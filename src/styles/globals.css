@@ -1,5 +1,6 @@
 @import "./reset.css";
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400");
 
 * {
     padding: 0;
@@ -8,6 +9,37 @@
     font-family: -apple-system, Pretendard, BlinkMacSystemFont, Segoe UI, Roboto,
         Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
         sans-serif;
+}
+
+:root {
+    --main: #adef2b;
+    --main-dark: #212121;
+    --gray: #393939;
+}
+
+body {
+    background-color: var(--main-dark);
+    color: #fff;
+    --bg: var(--main-dark);
+    --alert-bg: #fff;
+    --black: #000;
+    --white: #fff;
+    --white-op45: rgba(255, 255, 255, 0.45);
+}
+
+body.light {
+    background-color: #eaeaea;
+    color: #000;
+    --bg: #eaeaea;
+    --alert-bg: #cdcdcd;
+    --black: #fff;
+    --white: #000;
+    --white-op45: rgba(0, 0, 0, 0.45);
+}
+
+.numbers {
+    font-family: "Barlow Condensed";
+    letter-spacing: 0.5px;
 }
 
 input,

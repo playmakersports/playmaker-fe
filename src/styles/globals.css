@@ -22,7 +22,8 @@ body {
     --alert-bg: #fff;
     --white: #fff;
     --black: #000;
-    --white-op45: rgba(0, 0, 0, 0.45);
+    --black-op45: rgba(0, 0, 0, 0.45);
+    --black-op15: rgba(0, 0, 0, 0.15);
 }
 
 body.dark {
@@ -30,7 +31,8 @@ body.dark {
     --alert-bg: #cdcdcd;
     --white: #000;
     --black: #fff;
-    --white-op45: rgba(255, 255, 255, 0.45);
+    --black-op45: rgba(255, 255, 255, 0.45);
+    --black-op15: rgba(255, 255, 255, 0.15);
 }
 
 .main-conatiner {

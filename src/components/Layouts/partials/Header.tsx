@@ -1,60 +1,85 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 
-import { lightMode } from "@/src/atoms/state";
+import { darkMode } from "@/src/atoms/state";
 
 function Header() {
-    const [lightModeState, setLightModeState] = useAtom(lightMode);
+    const router = useRouter();
+    const nowPath = router.asPath.slice(1).split("/");
+    const pathHeader: { [key: string]: string } = {
+        player: "",
+        team: "팀 정보",
+        rank: "우리 동네 순위",
+    };
+
+    const [darkModeState, setDarkModeState] = useAtom(darkMode);
     const handleLightMode = () => {
         const body = document.querySelector("body");
-        if (body?.classList.contains("light")) {
-            body?.classList.remove("light");
-            setLightModeState((prev) => !prev);
+        if (body?.classList.contains("dark")) {
+            body?.classList.remove("dark");
+            setDarkModeState((prev) => !prev);
         } else {
-            body?.classList.add("light");
-            setLightModeState((prev) => !prev);
+            body?.classList.add("dark");
+            setDarkModeState((prev) => !prev);
         }
     };
 
     return (
         <Container>
-            <Logo lightModeState={lightModeState} />
-            <div onClick={handleLightMode} style={{ color: "white" }}>
-                라이트모드({lightModeState ? "ON" : "OFF"})
-            </div>
+            <Contents>
+                {nowPath[0] === "" && <Logo lightModeState={darkModeState} />}
+                {nowPath[0] !== "" && <PageName>{pathHeader[nowPath[0]]}</PageName>}
+                <ModeHandleButton onClick={handleLightMode}>({darkModeState ? "ON" : "OFF"})</ModeHandleButton>
+            </Contents>
         </Container>
     );
 }
 
 const Container = styled.header`
-    display: flex;
     position: sticky;
-    padding: 16px 24px 0px;
-    justify-content: space-between;
     top: 0;
-    background-color: var(--bg);
-    z-index: 9;
+    background-color: var(--main);
+    z-index: 10;
+`;
+
+const Contents = styled.div`
+    margin: 0 auto;
+    display: flex;
+    max-width: 1024px;
+    padding: 16px 20px;
+    justify-content: space-between;
+    @media (min-width: 768px) {
+        padding: 8px 20px;
+    }
 `;
 const Logo = styled.div<{ lightModeState: boolean }>`
-    width: 148px;
-    height: 80px;
-    background-size: 148px;
+    width: 120px;
+    height: 52px;
+    background-size: 120px;
     background-repeat: no-repeat;
     background-position: center left;
-    background-image: ${(props) =>
-        `url("/logotype/LogoType2Lines${
-            props.lightModeState ? "Black" : "Color"
-        }.svg")`};
-    @media (min-width: 640px) {
-        width: 320px;
-        height: 68px;
-        background-size: 320px;
-        background-image: ${(props) =>
-            `url("/logotype/LogoType${
-                props.lightModeState ? "Black" : "Color"
-            }.svg")`};
+    background-image: url("/logotype/LogoType2LinesBlack.svg");
+    @media (min-width: 768px) {
+        width: 228px;
+        height: 60px;
+        background-size: 128px;
     }
+`;
+
+const PageName = styled.p`
+    display: flex;
+    align-items: center;
+    width: 148px;
+    height: 52px;
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: #000;
+`;
+const ModeHandleButton = styled.p`
+    display: flex;
+    align-items: center;
 `;
 
 export default Header;

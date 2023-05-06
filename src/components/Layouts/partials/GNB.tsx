@@ -32,15 +32,19 @@ const Container = styled.ul`
     bottom: 0%;
     width: 100%;
     height: 80px;
-    background-color: var(--main);
-    color: #000;
-    z-index: 9;
-    @media (max-width: 640px) {
+    color: var(--black);
+    background-color: var(--gnb-bg);
+    z-index: 10;
+    @media (max-width: 768px) {
         align-items: top;
         padding: 0 24px;
         left: 0%;
+        border-radius: 20px 20px 0 0;
+        border-top: var(--gnb-border);
+        box-shadow: 1px 0 12px 4px rgba(0, 0, 0, 0.02);
     }
-    @media (min-width: 640px) {
+    @media (min-width: 768px) {
+        border: var(--gnb-border);
         align-items: center;
         margin: 24px;
         padding: 0 24px;
@@ -57,7 +61,7 @@ const Item = styled.li`
     span {
         padding: 16px 20px;
     }
-    @media (max-width: 640px) {
+    @media (max-width: 768px) {
         padding: 20px 0 0 0;
     }
 `;

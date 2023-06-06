@@ -7,21 +7,9 @@ function Main() {
     return (
         <>
             <Alerts>
-                <AlertCard
-                    code="UPCOMING_MATCH"
-                    contents="5월 1일 20:00, CS풋살클럽에서의 경기"
-                    redirect=""
-                />
-                <AlertCard
-                    code="JOIN_PURPOSE"
-                    contents="FC달린다 등 2개 팀에게 온 제안"
-                    redirect=""
-                />
-                <AlertCard
-                    code="MATCH_PURPOSE"
-                    contents="FC불도저가 보낸 5월 5일 16:30 매치 제안"
-                    redirect=""
-                />
+                <AlertCard code="UPCOMING_MATCH" contents="5월 1일 20:00, CS풋살클럽에서의 경기" redirect="" />
+                <AlertCard code="JOIN_PURPOSE" contents="FC달린다 등 2개 팀에게 온 제안" redirect="" />
+                <AlertCard code="MATCH_PURPOSE" contents="FC불도저가 보낸 5월 5일 16:30 매치 제안" redirect="" />
             </Alerts>
             <Articles>
                 <RankCard
@@ -55,7 +43,7 @@ function Main() {
 
 const Alerts = styled.section`
     display: flex;
-    margin: 0 0 32px 0;
+    margin: 12px 0 32px 0;
     padding: 0 16px;
     flex-direction: column;
 `;

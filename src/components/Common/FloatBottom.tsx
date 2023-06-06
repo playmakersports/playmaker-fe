@@ -20,7 +20,7 @@ const Container = styled.div<{ showButtons: boolean }>`
     width: 100%;
     height: 68px;
     z-index: 9;
-    transform: translate(-50%, ${(props) => (props.showButtons ? "-92px" : 0)});
+    transform: translate(-50%, ${(props) => (props.showButtons ? "-68px" : 0)});
     transition: transform 0.45s;
     @media (min-width: 768px) {
         width: calc(100% - 420px);

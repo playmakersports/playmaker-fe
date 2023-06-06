@@ -2,27 +2,31 @@ import styled from "@emotion/styled";
 import React from "react";
 
 interface ButtonLargePropsType {
+    type?: "button" | "submit" | "reset" | undefined;
     text: string;
-    callback: () => void;
     main: boolean;
+    shadow?: boolean;
+    callback?: () => void;
 }
 
-function ButtonLarge({ text, callback, main }: ButtonLargePropsType) {
+function ButtonLarge({ type, text, main, shadow = true, callback }: ButtonLargePropsType) {
     return (
-        <Button onClick={callback} main={main}>
+        <Button type={type ?? "button"} onClick={callback} main={main} shadow={shadow}>
             {text}
         </Button>
     );
 }
 
-const Button = styled.button<{ main: boolean }>`
+const Button = styled.button<{ main: boolean; shadow: boolean }>`
+    padding: 12px 0;
+    min-height: 56px;
     flex: ${(props) => (props.main ? 2 : 1)};
     background-color: ${(props) => (props.main ? "var(--main)" : "#ffffff")};
-    font-size: 0.95rem;
-    color: #000;
     border: 1px solid ${(props) => (props.main ? "#aae732" : "#efefef")};
-    box-shadow: 0 0 12px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: ${(props) => (props.shadow ? "0 0 12px 8px rgba(0, 0, 0, 0.05)" : "none")};
     border-radius: 8px;
+    color: #000;
+    font-size: 1.05rem;
     font-weight: 600;
 `;
 

@@ -7,11 +7,13 @@ import { darkMode } from "@/src/atoms/state";
 
 function Header() {
     const router = useRouter();
-    const nowPath = router.asPath.slice(1).split("/");
+    const nowPath = router.pathname;
     const pathHeader: { [key: string]: string } = {
-        player: "",
-        team: "팀 정보",
-        rank: "우리 동네 순위",
+        "/player/[id]/playlog": "경기 기록",
+        "/team": "팀 정보",
+        "/rank": "우리 동네 순위",
+        "/user/join": "회원가입",
+        "/user/login": "로그인",
     };
 
     const [darkModeState, setDarkModeState] = useAtom(darkMode);
@@ -29,8 +31,8 @@ function Header() {
     return (
         <Container>
             <Contents>
-                {nowPath[0] === "" && <Logo lightModeState={darkModeState} />}
-                {nowPath[0] !== "" && <PageName>{pathHeader[nowPath[0]]}</PageName>}
+                {nowPath === "/" && <Logo lightModeState={darkModeState} />}
+                {nowPath !== "/" && <PageName>{pathHeader[nowPath]}</PageName>}
                 <ModeHandleButton onClick={handleLightMode}>({darkModeState ? "ON" : "OFF"})</ModeHandleButton>
             </Contents>
         </Container>

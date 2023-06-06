@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-function UserBadge() {
+function UserBadge({ simple }: { simple?: boolean }) {
     return (
         <Container>
             <Numbers className="numbers">
@@ -12,22 +12,25 @@ function UserBadge() {
             <Photo>
                 <img src="/assets/profile_image.png" alt="프로필 이미지" />
             </Photo>
-            <Description>
-                <p className="username">이강인</p>
-                <ul className="userstats numbers">
-                    <li>
-                        <dt>GOAL</dt>
-                        <dd>120</dd>
-                    </li>
-                    <li>
-                        <dt>M.O.M</dt>
-                        <dd>8</dd>
-                    </li>
-                    <li>
-                        <dt>TOP RANKED</dt>
-                        <dd>20</dd>
-                    </li>
-                </ul>
+            <Description simple={!!simple}>
+                <p className="username">이강인이피엘가자</p>
+                {simple && <p className="username-real">본명</p>}
+                {simple || (
+                    <ul className="userstats numbers">
+                        <li>
+                            <dt>GOAL</dt>
+                            <dd>120</dd>
+                        </li>
+                        <li>
+                            <dt>M.O.M</dt>
+                            <dd>8</dd>
+                        </li>
+                        <li>
+                            <dt>TOP RANKED</dt>
+                            <dd>20</dd>
+                        </li>
+                    </ul>
+                )}
             </Description>
         </Container>
     );
@@ -86,18 +89,30 @@ const Photo = styled.div`
         object-fit: cover;
     }
 `;
-const Description = styled.div`
+const Description = styled.div<{ simple: boolean }>`
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 132px;
     background-color: #faebeb; // 소속팀 상징색
     .username {
         margin: 0 auto;
         width: 160px;
-        padding: 12px 0 8px;
-        color: #e65f5f;
-        font-weight: 800;
-        font-size: 1.35rem;
+        padding: ${(props) => (props.simple ? "28px 0 0" : "12px 0 8px")};
         border-bottom: 1px solid #e65f5f; // 소속팀 상징색
+        border: ${(props) => (props.simple ? "none" : "")};
+        color: #e65f5f;
+        font-weight: 700;
+        font-size: 1.35rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .username-real {
+        margin: 12px 0 0;
+        font-size: 1.15rem;
+        color: #000;
+        opacity: 0.7;
     }
     .userstats {
         display: flex;

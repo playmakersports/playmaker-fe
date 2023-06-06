@@ -28,13 +28,9 @@ function Player() {
         };
     }, []);
 
-    const infos = [
-        { title: "출생연월", contents: "'01.02" },
-        { title: "나이", contents: "21" },
-        { title: "지역", contents: "강남구" },
-    ];
-
-    const hashtags = ["공격형", "미드필더", "피지컬", "왼발", "골키퍼", "육상부", "체대생", "180이상", "선수출신"];
+    const infos = { birth: "2001-02-19", location: ["서울 강남구", "경기 성남시분당구"] };
+    const hashtags = ["공격형", "미드필더", "피지컬", "왼발", "골키퍼", "육상부", "체대생", "선수출신"];
+    const favTeam = ["seoul", "liverpool"];
 
     const handleMovePage = (path: string) => {
         router.push(path);
@@ -44,11 +40,10 @@ function Player() {
         <Container scrolled={isScrolled}>
             <UserBadgeHeader isScrolled={isScrolled} />
             <UserInfoList data={infos} />
-            <SelfIntro>홀란드보다 잘생김</SelfIntro>
-            <Title>HASHTAG</Title>
+            <SelfIntro>매너게임합니다! 열정넘침!</SelfIntro>
             <UserHashTag data={hashtags} />
-            <Title>FAN OF</Title>
-            <UserFan />
+            <Title>좋아하는 팀</Title>
+            <UserFan data={favTeam} />
             <FloatBottom>
                 <>
                     <ButtonLarge callback={() => console.log("hi")} main={false} text="정보 수정" />
@@ -73,32 +68,22 @@ const Container = styled.section<{ scrolled: boolean }>`
 `;
 
 const SelfIntro = styled.p`
-    margin: 12px 0 -12px;
-    padding: 20px 8px;
-    text-align: center;
+    margin: 24px 0 0;
+    padding: 24px 4px 16px;
+    border-top: 1px solid var(--black-op15);
     color: var(--black);
-    font-size: 0.9rem;
+    font-size: 1rem;
+    text-align: center;
+    word-break: keep-all;
     opacity: 0.9;
 `;
 
 const Title = styled.h3`
-    margin: 32px 0 12px;
-    font-size: 0.7rem;
-    line-height: 0.9rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--black);
-    opacity: 0.65;
-    &::before,
-    &::after {
-        content: "";
-        display: inline-block;
-        margin: 0.225rem 16px;
-        width: 64px;
-        height: 1px;
-        background-color: var(--black);
-        opacity: 0.7;
-    }
+    border-top: 1px solid var(--black-op15);
+    margin: 32px 0 0;
+    padding: 24px 2px 16px;
+    font-size: 1.2rem;
+    font-weight: 600;
 `;
 
 export default Player;

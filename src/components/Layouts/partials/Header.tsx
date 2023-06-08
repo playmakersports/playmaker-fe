@@ -29,9 +29,9 @@ function Header() {
     };
 
     return (
-        <Container>
+        <Container dark={darkModeState} nowPath={nowPath === "/"}>
             <Contents>
-                {nowPath === "/" && <Logo lightModeState={darkModeState} />}
+                {nowPath === "/" && <Logo dark={darkModeState} />}
                 {nowPath !== "/" && <PageName>{pathHeader[nowPath]}</PageName>}
                 <ModeHandleButton onClick={handleLightMode}>({darkModeState ? "ON" : "OFF"})</ModeHandleButton>
             </Contents>
@@ -39,10 +39,10 @@ function Header() {
     );
 }
 
-const Container = styled.header`
+const Container = styled.header<{ dark: boolean; nowPath: boolean }>`
     position: sticky;
     top: 0;
-    background-color: var(--main);
+    background-color: ${(props) => (props.dark && props.nowPath ? `var(--bg)` : `var(--main)`)};
     z-index: 10;
 `;
 
@@ -56,13 +56,13 @@ const Contents = styled.div`
         padding: 8px 20px;
     }
 `;
-const Logo = styled.div<{ lightModeState: boolean }>`
+const Logo = styled.div<{ dark: boolean }>`
     width: 120px;
     height: 52px;
     background-size: 120px;
     background-repeat: no-repeat;
     background-position: center left;
-    background-image: url("/logotype/LogoType2LinesBlack.svg");
+    background-image: url(${(props) => `/logotype/LogoType2Lines${props.dark ? "Color" : "Black"}.svg`});
     @media (min-width: 768px) {
         width: 228px;
         height: 60px;

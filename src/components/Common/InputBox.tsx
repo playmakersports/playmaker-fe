@@ -6,7 +6,7 @@ import { FieldErrors, FieldValues, RegisterOptions, UseFormRegister, UseFormWatc
 export interface IInputBoxDataType {
     id: string;
     label: string;
-    type: "text" | "date" | "tel" | "number" | "textarea";
+    type: "text" | "date" | "tel" | "number" | "textarea" | "password";
     required?: boolean;
     description?: string;
     placeholder?: string;

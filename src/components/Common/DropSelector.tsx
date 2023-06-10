@@ -124,6 +124,7 @@ const SelectedOptions = styled.div`
         padding: 4px 8px;
         background-color: var(--main);
         border-radius: 32px;
+        color: #000;
         font-size: 0.9rem;
         font-weight: 500;
     }

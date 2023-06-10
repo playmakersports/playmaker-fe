@@ -43,14 +43,11 @@ const Container = styled.div`
         left: 0%;
     }
     @media (min-width: 768px) {
-        border: var(--gnb-border);
+        margin: 0 16px 36px;
         align-items: center;
-        margin: 24px;
         padding: 0 24px;
-        width: 320px;
-        height: 68px;
+        width: 420px;
         right: 0%;
-        border-radius: 40px;
     }
 `;
 
@@ -81,10 +78,10 @@ const HideBg = styled.div`
     position: absolute;
     left: 50%;
     bottom: 0;
-    transform: translate(-50%, 0);
+    transform: translate(-50%, 1px);
     background-color: var(--gnb-bg);
     width: 52px;
-    height: 32px;
+    height: 30px;
 `;
 const Item = styled.div<{ icon?: string; dark: boolean }>`
     padding: 6px 0;
@@ -111,10 +108,15 @@ const Item = styled.div<{ icon?: string; dark: boolean }>`
     }
 
     @media (min-width: 768px) {
-        margin: 8px 0;
-        background-size: 30px;
-        span {
-            padding: 34px 20px 0;
+        &:first-of-type {
+            border-radius: 40px 32px 0 40px;
+            border-right: var(--gnb-border);
+            border-left: var(--gnb-border);
+        }
+        &:last-of-type {
+            border-radius: 32px 40px 40px 0;
+            border-right: var(--gnb-border);
+            border-left: var(--gnb-border);
         }
     }
 `;

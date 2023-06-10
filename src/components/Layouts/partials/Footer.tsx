@@ -12,28 +12,23 @@ function Footer() {
             <Img
                 src={`/logotype/LogoType${darkModeState ? "White" : "Black"}.svg`}
                 alt="PlayMaker"
-                width={224}
+                width={160}
                 height={32}
             />
-            <p className="slogan">당신의 스포츠 파트너</p>
-            <p className="copyright">Copyright PlayMaker All rights reserved.</p>
+            <p className="copyright numbers">COPYRIGHT PLAY\MAKER ALL RIGHTS RESERVED.</p>
         </Container>
     );
 }
 
 const Container = styled.footer`
-    margin: 24px auto 80px auto;
-    padding: 24px 28px;
+    margin: 0 auto 40px auto;
+    padding: 24px 28px 120px;
     max-width: 1024px;
     opacity: 0.65;
     color: var(--black);
-    .slogan {
-        font-size: 0.9rem;
-        font-weight: 800;
-    }
+    text-align: center;
     .copyright {
-        margin: 20px 0 0 0;
-        font-size: 0.8rem;
+        font-size: 0.85rem;
         font-weight: 300;
     }
 `;

@@ -22,5 +22,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.9",
     "typescript": "5.0.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }

@@ -164,7 +164,7 @@ const DayLabel = styled.p`
     width: 70px;
     opacity: 0.65;
     background-color: var(--dark);
-    color: var(--white);
+    color: var(--lightsilver);
     font-size: 0.9rem;
     font-weight: 500;
     text-align: center;

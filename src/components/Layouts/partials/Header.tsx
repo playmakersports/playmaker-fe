@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtom } from "jotai";
@@ -6,6 +6,8 @@ import { useAtom } from "jotai";
 import { darkMode } from "@/src/atoms/state";
 
 function Header() {
+    const [showLocationMenu, setShowLocationMenu] = useState(false);
+    const [showListMenu, setShowListMenu] = useState(false);
     const router = useRouter();
     const nowPath = router.pathname;
     const pathHeader: { [key: string]: string } = {
@@ -14,6 +16,7 @@ function Header() {
         "/rank": "우리 동네 순위",
         "/user/join": "회원가입",
         "/user/login": "로그인",
+        "/find/yongbyung": "용병 모집 현황",
     };
 
     const [darkModeState, setDarkModeState] = useAtom(darkMode);
@@ -33,7 +36,45 @@ function Header() {
             <Contents>
                 {nowPath === "/" && <Logo dark={darkModeState} />}
                 {nowPath !== "/" && <PageName>{pathHeader[nowPath]}</PageName>}
-                <ModeHandleButton onClick={handleLightMode}>({darkModeState ? "ON" : "OFF"})</ModeHandleButton>
+                <RightBtns>
+                    <LocationBtn
+                        path={nowPath === "/"}
+                        dark={darkModeState}
+                        onClick={() => setShowLocationMenu((prev) => !prev)}
+                    >
+                        안양시
+                    </LocationBtn>
+                    <MainBtn
+                        path={nowPath === "/"}
+                        dark={darkModeState}
+                        onClick={() => setShowListMenu((prev) => !prev)}
+                    >
+                        <i></i>
+                        <i></i>
+                        <i></i>
+                    </MainBtn>
+                    {showLocationMenu && (
+                        <>
+                            <Menus onClick={() => setShowLocationMenu((prev) => !prev)}>
+                                <ul className="change-location-menu">
+                                    <li className="checked">경기도 안양시</li>
+                                    <li>경기도 성남시분당구</li>
+                                </ul>
+                            </Menus>
+                            <Backdrop onClick={() => setShowLocationMenu((prev) => !prev)} />
+                        </>
+                    )}
+                    {showListMenu && (
+                        <>
+                            <Menus onClick={() => setShowListMenu((prev) => !prev)}>
+                                <DarkBtn type="button" onClick={handleLightMode}>
+                                    다크모드
+                                </DarkBtn>
+                            </Menus>
+                            <Backdrop onClick={() => setShowListMenu((prev) => !prev)} />
+                        </>
+                    )}
+                </RightBtns>
             </Contents>
         </Container>
     );
@@ -79,9 +120,115 @@ const PageName = styled.p`
     font-weight: 600;
     color: #000;
 `;
-const ModeHandleButton = styled.p`
+const RightBtns = styled.ul`
+    position: relative;
     display: flex;
     align-items: center;
+    gap: 16px;
+    color: var(--black);
+`;
+const MainBtn = styled.button<{ path: boolean; dark: boolean }>`
+    position: relative;
+    display: block;
+    width: 30px;
+    height: 18px;
+    i {
+        position: absolute;
+        height: 3px;
+        right: 0;
+        background-color: ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
+        transition: width 0.35s;
+        &:first-of-type {
+            width: 100%;
+            top: 0;
+        }
+        &:nth-of-type(2) {
+            width: 60%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        &:last-of-type {
+            width: 85%;
+            bottom: 0;
+        }
+    }
+    &:hover {
+        i {
+            &:first-of-type {
+                width: 85%;
+            }
+            &:nth-of-type(2) {
+                width: 100%;
+            }
+            &:last-of-type {
+                width: 60%;
+            }
+        }
+    }
+`;
+const LocationBtn = styled.button<{ path: boolean; dark: boolean }>`
+    display: flex;
+    padding: 3px 8px;
+    align-items: center;
+    gap: 2px;
+    color: ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
+    border: 1px solid ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
+    border-radius: 20px;
+    font-size: 0.8rem;
+    &::before {
+        content: "";
+        background-image: url("/assets/icons/location_icon.svg");
+        width: 16px;
+        height: 20px;
+        background-size: 17px;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: invert(${(props) => (props.dark && props.path ? 1 : 0)});
+    }
+`;
+const Menus = styled.div`
+    position: absolute;
+    padding: 16px;
+    width: 208px;
+    top: 50px;
+    right: -8px;
+    background-color: var(--white);
+    border-radius: 28px;
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.05);
+    z-index: 2;
+    .change-location-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        font-size: 0.9rem;
+        text-align: center;
+        li {
+            padding: 6px 0;
+        }
+    }
+    .checked {
+        font-weight: 600;
+        &::before {
+            display: inline-block;
+            content: "";
+            margin: 0 4px 2px 0;
+            width: 6px;
+            height: 6px;
+            background-color: var(--main);
+            border-radius: 100%;
+        }
+    }
+`;
+const DarkBtn = styled.button``;
+
+const Backdrop = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.1);
+    z-index: 1;
 `;
 
 export default Header;

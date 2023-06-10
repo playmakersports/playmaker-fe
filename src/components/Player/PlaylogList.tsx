@@ -23,7 +23,7 @@ function PlaylogListCol({ match }: any) {
                     <p>
                         <span>{match.counter}</span>
                         <span className="numbers">{match.counter_point}</span>
-                        <i className="numbers">:</i>
+                        <i className="numbers">-</i>
                         <span className="numbers">{match.myteam_point}</span>
                         <span>{match.myteam}</span>
                     </p>
@@ -43,7 +43,7 @@ function PlaylogList() {
             mom: true,
             counter_point: 1,
             myteam_point: 3,
-            myteam: "최강 FC",
+            myteam: "팀이름 FC",
             matchId: 123,
         },
         {
@@ -53,7 +53,7 @@ function PlaylogList() {
             mom: true,
             counter_point: 1,
             myteam_point: 3,
-            myteam: "최강 FC",
+            myteam: "팀이름 FC",
             matchId: 123,
         },
         {
@@ -63,7 +63,7 @@ function PlaylogList() {
             mom: true,
             counter_point: 1,
             myteam_point: 3,
-            myteam: "최강 FC",
+            myteam: "팀이름 FC",
             matchId: 123,
         },
         {
@@ -108,16 +108,19 @@ const Col = styled.article`
         text-align: center;
         font-size: 0.95rem;
         .match-counter {
-            flex: 2;
+            flex: 1.5;
         }
         .match-date {
             flex: 1;
         }
         .match-contribute {
-            flex: 1;
+            flex: 1.5;
         }
     }
 
+    .match-column {
+        border-bottom: 1px solid var(--bg-dark);
+    }
     .col-header {
         cursor: auto;
         padding: 12px 0;
@@ -129,8 +132,10 @@ const Col = styled.article`
         opacity: 0.8;
     }
     .match-select {
+        border-bottom: none;
         background-color: #2a365d;
         color: #fff;
+        font-weight: 500;
     }
 `;
 
@@ -155,11 +160,15 @@ const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
             align-items: center;
             span {
                 flex: 1;
+                font-size: 0.95rem;
                 text-align: center;
             }
+            i {
+                opacity: 0.7;
+            }
             .numbers {
-                font-size: 1.5rem;
-                font-weight: 600;
+                font-size: 1.8rem;
+                font-weight: 500;
             }
         }
     }
@@ -167,9 +176,11 @@ const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
         height: ${(props) => (props.showMatchDetail ? "80px" : "0")};
         .match-detail-wrap {
             flex-direction: row;
-            padding: 12px 16px 16px;
-            p {
-                flex: 2;
+            gap: 40px;
+            padding: 16px;
+            button {
+                flex: 0.4;
+                min-height: auto;
             }
         }
     }

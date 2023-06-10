@@ -60,7 +60,7 @@ function Player() {
 
 const Container = styled.section<{ scrolled: boolean }>`
     margin: ${(props) => (props.scrolled ? "192px 0 0" : "248px 0 0")};
-    padding: 8px 20px 60px;
+    padding: 8px 20px 40px;
     transition: margin 0.45s;
     @media (min-width: 768px) {
         padding: 20px 20px 60px;

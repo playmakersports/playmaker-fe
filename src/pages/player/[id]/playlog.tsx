@@ -9,7 +9,7 @@ function Playlog() {
     const router = useRouter();
     const PLAY_DUMMY = {
         playCount: 24,
-        goalCount: 7,
+        goalCount: 27,
         winMatchCount: 12,
         momCount: 6,
         topRanked: 4,
@@ -31,7 +31,7 @@ function Playlog() {
                         <dd className="numbers">{PLAY_DUMMY.goalCount}</dd>
                     </li>
                     <li>
-                        <dt>골성공률</dt>
+                        <dt>골기여율</dt>
                         <dd className="numbers">{((PLAY_DUMMY.goalCount / PLAY_DUMMY.playCount) * 100).toFixed(1)}%</dd>
                     </li>
                     <li>
@@ -105,13 +105,12 @@ const PlayOverview = styled.ul`
             display: inline-block;
             margin: 0 0 5px;
             font-size: 0.8rem;
-            opacity: 0.85;
+            opacity: 0.65;
             letter-spacing: -0.2px;
-            text-shadow: 1px 1px 0px var(--white);
         }
         dd {
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 500;
         }
     }
     @media (min-width: 768px) {

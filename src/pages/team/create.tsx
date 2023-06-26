@@ -101,7 +101,7 @@ function TeamCreate() {
 }
 
 const Container = styled.form`
-    padding: 120px 16px 0;
+    padding: 200px 16px 0;
 `;
 const NameBox = styled.article<{ color: string }>`
     position: fixed;

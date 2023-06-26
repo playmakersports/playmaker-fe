@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import FloatBottom from "@/src/components/Common/FloatBottom";
 import ButtonLarge from "@/src/components/Common/ButtonLarge";
-import Card from "@/src/components/Main/Card";
+import BoardCard from "@/src/components/Team/BoardCard";
 
 function Team() {
     const router = useRouter();
@@ -34,38 +34,19 @@ function Team() {
                     <p className="numbers team-info-founded">2020.12.30</p>
                 </TeamInfo>
             </NameBox>
-            <Cards>
-                <Card title="팀 게시판" link={`/team/room/${teamId}/board`}>
-                    <BoardCard>
-                        {TEAM_BAORD_MOCK.map((item) => (
-                            <li key={item.articleId}>
-                                <span className="card-board-title">
-                                    {item.label && <span className="card-board-label">{item.label}</span>}
-                                    {item.title}
-                                </span>
-                                <span className="card-board-written numbers">{item.writtenAt}</span>
-                            </li>
-                        ))}
-                    </BoardCard>
-                </Card>
-                <Card title="사진 게시판" link={`/team/room/${teamId}/photos`}>
-                    <BoardCard>
-                        {TEAM_BAORD_MOCK.map((item) => (
-                            <li key={item.articleId}>
-                                <span className="card-board-title">
-                                    {item.label && <span className="card-board-label">{item.label}</span>}
-                                    {item.title}
-                                </span>
-                                <span className="card-board-written numbers">{item.writtenAt}</span>
-                            </li>
-                        ))}
-                    </BoardCard>
-                </Card>
-            </Cards>
+            <BoardCard teamId={teamId as string} board={TEAM_BAORD_MOCK} photos={TEAM_BAORD_MOCK} />
             <FloatBottom>
                 <>
-                    <ButtonLarge callback={() => console.log("hi")} main={false} text="경기 목록" />
-                    <ButtonLarge callback={() => console.log("")} main={false} text="선수 목록" />
+                    <ButtonLarge
+                        callback={() => router.push(`/team/room/${teamId}/playlog`)}
+                        main={false}
+                        text="경기 목록"
+                    />
+                    <ButtonLarge
+                        callback={() => router.push(`/team/room/${teamId}/players`)}
+                        main={false}
+                        text="선수 목록"
+                    />
                 </>
             </FloatBottom>
         </Container>
@@ -73,7 +54,7 @@ function Team() {
 }
 
 const Container = styled.section`
-    padding: 136px 16px 0;
+    padding: 212px 16px 0;
 `;
 
 const NameBox = styled.article<{ color: string }>`
@@ -190,39 +171,4 @@ const TeamInfo = styled.div`
     }
 `;
 
-const Cards = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-`;
-const BoardCard = styled.ul`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    li {
-        display: flex;
-        padding: 4px 0;
-        align-items: center;
-        justify-content: space-between;
-        gap: 8px;
-        .card-board-title {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            font-size: 0.95rem;
-            line-height: 1.1rem;
-        }
-        .card-board-label {
-            padding: 0 6px;
-            border-radius: 20px;
-            border: 1px solid var(--black);
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
-        .card-board-written {
-            opacity: 0.6;
-            font-size: 0.85rem;
-        }
-    }
-`;
 export default Team;

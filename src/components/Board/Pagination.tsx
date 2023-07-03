@@ -41,6 +41,7 @@ function Pagination({ base, now, last }: IPaginationType) {
 
 const PageList = styled.ul`
     display: flex;
+    justify-content: center;
     gap: 8px;
     margin: 12px auto 0;
     max-width: 320px;

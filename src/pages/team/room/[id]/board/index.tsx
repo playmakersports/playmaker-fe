@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import TeamLayout from "@/src/components/Team/Layout";
 import Pagination from "@/src/components/Board/Pagination";
 import Search from "@/src/components/Board/Search";
+import { BasicButton } from "@/src/components/Common/Button";
 
 function TeamBoard() {
     const router = useRouter();
@@ -70,8 +71,7 @@ function TeamBoard() {
                     </Article>
                 ))}
                 <Btns>
-                    {" "}
-                    <WriteBtn>글쓰기</WriteBtn>
+                    <BasicButton type="button">글쓰기</BasicButton>
                 </Btns>
                 <Search />
                 <Pagination base={`/team/room/${teamId}/board`} now={0} last={12} />
@@ -133,11 +133,5 @@ const ArticleDetail = styled.div`
 `;
 
 const Btns = styled.div``;
-const WriteBtn = styled.button`
-    display: inline-block;
-    padding: 8px 12px;
-    background-color: var(--main);
-    border-radius: 16px;
-`;
 
 export default TeamBoard;

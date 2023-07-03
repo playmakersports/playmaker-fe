@@ -10,7 +10,6 @@ interface IPaginationType {
 
 function Pagination({ base, now, last }: IPaginationType) {
     const router = useRouter();
-    console.log(router);
     const startPage = Math.floor(now / 5) * 5;
     const endPage = Math.min(startPage + 5, last);
     const totalPages = Array.from({ length: endPage - startPage }, (_, i) => i + startPage);

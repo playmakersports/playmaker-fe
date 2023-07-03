@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import TeamLayout from "@/src/components/Team/Layout";
 import { BasicButton } from "@/src/components/Common/Button";
 
-function BoardArticle() {
+function PhotoArticle() {
     const router = useRouter();
     const teamId = router.query.id;
     const page = router.query.page;
@@ -150,4 +150,4 @@ const Comment = styled.li`
     }
 `;
 
-export default BoardArticle;
+export default PhotoArticle;

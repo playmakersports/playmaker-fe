@@ -28,7 +28,7 @@ function TeamBoard() {
             writtenAt: "2023-06-20",
         },
         {
-            articleId: "123",
+            articleId: "122",
             label: "",
             title: "제목제목제목제목제목제목제목제목제목제목제목제목제목제목",
             commentCount: 24,
@@ -37,7 +37,7 @@ function TeamBoard() {
             writtenAt: "2023-06-20",
         },
         {
-            articleId: "123",
+            articleId: "125",
             label: "공지",
             title: "제목제목제목제목제목제목제목제목제목제목제목제목제목제목",
             commentCount: 24,

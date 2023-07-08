@@ -33,17 +33,23 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
                     <div className="modal-contents-container">{children}</div>
                     <div className="modal-btn-container">
                         {btns.map((btn) => (
-                            <ButtonLarge type={btn.type} text={btn.text} main={btn.main} callback={btn.onClick} />
+                            <ButtonLarge
+                                type={btn.type}
+                                text={btn.text}
+                                main={btn.main}
+                                shadow={false}
+                                callback={btn.onClick}
+                            />
                         ))}
                     </div>
                 </Contents>
             </Wrap>
-            <Backdrop onClick={closeModal} />
+            <Dim onClick={closeModal} />
         </>
     );
 }
 
-const Backdrop = styled.div`
+const Dim = styled.div`
     position: fixed;
     z-index: 11;
     top: 0;
@@ -55,14 +61,14 @@ const Backdrop = styled.div`
 
 const Wrap = styled.div`
     position: fixed;
-    padding: 32px 28px 28px;
+    padding: 28px;
     top: 50%;
     left: 50%;
     width: calc(100% - 32px);
     z-index: 99;
     background: #ffffff;
-    background-color: var(--white);
-    border-radius: 20px;
+    background-color: ${({ theme }) => theme.color.white};
+    border-radius: 8px;
     transform: translate(-50%, -50%);
 `;
 
@@ -73,9 +79,9 @@ const Contents = styled.section`
     justify-content: space-between;
     .modal-contents-container {
         h2 {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
         p {
             font-size: 1rem;
@@ -84,7 +90,7 @@ const Contents = styled.section`
     .modal-btn-container {
         display: flex;
         justify-content: space-between;
-        gap: 8px;
+        gap: 12px;
         margin-top: 20px;
     }
 `;

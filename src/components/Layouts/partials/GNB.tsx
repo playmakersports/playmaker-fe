@@ -1,27 +1,23 @@
 import React from "react";
 import styled from "@emotion/styled";
-
 import Link from "next/link";
-import { useAtom } from "jotai";
 import { useRouter } from "next/router";
-import { darkMode } from "@/src/atoms/state";
 
 function GNB() {
-    const [darkModeState] = useAtom(darkMode);
     const router = useRouter();
 
     return (
         <Container>
-            <Item dark={darkModeState}>
+            <Item>
                 <Link href="/team">
                     <Text icon="/assets/GNB/soccer_field_icon.svg">소속팀</Text>
                 </Link>
             </Item>
-            <MainBtn dark={darkModeState} onClick={() => router.push("/")}>
+            <MainBtn onClick={() => router.push("/")}>
                 <i />
             </MainBtn>
             <HideBg />
-            <Item dark={darkModeState}>
+            <Item>
                 <Link href="/player">
                     <Text icon="/assets/GNB/whistle_icon.svg">플레이어</Text>
                 </Link>
@@ -51,12 +47,12 @@ const Container = styled.div`
     }
 `;
 
-const MainBtn = styled.div<{ icon?: string; dark: boolean }>`
+const MainBtn = styled.div<{ icon?: string }>`
     cursor: pointer;
     position: absolute;
     top: 0;
     left: 50%;
-    background-color: var(--gnb-bg);
+    background-color: ${({ theme }) => theme.color.background};
     width: 48px;
     height: 48px;
     transform: translate(-50%, -4px);
@@ -71,7 +67,7 @@ const MainBtn = styled.div<{ icon?: string; dark: boolean }>`
         background-position: center;
         background-size: 48px;
         background-repeat: no-repeat;
-        filter: invert(${(props) => (props.dark ? 1 : 0)});
+        filter: ${({ theme }) => theme.filter.invert};
     }
 `;
 const HideBg = styled.div`
@@ -79,44 +75,42 @@ const HideBg = styled.div`
     left: 50%;
     bottom: 0;
     transform: translate(-50%, 1px);
-    background-color: var(--gnb-bg);
+    background-color: ${({ theme }) => theme.color.background};
     width: 52px;
     height: 30px;
 `;
-const Item = styled.div<{ icon?: string; dark: boolean }>`
-    padding: 6px 0;
+const Item = styled.div<{ icon?: string }>`
     flex: 1;
-    background-color: var(--gnb-bg);
-    border-top: var(--gnb-border);
-    box-shadow: 1px 0 12px 4px rgba(0, 0, 0, 0.02);
+    padding: 6px 0;
     overflow: hidden;
-    border-top: var(--gnb-border);
-
+    background-color: ${({ theme }) => theme.color.background};
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
+    box-shadow: 1px 0 12px 4px rgba(0, 0, 0, 0.02);
     color: #404040;
     text-align: center;
 
     &:first-of-type {
         border-radius: 0 32px 0 0;
-        border-right: var(--gnb-border);
+        border-right: 1px solid ${({ theme }) => theme.color.gray1};
     }
     &:last-of-type {
         border-radius: 32px 0 0 0;
-        border-left: var(--gnb-border);
+        border-left: 1px solid ${({ theme }) => theme.color.gray1};
     }
     div {
-        filter: invert(${(props) => (props.dark ? 1 : 0)});
+        filter: ${({ theme }) => theme.filter.invert};
     }
 
     @media (min-width: 768px) {
         &:first-of-type {
             border-radius: 40px 32px 0 40px;
-            border-right: var(--gnb-border);
-            border-left: var(--gnb-border);
+            border-right: 1px solid ${({ theme }) => theme.color.gray1};
+            border-left: 1px solid ${({ theme }) => theme.color.gray1};
         }
         &:last-of-type {
             border-radius: 32px 40px 40px 0;
-            border-right: var(--gnb-border);
-            border-left: var(--gnb-border);
+            border-right: 1px solid ${({ theme }) => theme.color.gray1};
+            border-left: 1px solid ${({ theme }) => theme.color.gray1};
         }
     }
 `;

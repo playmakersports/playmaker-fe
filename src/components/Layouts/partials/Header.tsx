@@ -33,23 +33,27 @@ function Header() {
     };
 
     return (
-        <Container dark={darkModeState} nowPath={nowPath === "/"}>
+        <Container nowPath={nowPath === "/"}>
             <Contents>
-                {nowPath === "/" && <Logo dark={darkModeState} />}
+                {nowPath !== "/" && <BackBtn type="button" onClick={() => router.back()} />}
+                {nowPath === "/" && (
+                    <Logo>
+                        <img
+                            src={
+                                darkModeState
+                                    ? "/logotype/LogoType2LinesColor.svg"
+                                    : "/logotype/LogoType2LinesBlack.svg"
+                            }
+                            alt="Logo"
+                        />
+                    </Logo>
+                )}
                 {nowPath !== "/" && <PageName>{pathHeader[nowPath]}</PageName>}
                 <RightBtns>
-                    <LocationBtn
-                        path={nowPath === "/"}
-                        dark={darkModeState}
-                        onClick={() => setShowLocationMenu((prev) => !prev)}
-                    >
-                        안양시
-                    </LocationBtn>
-                    <MainBtn
-                        path={nowPath === "/"}
-                        dark={darkModeState}
-                        onClick={() => setShowListMenu((prev) => !prev)}
-                    >
+                    {nowPath === "/" && (
+                        <LocationBtn onClick={() => setShowLocationMenu((prev) => !prev)}>안양시</LocationBtn>
+                    )}
+                    <MainBtn onClick={() => setShowListMenu((prev) => !prev)}>
                         <i></i>
                         <i></i>
                         <i></i>
@@ -81,77 +85,74 @@ function Header() {
     );
 }
 
-const Container = styled.header<{ dark: boolean; nowPath: boolean }>`
+const Container = styled.header<{ nowPath: boolean }>`
     position: sticky;
     top: 0;
-    background-color: ${(props) => (props.dark && props.nowPath ? `var(--bg)` : `var(--main)`)};
+    height: 60px;
+    background-color: ${({ theme }) => theme.color.background};
     z-index: 10;
+    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
 `;
 
 const Contents = styled.div`
     margin: 0 auto;
     display: flex;
+    padding: 8px 16px;
     max-width: 1024px;
-    padding: 16px 20px;
+    height: 100%;
+    align-items: center;
     justify-content: space-between;
     @media (min-width: 768px) {
         padding: 8px 20px;
     }
 `;
-const Logo = styled.div<{ dark: boolean }>`
-    width: 120px;
-    height: 52px;
-    background-size: 120px;
-    background-repeat: no-repeat;
-    background-position: center left;
-    background-image: url(${(props) => `/logotype/LogoType2Lines${props.dark ? "Color" : "Black"}.svg`});
+
+const BackBtn = styled.button`
+    width: 24px;
+    height: 24px;
+    background-image: url("/assets/icons/arrow_left_icon_black.svg");
+    filter: ${({ theme }) => theme.filter.invert};
+`;
+const Logo = styled.div`
+    display: flex;
+    align-items: center;
+    img {
+        width: 88px;
+    }
     @media (min-width: 768px) {
-        width: 228px;
-        height: 60px;
-        background-size: 128px;
+        img {
+            width: 116px;
+        }
     }
 `;
 
 const PageName = styled.p`
-    display: flex;
-    align-items: center;
-    width: 148px;
-    height: 52px;
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: #000;
+    margin: 3px 0 0;
+    font-size: 1.15rem;
+    font-weight: 500;
 `;
 const RightBtns = styled.ul`
     position: relative;
     display: flex;
     align-items: center;
-    gap: 16px;
-    color: var(--black);
+    gap: 8px;
 `;
-const MainBtn = styled.button<{ path: boolean; dark: boolean }>`
-    position: relative;
-    display: block;
-    width: 30px;
-    height: 18px;
+const MainBtn = styled.button`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 36px;
+    height: 36px;
+    padding: 10.5px 9px;
+    background-color: ${({ theme }) => theme.color.main};
+    border-radius: 100%;
     i {
-        position: absolute;
+        width: 100%;
         height: 3px;
         right: 0;
-        background-color: ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
+        background-color: #333;
+        border-radius: 2px;
         transition: width 0.35s;
-        &:first-of-type {
-            width: 100%;
-            top: 0;
-        }
-        &:nth-of-type(2) {
-            width: 60%;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        &:last-of-type {
-            width: 85%;
-            bottom: 0;
-        }
     }
     &:hover {
         i {
@@ -167,15 +168,14 @@ const MainBtn = styled.button<{ path: boolean; dark: boolean }>`
         }
     }
 `;
-const LocationBtn = styled.button<{ path: boolean; dark: boolean }>`
-    display: flex;
+const LocationBtn = styled.button`
+    display: inline-flex;
     padding: 3px 8px;
     align-items: center;
     gap: 2px;
-    color: ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
-    border: 1px solid ${(props) => (props.dark && props.path ? "var(--black)" : "#000")};
-    border-radius: 20px;
+    color: ${({ theme }) => theme.color.gray4};
     font-size: 0.8rem;
+    font-weight: 500;
     &::before {
         content: "";
         background-image: url("/assets/icons/location_icon.svg");
@@ -184,10 +184,13 @@ const LocationBtn = styled.button<{ path: boolean; dark: boolean }>`
         background-size: 17px;
         background-position: center;
         background-repeat: no-repeat;
-        filter: invert(${(props) => (props.dark && props.path ? 1 : 0)});
+        filter: ${({ theme }) => theme.filter.invert};
+        opacity: 0.65;
     }
 `;
 
-const DarkBtn = styled.button``;
+const DarkBtn = styled.button`
+    color: #000;
+`;
 
 export default Header;

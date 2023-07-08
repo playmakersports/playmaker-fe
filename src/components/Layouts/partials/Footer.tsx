@@ -25,7 +25,6 @@ const Container = styled.footer`
     padding: 24px 28px 120px;
     max-width: 1024px;
     opacity: 0.65;
-    color: var(--black);
     text-align: center;
     .copyright {
         font-size: 0.85rem;

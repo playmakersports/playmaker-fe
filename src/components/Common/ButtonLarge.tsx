@@ -19,10 +19,10 @@ function ButtonLarge({ type, text, main, shadow = true, callback }: ButtonLargeP
 
 const Button = styled.button<{ main: boolean; shadow: boolean }>`
     min-height: 56px;
-    flex: ${(props) => (props.main ? 2 : 1)};
-    background-color: ${(props) => (props.main ? "var(--main)" : "#ffffff")};
-    border: 1px solid ${(props) => (props.main ? "#aae732" : "#e7e7e7")};
-    box-shadow: ${(props) => (props.shadow ? "0 0 10px 4px rgba(0, 0, 0, 0.05)" : "none")};
+    flex: ${({ main }) => (main ? 2 : 1)};
+    background-color: ${({ theme, main }) => (main ? theme.color.main : "#fff")};
+    border: 1px solid ${({ main }) => (main ? "#aae732" : "#e7e7e7")};
+    box-shadow: ${({ shadow }) => (shadow ? "0 0 10px 4px rgba(0, 0, 0, 0.05)" : "none")};
     border-radius: 8px;
     color: #000;
     font-size: 1.05rem;

@@ -56,13 +56,13 @@ function Main() {
 
 const Articles = styled.section`
     display: flex;
-    padding: 12px 16px;
+    padding: 0 16px;
     flex-direction: column;
     gap: 24px;
     @media (min-width: 768px) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 40px;
+        gap: 36px;
     }
 `;
 

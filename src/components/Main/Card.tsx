@@ -1,9 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { useAtom } from "jotai";
-
-import { darkMode } from "@/src/atoms/state";
 
 interface CardPropsType {
     title: string;
@@ -13,17 +10,15 @@ interface CardPropsType {
 }
 
 function Card({ title, localname, link, children }: CardPropsType) {
-    const [darkModeState] = useAtom(darkMode);
     return (
         <Container>
             <Title>
-                <Name dark={darkModeState}>
+                <Name>
                     <h3>{title}</h3>
                     {localname && <p className="location">{localname}</p>}
                 </Name>
                 {link && (
                     <Link href={link}>
-                        <ArrowIcon />
                         <ArrowIcon />
                     </Link>
                 )}
@@ -34,12 +29,10 @@ function Card({ title, localname, link, children }: CardPropsType) {
 }
 
 const Container = styled.article`
-    margin: 0 4px;
     padding: 24px;
-    color: var(--black);
-    background-color: var(--white);
-    border-radius: 20px;
-    box-shadow: 0 0 8px 4px rgba(256, 256, 256, 0.1);
+    background-color: ${({ theme }) => theme.color.white};
+    box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.01);
+    border-radius: 16px;
     @media (min-width: 768px) {
         margin: 0;
     }
@@ -47,45 +40,38 @@ const Container = styled.article`
 const Title = styled.div`
     display: flex;
     margin: 0 0 16px;
-    padding: 0 0 12px;
     justify-content: space-between;
     align-items: center;
-    color: var(--black);
-    border-bottom: var(--gnb-border);
 `;
-const Name = styled.div<{ dark: boolean }>`
-    display: flex;
+const Name = styled.div`
+    display: inline-flex;
     align-items: center;
-    gap: 4px;
+    gap: 6px;
     h3 {
         font-size: 1.2rem;
         font-weight: 600;
     }
     .location {
-        font-size: 0.85rem;
-        opacity: 0.8;
-        &::before {
-            display: inline-block;
-            vertical-align: middle;
-            content: "";
-            width: 19px;
-            height: 16px;
-            background-image: url("/assets/icons/location_icon.svg");
-            background-size: 18px;
-            background-position: left;
-            background-repeat: no-repeat;
-            opacity: 0.7;
-            filter: invert(${(props) => (props.dark ? 1 : 0)});
-        }
+        display: inline-flex;
+        padding: 4px 6px;
+        align-items: center;
+        background-color: ${({ theme }) => theme.color.gray4};
+        color: #fff;
+        font-size: 0.75rem;
+        font-weight: 500;
+        opacity: 0.6;
+        border-radius: 20px;
     }
 `;
 const ArrowIcon = styled.i`
-    display: inline-block;
+    display: block;
     margin-left: -6px;
-    width: 18px;
-    height: 18px;
-    background-color: var(--main);
-    clip-path: polygon(40% 0, 100% 50%, 40% 100%, 0% 100%, 60% 50%, 0% 0%);
+    width: 24px;
+    height: 24px;
+    background-image: url("/assets/icons/arrow_right_icon.svg");
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
 `;
 
 export default Card;

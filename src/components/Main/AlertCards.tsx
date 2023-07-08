@@ -31,42 +31,41 @@ function AlertCards({ data }: CardPropsType) {
 
 const Cards = styled.ul`
     display: flex;
-    margin: 12px 0 16px;
+    margin: 6px 0 12px;
     padding: 0 16px;
     flex-direction: column;
 `;
 const Card = styled.li`
     cursor: pointer;
-    padding: 12px 8px;
-    color: var(--black);
-    border-bottom: 1px solid var(--black-op15);
+    padding: 10px 8px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray1};
     &:last-of-type {
         border-bottom: none;
     }
     .alert-title {
-        display: flex;
+        display: inline-flex;
         align-items: center;
         margin: 0 0 8px 0;
         font-weight: 500;
-        font-size: 1rem;
+        font-size: 0.95rem;
+        gap: 8px;
         i {
-            display: inline-block;
-            margin: 0 6px 0 0;
             content: "N";
             width: 16px;
             height: 16px;
             border-radius: 100%;
-            background-color: var(--warn);
+            background-color: ${({ theme }) => theme.color.warn};
             color: #fff;
-            font-size: 11px;
+            font-size: 0.65rem;
+            font-weight: 600;
             text-align: center;
-            line-height: 17px;
+            line-height: 1rem;
         }
     }
     .alert-detail {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
         font-weight: 300;
-        opacity: 0.7;
+        opacity: 0.75;
     }
     @media (min-width: 640px) {
         display: flex;

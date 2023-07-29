@@ -10,7 +10,7 @@ interface ITeamLayoutType {
     teamName: string;
     title: string;
     color: string;
-    children: JSX.Element;
+    children: React.ReactNode;
 }
 
 function TeamLayout({ teamName, title, color, children }: ITeamLayoutType) {

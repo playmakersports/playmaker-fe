@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { FieldValues, useForm } from "react-hook-form";
 
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
-import InputBox, { IInputBoxDataType } from "@/src/components/Common/InputBox";
+import Button from "@/src/components/Common/Button";
+import InputBox, { InputBoxDataType } from "@/src/components/Common/InputBox";
 
 function TeamCreate() {
     function getFormattedDate() {
@@ -26,7 +26,7 @@ function TeamCreate() {
         console.log(data);
     };
 
-    const TEAM_CREATE_INPUTS: IInputBoxDataType[] = [
+    const TEAM_CREATE_INPUTS: InputBoxDataType[] = [
         {
             id: "teamEngName",
             label: "팀 영문명",
@@ -41,7 +41,7 @@ function TeamCreate() {
                 required: { value: true, message: "필수 입력값입니다." },
             },
         },
-        { id: "teamSports", label: "팀 종목", type: "text" },
+        { id: "teamSports", label: "팀 종목", type: "text", readonly: true },
         {
             id: "teamCreateAt",
             label: "창단일",
@@ -83,6 +83,7 @@ function TeamCreate() {
                         label={item.label}
                         type={item.type}
                         required={true}
+                        readonly={item.readonly}
                         description={item.description}
                         placeholder={item.placeholder}
                         options={item.options}
@@ -93,8 +94,15 @@ function TeamCreate() {
                 ))}
             </Items>
             <Buttons>
-                <ButtonLarge type="button" text="취소" main={false} callback={() => console.log()} />
-                <ButtonLarge type="submit" text="입력완료" main={true} />
+                <Button
+                    type="button"
+                    mode="basic"
+                    size="large"
+                    shadow={false}
+                    text="취소"
+                    callback={() => console.log()}
+                />
+                <Button type="submit" mode="main1" size="large" shadow={false} text="입력완료" />
             </Buttons>
         </Container>
     );

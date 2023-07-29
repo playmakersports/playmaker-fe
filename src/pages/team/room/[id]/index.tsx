@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import FloatBottom from "@/src/components/Common/FloatBottom";
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
+import Button from "@/src/components/Common/Button";
 import BoardCard from "@/src/components/Team/BoardCard";
 
 function Team() {
@@ -36,18 +36,20 @@ function Team() {
             </NameBox>
             <BoardCard teamId={teamId as string} board={TEAM_BAORD_MOCK} photos={TEAM_BAORD_MOCK} />
             <FloatBottom>
-                <>
-                    <ButtonLarge
-                        callback={() => router.push(`/team/room/${teamId}/playlog`)}
-                        main={false}
-                        text="경기 목록"
-                    />
-                    <ButtonLarge
-                        callback={() => router.push(`/team/room/${teamId}/players`)}
-                        main={false}
-                        text="선수 목록"
-                    />
-                </>
+                <Button
+                    type="button"
+                    text="경기 목록"
+                    mode="basic"
+                    size="large"
+                    callback={() => router.push(`/team/room/${teamId}/playlog`)}
+                />
+                <Button
+                    type="button"
+                    text="선수 목록"
+                    mode="basic"
+                    size="large"
+                    callback={() => router.push(`/team/room/${teamId}/players`)}
+                />
             </FloatBottom>
         </Container>
     );
@@ -64,7 +66,7 @@ const NameBox = styled.article<{ color: string }>`
     left: 0;
     width: 100%;
     height: 168px;
-    background-color: ${(props) => props.color ?? "silver"};
+    background-color: ${({ color }) => color ?? "silver"};
     z-index: 10;
     &::after {
         position: absolute;
@@ -72,8 +74,8 @@ const NameBox = styled.article<{ color: string }>`
         margin-left: -4px;
         content: "";
         left: 0;
-        bottom: -28px;
-        background-color: ${(props) => props.color ?? "silver"};
+        bottom: -27px;
+        background-color: ${({ color }) => color ?? "silver"};
         width: calc(100% + 6px);
         height: 28px;
         clip-path: polygon(50% 100%, 0 0, 100% 0);

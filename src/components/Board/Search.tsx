@@ -21,20 +21,17 @@ const Wrapper = styled.div`
 const Input = styled.input`
     width: 180px;
     padding: 8px 12px;
-    border-radius: 16px;
     background-color: transparent;
-    border: 1px solid var(--dark);
-    color: var(--black);
+    border: 1px solid ${({ theme }) => theme.color.gray2};
     &:focus {
-        font-weight: 600;
+        border: 1px solid ${({ theme }) => theme.color.gray3};
     }
 `;
 const Button = styled.button`
-    padding: 8px 16px;
-    border-radius: 16px;
-    background-color: var(--dark);
+    padding: 0 16px;
+    background-color: ${({ theme }) => theme.color.gray3};
     color: #fff;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     font-weight: 600;
 `;
 

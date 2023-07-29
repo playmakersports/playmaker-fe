@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import TeamLayout from "@/src/components/Team/Layout";
 import Pagination from "@/src/components/Board/Pagination";
 import Search from "@/src/components/Board/Search";
-import { BasicButton } from "@/src/components/Common/Button";
+import Button from "@/src/components/Common/Button";
 
 function TeamPhoto() {
     const router = useRouter();
@@ -71,7 +71,7 @@ function TeamPhoto() {
                     ))}
                 </List>
                 <Btns>
-                    <BasicButton type="button">글쓰기</BasicButton>
+                    <Button type="button" mode="sub1" size="xsmall" text="글쓰기" />
                 </Btns>
                 <Search />
                 <Pagination base={`/team/room/${teamId}/photos`} now={0} last={12} />
@@ -120,10 +120,7 @@ const ArticleDetail = styled.div`
 `;
 
 const Btns = styled.div`
-    display: flex;
-    margin: 16px 0 0;
-    justify-content: flex-end;
-    gap: 8px;
+    margin: 20px 0 0;
 `;
 
 export default TeamPhoto;

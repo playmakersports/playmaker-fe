@@ -22,7 +22,7 @@ function Pagination({ base, now, last }: IPaginationType) {
         <PageList>
             {now > 4 && (
                 <PageButton className="move-page-area" onClick={() => movePage(totalPages[0] - 1)}>
-                    이전
+                    ᐸ
                 </PageButton>
             )}
             {totalPages.map((v) => (
@@ -32,7 +32,7 @@ function Pagination({ base, now, last }: IPaginationType) {
             ))}
             {totalPages.length === 5 && last > 5 ? (
                 <PageButton className="move-page-area" onClick={() => movePage(totalPages[4] + 1)}>
-                    다음
+                    ᐳ
                 </PageButton>
             ) : null}
         </PageList>
@@ -52,16 +52,14 @@ const PageList = styled.ul`
 const PageButton = styled.li<{ isNow?: boolean }>`
     cursor: pointer;
     display: inline-flex;
+    width: 32px;
+    height: 32px;
     justify-content: center;
     align-items: center;
-    padding: 0 8px;
-    border-radius: 20px;
-    border: ${({ isNow }) => isNow && "2px solid var(--black)"};
-    color: var(--black);
+    border-radius: 100%;
+    background-color: ${({ theme, isNow }) => isNow && theme.color.gray1};
     font-size: 0.9rem;
     font-weight: ${({ isNow }) => isNow && 900};
-    text-align: center;
-    line-height: 32px;
     &.move-page-area {
         width: 48px;
     }

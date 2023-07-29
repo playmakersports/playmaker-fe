@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
+import Button from "@/src/components/Common/Button";
 
 function TeamIndex() {
     const router = useRouter();
@@ -16,12 +16,13 @@ function TeamIndex() {
                 직접 새 팀을 창단할 수 있어요
             </p>
             <Buttons>
-                <ButtonLarge type="button" text="우리 동네 팀 찾기" shadow={false} main={false} />
-                <ButtonLarge
+                <Button type="button" text="우리 동네 팀 찾기" mode="basic" size="large" shadow={false} />
+                <Button
                     type="button"
                     text="새로운 팀 창단"
+                    mode="basic"
+                    size="large"
                     shadow={false}
-                    main={false}
                     callback={() => router.push("/team/create")}
                 />
             </Buttons>

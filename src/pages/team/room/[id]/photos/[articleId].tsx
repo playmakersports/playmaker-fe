@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import TeamLayout from "@/src/components/Team/Layout";
-import { BasicButton } from "@/src/components/Common/Button";
+import { Comment } from "@/src/components/Board/styles";
+import Button from "@/src/components/Common/Button";
 
 function PhotoArticle() {
     const router = useRouter();
@@ -58,9 +59,9 @@ function PhotoArticle() {
                 </Info>
                 <Contents>글 내용</Contents>
                 <Btns>
-                    <BasicButton type="button">수정</BasicButton>
-                    <BasicButton type="button">삭제</BasicButton>
-                    <BasicButton type="button">글쓰기</BasicButton>
+                    <Button type="button" mode="sub1" size="xsmall" shadow={false} text="수정" />
+                    <Button type="button" mode="sub1" size="xsmall" shadow={false} text="삭제" />
+                    <Button type="button" mode="sub1" size="xsmall" shadow={false} text="글쓰기" />
                 </Btns>
                 <Comments>
                     <h3>댓글 {COMMENTS_MOCK.length}개</h3>
@@ -72,7 +73,11 @@ function PhotoArticle() {
                                         <span className="comment-writer">{comment.written}</span>{" "}
                                         <span className="comment-date">{comment.writtenAt}</span>
                                     </p>
-                                    {comment.myComment && <button type="button">✕</button>}
+                                    {comment.myComment && (
+                                        <button type="button" className="comment-delete">
+                                            ✕
+                                        </button>
+                                    )}
                                 </div>
                                 <div className="comment-contents">{comment.contents}</div>
                             </Comment>
@@ -103,7 +108,7 @@ const Contents = styled.article`
 
 const Btns = styled.div`
     display: flex;
-    margin: 0 0 16px;
+    margin: 0 0 36px;
     justify-content: flex-end;
     gap: 8px;
 `;
@@ -118,36 +123,6 @@ const Comments = styled.div`
 const List = styled.ul`
     display: flex;
     flex-direction: column;
-`;
-const Comment = styled.li`
-    padding: 8px 0;
-    border-bottom: 1px solid var(--black-op15);
-    &:last-of-type {
-        border: none;
-    }
-    .comment-info {
-        width: 100%;
-        display: inline-flex;
-        justify-content: space-between;
-        p {
-            display: inline-flex;
-            align-items: center;
-            margin: 0 0 8px;
-            gap: 8px;
-            font-size: 0.9rem;
-            .comment-writer {
-                font-weight: 500;
-            }
-            .comment-date {
-                font-size: 0.8rem;
-                opacity: 0.65;
-            }
-        }
-    }
-    .comment-contents {
-        font-size: 0.95rem;
-        font-weight: 300;
-    }
 `;
 
 export default PhotoArticle;

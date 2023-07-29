@@ -5,7 +5,8 @@ import { useRouter } from "next/router";
 import TeamLayout from "@/src/components/Team/Layout";
 import Pagination from "@/src/components/Board/Pagination";
 import Search from "@/src/components/Board/Search";
-import { BasicButton } from "@/src/components/Common/Button";
+import { BasicButton } from "@/src/components/Common/OptionalButton";
+import Button from "@/src/components/Common/Button";
 
 function TeamBoard() {
     const router = useRouter();
@@ -71,7 +72,7 @@ function TeamBoard() {
                     </Article>
                 ))}
                 <Btns>
-                    <BasicButton type="button">글쓰기</BasicButton>
+                    <Button type="button" mode="sub1" size="xsmall" text="글쓰기" />
                 </Btns>
                 <Search />
                 <Pagination base={`/team/room/${teamId}/board`} now={0} last={12} />
@@ -83,13 +84,11 @@ function TeamBoard() {
 const List = styled.ul`
     display: flex;
     flex-direction: column;
-    gap: 8px;
 `;
 const Article = styled.li`
     cursor: pointer;
-    padding: 4px 4px 12px;
-    border-bottom: 1px solid var(--dark);
-    color: var(--black);
+    padding: 12px 4px;
+    border-bottom: 1px solid ${({ theme }) => theme.color.gray1};
     &:last-of-type {
         border: none;
     }
@@ -104,7 +103,7 @@ const ArticleTitle = styled.div`
     .article-label {
         padding: 2px 6px;
         border-radius: 20px;
-        border: 1px solid var(--black);
+        border: 1px solid ${({ theme }) => theme.color.black};
         font-size: 0.7rem;
         font-weight: 500;
         text-align: center;
@@ -132,6 +131,8 @@ const ArticleDetail = styled.div`
     }
 `;
 
-const Btns = styled.div``;
+const Btns = styled.div`
+    margin: 20px 0 0;
+`;
 
 export default TeamBoard;

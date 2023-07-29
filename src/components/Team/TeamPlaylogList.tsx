@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-
-import ButtonLarge from "../Common/ButtonLarge";
+import Button from "../Common/Button";
 
 function PlaylogListCol({ match }: any) {
     const [showMatchDetail, setShowMatchDetail] = useState(false);
@@ -30,7 +29,14 @@ function PlaylogListCol({ match }: any) {
                             <dd>{match.place}</dd>
                         </li>
                     </DetailInfos>
-                    <ButtonLarge text="경기 상세" main={false} callback={() => {}} />
+                    <Button
+                        type="button"
+                        mode="main1"
+                        size="medium"
+                        text="경기 상세"
+                        main={false}
+                        callback={() => {}}
+                    />
                 </div>
             </MatchDetail>
         </Col>
@@ -106,9 +112,9 @@ const Col = styled.article`
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 16px 8px;
+        padding: 12px 8px;
         text-align: center;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         .match-teamname {
             flex: 1.5;
         }
@@ -118,23 +124,13 @@ const Col = styled.article`
             opacity: 0.7;
         }
         .numbers {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 500;
         }
     }
 
     .match-column {
-        border-bottom: 1px solid var(--bg-dark);
-    }
-    .col-header {
-        cursor: auto;
-        padding: 12px 0;
-        background-color: var(--lightgray);
-        color: #000;
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: -0.2px;
-        opacity: 0.8;
+        border-bottom: 1px solid ${({ theme }) => theme.color.gray1};
     }
     .match-select {
         border-bottom: none;
@@ -145,7 +141,7 @@ const Col = styled.article`
 `;
 
 const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
-    height: ${(props) => (props.showMatchDetail ? "124px" : "0")};
+    height: ${({ showMatchDetail }) => (showMatchDetail ? "124px" : "0")};
     background-color: #3c4a76;
     color: #fff;
     transition: height 0.4s;
@@ -160,7 +156,7 @@ const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
         justify-content: space-between;
     }
     @media (min-width: 768px) {
-        height: ${(props) => (props.showMatchDetail ? "80px" : "0")};
+        height: ${({ showMatchDetail }) => (showMatchDetail ? "80px" : "0")};
         .match-detail-wrap {
             flex-direction: row;
             gap: 40px;
@@ -190,6 +186,9 @@ const DetailInfos = styled.ul`
         dd {
             font-weight: 400;
         }
+    }
+    @media (min-width: 768px) {
+        justify-content: space-around;
     }
 `;
 

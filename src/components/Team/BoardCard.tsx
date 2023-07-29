@@ -75,7 +75,7 @@ const CardContents = styled.ul`
         .card-board-label {
             padding: 0 6px;
             border-radius: 20px;
-            border: 1px solid var(--black);
+            border: 1px solid ${({ theme }) => theme.color.black};
             font-size: 0.7rem;
             font-weight: 500;
         }

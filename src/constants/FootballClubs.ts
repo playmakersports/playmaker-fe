@@ -48,6 +48,10 @@ export const FOOTBALL_CLUBS = [
     { category: "epl", optionName: "크리스탈팰리스", value: "palace" },
     { category: "epl", optionName: "토트넘", value: "tottenham" },
     { category: "epl", optionName: "풀럼", value: "fulham" },
+    { category: "frleague1", optionName: "파리생제르맹", value: "psg" },
+    { category: "frleague1", optionName: "AS모나코", value: "asmonaco" },
+    { category: "frleague1", optionName: "OGC니스", value: "ogcnice" },
+    { category: "etc", optionName: "없음", value: "NOT_SELECTED" },
 ];
 
 export const FOOTBALL_LEAGUE = [
@@ -57,6 +61,7 @@ export const FOOTBALL_LEAGUE = [
     { optionName: "분데스리가", value: "bundesliga" },
     { optionName: "세리에A", value: "seriea" },
     { optionName: "프랑스리그앙", value: "frleague1" },
+    { optionName: "기타", value: "etc" },
 ];
 export const FOOTBALL_LEAGUE_KR: ILiteralObject = {
     kleague1: "K리그1",
@@ -65,4 +70,5 @@ export const FOOTBALL_LEAGUE_KR: ILiteralObject = {
     bundesliga: "분데스리가",
     seriea: "세리에A",
     frleague1: "프랑스리그앙",
+    etc: "기타",
 };

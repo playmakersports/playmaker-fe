@@ -1,6 +1,10 @@
 @import "./reset.css";
-@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 @import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600");
+@font-face {
+    font-family: "NanumSquareNeo-Variable";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2")
+        format("woff2");
+}
 
 body {
     color: #000;

@@ -84,6 +84,8 @@ video {
     border: 0;
     font-size: 100%;
     font: inherit;
+    font-family: NanumSquareNeo-Variable, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
+        Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     vertical-align: baseline;
 }
 /* HTML5 display-role reset for older browsers */
@@ -129,8 +131,7 @@ button {
 * {
     padding: 0;
     margin: 0;
-    font-family: Pretendard, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
-        Droid Sans, Helvetica Neue, sans-serif;
+    box-sizing: border-box;
 }
 
 input,
@@ -140,6 +141,7 @@ option {
     border: none;
     outline: none;
     border-radius: 0px;
+    font-family: NanumSquareNeo-Variable;
 }
 
 a,
@@ -147,8 +149,5 @@ button {
     color: inherit;
     text-decoration: none;
     cursor: pointer;
-}
-
-* {
-    box-sizing: border-box;
+    font-family: NanumSquareNeo-Variable;
 }

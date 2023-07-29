@@ -7,11 +7,10 @@ import UserHashTag from "@/src/components/Player/UserHashTag";
 import UserFan from "@/src/components/Player/UserFan";
 import UserBadgeHeader from "@/src/components/Player/UserBadgeHeader";
 import FloatBottom from "@/src/components/Common/FloatBottom";
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
+import Button from "@/src/components/Common/Button";
 
 function Player() {
     const router = useRouter();
-    console.log(router.query.id);
     const [isScrolled, setIsScrolled] = useState<boolean>(false);
 
     useEffect(() => {
@@ -46,11 +45,19 @@ function Player() {
             <UserFan data={favTeam} />
             <FloatBottom>
                 <>
-                    <ButtonLarge callback={() => console.log("hi")} main={false} text="정보 수정" />
-                    <ButtonLarge
-                        callback={() => handleMovePage(`/player/${router.query.id}/playlog`)}
-                        main={true}
+                    <Button
+                        type="button"
+                        mode="basic"
+                        size="large"
+                        text="정보 수정"
+                        callback={() => console.log("hi")}
+                    />
+                    <Button
+                        type="button"
+                        mode="main1"
+                        size="large"
                         text="경기 기록 보기"
+                        callback={() => handleMovePage(`/player/${router.query.id}/playlog`)}
                     />
                 </>
             </FloatBottom>
@@ -59,7 +66,7 @@ function Player() {
 }
 
 const Container = styled.section<{ scrolled: boolean }>`
-    margin: ${(props) => (props.scrolled ? "192px 0 0" : "248px 0 0")};
+    margin: ${({ scrolled }) => (scrolled ? "192px 0 0" : "280px 0 0")};
     padding: 8px 20px 40px;
     transition: margin 0.45s;
     @media (min-width: 768px) {
@@ -70,8 +77,7 @@ const Container = styled.section<{ scrolled: boolean }>`
 const SelfIntro = styled.p`
     margin: 24px 0 0;
     padding: 24px 4px 16px;
-    border-top: 1px solid var(--black-op15);
-    color: var(--black);
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
     font-size: 1rem;
     text-align: center;
     word-break: keep-all;
@@ -79,7 +85,7 @@ const SelfIntro = styled.p`
 `;
 
 const Title = styled.h3`
-    border-top: 1px solid var(--black-op15);
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
     margin: 32px 0 0;
     padding: 24px 2px 16px;
     font-size: 1.2rem;

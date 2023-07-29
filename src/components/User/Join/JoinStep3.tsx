@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { FieldValues, UseFormRegister, UseFormWatch } from "react-hook-form";
 
-import { Label, SelectLabel } from "../../Common/FormStyle";
+import { Label, SelectLabel, TextArea, TextAreaWrap } from "../../Common/FormStyle";
 import FormDropdownBox from "../../Common/FormDropdownBox";
 import { FOOTBALL_CLUBS, FOOTBALL_LEAGUE } from "@/src/constants/FootballClubs";
 
@@ -65,8 +65,9 @@ function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
             </Item>
             <Item>
                 <Label>자기소개</Label>
-                <TextArea required={true} id="introduce" maxLength={60} {...register("introduce", { maxLength: 60 })} />
-                <Label style={{ textAlign: "right" }}>({(watch("introduce") ?? 0).length}/60자)</Label>
+                <TextAreaWrap length={watch("introduce").length ?? 0} max={60}>
+                    <TextArea required={true} {...register("introduce", { maxLength: 60 })} />
+                </TextAreaWrap>
             </Item>
             <Item>
                 <Label>좋아하는 축구 클럽(팀)</Label>
@@ -77,6 +78,7 @@ function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
                     id="favoriteClub"
                     options={FOOTBALL_CLUBS}
                     filter={FOOTBALL_LEAGUE}
+                    maxChecked={2}
                     placeholder="축구 클럽(팀)을 선택해주세요"
                 />
             </Item>
@@ -106,20 +108,6 @@ const Options = styled.div`
     label {
         flex: auto;
         min-width: 90px;
-    }
-`;
-
-const TextArea = styled.textarea`
-    width: 100%;
-    height: 72px;
-    padding: 12px;
-    background-color: var(--bg-dark);
-    border: 1px solid var(--bg-dark);
-    color: var(--black);
-    font-size: 1rem;
-    resize: none;
-    &:focus {
-        border: 1px solid var(--main);
     }
 `;
 

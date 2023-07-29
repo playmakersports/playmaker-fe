@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { FieldValues, UseFormRegister } from "react-hook-form";
-import { InputText, Label, InputCheck, SelectLabel } from "../../Common/FormStyle";
+import { InputText, Label, InputCheck, SelectLabel, InputCheckRadioWrapper } from "../../Common/FormStyle";
 
 interface JoinStepPropsType {
     setJoinStep: React.Dispatch<React.SetStateAction<number>>;
@@ -98,10 +98,10 @@ function JoinStep2({ setJoinStep, register }: JoinStepPropsType) {
                 </DayWrap>
             </Item>
             <Item>
-                <div className="selected-label-wrap">
+                <InputCheckRadioWrapper>
                     <InputCheck type="checkbox" id="offer-active" {...register("offer-active")} />
                     <label htmlFor="offer-active">영입 제안 받기 허용</label>
-                </div>
+                </InputCheckRadioWrapper>
                 <p className="offer-active-description">
                     다른 사람이 선수 님께 영입 제안을 할 수 있도록 일부 선수정보가 공개됩니다. (닉네임, 출생년도, 성별,
                     활동정보 및 플레이정보)
@@ -122,12 +122,6 @@ const Item = styled.div`
     position: relative;
     label {
         cursor: pointer;
-    }
-    .selected-label-wrap {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        font-size: 1.1rem;
     }
     .offer-active-description {
         margin: 8px 0 0;
@@ -163,10 +157,11 @@ const DayLabel = styled.p`
     padding: 12px 6px;
     width: 70px;
     opacity: 0.65;
-    background-color: var(--dark);
-    color: var(--lightsilver);
+    background-color: ${({ theme }) => theme.color.gray1};
+    color: ${({ theme }) => theme.color.black};
     font-size: 0.9rem;
     font-weight: 500;
     text-align: center;
 `;
+
 export default JoinStep2;

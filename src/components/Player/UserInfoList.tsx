@@ -21,7 +21,7 @@ function UserInfoList({ data }: UserInfoListPropsType) {
                 <dt>출생</dt>
                 <dd>
                     <p>{data.birth}</p>
-                    <p>만 21세</p>
+                    <p>21세</p>
                 </dd>
             </Item>
             <Item icon="location" dark={darkModeState}>
@@ -39,7 +39,7 @@ function UserInfoList({ data }: UserInfoListPropsType) {
 const Container = styled.ul`
     display: flex;
     margin: 0 auto;
-    padding: 0 12px;
+    padding: 0 8px;
     justify-content: space-evenly;
     gap: 16px;
     @media (min-width: 768px) {
@@ -50,17 +50,17 @@ const Container = styled.ul`
 const Item = styled.li<{ icon: string; dark: boolean }>`
     flex: 1;
     display: flex;
-    gap: 12px;
-    letter-spacing: -0.25px;
+    gap: 8px;
+    letter-spacing: -0.2px;
     white-space: nowrap;
     text-overflow: ellipsis;
     dt {
         display: flex;
         padding: 4px 0 0;
-        align-items: top;
-        font-weight: 800;
+        align-items: flex-start;
+        font-weight: 600;
         font-size: 0.8rem;
-        opacity: 0.8;
+        opacity: 0.65;
         &::before {
             content: "";
             margin: -3px 0 0;
@@ -70,12 +70,11 @@ const Item = styled.li<{ icon: string; dark: boolean }>`
             background-size: 18px;
             background-position: left;
             background-repeat: no-repeat;
-            opacity: 0.7;
             filter: invert(${(props) => (props.dark ? 1 : 0)});
         }
     }
     dd {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         line-height: 1.3rem;
         word-break: keep-all;
     }

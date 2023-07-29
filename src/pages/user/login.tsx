@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import styled from "@emotion/styled";
 
 import InputBox, { IInputBoxDataType } from "../../components/Common/InputBox";
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
+import Button from "@/src/components/Common/Button";
 import { loggedState } from "@/src/atoms/state";
 
 function Login() {
@@ -48,10 +48,11 @@ function Login() {
                     errors={errors}
                 />
             ))}
-            <ButtonLarge type="submit" main={true} shadow={false} text="로그인" />
-            <ButtonLarge
+            <Button type="submit" mode="main1" size="large" shadow={false} text="로그인" />
+            <Button
                 type="button"
-                main={false}
+                mode="basic"
+                size="large"
                 shadow={false}
                 text="회원가입"
                 callback={() => router.push("/user/join")}

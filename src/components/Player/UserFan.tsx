@@ -28,19 +28,20 @@ const Container = styled.ul`
     flex-wrap: wrap;
 `;
 const Item = styled.li`
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     .fav-team-category {
         display: inline-block;
         padding: 4px 8px;
         border-radius: 12px;
-        background-color: var(--black-op45);
-        color: var(--white);
-        font-size: 0.75rem;
+        background-color: ${({ theme }) => theme.color.gray1};
+        font-size: 0.7rem;
         font-weight: 800;
         letter-spacing: -0.25px;
     }
     .fav-team-name {
-        display: inline-block;
-        vertical-align: middle;
+        font-size: 0.9rem;
     }
 `;
 

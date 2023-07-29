@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-
-import ButtonLarge from "../Common/ButtonLarge";
+import Button from "../Common/Button";
 
 function PlaylogListCol({ match }: any) {
     const [showMatchDetail, setShowMatchDetail] = useState(false);
@@ -27,7 +26,14 @@ function PlaylogListCol({ match }: any) {
                         <span className="numbers">{match.myteam_point}</span>
                         <span>{match.myteam}</span>
                     </p>
-                    <ButtonLarge text="경기 상세" main={false} callback={() => {}} />
+                    <Button
+                        type="button"
+                        mode="main1"
+                        size="medium"
+                        text="경기 상세"
+                        main={false}
+                        callback={() => {}}
+                    />
                 </div>
             </MatchDetail>
         </Col>

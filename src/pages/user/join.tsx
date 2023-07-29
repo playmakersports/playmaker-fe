@@ -5,7 +5,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import JoinStep1 from "@/src/components/User/Join/JoinStep1";
 import JoinStep2 from "@/src/components/User/Join/JoinStep2";
 import JoinStep3 from "@/src/components/User/Join/JoinStep3";
-import ButtonLarge from "@/src/components/Common/ButtonLarge";
+import Button from "@/src/components/Common/Button";
 
 function Join() {
     const [joinStep, setJoinStep] = useState(1);
@@ -41,8 +41,15 @@ function Join() {
                 <JoinStep2 setJoinStep={setJoinStep} register={register} />
                 <JoinStep3 setJoinStep={setJoinStep} register={register} watch={watch} />
                 <Buttons>
-                    <ButtonLarge type="button" text="취소" main={false} callback={() => console.log()} />
-                    <ButtonLarge type="submit" text="입력완료" main={true} />
+                    <Button
+                        type="button"
+                        mode="basic"
+                        size="large"
+                        text="취소"
+                        main={false}
+                        callback={() => console.log()}
+                    />
+                    <Button type="submit" mode="main1" size="large" text="입력완료" main={true} />
                 </Buttons>
             </section>
         </Container>
@@ -50,7 +57,7 @@ function Join() {
 }
 
 const Container = styled.form`
-    padding: 88px 0 0;
+    padding: 120px 0 0;
 `;
 
 const Steps = styled.ul`
@@ -62,7 +69,8 @@ const Steps = styled.ul`
     top: 96px;
     align-items: center;
     justify-content: space-evenly;
-    background-color: var(--white);
+    background-color: ${({ theme }) => theme.color.white};
+    border: 1px solid ${({ theme }) => theme.color.gray1};
     border-radius: 80px;
     z-index: 1;
     box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
@@ -83,15 +91,14 @@ const StepItem = styled.li<{ nowStep: boolean }>`
     opacity: ${(props) => (props.nowStep ? "1" : "0.55")};
     transition: all 0.3s;
     .step-circle {
-        display: inline-block;
-        width: 14px;
-        height: 14px;
-        background-color: ${(props) => (props.nowStep ? "var(--main)" : "var(--dark)")};
+        display: inline-flex;
+        width: 16px;
+        height: 16px;
+        background-color: ${({ theme, nowStep }) => (nowStep ? theme.color.main : theme.color.gray2)};
         border-radius: 100%;
-        color: #000;
         font-size: 10px;
-        line-height: 14px;
-        text-align: center;
+        justify-content: center;
+        align-items: center;
     }
     .step-name {
         font-size: 0.9rem;

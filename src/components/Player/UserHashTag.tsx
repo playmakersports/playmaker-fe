@@ -23,10 +23,10 @@ const Container = styled.ul`
 `;
 const Item = styled.li`
     padding: 6px 12px;
-    border: 1px solid var(--lightgray);
-    font-size: 0.9rem;
     border-radius: 20px;
-    opacity: 0.8;
+    border: 1px solid ${({ theme }) => theme.color.gray4};
+    color: ${({ theme }) => theme.color.gray4};
+    font-size: 0.85rem;
 `;
 
 export default UserHashTag;

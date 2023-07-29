@@ -28,7 +28,7 @@ function JoinStep1({ setJoinStep, register, watch, errors }: JoinStepPropsType) 
                     }
                 });
             },
-            { threshold: 0.2 }
+            { threshold: 0.3 }
         );
         observer.observe(ContainerRef.current!);
     }, []);
@@ -132,8 +132,8 @@ const Item = styled.div`
 const PwdValid = styled.li<{ isContain: boolean }>`
     padding: 0 2px 10px;
     font-size: 0.85rem;
-    font-weight: ${(props) => (props.isContain ? 500 : 300)};
-    opacity: ${(props) => (props.isContain ? 1 : 0.55)};
+    font-weight: ${({ isContain }) => (isContain ? 500 : 300)};
+    opacity: ${({ isContain }) => (isContain ? 0.9 : 0.55)};
     &::before {
         display: inline-block;
         content: "✓";
@@ -141,9 +141,7 @@ const PwdValid = styled.li<{ isContain: boolean }>`
         height: 13px;
         margin: 0 6px 0 0;
         text-align: center;
-        border-radius: 100%;
-        border: 1px solid var(--black);
-        color: ${(props) => (props.isContain ? "var(--black)" : "transparent")};
+        color: ${({ theme, isContain }) => (isContain ? theme.color.gray4 : theme.color.gray2)};
     }
 `;
 

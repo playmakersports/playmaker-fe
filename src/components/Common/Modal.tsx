@@ -1,11 +1,11 @@
 import styled from "@emotion/styled";
 import React, { useEffect } from "react";
-import ButtonLarge from "./ButtonLarge";
+import Button from "./Button";
 
 export interface IModalPopupBtnType {
     text: string;
     type: "submit" | "button" | "reset" | undefined;
-    main: boolean;
+    mode: "main1" | "main2" | "basic";
     onClick: () => void;
 }
 
@@ -33,10 +33,11 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
                     <div className="modal-contents-container">{children}</div>
                     <div className="modal-btn-container">
                         {btns.map((btn) => (
-                            <ButtonLarge
+                            <Button
                                 type={btn.type}
                                 text={btn.text}
-                                main={btn.main}
+                                mode={btn.mode}
+                                size="medium"
                                 shadow={false}
                                 callback={btn.onClick}
                             />
@@ -70,6 +71,9 @@ const Wrap = styled.div`
     background-color: ${({ theme }) => theme.color.white};
     border-radius: 8px;
     transform: translate(-50%, -50%);
+    @media (min-width: 768px) {
+        width: 460px;
+    }
 `;
 
 const Contents = styled.section`

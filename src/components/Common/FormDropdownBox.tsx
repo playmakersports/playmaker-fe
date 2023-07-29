@@ -13,6 +13,7 @@ export interface IFormDropdownBoxType {
     filter?: IDropdownItemType[];
     placeholder?: string;
     optionSetting?: RegisterOptions;
+    maxChecked?: number;
 }
 
 function FormDropdownBox({
@@ -24,6 +25,7 @@ function FormDropdownBox({
     filter,
     placeholder,
     optionSetting,
+    maxChecked,
 }: IFormDropdownBoxType) {
     const [showDropdown, setShowDropdown] = useState(() => false);
 
@@ -69,6 +71,7 @@ function FormDropdownBox({
                     filter={filter ?? []}
                     optionSetting={optionSetting}
                     expanded={false}
+                    maxChecked={maxChecked}
                 />
             )}
         </>
@@ -81,12 +84,11 @@ const BoxWrap = styled.button<{ isPlaceholder: boolean }>`
     padding: 12px;
     width: 100%;
 
-    background-color: ${(props) => (props.isPlaceholder ? "var(--bg-dark)" : "var(--main)")};
-    border: 1px solid ${(props) => (props.isPlaceholder ? "var(--bg-dark)" : "var(--main)")};
-    color: ${(props) => (props.isPlaceholder ? "var(--black-op45)" : "#000")};
+    background-color: transparent;
+    border: 1px solid ${({ theme }) => theme.color.gray2};
+    color: ${({ theme, isPlaceholder }) => (isPlaceholder ? theme.color.gray3 : theme.color.black)};
 
     font-size: 1rem;
-    font-weight: 500;
     text-align: left;
     word-break: keep-all;
 

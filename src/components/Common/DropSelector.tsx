@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
 import { FieldValues, RegisterOptions, UseFormRegister, UseFormWatch } from "react-hook-form";
-import ButtonLarge from "./ButtonLarge";
+import Button from "./Button";
 
 export interface IDropdownItemType {
     optionName: string;
@@ -19,9 +19,21 @@ interface IDropdownType {
     filter?: IDropdownItemType[];
     optionSetting?: RegisterOptions;
     expanded?: boolean;
+    maxChecked?: number;
 }
 
-function Dropdown({ register, setShow, watch, type, items, name, filter, optionSetting, expanded }: IDropdownType) {
+function Dropdown({
+    register,
+    setShow,
+    watch,
+    type,
+    items,
+    name,
+    filter,
+    optionSetting,
+    expanded,
+    maxChecked,
+}: IDropdownType) {
     const [isDropdownMount, setIsDropdownMount] = useState(() => false);
     const [selectedFilter, setSelectedFilter] = useState<string>("kleague1");
     useEffect(() => {
@@ -34,7 +46,11 @@ function Dropdown({ register, setShow, watch, type, items, name, filter, optionS
     }, []);
 
     const closeModal = () => {
-        if (watch(name)?.length > 0) {
+        if (maxChecked && watch(name)?.length > maxChecked) {
+            alert(`최대 ${maxChecked}개까지 선택할 수 있는 항목입니다.`);
+        } else if (watch(name).includes("NOT_SELECTED") && watch(name)?.length > 1) {
+            alert("'없음'과 다른 항목이 함께 선택될 수 없습니다.");
+        } else if (watch(name)?.length > 0) {
             setShow((prev) => !prev);
         }
     };
@@ -53,7 +69,11 @@ function Dropdown({ register, setShow, watch, type, items, name, filter, optionS
         <>
             <Wrap isShow={isDropdownMount} expanded={!!expanded}>
                 <Bar onClick={closeModal} />
-                {watch(name).length > 0 && <SelectedOptions>{convertSelectedOption(watch(name))}</SelectedOptions>}
+                {watch(name).length > 0 ? (
+                    <SelectedOptions>{convertSelectedOption(watch(name))}</SelectedOptions>
+                ) : (
+                    maxChecked && <BeforeSelected>최대 {maxChecked}개까지 선택할 수 있는 항목입니다.</BeforeSelected>
+                )}
                 <Container isFilter={!!filter?.length}>
                     {filter && (
                         <Filter>
@@ -86,9 +106,17 @@ function Dropdown({ register, setShow, watch, type, items, name, filter, optionS
                         ))}
                     </Items>
                 </Container>
-                <ButtonLarge type="button" text="확인" callback={closeModal} main={true} />
+                <Button
+                    type="button"
+                    mode="main1"
+                    size="large"
+                    text="확인"
+                    callback={closeModal}
+                    shadow={false}
+                    main={true}
+                />
             </Wrap>
-            <Backdrop onClick={() => setShow((prev) => !prev)} />
+            <Backdrop onClick={closeModal} />
         </>
     );
 }
@@ -110,24 +138,36 @@ const Bar = styled.div`
     background-color: #d9d9d9;
 `;
 const SelectedOptions = styled.div`
-    text-align: center;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
     padding: 4px 0 32px;
-    font-size: 1.05rem;
-    line-height: 1.25rem;
-    font-weight: 700;
+    font-size: 1rem;
+    line-height: 1.55rem;
+    font-weight: 500;
     word-break: keep-all;
     vertical-align: middle;
+    text-align: center;
+    gap: 6px;
     &::before {
-        display: inline-block;
         content: "✓ 선택됨";
-        margin: 2px 8px 2px 0;
-        padding: 4px 8px;
-        background-color: var(--main);
-        border-radius: 32px;
+        margin: 0 0 4px;
+        padding: 6px 8px;
+        background-color: ${({ theme }) => theme.color.main2};
+        border-radius: 24px;
         color: #000;
-        font-size: 0.9rem;
-        font-weight: 500;
+        font-size: 0.75rem;
+        line-height: 1rem;
+        font-weight: 400;
     }
+`;
+
+const BeforeSelected = styled.p`
+    margin: 12px 0 24px;
+    font-size: 0.9rem;
+    text-align: center;
+    opacity: 0.8;
+    color: ${({ theme }) => theme.color.warn};
 `;
 
 const Wrap = styled.div<{ isShow: boolean; expanded: boolean }>`
@@ -139,11 +179,12 @@ const Wrap = styled.div<{ isShow: boolean; expanded: boolean }>`
     bottom: 0;
     left: 0;
     width: 100%;
-    min-height: ${(props) => (props.expanded ? "90vh" : "320px")};
+    min-height: ${({ expanded }) => (expanded ? "90vh" : "320px")};
     z-index: 99;
-    background: var(--bg);
+    background: ${({ theme }) => theme.color.white};
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
     border-radius: 30px 30px 0 0;
-    transform: translateY(${(props) => (props.isShow ? "" : "100%")});
+    transform: translateY(${({ isShow }) => (isShow ? "" : "100%")});
     transition: transform 0.3s;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
 `;
@@ -154,25 +195,29 @@ const Container = styled.div<{ isFilter: boolean }>`
 `;
 const Filter = styled.div`
     display: flex;
-    flex: 0.45;
-    padding: 0 16px 0 0;
+    flex: 0.5;
+    padding: 0 12px 0 0;
     flex-direction: column;
     gap: 4px;
-    border-right: 1px solid var(--black-op15);
+    border-right: 1px solid ${({ theme }) => theme.color.gray1};
 `;
 const FilterItem = styled.button<{ isSelected: boolean }>`
     padding: 12px 8px 12px 2px;
     font-size: 0.9rem;
     text-align: left;
-    font-weight: ${(props) => (props.isSelected ? 600 : 300)};
+    font-weight: ${({ isSelected }) => (isSelected ? 600 : 300)};
+    letter-spacing: -0.2px;
     &::before {
         content: "";
-        display: ${(props) => (props.isSelected ? "inline-block" : "none")};
-        margin: 2px 4px 2px 0;
+        display: ${({ isSelected }) => (isSelected ? "inline-block" : "none")};
+        margin: 2px 6px 2px -12px;
         width: 6px;
         height: 6px;
-        background-color: var(--main);
+        background-color: ${({ theme }) => theme.color.main};
         border-radius: 100%;
+    }
+    label::before {
+        color: ${({ theme, isSelected }) => (isSelected ? theme.color.white : theme.color.black)};
     }
 `;
 const Items = styled.ul`
@@ -180,15 +225,14 @@ const Items = styled.ul`
     flex: 1;
     height: 320px;
     flex-direction: column;
-    /* margin: 0 0 20px; */
     gap: 8px;
     overflow-y: scroll;
     li {
-        font-size: 1.05rem;
+        font-size: 1rem;
         input {
             display: none;
             &:checked + label {
-                background-color: var(--main);
+                background-color: ${({ theme }) => theme.color.main};
                 color: #000;
                 opacity: 1;
                 &::before {
@@ -203,10 +247,9 @@ const Items = styled.ul`
             cursor: pointer;
             padding: 16px;
             font-weight: 400;
-            color: var(--black);
-            opacity: 0.5;
+            color: ${({ theme }) => theme.color.black};
+            opacity: 0.45;
             &::before {
-                display: inline-block;
                 content: "✓";
                 margin-right: 12px;
                 opacity: 0.35;

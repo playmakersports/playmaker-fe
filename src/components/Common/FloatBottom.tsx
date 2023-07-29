@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
-function FloatBottom({ children }: { children: JSX.Element }) {
+function FloatBottom({ children }: { children: React.ReactNode }) {
     const [showButtons, setShowButtons] = useState(false);
     useEffect(() => {
         setShowButtons(true);

@@ -1,24 +1,25 @@
 import styled from "@emotion/styled";
 import React from "react";
-import { ErrorMsg, InputText, Label } from "./FormStyle";
+import { ErrorMsg, InputText, Label, TextArea } from "./FormStyle";
 import { FieldErrors, FieldValues, RegisterOptions, UseFormRegister, UseFormWatch } from "react-hook-form";
 
-export interface IInputBoxDataType {
+export type InputBoxDataType = {
     id: string;
     label: string;
     type: "text" | "date" | "tel" | "number" | "textarea" | "password";
     required?: boolean;
+    readonly?: boolean;
     description?: string;
     placeholder?: string;
     maxLength?: number;
     showLength?: boolean;
     options?: RegisterOptions;
-}
-interface IInputBoxPropsType extends IInputBoxDataType {
+};
+type InputBoxPropsType = {
     register: UseFormRegister<FieldValues>;
     watch: UseFormWatch<FieldValues>;
     errors?: FieldErrors<FieldValues>;
-}
+};
 
 function InputBox({
     register,
@@ -27,13 +28,14 @@ function InputBox({
     label,
     type,
     required = true,
+    readonly = false,
     description,
     placeholder,
     options,
     maxLength,
     showLength,
     errors,
-}: IInputBoxPropsType) {
+}: InputBoxPropsType & InputBoxDataType) {
     return (
         <Item>
             <Label>{label}</Label>
@@ -46,6 +48,7 @@ function InputBox({
                         maxLength={maxLength}
                         required={required}
                         placeholder={placeholder}
+                        readOnly={readonly}
                         {...register(id, { ...options })}
                     />
                 )}
@@ -90,10 +93,10 @@ const Item = styled.div`
     .input-description {
         margin: 8px 0 0;
         padding: 0 4px;
-        color: var(--black-op45);
-        font-size: 0.85rem;
+        color: ${({ theme }) => theme.color.black};
+        font-size: 0.8rem;
         line-height: 1.3rem;
-        opacity: 0.85;
+        opacity: 0.65;
     }
     .input-length {
         position: absolute;
@@ -103,20 +106,6 @@ const Item = styled.div`
         opacity: 0.6;
         font-size: 0.8rem;
         text-align: right;
-    }
-`;
-
-const TextArea = styled.textarea`
-    width: 100%;
-    height: 84px;
-    padding: 12px;
-    background-color: var(--bg-dark);
-    border: 1px solid var(--bg-dark);
-    color: var(--black);
-    font-size: 1rem;
-    resize: none;
-    &:focus {
-        border: 1px solid var(--main);
     }
 `;
 

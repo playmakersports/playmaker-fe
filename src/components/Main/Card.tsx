@@ -6,7 +6,7 @@ interface CardPropsType {
     title: string;
     localname?: string;
     link?: string;
-    children: JSX.Element;
+    children: React.ReactNode;
 }
 
 function Card({ title, localname, link, children }: CardPropsType) {

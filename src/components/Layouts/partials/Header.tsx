@@ -128,7 +128,7 @@ const Logo = styled.div`
 
 const PageName = styled.p`
     margin: 3px 0 0;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 500;
 `;
 const RightBtns = styled.ul`

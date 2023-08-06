@@ -94,6 +94,7 @@ const StepItem = styled.li<{ nowStep: boolean }>`
         display: inline-flex;
         width: 16px;
         height: 16px;
+        color: #000;
         background-color: ${({ theme, nowStep }) => (nowStep ? theme.color.main : theme.color.gray2)};
         border-radius: 100%;
         font-size: 10px;

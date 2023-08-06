@@ -11,21 +11,6 @@ import Button from "@/src/components/Common/Button";
 
 function Player() {
     const router = useRouter();
-    const [isScrolled, setIsScrolled] = useState<boolean>(false);
-
-    useEffect(() => {
-        function handleScroll() {
-            if (window.scrollY > 40) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        }
-        window.addEventListener("scroll", handleScroll);
-        return () => {
-            window.removeEventListener("scroll", handleScroll);
-        };
-    }, []);
 
     const infos = { birth: "2001-02-19", location: ["서울 강남구", "경기 성남시분당구"] };
     const hashtags = ["공격형", "미드필더", "피지컬", "왼발", "골키퍼", "육상부", "체대생", "선수출신"];
@@ -36,8 +21,8 @@ function Player() {
     };
 
     return (
-        <Container scrolled={isScrolled}>
-            <UserBadgeHeader isScrolled={isScrolled} />
+        <Container>
+            <UserBadgeHeader />
             <UserInfoList data={infos} />
             <SelfIntro>매너게임합니다! 열정넘침!</SelfIntro>
             <UserHashTag data={hashtags} />
@@ -65,10 +50,10 @@ function Player() {
     );
 }
 
-const Container = styled.section<{ scrolled: boolean }>`
-    margin: ${({ scrolled }) => (scrolled ? "192px 0 0" : "280px 0 0")};
-    padding: 8px 20px 40px;
-    transition: margin 0.45s;
+const Container = styled.section`
+    padding: 288px 20px 40px;
+    background-color: #2a365d;
+    color: #fff;
     @media (min-width: 768px) {
         padding: 20px 20px 60px;
     }
@@ -77,7 +62,7 @@ const Container = styled.section<{ scrolled: boolean }>`
 const SelfIntro = styled.p`
     margin: 24px 0 0;
     padding: 24px 4px 16px;
-    border-top: 1px solid ${({ theme }) => theme.color.gray1};
+    border-top: 1px solid ${({ theme }) => theme.color.gray4};
     font-size: 1rem;
     text-align: center;
     word-break: keep-all;
@@ -85,7 +70,7 @@ const SelfIntro = styled.p`
 `;
 
 const Title = styled.h3`
-    border-top: 1px solid ${({ theme }) => theme.color.gray1};
+    border-top: 1px solid ${({ theme }) => theme.color.gray4};
     margin: 32px 0 0;
     padding: 24px 2px 16px;
     font-size: 1.2rem;

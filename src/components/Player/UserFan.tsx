@@ -35,7 +35,7 @@ const Item = styled.li`
         display: inline-block;
         padding: 4px 8px;
         border-radius: 12px;
-        background-color: ${({ theme }) => theme.color.gray1};
+        background-color: ${({ theme }) => theme.color.gray4};
         font-size: 0.7rem;
         font-weight: 800;
         letter-spacing: -0.25px;

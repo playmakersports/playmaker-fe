@@ -1,8 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useAtom } from "jotai";
-
-import { darkMode } from "@/src/atoms/state";
 
 interface UserInfoListDataType {
     birth: string;
@@ -13,18 +10,16 @@ interface UserInfoListPropsType {
 }
 
 function UserInfoList({ data }: UserInfoListPropsType) {
-    const [darkModeState] = useAtom(darkMode);
-
     return (
         <Container>
-            <Item icon="birthday_cake" dark={darkModeState}>
+            <Item icon="birthday_cake">
                 <dt>출생</dt>
                 <dd>
                     <p>{data.birth}</p>
                     <p>21세</p>
                 </dd>
             </Item>
-            <Item icon="location" dark={darkModeState}>
+            <Item icon="location">
                 <dt>지역</dt>
                 <dd>
                     {data.location.map((item) => (
@@ -47,7 +42,7 @@ const Container = styled.ul`
     }
 `;
 
-const Item = styled.li<{ icon: string; dark: boolean }>`
+const Item = styled.li<{ icon: string }>`
     flex: 1;
     display: flex;
     gap: 8px;
@@ -70,7 +65,7 @@ const Item = styled.li<{ icon: string; dark: boolean }>`
             background-size: 18px;
             background-position: left;
             background-repeat: no-repeat;
-            filter: invert(${(props) => (props.dark ? 1 : 0)});
+            filter: invert(1);
         }
     }
     dd {

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import styled from "@emotion/styled";
 
-import InputBox, { IInputBoxDataType } from "../../components/Common/InputBox";
+import InputBox, { InputBoxDataType } from "../../components/Common/InputBox";
 import Button from "@/src/components/Common/Button";
 import { loggedState } from "@/src/atoms/state";
 
@@ -19,7 +19,7 @@ function Login() {
     const router = useRouter();
     const [, setLogged] = useAtom(loggedState);
 
-    const LOGIN_INPUTS: IInputBoxDataType[] = [
+    const LOGIN_INPUTS: InputBoxDataType[] = [
         { id: "username", label: "아이디", type: "text" },
         { id: "password", label: "비밀번호", type: "password" },
     ];
@@ -36,6 +36,11 @@ function Login() {
 
     return (
         <Container onSubmit={handleSubmit(onSubmit)}>
+            <Hello>
+                나를 알고 상대를 알아
+                <br />
+                더욱 즐거운 <strong>플레이메이커</strong>
+            </Hello>
             {LOGIN_INPUTS.map((value) => (
                 <InputBox
                     key={value.id}
@@ -66,6 +71,16 @@ const Container = styled.form`
     flex-direction: column;
     padding: 32px 16px;
     gap: 16px;
+`;
+
+const Hello = styled.p`
+    margin: 0 0 16px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 2.2rem;
+    strong {
+        font-weight: 700;
+    }
 `;
 
 export default Login;

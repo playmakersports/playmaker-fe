@@ -65,7 +65,7 @@ function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
             </Item>
             <Item>
                 <Label>자기소개</Label>
-                <TextAreaWrap length={watch("introduce").length ?? 0} max={60}>
+                <TextAreaWrap length={(watch("introduce") ?? "").length} max={60}>
                     <TextArea required={true} {...register("introduce", { maxLength: 60 })} />
                 </TextAreaWrap>
             </Item>

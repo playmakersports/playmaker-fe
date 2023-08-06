@@ -59,7 +59,7 @@ function InputBox({
                 </p>
             )}
             {description && <p className="input-description">{description}</p>}
-            {errors?.[id] && <ErrorMsg>{errors?.[id]?.message as React.ReactNode}</ErrorMsg>}
+            {errors?.[id] && <ErrorMsg>{errors?.[id]?.message as string}</ErrorMsg>}
         </Item>
     );
 }
@@ -99,13 +99,17 @@ const Item = styled.div`
         opacity: 0.65;
     }
     .input-length {
+        margin: 0 12px 12px 0;
+        padding: 4px 6px;
         position: absolute;
-        padding: 8px;
         right: 0;
         bottom: 0;
-        opacity: 0.6;
+        border-radius: 12px;
+        color: ${({ theme }) => theme.color.gray4};
         font-size: 0.8rem;
-        text-align: right;
+        font-weight: 600;
+        letter-spacing: -0.3px;
+        backdrop-filter: blur(8px);
     }
 `;
 

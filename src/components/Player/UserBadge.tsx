@@ -4,30 +4,30 @@ import styled from "@emotion/styled";
 function UserBadge({ simple }: { simple?: boolean }) {
     return (
         <Container>
-            <Numbers className="numbers">
-                <p className="point">120</p>
-                <p className="rank">20</p>
+            <Numbers>
+                <p className="point numbers">120</p>
+                <p className="rank numbers">20</p>
                 <img className="flag" src="/assets/Flag/ROK_40px_Flag.png" alt="대한민국 국기" />
             </Numbers>
             <Photo>
                 <img src="/assets/profile_image.png" alt="프로필 이미지" />
             </Photo>
             <Description simple={!!simple}>
-                <p className="username">이강인이피엘가자</p>
+                <p className="username">빠리지앵이강인</p>
                 {simple && <p className="username-real">본명</p>}
                 {simple || (
-                    <ul className="userstats numbers">
+                    <ul className="userstats">
                         <li>
-                            <dt>GOAL</dt>
-                            <dd>120</dd>
+                            <dt className="numbers">GOAL</dt>
+                            <dd className="numbers">120</dd>
                         </li>
                         <li>
-                            <dt>M.O.M</dt>
-                            <dd>8</dd>
+                            <dt className="numbers">M.O.M</dt>
+                            <dd className="numbers">8</dd>
                         </li>
                         <li>
-                            <dt>TOP RANKED</dt>
-                            <dd>20</dd>
+                            <dt className="numbers">TOP RANKED</dt>
+                            <dd className="numbers">20</dd>
                         </li>
                     </ul>
                 )}

@@ -3,7 +3,7 @@ import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
 interface ButtonPropsType {
-    mode: "main1" | "main2" | "basic" | "sub1";
+    mode: "main1" | "main2" | "basic" | "sub1" | "sub2";
     size: "large" | "medium" | "small" | "xsmall";
     type?: "button" | "submit" | "reset" | undefined;
     noFlex?: boolean;
@@ -26,14 +26,14 @@ function Button({ mode, size, type, text, main = true, noFlex = false, shadow = 
         main1: {
             background: theme.color.main,
             color: "#000",
-            border: "#aae732",
+            border: theme.color.main,
             shadow: "0 0 10px 4px rgba(0, 0, 0, 0.05)",
             radius: "8px",
         },
         main2: {
             background: theme.color.white,
             color: "#000",
-            border: "#aae732",
+            border: theme.color.main,
             shadow: "0 0 10px 4px rgba(0, 0, 0, 0.05)",
             radius: "8px",
         },
@@ -50,6 +50,13 @@ function Button({ mode, size, type, text, main = true, noFlex = false, shadow = 
             border: "transparent",
             shadow: "none",
             radius: "4px",
+        },
+        sub2: {
+            background: "#ececec",
+            color: theme.color.gray4,
+            border: "transparent",
+            shadow: "none",
+            radius: "8px",
         },
     };
     return (

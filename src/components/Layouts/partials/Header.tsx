@@ -18,6 +18,8 @@ function Header() {
         "/user/join": "회원가입",
         "/user/login": "로그인",
         "/find/yongbyung": "용병 모집 현황",
+        "/match/[id]": "경기정보",
+        "/match/create": "새 경기 만들기",
     };
 
     const [darkModeState, setDarkModeState] = useAtom(darkMode);

@@ -51,7 +51,7 @@ function Player() {
 }
 
 const Container = styled.section`
-    padding: 288px 20px 40px;
+    padding: 348px 20px 40px;
     background-color: #2a365d;
     color: #fff;
     @media (min-width: 768px) {

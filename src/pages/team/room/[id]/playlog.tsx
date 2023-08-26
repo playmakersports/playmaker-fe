@@ -62,10 +62,10 @@ const Container = styled.section`
 
 const Header = styled.header`
     display: flex;
-    padding: 20px 24px;
+    padding: 20px 8px;
     width: 100%;
     background-color: ${({ theme }) => theme.color.gray1};
-    justify-content: space-between;
+    justify-content: space-around;
     @media (min-width: 768px) {
         width: 240px;
         height: auto;

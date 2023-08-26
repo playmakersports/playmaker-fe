@@ -1,30 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import { FieldValues, useForm } from "react-hook-form";
 
 import Button from "@/src/components/Common/Button";
 import InputBox, { InputBoxDataType } from "@/src/components/Common/InputBox";
+import { ErrorMsg } from "@/src/components/Common/FormStyle";
+import { getCurrentDateTime } from "@/src/util/time";
 
 function TeamCreate() {
-    function getFormattedDate() {
-        const today = new Date();
-        const formattedDate = new Intl.DateTimeFormat("ja", { dateStyle: "medium" }).format(today).split("/").join("-");
-        return formattedDate;
-    }
+    const router = useRouter();
+    const teamId = router.query.teamId;
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
         watch,
     } = useForm<FieldValues>({
         mode: "onBlur",
-        defaultValues: { teamColor: "#333", teamSports: "축구(풋살)", teamCreateAt: getFormattedDate() },
+        defaultValues: { teamColor: "#333", teamSports: "축구(풋살)", teamCreateAt: getCurrentDateTime("date") },
     });
 
     const onSubmit = (data: FieldValues) => {
         console.log(data);
     };
+
+    const setTeamInfo = () => {
+        reset();
+    };
+
+    useEffect(() => {
+        if (router.query.type === "edit") {
+            setTeamInfo();
+        }
+    }, [router.query.type]);
 
     const TEAM_CREATE_INPUTS: InputBoxDataType[] = [
         {
@@ -46,7 +57,11 @@ function TeamCreate() {
             id: "teamCreateAt",
             label: "창단일",
             type: "date",
-            description: "창단일은 팀 생성 후 수정이 불가능하므로, 신중히 입력해주세요.",
+            readonly: router.query.type === "edit",
+            description:
+                router.query.type === "edit"
+                    ? "창단일은 수정이 불가능합니다."
+                    : "창단일은 팀 생성 후 수정이 불가능하므로, 신중히 입력해주세요.",
         },
         { id: "teamLocation", label: "활동지역", type: "text" },
         {
@@ -60,13 +75,17 @@ function TeamCreate() {
 
     return (
         <Container onSubmit={handleSubmit(onSubmit)}>
-            <NameBox color={watch("teamColor")}>
+            <NameBox>
                 <Name
                     type="text"
                     placeholder="팀 이름을 입력하세요"
                     required={true}
-                    {...register("teamName", { required: true })}
+                    {...register("teamName", {
+                        required: { value: true, message: "필수 입력 항목입니다." },
+                        minLength: { value: 3, message: "최소 3자 이상의 이름이어야 합니다." },
+                    })}
                 />
+                {errors.teamName?.message && <ErrorMsg>{errors?.teamName?.message as string}</ErrorMsg>}
                 <ColorPicker color={watch("teamColor")}>
                     <span className="team-color-label">팀 색상 선택</span>
                     <input type="color" {...register("teamColor")} />
@@ -109,64 +128,35 @@ function TeamCreate() {
 }
 
 const Container = styled.form`
-    padding: 200px 16px 0;
+    padding: 0 16px 0;
 `;
-const NameBox = styled.article<{ color: string }>`
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 32px 24px 24px;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 136px;
-    background-color: ${(props) => props.color ?? "silver"};
-    z-index: 10;
-    &::after {
-        position: absolute;
-        display: block;
-        margin-left: -4px;
-        content: "";
-        left: 0;
-        bottom: -35px;
-        background-color: ${(props) => props.color ?? "silver"};
-        width: calc(100% + 6px);
-        height: 36px;
-        clip-path: polygon(50% 100%, 0 0, 100% 0);
-    }
+const NameBox = styled.div`
+    margin: 20px 0 32px;
 `;
 
 const Name = styled.input`
-    margin: 12px 0 0;
-    background: none;
-    color: #fff;
-    font-size: 1.85rem;
+    margin: 8px 0 0;
+    padding: 4px 0;
+    width: 100%;
+    background: transparent;
+    font-size: 1.6rem;
     font-weight: 800;
-    text-align: center;
-    text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-    &::placeholder {
-        text-shadow: none;
-    }
+    border-bottom: 2px solid ${({ theme }) => theme.color.gray4};
 `;
 const ColorPicker = styled.label<{ color: string }>`
     display: flex;
     margin: 16px 0 0;
     align-items: center;
     gap: 6px;
-    color: #fff;
     input {
-        position: absolute;
         width: 0;
         height: 0;
         opacity: 0;
     }
     .team-color-label {
-        font-weight: 700;
-        mix-blend-mode: difference;
+        font-weight: 600;
     }
     .selected-color {
-        mix-blend-mode: difference;
         opacity: 0.8;
     }
     &::before {

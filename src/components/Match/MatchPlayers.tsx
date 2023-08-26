@@ -25,9 +25,9 @@ type MatchPlayersType = {
 function MatchPlayers({ type = "view", id, register, control, teamColor, list }: MatchPlayersType) {
     const [showModal, setShowModal] = useState(() => false);
     const PLAYER_SEARCH_DATA = [
-        { id: 123, name: "홍길동", position: "공격", point: 200, rank: 2, location: "경기 안양" },
-        { id: 333, name: "선수1", position: "공격", point: 145, rank: 4, location: "경기 안양" },
-        { id: 343, name: "선수2", position: "공격", point: 125, rank: 9, location: "경기 안양" },
+        { id: 123, name: "홍길동", point: 200, rank: 2, location: "경기 안양" },
+        { id: 333, name: "선수1", point: 145, rank: 4, location: "경기 안양" },
+        { id: 343, name: "선수2", point: 125, rank: 9, location: "경기 안양" },
     ];
 
     if (type === "edit") {
@@ -92,10 +92,10 @@ function MatchPlayers({ type = "view", id, register, control, teamColor, list }:
                                 <li key={player.id}>
                                     <p className="player-list-info">
                                         {player.name}
-                                        <span className="player-list-label">{player.position}</span>
-                                        <span className="player-list-label">{player.point}</span>
-                                        <span className="player-list-label">{player.rank}위</span>
-                                        <span className="player-list-label">({player.location})</span>
+                                        <span className="player-list-label">
+                                            {player.location} {player.rank}위
+                                        </span>
+                                        <span className="player-list-label">({player.point})</span>
                                     </p>
                                     <Button
                                         type="button"

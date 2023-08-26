@@ -21,17 +21,17 @@ function PlaylogListCol({ match }: any) {
                 <div className="match-detail-wrap">
                     <DetailInfos>
                         <li>
-                            <dt>경기일시</dt>
+                            <dt>일시</dt>
                             <dd>{match.date}</dd>
                         </li>
                         <li>
-                            <dt>경기장소</dt>
+                            <dt>장소</dt>
                             <dd>{match.place}</dd>
                         </li>
                     </DetailInfos>
                     <Button
                         type="button"
-                        mode="main1"
+                        mode="basic"
                         size="medium"
                         text="경기 상세"
                         main={false}
@@ -141,19 +141,22 @@ const Col = styled.article`
 `;
 
 const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
-    height: ${({ showMatchDetail }) => (showMatchDetail ? "124px" : "0")};
+    height: ${({ showMatchDetail }) => (showMatchDetail ? "120px" : "0")};
+    opacity: ${({ showMatchDetail }) => (showMatchDetail ? 1 : 0)};
     background-color: #3c4a76;
     color: #fff;
-    transition: height 0.4s;
+    transition: height 0.4s, opacity 0.4s;
     overflow: hidden;
     .match-detail-wrap {
         display: flex;
         height: 100%;
         flex-direction: column;
-        padding: 8px 16px 16px;
-        gap: 12px;
+        padding: 8px 20px 20px;
+        gap: 8px;
         border-top: 1px solid #ffffff28;
-        justify-content: space-between;
+        button {
+            margin: 0 16px;
+        }
     }
     @media (min-width: 768px) {
         height: ${({ showMatchDetail }) => (showMatchDetail ? "80px" : "0")};
@@ -172,7 +175,7 @@ const MatchDetail = styled.div<{ showMatchDetail: boolean }>`
 const DetailInfos = styled.ul`
     flex: 1.5;
     display: inline-flex;
-    justify-content: space-between;
+    justify-content: space-around;
     font-size: 0.9rem;
     li {
         display: inline-flex;

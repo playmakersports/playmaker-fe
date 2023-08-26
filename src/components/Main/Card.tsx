@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 
 interface CardPropsType {
-    title: string;
+    title?: string;
     localname?: string;
     link?: string;
     children: React.ReactNode;
@@ -12,17 +12,19 @@ interface CardPropsType {
 function Card({ title, localname, link, children }: CardPropsType) {
     return (
         <Container>
-            <Title>
-                <Name>
-                    <h3>{title}</h3>
-                    {localname && <p className="location">{localname}</p>}
-                </Name>
-                {link && (
-                    <Link href={link}>
-                        <ArrowIcon />
-                    </Link>
-                )}
-            </Title>
+            {title && (
+                <Title>
+                    <Name>
+                        <h3>{title}</h3>
+                        {localname && <p className="location">{localname}</p>}
+                    </Name>
+                    {link && (
+                        <Link href={link}>
+                            <ArrowIcon />
+                        </Link>
+                    )}
+                </Title>
+            )}
             <>{children}</>
         </Container>
     );

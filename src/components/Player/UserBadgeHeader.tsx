@@ -20,18 +20,12 @@ const badgePath =
 const BadgeWrap = styled.article`
     position: absolute;
     width: 100%;
-    height: 72px;
-    padding: 16px 0 0;
     top: 0;
-    left: 0;
-    background-color: ${({ theme }) => theme.color.main};
-    z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
+    border-top: 60px solid ${({ theme }) => theme.color.main};
     .badge-container {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        transform-origin: center top;
-        transition: transform 0.35s;
+        margin: -40px 0 0;
     }
 `;
 const UserBadgeBlurBack = styled.div`

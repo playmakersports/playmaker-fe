@@ -23,10 +23,10 @@ const Container = styled.div<{ showButtons: boolean }>`
     transform: translate(-50%, ${(props) => (props.showButtons ? "-68px" : 0)});
     transition: transform 0.45s;
     @media (min-width: 768px) {
-        width: calc(100% - 420px);
+        width: calc(100% - 460px);
         padding: 4px 0;
         left: 20px;
-        transform: translate(0, ${(props) => (props.showButtons ? "-24px" : "60px")});
+        transform: translate(0, ${(props) => (props.showButtons ? "-28px" : "60px")});
     }
 `;
 

@@ -12,7 +12,7 @@ export interface IModalPopupBtnType {
 interface IModalPopupPropsType {
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
     btns: IModalPopupBtnType[];
-    children: JSX.Element;
+    children: React.ReactNode;
 }
 
 function Modal({ setShow, btns, children }: IModalPopupPropsType) {
@@ -28,7 +28,7 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
     };
     return (
         <>
-            <Wrap>
+            <Wrapper>
                 <Contents>
                     <div className="modal-contents-container">{children}</div>
                     <div className="modal-btn-container">
@@ -44,7 +44,7 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
                         ))}
                     </div>
                 </Contents>
-            </Wrap>
+            </Wrapper>
             <Dim onClick={closeModal} />
         </>
     );
@@ -57,10 +57,10 @@ const Dim = styled.div`
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.25);
+    background-color: rgba(0, 0, 0, 0.4);
 `;
 
-const Wrap = styled.div`
+const Wrapper = styled.div`
     position: fixed;
     padding: 28px;
     top: 50%;
@@ -69,7 +69,8 @@ const Wrap = styled.div`
     z-index: 99;
     background: #ffffff;
     background-color: ${({ theme }) => theme.color.white};
-    border-radius: 8px;
+    border-radius: 16px;
+    border: 1px solid ${({ theme }) => theme.color.gray1};
     transform: translate(-50%, -50%);
     @media (min-width: 768px) {
         width: 460px;
@@ -77,7 +78,7 @@ const Wrap = styled.div`
 `;
 
 const Contents = styled.section`
-    min-height: 228px;
+    min-height: 248px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -85,7 +86,9 @@ const Contents = styled.section`
         h2 {
             font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 24px;
+            padding: 2px 2px 8px;
+            margin: 0 0 28px;
+            border-bottom: 3px solid ${({ theme }) => theme.color.main};
         }
         p {
             font-size: 1rem;

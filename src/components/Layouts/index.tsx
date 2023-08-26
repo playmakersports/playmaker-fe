@@ -18,7 +18,7 @@ function Layout({ children }: { children: JSX.Element }) {
     return (
         <ThemeProvider theme={darkModeState ? DarkTheme : LightTheme}>
             <div className="contents" style={{ minHeight: "100vh" }}>
-                {place[0] !== "team" && <Header />}
+                {(place[0] !== "team" || place[1] === "create") && <Header />}
                 <main className="main-conatiner">{children}</main>
                 <GNB />
                 <Footer />

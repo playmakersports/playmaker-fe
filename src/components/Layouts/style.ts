@@ -11,16 +11,17 @@ export const Backdrop = styled.div`
 `;
 
 export const Menus = styled.div`
-    position: absolute;
+    position: fixed;
     padding: 16px;
-    width: 208px;
-    top: 48px;
-    right: -8px;
+    width: max-content;
+    min-width: 160px;
+    top: 56px;
+    right: 12px;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.05);
-    color: var(--black);
-    z-index: 2;
+    color: #000;
+    z-index: 10;
     .change-location-menu {
         display: flex;
         flex-direction: column;

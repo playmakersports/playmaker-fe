@@ -30,3 +30,31 @@ export const CentralBtn = styled.button<{ icon?: string }>`
         opacity: 0.65;
     }
 `;
+
+export const FilterBtn = styled(CentralBtn)<{ showFilters: boolean }>`
+    position: relative;
+    .filter-selector {
+        position: absolute;
+        margin: 12px 0 0;
+        padding: 16px;
+        opacity: ${({ showFilters }) => (showFilters ? "1" : "0")};
+        top: ${({ showFilters }) => (showFilters ? "100%" : "50%")};
+        left: 50%;
+        width: 180px;
+        background-color: ${({ theme }) => theme.color.white};
+        border: 1px solid ${({ theme }) => theme.color.gray1};
+        border-radius: 16px;
+        transform: translateX(-50%);
+        font-size: 0.9rem;
+        z-index: ${({ showFilters }) => (showFilters ? "1" : "-1")};
+        transition: top 0.3s, opacity 0.3s;
+        li {
+            padding: 16px 0;
+            color: ${({ theme }) => theme.color.gray4};
+            border-bottom: 1px solid ${({ theme }) => theme.color.lightGray};
+            &:last-of-type {
+                border-bottom: none;
+            }
+        }
+    }
+`;

@@ -4,13 +4,15 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 
 import { darkMode } from "@/src/atoms/state";
-import { Backdrop, Menus } from "../style";
+import HeaderMenu from "./HeaderMenu";
 
 function Header() {
-    const [showLocationMenu, setShowLocationMenu] = useState(false);
-    const [showListMenu, setShowListMenu] = useState(false);
     const router = useRouter();
     const nowPath = router.pathname;
+    console.log(router);
+
+    const [showLocationMenu, setShowLocationMenu] = useState(false);
+    const [showListMenu, setShowListMenu] = useState(false);
     const pathHeader: { [key: string]: string } = {
         "/player/[id]/playlog": "경기 기록",
         "/team": "팀 정보",
@@ -20,6 +22,7 @@ function Header() {
         "/find/yongbyung": "용병 모집 현황",
         "/match/[id]": "경기정보",
         "/match/create": "새 경기 만들기",
+        "/team/create": "팀 창단",
     };
 
     const [darkModeState, setDarkModeState] = useAtom(darkMode);
@@ -34,66 +37,73 @@ function Header() {
         }
     };
 
-    return (
-        <Container nowPath={nowPath === "/"}>
-            <Contents>
-                {nowPath !== "/" && <BackBtn type="button" onClick={() => router.back()} />}
-                {nowPath === "/" && (
+    if (nowPath === "/") {
+        return (
+            <Container>
+                <Contents>
                     <Logo>
-                        <img
-                            src={
-                                darkModeState
-                                    ? "/logotype/LogoType2LinesColor.svg"
-                                    : "/logotype/LogoType2LinesBlack.svg"
-                            }
-                            alt="Logo"
-                        />
+                        <img src={`/logotype/LogoType2Lines${darkModeState ? "Color" : "Black"}.svg`} alt="Logo" />
                     </Logo>
-                )}
-                {nowPath !== "/" && <PageName>{pathHeader[nowPath]}</PageName>}
-                <RightBtns>
-                    {nowPath === "/" && (
+                    <RightBtns>
                         <LocationBtn onClick={() => setShowLocationMenu((prev) => !prev)}>안양시</LocationBtn>
-                    )}
+                        <MainBtn onClick={() => setShowListMenu((prev) => !prev)}>
+                            <i></i>
+                            <i></i>
+                            <i></i>
+                        </MainBtn>
+                    </RightBtns>
+                </Contents>
+                {showLocationMenu && (
+                    <HeaderMenu showMenu={setShowLocationMenu}>
+                        <ul className="change-location-menu">
+                            <li className="checked">경기도 안양시</li>
+                            <li>경기도 성남시분당구</li>
+                        </ul>
+                    </HeaderMenu>
+                )}
+                {showListMenu && (
+                    <HeaderMenu showMenu={setShowListMenu}>
+                        <ul className="change-location-menu">
+                            <li onClick={handleLightMode}>다크모드</li>
+                        </ul>
+                    </HeaderMenu>
+                )}
+            </Container>
+        );
+    }
+
+    return (
+        <Container nowPath={nowPath === "/player/[id]"}>
+            <Contents>
+                <BackBtn type="button" onClick={() => router.back()} />
+                <PageName>{pathHeader[nowPath]}</PageName>
+                <RightBtns>
                     <MainBtn onClick={() => setShowListMenu((prev) => !prev)}>
                         <i></i>
                         <i></i>
                         <i></i>
                     </MainBtn>
-                    {showLocationMenu && (
-                        <>
-                            <Menus onClick={() => setShowLocationMenu((prev) => !prev)}>
-                                <ul className="change-location-menu">
-                                    <li className="checked">경기도 안양시</li>
-                                    <li>경기도 성남시분당구</li>
-                                </ul>
-                            </Menus>
-                            <Backdrop onClick={() => setShowLocationMenu((prev) => !prev)} />
-                        </>
-                    )}
-                    {showListMenu && (
-                        <>
-                            <Menus onClick={() => setShowListMenu((prev) => !prev)}>
-                                <DarkBtn type="button" onClick={handleLightMode}>
-                                    다크모드
-                                </DarkBtn>
-                            </Menus>
-                            <Backdrop onClick={() => setShowListMenu((prev) => !prev)} />
-                        </>
-                    )}
                 </RightBtns>
             </Contents>
+            {showListMenu && (
+                <HeaderMenu showMenu={setShowListMenu}>
+                    <ul className="change-location-menu">
+                        <li onClick={handleLightMode}>다크모드</li>
+                    </ul>
+                </HeaderMenu>
+            )}
         </Container>
     );
 }
 
-const Container = styled.header<{ nowPath: boolean }>`
+const Container = styled.header<{ nowPath?: boolean }>`
     position: sticky;
-    top: 0;
+    width: 100vw;
     height: 60px;
-    background-color: ${({ theme }) => theme.color.background};
-    z-index: 10;
-    box-shadow: 0 0 10px 4px rgba(0, 0, 0, 0.1);
+    top: 0;
+    background-color: ${({ theme, nowPath }) => (nowPath ? "transparent" : theme.color.background)};
+    box-shadow: ${({ nowPath }) => !nowPath && "0 0 10px 4px rgba(0, 0, 0, 0.1)"};
+    z-index: 1;
 `;
 
 const Contents = styled.div`
@@ -134,7 +144,6 @@ const PageName = styled.p`
     font-weight: 500;
 `;
 const RightBtns = styled.ul`
-    position: relative;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -189,10 +198,6 @@ const LocationBtn = styled.button`
         filter: ${({ theme }) => theme.filter.invert};
         opacity: 0.65;
     }
-`;
-
-const DarkBtn = styled.button`
-    color: #000;
 `;
 
 export default Header;

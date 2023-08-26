@@ -46,13 +46,15 @@ function Dropdown({
     }, []);
 
     const closeModal = () => {
-        if (maxChecked && watch(name)?.length > maxChecked) {
+        const WatchName = watch(name) ? watch(name) : [];
+        if (maxChecked && WatchName.length > maxChecked) {
             alert(`최대 ${maxChecked}개까지 선택할 수 있는 항목입니다.`);
-        } else if (watch(name).includes("NOT_SELECTED") && watch(name)?.length > 1) {
+        } else if (WatchName.includes("NOT_SELECTED") && WatchName.length > 1) {
             alert("'없음'과 다른 항목이 함께 선택될 수 없습니다.");
-        } else if (watch(name)?.length > 0) {
+        } else {
             setShow((prev) => !prev);
         }
+        return;
     };
 
     function convertSelectedOption(data: string | string[]) {

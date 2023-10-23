@@ -1,20 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import AlertCards from "./AlertCards";
+import AlertList from "./AlertList";
 import RankCard from "./RankCard";
 import FindPlayerCard from "./FindPlayerCard";
 
 function Main() {
-    const ALERT_CARD_MOCK = [
-        { code: "UPCOMING_MATCH", contents: "5월 1일 20:00, CS풋살클럽에서의 경기", redirect: "" },
-        { code: "JOIN_PURPOSE", contents: "FC달린다 등 2개 팀에게 온 제안", redirect: "" },
-        { code: "MATCH_PURPOSE", contents: "FC불도저가 보낸 5월 5일 16:30 매치 제안", redirect: "" },
-    ];
-
     return (
         <>
-            <AlertCards data={ALERT_CARD_MOCK} />
+            <AlertList />
             <Articles>
                 <RankCard
                     type="TEAM"

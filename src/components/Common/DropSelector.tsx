@@ -1,7 +1,9 @@
-import styled from "@emotion/styled";
 import React, { useEffect, useState } from "react";
+import styled from "@emotion/styled";
 import { FieldValues, RegisterOptions, UseFormRegister, UseFormWatch } from "react-hook-form";
+
 import Button from "./Button";
+import { MdHeadText } from "@/src/styles/common";
 
 export interface IDropdownItemType {
     optionName: string;
@@ -144,7 +146,7 @@ const SelectedOptions = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 4px 0 32px;
-    font-size: 1rem;
+    font-size: 1.6rem;
     line-height: 1.55rem;
     font-weight: 500;
     word-break: keep-all;
@@ -155,18 +157,18 @@ const SelectedOptions = styled.div`
         content: "✓ 선택됨";
         margin: 0 0 4px;
         padding: 6px 8px;
-        background-color: ${({ theme }) => theme.color.main2};
         border-radius: 24px;
-        color: #000;
-        font-size: 0.75rem;
-        line-height: 1rem;
-        font-weight: 400;
+        color: ${({ theme }) => theme.color.black};
+        border: 1px solid ${({ theme }) => theme.color.black};
+        font-family: SUITE Variable;
+        font-size: 1.4rem;
+        line-height: 1.2rem;
     }
 `;
 
-const BeforeSelected = styled.p`
+const BeforeSelected = styled(MdHeadText)`
     margin: 12px 0 24px;
-    font-size: 0.9rem;
+    font-size: 1.6rem;
     text-align: center;
     opacity: 0.8;
     color: ${({ theme }) => theme.color.warn};
@@ -205,10 +207,13 @@ const Filter = styled.div`
 `;
 const FilterItem = styled.button<{ isSelected: boolean }>`
     padding: 12px 8px 12px 2px;
-    font-size: 0.9rem;
+    font-size: 1.6rem;
+    font-family: SUITE Variable;
     text-align: left;
-    font-weight: ${({ isSelected }) => (isSelected ? 600 : 300)};
+    font-weight: ${({ isSelected }) => (isSelected ? 700 : 400)};
+    opacity: ${({ isSelected }) => (isSelected ? 1 : 0.7)};
     letter-spacing: -0.2px;
+    user-select: none;
     &::before {
         content: "";
         display: ${({ isSelected }) => (isSelected ? "inline-block" : "none")};
@@ -229,8 +234,9 @@ const Items = styled.ul`
     flex-direction: column;
     gap: 8px;
     overflow-y: scroll;
+    user-select: none;
     li {
-        font-size: 1rem;
+        font-size: 1.6rem;
         input {
             display: none;
             &:checked + label {
@@ -247,14 +253,14 @@ const Items = styled.ul`
             display: flex;
             align-items: center;
             cursor: pointer;
-            padding: 16px;
-            font-weight: 400;
+            padding: 20px 16px;
+            font-weight: 500;
             color: ${({ theme }) => theme.color.black};
-            opacity: 0.45;
+            opacity: 0.5;
             &::before {
                 content: "✓";
                 margin-right: 12px;
-                opacity: 0.35;
+                opacity: 0.5;
             }
         }
     }

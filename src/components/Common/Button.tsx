@@ -2,7 +2,7 @@ import React from "react";
 import { useTheme } from "@emotion/react";
 import styled from "@emotion/styled";
 
-interface ButtonPropsType {
+interface Props {
     mode: "main1" | "main2" | "basic" | "sub1" | "sub2";
     size: "large" | "medium" | "small" | "xsmall";
     type?: "button" | "submit" | "reset" | undefined;
@@ -14,13 +14,13 @@ interface ButtonPropsType {
 }
 
 const BUTTON_SIZE_STYLE: { [key: string]: { [key: string]: string } } = {
-    large: { fontSize: "1rem", height: "56px", weight: "600" },
-    medium: { fontSize: "0.9rem", height: "42px", weight: "600" },
-    small: { fontSize: "0.8rem", height: "28px", weight: "400" },
-    xsmall: { fontSize: "0.75rem", height: "28px", weight: "500" },
+    large: { fontSize: "1.8rem", height: "56px", weight: "600" },
+    medium: { fontSize: "1.6rem", height: "42px", weight: "600" },
+    small: { fontSize: "1.4rem", height: "28px", weight: "400" },
+    xsmall: { fontSize: "1.4rem", height: "28px", weight: "500" },
 };
 
-function Button({ mode, size, type, text, main = true, noFlex = false, shadow = true, callback }: ButtonPropsType) {
+function Button({ mode, size, type, text, main = true, noFlex = false, shadow = true, callback }: Props) {
     const theme = useTheme();
     const BUTTON_MODE_STYLE = {
         main1: {
@@ -91,6 +91,7 @@ const Wrapper = styled.button<{
     box-shadow: ${({ modestyle, mode, shadow }) => (shadow ? modestyle[mode].shadow : "none")};
     border-radius: ${({ modestyle, mode }) => modestyle[mode].radius};
     color: ${({ modestyle, mode }) => modestyle[mode].color};
+    font-family: SUITE Variable;
     font-size: ${({ size }) => BUTTON_SIZE_STYLE[size].fontSize};
     font-weight: ${({ size }) => BUTTON_SIZE_STYLE[size].weight};
     &:hover {

@@ -34,6 +34,7 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
                     <div className="modal-btn-container">
                         {btns.map((btn) => (
                             <Button
+                                key={btn.text}
                                 type={btn.type}
                                 text={btn.text}
                                 mode={btn.mode}

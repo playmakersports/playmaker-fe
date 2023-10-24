@@ -2,21 +2,21 @@ import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
 
-interface CardPropsType {
+interface Props {
     title?: string;
-    localname?: string;
+    localName?: string;
     link?: string;
     children: React.ReactNode;
 }
 
-function Card({ title, localname, link, children }: CardPropsType) {
+function Card({ title, localName, link, children }: Props) {
     return (
         <Container>
             {title && (
                 <Title>
                     <Name>
                         <h3>{title}</h3>
-                        {localname && <p className="location">{localname}</p>}
+                        {localName && <p className="location">{localName}</p>}
                     </Name>
                     {link && (
                         <Link href={link}>

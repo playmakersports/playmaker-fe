@@ -3,18 +3,18 @@ import styled from "@emotion/styled";
 
 import Card from "./Card";
 
-interface RankCardPropsType {
+interface Props {
     type: string;
     localId: string;
-    localname: string;
+    localName: string;
     list: any;
 }
 
-function RankCard({ type, localId, localname, list }: RankCardPropsType) {
+function RankCard({ type, localId, localName, list }: Props) {
     const [RankOrder, setRankOrder] = useState(0);
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setRankOrder((prevRankOrder) => (prevRankOrder + 1) % 5);
+            setRankOrder((prev) => (prev + 1) % 5);
         }, 1500);
         return () => clearInterval(intervalId);
     }, []);
@@ -22,7 +22,7 @@ function RankCard({ type, localId, localname, list }: RankCardPropsType) {
     return (
         <Card
             title={`${type === "TEAM" ? "팀" : "선수"} 랭킹`}
-            localname={localname}
+            localName={localName}
             link={`/rank/${type.toLowerCase()}?location=${localId}`}
         >
             <RankList>

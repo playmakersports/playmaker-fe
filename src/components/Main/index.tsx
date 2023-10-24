@@ -26,7 +26,7 @@ function Main() {
 
                 <FindPlayerCard
                     localId="anyang"
-                    localname="안양시"
+                    localName="안양시"
                     list={[
                         { teamname: "불도저FC", playAt: "6월 12일 16:00", playground: "00풋살장", findNum: 2 },
                         { teamname: "어쩌고FC", playAt: "6월 13일 16:00", playground: "00중학교", findNum: 3 },

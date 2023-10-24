@@ -2,15 +2,15 @@ import React from "react";
 import Card from "./Card";
 import styled from "@emotion/styled";
 
-interface FindPlayerCardPropsType {
+interface Props {
     localId: string;
-    localname: string;
+    localName: string;
     list: any;
 }
 
-function FindPlayerCard({ localId, localname, list }: FindPlayerCardPropsType) {
+function FindPlayerCard({ localId, localName, list }: Props) {
     return (
-        <Card title="용병 급구" localname={localname} link={`/find/yongbyung?location=${localId}`}>
+        <Card title="용병 급구" localName={localName} link={`/find/yongbyung?location=${localId}`}>
             <RankList>
                 {list.map((item: any, index: number) => (
                     <RankItem key={index}>

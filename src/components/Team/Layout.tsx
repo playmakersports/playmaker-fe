@@ -4,7 +4,8 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 
 import { darkMode } from "@/src/atoms/state";
-import { Backdrop, Menus } from "../Layouts/style";
+import { Backdrop } from "../Layouts/style";
+import { MdHeadText } from "@/src/styles/common";
 
 interface ITeamLayoutType {
     teamName: string;
@@ -45,11 +46,9 @@ function TeamLayout({ teamName, title, color, children }: ITeamLayoutType) {
                 </MainBtn>
                 {showListMenu && (
                     <>
-                        <Menus onClick={() => setShowListMenu((prev) => !prev)}>
-                            <DarkBtn type="button" onClick={handleLightMode}>
-                                다크모드
-                            </DarkBtn>
-                        </Menus>
+                        <MenuList as="div" onClick={() => setShowListMenu((prev) => !prev)}>
+                            <DarkBtn onClick={handleLightMode}>다크모드</DarkBtn>
+                        </MenuList>
                         <Backdrop onClick={() => setShowListMenu((prev) => !prev)} />
                     </>
                 )}
@@ -103,6 +102,16 @@ const Contents = styled.section`
     padding: 20px 16px;
 `;
 
+const MenuList = styled(MdHeadText)`
+    position: absolute;
+    padding: 8px 12px;
+    right: 0;
+    top: 60px;
+    background-color: ${({ theme }) => theme.color.black};
+    width: max-content;
+    z-index: 10;
+    color: ${({ theme }) => theme.color.white};
+`;
 const MainBtn = styled.button`
     position: relative;
     display: block;
@@ -143,6 +152,6 @@ const MainBtn = styled.button`
     }
 `;
 
-const DarkBtn = styled.button``;
+const DarkBtn = styled.div``;
 
 export default TeamLayout;

@@ -10,6 +10,7 @@ interface Props {
     text: string;
     main?: boolean;
     shadow?: boolean;
+    disabled?: boolean;
     callback?: () => void;
 }
 
@@ -20,7 +21,17 @@ const BUTTON_SIZE_STYLE: { [key: string]: { [key: string]: string } } = {
     xsmall: { fontSize: "1.4rem", height: "28px", weight: "500" },
 };
 
-function Button({ mode, size, type, text, main = true, noFlex = false, shadow = true, callback }: Props) {
+function Button({
+    mode,
+    size,
+    type,
+    text,
+    main = true,
+    noFlex = false,
+    shadow = true,
+    disabled = false,
+    callback,
+}: Props) {
     const theme = useTheme();
     const BUTTON_MODE_STYLE = {
         main1: {
@@ -69,6 +80,7 @@ function Button({ mode, size, type, text, main = true, noFlex = false, shadow = 
             size={size}
             main={main}
             shadow={shadow}
+            disabled={disabled}
         >
             {text}
         </Wrapper>
@@ -82,6 +94,7 @@ const Wrapper = styled.button<{
     modestyle: { [key: string]: { [key: string]: string } };
     main: boolean;
     shadow: boolean;
+    disabled: boolean;
 }>`
     padding: 0 16px;
     min-height: ${({ size }) => BUTTON_SIZE_STYLE[size].height};
@@ -96,6 +109,12 @@ const Wrapper = styled.button<{
     font-weight: ${({ size }) => BUTTON_SIZE_STYLE[size].weight};
     &:hover {
         opacity: 0.85;
+    }
+    &:disabled {
+        cursor: not-allowed;
+        filter: grayscale(1);
+        background-color: ${({ theme }) => theme.color.gray1};
+        color: ${({ theme }) => theme.color.gray2};
     }
 `;
 

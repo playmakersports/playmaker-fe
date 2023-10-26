@@ -88,7 +88,7 @@ const BoxWrap = styled.button<{ isPlaceholder: boolean }>`
     border: 1px solid ${({ theme }) => theme.color.gray2};
     color: ${({ theme, isPlaceholder }) => (isPlaceholder ? theme.color.gray3 : theme.color.black)};
 
-    font-size: 1rem;
+    font-size: 1.6rem;
     text-align: left;
     word-break: keep-all;
 

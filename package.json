@@ -1,31 +1,35 @@
 {
-  "name": "playmaker-fe",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
-    "@svgr/webpack": "^8.0.1",
-    "@types/node": "18.15.11",
-    "@types/react": "18.0.33",
-    "@types/react-dom": "18.0.11",
-    "eslint-config-next": "13.3.0",
-    "jotai": "^2.0.3",
-    "next": "13.3.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "react-hook-form": "^7.43.9",
-    "typescript": "5.0.3"
-  },
-  "devDependencies": {
-    "babel-eslint": "^10.1.0",
-    "eslint-config-prettier": "^8.8.0",
-    "prettier": "^2.8.8"
-  }
+    "name": "playmaker-fe",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "jotai": "^2.0.3",
+        "next": "13.3.0",
+        "react": "18.2.0",
+        "react-dom": "18.2.0",
+        "react-hook-form": "^7.43.9",
+        "typescript": "5.0.3"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^5.59.6",
+        "@typescript-eslint/parser": "^5.59.6",
+        "@types/node": "18.15.11",
+        "@types/react": "18.0.33",
+        "@types/react-dom": "18.0.11",
+        "babel-eslint": "^10.1.0",
+        "eslint": "^7.32.0",
+        "prettier": "^2.8.8",
+        "eslint-config-next": "13.3.0",
+        "eslint-config-prettier": "^8.8.0",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "eslint-plugin-unused-imports": "^2.0.0"
+    }
 }

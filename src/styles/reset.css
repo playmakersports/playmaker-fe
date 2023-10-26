@@ -3,6 +3,7 @@
     padding: 0;
     border: 0;
     font-size: 100%;
+    box-sizing: border-box;
 }
 html,
 body {
@@ -50,16 +51,12 @@ button {
     background: none;
     border: none;
 }
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
 
 input,
 textarea,
 select,
 option {
+    font: inherit;
     border: none;
     outline: none;
     border-radius: 0px;

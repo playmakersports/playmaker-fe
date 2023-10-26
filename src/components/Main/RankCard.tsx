@@ -1,95 +1,99 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 
-import Card from "./Card";
+import ItemTitle from "./ItemTitle";
+import { MdHeadText, MdText } from "@/src/styles/common";
+import CrownIcon from "@/src/assets/icons/common/CrownIcon";
 
 interface Props {
     type: string;
     localId: string;
-    localName: string;
-    list: any;
+    list: {
+        rank: number;
+        userId: string;
+        nickname: string;
+        profileImg: string;
+        winRate: number;
+        point: number;
+    }[];
 }
 
-function RankCard({ type, localId, localName, list }: Props) {
-    const [RankOrder, setRankOrder] = useState(0);
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            setRankOrder((prev) => (prev + 1) % 5);
-        }, 1500);
-        return () => clearInterval(intervalId);
-    }, []);
-
+function RankCard({ type, localId, list }: Props) {
     return (
-        <Card
-            title={`${type === "TEAM" ? "팀" : "선수"} 랭킹`}
-            localName={localName}
-            link={`/rank/${type.toLowerCase()}?location=${localId}`}
-        >
+        <Container>
+            <ItemTitle title="이시각 선수 랭킹" moreLink={`/rank/${type.toLowerCase()}?location=${localId}`} />
+
             <RankList>
-                {list.map((v: any, i: number) => (
-                    <RankItem key={i} position={i === RankOrder}>
-                        {v.rank === 1 ? (
-                            <img src="/assets/icons/crown_icon_color.svg" alt="1위" className="ranking-first" />
-                        ) : (
-                            <span className="ranking">{v.rank}위</span>
-                        )}
-                        <span className="name">{v.name}</span>
-                        <span className="card-number percent">12%</span>
-                        <span className="card-number point">{v.point}</span>
+                {list.map((item) => (
+                    <RankItem key={item.userId}>
+                        <RankNum as="span">
+                            {item.rank === 1 ? <CrownIcon width={32} height={26} /> : item.rank}
+                        </RankNum>
+                        <Nickname>
+                            <img src={item.profileImg} alt={`${item.nickname}의 프로필 이미지`} />
+                            {item.nickname}
+                        </Nickname>
+                        <Stats>
+                            <span className="card-number numbers percent">{item.winRate * 100}%</span>
+                            <span className="card-number numbers point">{item.point}</span>
+                        </Stats>
                     </RankItem>
                 ))}
             </RankList>
-        </Card>
+        </Container>
     );
 }
 
+const Container = styled.div``;
 const RankList = styled.ul`
     display: flex;
-    margin: 0 4px 0 0;
+    padding: 12px 16px;
     flex-direction: column;
-    gap: 2px;
+    gap: 12px;
+    background-color: ${({ theme }) => theme.color.white};
+    border-radius: 8px;
+    box-shadow: ${({ theme }) => theme.shadow.card20};
 `;
-const RankItem = styled.li<{ position: boolean }>`
+const RankItem = styled.li`
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
     height: 36px;
-    .ranking {
+`;
+
+const RankNum = styled(MdHeadText)`
+    padding: 3px 0;
+    width: 36px;
+    text-align: center;
+    font-size: 2rem;
+`;
+const Nickname = styled(MdText)`
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    img {
         display: inline-block;
-        padding: 3px 0;
-        width: 36px;
-        color: ${({ theme }) => theme.color.gray4};
-        background-color: ${({ theme }) => theme.color.background};
-        border-radius: 12px;
-        font-size: 0.75rem;
-        text-align: center;
-        transition: all 0.3s;
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        overflow: hidden;
+        border-radius: 100%;
+        border: 1px solid ${({ theme }) => theme.color.gray2};
     }
-    .ranking-first {
-        width: 36px;
-        height: 28px;
-        object-fit: contain;
-    }
-    .name {
-        display: inline-block;
-        width: 45%;
-        font-size: 0.9rem;
-        font-weight: ${(props) => (props.position ? 600 : 0)};
-        text-align: center;
-        transition: font-weight 0.25s;
-    }
+`;
+const Stats = styled(MdText)`
+    display: inline-flex;
+    gap: 8px;
     .card-number {
         display: inline-flex;
         align-items: center;
         gap: 3px;
-        color: ${({ theme }) => theme.color.gray3};
-        font-size: 0.85rem;
-        font-weight: 500;
+        color: ${({ theme }) => theme.color.gray4};
+        font-size: 1.8rem;
         text-align: center;
-        transition: all 0.3s;
-        letter-spacing: -0.35px;
+        letter-spacing: -0.3px;
         &::before {
-            font-size: 0.6rem;
+            font-size: 1.2rem;
             font-weight: 400;
             color: ${({ theme }) => theme.color.gray2};
         }

@@ -3,8 +3,8 @@ import styled from "@emotion/styled";
 
 import AlertList from "./AlertList";
 import RankCard from "./RankCard";
-import FindPlayerCard from "./FindPlayerCard";
 import RankCarousel from "./RankCarousel";
+import YBFindList from "./YBFindList";
 
 function Main() {
     return (
@@ -14,7 +14,6 @@ function Main() {
                 <RankCarousel
                     type="TEAM"
                     localId="anyang"
-                    localName="안양시"
                     list={[
                         { rank: 1, teamId: "1231", teamName: "불도저FC", teamImage: "", point: 230, winRate: 0.4 },
                         { rank: 2, teamId: "1232", teamName: "진짜FC", teamImage: "", point: 230, winRate: 0.4 },
@@ -24,25 +23,87 @@ function Main() {
                     ]}
                 />
 
-                <FindPlayerCard
+                <YBFindList
                     localId="anyang"
-                    localName="안양시"
                     list={[
-                        { teamname: "불도저FC", playAt: "6월 12일 16:00", playground: "00풋살장", findNum: 2 },
-                        { teamname: "어쩌고FC", playAt: "6월 13일 16:00", playground: "00중학교", findNum: 3 },
-                        { teamname: "저쩌고FC", playAt: "6월 13일 21:00", playground: "00공원 실내풋살장", findNum: 1 },
+                        {
+                            teamId: "12343",
+                            matchId: "23111200001",
+                            teamName: "불도저FC",
+                            playDate: "2023-11-12 20:30",
+                            playPlace: "00풋살장",
+                            findNum: 2,
+                        },
+                        {
+                            teamId: "12342",
+                            matchId: "23102900002",
+                            teamName: "어쩌고FC",
+                            playDate: "2023-10-29 18:00",
+                            playPlace: "00중학교",
+                            findNum: 3,
+                        },
+                        {
+                            teamId: "12341",
+                            matchId: "23102800012",
+                            teamName: "저쩌고FC",
+                            playDate: "2023-10-28 21:00",
+                            playPlace: "00공원 실내풋살장",
+                            findNum: 1,
+                        },
+                        {
+                            teamId: "12345",
+                            matchId: "23102800014",
+                            teamName: "진짜FC",
+                            playDate: "2023-10-27 21:00",
+                            playPlace: "00공원 실내풋살장",
+                            findNum: 1,
+                        },
                     ]}
                 />
                 <RankCard
                     type="PLAYER"
                     localId="anyang"
-                    localName="안양시"
                     list={[
-                        { rank: 1, name: "안양의메시", point: 230 },
-                        { rank: 2, name: "안양의메시", point: 230 },
-                        { rank: 3, name: "안양의메시", point: 230 },
-                        { rank: 4, name: "안양의메시", point: 230 },
-                        { rank: 5, name: "안양의메시", point: 230 },
+                        {
+                            rank: 1,
+                            userId: "test1239",
+                            nickname: "닉네임1",
+                            profileImg: "https://img.sbs.co.kr/newimg/news/20230710/201805762_1280.jpg",
+                            winRate: 0.6,
+                            point: 240,
+                        },
+                        {
+                            rank: 2,
+                            userId: "test1231",
+                            nickname: "닉네임닉네임",
+                            profileImg: "",
+                            winRate: 0.6,
+                            point: 230,
+                        },
+                        {
+                            rank: 3,
+                            userId: "test1232",
+                            nickname: "진짜임",
+                            profileImg: "https://img.sbs.co.kr/newimg/news/20230710/201805762_1280.jpg",
+                            winRate: 0.6,
+                            point: 230,
+                        },
+                        {
+                            rank: 4,
+                            userId: "test1233",
+                            nickname: "안양의메시",
+                            profileImg: "",
+                            winRate: 0.6,
+                            point: 230,
+                        },
+                        {
+                            rank: 5,
+                            userId: "test1234",
+                            nickname: "안양의메시",
+                            profileImg: "",
+                            winRate: 0.6,
+                            point: 230,
+                        },
                     ]}
                 />
             </Articles>
@@ -55,11 +116,11 @@ const Articles = styled.section`
     margin: 32px 0 0;
     padding: 0 16px;
     flex-direction: column;
-    gap: 24px;
+    gap: 48px;
     @media (min-width: 768px) {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 36px;
+        grid-template-columns: 1fr 2fr;
+        gap: 36px 52px;
     }
 `;
 

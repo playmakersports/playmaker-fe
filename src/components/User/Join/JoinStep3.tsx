@@ -1,33 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import styled from "@emotion/styled";
-import { FieldValues, UseFormRegister, UseFormWatch } from "react-hook-form";
 
 import { Label, SelectLabel, TextArea, TextAreaWrap } from "../../Common/FormStyle";
 import FormDropdownBox from "../../Common/FormDropdownBox";
 import { FOOTBALL_CLUBS, FOOTBALL_LEAGUE } from "@/src/constants/FootballClubs";
+import { useFormContext } from "react-hook-form";
 
-interface JoinStepPropsType {
-    setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-    register: UseFormRegister<FieldValues>;
-    watch: UseFormWatch<FieldValues>;
-}
-
-function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
-    const ContainerRef = useRef<HTMLDivElement>(null);
-
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setJoinStep(3);
-                    }
-                });
-            },
-            { threshold: 0.5 }
-        );
-        observer.observe(ContainerRef.current!);
-    }, []);
+function JoinStep3() {
+    const { register, watch } = useFormContext();
 
     const PLAY_STYLE = [
         "공격수",
@@ -51,7 +31,7 @@ function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
     ];
 
     return (
-        <Container id="step3" ref={ContainerRef}>
+        <Container id="step3">
             <Item>
                 <Label>나의 해시태그</Label>
                 <Options>
@@ -89,7 +69,6 @@ function JoinStep3({ setJoinStep, register, watch }: JoinStepPropsType) {
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px;
     gap: 32px;
 `;
 const Item = styled.div`
@@ -104,7 +83,7 @@ const Options = styled.div`
     flex-wrap: wrap;
     align-items: center;
     gap: 8px;
-    font-size: 1rem;
+    font-size: 1.6rem;
     label {
         flex: auto;
         min-width: 90px;

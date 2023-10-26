@@ -1,62 +1,51 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { FieldErrors, FieldValues, UseFormRegister, UseFormWatch } from "react-hook-form";
-import { InputText, InputRadioWrap, Label, SelectLabel } from "../../Common/FormStyle";
+import { useFormContext } from "react-hook-form";
 
-interface JoinStepPropsType {
-    setJoinStep: React.Dispatch<React.SetStateAction<number>>;
-    register: UseFormRegister<FieldValues>;
-    watch: UseFormWatch<FieldValues>;
-    errors: FieldErrors<FieldValues>;
-}
+import { InputText, InputRadioWrap, Label, SelectLabel, ErrorMsg } from "../../Common/FormStyle";
 
-function JoinStep1({ setJoinStep, register, watch, errors }: JoinStepPropsType) {
+function JoinStep1() {
+    const {
+        register,
+        watch,
+        formState: { errors },
+    } = useFormContext();
     const [showPassword, setShowPassword] = useState(false);
     const handleShowPassword = () => {
         setShowPassword((prev) => !prev);
     };
 
-    const ContainerRef = useRef<HTMLDivElement>(null);
     const passwordRegx = /^(?=.*[\W_]).{8,}$/;
 
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        setJoinStep(1);
-                    }
-                });
-            },
-            { threshold: 0.3 }
-        );
-        observer.observe(ContainerRef.current!);
-    }, []);
-
     return (
-        <Container id="step1" ref={ContainerRef}>
+        <Container id="step1">
             <Item>
-                <Label>아이디</Label>
+                <Label data-required>아이디</Label>
                 <InputText
                     type="text"
                     {...register("userId", {
-                        pattern: /^[a-zA-Z0-9_-]+$/,
-                        required: true,
+                        pattern: { value: /^[a-zA-Z0-9_-]+$/, message: "잘못된 아이디가 입력되었습니다." },
+                        required: { value: true, message: "아이디를 입력해주세요." },
                     })}
                 />
+                {errors.userId && <ErrorMsg>{errors.userId.message as string}</ErrorMsg>}
             </Item>
             <Item>
-                <Label>비밀번호</Label>
+                <Label data-required>비밀번호</Label>
                 <InputText
                     type={showPassword ? "text" : "password"}
                     placeholder=""
                     minLength={8}
                     style={{ paddingRight: "56px" }}
-                    {...register("password", { pattern: passwordRegx, required: true })}
+                    {...register("password", {
+                        pattern: passwordRegx,
+                        required: { value: true, message: "비밀번호를 입력해주세요." },
+                    })}
                 />
                 <button type="button" className="password-show-button numbers" onClick={handleShowPassword}>
                     {showPassword ? "HIDE" : "SHOW"}
                 </button>
+                {errors.password && <ErrorMsg>{errors.password.message as string}</ErrorMsg>}
                 <ul className="password-validation-list">
                     <PwdValid isContain={watch("password")?.length > 7}>최소 8자 이상의 문자</PwdValid>
                     <PwdValid isContain={watch("password") ? passwordRegx.test(watch("password")) : false}>
@@ -65,25 +54,25 @@ function JoinStep1({ setJoinStep, register, watch, errors }: JoinStepPropsType) 
                 </ul>
             </Item>
             <Item>
-                <Label>이름</Label>
+                <Label data-required>이름</Label>
                 <InputText type="text" {...register("name", { required: true })} />
             </Item>
             <Item>
-                <Label>닉네임</Label>
+                <Label data-required>닉네임</Label>
                 <InputText type="text" {...register("nickname", { required: true })} />
             </Item>
             <Item>
-                <Label>연락처</Label>
+                <Label data-required>연락처</Label>
                 <InputText type="tel" {...register("phone", { required: true })} />
             </Item>
             <Item>
-                <Label>생년월일</Label>
+                <Label data-required>생년월일</Label>
                 <div className="input-container">
                     <InputText type="date" {...register("birthday", { required: true })} />
                 </div>
             </Item>
             <Item>
-                <Label>성별</Label>
+                <Label data-required>성별</Label>
                 <InputRadioWrap>
                     <SelectLabel>
                         <input type="radio" value="male" {...register("sex", { required: true })} />
@@ -96,7 +85,7 @@ function JoinStep1({ setJoinStep, register, watch, errors }: JoinStepPropsType) 
                 </InputRadioWrap>
             </Item>
             <Item>
-                <Label>이메일</Label>
+                <Label data-required>이메일</Label>
                 <InputText type="email" {...register("email", { required: true })} />
             </Item>
         </Container>
@@ -106,7 +95,6 @@ function JoinStep1({ setJoinStep, register, watch, errors }: JoinStepPropsType) 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 20px;
     gap: 32px;
 `;
 const Item = styled.div`
@@ -130,18 +118,18 @@ const Item = styled.div`
     }
 `;
 const PwdValid = styled.li<{ isContain: boolean }>`
-    padding: 0 2px 10px;
-    font-size: 0.85rem;
-    font-weight: ${({ isContain }) => (isContain ? 500 : 300)};
-    opacity: ${({ isContain }) => (isContain ? 0.9 : 0.55)};
+    padding: 0 2px 16px;
+    font-size: 1.4rem;
+    font-weight: ${({ isContain }) => (isContain ? 600 : 500)};
+    opacity: ${({ isContain }) => (isContain ? 1 : 0.6)};
     &::before {
         display: inline-block;
-        content: "✓";
+        content: ${({ isContain }) => (isContain ? `"✓"` : `"✕"`)};
         width: 13px;
         height: 13px;
         margin: 0 6px 0 0;
         text-align: center;
-        color: ${({ theme, isContain }) => (isContain ? theme.color.gray4 : theme.color.gray2)};
+        color: ${({ theme, isContain }) => (isContain ? theme.color.green : theme.color.warn)};
     }
 `;
 

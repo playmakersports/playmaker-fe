@@ -4,8 +4,6 @@ import { useTheme } from "@emotion/react";
 import { useRouter } from "next/router";
 
 import TeamLayout from "@/src/components/Team/Layout";
-import MATCH_ICON from "@/src/assets/icons/manager/match_icon.svg";
-import JOIN_ICON from "@/src/assets/icons/manager/join_setting_icon.svg";
 
 function Manager() {
     const router = useRouter();
@@ -25,8 +23,8 @@ function Manager() {
     const MENUS = [
         { icon: <></>, name: "기본정보", path: "info" },
         { icon: <></>, name: "팀원관리", path: "members" },
-        { icon: <MATCH_ICON color={theme.color.gray3} />, name: "경기관리", path: "match-control" },
-        { icon: <JOIN_ICON color={theme.color.gray3} />, name: "가입설정", path: "join-setting" },
+        { icon: <></>, name: "경기관리", path: "match-control" },
+        { icon: <></>, name: "가입설정", path: "join-setting" },
         { icon: <></>, name: "가입대기 목록", path: "join-player" },
         { icon: <></>, name: "용병관리", path: "yongbyung" },
     ];

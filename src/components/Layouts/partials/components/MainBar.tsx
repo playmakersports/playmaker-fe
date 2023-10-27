@@ -8,7 +8,7 @@ import { MdHeadText } from "@/src/styles/common";
 import { HeaderInner } from "../Header";
 import HeaderMenu from "../components/HeaderModal";
 import LogotypeVertical from "@/src/assets/logo/LogotypeVertical";
-import LocationPickerIcon from "@/src/assets/icons/common/LocationPickerIcon";
+import { LocationPickerIcon } from "@/src/assets/icons/common/LocationPickerIcon";
 
 function MainBar() {
     const theme = useTheme();

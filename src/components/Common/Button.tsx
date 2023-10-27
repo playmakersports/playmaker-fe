@@ -15,10 +15,10 @@ interface Props {
 }
 
 const BUTTON_SIZE_STYLE: { [key: string]: { [key: string]: string } } = {
-    large: { fontSize: "1.8rem", height: "56px", weight: "600" },
-    medium: { fontSize: "1.6rem", height: "42px", weight: "600" },
-    small: { fontSize: "1.4rem", height: "28px", weight: "400" },
-    xsmall: { fontSize: "1.4rem", height: "28px", weight: "500" },
+    large: { fontSize: "1.8rem", height: "52px", weight: "600" },
+    medium: { fontSize: "1.6rem", height: "48px", weight: "600" },
+    small: { fontSize: "1.4rem", height: "32px", weight: "400" },
+    xsmall: { fontSize: "1.4rem", height: "32px", weight: "500" },
 };
 
 function Button({
@@ -74,7 +74,7 @@ function Button({
         <Wrapper
             type={type ?? "button"}
             onClick={callback}
-            modestyle={BUTTON_MODE_STYLE}
+            modeStyle={BUTTON_MODE_STYLE}
             noFlex={noFlex}
             mode={mode}
             size={size}
@@ -91,7 +91,7 @@ const Wrapper = styled.button<{
     mode: string;
     size: string;
     noFlex: boolean;
-    modestyle: { [key: string]: { [key: string]: string } };
+    modeStyle: { [key: string]: { [key: string]: string } };
     main: boolean;
     shadow: boolean;
     disabled: boolean;
@@ -99,11 +99,11 @@ const Wrapper = styled.button<{
     padding: 0 16px;
     min-height: ${({ size }) => BUTTON_SIZE_STYLE[size].height};
     flex: ${({ noFlex, main }) => (noFlex ? "none" : main ? 2 : 1)};
-    background-color: ${({ modestyle, mode }) => modestyle[mode].background};
-    border: 1px solid ${({ modestyle, mode }) => modestyle[mode].border};
-    box-shadow: ${({ modestyle, mode, shadow }) => (shadow ? modestyle[mode].shadow : "none")};
-    border-radius: ${({ modestyle, mode }) => modestyle[mode].radius};
-    color: ${({ modestyle, mode }) => modestyle[mode].color};
+    background-color: ${({ modeStyle, mode }) => modeStyle[mode].background};
+    border: 1px solid ${({ modeStyle, mode }) => modeStyle[mode].border};
+    box-shadow: ${({ modeStyle, mode, shadow }) => (shadow ? modeStyle[mode].shadow : "none")};
+    border-radius: ${({ modeStyle, mode }) => modeStyle[mode].radius};
+    color: ${({ modeStyle, mode }) => modeStyle[mode].color};
     font-family: SUITE Variable;
     font-size: ${({ size }) => BUTTON_SIZE_STYLE[size].fontSize};
     font-weight: ${({ size }) => BUTTON_SIZE_STYLE[size].weight};

@@ -1,5 +1,6 @@
-import styled from "@emotion/styled";
 import React, { useEffect } from "react";
+import styled from "@emotion/styled";
+
 import Button from "./Button";
 
 export interface IModalPopupBtnType {
@@ -9,13 +10,14 @@ export interface IModalPopupBtnType {
     onClick: () => void;
 }
 
-interface IModalPopupPropsType {
+interface Props {
+    title: string;
     setShow: React.Dispatch<React.SetStateAction<boolean>>;
     btns: IModalPopupBtnType[];
     children: React.ReactNode;
 }
 
-function Modal({ setShow, btns, children }: IModalPopupPropsType) {
+function Modal({ title, setShow, btns, children }: Props) {
     useEffect(() => {
         document.body.style.overflow = "hidden";
         return () => {
@@ -30,8 +32,9 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
         <>
             <Wrapper>
                 <Contents>
+                    <Title>{title}</Title>
                     <div className="modal-contents-container">{children}</div>
-                    <div className="modal-btn-container">
+                    <Buttons>
                         {btns.map((btn) => (
                             <Button
                                 key={btn.text}
@@ -43,7 +46,7 @@ function Modal({ setShow, btns, children }: IModalPopupPropsType) {
                                 callback={btn.onClick}
                             />
                         ))}
-                    </div>
+                    </Buttons>
                 </Contents>
             </Wrapper>
             <Dim onClick={closeModal} />
@@ -63,44 +66,45 @@ const Dim = styled.div`
 
 const Wrapper = styled.div`
     position: fixed;
-    padding: 28px;
     top: 50%;
     left: 50%;
     width: calc(100% - 32px);
     z-index: 99;
-    background: #ffffff;
-    background-color: ${({ theme }) => theme.color.white};
-    border-radius: 16px;
-    border: 1px solid ${({ theme }) => theme.color.gray1};
     transform: translate(-50%, -50%);
     @media (min-width: 768px) {
         width: 460px;
     }
 `;
-
 const Contents = styled.section`
-    min-height: 248px;
+    min-height: 360px;
     display: flex;
+    padding: 24px;
     flex-direction: column;
     justify-content: space-between;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: ${({ theme }) => theme.color.white};
+
     .modal-contents-container {
-        h2 {
-            font-size: 1rem;
-            font-weight: 600;
-            padding: 2px 2px 8px;
-            margin: 0 0 28px;
-            border-bottom: 3px solid ${({ theme }) => theme.color.main};
-        }
         p {
-            font-size: 1rem;
+            font-size: 1.4rem;
         }
     }
-    .modal-btn-container {
-        display: flex;
-        justify-content: space-between;
-        gap: 12px;
-        margin-top: 20px;
-    }
+`;
+const Title = styled.h2`
+    display: block;
+    margin: -24px -24px 0;
+    padding: 24px 24px 16px;
+    font-size: 2rem;
+    font-weight: 700;
+    font-family: SUITE Variable;
+    background-color: ${({ theme }) => theme.color.main};
+`;
+const Buttons = styled.div`
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    gap: 12px;
 `;
 
 export default Modal;

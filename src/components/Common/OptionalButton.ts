@@ -9,7 +9,7 @@ export const BasicButton = styled.button<{ color?: string; backgroundColor?: str
 `;
 
 export const CentralBtn = styled.button<{ icon?: string }>`
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 4px;
     margin: 0 auto 20px;
@@ -17,7 +17,7 @@ export const CentralBtn = styled.button<{ icon?: string }>`
     border-radius: 24px;
     border: 1px solid ${({ theme }) => theme.color.gray3};
     color: ${({ theme }) => theme.color.gray4};
-    font-weight: 500;
+    font-size: 1.4rem;
     &::before {
         content: "";
         display: ${({ icon }) => icon || "none"};
@@ -36,7 +36,7 @@ export const FilterBtn = styled(CentralBtn)<{ showFilters: boolean }>`
     .filter-selector {
         position: absolute;
         margin: 12px 0 0;
-        padding: 16px;
+        padding: 12px;
         opacity: ${({ showFilters }) => (showFilters ? "1" : "0")};
         top: ${({ showFilters }) => (showFilters ? "100%" : "50%")};
         left: 50%;
@@ -45,7 +45,7 @@ export const FilterBtn = styled(CentralBtn)<{ showFilters: boolean }>`
         border: 1px solid ${({ theme }) => theme.color.gray1};
         border-radius: 16px;
         transform: translateX(-50%);
-        font-size: 0.9rem;
+        font-size: 1.6rem;
         z-index: ${({ showFilters }) => (showFilters ? "1" : "-1")};
         transition: top 0.3s, opacity 0.3s;
         li {

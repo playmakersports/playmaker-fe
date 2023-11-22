@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import TeamLayout from "@/src/components/Team/Layout";
 import Button from "@/src/components/Common/Button";
 import { FilterBtn } from "@/src/components/Common/OptionalButton";
+import { FilterIcon } from "@/src/assets/icons/common/FilterIcon";
 
 function TeamPlayers() {
     const [showFilters, setShowFilters] = useState(false);
@@ -49,13 +50,8 @@ function TeamPlayers() {
     return (
         <TeamLayout teamName="팀 이름" title="선수 명단" color={teamColor}>
             <>
-                <FilterBtn
-                    type="button"
-                    icon="/assets/icons/moderate_icon.svg"
-                    onClick={() => setShowFilters((prev) => !prev)}
-                    showFilters={showFilters}
-                >
-                    {FILTER_VALUE[filter]}
+                <FilterBtn type="button" onClick={() => setShowFilters((prev) => !prev)} showFilters={showFilters}>
+                    <FilterIcon /> {FILTER_VALUE[filter]}
                     <ul className="filter-selector">
                         {Object.keys(FILTER_VALUE)
                             .map((key) => ({

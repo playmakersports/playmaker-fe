@@ -80,8 +80,7 @@ function MatchPlayers({ type = "view", id, register, control, teamColor, list }:
                         </Player>
                     ))}
                 {showModal && (
-                    <Modal setShow={setShowModal} btns={[]}>
-                        <h2>선수 선택</h2>
+                    <Modal title="선수 선택" setShow={setShowModal} btns={[]}>
                         <p>경기에 참여하는 선수를 선택해주세요.</p>
                         <SearchWrapper>
                             <input type="text" />

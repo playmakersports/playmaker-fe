@@ -24,9 +24,10 @@ const Container = styled.ul`
 const Item = styled.li`
     padding: 6px 12px;
     border-radius: 20px;
-    border: 1px solid ${({ theme }) => theme.color.gray1};
-    color: ${({ theme }) => theme.color.gray1};
-    font-size: 0.85rem;
+    border: 2px solid ${({ theme }) => theme.color.gray3};
+    color: ${({ theme }) => theme.color.gray4};
+    font-weight: 500;
+    font-size: 1.4rem;
 `;
 
 export default UserHashTag;

@@ -54,7 +54,7 @@ const Item = styled.li<{ icon: string }>`
         padding: 4px 0 0;
         align-items: flex-start;
         font-weight: 600;
-        font-size: 0.8rem;
+        font-size: 1.5rem;
         opacity: 0.65;
         &::before {
             content: "";
@@ -69,8 +69,8 @@ const Item = styled.li<{ icon: string }>`
         }
     }
     dd {
-        font-size: 0.85rem;
-        line-height: 1.3rem;
+        font-size: 1.6rem;
+        line-height: 2.1rem;
         word-break: keep-all;
     }
 `;

@@ -36,12 +36,13 @@ const Item = styled.li`
         padding: 4px 8px;
         border-radius: 12px;
         background-color: ${({ theme }) => theme.color.gray4};
-        font-size: 0.7rem;
-        font-weight: 800;
+        font-size: 1.3rem;
+        font-weight: 600;
         letter-spacing: -0.25px;
+        color: #fff;
     }
     .fav-team-name {
-        font-size: 0.9rem;
+        font-size: 1.6rem;
     }
 `;
 

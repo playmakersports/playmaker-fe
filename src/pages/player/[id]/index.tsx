@@ -21,13 +21,15 @@ function Player() {
     };
 
     return (
-        <Container>
+        <Wrapper>
             <UserBadgeHeader />
-            <UserInfoList data={infos} />
-            <SelfIntro>매너게임합니다! 열정넘침!</SelfIntro>
-            <UserHashTag data={hashtags} />
-            <Title>좋아하는 팀</Title>
-            <UserFan data={favTeam} />
+            <Contents>
+                <UserInfoList data={infos} />
+                <SelfIntro>매너게임합니다! 열정넘침!</SelfIntro>
+                <UserHashTag data={hashtags} />
+                <Title>좋아하는 팀</Title>
+                <UserFan data={favTeam} />
+            </Contents>
             <FloatBottom>
                 <>
                     <Button
@@ -46,35 +48,33 @@ function Player() {
                     />
                 </>
             </FloatBottom>
-        </Container>
+        </Wrapper>
     );
 }
 
-const Container = styled.section`
-    padding: 348px 20px 40px;
-    background-color: #2a365d;
-    color: #fff;
-    @media (min-width: 768px) {
-        padding: 20px 20px 60px;
-    }
+const Wrapper = styled.section`
+    margin-top: -64px;
 `;
-
+const Contents = styled.div`
+    padding: 16px;
+`;
 const SelfIntro = styled.p`
     margin: 24px 0 0;
     padding: 24px 4px 16px;
-    border-top: 1px solid ${({ theme }) => theme.color.gray4};
-    font-size: 1rem;
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
+    font-size: 1.6rem;
     text-align: center;
     word-break: keep-all;
     opacity: 0.9;
 `;
 
 const Title = styled.h3`
-    border-top: 1px solid ${({ theme }) => theme.color.gray4};
+    border-top: 1px solid ${({ theme }) => theme.color.gray1};
     margin: 32px 0 0;
     padding: 24px 2px 16px;
-    font-size: 1.2rem;
+    font-size: 1.8rem;
     font-weight: 600;
+    font-family: SUITE Variable;
 `;
 
 export default Player;

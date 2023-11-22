@@ -1,49 +1,62 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 
 import UserBadge from "./UserBadge";
+import footballFiledImage from "@/src/assets/images/football_field_large.jpg";
 
 function UserBadgeHeader() {
     return (
-        <BadgeWrap>
-            <div className="badge-container">
-                <UserBadgeBlurBack />
-                <UserBadge />
-            </div>
-        </BadgeWrap>
+        <Wrapper>
+            <Background src={footballFiledImage.src} />
+            <BadgeWrap>
+                <div className="badge-container">
+                    <UserBadge />
+                </div>
+            </BadgeWrap>
+        </Wrapper>
     );
 }
 
-const badgePath =
-    "M0 260.461V20.1191L45.8567 10.0596L91.7134 0L184 20.1191V260.461C184 260.461 102 276 92 296C82 276 0 260.461 0 260.461Z";
-
-const BadgeWrap = styled.article`
-    position: absolute;
-    width: 100%;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    border-top: 60px solid ${({ theme }) => theme.color.main};
-    .badge-container {
-        margin: -40px 0 0;
-    }
+const zoomInBackground = keyframes`
+  from {
+    width: 140%;
+    height: 100%;
+    filter: brightness(0.7);
+  }
+  to {
+    width: 160%;
+    height: 110%;
+    filter: brightness(0.4);
+  }
 `;
-const UserBadgeBlurBack = styled.div`
+const Wrapper = styled.article`
+    position: relative;
+    display: flex;
+    padding: 80px 30px 32px;
+    justify-content: center;
+    overflow: hidden;
+`;
+const Background = styled.img`
     position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 183px;
-    height: 296px;
-    filter: blur(8px);
-    &::before {
+    left: 0;
+    top: 0;
+    width: 160%;
+    height: 110%;
+    filter: brightness(0.4);
+    object-fit: cover;
+    animation: ${zoomInBackground} 1.2s ease-in-out;
+`;
+const BadgeWrap = styled.article`
+    position: relative;
+    width: 186px;
+    height: 286px;
+    background-color: #46859a;
+    clip-path: polygon(0 5%, 50% 0, 100% 5%, 100% 92%, 50% 100%, 0 92%);
+    .badge-container {
         position: absolute;
-        content: "";
-        margin: 8px 0 0;
-        width: 100%;
-        height: 100%;
-        clip-path: ${`path("${badgePath}")`};
-        background-color: rgba(0, 0, 0, 0.1);
-        transform: scale(1.05);
+        top: 3px;
+        left: 3px;
     }
 `;
 

@@ -5,10 +5,10 @@ import { useTheme } from "@emotion/react";
 
 import { darkMode } from "@/src/atoms/state";
 import { MdHeadText } from "@/src/styles/common";
-import { HeaderInner } from "../Header";
 import HeaderMenu from "../components/HeaderModal";
 import LogotypeVertical from "@/src/assets/logo/LogotypeVertical";
 import { LocationPickerIcon } from "@/src/assets/icons/common/LocationPickerIcon";
+import { HeaderInner } from "../../style";
 
 function MainBar() {
     const theme = useTheme();

@@ -36,14 +36,12 @@ const Container = styled.div`
     gap: 40px;
     @media (max-width: 768px) {
         align-items: top;
-        left: 0%;
     }
     @media (min-width: 768px) {
-        margin: 0 16px 36px;
+        left: 50%;
         align-items: center;
-        padding: 0 24px;
-        width: 420px;
-        right: 0%;
+        width: 1024px;
+        transform: translateX(-50%);
     }
 `;
 
@@ -117,12 +115,12 @@ const Item = styled.div<{ icon?: string }>`
 
 const Text = styled.div<{ icon: string }>`
     height: 100%;
-    background-image: url(${(props) => props.icon});
+    background-image: url(${({ icon }) => icon});
     background-position: top center;
     background-size: 28px;
     background-repeat: no-repeat;
     padding: 32px 20px 0;
-    font-size: 0.8rem;
+    font-size: 1.3rem;
 `;
 
 export default GNB;

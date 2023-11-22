@@ -28,34 +28,21 @@ function Header() {
     }
 
     return (
-        <HeaderContainer nowScrollY={scrollY}>
+        <HeaderContainer nowScrollY={scrollY} transparent={nowPath === "/player/[id]"}>
             <PageBar />
         </HeaderContainer>
     );
 }
 
-const HeaderContainer = styled.header<{ nowScrollY: number }>`
+const HeaderContainer = styled.header<{ nowScrollY: number; transparent?: boolean }>`
     position: fixed;
     width: 100vw;
     height: 64px;
     top: 0;
-    background-color: ${({ theme }) => theme.color.background};
+    background-color: ${({ transparent, theme }) => (transparent ? "transparent" : theme.color.background)};
     box-shadow: ${({ nowScrollY }) => nowScrollY > 10 && "0 0 10px 4px rgba(0, 0, 0, 0.2)"};
     z-index: 10;
     transition: box-shadow 0.3s;
-`;
-
-export const HeaderInner = styled.div`
-    margin: 0 auto;
-    display: flex;
-    padding: 8px 16px;
-    max-width: 1024px;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
-    @media (min-width: 768px) {
-        padding: 8px 20px;
-    }
 `;
 
 export default Header;

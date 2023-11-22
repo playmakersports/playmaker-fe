@@ -6,8 +6,8 @@ import { PAGE_HEADER_TITLE } from "../../../../constants/PAGE_HEADER";
 import { ArrowIconLeft } from "@/src/assets/icons/common/ArrowIconLeft";
 import AlertIcon from "@/src/assets/icons/common/AlertIcon";
 
-import { HeaderInner } from "../Header";
 import AlertList from "@/src/components/Main/AlertList";
+import { HeaderInner } from "../../style";
 
 function PageBar() {
     const router = useRouter();
@@ -18,7 +18,7 @@ function PageBar() {
 
     return (
         <>
-            <HeaderInner>
+            <PageBarInner transparent={nowPath === "/player/[id]"}>
                 <IconButton type="button" onClick={() => router.back()}>
                     <ArrowIconLeft />
                 </IconButton>
@@ -26,7 +26,7 @@ function PageBar() {
                 <AlertButton type="button" onClick={() => setShowAlertList((prev) => !prev)} active={activeAlert}>
                     <AlertIcon width={22} />
                 </AlertButton>
-            </HeaderInner>
+            </PageBarInner>
             <AlertListWrapper show={showAlertList}>
                 <AlertList />
             </AlertListWrapper>
@@ -34,6 +34,12 @@ function PageBar() {
     );
 }
 
+const PageBarInner = styled(HeaderInner)<{ transparent?: boolean }>`
+    svg {
+        fill: ${({ transparent }) => transparent && "#fff"};
+    }
+    color: ${({ transparent }) => transparent && "#fff"};
+`;
 const PageName = styled.p`
     font-size: 2rem;
     font-weight: 700;

@@ -11,9 +11,9 @@ export const ALERT_CODE: { [key: string]: string } = {
 
 function AlertList() {
     const ALERT_DATA = [
-        { code: "UPCOMING_MATCH", contents: "5월 1일 20:00, CS풋살클럽에서의 경기", redirect: "" },
-        { code: "JOIN_PURPOSE", contents: "FC달린다 등 2개 팀에게 온 제안", redirect: "" },
-        { code: "MATCH_PURPOSE", contents: "FC불도저가 보낸 5월 5일 16:30 매치 제안", redirect: "" },
+        { code: "UPCOMING_MATCH", contents: "5월 1일 20:00, CS풋살클럽 경기", redirect: "" },
+        { code: "JOIN_PURPOSE", contents: "FC달린다 등 2개 팀의 영입 제안", redirect: "" },
+        { code: "MATCH_PURPOSE", contents: "FC불도저의 5월 5일 매치 제안", redirect: "" },
     ];
 
     return (

@@ -11,6 +11,7 @@ import Button from "@/src/components/Common/Button";
 import { CentralBtn, FilterBtn } from "@/src/components/Common/OptionalButton";
 import { DateTimeIcon } from "@/src/assets/icons/common/DateTimeIcon";
 import { LocationPickerIconOutlined } from "@/src/assets/icons/common/LocationPickerIcon";
+import { FilterIcon } from "@/src/assets/icons/common/FilterIcon";
 
 interface YongbyungItemType {
     teamId: string;
@@ -107,16 +108,9 @@ function Yongbyung() {
         <>
             <Container>
                 <TopBtns>
-                    <CentralBtn type="button" icon="/assets/icons/location_icon.svg">
-                        경기 안양시
-                    </CentralBtn>
-                    <FilterBtn
-                        type="button"
-                        icon="/assets/icons/moderate_icon.svg"
-                        onClick={() => setShowFilters((prev) => !prev)}
-                        showFilters={showFilters}
-                    >
-                        {FILTER_VALUE[filter]}
+                    <CentralBtn type="button">경기 안양시</CentralBtn>
+                    <FilterBtn type="button" onClick={() => setShowFilters((prev) => !prev)} showFilters={showFilters}>
+                        <FilterIcon /> {FILTER_VALUE[filter]}
                         <ul className="filter-selector">
                             {Object.keys(FILTER_VALUE)
                                 .map((key) => ({
@@ -124,7 +118,11 @@ function Yongbyung() {
                                     name: FILTER_VALUE[key],
                                 }))
                                 .map((item) => (
-                                    <li key={item.value} onClick={() => setFilter(item.value)}>
+                                    <li
+                                        key={item.value}
+                                        className={item.value === filter ? "selected" : ""}
+                                        onClick={() => setFilter(item.value)}
+                                    >
                                         {item.name}
                                     </li>
                                 ))}
@@ -141,7 +139,7 @@ function Yongbyung() {
                                     <span className="find-team-name">{item.teamName}</span>
                                     <span className="find-team-rank">지역 {item.teamRank}위</span>
                                 </TeamName>
-                                <PlayInfo>
+                                <PlayInfo as="div">
                                     <p>
                                         <DateTimeIcon width={16} height={16} fill={theme.color.gray3} />
                                         {getDateDiffMessage(getDateInterval(item.playAt), new Date(item.playAt))}{" "}

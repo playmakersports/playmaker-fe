@@ -5,9 +5,10 @@ export const PAGE_HEADER_TITLE: { [key: string]: string } = {
     "/user/join": "회원가입",
     "/user/login": "로그인",
     "/find/yongbyung": "용병 모집 현황",
-    "/match/[id]": "경기정보",
+    "/match/[id]": "경기 정보",
     "/match/create": "새 경기 만들기",
     "/team/create": "팀 창단",
     "/rank/team": "팀 랭킹",
     "/rank/player": "선수 랭킹",
+    "/player/[id]": "선수 정보",
 };

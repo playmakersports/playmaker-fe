@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
@@ -9,20 +9,18 @@ import AlertIcon from "@/src/assets/icons/common/AlertIcon";
 import AlertList from "@/src/components/Main/AlertList";
 import { HeaderInner } from "../../style";
 
-function PageBar() {
-    const router = useRouter();
+function PageBar({ transparent }: { transparent?: boolean }) {
+    const { pathname, back } = useRouter();
     const [activeAlert, setActiveAlert] = useState(true);
     const [showAlertList, setShowAlertList] = useState(false);
 
-    const nowPath = router.pathname;
-
     return (
         <>
-            <PageBarInner transparent={nowPath === "/player/[id]"}>
-                <IconButton type="button" onClick={() => router.back()}>
+            <PageBarInner transparent={!!transparent}>
+                <IconButton type="button" onClick={() => back()}>
                     <ArrowIconLeft />
                 </IconButton>
-                <PageName>{PAGE_HEADER_TITLE[nowPath]}</PageName>
+                <PageName>{PAGE_HEADER_TITLE[pathname]}</PageName>
                 <AlertButton type="button" onClick={() => setShowAlertList((prev) => !prev)} active={activeAlert}>
                     <AlertIcon width={22} />
                 </AlertButton>

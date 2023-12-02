@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
@@ -12,12 +12,16 @@ import Footer from "./partials/Footer";
 
 function Layout({ children }: { children: JSX.Element }) {
     const [darkModeState] = useAtom(darkMode);
-    const router = useRouter();
-    const place = router.pathname.split("/").slice(1);
+    const container = useRef<HTMLDivElement>(null);
+    const { asPath } = useRouter();
+
+    useEffect(() => {
+        container.current?.scrollTo(0, 0);
+    }, [asPath]);
 
     return (
         <ThemeProvider theme={darkModeState ? DarkTheme : LightTheme}>
-            <div className="contents" style={{ minHeight: "100vh", paddingTop: "64px" }}>
+            <div ref={container} className="contents" style={{ minHeight: "100vh", paddingTop: "64px" }}>
                 <Header />
                 <main className="main-container">{children}</main>
                 <GNB />

@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { FieldValues, RegisterOptions, UseFormRegister, UseFormWatch } from "react-hook-form";
+import { FieldValues, RegisterOptions, UseFormRegister, UseFormWatch, useFormContext } from "react-hook-form";
 
 import DropSelector, { IDropdownItemType } from "./DropSelector";
 
-export interface IFormDropdownBoxType {
-    register: UseFormRegister<FieldValues>;
-    watch: UseFormWatch<FieldValues>;
+export interface Props {
     type: "radio" | "checkbox";
     id: string;
     options: IDropdownItemType[] | undefined;
@@ -14,19 +12,11 @@ export interface IFormDropdownBoxType {
     placeholder?: string;
     optionSetting?: RegisterOptions;
     maxChecked?: number;
+    showFilterName?: boolean;
 }
 
-function FormDropdownBox({
-    register,
-    watch,
-    type,
-    id,
-    options,
-    filter,
-    placeholder,
-    optionSetting,
-    maxChecked,
-}: IFormDropdownBoxType) {
+function FormDropdownBox({ type, id, options, filter, placeholder, optionSetting, maxChecked, showFilterName }: Props) {
+    const { register, watch } = useFormContext();
     const [showDropdown, setShowDropdown] = useState(() => false);
 
     function convertSelectedOption(data: string | string[]) {
@@ -46,7 +36,19 @@ function FormDropdownBox({
                 isPlaceholder={!(watch(id)?.length > 0)}
                 onClick={() => setShowDropdown((prev) => !prev)}
             >
-                <div>{watch(id)?.length > 0 ? convertSelectedOption(watch(id)) : placeholder}</div>
+                <div>
+                    {watch(id)?.length > 0
+                        ? `${
+                              showFilterName
+                                  ? filter?.filter(
+                                        (item) =>
+                                            item.value ===
+                                            options?.filter((option) => option.value === watch(id))[0].category
+                                    )[0].optionName
+                                  : ""
+                          } ${convertSelectedOption(watch(id))}`
+                        : placeholder}
+                </div>
             </BoxWrap>
             {!showDropdown && (
                 <div style={{ display: "none" }}>
@@ -62,9 +64,7 @@ function FormDropdownBox({
             )}
             {showDropdown && (
                 <DropSelector
-                    register={register}
                     setShow={setShowDropdown}
-                    watch={watch}
                     type={type}
                     name={id}
                     items={options ?? []}

@@ -1,17 +1,13 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import JoinStep1 from "@/src/components/User/Join/JoinStep1";
 import JoinStep2 from "@/src/components/User/Join/JoinStep2";
 import JoinStep3 from "@/src/components/User/Join/JoinStep3";
-import Button from "@/src/components/Common/Button";
 import { SubTitleText } from "@/src/styles/common";
 
 function Join() {
     const [joinStep, setJoinStep] = useState(1);
-    const methods = useForm({ mode: "onChange" });
-    const { errors } = methods.formState;
 
     const STEP_LIST = [
         { step: 1, value: "기본정보" },
@@ -19,65 +15,24 @@ function Join() {
         { step: 3, value: "플레이정보" },
     ];
 
-    const onSubmit = (data: FieldValues) => {
-        console.log(data);
-    };
-
     return (
-        <FormProvider {...methods}>
-            <Form onSubmit={methods.handleSubmit(onSubmit)}>
-                <Steps>
-                    {STEP_LIST.map((item, idx) => (
-                        <StepItem as="li" key={idx} nowStep={item.step <= joinStep}>
-                            <span className="step-circle">{item.step}</span>
-                            <span className="step-name">{item.value}</span>
-                        </StepItem>
-                    ))}
-                </Steps>
-                {joinStep === 1 && <JoinStep1 />}
-                {joinStep === 2 && <JoinStep2 />}
-                {joinStep === 3 && <JoinStep3 />}
-                <StepButtons>
-                    {joinStep !== 1 && (
-                        <Button
-                            type="button"
-                            mode="basic"
-                            size="large"
-                            text="이전"
-                            main={false}
-                            shadow={false}
-                            callback={() => setJoinStep((prev) => prev - 1)}
-                        />
-                    )}
-                    {joinStep !== 3 && (
-                        <Button
-                            type="button"
-                            mode="main1"
-                            size="large"
-                            text="다음"
-                            main={true}
-                            shadow={false}
-                            callback={() => setJoinStep((prev) => prev + 1)}
-                        />
-                    )}
-                    {joinStep === 3 && (
-                        <Button
-                            type="submit"
-                            mode="main1"
-                            size="large"
-                            text="완료"
-                            main={true}
-                            shadow={false}
-                            disabled={Object.keys(errors).length > 0}
-                        />
-                    )}
-                </StepButtons>
-            </Form>
-        </FormProvider>
+        <Wrapper>
+            <Steps>
+                {STEP_LIST.map((item, idx) => (
+                    <StepItem as="li" key={idx} nowStep={item.step <= joinStep}>
+                        <span className="step-circle">{item.step}</span>
+                        <span className="step-name">{item.value}</span>
+                    </StepItem>
+                ))}
+            </Steps>
+            {joinStep === 1 && <JoinStep1 setJoinStep={setJoinStep} />}
+            {joinStep === 2 && <JoinStep2 setJoinStep={setJoinStep} />}
+            {joinStep === 3 && <JoinStep3 setJoinStep={setJoinStep} />}
+        </Wrapper>
     );
 }
 
-const Form = styled.form`
+const Wrapper = styled.section`
     padding: 0 20px;
 `;
 
@@ -134,12 +89,6 @@ const StepItem = styled(SubTitleText)<{ nowStep: boolean }>`
         z-index: -1;
         transition: width 0.3s;
     }
-`;
-
-const StepButtons = styled.div`
-    display: flex;
-    margin: 24px 0 0;
-    gap: 12px;
 `;
 
 export default Join;

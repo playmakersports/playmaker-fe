@@ -1,19 +1,25 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
+import { useAtom } from "jotai";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
+import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
 import { Label, SelectLabel, TextArea, TextAreaWrap } from "../../Common/FormStyle";
 import FormDropdownBox from "../../Common/FormDropdownBox";
 import { FOOTBALL_CLUBS, FOOTBALL_LEAGUE } from "@/src/constants/FootballClubs";
-import { useFormContext } from "react-hook-form";
+import Button from "../../Common/Button";
+import { joinState } from "@/src/atoms/state";
+import { API_URL } from "@/src/apis/endpoint";
+import { useQueryMutate } from "@/src/apis/hook";
 
-function JoinStep3() {
-    const { register, watch } = useFormContext();
+function JoinStep3({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetStateAction<number>> }) {
+    const router = useRouter();
+    const { data: res, mutate, error } = useQueryMutate("POST", API_URL.JOIN);
+    const [joinStateData, setJoinStateData] = useAtom(joinState);
+    const methods = useForm({ defaultValues: joinStateData });
+    const { register, watch } = methods;
 
     const PLAY_STYLE = [
-        "공격수",
-        "수비수",
-        "미드필더",
-        "골키퍼",
         "육상부",
         "체대생",
         "축구부",
@@ -30,43 +36,93 @@ function JoinStep3() {
         "초보",
     ];
 
+    const onSubmit = (data: FieldValues) => {
+        mutate({
+            ...data,
+            activeTime: data.activeTime[0],
+            gameStyle: data.gameStyle[0],
+            preferredSoccerTeam: data.preferredSoccerTeam.join[0],
+            proposalYn: data.proposalYn ? "Y" : "N",
+        });
+        console.log(res);
+        if (error) {
+            alert("error");
+        } else {
+            console.log("완료");
+            console.log(res);
+        }
+    };
+
+    useEffect(() => {
+        router.push({ query: { step: 3 } });
+    }, []);
+
     return (
-        <Container id="step3">
-            <Item>
-                <Label>나의 해시태그</Label>
-                <Options>
-                    {PLAY_STYLE.map((value) => (
-                        <SelectLabel key={value}>
-                            #{value}
-                            <input type="checkbox" value={value} {...register("play-style")} />
+        <FormProvider {...methods}>
+            <Form id="step3" onSubmit={methods.handleSubmit(onSubmit)}>
+                <Item>
+                    <Label>포지션</Label>
+                    <Options>
+                        <SelectLabel style={{ flex: 1 }}>
+                            공격에 강해요
+                            <input type="radio" value="FORWARD" {...register("position")} />
                         </SelectLabel>
-                    ))}
-                </Options>
-            </Item>
-            <Item>
-                <Label>자기소개</Label>
-                <TextAreaWrap length={(watch("introduce") ?? "").length} max={60}>
-                    <TextArea required={true} {...register("introduce", { maxLength: 60 })} />
-                </TextAreaWrap>
-            </Item>
-            <Item>
-                <Label>좋아하는 축구 클럽(팀)</Label>
-                <FormDropdownBox
-                    register={register}
-                    watch={watch}
-                    type="checkbox"
-                    id="favoriteClub"
-                    options={FOOTBALL_CLUBS}
-                    filter={FOOTBALL_LEAGUE}
-                    maxChecked={2}
-                    placeholder="축구 클럽(팀)을 선택해주세요"
-                />
-            </Item>
-        </Container>
+                        <SelectLabel style={{ flex: 1 }}>
+                            수비에 강해요
+                            <input type="radio" value="DEFENDER" {...register("position")} />
+                        </SelectLabel>
+                        <SelectLabel style={{ flex: 1 }}>
+                            골키퍼에 강해요
+                            <input type="radio" value="GK" {...register("position")} />
+                        </SelectLabel>
+                    </Options>
+                </Item>
+                <Item>
+                    <Label>나의 해시태그</Label>
+                    <Options>
+                        {PLAY_STYLE.map((value) => (
+                            <SelectLabel key={value}>
+                                #{value}
+                                <input type="checkbox" value={value} {...register("gameStyle")} />
+                            </SelectLabel>
+                        ))}
+                    </Options>
+                </Item>
+                <Item>
+                    <Label>자기소개</Label>
+                    <TextAreaWrap length={(watch("selfIntro") ?? "").length} max={60}>
+                        <TextArea required={true} {...register("selfIntro", { maxLength: 60 })} />
+                    </TextAreaWrap>
+                </Item>
+                <Item>
+                    <Label>좋아하는 축구 클럽(팀)</Label>
+                    <FormDropdownBox
+                        type="checkbox"
+                        id="preferredSoccerTeam"
+                        options={FOOTBALL_CLUBS}
+                        filter={FOOTBALL_LEAGUE}
+                        maxChecked={2}
+                        placeholder="축구 클럽(팀)을 선택해주세요"
+                    />
+                </Item>
+                <StepButtons>
+                    <Button
+                        type="button"
+                        mode="basic"
+                        size="large"
+                        text="이전"
+                        main={false}
+                        shadow={false}
+                        callback={() => setJoinStep((prev) => prev - 1)}
+                    />
+                    <Button type="submit" mode="main1" size="large" text="완료" main={true} shadow={false} />
+                </StepButtons>
+            </Form>
+        </FormProvider>
     );
 }
 
-const Container = styled.div`
+const Form = styled.form`
     display: flex;
     flex-direction: column;
     gap: 32px;
@@ -84,10 +140,12 @@ const Options = styled.div`
     align-items: center;
     gap: 8px;
     font-size: 1.6rem;
-    label {
-        flex: auto;
-        min-width: 90px;
-    }
+`;
+
+const StepButtons = styled.div`
+    display: flex;
+    margin: 24px 0 0;
+    gap: 12px;
 `;
 
 export default JoinStep3;

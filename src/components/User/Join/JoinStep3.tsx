@@ -14,8 +14,8 @@ import { useQueryMutate } from "@/src/apis/hook";
 
 function JoinStep3({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetStateAction<number>> }) {
     const router = useRouter();
-    const { data: res, mutate, error } = useQueryMutate("POST", API_URL.JOIN);
-    const [joinStateData, setJoinStateData] = useAtom(joinState);
+    const { mutate } = useQueryMutate("POST", API_URL.JOIN);
+    const [joinStateData] = useAtom(joinState);
     const methods = useForm({ defaultValues: joinStateData });
     const { register, watch } = methods;
 
@@ -37,20 +37,22 @@ function JoinStep3({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetState
     ];
 
     const onSubmit = (data: FieldValues) => {
-        mutate({
-            ...data,
-            activeTime: data.activeTime[0],
-            gameStyle: data.gameStyle[0],
-            preferredSoccerTeam: data.preferredSoccerTeam.join[0],
-            proposalYn: data.proposalYn ? "Y" : "N",
-        });
-        console.log(res);
-        if (error) {
-            alert("error");
-        } else {
-            console.log("완료");
-            console.log(res);
-        }
+        mutate(
+            {
+                ...data,
+                activeTime: data.activeTime[0],
+                gameStyle: data.gameStyle[0],
+                preferredSoccerTeam: data.preferredSoccerTeam.join[0],
+                proposalYn: data.proposalYn ? "Y" : "N",
+            },
+            {
+                onSuccess: () => {
+                    console.log("완료");
+                    router.push("/user/login");
+                },
+                onError: (err) => alert(`잘못된 회원가입 정보입니다.\n(${err.message})`),
+            }
+        );
     };
 
     useEffect(() => {

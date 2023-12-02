@@ -14,13 +14,7 @@ import { EyeHideIcon, EyeShowIcon } from "@/src/assets/icons/common/EyeIcon";
 
 function JoinStep1({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetStateAction<number>> }) {
     const [joinStateData, setJoinStateData] = useAtom(joinState);
-    const {
-        data: res,
-        mutate,
-        isLoading,
-        isError,
-        error,
-    } = useQueryMutate<Pick<JoinStateType, "userId" | "nickname" | "contact" | "email">>(
+    const { mutate } = useQueryMutate<Pick<JoinStateType, "userId" | "nickname" | "contact" | "email">>(
         "POST",
         API_URL.JOIN_VALIDATION
     );
@@ -50,18 +44,23 @@ function JoinStep1({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetState
     const passwordRegx = /^(?=.*[\W_]).{8,}$/;
 
     const onSubmit = async (data: FieldValues) => {
-        mutate({
-            userId: data.userId,
-            nickname: data.nickname,
-            contact: data.contact,
-            email: data.email,
-        });
-        if (isError) {
-            alert(`${error?.response?.data.errorCode}: ${error?.response?.data.errorMessage}(${error.message})`);
-        } else {
-            setJoinStateData((prev) => ({ ...prev, ...data }));
-            setJoinStep((prev) => prev + 1);
-        }
+        mutate(
+            {
+                userId: data.userId,
+                nickname: data.nickname,
+                contact: data.contact,
+                email: data.email,
+            },
+            {
+                onSuccess: () => {
+                    setJoinStateData((prev) => ({ ...prev, ...data }));
+                    setJoinStep((prev) => prev + 1);
+                },
+                onError: (err) => {
+                    alert(`${err?.response?.data.errorCode}: ${err?.response?.data.errorMessage}\n(${err.message})`);
+                },
+            }
+        );
     };
 
     useEffect(() => {

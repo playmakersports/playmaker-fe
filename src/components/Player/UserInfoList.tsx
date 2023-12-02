@@ -1,26 +1,34 @@
 import React from "react";
 import styled from "@emotion/styled";
+import BirthdayCakeIcon from "@/src/assets/icons/common/BirthdayCakeIcon";
+import { LocationPickerIcon } from "@/src/assets/icons/common/LocationPickerIcon";
 
 interface UserInfoListDataType {
     birth: string;
     location: string[];
 }
-interface UserInfoListPropsType {
+interface Props {
     data: UserInfoListDataType;
 }
 
-function UserInfoList({ data }: UserInfoListPropsType) {
+function UserInfoList({ data }: Props) {
     return (
         <Container>
-            <Item icon="birthday_cake">
-                <dt>출생</dt>
+            <Item>
+                <dt>
+                    <BirthdayCakeIcon width={22} />
+                    출생
+                </dt>
                 <dd>
                     <p>{data.birth}</p>
                     <p>21세</p>
                 </dd>
             </Item>
-            <Item icon="location">
-                <dt>지역</dt>
+            <Item>
+                <dt>
+                    <LocationPickerIcon width={22} />
+                    지역
+                </dt>
                 <dd>
                     {data.location.map((item) => (
                         <p key={item}>{item}</p>
@@ -42,36 +50,28 @@ const Container = styled.ul`
     }
 `;
 
-const Item = styled.li<{ icon: string }>`
-    flex: 1;
+const Item = styled.li`
     display: flex;
-    gap: 8px;
+    align-items: center;
+    gap: 12px;
     letter-spacing: -0.2px;
     white-space: nowrap;
     text-overflow: ellipsis;
     dt {
-        display: flex;
-        padding: 4px 0 0;
-        align-items: flex-start;
+        display: inline-flex;
+        align-items: center;
         font-weight: 600;
         font-size: 1.5rem;
-        opacity: 0.65;
-        &::before {
-            content: "";
-            margin: -3px 0 0;
-            width: 22px;
-            height: 18px;
-            background-image: url(${(props) => `/assets/icons/${props.icon}_icon.svg`});
-            background-size: 18px;
-            background-position: left;
-            background-repeat: no-repeat;
-            filter: invert(1);
-        }
+        gap: 4px;
+        opacity: 0.8;
     }
     dd {
+        display: inline-flex;
+        flex-wrap: wrap;
         font-size: 1.6rem;
         line-height: 2.1rem;
         word-break: keep-all;
+        gap: 0 12px;
     }
 `;
 

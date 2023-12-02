@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-interface UserHashTagPropsType {
+interface Props {
     data: string[];
 }
 
-function UserHashTag({ data }: UserHashTagPropsType) {
+function UserHashTag({ data }: Props) {
     return (
         <Container>
             {data.map((value, idx) => (
@@ -19,6 +19,7 @@ const Container = styled.ul`
     margin: 8px 0 0;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 8px;
 `;
 const Item = styled.li`

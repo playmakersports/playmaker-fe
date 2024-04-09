@@ -4,11 +4,11 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
-import { Label, SelectLabel, TextArea, TextAreaWrap } from "../../Common/FormStyle";
-import FormDropdownBox from "../../Common/FormDropdownBox";
+import { Label, SelectLabel, TextArea, TextAreaWrap } from "../../../common/FormStyle";
+import FormDropdownBox from "../../../common/FormDropdownBox";
 import { FOOTBALL_CLUBS, FOOTBALL_LEAGUE } from "@/src/constants/FootballClubs";
-import Button from "../../Common/Button";
-import { joinState } from "@/src/atoms/state";
+import Button from "../../../common/Button";
+import { joinState } from "@/src/atoms/user";
 import { API_URL } from "@/src/apis/endpoint";
 import { useQueryMutate } from "@/src/apis/hook";
 

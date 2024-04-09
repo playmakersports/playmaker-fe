@@ -4,9 +4,9 @@ import { useRouter } from "next/router";
 import { useAtom } from "jotai";
 import styled from "@emotion/styled";
 
-import InputBox, { InputBoxDataType } from "../../components/Common/InputBox";
-import Button from "@/src/components/Common/Button";
-import { loggedState } from "@/src/atoms/state";
+import InputBox, { InputBoxDataType } from "../../components/common/InputBox";
+import Button from "@/src/components/common/Button";
+import { loggedState } from "@/src/atoms/user";
 
 function Login() {
     const {

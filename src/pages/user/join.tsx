@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 
-import JoinStep1 from "@/src/components/User/Join/JoinStep1";
-import JoinStep2 from "@/src/components/User/Join/JoinStep2";
-import JoinStep3 from "@/src/components/User/Join/JoinStep3";
+import JoinStep1 from "@/src/components/pages/User/Join/JoinStep1";
+import JoinStep2 from "@/src/components/pages/User/Join/JoinStep2";
+import JoinStep3 from "@/src/components/pages/User/Join/JoinStep3";
 import { SubTitleText } from "@/src/styles/common";
 
 function Join() {

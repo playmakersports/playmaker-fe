@@ -3,7 +3,7 @@ import { ThemeProvider } from "@emotion/react";
 import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 
-import { darkMode } from "@/src/atoms/state";
+import { darkMode } from "@/src/atoms/user";
 import { DarkTheme, LightTheme } from "@/src/styles/theme";
 
 import Header from "./partials/Header";

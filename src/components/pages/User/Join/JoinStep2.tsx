@@ -4,11 +4,11 @@ import { useRouter } from "next/router";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 import styled from "@emotion/styled";
 
-import FormDropdownBox from "../../Common/FormDropdownBox";
-import { Label, InputCheck, SelectLabel, InputCheckRadioWrapper, ErrorMsg } from "../../Common/FormStyle";
+import FormDropdownBox from "../../../common/FormDropdownBox";
+import { Label, InputCheck, SelectLabel, InputCheckRadioWrapper, ErrorMsg } from "../../../common/FormStyle";
 import { SIDO_AREA_NAME, SIGUNGU_AREA_NAME } from "@/src/constants/areaName";
-import Button from "../../Common/Button";
-import { joinState } from "@/src/atoms/state";
+import Button from "../../../common/Button";
+import { joinState } from "@/src/atoms/user";
 
 function JoinStep2({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetStateAction<number>> }) {
     const router = useRouter();

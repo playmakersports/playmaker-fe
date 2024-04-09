@@ -1,18 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useTheme } from "@emotion/react";
-import { useAtom } from "jotai";
-
-import { darkMode } from "@/src/atoms/state";
-import LogotypeHorizontal from "@/src/assets/logo/LogotypeHorizontal";
+import LogotypeHorizontal from "@/src/assets/logo/LogotypeHorizontal.svg";
 
 function Footer() {
-    const theme = useTheme();
-    const [darkModeState] = useAtom(darkMode);
-
     return (
         <Container>
-            <LogotypeHorizontal width={164} fill={darkModeState ? theme.color.white : theme.color.black} />
+            <LogotypeHorizontal />
             <p className="copyright">Copyright PLAY\MAKER all rights reserved.</p>
         </Container>
     );

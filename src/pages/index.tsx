@@ -1,11 +1,9 @@
-import SEO from "../components/Layouts/SEO";
-import Main from "../components/Main";
+import SEO from "../components/layouts/SEO";
 
 export default function Home() {
     return (
         <>
             <SEO />
-            <Main />
         </>
     );
 }

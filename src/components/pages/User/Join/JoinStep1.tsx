@@ -4,13 +4,12 @@ import { useAtom } from "jotai";
 import { useRouter } from "next/router";
 import { FieldValues, FormProvider, useForm } from "react-hook-form";
 
-import Button from "../../Common/Button";
-import { InputText, InputRadioWrap, Label, SelectLabel, ErrorMsg } from "../../Common/FormStyle";
-import { JoinStateType, joinState } from "@/src/atoms/state";
+import Button from "../../../common/Button";
+import { InputText, InputRadioWrap, Label, SelectLabel, ErrorMsg } from "../../../common/FormStyle";
+import { JoinStateType, joinState } from "@/src/atoms/user";
 import { API_URL } from "@/src/apis/endpoint";
 import { removeHyphens, formatPhoneNumber } from "@/src/util/input";
 import { useQueryMutate } from "@/src/apis/hook";
-import { EyeHideIcon, EyeShowIcon } from "@/src/assets/icons/common/EyeIcon";
 
 function JoinStep1({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetStateAction<number>> }) {
     const [joinStateData, setJoinStateData] = useAtom(joinState);
@@ -94,7 +93,7 @@ function JoinStep1({ setJoinStep }: { setJoinStep: React.Dispatch<React.SetState
                         })}
                     />
                     <button type="button" className="password-show-button numbers" onClick={handleShowPassword}>
-                        {showPassword ? <EyeHideIcon width={24} height={24} /> : <EyeShowIcon width={24} height={24} />}
+                        {showPassword ? "보기" : "숨기기"}
                     </button>
                     {errors.password && <ErrorMsg>{errors.password.message as string}</ErrorMsg>}
                     <ul className="password-validation-list">

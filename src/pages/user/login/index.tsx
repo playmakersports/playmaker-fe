@@ -23,7 +23,7 @@ function Login() {
           카카오 로그인
         </Button>
         <Button type="button" mode="OPTION2" onClick={() => router.push("/user/join")}>
-          회원가입
+          이메일 로그인
         </Button>
       </LoginOptions>
     </Container>
@@ -35,7 +35,6 @@ const Container = styled.form`
   height: 60vh;
   justify-content: center;
   flex-direction: column;
-  padding: 32px 16px;
   gap: 16px;
 `;
 

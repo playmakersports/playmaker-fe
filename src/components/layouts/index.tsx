@@ -12,12 +12,6 @@ function Layout({ children }: { children: JSX.Element }) {
     container.current?.scrollTo(0, 0);
   }, [asPath]);
 
-  if (asPath === "/")
-    return (
-      <Container ref={container}>
-        <main className="home-container">{children}</main>
-      </Container>
-    );
   return (
     <Container ref={container}>
       <Header />
@@ -33,9 +27,8 @@ const Container = styled.div`
   overflow: hidden;
   & > main {
     padding: 64px 16px 0;
-  }
-  & > .home-container {
-    padding: 0 16px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 `;
 

@@ -5,13 +5,14 @@ import { usePageTitle } from "@/hook/usePageTitle";
 
 import Button from "@/components/common/Button";
 import { KAKAO_AUTH } from "@/apis/oauth";
+import { VERCEL_BASE_URL } from "@/constants/baseUrl";
 
 function Login() {
   usePageTitle("로그인");
   const router = useRouter();
 
   const handleKakaoLogin = () => {
-    const REDIRECT_URI = `http://localhost:3000/user/login/kakao`;
+    const REDIRECT_URI = `${VERCEL_BASE_URL}/user/login/kakao`;
     const KAKAO_URL = `${KAKAO_AUTH}?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     window.open(KAKAO_URL, "_self");
   };

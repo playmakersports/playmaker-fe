@@ -4,14 +4,14 @@
   border: 0;
   font-size: 100%;
   vertical-align: baseline;
-  touch-action: pan-y;
   box-sizing: border-box;
+  font-style: normal;
 }
 
 html,
 body {
   font-size: 10px;
-  font-family: Pretendard;
+  font-family: "SUIT Variable";
   line-height: 1;
 }
 

@@ -78,7 +78,7 @@ const Wrapper = styled.button<ButtonStyled>`
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   height: 56px;
   border: 0 solid transparent;
-  border-radius: 16px;
+  border-radius: 12px;
   background-color: ${({ mode }) => mode.background};
   color: ${({ mode }) => mode.color};
   font-size: 1.6rem;
@@ -100,7 +100,6 @@ const Wrapper = styled.button<ButtonStyled>`
 `;
 
 const SnsWrapper = styled(Wrapper)`
-  border-radius: 12px;
   &:active {
     background-color: #fee500;
   }

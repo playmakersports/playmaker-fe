@@ -1,5 +1,6 @@
 import React, { ReactNode } from "react";
-import styled, { useTheme } from "styled-components";
+import styled from "@emotion/styled";
+import { useTheme } from "@emotion/react";
 
 type Props = {
   mode: "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "SNS_LOGIN";
@@ -95,7 +96,7 @@ const Wrapper = styled.button<ButtonStyled>`
     cursor: not-allowed;
   }
   &:active {
-    background-color: ${({ theme }) => theme.mainDark};
+    background-color: ${({ theme }) => theme.main2};
   }
 `;
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/router";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 import Header from "./partials/Header";
 

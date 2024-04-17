@@ -1,12 +1,14 @@
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const BasicWhiteCard = styled.div`
-  padding: 16px;
+  padding: 20px;
   border-radius: 16px;
   background-color: ${({ theme }) => theme.white};
+  user-select: none;
 `;
 
 export const BasicWhiteSection = styled.div`
   padding: 16px;
   background-color: ${({ theme }) => theme.white};
+  user-select: none;
 `;

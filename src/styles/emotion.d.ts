@@ -1,7 +1,7 @@
 import "@emotion/react";
-import { LIGHT_THEME_WITH_BG } from "./theme";
+import { BASIC_THEME } from "./theme";
 
-type ThemeType = (typeof LIGHT_THEME_WITH_BG)["GRAY"];
+type ThemeType = typeof BASIC_THEME;
 
 declare module "@emotion/react" {
   export interface Theme extends ThemeType {}

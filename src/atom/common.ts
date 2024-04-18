@@ -4,5 +4,4 @@ import { atom } from "jotai";
 export const atomPageTitle = atom<string>("");
 
 // 배경화면 색상
-export const atomTheme = atom<boolean>(false);
 export const atomBackgroundGray = atom<boolean>(false);

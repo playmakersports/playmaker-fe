@@ -21,5 +21,6 @@ const Container = styled.section`
   gap: 28px;
   margin: 0 -16px;
   padding: 12px 16px 20px;
-  height: 100vh;
+  height: auto;
+  min-height: 100vh;
 `;

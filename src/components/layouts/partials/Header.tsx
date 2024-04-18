@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -8,31 +7,15 @@ import Logotype from "@/assets/logo/Logotype.svg";
 import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import LeftArrow from "@/assets/icon/arrow/LeftArrow.svg";
-import { hexToRgb } from "@/util/common";
 
 function Header() {
   const ICON_SIZE = 22;
   const router = useRouter();
   const title = usePageTitle();
-  const [scroll, setScroll] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 40) {
-        setScroll(true);
-      } else {
-        setScroll(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.addEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   if (router.asPath === "/") {
     return (
-      <Wrapper scroll={scroll}>
+      <Wrapper>
         <Logotype width={128} height={40} />
         <Menu>
           <Icon>
@@ -48,16 +31,16 @@ function Header() {
     );
   }
   return (
-    <Wrapper scroll={scroll}>
+    <Wrapper>
       <button type="button" aria-label="뒤로가기" onClick={() => router.back()}>
-        <LeftArrow />
+        <LeftArrow width={ICON_SIZE + 8} height={ICON_SIZE + 8} />
       </button>
       <PageTitle>{title}</PageTitle>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.header<{ scroll: boolean }>`
+const Wrapper = styled.header`
   position: fixed;
   top: 0;
   padding: 0 20px;
@@ -67,7 +50,6 @@ const Wrapper = styled.header<{ scroll: boolean }>`
   align-items: center;
   justify-content: space-between;
   backdrop-filter: blur(16px);
-  background-color: rgba(${({ theme }) => hexToRgb(theme.background, "String")}, 0.35);
   z-index: 999;
 
   svg {

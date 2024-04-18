@@ -27,14 +27,22 @@ function SportsSection() {
             ))}
           </ListWrapper>
           <MoreButton type="button">
-            더 많은 팀 더보기 <RightArrowThinIcon width={12} height={12} />
+            더 많은 팀 보기 <RightArrowThinIcon width={12} height={12} />
           </MoreButton>
         </Container>
         <Container>
-          <Title>진행 중인 대회</Title>
+          <Title>진행 중인 경기</Title>
+          <ListWrapper></ListWrapper>
+          <MoreButton type="button">
+            더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
+          </MoreButton>
         </Container>
         <Container>
           <Title>대회 일정</Title>
+          <ListWrapper></ListWrapper>
+          <MoreButton type="button">
+            더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
+          </MoreButton>
         </Container>
       </Cards>
     </div>
@@ -76,7 +84,7 @@ const Title = styled.h3`
   ${FONTS.HEAD1}
 `;
 const ListWrapper = styled.div`
-  margin: 0 -4px 8px;
+  margin: 0 -4px 4px;
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;

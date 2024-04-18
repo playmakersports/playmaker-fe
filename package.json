@@ -16,7 +16,8 @@
     "jotai": "^2.8.0",
     "next": "14.2.1",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-hook-form": "^7.51.3"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.11.0",

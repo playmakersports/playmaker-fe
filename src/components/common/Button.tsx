@@ -25,7 +25,7 @@ function Button(props: Props) {
       color: theme.white,
     },
     OPTION2: {
-      background: theme.gray2,
+      background: theme.gray4,
       color: theme.black,
     },
     SUB1: {
@@ -34,7 +34,7 @@ function Button(props: Props) {
     },
     SNS_LOGIN: {
       background: "#fee500",
-      color: theme.black,
+      color: "#000",
     },
   };
 
@@ -87,7 +87,7 @@ const Wrapper = styled.button<ButtonStyled>`
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;
-  transition: color 0.1s ease-in-out, background-color 0.1s ease-in-out;
+  transition: filter 0.2s;
   &:focus {
     outline: none;
   }
@@ -96,12 +96,13 @@ const Wrapper = styled.button<ButtonStyled>`
     cursor: not-allowed;
   }
   &:active {
-    background-color: ${({ theme }) => theme.main2};
+    filter: brightness(1.05);
   }
 `;
 
 const SnsWrapper = styled(Wrapper)`
   &:active {
+    filter: none;
     background-color: #fee500;
   }
 `;

@@ -5,8 +5,9 @@
 :root {
   --main: #0059ff;
   --main2: #004fe2;
-  --sub1: #642efe;
-  --sub2: #3a01df;
+  --main3: #bad6eb;
+  --sub1: #f8333c;
+  --sub2: #e63f2d;
   --gray1: #777777;
   --gray2: #979797;
   --gray3: #cacaca;
@@ -17,22 +18,29 @@
   --black: #000;
   --text: rgb(21, 21, 21);
   --green: #77d935;
-  --background: #f7f7f7;
+  --card: var(--white);
+  --background: #f3f3f3;
+  --base-background: var(--white);
+  --base-background-rgb: 256, 256, 256;
 }
 :root[data-dark="true"] {
   --main: #0059ff;
   --main2: #004fe2;
-  --sub1: #642efe;
-  --sub2: #3a01df;
-  --gray1: #cbcbcb;
+  --main3: #bad6eb;
+  --sub1: #f8333c;
+  --sub2: #e63f2d;
+  --gray1: #b1b1b1;
   --gray2: #909090;
   --gray3: #848484;
-  --gray4: #757575;
+  --gray4: #424242;
   --placeholder: #a1aeb3;
   --warn: #ff5100;
   --white: #000;
   --black: #fff;
   --text: #e0e0e0;
   --green: #77d935;
+  --card: #1a1a1a;
   --background: #2c2c2c;
+  --base-background: #0e0e0e;
+  --base-background-rgb: 14, 14, 14;
 }

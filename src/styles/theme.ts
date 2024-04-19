@@ -1,6 +1,7 @@
 export const BASIC_THEME = {
   main: "var(--main)",
   main2: "var(--main2)",
+  main3: "var(--main3)",
   sub1: "var(--sub1)",
   sub2: "var(--sub2)",
   gray1: "var(--gray1)",
@@ -13,5 +14,8 @@ export const BASIC_THEME = {
   black: "var(--black)",
   text: "var(--text)",
   green: "var(--green)",
+  card: "var(--card)",
   background: "var(--background)",
+  baseBackground: "var(--base-background)",
+  baseBackgroundRgb: "var(--base-background-rgb)",
 };

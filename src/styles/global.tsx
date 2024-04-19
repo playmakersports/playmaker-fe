@@ -5,12 +5,12 @@ import { useEffect } from "react";
 
 const baseTheme = (isBackgroundGray: boolean) => css`
   html {
-    background: var(--white);
+    background: var(--base-background);
   }
   body {
     color: var(--text);
-    background: var(--white);
-    ${isBackgroundGray ? "background: linear-gradient(var(--white) 0%, var(--background) 6%)" : ""};
+    background: var(--base-background);
+    ${isBackgroundGray ? "background: linear-gradient(var(--base-background) 1%, var(--background) 10%)" : ""};
   }
 `;
 

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import { FONTS } from "@/styles/fonts";
 import { formattedDate } from "@/util/date";
+import { useRouter } from "next/router";
 
 type Props = {
   teamId: string;
@@ -15,8 +16,10 @@ type Props = {
 
 function SectionItem(props: Props) {
   const { teamId, teamName, univName, isUnivTeam, location, date } = props;
+  const router = useRouter();
+
   return (
-    <Container type="button">
+    <Container type="button" onClick={() => router.push(`/team/${teamId}`)}>
       <ItemWrapper>
         <TeamImage />
         <TeamInfo>

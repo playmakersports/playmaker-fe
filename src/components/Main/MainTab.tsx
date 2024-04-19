@@ -47,6 +47,7 @@ const Container = styled.ul`
   }
 `;
 const CommonItem = styled.li`
+  cursor: pointer;
   z-index: 1;
   margin: 10px 0;
   padding: 0 20px;
@@ -56,6 +57,7 @@ const CommonItem = styled.li`
   font-size: 1.4rem;
   text-align: center;
   transition: all 0.3s;
+  user-select: none;
   &:last-of-type {
     border-right: none;
   }

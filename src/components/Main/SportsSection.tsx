@@ -58,7 +58,7 @@ const TAB_ITEMS = [
 ];
 const MOCK_TEAM_LIST = [
   {
-    teamId: "",
+    teamId: "1",
     teamName: "SPABA",
     isUnivTeam: true,
     univName: "서울과기대",
@@ -66,7 +66,7 @@ const MOCK_TEAM_LIST = [
     date: "2024-04-12 20:00",
   },
   {
-    teamId: "",
+    teamId: "2",
     teamName: "프렌즈",
     isUnivTeam: true,
     univName: "성균관대",

@@ -35,6 +35,7 @@ function Header() {
         <Logotype width={128} height={40} />
         <Menu>
           <Icon>
+            <Count>3</Count>
             <NoticeBellIcon width={ICON_SIZE} height={ICON_SIZE} />
           </Icon>
           <Link href="/user/login">
@@ -76,7 +77,7 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
 
 const Menu = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 10px;
   font-weight: 400;
   font-size: 1.6rem;
   color: ${({ theme }) => theme.gray1};
@@ -87,16 +88,27 @@ const PageTitle = styled.div`
   color: ${({ theme }) => theme.gray1};
 `;
 const Icon = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 100%;
-  transition: all 0.2s;
-  &:active {
-    background-color: ${({ theme }) => theme.gray4};
-  }
+`;
+
+const Count = styled.div`
+  position: absolute;
+  padding: 2px 4px;
+  left: 50%;
+  top: -2px;
+  background-color: ${({ theme }) => theme.sub1};
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.4rem;
+  font-weight: 700;
+  border-radius: 9px;
+  min-width: 18px;
+  text-align: center;
 `;
 
 export default Header;

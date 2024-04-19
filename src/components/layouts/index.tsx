@@ -23,10 +23,10 @@ function Layout({ children }: { children: JSX.Element }) {
 const Container = styled.div`
   position: relative;
   width: 100%;
-  min-height: 100vh;
   overflow: hidden;
   & > main {
-    padding: 64px 16px 40px;
+    min-height: 100vh;
+    padding: 64px 16px 0;
     overflow-x: hidden;
     overflow-y: auto;
   }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -12,10 +13,25 @@ function Header() {
   const ICON_SIZE = 22;
   const router = useRouter();
   const title = usePageTitle();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 12) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.addEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   if (router.asPath === "/") {
     return (
-      <Wrapper>
+      <Wrapper scrolled={scrolled}>
         <Logotype width={128} height={40} />
         <Menu>
           <Icon>
@@ -31,7 +47,7 @@ function Header() {
     );
   }
   return (
-    <Wrapper>
+    <Wrapper scrolled={scrolled}>
       <button type="button" aria-label="뒤로가기" onClick={() => router.back()}>
         <LeftArrow width={ICON_SIZE + 8} height={ICON_SIZE + 8} />
       </button>
@@ -40,7 +56,7 @@ function Header() {
   );
 }
 
-const Wrapper = styled.header`
+const Wrapper = styled.header<{ scrolled: boolean }>`
   position: fixed;
   top: 0;
   padding: 0 20px;
@@ -49,9 +65,10 @@ const Wrapper = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  backdrop-filter: blur(16px);
+  background-color: ${({ scrolled, theme }) => (scrolled ? `rgba(${theme.baseBackgroundRgb}, 0.2)` : "none")};
+  backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   z-index: 999;
-
+  transition: background-color 0.3s, backdrop-filter 0.3s;
   svg {
     fill: ${({ theme }) => theme.gray2};
   }

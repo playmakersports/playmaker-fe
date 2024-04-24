@@ -27,3 +27,19 @@ export function hexToRgb(hex: string, output: "Object" | "String") {
   if (output === "Object") return { r, g, b };
   if (output === "String") return `${r}, ${g}, ${b}`;
 }
+
+/**
+ * 초를 mm:ss 단위로 변환
+ */
+export function secondToMinSec(target: number) {
+  return `${Math.floor(target / 60) < 10 ? `0${Math.floor(target / 60)}` : Math.floor(target / 60)}:${
+    target % 60 < 10 ? `0${target % 60}` : target % 60
+  }`;
+}
+/**
+ * mm:ss를 초 단위로 변환
+ */
+export function minSecToSecond(target: string): number {
+  const [min, sec] = target.split(":").map((v) => Number(v));
+  return min * 60 + sec;
+}

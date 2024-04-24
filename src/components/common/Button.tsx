@@ -7,14 +7,14 @@ type Props = {
   children: ReactNode;
   fullWidth?: boolean;
   type?: "button" | "submit" | "reset" | undefined;
-  noFlex?: boolean;
+  flex?: number;
   disabled?: boolean;
   onClick?: () => void;
 };
 
 function Button(props: Props) {
   const theme = useTheme();
-  const { mode, children, fullWidth, type, noFlex, disabled = false, onClick } = props;
+  const { mode, children, fullWidth, type, flex, disabled = false, onClick } = props;
   const BUTTON_STYLE = {
     MAIN: {
       background: theme.main,
@@ -30,7 +30,7 @@ function Button(props: Props) {
     },
     SUB1: {
       background: theme.sub1,
-      color: theme.black,
+      color: "#fff",
     },
     SNS_LOGIN: {
       background: "#fee500",
@@ -44,7 +44,7 @@ function Button(props: Props) {
         type={type ?? "button"}
         mode={BUTTON_STYLE[mode]}
         onClick={onClick}
-        noFlex={noFlex}
+        flex={flex}
         fullWidth={fullWidth}
         disabled={disabled}
       >
@@ -56,7 +56,7 @@ function Button(props: Props) {
     <Wrapper
       type={type ?? "button"}
       onClick={onClick}
-      noFlex={noFlex}
+      flex={flex}
       mode={BUTTON_STYLE[mode]}
       fullWidth={fullWidth}
       disabled={disabled}
@@ -70,12 +70,13 @@ type ButtonStyled = {
   mode: Record<string, string>;
   disabled: boolean;
   fullWidth?: boolean;
-  noFlex?: boolean;
+  flex?: number;
 };
 const Wrapper = styled.button<ButtonStyled>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  ${({ flex }) => (flex ? `flex: ${flex}` : "")};
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   height: 56px;
   border: 0 solid transparent;
@@ -92,7 +93,7 @@ const Wrapper = styled.button<ButtonStyled>`
     outline: none;
   }
   &:disabled {
-    opacity: 0.26;
+    opacity: 0.7;
     cursor: not-allowed;
   }
   &:active {

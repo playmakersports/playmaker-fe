@@ -1,3 +1,4 @@
+import { FONTS } from "@/styles/fonts";
 import styled from "@emotion/styled";
 
 export const BasicWhiteCard = styled.div`
@@ -11,4 +12,10 @@ export const BasicWhiteSection = styled.div`
   padding: 16px;
   background-color: ${({ theme }) => theme.card};
   user-select: none;
+`;
+
+export const BasicWhiteCardTitle = styled.h3`
+  margin: 0 0 16px;
+  padding: 0 8px;
+  ${FONTS.HEAD1}
 `;

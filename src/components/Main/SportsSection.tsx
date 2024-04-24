@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 import MainTab from "./MainTab";
 import { FONTS } from "@/styles/fonts";
-import { BasicWhiteCard } from "../common/Card";
+import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import SectionItem from "./SectionItem";
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 
@@ -20,7 +20,7 @@ function SportsSection() {
       />
       <Cards>
         <Container>
-          <Title>모집 중인 팀</Title>
+          <BasicWhiteCardTitle>모집 중인 팀</BasicWhiteCardTitle>
           <ListWrapper>
             {MOCK_TEAM_LIST.map((value, index) => (
               <SectionItem key={index} {...value} />
@@ -31,14 +31,14 @@ function SportsSection() {
           </MoreButton>
         </Container>
         <Container>
-          <Title>진행 중인 경기</Title>
+          <BasicWhiteCardTitle>진행 중인 경기</BasicWhiteCardTitle>
           <ListWrapper></ListWrapper>
           <MoreButton type="button">
             더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
           </MoreButton>
         </Container>
         <Container>
-          <Title>대회 일정</Title>
+          <BasicWhiteCardTitle>대회 일정</BasicWhiteCardTitle>
           <ListWrapper></ListWrapper>
           <MoreButton type="button">
             더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
@@ -77,11 +77,6 @@ const MOCK_TEAM_LIST = [
 
 const Container = styled(BasicWhiteCard)`
   padding: 24px 20px 8px;
-`;
-const Title = styled.h3`
-  margin: 0 0 16px;
-  padding: 0 8px;
-  ${FONTS.HEAD1}
 `;
 const ListWrapper = styled.div`
   margin: 0 -4px 4px;

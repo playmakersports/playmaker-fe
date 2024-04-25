@@ -5,6 +5,7 @@
   font-size: 100%;
   vertical-align: baseline;
   box-sizing: border-box;
+  font-family: "SUIT Variable";
   font-style: normal;
   -webkit-tap-highlight-color: transparent !important;
 }
@@ -12,7 +13,6 @@
 html,
 body {
   font-size: 10px;
-  font-family: "SUIT Variable";
   line-height: 1;
   touch-action: pan-y; /* 화면 확대 축소 방지 */
 }

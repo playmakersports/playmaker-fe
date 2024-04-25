@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/fonts";
@@ -13,14 +13,21 @@ import dynamic from "next/dynamic";
 function VideoArticle() {
   useBackgroundGray();
   const router = useRouter();
-  const playerRef = useRef<any>();
-  const commentsRef = useRef<HTMLUListElement>(null);
+  const playerRef = useRef<YouTube>(null);
+  const commentRef = useRef<HTMLUListElement>(null);
   const playerDuration = playerRef.current?.internalPlayer.getDuration();
 
-  const { handlePlayer, currentTime, playerState, opts } = useYoutube({
-    width: window.innerWidth + 32 ?? 500,
-    height: (window.innerWidth + 32) * (9 / 16) ?? 280,
-  });
+  const [currentActiveComment, setCurrentActiveComment] = useState("");
+  const [targetVideoTime, setTargetVideoTime] = useState("");
+  const [showCommentInput, setShowCommentInput] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [isScrollBottom, setIsScrollBottom] = useState(false);
+
+  const VIDEO_SIZE = {
+    width: window.innerWidth,
+    height: window.innerWidth * (9 / 16),
+  };
+  const { handlePlayer, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
 
   const matchId = router.query.matchId;
 
@@ -31,25 +38,27 @@ function VideoArticle() {
   };
   const playerPausePlay = () => {
     if (playerState === 1) {
-      playerRef.current.internalPlayer.pauseVideo();
+      playerRef.current?.internalPlayer.pauseVideo();
     } else {
-      playerRef.current.internalPlayer.playVideo();
+      playerRef.current?.internalPlayer.playVideo();
     }
   };
 
-  const activeTarget = commentsRef.current?.querySelector("li[data-active='true']");
-  useEffect(() => {
-    if (activeTarget) {
-      activeTarget.scrollIntoView({ behavior: "smooth" });
+  const onCommentScroll = useCallback(() => {
+    if (
+      commentRef &&
+      commentRef.current!.scrollHeight - commentRef.current!.scrollTop === commentRef.current!.clientHeight
+    ) {
+      setIsScrollBottom(true);
     } else {
-      commentsRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+      setIsScrollBottom(false);
     }
-  }, [activeTarget]);
+  }, []);
 
   return (
     <Container>
-      <PlayerTop>
-        <Wrapper>
+      <PlayerTop showCommentInput={showCommentInput} height={VIDEO_SIZE.height}>
+        <Wrapper className="video-wrapper" width={VIDEO_SIZE.width} height={VIDEO_SIZE.height}>
           <YouTube
             ref={playerRef}
             id="player_YouTube"
@@ -58,14 +67,17 @@ function VideoArticle() {
             onReady={handlePlayer}
             onPlay={handlePlayer}
             onStateChange={handlePlayer}
+            onPlaybackRateChange={(event) => setPlaybackRate(event.target.getPlaybackRate())}
           />
         </Wrapper>
-        <VideoInfo>
-          <h3 className="video-match">팀1 : 팀2</h3>
-          <h3 className="video-title">경기제목</h3>
-        </VideoInfo>
+        {!showCommentInput && (
+          <VideoInfo>
+            <h3 className="video-match">팀1 : 팀2</h3>
+            <h3 className="video-title">경기제목</h3>
+          </VideoInfo>
+        )}
       </PlayerTop>
-      <Comments ref={commentsRef}>
+      <Comments ref={commentRef} showCommentInput={showCommentInput} onScroll={onCommentScroll}>
         {COMMENTS.map((value, index) => {
           const thisTime = minSecToSecond(value.time);
           const nextTime = COMMENTS[index + 1] ? minSecToSecond(COMMENTS[index + 1].time) : playerDuration;
@@ -73,22 +85,69 @@ function VideoArticle() {
             <li
               key={value.time}
               onClick={() => playerSeekTo(value.time)}
-              data-active={thisTime <= currentTime && nextTime > currentTime ? "true" : ""}
+              ref={(ref) => {
+                if (!ref) return;
+                if (thisTime <= currentTime && nextTime > currentTime && currentActiveComment !== value.time) {
+                  ref.scrollIntoView({ block: "center", behavior: "smooth" });
+                  setCurrentActiveComment(value.time);
+                }
+              }}
+              className={thisTime <= currentTime && nextTime > currentTime ? "now-active" : ""}
+              data-info={`${value.author} • ${value.writtenAt}`}
             >
               <span className="timeline">{value.time}</span> <span className="contents">{value.contents}</span>
             </li>
           );
         })}
       </Comments>
-      <PlayerHandler>
-        <p className="yt-player-time">{secondToMinSec(currentTime)}</p>
-        <Button type="button" mode="SUB1" onClick={playerPausePlay} flex={2} disabled={playerState === 3}>
-          {playerState === 1 ? "일시정지" : playerState === 3 ? "버퍼링" : "재생"}
-        </Button>
-        <Button type="button" mode="OPTION1" flex={1}>
-          여기에 댓글
-        </Button>
-      </PlayerHandler>
+      <Bottom isScrollBottom={isScrollBottom} showCommentInput={showCommentInput}>
+        <PlayerHandler>
+          <p className="yt-player-time">{secondToMinSec(currentTime)}</p>
+          <Button
+            type="button"
+            mode="SUB1"
+            onClick={playerPausePlay}
+            flex={2}
+            disabled={playerState === 3}
+            split={{
+              text: `${playbackRate === 1 ? 0.5 : 1}x`,
+              onClick: () => {
+                if (playbackRate === 1) {
+                  playerRef.current?.internalPlayer.setPlaybackRate(0.5).then(() => {
+                    setPlaybackRate(0.5);
+                  });
+                } else {
+                  playerRef.current?.internalPlayer.setPlaybackRate(1).then(() => {
+                    setPlaybackRate(1);
+                  });
+                }
+              },
+            }}
+          >
+            {playerState === 1 ? "일시정지" : playerState === 3 ? "버퍼링" : "재생"}
+          </Button>
+          <Button
+            type="button"
+            mode="OPTION1"
+            flex={1}
+            onClick={() => {
+              setTargetVideoTime(secondToMinSec(currentTime));
+              setShowCommentInput(true);
+            }}
+          >
+            여기에 댓글
+          </Button>
+        </PlayerHandler>
+        {showCommentInput && (
+          <CommentBox>
+            <div className="comment-area">
+              <input type="text" className="target-time" readOnly value={targetVideoTime} />
+              <input type="text" className="target-comment" />
+            </div>
+            <button type="button">제출</button>
+          </CommentBox>
+        )}
+      </Bottom>
     </Container>
   );
 }
@@ -99,19 +158,31 @@ const Container = styled.section`
   flex-direction: column;
   height: calc(100dvh - 64px);
 `;
-const PlayerTop = styled.div`
+const PlayerTop = styled.div<{ showCommentInput: boolean; height: number }>`
   position: sticky;
-  top: -64px;
-  padding-top: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  ${({ showCommentInput, height }) => (showCommentInput ? ` height: ${height + 60}px` : "")};
+  padding: 64px 0 0;
   margin: -64px -16px 0;
   background: linear-gradient(${({ theme }) => theme.baseBackground} 1%, ${({ theme }) => theme.card} 6%);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   box-shadow: 0 4px 12px 8px rgba(0, 0, 0, 0.05);
+
+  ${({ showCommentInput }) =>
+    showCommentInput &&
+    `
+    .video-wrapper {
+      overflow: hidden;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+  `}
 `;
 const VideoInfo = styled.div`
-  margin: 16px 0;
-  padding: 0 20px 4px;
+  padding: 0 20px 16px;
   .video-match {
     margin-bottom: 8px;
     ${FONTS.MD2};
@@ -123,16 +194,19 @@ const VideoInfo = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ width: number; height: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  width: ${({ width }) => width}px;
+  min-height: ${({ height }) => height}px;
 `;
-const Comments = styled.ul`
+const Comments = styled.ul<{ showCommentInput: boolean }>`
   display: flex;
-  padding-top: 16px;
-  padding-bottom: 20px;
+  gap: 16px;
+  padding-top: 24px;
+  padding-bottom: ${({ showCommentInput }) => (showCommentInput ? "92px" : "28px")};
   margin-bottom: 88px;
   flex-direction: column;
   overflow-y: auto;
@@ -143,17 +217,23 @@ const Comments = styled.ul`
   }
   li {
     gap: 8px;
-    margin-top: 16px;
     padding: 12px 16px;
     background-color: ${({ theme }) => theme.gray4};
     border-radius: 12px;
-    ${FONTS.MD1};
+    ${FONTS.MD1W500};
     line-height: 2.4rem;
     transition: all 0.2s;
 
-    &[data-active="true"] {
+    &.now-active {
       background-color: ${({ theme }) => theme.main};
       color: #fff;
+    }
+    &::after {
+      content: attr(data-info);
+      display: block;
+      opacity: 0.6;
+      margin-top: 6px;
+      ${FONTS.MD3}
     }
   }
   .timeline {
@@ -167,38 +247,90 @@ const Comments = styled.ul`
   }
 `;
 
-const PlayerHandler = styled.div`
+const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }>`
   position: fixed;
   bottom: 0;
+  height: ${({ showCommentInput }) => (showCommentInput ? "auto" : "88px")};
   margin: 0 -16px;
   padding: 12px 16px 20px;
   width: 100%;
-  height: 88px;
+  background-color: ${({ theme }) => theme.background};
+
+  &::before {
+    content: "";
+    position: absolute;
+    display: ${({ isScrollBottom }) => (isScrollBottom ? "none" : "block")};
+    width: 100%;
+    height: 48px;
+    top: -48px;
+    left: 0;
+    background: linear-gradient(
+      0deg,
+      ${({ theme }) => theme.background} 15%,
+      rgba(${({ theme }) => theme.baseBackgroundRgb}, 0) 100%
+    );
+  }
+`;
+
+const PlayerHandler = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  background-color: ${({ theme }) => theme.background};
-
   .yt-player-time {
     flex: 0.5;
     text-align: center;
     ${FONTS.MD1}
   }
 `;
+const CommentBox = styled.div`
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  ${FONTS.MD1};
+
+  .comment-area {
+    flex: 1;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 20px;
+    background-color: ${({ theme }) => theme.gray4};
+    .target-time {
+      width: 42px;
+      font-size: 1.4rem;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03rem;
+      opacity: 0.65;
+      color: ${({ theme }) => theme.text};
+    }
+    .target-comment {
+      flex: 1;
+      font-size: 1.6rem;
+      color: ${({ theme }) => theme.text};
+    }
+  }
+`;
 
 const COMMENTS = [
-  { author: "홍길동", time: "03:20", contents: "여기임" },
-  { author: "홍길동", time: "04:20", contents: "여기임" },
-  { author: "홍길동", time: "07:11", contents: "여기임" },
-  { author: "홍길동", time: "09:55", contents: "여기임" },
-  { author: "홍길동", time: "10:01", contents: "여기임" },
-  { author: "홍길동", time: "12:12", contents: "여기임" },
-  { author: "홍길동", time: "14:33", contents: "여기임" },
-  { author: "홍길동", time: "15:41", contents: "여기임" },
-  { author: "홍길동", time: "19:11", contents: "여기임" },
-  { author: "홍길동", time: "20:08", contents: "내용입니다. 오른쪽에서 왼쪽으로 이동. 실수를 줄여야 합니다." },
-  { author: "홍길동", time: "21:48", contents: "여기임" },
-  { author: "홍길동", time: "24:34", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T06:40", time: "03:20", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T06:42", time: "04:20", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T06:43", time: "07:11", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T06:06", time: "09:55", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T21:34", time: "10:01", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-24T20:30", time: "12:12", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-25T12:27", time: "14:33", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-25T12:32", time: "15:41", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-25T12:37", time: "19:11", contents: "여기임" },
+  {
+    author: "홍길동",
+    writtenAt: "2024-04-25T13:40",
+    time: "20:08",
+    contents: "내용입니다. 오른쪽에서 왼쪽으로 이동. 실수를 줄여야 합니다.",
+  },
+  { author: "홍길동", writtenAt: "2024-04-25T20:18", time: "21:48", contents: "여기임" },
+  { author: "홍길동", writtenAt: "2024-04-25T21:32", time: "24:34", contents: "여기임" },
 ];
 
 export default dynamic(() => Promise.resolve(VideoArticle), { ssr: false });

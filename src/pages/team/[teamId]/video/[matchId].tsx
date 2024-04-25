@@ -1,14 +1,14 @@
-"use client";
-import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
+import YouTube from "react-youtube";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { FONTS } from "@/styles/fonts";
 import useYoutube from "@/hook/useYoutube";
-import YouTube from "react-youtube";
+import dynamic from "next/dynamic";
+import useBackgroundGray from "@/hook/useBackgroundGray";
+
+import { FONTS } from "@/styles/fonts";
 import { minSecToSecond, secondToMinSec } from "@/util/common";
 import Button from "@/components/common/Button";
-import useBackgroundGray from "@/hook/useBackgroundGray";
-import dynamic from "next/dynamic";
 
 function VideoArticle() {
   useBackgroundGray();

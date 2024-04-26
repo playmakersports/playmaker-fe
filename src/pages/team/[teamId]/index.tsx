@@ -58,8 +58,8 @@ const rotateCircle = keyframes`
 const Top = styled.section`
   display: flex;
   gap: 20px;
-  margin: -64px -16px 24px;
-  padding: 64px 20px 20px;
+  margin: calc(var(--header-height) * -1) -16px 24px;
+  padding: var(--header-height) 20px 20px;
   background-color: ${({ theme }) => theme.card};
   h2 {
     ${FONTS.HEAD1}

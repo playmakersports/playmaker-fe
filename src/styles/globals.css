@@ -3,6 +3,7 @@
 @import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/variable/woff2/SUIT-Variable.css");
 
 :root {
+  --header-height: 56px;
   --main: #0059ff;
   --main2: #004fe2;
   --main3: #bad6eb;

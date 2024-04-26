@@ -26,7 +26,10 @@ function MainTab({ items, nowValue }: Props) {
         <Item
           key={item.value}
           selected={selected === item.value}
-          onClick={(event) => handleClickItem(item.value, event)}
+          onClick={(event) => {
+            handleClickItem(item.value, event);
+            event.currentTarget.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+          }}
         >
           {item.name}
         </Item>

@@ -32,7 +32,7 @@ function Header() {
   if (router.asPath === "/") {
     return (
       <Wrapper scrolled={scrolled}>
-        <Logotype width={128} height={40} />
+        <Logotype width={120} height={36} />
         <Menu>
           <Icon>
             <Count>3</Count>

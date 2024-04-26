@@ -45,16 +45,14 @@ function VideoArticle() {
   };
 
   const onCommentScroll = useCallback(() => {
-    if (
-      commentRef &&
-      commentRef.current!.scrollHeight - commentRef.current!.scrollTop === commentRef.current!.clientHeight
-    ) {
+    const clientHeight = commentRef.current!.clientHeight;
+    const nowPosition = commentRef.current!.scrollHeight - commentRef.current!.scrollTop;
+    if (commentRef && nowPosition - clientHeight < 40) {
       setIsScrollBottom(true);
     } else {
       setIsScrollBottom(false);
     }
   }, []);
-
   return (
     <Container>
       <PlayerTop showCommentInput={showCommentInput} height={VIDEO_SIZE.height}>
@@ -156,7 +154,7 @@ const Container = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 64px);
+  height: calc(100dvh - var(--header-height));
 `;
 const PlayerTop = styled.div<{ showCommentInput: boolean; height: number }>`
   position: sticky;
@@ -164,8 +162,8 @@ const PlayerTop = styled.div<{ showCommentInput: boolean; height: number }>`
   flex-direction: column;
   gap: 16px;
   ${({ showCommentInput, height }) => (showCommentInput ? ` height: ${height + 60}px` : "")};
-  padding: 64px 0 0;
-  margin: -64px -16px 0;
+  margin: calc(var(--header-height) * -1) -16px 0;
+  padding: var(--header-height) 0 0;
   background: linear-gradient(${({ theme }) => theme.baseBackground} 1%, ${({ theme }) => theme.card} 6%);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
@@ -220,20 +218,24 @@ const Comments = styled.ul<{ showCommentInput: boolean }>`
     padding: 12px 16px;
     background-color: ${({ theme }) => theme.gray4};
     border-radius: 12px;
+    transition: all 0.2s;
     ${FONTS.MD1W500};
     line-height: 2.4rem;
-    transition: all 0.2s;
-
-    &.now-active {
-      background-color: ${({ theme }) => theme.main};
-      color: #fff;
-    }
+    transition: transform 0.2s;
     &::after {
       content: attr(data-info);
       display: block;
       opacity: 0.6;
       margin-top: 6px;
       ${FONTS.MD3}
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+    &.now-active {
+      background-color: ${({ theme }) => theme.main};
+      color: #fff;
     }
   }
   .timeline {
@@ -259,11 +261,12 @@ const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }
   &::before {
     content: "";
     position: absolute;
-    display: ${({ isScrollBottom }) => (isScrollBottom ? "none" : "block")};
+    opacity: ${({ isScrollBottom }) => (isScrollBottom ? 0 : 1)};
     width: 100%;
-    height: 48px;
-    top: -48px;
+    height: 36px;
+    top: -36px;
     left: 0;
+    transition: opacity 0.2s;
     background: linear-gradient(
       0deg,
       ${({ theme }) => theme.background} 15%,

@@ -3,12 +3,16 @@ import useBackgroundGray from "@/hook/useBackgroundGray";
 
 import MyTeam from "@/components/Main/MyTeam";
 import SportsSection from "@/components/Main/SportsSection";
+import Head from "next/head";
 
 export default function Home() {
   useBackgroundGray();
 
   return (
     <Container>
+      <Head>
+        <title>플메 PLAYMAKER</title>
+      </Head>
       <MyTeam />
       <SportsSection />
     </Container>

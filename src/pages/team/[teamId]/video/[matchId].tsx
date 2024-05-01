@@ -9,6 +9,7 @@ import useBackgroundGray from "@/hook/useBackgroundGray";
 import { FONTS } from "@/styles/fonts";
 import { minSecToSecond, secondToMinSec } from "@/util/common";
 import Button from "@/components/common/Button";
+import { BaseContainer } from "@/components/common/Container";
 
 function VideoArticle() {
   useBackgroundGray();
@@ -25,7 +26,7 @@ function VideoArticle() {
 
   const VIDEO_SIZE = {
     width: window.innerWidth,
-    height: window.innerWidth * (9 / 16),
+    height: Math.floor(window.innerWidth * (9 / 16)),
   };
   const { handlePlayer, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
 
@@ -47,12 +48,14 @@ function VideoArticle() {
   const onCommentScroll = useCallback(() => {
     const clientHeight = commentRef.current!.clientHeight;
     const nowPosition = commentRef.current!.scrollHeight - commentRef.current!.scrollTop;
-    if (commentRef && nowPosition - clientHeight < 40) {
+    console.log(nowPosition - clientHeight);
+    if (commentRef && nowPosition - clientHeight < 20) {
       setIsScrollBottom(true);
     } else {
       setIsScrollBottom(false);
     }
   }, []);
+
   return (
     <Container>
       <PlayerTop showCommentInput={showCommentInput} height={VIDEO_SIZE.height}>
@@ -75,7 +78,12 @@ function VideoArticle() {
           </VideoInfo>
         )}
       </PlayerTop>
-      <Comments ref={commentRef} showCommentInput={showCommentInput} onScroll={onCommentScroll}>
+      <Comments
+        ref={commentRef}
+        showCommentInput={showCommentInput}
+        height={VIDEO_SIZE.height}
+        onScroll={onCommentScroll}
+      >
         {COMMENTS.map((value, index) => {
           const thisTime = minSecToSecond(value.time);
           const nextTime = COMMENTS[index + 1] ? minSecToSecond(COMMENTS[index + 1].time) : playerDuration;
@@ -150,28 +158,32 @@ function VideoArticle() {
   );
 }
 
-const Container = styled.section`
+type PlayerStyledProps = { showCommentInput: boolean; height: number };
+const Container = styled(BaseContainer)`
   position: relative;
   display: flex;
-  flex-direction: column;
-  height: calc(100dvh - var(--header-height));
+  align-items: flex-end;
+  overflow: hidden;
+  height: calc(100vh - var(--safe-area-top));
+  padding-bottom: 0px;
 `;
-const PlayerTop = styled.div<{ showCommentInput: boolean; height: number }>`
-  position: sticky;
+const PlayerTop = styled.div<PlayerStyledProps>`
+  position: fixed;
   display: flex;
+  top: 0;
+  left: 0;
   flex-direction: column;
   gap: 16px;
-  ${({ showCommentInput, height }) => (showCommentInput ? ` height: ${height + 60}px` : "")};
-  margin: calc(var(--header-height) * -1) -16px 0;
-  padding: var(--header-height) 0 0;
-  background: linear-gradient(${({ theme }) => theme.baseBackground} 1%, ${({ theme }) => theme.card} 6%);
+  padding: var(--safe-area-top) 0 0;
+  background: linear-gradient(0deg, ${({ theme }) => theme.card} 50%, rgba(0, 0, 0, 0) 100%);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   box-shadow: 0 4px 12px 8px rgba(0, 0, 0, 0.05);
+  z-index: 1;
 
   ${({ showCommentInput }) =>
     showCommentInput &&
-    `
+    ` 
     .video-wrapper {
       overflow: hidden;
       border-bottom-left-radius: 20px;
@@ -199,19 +211,24 @@ const Wrapper = styled.div<{ width: number; height: number }>`
   overflow: hidden;
   width: ${({ width }) => width}px;
   min-height: ${({ height }) => height}px;
+  div {
+    height: ${({ height }) => height}px !important;
+  }
 `;
-const Comments = styled.ul<{ showCommentInput: boolean }>`
+const Comments = styled.ul<PlayerStyledProps>`
+  flex: 1;
   display: flex;
   gap: 16px;
-  padding-top: 24px;
-  padding-bottom: ${({ showCommentInput }) => (showCommentInput ? "92px" : "28px")};
-  margin-bottom: 88px;
+  padding: 16px 0 20px;
+  height: ${({ showCommentInput, height }) =>
+    `calc(100vh - var(--safe-area-top) - ${height}px - 88px ${showCommentInput ? "" : "- 88px"})`};
+  margin-bottom: ${({ showCommentInput }) => (showCommentInput ? "calc(88px + env(safe-area-inset-bottom))" : "88px")};
   flex-direction: column;
   overflow-y: auto;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera*/
+    display: none;
   }
   li {
     gap: 8px;
@@ -252,9 +269,9 @@ const Comments = styled.ul<{ showCommentInput: boolean }>`
 const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }>`
   position: fixed;
   bottom: 0;
-  height: ${({ showCommentInput }) => (showCommentInput ? "auto" : "88px")};
+  height: ${({ showCommentInput }) => (showCommentInput ? "auto" : "calc(88px + env(safe-area-inset-bottom))")};
   margin: 0 -16px;
-  padding: 12px 16px 20px;
+  padding: 12px 16px calc(20px + env(safe-area-inset-bottom));
   width: 100%;
   background-color: ${({ theme }) => theme.background};
 

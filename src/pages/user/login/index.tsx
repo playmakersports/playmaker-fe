@@ -6,6 +6,7 @@ import { usePageTitle } from "@/hook/usePageTitle";
 import Button from "@/components/common/Button";
 import { KAKAO_AUTH } from "@/apis/oauth";
 import { VERCEL_BASE_URL } from "@/constants/baseUrl";
+import { BaseContainer } from "@/components/common/Container";
 
 function Login() {
   usePageTitle("로그인");
@@ -31,7 +32,7 @@ function Login() {
   );
 }
 
-const Container = styled.form`
+const Container = styled(BaseContainer)`
   display: flex;
   height: 60vh;
   justify-content: center;

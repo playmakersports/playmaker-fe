@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
@@ -7,20 +8,21 @@ import { usePageTitle } from "@/hook/usePageTitle";
 import useBackgroundGray from "@/hook/useBackgroundGray";
 import { FONTS } from "@/styles/fonts";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
-import Link from "next/link";
+import { BaseContainer } from "@/components/common/Container";
 
 function TeamHome() {
   // usePageTitle("팀 이름");
   useBackgroundGray();
+  const PLAYING = true;
   const router = useRouter();
   const teamId = router.query.teamId;
 
   return (
-    <>
+    <BaseContainer>
       <Top>
         <ProfileImgContainer>
-          <Playing />
-          <ProfileImg playing={true}>
+          {PLAYING && <Playing />}
+          <ProfileImg playing={PLAYING}>
             <img
               className="image"
               src="https://www.yonexmall.com/shop/data/skin_mobileV2/godobaby_C/mobileShopLogo.gif"
@@ -47,7 +49,7 @@ function TeamHome() {
           <Link href={`/team/${teamId}/video/1`}>이동</Link>
         </Card>
       </Cards>
-    </>
+    </BaseContainer>
   );
 }
 
@@ -57,10 +59,9 @@ const rotateCircle = keyframes`
 `;
 const Top = styled.section`
   display: flex;
+  padding: 0 8px;
+  margin-bottom: 32px;
   gap: 20px;
-  margin: calc(var(--header-height) * -1) -16px 24px;
-  padding: var(--header-height) 20px 20px;
-  background-color: ${({ theme }) => theme.card};
   h2 {
     ${FONTS.HEAD1}
   }
@@ -68,16 +69,16 @@ const Top = styled.section`
 
 const ProfileImgContainer = styled.div`
   position: relative;
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
 `;
 const ProfileImg = styled.div<{ playing: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 88px;
-  height: 88px;
+  width: 80px;
+  height: 80px;
   border-radius: 100%;
   overflow: hidden;
 

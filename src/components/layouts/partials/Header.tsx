@@ -9,63 +9,53 @@ import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import LeftArrow from "@/assets/icon/arrow/LeftArrow.svg";
 
-function Header() {
+type Props = { scrollActive: boolean };
+function Header({ scrollActive }: Props) {
   const ICON_SIZE = 22;
   const router = useRouter();
   const title = usePageTitle();
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 12) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.addEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   if (router.asPath === "/") {
     return (
-      <Wrapper scrolled={scrolled}>
-        <Logotype width={120} height={36} />
-        <Menu>
-          <Icon>
-            <Count>3</Count>
-            <NoticeBellIcon width={ICON_SIZE} height={ICON_SIZE} />
-          </Icon>
-          <Link href="/user/login">
+      <Wrapper scrolled={scrollActive}>
+        <Inner>
+          <Logotype width={120} height={36} />
+          <Menu>
             <Icon>
-              <PersonIcon width={ICON_SIZE} height={ICON_SIZE} />
+              <Count>3</Count>
+              <NoticeBellIcon width={ICON_SIZE} height={ICON_SIZE} />
             </Icon>
-          </Link>
-        </Menu>
+            <Link href="/user/login">
+              <Icon>
+                <PersonIcon width={ICON_SIZE} height={ICON_SIZE} />
+              </Icon>
+            </Link>
+          </Menu>
+        </Inner>
       </Wrapper>
     );
   }
   return (
-    <Wrapper scrolled={scrolled}>
-      <button type="button" aria-label="뒤로가기" onClick={() => router.back()}>
-        <LeftArrow width={ICON_SIZE + 8} height={ICON_SIZE + 8} />
-      </button>
-      <PageTitle>{title}</PageTitle>
+    <Wrapper scrolled={scrollActive}>
+      <Inner>
+        <button type="button" aria-label="뒤로가기" onClick={() => router.back()}>
+          <LeftArrow width={ICON_SIZE + 8} height={ICON_SIZE + 8} />
+        </button>
+        <PageTitle>{title}</PageTitle>
+      </Inner>
     </Wrapper>
   );
 }
 
 const Wrapper = styled.header<{ scrolled: boolean }>`
   position: fixed;
-  top: 0;
-  padding: 0 20px;
-  width: 100%;
-  height: var(--header-height);
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
+  top: 0;
+  padding: env(safe-area-inset-top) 20px;
+  padding: constant(safe-area-inset-top) 20px;
+  height: var(--header-height);
   background-color: ${({ scrolled, theme }) => (scrolled ? `rgba(${theme.baseBackgroundRgb}, 0.2)` : "none")};
   backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   z-index: 999;
@@ -73,6 +63,14 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
   svg {
     fill: ${({ theme }) => theme.gray2};
   }
+`;
+const Inner = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: env(safe-area-inset-top);
+  padding-top: constant(safe-area-inset-top);
 `;
 
 const Menu = styled.div`

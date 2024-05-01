@@ -6,7 +6,7 @@ export default function Document() {
       <Head>
         <meta
           name="viewport"
-          content="width=device-width, initial-scale=1, minimum-scale=1,  maximum-scale=1, user-scalable=no"
+          content="width=device-width, initial-scale=1, minimum-scale=1,  maximum-scale=1, user-scalable=no, viewport-fit=cover"
         />
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-title" content="플메" />

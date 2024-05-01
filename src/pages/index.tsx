@@ -4,27 +4,26 @@ import useBackgroundGray from "@/hook/useBackgroundGray";
 import MyTeam from "@/components/Main/MyTeam";
 import SportsSection from "@/components/Main/SportsSection";
 import Head from "next/head";
+import { BaseContainer } from "@/components/common/Container";
 
 export default function Home() {
   useBackgroundGray();
 
   return (
-    <Container>
+    <>
       <Head>
         <title>플메 PLAYMAKER</title>
       </Head>
-      <MyTeam />
-      <SportsSection />
-    </Container>
+      <Container>
+        <MyTeam />
+        <SportsSection />
+      </Container>
+    </>
   );
 }
 
-const Container = styled.section`
+const Container = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
   gap: 28px;
-  margin: 0 -16px;
-  padding: 12px 16px 20px;
-  height: auto;
-  min-height: 100vh;
 `;

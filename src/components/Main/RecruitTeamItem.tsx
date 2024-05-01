@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import { FONTS } from "@/styles/fonts";
+import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import { useRouter } from "next/router";
 
@@ -14,12 +14,17 @@ type Props = {
   date: string;
 };
 
-function SectionItem(props: Props) {
+function RecruitTeamItem(props: Props) {
   const { teamId, teamName, univName, isUnivTeam, location, date } = props;
   const router = useRouter();
 
   return (
-    <Container type="button" onClick={() => router.push(`/team/${teamId}`)}>
+    <Container
+      type="button"
+      onClick={() => {
+        router.push(`/team/${teamId}`);
+      }}
+    >
       <ItemWrapper>
         <TeamImage />
         <TeamInfo>
@@ -85,4 +90,4 @@ const TeamInfo = styled.div`
   }
 `;
 
-export default SectionItem;
+export default RecruitTeamItem;

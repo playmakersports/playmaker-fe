@@ -1,4 +1,4 @@
-import { FONTS } from "@/styles/fonts";
+import { FONTS } from "@/styles/common";
 import styled from "@emotion/styled";
 
 export const BasicWhiteCard = styled.div`

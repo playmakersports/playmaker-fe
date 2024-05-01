@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import useBackgroundGray from "@/hook/useBackgroundGray";
-import { FONTS } from "@/styles/fonts";
+import { FONTS } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer } from "@/components/common/Container";
 

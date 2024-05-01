@@ -6,7 +6,7 @@ import useYoutube from "@/hook/useYoutube";
 import dynamic from "next/dynamic";
 import useBackgroundGray from "@/hook/useBackgroundGray";
 
-import { FONTS } from "@/styles/fonts";
+import { FONTS, SCROLL_HIDE } from "@/styles/common";
 import { minSecToSecond, secondToMinSec } from "@/util/common";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
@@ -225,11 +225,8 @@ const Comments = styled.ul<PlayerStyledProps>`
   margin-bottom: ${({ showCommentInput }) => (showCommentInput ? "calc(88px + env(safe-area-inset-bottom))" : "88px")};
   flex-direction: column;
   overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  ${SCROLL_HIDE};
+
   li {
     gap: 8px;
     padding: 12px 16px;

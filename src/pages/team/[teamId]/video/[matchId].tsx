@@ -147,7 +147,7 @@ function VideoArticle() {
         {showCommentInput && (
           <CommentBox>
             <div className="comment-area">
-              <input type="text" className="target-time" readOnly value={targetVideoTime} />
+              <p className="target-time">{targetVideoTime}</p>
               <input type="text" className="target-comment" />
             </div>
             <button type="button">제출</button>
@@ -160,7 +160,7 @@ function VideoArticle() {
 
 type PlayerStyledProps = { showCommentInput: boolean; height: number };
 const Container = styled(BaseContainer)`
-  position: relative;
+  position: fixed;
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -219,12 +219,16 @@ const Comments = styled.ul<PlayerStyledProps>`
   flex: 1;
   display: flex;
   gap: 16px;
-  padding: 16px 0 20px;
+  margin: 0 -16px;
+  padding: 16px 16px 20px;
   height: ${({ showCommentInput, height }) =>
-    `calc(100vh - var(--safe-area-top) - ${height}px - 88px ${showCommentInput ? "" : "- 88px"})`};
-  margin-bottom: ${({ showCommentInput }) => (showCommentInput ? "calc(88px + env(safe-area-inset-bottom))" : "88px")};
+    `calc(100vh - var(--safe-area-top) - ${height}px - 88px - env(safe-area-inset-bottom) ${
+      showCommentInput ? "- 64px" : "- 80px"
+    })`};
+  margin-bottom: ${({ showCommentInput }) =>
+    showCommentInput ? "calc(88px + env(safe-area-inset-bottom) + 64px)" : "calc(88px + env(safe-area-inset-bottom))"};
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
   ${SCROLL_HIDE};
 
   li {
@@ -301,12 +305,12 @@ const PlayerHandler = styled.div`
 `;
 const CommentBox = styled.div`
   display: flex;
+  width: 100%;
   gap: 12px;
   margin-top: 20px;
   ${FONTS.MD1};
 
   .comment-area {
-    flex: 1;
     padding: 16px;
     display: flex;
     align-items: center;
@@ -323,7 +327,6 @@ const CommentBox = styled.div`
       color: ${({ theme }) => theme.text};
     }
     .target-comment {
-      flex: 1;
       font-size: 1.6rem;
       color: ${({ theme }) => theme.text};
     }

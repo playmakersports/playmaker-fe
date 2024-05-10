@@ -1,16 +1,18 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "jotai";
-import Layout from "@/components/layouts";
+import dynamic from "next/dynamic";
+import { ThemeProvider } from "@emotion/react";
 
 import { BASIC_THEME } from "@/styles/theme";
-import { ThemeProvider } from "@emotion/react";
-import dynamic from "next/dynamic";
+import Layout from "@/components/layouts";
+import GlobalComponents from "@/components/common/global";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider>
       <EmotionProvider>
+        <GlobalComponents />
         <Layout>
           <Component {...pageProps} />
         </Layout>

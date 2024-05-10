@@ -130,6 +130,7 @@ const MoreButton = styled.button`
 `;
 const ListWrapperRow = styled.div`
   display: flex;
+  padding: 0 0 12px;
   margin: -4px -4px 4px;
   gap: 4px;
   overflow-x: auto;

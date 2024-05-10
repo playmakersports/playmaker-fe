@@ -55,14 +55,14 @@ const Poster = styled.div`
   position: relative;
   margin: 0 auto;
   width: 72px;
-  min-height: 100px;
+  height: 100px;
   background-color: ${({ theme }) => theme.gray3};
   border-radius: 4px;
   overflow: hidden;
 
   img {
     width: 72px;
-    min-height: 100px;
+    height: 100px;
     object-fit: cover;
   }
 
@@ -88,7 +88,7 @@ const Poster = styled.div`
 const Name = styled.p`
   ${FONTS.MD1W500};
   width: 100%;
-  max-height: 40px;
+  max-height: 36px;
   text-align: center;
   word-break: keep-all;
   -webkit-line-clamp: 2;

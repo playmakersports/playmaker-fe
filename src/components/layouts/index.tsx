@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import Header from "./partials/Header";
+import { SCROLL_HIDE } from "@/styles/common";
 
 function Layout({ children }: { children: JSX.Element }) {
   const container = useRef<HTMLDivElement>(null);
@@ -45,11 +46,13 @@ const Container = styled.div`
   min-height: 100vh;
   overflow: hidden;
   & > main {
+    position: fixed;
     width: 100%;
-    min-height: 100vh;
+    height: calc(100vh - 1px);
     padding: calc(env(safe-area-inset-top) + var(--header-height)) 0 env(safe-area-inset-bottom);
     overflow-x: hidden;
     overflow-y: auto;
+    ${SCROLL_HIDE};
   }
 `;
 

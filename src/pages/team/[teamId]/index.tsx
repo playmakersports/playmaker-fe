@@ -1,17 +1,20 @@
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import useBackgroundGray from "@/hook/useBackgroundGray";
-import { FONTS } from "@/styles/common";
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer } from "@/components/common/Container";
+import ScheduleSection from "@/components/Team/ScheduleSection";
+import Button from "@/components/common/Button";
 
 function TeamHome() {
-  // usePageTitle("팀 이름");
+  usePageTitle("팀 페이지");
   useBackgroundGray();
   const PLAYING = true;
   const router = useRouter();
@@ -20,33 +23,52 @@ function TeamHome() {
   return (
     <BaseContainer>
       <Top>
-        <ProfileImgContainer>
-          {PLAYING && <Playing />}
-          <ProfileImg playing={PLAYING}>
-            <img
-              className="image"
-              src="https://www.yonexmall.com/shop/data/skin_mobileV2/godobaby_C/mobileShopLogo.gif"
-              alt="팀 프로필 이미지"
-            />
-          </ProfileImg>
-        </ProfileImgContainer>
-        <Right>
-          <h2>
-            팀 이름
-            <span>배구</span>
-            <span>성균관대</span>
-          </h2>
-          <p>창단 2024.04.20</p>
-          <p>팀원 14명</p>
-        </Right>
+        <TeamInfo>
+          <ProfileImgContainer>
+            {PLAYING && <Playing />}
+            <ProfileImg playing={PLAYING}>
+              <img
+                className="image"
+                src="https://www.yonexmall.com/shop/data/skin_mobileV2/godobaby_C/mobileShopLogo.gif"
+                alt="팀 프로필 이미지"
+              />
+            </ProfileImg>
+          </ProfileImgContainer>
+          <Right>
+            <h2>
+              팀 이름
+              <span>배구</span>
+              <span>성균관대</span>
+            </h2>
+            <p>창단 2024.04.20 | 현 14명</p>
+            <p className="team-introduce">최강 배구팀입니다. 0년 연속 전국 대회 수상한 팀입니다</p>
+          </Right>
+        </TeamInfo>
+        <TeamButtons>
+          <Button type="button" mode="MAIN" flex={2} autoHeight onClick={() => console.log("click")}>
+            가입 요청
+          </Button>
+          <Button type="button" mode="OPTION1" flex={2} autoHeight onClick={() => console.log("click")}>
+            관심 팀 추가
+          </Button>
+          <Button type="button" mode="OPTION2" flex={1} autoHeight onClick={() => console.log("click")}>
+            관리
+          </Button>
+        </TeamButtons>
       </Top>
       <Cards>
-        <Card></Card>
-        <Card></Card>
-        <Card>123</Card>
         <Card>
+          <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
+        </Card>
+        <Card onClick={() => router.push(`/team/${teamId}/schedule`)}>
+          <BasicWhiteCardTitle>일정</BasicWhiteCardTitle>
+          <ScheduleSection />
+        </Card>
+        <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
           <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
-          <Link href={`/team/${teamId}/video/1`}>이동</Link>
+        </Card>
+        <Card>
+          <BasicWhiteCardTitle>수상 이력</BasicWhiteCardTitle>
         </Card>
       </Cards>
     </BaseContainer>
@@ -58,12 +80,23 @@ const rotateCircle = keyframes`
     to { transform: rotate(360deg) }
 `;
 const Top = styled.section`
-  display: flex;
   padding: 0 8px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
+`;
+const TeamInfo = styled.article`
+  display: flex;
   gap: 20px;
   h2 {
     ${FONTS.HEAD1}
+  }
+`;
+const TeamButtons = styled.article`
+  display: flex;
+  margin-top: 12px;
+  gap: 8px;
+  justify-content: space-between;
+  button {
+    font-size: 1.4rem;
   }
 `;
 
@@ -84,7 +117,7 @@ const ProfileImg = styled.div<{ playing: boolean }>`
 
   .image {
     margin: ${({ playing }) => (playing ? "3px" : "0")};
-    border: 5px solid ${({ theme }) => theme.card};
+    border: 5px solid ${({ theme }) => theme.background};
     border: ${({ playing }) => (playing ? "" : "none")};
     width: calc(100% - 6px);
     height: calc(100% - 6px);
@@ -113,9 +146,9 @@ const Playing = styled.p`
   left: 50%;
   transform: translateX(-50%);
   background-color: ${({ theme }) => theme.main2};
-  border-top: 3px solid ${({ theme }) => theme.card};
-  border-left: 3px solid ${({ theme }) => theme.card};
-  border-right: 3px solid ${({ theme }) => theme.card};
+  border-top: 3px solid ${({ theme }) => theme.background};
+  border-left: 3px solid ${({ theme }) => theme.background};
+  border-right: 3px solid ${({ theme }) => theme.background};
   color: #fff;
   font-weight: 600;
   font-size: 1.2rem;
@@ -146,6 +179,12 @@ const Right = styled.div`
   p {
     ${FONTS.MD2};
   }
+  .team-introduce {
+    margin-top: 2px;
+    line-height: 2rem;
+    font-weight: 400;
+    opacity: 0.9;
+  }
 `;
 const Cards = styled.section`
   display: flex;
@@ -153,8 +192,10 @@ const Cards = styled.section`
   gap: 16px;
 `;
 
-const Card = styled(BasicWhiteCard)`
-  height: 128px;
+const Card = styled(BasicWhiteCard.withComponent("button"))`
+  position: relative;
+  text-align: left;
+  ${CARD_ACTIVE};
 `;
 
 export default TeamHome;

@@ -10,12 +10,14 @@ import { FONTS, SCROLL_HIDE } from "@/styles/common";
 import { minSecToSecond, secondToMinSec } from "@/util/common";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
+import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
 
 function VideoArticle() {
   useBackgroundGray();
   const router = useRouter();
   const playerRef = useRef<YouTube>(null);
   const commentRef = useRef<HTMLUListElement>(null);
+  const commentInputRef = useRef<HTMLInputElement>(null);
   const playerDuration = playerRef.current?.internalPlayer.getDuration();
 
   const [currentActiveComment, setCurrentActiveComment] = useState("");
@@ -63,7 +65,7 @@ function VideoArticle() {
           <YouTube
             ref={playerRef}
             id="player_YouTube"
-            videoId="roWaiGLWMB0"
+            videoId="yD3qRoTuHzQ"
             opts={opts}
             onReady={handlePlayer}
             onPlay={handlePlayer}
@@ -108,12 +110,12 @@ function VideoArticle() {
       </Comments>
       <Bottom isScrollBottom={isScrollBottom} showCommentInput={showCommentInput}>
         <PlayerHandler>
-          <p className="yt-player-time">{secondToMinSec(currentTime)}</p>
+          {/* <p className="yt-player-time">{secondToMinSec(currentTime)}</p> */}
           <Button
             type="button"
             mode="SUB1"
             onClick={playerPausePlay}
-            flex={2}
+            flex={showCommentInput ? 1 : 2}
             disabled={playerState === 3}
             split={{
               text: `${playbackRate === 1 ? 0.5 : 1}x`,
@@ -139,20 +141,30 @@ function VideoArticle() {
             onClick={() => {
               setTargetVideoTime(secondToMinSec(currentTime));
               setShowCommentInput(true);
+              commentInputRef.current?.focus();
             }}
+            split={
+              showCommentInput
+                ? {
+                    text: "닫기",
+                    onClick: () => setShowCommentInput(false),
+                  }
+                : undefined
+            }
           >
-            여기에 댓글
+            {secondToMinSec(currentTime)}에 댓글
           </Button>
         </PlayerHandler>
-        {showCommentInput && (
-          <CommentBox>
-            <div className="comment-area">
-              <p className="target-time">{targetVideoTime}</p>
-              <input type="text" className="target-comment" />
-            </div>
-            <button type="button">제출</button>
-          </CommentBox>
-        )}
+
+        <CommentBox style={{ display: showCommentInput ? "block" : "none" }}>
+          <div className="comment-area">
+            <p className="target-time">{targetVideoTime}</p>
+            <input type="text" ref={commentInputRef} className="target-comment" />
+            <button type="button">
+              <PaperPlaneIcon width={20} height={20} />
+            </button>
+          </div>
+        </CommentBox>
       </Bottom>
     </Container>
   );
@@ -305,17 +317,17 @@ const PlayerHandler = styled.div`
 `;
 const CommentBox = styled.div`
   display: flex;
-  width: 100%;
-  gap: 12px;
   margin-top: 20px;
   ${FONTS.MD1};
 
   .comment-area {
-    padding: 16px;
+    width: 100%;
+    padding: 12px 16px;
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: 8px;
-    border-radius: 20px;
+    border-radius: 32px;
     background-color: ${({ theme }) => theme.gray4};
     .target-time {
       width: 42px;
@@ -327,9 +339,16 @@ const CommentBox = styled.div`
       color: ${({ theme }) => theme.text};
     }
     .target-comment {
+      flex: 1;
       font-size: 1.6rem;
       color: ${({ theme }) => theme.text};
     }
+  }
+  & button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.65;
   }
 `;
 

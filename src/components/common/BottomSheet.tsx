@@ -60,12 +60,12 @@ function BottomSheet(props: BottomSheetProps) {
           ))}
         </ButtonWrapper>
       </Wrapper>
-      <Backdrop onClick={closeBottomSheet} />
+      <Backdrop isShow={showModal} onClick={closeBottomSheet} />
     </>
   );
 }
 
-const Backdrop = styled.div`
+const Backdrop = styled.div<{ isShow: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -73,6 +73,8 @@ const Backdrop = styled.div`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 11;
+  opacity: ${({ isShow }) => (isShow ? 1 : 0)};
+  transition: opacity 0.2s;
 `;
 
 const Bar = styled.div`
@@ -97,10 +99,9 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   justify-content: space-between;
   margin: 0 auto;
   padding: 16px;
-  left: 16px;
-  bottom: 20px;
-  width: calc(100% - 32px);
-  max-width: 640px;
+  left: 12px;
+  bottom: calc(28px + env(safe-area-inset-bottom) / 2);
+  width: calc(100% - 24px);
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
   z-index: 99;
   background: ${({ theme }) => theme.background};

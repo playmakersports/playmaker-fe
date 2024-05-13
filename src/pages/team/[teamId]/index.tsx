@@ -1,9 +1,8 @@
 import React from "react";
-import Link from "next/link";
-import dynamic from "next/dynamic";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
+import useToast from "@/hook/useToast";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import useBackgroundGray from "@/hook/useBackgroundGray";
@@ -17,8 +16,15 @@ function TeamHome() {
   usePageTitle("팀 페이지");
   useBackgroundGray();
   const PLAYING = true;
+  const { trigger } = useToast();
   const router = useRouter();
   const teamId = router.query.teamId;
+
+  const requestTeamJoin = () => {};
+  const addFavoriteTeam = () => {
+    trigger("관심 팀에 추가했어요.");
+  };
+  const moveAdminPage = () => {};
 
   return (
     <BaseContainer>
@@ -45,13 +51,13 @@ function TeamHome() {
           </Right>
         </TeamInfo>
         <TeamButtons>
-          <Button type="button" mode="MAIN" flex={2} autoHeight onClick={() => console.log("click")}>
+          <Button type="button" mode="MAIN" flex={2} autoHeight onClick={requestTeamJoin}>
             가입 요청
           </Button>
-          <Button type="button" mode="OPTION1" flex={2} autoHeight onClick={() => console.log("click")}>
+          <Button type="button" mode="OPTION1" flex={2} autoHeight onClick={addFavoriteTeam}>
             관심 팀 추가
           </Button>
-          <Button type="button" mode="OPTION2" flex={1} autoHeight onClick={() => console.log("click")}>
+          <Button type="button" mode="OPTION2" flex={1} autoHeight onClick={moveAdminPage}>
             관리
           </Button>
         </TeamButtons>

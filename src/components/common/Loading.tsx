@@ -19,7 +19,7 @@ function Loading(props: Props) {
           margin: "0 auto",
           width: "100%",
           height: "100%",
-          background: "rgba(var(--base-background-rgb), 0.6)",
+          background: "rgba(var(--background-rgb), 0.6)",
           zIndex: 10,
         }}
       >

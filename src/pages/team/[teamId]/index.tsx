@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import useToast from "@/hook/useToast";
 
 import { usePageTitle } from "@/hook/usePageTitle";
-import useBackgroundGray from "@/hook/useBackgroundGray";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer } from "@/components/common/Container";
@@ -14,7 +13,6 @@ import Button from "@/components/common/Button";
 
 function TeamHome() {
   usePageTitle("팀 페이지");
-  useBackgroundGray();
   const PLAYING = true;
   const { trigger } = useToast();
   const router = useRouter();

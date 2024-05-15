@@ -4,7 +4,6 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import useYoutube from "@/hook/useYoutube";
 import dynamic from "next/dynamic";
-import useBackgroundGray from "@/hook/useBackgroundGray";
 
 import { FONTS, SCROLL_HIDE } from "@/styles/common";
 import { minSecToSecond, secondToMinSec } from "@/util/common";
@@ -13,7 +12,6 @@ import { BaseContainer } from "@/components/common/Container";
 import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
 
 function VideoArticle() {
-  useBackgroundGray();
   const router = useRouter();
   const playerRef = useRef<YouTube>(null);
   const commentRef = useRef<HTMLUListElement>(null);
@@ -301,7 +299,7 @@ const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }
     background: linear-gradient(
       0deg,
       ${({ theme }) => theme.background} 15%,
-      rgba(${({ theme }) => theme.baseBackgroundRgb}, 0) 100%
+      rgba(${({ theme }) => theme.backgroundRgb}, 0) 100%
     );
   }
 `;
@@ -340,12 +338,13 @@ const CommentBox = styled.div`
       color: ${({ theme }) => theme.text};
     }
     .target-comment {
-      flex: 1;
+      width: calc(100% - 28px);
       font-size: 1.6rem;
       color: ${({ theme }) => theme.text};
     }
   }
-  & button {
+  button {
+    padding: 4px;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import useBackgroundGray from "@/hook/useBackgroundGray";
 
 import MainTab from "@/components/Main/MainTab";
 import { BaseContainer } from "@/components/common/Container";
@@ -8,7 +7,6 @@ import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { useRouter } from "next/router";
 
 function Board() {
-  useBackgroundGray();
   const [, setTab] = useState("ALL");
   const router = useRouter();
   const teamId = router.query.teamId;

@@ -23,8 +23,7 @@
   --card: var(--white);
   --card-active: #fafafa;
   --background: #f3f3f3;
-  --base-background: var(--white);
-  --base-background-rgb: 256, 256, 256;
+  --background-rgb: 243, 243, 243;
 }
 :root[data-dark="true"] {
   --main: #0059ff;
@@ -45,6 +44,5 @@
   --card: #1a1a1a;
   --card-active: rgb(35, 35, 35);
   --background: #2c2c2c;
-  --base-background: #101010;
-  --base-background-rgb: 14, 14, 14;
+  --background-rgb: 44, 44, 44;
 }

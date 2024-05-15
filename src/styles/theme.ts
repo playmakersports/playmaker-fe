@@ -16,6 +16,5 @@ export const BASIC_THEME = {
   green: "var(--green)",
   card: "var(--card)",
   background: "var(--background)",
-  baseBackground: "var(--base-background)",
-  baseBackgroundRgb: "var(--base-background-rgb)",
+  backgroundRgb: "var(--background-rgb)",
 };

@@ -3,19 +3,17 @@ import { Global, css } from "@emotion/react";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 
-const baseTheme = (isBackgroundGray: boolean) => css`
+const baseTheme = css`
   html {
-    background: var(--base-background);
+    background: var(--background);
   }
   body {
     color: var(--text);
-    background: var(--base-background);
-    ${isBackgroundGray ? "background: linear-gradient(var(--base-background) 1%, var(--background) 10%)" : ""};
+    background: var(--background);
   }
 `;
 
 const GlobalStyle = () => {
-  const isBackgroundGray = useAtomValue(atomBackgroundGray);
   const updateThemeMode = () => {
     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.getElementsByTagName("html")[0].setAttribute("data-dark", "true");
@@ -32,7 +30,7 @@ const GlobalStyle = () => {
     };
   }, []);
 
-  return <Global styles={baseTheme(isBackgroundGray)} />;
+  return <Global styles={baseTheme} />;
 };
 
 export default GlobalStyle;

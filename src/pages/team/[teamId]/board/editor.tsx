@@ -2,7 +2,6 @@
 
 import React from "react";
 import styled from "@emotion/styled";
-import useBackgroundGray from "@/hook/useBackgroundGray";
 
 import { BaseContainer } from "@/components/common/Container";
 import { useEditorHandler } from "@/hook/useEditorHandler";
@@ -11,7 +10,6 @@ import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
 
 function ArticleEditor() {
-  useBackgroundGray();
   const editor = useEditorHandler();
   if (!editor) return null;
 

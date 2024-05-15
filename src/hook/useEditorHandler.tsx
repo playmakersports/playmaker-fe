@@ -9,6 +9,7 @@ type Props = {
 
 export const useEditorHandler = ({ initialContent }: Props = {}) =>
   useEditor({
+    enablePasteRules: false, // 붙여넣기할 때 마크다운 문법 무시
     content: initialContent ?? "",
     extensions: [
       StarterKit,

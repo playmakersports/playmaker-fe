@@ -348,7 +348,10 @@ const CommentBox = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    opacity: 0.65;
+    opacity: 0.8;
+    svg {
+      fill: var(--black);
+    }
   }
 `;
 

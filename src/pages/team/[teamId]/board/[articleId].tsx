@@ -26,7 +26,7 @@ function ArticleId() {
             `<p class="wrong-iframe">[부적절한 코드가 감지되어 삭제되었습니다.]</p>`
           ),
         }}
-      ></Contents>
+      />
     </Container>
   );
 }
@@ -64,4 +64,5 @@ const MOCK = ` <p>안녕하세요 손수철입니다.</p>
   <iframe>이상한 코드</iframe>
   <p>감사합니다.</p>
   <p>손수철 드림.</p>`;
+
 export default ArticleId;

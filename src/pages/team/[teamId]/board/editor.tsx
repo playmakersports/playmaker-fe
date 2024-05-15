@@ -48,6 +48,7 @@ const Title = styled.input`
   border-radius: 8px;
   background-color: var(--card);
   ${FONTS.HEAD1};
+  color: var(--text);
 `;
 const Buttons = styled.div`
   display: flex;

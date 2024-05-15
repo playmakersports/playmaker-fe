@@ -4,12 +4,18 @@ export const EDITOR_ARTICLE_STYLE = `
     ${FONTS.MD1W500};
     font-weight: 400;
     line-height: 2.4rem;
-    font-style: inherit !important;
+    font-style: inherit;
 
-    ul,
-    ol {
-      padding: 0 16px;
+    ul {
+      padding-left: 20px;
       list-style-type: disc
+    }
+    ol {
+      padding-left: 24px;
+      list-style-type: decimal;
+      li::marker {
+        font-variant-numeric: tabular-nums;
+      }
     }
 
 
@@ -49,6 +55,10 @@ export const EDITOR_ARTICLE_STYLE = `
       margin-bottom: 10px;
       padding-left: 1rem;
       border-left: 3px solid var(--gray1);
+    }
+
+    em {
+    border-bottom: 1px solid var(--text);
     }
 
     p {

@@ -178,6 +178,7 @@ const Container = styled(BaseContainer)`
   overflow: hidden;
   height: calc(100vh - var(--safe-area-top));
   padding-bottom: 0px;
+  width: 100%;
 `;
 const PlayerTop = styled.div<PlayerStyledProps>`
   position: fixed;

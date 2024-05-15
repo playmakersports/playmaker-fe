@@ -18,16 +18,16 @@ export const CARD_ACTIVE = `
     border-radius: 16px;
     transition: all 0.2s;
     &:active {
-      transform: scale(0.97);
+      transform: scale(0.95);
       background-color: var(--card-active);
     }
 `;
-export const BUTTON_ACTIVE = `
+export const BUTTON_ACTIVE = (color?: string) => `
     border-radius: 16px;
     transition: all 0.2s;
     &:active {
-      transform: scale(0.97);
-      background-color: var(--background);
+      transform: scale(0.95);
+      background-color: ${color ?? "var(--background)"};
     }
 `;
 
@@ -39,6 +39,6 @@ export const INNER_BUTTON_ACTIVE = `
     }
     &:active > .inner-button {
       transition: transform 0.2s;
-      transform: scale(0.97);
+      transform: scale(0.95);
     }
 `;

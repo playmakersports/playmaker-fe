@@ -223,7 +223,7 @@ const DayName = styled.div`
 const Control = styled.button`
   padding: 12px 20px;
   font-size: 1.4rem;
-  ${BUTTON_ACTIVE};
+  ${BUTTON_ACTIVE()};
   opacity: 0.7;
 `;
 const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
@@ -233,7 +233,7 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   text-align: center;
   color: ${({ isHoliday, theme }) => (isHoliday ? theme.sub2 : theme.text)};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
-  ${BUTTON_ACTIVE};
+  ${BUTTON_ACTIVE()};
 
   &[aria-invalid] {
     visibility: hidden;

@@ -4,7 +4,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { EditorContent, Editor } from "@tiptap/react";
 
-import EditorHandler from "./Handler";
+import EditorMenu from "./Menu";
 import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 
 type Props = {
@@ -14,7 +14,7 @@ type Props = {
 function EditorUI({ editor }: Props) {
   return (
     <EditorContainer>
-      <EditorHandler editor={editor} />
+      <EditorMenu editor={editor} />
       <div id="editor">
         <EditorContent editor={editor} />
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { Editor, useCurrentEditor } from "@tiptap/react";
+import { Editor } from "@tiptap/react";
 import styled from "@emotion/styled";
 import { BUTTON_ACTIVE } from "@/styles/common";
 
@@ -8,7 +8,7 @@ type Props = {
   editor: Editor | null;
 };
 
-function EditorHandler({ editor }: Props) {
+function EditorMenu({ editor }: Props) {
   if (!editor) {
     return null;
   }
@@ -27,7 +27,7 @@ function EditorHandler({ editor }: Props) {
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "is-active" : ""}
       >
-        기울임
+        밑줄
       </button>
       <button
         onClick={() => editor.chain().focus().toggleStrike().run()}
@@ -103,17 +103,15 @@ const Container = styled.header`
   display: flex;
   flex-wrap: wrap;
   gap: 2px 4px;
+
   button {
     padding: 6px 12px;
     font-size: 1.6rem;
     ${BUTTON_ACTIVE("var(--gray4)")};
     transition: all 0.1s;
+    border: 1px solid transparent;
 
-    &:active {
-      font-weight: 700;
-    }
     &.is-active {
-      padding: 5px 11px;
       font-weight: 700;
       transform: scale(0.95);
       background-color: var(--gray4);
@@ -122,4 +120,4 @@ const Container = styled.header`
   }
 `;
 
-export default EditorHandler;
+export default EditorMenu;

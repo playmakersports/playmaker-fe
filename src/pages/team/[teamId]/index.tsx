@@ -63,7 +63,7 @@ function TeamHome() {
         </TeamButtons>
       </Top>
       <Cards>
-        <Card>
+        <Card onClick={() => router.push(`/team/${teamId}/board`)}>
           <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
         </Card>
         <Card onClick={() => router.push(`/team/${teamId}/schedule`)}>

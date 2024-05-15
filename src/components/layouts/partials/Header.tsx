@@ -56,7 +56,7 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
   padding: env(safe-area-inset-top) 20px;
   padding: constant(safe-area-inset-top) 20px;
   height: var(--header-height);
-  background-color: ${({ scrolled, theme }) => (scrolled ? `rgba(${theme.baseBackgroundRgb}, 0.2)` : "none")};
+  background-color: ${({ scrolled, theme }) => (scrolled ? `rgba(${theme.backgroundRgb}, 0.2)` : "none")};
   backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   z-index: 999;
   transition: background-color 0.3s, backdrop-filter 0.3s;

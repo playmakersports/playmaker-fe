@@ -31,11 +31,11 @@ export const BUTTON_ACTIVE = (color?: string) => `
     }
 `;
 
-export const INNER_BUTTON_ACTIVE = `
+export const INNER_BUTTON_ACTIVE = (color?: string) => `
     border-radius: 16px;
     transition: all 0.2s;
     &:active {
-      background-color: var(--background);
+      background-color: ${color ?? "var(--background)"};
     }
     &:active > .inner-button {
       transition: transform 0.2s;

@@ -49,7 +49,7 @@ const Container = styled.div`
     position: fixed;
     width: 100%;
     height: calc(100vh - 1px);
-    padding: calc(env(safe-area-inset-top) + var(--header-height)) 0 env(safe-area-inset-bottom);
+    padding: calc(env(safe-area-inset-top) + var(--header-height)) 0 calc(env(safe-area-inset-bottom) + 16px);
     overflow-x: hidden;
     overflow-y: auto;
     ${SCROLL_HIDE};

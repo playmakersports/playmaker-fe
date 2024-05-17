@@ -297,7 +297,7 @@ const ScheduleList = styled.ul`
   li > button {
     padding: 12px;
     width: 100%;
-    ${INNER_BUTTON_ACTIVE};
+    ${INNER_BUTTON_ACTIVE()};
     .inner-button {
       display: flex;
       flex-direction: column;

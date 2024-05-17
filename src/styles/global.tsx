@@ -1,6 +1,4 @@
-import { atomBackgroundGray } from "@/atom/common";
 import { Global, css } from "@emotion/react";
-import { useAtomValue } from "jotai";
 import { useEffect } from "react";
 
 const baseTheme = css`

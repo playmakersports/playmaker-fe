@@ -28,7 +28,6 @@ const EditorContainer = styled.div`
   width: 100%;
 
   #editor {
-    margin-top: 16px;
     padding: 20px;
     border-radius: 8px;
     background-color: var(--card);
@@ -37,7 +36,7 @@ const EditorContainer = styled.div`
       outline: none;
     }
     .tiptap {
-      height: 360px;
+      min-height: 360px;
       overflow-y: auto;
       ${EDITOR_ARTICLE_STYLE}
     }

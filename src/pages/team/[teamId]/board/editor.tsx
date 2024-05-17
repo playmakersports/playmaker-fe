@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 
 import { BaseContainer } from "@/components/common/Container";
@@ -8,8 +8,10 @@ import { useEditorHandler } from "@/hook/useEditorHandler";
 import EditorUI from "@/components/Editor";
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
+import DropDown from "@/components/common/DropDown";
 
 function ArticleEditor() {
+  const [category, setCategory] = useState("");
   const editor = useEditorHandler();
   if (!editor) return null;
 
@@ -26,6 +28,17 @@ function ArticleEditor() {
 
   return (
     <Container>
+      <DropDown
+        id="category"
+        getSelectedValue={setCategory}
+        defaultValue=""
+        options={[
+          { name: "카테고리 선택", value: "" },
+          { name: "공지사항", value: "notice" },
+          { name: "사진", value: "photo" },
+          { name: "일정", value: "schedule" },
+        ]}
+      />
       <Title type="text" placeholder="제목을 입력하세요." autoFocus />
       <EditorUI editor={editor} />
       <Buttons>
@@ -40,9 +53,12 @@ function ArticleEditor() {
   );
 }
 
-const Container = styled(BaseContainer)``;
+const Container = styled(BaseContainer)`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
 const Title = styled.input`
-  margin-bottom: 24px;
   width: 100%;
   padding: 20px;
   border-radius: 8px;
@@ -52,7 +68,6 @@ const Title = styled.input`
 `;
 const Buttons = styled.div`
   display: flex;
-  margin-top: 24px;
   gap: 8px;
   justify-content: space-between;
 `;

@@ -48,7 +48,7 @@ function VideoArticle() {
   const onCommentScroll = useCallback(() => {
     const clientHeight = commentRef.current!.clientHeight;
     const nowPosition = commentRef.current!.scrollHeight - commentRef.current!.scrollTop;
-    console.log(nowPosition - clientHeight);
+
     if (commentRef && nowPosition - clientHeight < 20) {
       setIsScrollBottom(true);
     } else {

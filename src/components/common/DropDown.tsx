@@ -69,13 +69,14 @@ const Container = styled.div`
 const Options = styled.ul<{ show: boolean }>`
   position: absolute;
   top: 100%;
-  margin-top: 8px;
+  margin-top: 12px;
   padding: 8px 2px;
   left: 0;
   width: 100%;
-  background-color: var(--card);
+  background-color: var(--drop-down-background);
   border-radius: 16px;
-  box-shadow: 0 10px 16px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--background);
+  box-shadow: 0 10px 16px 12px var(--box-shadow);
   transition: all 0.2s;
 
   transform: translateY(${({ show }) => (show ? "0px" : "-30px")});

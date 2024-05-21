@@ -32,7 +32,9 @@ function Layout({ children }: { children: JSX.Element }) {
   return (
     <Container>
       <Header scrollActive={scrollActive} />
-      <main ref={container}>{children}</main>
+      <main id="main_Container" ref={container}>
+        {children}
+      </main>
     </Container>
   );
 }

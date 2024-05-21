@@ -25,6 +25,7 @@ export const CARD_ACTIVE = `
 export const BUTTON_ACTIVE = (color?: string) => `
     border-radius: 16px;
     transition: all 0.2s;
+    user-select: none;
     &:active {
       transform: scale(0.95);
       background-color: ${color ?? "var(--background)"};

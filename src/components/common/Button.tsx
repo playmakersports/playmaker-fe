@@ -32,7 +32,7 @@ function Button(props: Props) {
       color: theme.white,
     },
     OPTION2: {
-      background: theme.gray4,
+      background: theme.gray3,
       color: theme.black,
     },
     SUB1: {

@@ -88,7 +88,7 @@ const Bar = styled.div`
 const Header = styled.header``;
 const Contents = styled.div`
   margin: 12px 0 20px;
-  padding: 0 8px;
+  padding: 0 4px;
   ${FONTS.MD1W500}
 `;
 
@@ -104,7 +104,7 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   width: calc(100% - 24px);
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
   z-index: 99;
-  background: ${({ theme }) => theme.background};
+  background: var(--drop-down-background);
   border-radius: 24px;
   transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);
   scale: ${({ isShow }) => (isShow ? 1 : 0.9)};

@@ -6,6 +6,7 @@ import { EditorContent, Editor } from "@tiptap/react";
 
 import EditorMenu from "./Menu";
 import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
+import EditorMenuBottom from "./MenuBottom";
 
 type Props = {
   editor: Editor | null;
@@ -14,10 +15,21 @@ type Props = {
 function EditorUI({ editor }: Props) {
   return (
     <EditorContainer>
-      <EditorMenu editor={editor} />
-      <div id="editor">
-        <EditorContent editor={editor} />
+      <div style={{ position: "relative" }}>
+        <EditorMenu editor={editor} />
+        <div id="editor">
+          {editor && (
+            <EditorContent
+              editor={editor}
+              onFocus={(event) => {
+                console.log(event);
+                event.target.scrollBy({ top: 50 });
+              }}
+            />
+          )}
+        </div>
       </div>
+      <EditorMenuBottom editor={editor} />
     </EditorContainer>
   );
 }
@@ -36,7 +48,7 @@ const EditorContainer = styled.div`
       outline: none;
     }
     .tiptap {
-      min-height: 360px;
+      min-height: 280px;
       overflow-y: auto;
       ${EDITOR_ARTICLE_STYLE}
     }

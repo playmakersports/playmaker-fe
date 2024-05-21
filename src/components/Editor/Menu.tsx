@@ -21,13 +21,33 @@ type Props = {
 
 function EditorMenu({ editor }: Props) {
   const [showStyle, setShowStyle] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const mainContainerEl = document.getElementById("main_Container") as HTMLDivElement;
+    const headerHeight = +getComputedStyle(document.documentElement)
+      .getPropertyValue("--header-height")
+      .replace("px", "");
+    const safeAreaTop = +getComputedStyle(document.documentElement).getPropertyValue("--env-sat").replace("px", "");
+
+    const handleScroll = () => {
+      containerRef.current!.classList.toggle(
+        "stuck",
+        containerRef.current?.getBoundingClientRect().top === headerHeight + safeAreaTop
+      );
+    };
+    mainContainerEl!.addEventListener("scroll", handleScroll);
+    return () => {
+      mainContainerEl!.removeEventListener("scroll", handleScroll);
+    };
+  }, [containerRef]);
 
   if (!editor) {
     return null;
   }
 
   return (
-    <Container focused={editor.isFocused}>
+    <Container ref={containerRef}>
       <button
         type="button"
         className={`toggle-button ${showStyle && "active"}`}
@@ -77,6 +97,7 @@ function EditorMenu({ editor }: Props) {
         <DeleteText />
       </button>
       <button
+        id="highlight-button"
         onClick={() => editor.chain().focus().toggleHighlight().run()}
         disabled={!editor.can().chain().focus().toggleHighlight().run()}
         className={editor.isActive("highlight") ? "is-active" : ""}
@@ -107,34 +128,33 @@ function EditorMenu({ editor }: Props) {
       >
         <AlignRight />
       </button>
-
-      <button onClick={() => editor.chain().focus().undo().run()} disabled={!editor.can().chain().focus().undo().run()}>
-        실행취소
-      </button>
-      <button onClick={() => editor.chain().focus().redo().run()} disabled={!editor.can().chain().focus().redo().run()}>
-        되돌리기
-      </button>
-      <button type="button">이미지(준비)</button>
-      <button type="button">투표(준비)</button>
     </Container>
   );
 }
 
-const Container = styled.div<{ focused: boolean }>`
+const Container = styled.div`
   display: flex;
   position: sticky;
   top: 0;
   gap: 4px;
   margin-left: -2px;
-  padding-left: 22px;
+  padding: 0 16px 0 22px;
   margin-left: -16px;
   margin-right: -16px;
   margin-bottom: 8px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
+  transition: all 0.2s;
 
+  &.stuck {
+    padding: 8px 22px;
+    background-color: var(--card);
+    border-bottom: 1px solid var(--gray4);
+    z-index: 10;
+  }
   button {
+    /* MenuBottom과 통일 */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -172,9 +192,12 @@ const Container = styled.div<{ focused: boolean }>`
   }
 
   svg {
-    width: 20px;
-    height: 24px;
+    width: 18px;
+    height: 20px;
     fill: var(--text);
+  }
+  #highlight-button svg {
+    fill: #000;
   }
 
   &::-webkit-scrollbar {

@@ -30,7 +30,7 @@ function ArticleHead(props: Props) {
 const Container = styled.div`
   margin-bottom: 20px;
   padding: 0 8px 12px;
-  border-bottom: 1px solid ${({ theme }) => theme.gray4};
+  border-bottom: 1px solid rgb(var(--gray-h4));
 `;
 const Category = styled.p`
   margin-bottom: 4px;

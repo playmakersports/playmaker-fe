@@ -1,121 +1,60 @@
-import { useFormContext } from "react-hook-form";
+import React from "react";
+import { FONTS } from "@/styles/common";
 import styled from "@emotion/styled";
-// import FormDropdownBox from "./FormDropdownBox";
 
-export type InputProps = {
-  flex?: number;
-  type: "email" | "text" | "combo";
-  id: string;
-  placeholder?: string;
-  label?: string;
-  comboOption?: { value: string; label: string }[];
-  readOnly?: boolean;
+import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
+import SearchIcon from "@/assets/icon/global/Search.svg";
+
+type Props = Partial<React.InputHTMLAttributes<HTMLInputElement>> & {
+  search?: boolean;
+  delButton?: () => void;
 };
+export function BasicInput(props: Props) {
+  const { search, delButton } = props;
 
-function Input(props: InputProps) {
-  const { type, flex, id, label, comboOption, readOnly = false } = props;
-  const { register } = useFormContext();
-
-  if (type === "email") {
-    return (
-      <FlexBox gap="6px">
-        <InputWrapper flex={1}>
-          <InputArea type="text" readOnly={readOnly} placeholder={label} {...register(id)} />
-        </InputWrapper>
-        <span className="email-at">@</span>
-        {/* <FormDropdownBox
-          type="radio"
-          id="email-domain"
-          placeholder="선택"
-          filter={undefined}
-          options={[
-            { optionName: "naver.com", value: "@naver.com" },
-            { optionName: "gmail.com", value: "@gmail.com" },
-          ]}
-        /> */}
-      </FlexBox>
-    );
-  }
-  if (type === "combo") {
-    return (
-      <ComboWrapper flex={flex}>
-        {comboOption?.map((option) => (
-          <>
-            <ComboRadio key={option.value} type="radio" id={option.value} readOnly={readOnly} {...register(id)} />
-            <label htmlFor={option.value}>{option.label}</label>
-          </>
-        ))}
-      </ComboWrapper>
-    );
-  }
   return (
-    <InputWrapper flex={flex}>
-      <InputArea readOnly={readOnly} placeholder={label} {...register(id)} {...props} />
-    </InputWrapper>
+    <Wrapper>
+      {search && <SearchIcon />}
+      <Basic placeholder={props.placeholder ?? " "} {...props} />
+      {delButton && <DeleteAllIcon role="button" className="clear-input-button" onClick={delButton} />}
+    </Wrapper>
   );
 }
 
-const InputWrapper = styled.div<{ flex?: number }>`
-  ${({ flex }) => (flex ? `flex: ${flex}` : "")};
-  padding: 12px 16px;
-  border: 1px solid ${({ theme }) => theme.gray2};
-  border-radius: 10px;
-`;
-const ComboWrapper = styled(InputWrapper)`
+const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-`;
-
-const InputArea = styled.input`
-  width: 100%;
-  color: ${({ theme }) => theme.black};
-  font-size: 1.6rem;
-  line-height: 2.4rem;
-
-  &::placeholder {
-    color: ${({ theme }) => theme.placeholder};
-  }
-
-  &:read-only {
-    background-color: ${({ theme }) => theme.gray1};
-    color: ${({ theme }) => theme.placeholder};
-  }
-`;
-const ComboRadio = styled.input`
-  display: none;
-  & + label {
-    padding: 0 16px;
-    color: ${({ theme }) => theme.placeholder};
-    border-right: 1px solid ${({ theme }) => theme.gray2};
-    &:first-of-type {
-      padding-left: 0;
-    }
-    &:last-of-type {
-      padding-right: 0;
-      border: none;
-    }
-  }
-  &:checked + label {
-    color: ${({ theme }) => theme.main};
-    font-weight: 500;
-  }
-`;
-
-const FlexBox = styled.div<{ gap: string }>`
-  display: flex;
+  padding: 12px;
+  gap: 10px;
   align-items: center;
-  gap: ${({ gap }) => gap};
-  .email-at {
-    font-size: 2rem;
-    color: #989898;
+  background-color: rgba(var(--gray-h5), 1);
+  border-radius: 8px 10px;
+
+  & > svg {
+    fill: rgba(var(--gray-h3));
+    width: 20px;
+    height: 20px;
   }
 `;
 
-const StyledErrorMessage = styled.p`
-  margin: 4px 0 0 8px;
-  color: ${({ theme }) => theme.warn};
-`;
+const Basic = styled.input`
+  &[type="text"] {
+    width: 100%;
+    ${FONTS.MD1};
+    font-size: 1.8rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    color: var(--black);
 
-export default Input;
+    &::placeholder {
+      color: rgba(var(--gray-h2), 0.6);
+    }
+
+    & + .clear-input-button {
+      display: none;
+    }
+
+    &:not(:placeholder-shown) + .clear-input-button {
+      display: block;
+    }
+  }
+`;

@@ -29,20 +29,24 @@ const showToastAnim = keyframes`
   0% {
     opacity: 0;
     transform: scale(0.8) translateY(-130%);
+    padding: 8px 16px;
   }
   100% {
     opacity: 1;
     transform: scale(1) translateY(0);
+    padding: 16px 24px;
   }
 `;
 const hideToastAnim = keyframes`
     0% {
       opacity: 1;
       transform: scale(1) translateY(0);
+      padding: 16px 24px;
     }
     100% {
       opacity: 0;
       transform: scale(0.8) translateY(-130%);
+      padding: 8px 16px;
     }
 `;
 
@@ -53,7 +57,7 @@ const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT"
   width: fit-content;
   background-color: ${({ type, theme }) => (type === "ALERT" ? theme.warn : theme.white)};
   color: ${({ type, theme }) => (type === "ALERT" ? "#fff" : theme.text)};
-  padding: 16px 24px;
+  /* padding: 16px 24px; */
   margin: calc(env(safe-area-inset-top) + 8px) auto;
   margin: calc(constant(safe-area-inset-top) + 8px) auto;
   border-radius: 40px;

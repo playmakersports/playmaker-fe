@@ -5,6 +5,7 @@ import { FONTS } from "@/styles/common";
 
 export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "SNS_LOGIN" | "WARN";
 type Props = {
+  borderType?: boolean;
   mode: ButtonStyleMode;
   children: ReactNode;
   fullWidth?: boolean;
@@ -21,26 +22,37 @@ type Props = {
 
 function Button(props: Props) {
   const theme = useTheme();
-  const { split, mode, children, fullWidth, autoHeight = false, type, flex, disabled = false, onClick } = props;
+  const {
+    borderType,
+    split,
+    mode,
+    children,
+    fullWidth,
+    autoHeight = false,
+    type,
+    flex,
+    disabled = false,
+    onClick,
+  } = props;
   const BUTTON_STYLE = {
     MAIN: {
-      background: theme.main,
+      background: "var(--main)",
       color: "#fff",
     },
     OPTION1: {
-      background: theme.gray1,
-      color: theme.white,
+      background: "rgb(var(--gray-h2))",
+      color: "var(--white)",
     },
     OPTION2: {
-      background: theme.gray3,
-      color: theme.black,
+      background: "rgb(var(--gray-h5))",
+      color: "var(--black)",
     },
     SUB1: {
-      background: theme.sub1,
+      background: "var(--sub1)",
       color: "#fff",
     },
     WARN: {
-      background: theme.sub1,
+      background: "var(--sub1)",
       color: "#fff",
     },
     SNS_LOGIN: {
@@ -70,6 +82,7 @@ function Button(props: Props) {
         type={type ?? "button"}
         onClick={onClick}
         flex={flex}
+        borderType={borderType}
         mode={BUTTON_STYLE[mode]}
         fullWidth={fullWidth}
         disabled={disabled}
@@ -98,6 +111,7 @@ type ButtonStyled = {
   fullWidth?: boolean;
   flex?: number;
   autoHeight?: boolean;
+  borderType?: boolean;
 };
 const Wrapper = styled.button<ButtonStyled>`
   display: inline-flex;
@@ -107,10 +121,10 @@ const Wrapper = styled.button<ButtonStyled>`
   ${({ flex }) => (flex ? `flex: ${flex}` : "")};
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   height: ${({ autoHeight }) => (autoHeight ? "auto" : "56px")};
-  border: 0 solid transparent;
+  border: ${({ borderType, mode }) => (borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
   border-radius: ${({ autoHeight }) => (autoHeight ? "6px" : "12px")};
-  background-color: ${({ mode }) => mode.background};
-  color: ${({ mode }) => mode.color};
+  background-color: ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
+  color: ${({ borderType, mode }) => (borderType ? mode.background : mode.color)};
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;

@@ -72,7 +72,7 @@ const Backdrop = styled.div<{ isShow: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index: 11;
+  z-index: 999;
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};
   transition: opacity 0.2s;
 `;
@@ -98,12 +98,12 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 16px;
+  padding: 16px 20px;
   left: 12px;
   bottom: calc(28px + env(safe-area-inset-bottom) / 2);
   width: calc(100% - 24px);
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
-  z-index: 99;
+  z-index: 1000;
   background: var(--drop-down-background);
   border-radius: 24px;
   transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);

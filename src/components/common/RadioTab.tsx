@@ -18,7 +18,7 @@ function RadioTab({ id, items }: Props) {
   return (
     <Container>
       <SelectedBackground offset={offset} data-value={selected} />
-      {items.map((item) => (
+      {items.map((item, index) => (
         <ItemWrapper
           style={{ zIndex: 1 }}
           key={item.value}
@@ -27,7 +27,7 @@ function RadioTab({ id, items }: Props) {
             setOffset(event.currentTarget.offsetLeft);
           }}
         >
-          <input type="radio" id={item.value} value={item.value} {...register(id)} />
+          <input type="radio" id={item.value} value={item.value} defaultChecked={index === 0} {...register(id)} />
           <Item htmlFor={item.value}>{item.name}</Item>
         </ItemWrapper>
       ))}
@@ -68,7 +68,7 @@ const Item = styled.label`
   justify-content: center;
   font-size: 1.4rem;
   text-align: center;
-  transition: all 0.3s;
+  transition: all 0.2s;
   user-select: none;
   color: var(--main-white);
 `;

@@ -21,7 +21,6 @@ type Props = {
 };
 
 function Button(props: Props) {
-  const theme = useTheme();
   const {
     borderType,
     split,
@@ -134,7 +133,8 @@ const Wrapper = styled.button<ButtonStyled>`
     outline: none;
   }
   &:disabled {
-    opacity: 0.7;
+    background-color: rgb(var(--gray-h5));
+    color: rgb(var(--gray-h3));
     cursor: not-allowed;
   }
   &:active {

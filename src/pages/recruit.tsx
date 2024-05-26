@@ -24,7 +24,7 @@ function Recruit() {
   const [selectedTeam, setSelectedTeam] = useState("");
 
   return (
-    <Container isSelected={selectedTeam !== ""}>
+    <Container>
       <TabWrapper ref={sportsTabRef}>
         <MainTab
           initialValue={activeTab}
@@ -47,6 +47,7 @@ function Recruit() {
       <Cards>
         {NOW_RECRUIT_LIST.map((item) => (
           <Card
+            as="button"
             key={item.teamId}
             className={selectedTeam === item.teamId ? "selected" : ""}
             onClick={(e) => {
@@ -85,11 +86,22 @@ function Recruit() {
           </Card>
         ))}
       </Cards>
-      <Bottom isSelected={selectedTeam !== ""}>
+      <Bottom>
         <Button
           type="button"
-          mode="MAIN"
-          fullWidth
+          flex={1}
+          mode="OPTION2"
+          onClick={() => {
+            console.log("신청");
+          }}
+        >
+          모집 올리기
+        </Button>
+        <Button
+          type="button"
+          flex={1}
+          mode={selectedTeam !== "" ? "MAIN" : "OPTION1"}
+          disabled={selectedTeam === ""}
           onClick={() => {
             console.log("신청");
           }}
@@ -101,8 +113,8 @@ function Recruit() {
   );
 }
 
-const Container = styled(BaseContainer)<{ isSelected: boolean }>`
-  padding-bottom: calc(${({ isSelected }) => isSelected && "88px +"} var(--env-sab) + 12px);
+const Container = styled(BaseContainer)`
+  padding-bottom: calc(88px + var(--env-sab) + 12px);
 `;
 const TabWrapper = styled.div`
   position: sticky;
@@ -129,6 +141,7 @@ const Cards = styled.section`
 const Card = styled(BasicWhiteCard)`
   ${FONTS.MD1W500};
   font-weight: 400;
+  text-align: left;
   border: 2px solid transparent;
   ${CARD_ACTIVE};
 
@@ -157,14 +170,15 @@ const Card = styled(BasicWhiteCard)`
   }
 `;
 
-const Bottom = styled.div<{ isSelected: boolean }>`
+const Bottom = styled.div`
   position: fixed;
+  display: flex;
+  gap: 8px;
   bottom: 0;
   left: 0;
   width: 100%;
   padding: 12px 16px calc(20px + env(safe-area-inset-bottom));
   background-color: ${({ theme }) => theme.background};
-  transform: translateY(${({ isSelected }) => (isSelected ? "0%" : "100%")});
   transition: transform 0.2s;
 `;
 

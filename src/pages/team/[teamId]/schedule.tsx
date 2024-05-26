@@ -134,7 +134,6 @@ function Schedule() {
         title="일정 정보"
         buttons={[
           { mode: "OPTION2", name: "편집", onClick: () => {} },
-          { mode: "OPTION1", name: "길찾기", onClick: () => {} },
           { mode: "MAIN", name: "확인", onClick: () => {} },
         ]}
       >

@@ -66,8 +66,8 @@ const TeamImage = styled.div`
     width: max-content;
     padding: 4px 6px;
     border-radius: 12px;
-    background-color: ${({ theme }) => theme.main2};
-    color: ${({ theme }) => theme.white};
+    background-color: var(--main);
+    color: #fff;
     font-size: 1.2rem;
     font-weight: 500;
   }

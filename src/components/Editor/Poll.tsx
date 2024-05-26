@@ -13,7 +13,6 @@ function Poll() {
   const form = useForm({
     defaultValues: {
       pollTitle: "",
-      selectedType: "radio",
       pollOptions: [{ value: "" }, { value: "" }],
     },
   });
@@ -45,6 +44,13 @@ function Poll() {
               { value: "checkbox", name: "복수선택" },
             ]}
           />
+          <RadioTab
+            id="anonymous"
+            items={[
+              { value: "no", name: "공개" },
+              { value: "yes", name: "익명" },
+            ]}
+          />
         </PollSetting>
         <Options>
           {fields.map((field, index) => (
@@ -57,7 +63,14 @@ function Poll() {
             </Option>
           ))}
         </Options>
-        <Button fullWidth autoHeight mode="OPTION1" type="button" onClick={() => append({ value: "" })}>
+        <Button
+          fullWidth
+          autoHeight
+          borderType
+          mode="OPTION1"
+          type="button"
+          onClick={() => append({ value: "" }, { shouldFocus: false })}
+        >
           선택지 추가
         </Button>
       </Container>
@@ -76,22 +89,25 @@ const PollSetting = styled.div`
 const Title = styled.input`
   width: 100%;
   padding: 12px;
-  background-color: var(--background);
+  background-color: rgb(var(--gray-h6));
   border-radius: 8px;
   ${FONTS.MD1};
   font-size: 1.8rem;
 `;
 const Options = styled.ul`
   display: flex;
-  margin: 12px 0 16px;
+  margin: 12px 0 20px;
   flex-direction: column;
+  justify-content: flex-end;
+  max-height: 28vh;
+  overflow-y: auto;
 `;
 const Option = styled.li`
   display: flex;
   gap: 12px;
   margin-top: 12px;
   padding: 12px 8px 0;
-  border-top: 1px solid var(--gray3);
+  border-top: 1px solid rgb(var(--gray-h5));
   .option-index {
     flex-shrink: 0;
     display: inline-flex;
@@ -100,8 +116,8 @@ const Option = styled.li`
     width: 24px;
     height: 24px;
     text-align: center;
-    color: var(--gray1);
-    border: 2px solid var(--gray3);
+    color: rgb(var(--gray-h2));
+    border: 2px solid rgb(var(--gray-h4));
     border-radius: 100%;
     font-size: 1.4rem;
     font-weight: 700;

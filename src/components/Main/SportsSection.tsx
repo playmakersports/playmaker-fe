@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
 import MainTab from "./MainTab";
 import { FONTS, SCROLL_HIDE } from "@/styles/common";
@@ -7,9 +8,11 @@ import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import RecruitTeamItem from "./RecruitTeamItem";
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 import MatchScheduleItem from "./MatchScheduleItem";
+import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 
 function SportsSection() {
-  const [activeTab, setActiveTab] = useState(TAB_ITEMS[0].value);
+  const router = useRouter();
+  const [activeTab, setActiveTab] = useState(SUPPORT_SPORTS[0].value);
 
   return (
     <div>
@@ -17,7 +20,7 @@ function SportsSection() {
         nowValue={(value) => {
           setActiveTab(value);
         }}
-        items={TAB_ITEMS}
+        items={SUPPORT_SPORTS}
       />
       <Cards>
         <Container>
@@ -27,7 +30,7 @@ function SportsSection() {
               <RecruitTeamItem key={index} {...value} />
             ))}
           </ListWrapperColumn>
-          <MoreButton type="button">
+          <MoreButton type="button" onClick={() => router.push(`/recruit?sports=${activeTab}`)}>
             더 많은 팀 보기 <RightArrowThinIcon width={12} height={12} />
           </MoreButton>
         </Container>
@@ -54,13 +57,6 @@ function SportsSection() {
   );
 }
 
-const TAB_ITEMS = [
-  { value: "volley", name: "배구" },
-  { value: "basketball", name: "농구" },
-  { value: "football", name: "축구" },
-  { value: "badminton", name: "배드민턴" },
-  { value: "run", name: "러닝" },
-];
 const MOCK_TEAM_LIST = [
   {
     teamId: "1",

@@ -149,8 +149,8 @@ const Container = styled.div`
 
   &.stuck {
     padding: 8px 22px;
-    background-color: var(--card);
-    border-bottom: 1px solid var(--gray4);
+    background-color: var(--background);
+    border-bottom: 1px solid rgb(var(--gray-h5));
     z-index: 10;
   }
   button {
@@ -160,14 +160,14 @@ const Container = styled.div`
     align-items: center;
     padding: 6px 10px;
     font-size: 1.6rem;
-    ${BUTTON_ACTIVE("var(--gray4)")};
+    ${BUTTON_ACTIVE("rgb(var(--gray-h5))")};
     transition: all 0.1s;
     border: 1px solid transparent;
 
     &.is-active {
       font-weight: 700;
       transform: scale(0.95);
-      background-color: var(--gray4);
+      background-color: rgb(var(--gray-h5));
     }
   }
 
@@ -215,7 +215,7 @@ const HideMenu = styled.div<{ show: boolean }>`
   width: ${({ show }) => (show ? "100%" : "0%")};
   opacity: ${({ show }) => (show ? 1 : 0)};
   transition: all 0.2s;
-  border-right: 1px solid var(--gray3);
+  border-right: 1px solid rgb(var(--gray-h4));
 `;
 
 export default EditorMenu;

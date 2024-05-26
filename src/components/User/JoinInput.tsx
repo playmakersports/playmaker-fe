@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useFormContext } from "react-hook-form";
 
-import { InputProps } from "../common/Input";
+import { InputProps } from "../common/FormInput";
 import { FONTS } from "@/styles/common";
 
 function JoinInput(props: InputProps) {

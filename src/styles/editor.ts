@@ -54,7 +54,7 @@ export const EDITOR_ARTICLE_STYLE = `
     blockquote {
       margin-bottom: 10px;
       padding-left: 1rem;
-      border-left: 3px solid var(--gray1);
+      border-left: 3px solid rgb(var(--gray-h3));
     }
 
     em {

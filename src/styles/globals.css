@@ -9,12 +9,15 @@
   --main2: #004fe2;
   --main3: #bad6eb;
   --main-rgb: 0, 89, 255;
+  --main2-rgb: 0, 79, 226;
+  --main3-rgb: 186, 214, 235;
+  --lnb-back-drop-rgb: var(--main3-rgb);
   --main-white: var(--main);
   --sub1: #f8333c;
   --sub2: #e63f2d;
   --gray1: #777777;
   --gray2: #979797;
-  --gray3: #cdcdcd;
+  --gray3: #dbdbdb;
   --gray4: #e2e2e2;
   --placeholder: #788991;
   --warn: #ff5100;
@@ -23,26 +26,53 @@
   --text: rgb(21, 21, 21);
   --green: #77d935;
   --card: var(--white);
+  --card-rgb: 256, 256, 256;
   --drop-down-background: var(--white);
   --box-shadow: rgba(0, 0, 0, 0.05);
   --card-active: #fafafa;
   --background: #f3f3f3;
   --background-rgb: 243, 243, 243;
+  --background-light: var(--white);
+  --background-light-rgb: 256, 256, 256;
 
   --env-sat: env(safe-area-inset-top);
   --env-sab: env(safe-area-inset-bottom);
+
+  --gray10: 25, 26, 29;
+  --gray15: 32, 32, 34;
+  --gray20: 43, 44, 46;
+  --gray30: 68, 68, 71;
+  --gray40: 92, 93, 95;
+  --gray50: 116, 117, 119;
+  --gray60: 142, 142, 145;
+  --gray70: 169, 170, 172;
+  --gray80: 196, 196, 199;
+  --gray90: 225, 226, 227;
+  --gray95: 234, 234, 234;
+  --gray99: 250, 251, 253;
+
+  --gray-h1: var(--gray20);
+  --gray-h2: var(--gray40);
+  --gray-h3: var(--gray50);
+  --gray-h3: var(--gray70);
+  --gray-h4: var(--gray80);
+  --gray-h5: var(--gray90);
+  --gray-h6: var(--gray95);
+  --gray-h7: var(--gray99);
 }
+
 :root[data-dark="true"] {
   --main: #0059ff;
   --main2: #004fe2;
   --main3: #bad6eb;
   --main-white: #d5edff;
+  --lnb-back-drop-rgb: 68, 68, 71; /* --gray30 */
   --sub1: #f8333c;
   --sub2: #e63f2d;
   --gray1: #b1b1b1;
   --gray2: #909090;
-  --gray3: #848484;
-  --gray4: #484848;
+  --gray3: #8b8b8b;
+  --gray4: #4d4d4d;
   --placeholder: #a1aeb3;
   --warn: #ff5100;
   --white: #000;
@@ -50,9 +80,21 @@
   --text: #e0e0e0;
   --green: #77d935;
   --card: #1a1a1a;
-  --drop-down-background: var(--gray4);
+  --card-rgb: 26, 26, 26;
+  --drop-down-background: rgb(var(--gray-h7));
   --box-shadow: #292929;
   --card-active: rgb(35, 35, 35);
   --background: #2c2c2c;
   --background-rgb: 44, 44, 44;
+  --background-light: var(--card);
+  --background-light-rgb: 26, 26, 26;
+
+  --gray-h1: var(--gray99);
+  --gray-h2: var(--gray80);
+  --gray-h3: var(--gray70);
+  --gray-h3: var(--gray60);
+  --gray-h4: var(--gray50);
+  --gray-h5: var(--gray40);
+  --gray-h6: var(--gray30);
+  --gray-h7: var(--gray20);
 }

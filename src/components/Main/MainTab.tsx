@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 
 type Props = {
@@ -7,9 +7,11 @@ type Props = {
     name: string;
   }[];
   nowValue: (value: string) => void;
+  initialValue?: string;
 };
 
-function MainTab({ items, nowValue }: Props) {
+function MainTab({ items, nowValue, initialValue }: Props) {
+  const containerRef = useRef<HTMLUListElement>(null);
   const [selected, setSelected] = useState(items[0].value);
   const [offset, setOffset] = useState(0);
 
@@ -19,13 +21,23 @@ function MainTab({ items, nowValue }: Props) {
     nowValue(value);
   };
 
+  useEffect(() => {
+    if (initialValue && containerRef.current) {
+      const target = containerRef.current.getElementsByClassName("selected")[0];
+      setSelected(initialValue);
+      setOffset(target.getBoundingClientRect().x - 24);
+      nowValue(initialValue);
+      target.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    }
+  }, [initialValue, offset, containerRef, nowValue]);
+
   return (
-    <Container>
+    <Container ref={containerRef}>
       <SelectedBackground offset={offset} data-value={items.find((item) => item.value === selected)?.name} />
       {items.map((item) => (
         <Item
           key={item.value}
-          selected={selected === item.value}
+          className={selected === item.value ? "selected" : ""}
           onClick={(event) => {
             handleClickItem(item.value, event);
             event.currentTarget.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
@@ -65,9 +77,13 @@ const CommonItem = styled.li`
     border-right: none;
   }
 `;
-const Item = styled(CommonItem)<{ selected: boolean }>`
-  color: ${({ selected, theme }) => (selected ? theme.black : theme.gray1)};
-  font-weight: ${({ selected }) => (selected ? 700 : 400)};
+const Item = styled(CommonItem)`
+  color: rgb(var(--gray-h2));
+  font-weight: 400;
+  &.selected {
+    color: var(--black);
+    font-weight: 700;
+  }
 `;
 
 const SelectedBackground = styled(CommonItem)<{ offset: number }>`

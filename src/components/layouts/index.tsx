@@ -40,18 +40,14 @@ function Layout({ children }: { children: JSX.Element }) {
 }
 
 const Container = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  height: 100vh;
-  min-height: 100vh;
+  position: fixed;
   overflow: hidden;
-  & > main {
-    position: fixed;
+  width: 100vw;
+  height: calc(100vh - 1px);
+  #main_Container {
     width: 100%;
     height: calc(100vh - 1px);
-    padding: calc(env(safe-area-inset-top) + var(--header-height)) 0 calc(env(safe-area-inset-bottom) + 16px);
+    padding-top: calc(env(safe-area-inset-top) + var(--header-height));
     overflow-x: hidden;
     overflow-y: auto;
     ${SCROLL_HIDE};

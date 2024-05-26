@@ -8,8 +8,10 @@ import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
 import { BaseContainer, DividedContainer } from "@/components/common/Container";
 import { BasicWhiteCardTitle } from "@/components/common/Card";
 import Loading from "@/components/common/Loading";
+import useBgWhite from "@/hook/useBgWhite";
 
 function Schedule() {
+  useBgWhite();
   const { dayList, weekCalendarList, currentDate, currentDateHoliday, setCurrentDate } = useCalendar();
   const { ModalComponents, showModal } = useModal();
   const [nowDateValue, setNowDateValue] = useState<{ year: number | string; month: number | string }>({
@@ -173,14 +175,12 @@ const SCHEDULE_DUMMY = [
 
 const Container = styled(BaseContainer)`
   display: flex;
-  margin-top: -12px;
+  padding-bottom: 32px;
   flex-direction: column;
-  height: 100%;
   gap: 32px;
 `;
 const CalendarContainer = styled.article``;
 const ScheduleContainer = styled(DividedContainer)`
-  flex: 1;
   padding-left: 24px;
   padding-right: 24px;
 `;

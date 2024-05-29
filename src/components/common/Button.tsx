@@ -127,7 +127,7 @@ const Wrapper = styled.button<ButtonStyled>`
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;
-  transition: filter 0.2s, transform 0.2s;
+  transition: all 0.2s;
   ${FONTS.MD1};
   &:focus {
     outline: none;

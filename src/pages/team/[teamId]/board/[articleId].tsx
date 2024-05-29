@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
@@ -9,10 +9,12 @@ import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 import { COMMENTS_MOCK } from "@/constants/mock/COMMENTS";
 
 import ReplyIcon from "@/assets/icon/editor/Reply.svg";
+import Button from "@/components/common/Button";
 
 function ArticleId() {
   const router = useRouter();
   const articleId = router.query.articleId;
+  const [isRead, setIsRead] = useState(false);
 
   return (
     <Container>
@@ -31,6 +33,9 @@ function ArticleId() {
           ),
         }}
       />
+      <Button type="button" mode={isRead ? "MAIN" : "OPTION2"} fullWidth onClick={() => setIsRead((prev) => !prev)}>
+        {isRead ? "이 글을 읽었습니다" : "이 글을 읽었다면 눌러주세요"}
+      </Button>
       <Comments>
         <CommentCount>댓글 {COMMENTS_MOCK.length}개</CommentCount>
         <CommentList>
@@ -80,10 +85,11 @@ const CommentCount = styled.div`
   ${FONTS.HEAD2};
   font-weight: 800;
   font-size: 1.8rem;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 `;
 const CommentList = styled.ul`
   display: flex;
+  margin: 0 -8px;
   flex-direction: column;
   gap: 12px;
   ${FONTS.MD1W500};
@@ -117,8 +123,8 @@ const CommentList = styled.ul`
         height: 14px;
       }
       li {
-        padding: 0 4px 4px;
-        margin-bottom: 4px;
+        padding: 0 4px 8px;
+        margin-bottom: 8px;
         ${FONTS.MD1W500};
         font-size: 1.4rem;
         line-height: 2.2rem;

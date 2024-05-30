@@ -23,4 +23,5 @@ const Container = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
   gap: 28px;
+  padding-bottom: calc(32px + var(--env-sab));
 `;

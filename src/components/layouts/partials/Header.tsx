@@ -30,7 +30,7 @@ function Header({ scrollActive }: Props) {
         <Inner>
           <Logotype className="logo" width={120} height={36} />
           <Menu>
-            <Icon>
+            <Icon onClick={() => router.push("/notification")}>
               <Count>3</Count>
               <NoticeBellIcon width={ICON_SIZE} height={ICON_SIZE} />
             </Icon>

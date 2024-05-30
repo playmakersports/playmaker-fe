@@ -17,17 +17,7 @@ function EditorUI({ editor }: Props) {
     <EditorContainer>
       <div style={{ position: "relative" }}>
         <EditorMenu editor={editor} />
-        <div id="editor">
-          {editor && (
-            <EditorContent
-              editor={editor}
-              onFocus={(event) => {
-                console.log(event);
-                event.target.scrollBy({ top: 50 });
-              }}
-            />
-          )}
-        </div>
+        <div id="editor">{editor && <EditorContent editor={editor} />}</div>
       </div>
       <EditorMenuBottom editor={editor} />
     </EditorContainer>

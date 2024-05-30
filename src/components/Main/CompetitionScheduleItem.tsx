@@ -1,16 +1,19 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
+
 import { FONTS } from "@/styles/common";
 import { countDayDiff } from "@/util/date";
 
 type Props = {
   posterImg: string;
-  matchId: string;
+  competitionId: string;
   matchName: string;
   matchDate: string;
 };
-function MatchScheduleItem(props: Props) {
-  const { posterImg, matchId, matchName, matchDate } = props;
+function CompetitionScheduleItem(props: Props) {
+  const router = useRouter();
+  const { posterImg, competitionId, matchName, matchDate } = props;
   const dayCount = () => {
     if (countDayDiff(matchDate) === 0) return "오늘";
     if (countDayDiff(matchDate) === 1) return "내일";
@@ -18,7 +21,7 @@ function MatchScheduleItem(props: Props) {
   };
 
   return (
-    <Container>
+    <Container onClick={() => router.push(`/competition/${competitionId}`)}>
       <ItemWrapper>
         <Poster data-count={dayCount()}>
           <img src={posterImg} alt={matchName} />
@@ -88,7 +91,7 @@ const Poster = styled.div`
 const Name = styled.p`
   ${FONTS.MD1W500};
   width: 100%;
-  max-height: 36px;
+  max-height: 4.8rem;
   text-align: center;
   word-break: keep-all;
   -webkit-line-clamp: 2;
@@ -97,4 +100,4 @@ const Name = styled.p`
   text-overflow: ellipsis;
 `;
 
-export default MatchScheduleItem;
+export default CompetitionScheduleItem;

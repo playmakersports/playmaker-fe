@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "@emotion/styled";
 
 import { BasicWhiteCard } from "../common/Card";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
+import { SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 
 function MyTeam() {
   const MOCK = [
@@ -13,29 +15,36 @@ function MyTeam() {
   ];
 
   return (
-    <TeamList as="ul">
-      {MOCK.map((item) => (
-        <TeamItem key={item.teamName}>
-          <TeamImage data-category={item.category}></TeamImage>
-          <p>{item.teamName}</p>
+    <TeamList>
+      <ul className="team-list" ref={scrollMaskedHandlerRef} onScroll={(e) => scrollMaskedHandler(e)}>
+        {MOCK.map((item) => (
+          <TeamItem key={item.teamName}>
+            <TeamImage data-category={item.category}></TeamImage>
+            <p>{item.teamName}</p>
+          </TeamItem>
+        ))}
+        <TeamItem>
+          <More>
+            <PlusIcon width={28} height={28} />
+          </More>
+          <p>추가</p>
         </TeamItem>
-      ))}
-      <TeamItem>
-        <More>
-          <PlusIcon width={28} height={28} />
-        </More>
-        <p>추가</p>
-      </TeamItem>
+      </ul>
     </TeamList>
   );
 }
 
 const TeamList = styled(BasicWhiteCard)`
-  display: flex;
-  padding: 20px 16px;
-  gap: 12px;
-  overflow-x: auto;
-  overflow-y: hidden;
+  padding: 0;
+  ${SCROLL_MASKED_GRADIENT("var(--card-rgb)")}
+
+  .team-list {
+    display: flex;
+    gap: 12px;
+    padding: 20px 16px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
 `;
 const TeamItem = styled.li`
   position: relative;

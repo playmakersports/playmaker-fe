@@ -3,12 +3,13 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import MainTab from "./MainTab";
-import { FONTS, SCROLL_HIDE } from "@/styles/common";
+import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import RecruitTeamItem from "./RecruitTeamItem";
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-import MatchScheduleItem from "./MatchScheduleItem";
+import CompetitionScheduleItem from "./CompetitionScheduleItem";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
+import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 
 function SportsSection() {
   const router = useRouter();
@@ -44,9 +45,11 @@ function SportsSection() {
         <Container>
           <BasicWhiteCardTitle>대회 일정</BasicWhiteCardTitle>
           <ListWrapperRow>
-            {MOCK_MATCH_LIST.map((value, index) => (
-              <MatchScheduleItem key={index} {...value} />
-            ))}
+            <div className="inner-scroll-wrapper" ref={scrollMaskedHandlerRef} onScroll={scrollMaskedHandler}>
+              {MOCK_MATCH_LIST.map((value, index) => (
+                <CompetitionScheduleItem key={index} {...value} />
+              ))}
+            </div>
           </ListWrapperRow>
           <MoreButton type="button">
             더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
@@ -78,15 +81,15 @@ const MOCK_TEAM_LIST = [
 
 const MOCK_MATCH_LIST = [
   {
-    matchId: "2",
+    competitionId: "2",
     posterImg:
       "https://i.namu.wiki/i/83QhQJRkrjYOgRlz8WBlerxOxWfSDjs0nEag90x03uiA6hIMS9rdFCFuC7aCRxP53zCadhmwMlUHhjJX570WRg.webp",
     matchName: "무슨무슨 배구 대회",
     matchDate: "2024-05-01",
   },
-  { matchId: "3", posterImg: "0", matchName: "000 천하제일대박 대회", matchDate: "2024-05-02" },
-  { matchId: "4", posterImg: "0", matchName: "2024 전국배구대회", matchDate: "2024-05-09" },
-  { matchId: "5", posterImg: "0", matchName: "00배 경기도대회", matchDate: "2024-05-20" },
+  { competitionId: "3", posterImg: "0", matchName: "000 천하제일대박 대회", matchDate: "2024-05-02" },
+  { competitionId: "4", posterImg: "0", matchName: "2024 전국배구대회", matchDate: "2024-05-09" },
+  { competitionId: "5", posterImg: "0", matchName: "00배 경기도대회", matchDate: "2024-05-20" },
 ];
 
 const Container = styled(BasicWhiteCard)`
@@ -125,14 +128,17 @@ const MoreButton = styled.button`
   }
 `;
 const ListWrapperRow = styled.div`
-  display: flex;
-  padding: 0 0 12px;
   margin: -4px -4px 4px;
-  gap: 4px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  ${SCROLL_HIDE};
   border-bottom: 1px solid ${({ theme }) => theme.gray4};
+  ${SCROLL_HIDE};
+  .inner-scroll-wrapper {
+    display: flex;
+    margin-bottom: 12px;
+    gap: 4px;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  ${SCROLL_MASKED_GRADIENT("var(--card-rgb)")};
 `;
 
 export default SportsSection;

@@ -18,7 +18,7 @@ export const CARD_ACTIVE = `
     border-radius: 16px;
     transition: all 0.2s;
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
       background-color: var(--card-active);
     }
 `;
@@ -27,7 +27,7 @@ export const BUTTON_ACTIVE = (color?: string) => `
     transition: all 0.2s;
     user-select: none;
     &:active {
-      transform: scale(0.95);
+      transform: scale(0.97);
       background-color: ${color ?? "var(--background)"};
     }
 `;
@@ -40,7 +40,7 @@ export const INNER_BUTTON_ACTIVE = (color?: string) => `
     }
     &:active > .inner-button {
       transition: transform 0.2s;
-      transform: scale(0.95);
+      transform: scale(0.97);
     }
 `;
 

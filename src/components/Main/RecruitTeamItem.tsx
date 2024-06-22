@@ -47,6 +47,7 @@ const ItemWrapper = styled.div`
   gap: 12px;
 `;
 const Container = styled.button`
+  margin: 0 -12px;
   padding: 12px;
   border-radius: 12px;
   transition: all 0.2s;

@@ -3,9 +3,10 @@
 @import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/variable/woff2/SUIT-Variable.css");
 
 :root {
-  --header-height: 56px;
+  --header-height: 54px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
-  --main: #0059ff;
+  --main: #336ef6; /*  수정  */
+  --box-stroke: #f2f2f2; /*  수정  */
   --main2: #004fe2;
   --main3: #bad6eb;
   --main-rgb: 0, 89, 255;
@@ -13,8 +14,8 @@
   --main3-rgb: 186, 214, 235;
   --lnb-back-drop-rgb: var(--main3-rgb);
   --main-white: var(--main);
-  --sub1: #f8333c;
-  --sub2: #e63f2d;
+  --sub1: #d12e26; /*  수정  */
+  --sub2: #6fcc75; /*  수정  */
   --gray1: #777777;
   --gray2: #979797;
   --gray3: #dbdbdb;
@@ -62,13 +63,14 @@
 }
 
 :root[data-dark="true"] {
-  --main: #0059ff;
+  --main: #336ef6;
+  --box-stroke: #373737;
   --main2: #004fe2;
   --main3: #bad6eb;
   --main-white: #d5edff;
   --lnb-back-drop-rgb: 68, 68, 71; /* --gray30 */
-  --sub1: #f8333c;
-  --sub2: #e63f2d;
+  --sub1: #d12e26;
+  --sub2: #6fcc75;
   --gray1: #b1b1b1;
   --gray2: #909090;
   --gray3: #8b8b8b;

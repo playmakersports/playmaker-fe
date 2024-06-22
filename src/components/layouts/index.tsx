@@ -7,7 +7,7 @@ import { SCROLL_HIDE } from "@/styles/common";
 
 function Layout({ children }: { children: JSX.Element }) {
   const container = useRef<HTMLDivElement>(null);
-  const [scrollActive, setScrollActive] = useState(false);
+  const [scrollActive, setScrollActive] = useState(0);
   const { asPath } = useRouter();
 
   useEffect(() => {
@@ -16,10 +16,8 @@ function Layout({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (container.current && container.current?.scrollTop > 12) {
-        setScrollActive(true);
-      } else {
-        setScrollActive(false);
+      if (container.current && (container.current.scrollTop % 10 === 0 || container.current.scrollTop < 5)) {
+        setScrollActive(container.current.scrollTop);
       }
     };
     container.current?.addEventListener("scroll", handleScroll);

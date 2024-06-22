@@ -3,13 +3,13 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import MainTab from "./MainTab";
-import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import RecruitTeamItem from "./RecruitTeamItem";
-import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 import CompetitionScheduleItem from "./CompetitionScheduleItem";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import MoreButton from "../common/MoreButton";
 
 function SportsSection() {
   const router = useRouter();
@@ -31,16 +31,14 @@ function SportsSection() {
               <RecruitTeamItem key={index} {...value} />
             ))}
           </ListWrapperColumn>
-          <MoreButton type="button" onClick={() => router.push(`/recruit?sports=${activeTab}`)}>
-            더 많은 팀 보기 <RightArrowThinIcon width={12} height={12} />
-          </MoreButton>
+          <LineBottom />
+          <MoreButton text="더 많은 팀 보기" href={`/recruit?sports=${activeTab}`} />
         </Container>
         <Container>
           <BasicWhiteCardTitle>진행 중인 경기</BasicWhiteCardTitle>
           <ListWrapperColumn></ListWrapperColumn>
-          <MoreButton type="button">
-            더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
-          </MoreButton>
+          <LineBottom />
+          <MoreButton text="더 많은 경기 보기" href={`/recruit?sports=${activeTab}`} />
         </Container>
         <Container>
           <BasicWhiteCardTitle>대회 일정</BasicWhiteCardTitle>
@@ -51,9 +49,8 @@ function SportsSection() {
               ))}
             </div>
           </ListWrapperRow>
-          <MoreButton type="button">
-            더 많은 대회 보기 <RightArrowThinIcon width={12} height={12} />
-          </MoreButton>
+          <LineBottom />
+          <MoreButton text="더 많은 대회 보기" href={`/recruit?sports=${activeTab}`} />
         </Container>
       </Cards>
     </div>
@@ -85,7 +82,7 @@ const MOCK_MATCH_LIST = [
     posterImg:
       "https://i.namu.wiki/i/83QhQJRkrjYOgRlz8WBlerxOxWfSDjs0nEag90x03uiA6hIMS9rdFCFuC7aCRxP53zCadhmwMlUHhjJX570WRg.webp",
     matchName: "무슨무슨 배구 대회",
-    matchDate: "2024-05-01",
+    matchDate: "2024-06-04",
   },
   { competitionId: "3", posterImg: "0", matchName: "000 천하제일대박 대회", matchDate: "2024-05-02" },
   { competitionId: "4", posterImg: "0", matchName: "2024 전국배구대회", matchDate: "2024-05-09" },
@@ -93,52 +90,35 @@ const MOCK_MATCH_LIST = [
 ];
 
 const Container = styled(BasicWhiteCard)`
-  padding: 24px 20px 8px;
+  padding: 24px 20px 2px;
 `;
 const ListWrapperColumn = styled.div`
-  margin: 0 -4px 4px;
   padding-bottom: 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border-bottom: 1px solid ${({ theme }) => theme.gray4};
 `;
 const Cards = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
-const MoreButton = styled.button`
-  display: inline-flex;
-  gap: 8px;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 0;
-  width: 100%;
-  color: ${({ theme }) => theme.gray1};
-  border-radius: 16px;
-  transition: all 0.2s;
-  ${FONTS.MD2};
-  svg {
-    fill: ${({ theme }) => theme.gray1};
-  }
-  &:active {
-    transform: scale(0.97);
-    background-color: ${({ theme }) => theme.background};
-  }
-`;
+
 const ListWrapperRow = styled.div`
-  margin: -4px -4px 4px;
-  border-bottom: 1px solid ${({ theme }) => theme.gray4};
+  margin: 0 -20px;
   ${SCROLL_HIDE};
   .inner-scroll-wrapper {
+    margin: 0 12px;
     display: flex;
-    margin-bottom: 12px;
-    gap: 4px;
     overflow-x: auto;
     overflow-y: hidden;
   }
   ${SCROLL_MASKED_GRADIENT("var(--card-rgb)")};
+`;
+
+const LineBottom = styled.div`
+  margin-bottom: 2px;
+  border-bottom: 1px solid var(--gray4);
 `;
 
 export default SportsSection;

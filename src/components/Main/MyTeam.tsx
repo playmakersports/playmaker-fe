@@ -41,7 +41,7 @@ const TeamList = styled(BasicWhiteCard)`
   .team-list {
     display: flex;
     gap: 12px;
-    padding: 20px 16px;
+    padding: 12px 16px;
     overflow-x: auto;
     overflow-y: hidden;
   }
@@ -62,24 +62,10 @@ const TeamItem = styled.li`
 const TeamImage = styled.div`
   display: block;
   margin: 0 8px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   background-color: ${({ theme }) => theme.gray3};
   border-radius: 100%;
-  &::after {
-    position: absolute;
-    content: attr(data-category);
-    top: -6px;
-    left: 50%;
-    transform: translate(-50%, 0);
-    width: max-content;
-    padding: 4px 6px;
-    border-radius: 12px;
-    background-color: var(--main);
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: 500;
-  }
 `;
 
 const More = styled.div`
@@ -87,8 +73,8 @@ const More = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 8px;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   border: 1px solid ${({ theme }) => theme.gray3};
   border-radius: 100%;
   & + p {

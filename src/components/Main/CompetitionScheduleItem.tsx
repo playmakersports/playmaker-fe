@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import { FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { countDayDiff } from "@/util/date";
 
 type Props = {
@@ -15,9 +15,8 @@ function CompetitionScheduleItem(props: Props) {
   const router = useRouter();
   const { posterImg, competitionId, matchName, matchDate } = props;
   const dayCount = () => {
-    if (countDayDiff(matchDate) === 0) return "오늘";
-    if (countDayDiff(matchDate) === 1) return "내일";
-    return `${countDayDiff(matchDate)}일 전`;
+    if (countDayDiff(matchDate) === 0) return "D-DAY";
+    return `D${countDayDiff(matchDate) > 0 ? -countDayDiff(matchDate) : "+" + -countDayDiff(matchDate)}`;
   };
 
   return (
@@ -33,39 +32,34 @@ function CompetitionScheduleItem(props: Props) {
 }
 
 const ItemWrapper = styled.div`
-  width: 80px;
+  width: 107px;
   height: 100%;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   transition: transform 0.2s;
-  gap: 12px;
+  gap: 10px;
 `;
 const Container = styled.button`
-  padding: 12px;
+  padding: 8px;
   border-radius: 12px;
   transition: all 0.2s;
 
-  &:active {
-    background-color: ${({ theme }) => theme.background};
-  }
-  &:active > ${ItemWrapper} {
-    transform: scale(0.97);
-  }
+  ${BUTTON_ACTIVE("var(--background)")};
 `;
 
 const Poster = styled.div`
   position: relative;
   margin: 0 auto;
-  width: 72px;
-  height: 100px;
+  width: 107px;
+  height: 133px;
   background-color: ${({ theme }) => theme.gray3};
   border-radius: 4px;
   overflow: hidden;
 
   img {
-    width: 72px;
-    height: 100px;
+    width: 107px;
+    height: 133px;
     object-fit: cover;
   }
 
@@ -73,9 +67,9 @@ const Poster = styled.div`
     content: attr(data-count);
     position: absolute;
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
+    top: 0;
     left: 0;
-    bottom: 0;
     width: 100%;
     height: 100%;
     padding: 8px;
@@ -84,14 +78,15 @@ const Poster = styled.div`
     color: #fff;
     font-weight: 800;
     text-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 30%);
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 30%);
   }
 `;
 
 const Name = styled.p`
-  ${FONTS.MD1W500};
-  width: 100%;
-  max-height: 4.8rem;
+  ${FONTS.MD2};
+  margin: 0 auto;
+  width: calc(100% - 24px);
+  max-height: 4rem;
   text-align: center;
   word-break: keep-all;
   -webkit-line-clamp: 2;

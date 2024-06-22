@@ -9,7 +9,7 @@ function Toast() {
   const [toastAtom, setToastAtom] = useAtom(atomToast);
   const [touch, setTouch] = useState(0);
   return (
-    <div style={{ position: "fixed", top: 0, width: "100%", zIndex: 1999 }}>
+    <FixedWrapper style={{ display: toastAtom.show ? "block" : "none" }}>
       <Container
         {...toastAtom}
         onTouchStart={(e) => setTouch(e.changedTouches[0].pageY)}
@@ -21,7 +21,7 @@ function Toast() {
       >
         {toastAtom.text}
       </Container>
-    </div>
+    </FixedWrapper>
   );
 }
 
@@ -50,6 +50,14 @@ const hideToastAnim = keyframes`
     }
 `;
 
+const FixedWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  width: max-content;
+  z-index: 1999;
+`;
 const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT" | "ALERT" }>`
   display: ${({ show }) => (show ? "block" : "none")};
   min-width: 40vw;

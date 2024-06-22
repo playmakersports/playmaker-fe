@@ -119,7 +119,7 @@ const Wrapper = styled.button<ButtonStyled>`
   padding: 6px 0;
   ${({ flex }) => (flex ? `flex: ${flex}` : "")};
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
-  height: ${({ autoHeight }) => (autoHeight ? "auto" : "56px")};
+  height: ${({ autoHeight }) => (autoHeight ? "auto" : "48px")};
   border: ${({ borderType, mode }) => (borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
   border-radius: ${({ autoHeight }) => (autoHeight ? "6px" : "12px")};
   background-color: ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};

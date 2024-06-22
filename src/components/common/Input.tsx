@@ -97,11 +97,16 @@ const Basic = styled.input`
     }
   }
 
-  &[type="date"]::-webkit-calendar-picker-indicator,
+  &[type="date"]::-webkit-calendar-picker-indicator {
+    visibility: hidden;
+    margin-left: -36px;
+  }
   &[type="time"]::-webkit-calendar-picker-indicator,
   &[type="month"]::-webkit-calendar-picker-indicator,
   &[type="week"]::-webkit-calendar-picker-indicator,
   &[type="datetime-local"]::-webkit-calendar-picker-indicator {
-    display: none;
+    visibility: hidden;
+    margin-left: -32px;
+    padding-left: 10px;
   }
 `;

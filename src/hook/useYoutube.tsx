@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { YouTubeProps } from "react-youtube";
+import { useState } from "react";
+import { YouTubeEvent, YouTubeProps } from "react-youtube";
 
 type Props = { width?: number; height?: number; controller?: boolean };
 
@@ -26,7 +26,7 @@ function useYoutube(props: Props) {
       }
     : defaultOpts;
 
-  function handlePlayer(event: any) {
+  function handlePlayer(event: YouTubeEvent) {
     setPlayerState(event.data);
     if (event.data !== 1) {
       clearInterval(updateTimeInterval);
@@ -38,7 +38,13 @@ function useYoutube(props: Props) {
     }
   }
 
-  return { handlePlayer, currentTime, playerState, opts };
+  const playerConnect = {
+    onReady: handlePlayer,
+    onPlay: handlePlayer,
+    onStateChange: handlePlayer,
+  };
+
+  return { playerConnect, currentTime, playerState, opts };
 }
 
 export default useYoutube;

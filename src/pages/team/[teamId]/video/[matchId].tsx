@@ -5,17 +5,21 @@ import styled from "@emotion/styled";
 import useYoutube from "@/hook/useYoutube";
 import dynamic from "next/dynamic";
 
+import { VIDEO_COMMENTS, VIDEO_DATA } from "@/constants/mock/VIDEO";
 import { FONTS, SCROLL_HIDE } from "@/styles/common";
-import { minSecToSecond, secondToMinSec } from "@/util/common";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
+import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
+import { secondToMinSec } from "@/util/common";
 import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
+import VideoPlayTime from "@/components/Team/Video/VideoPlayTime";
+import VideoInfo from "@/components/Team/Video/VideoInfo";
 
 function VideoArticle() {
   const router = useRouter();
   const playerRef = useRef<YouTube>(null);
+  const topRef = useRef<HTMLDivElement>(null);
   const commentRef = useRef<HTMLUListElement>(null);
-  const commentInputRef = useRef<HTMLInputElement>(null);
   const playerDuration = playerRef.current?.internalPlayer.getDuration();
 
   const [currentActiveComment, setCurrentActiveComment] = useState("");
@@ -28,7 +32,7 @@ function VideoArticle() {
     width: window.innerWidth,
     height: Math.floor(window.innerWidth * (9 / 16)),
   };
-  const { handlePlayer, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
+  const { playerConnect, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
 
   const matchId = router.query.matchId;
 
@@ -58,53 +62,47 @@ function VideoArticle() {
 
   return (
     <Container>
-      <PlayerTop showCommentInput={showCommentInput} height={VIDEO_SIZE.height}>
+      <VideoPlayTime />
+      <PlayerTop ref={topRef} showCommentInput={showCommentInput}>
         <Wrapper className="video-wrapper" width={VIDEO_SIZE.width} height={VIDEO_SIZE.height}>
           <YouTube
             ref={playerRef}
             id="player_YouTube"
-            videoId="yD3qRoTuHzQ"
+            videoId={VIDEO_DATA.youtubeId}
             opts={opts}
-            onReady={handlePlayer}
-            onPlay={handlePlayer}
-            onStateChange={handlePlayer}
             onPlaybackRateChange={(event) => setPlaybackRate(event.target.getPlaybackRate())}
+            {...playerConnect}
           />
         </Wrapper>
         {!showCommentInput && (
-          <VideoInfo>
-            <h3 className="video-match">팀1 : 팀2</h3>
-            <h3 className="video-title">경기제목</h3>
-          </VideoInfo>
+          <VideoInfo
+            subTitle={VIDEO_DATA.subTitle}
+            title={VIDEO_DATA.title}
+            description={VIDEO_DATA.description}
+            createdAt={VIDEO_DATA.createdAt}
+            players={VIDEO_DATA.players}
+          />
         )}
       </PlayerTop>
       <Comments
         ref={commentRef}
         showCommentInput={showCommentInput}
-        height={VIDEO_SIZE.height}
+        videoHeight={VIDEO_SIZE.height}
+        height={topRef.current?.clientHeight}
         onScroll={onCommentScroll}
       >
-        {COMMENTS.map((value, index) => {
-          const thisTime = minSecToSecond(value.time);
-          const nextTime = COMMENTS[index + 1] ? minSecToSecond(COMMENTS[index + 1].time) : playerDuration;
-          return (
-            <li
-              key={value.time}
-              onClick={() => playerSeekTo(value.time)}
-              ref={(ref) => {
-                if (!ref) return;
-                if (thisTime <= currentTime && nextTime > currentTime && currentActiveComment !== value.time) {
-                  ref.scrollIntoView({ block: "center", behavior: "smooth" });
-                  setCurrentActiveComment(value.time);
-                }
-              }}
-              className={thisTime <= currentTime && nextTime > currentTime ? "now-active" : ""}
-              data-info={`${value.author} • ${value.writtenAt}`}
-            >
-              <span className="timeline">{value.time}</span> <span className="contents">{value.contents}</span>
-            </li>
-          );
-        })}
+        {VIDEO_COMMENTS.map((value, index) => (
+          <VideoCommentItem
+            key={value.time}
+            onClickSeekTo={() => playerSeekTo(value.time)}
+            activeComment={currentActiveComment}
+            setActiveComment={setCurrentActiveComment}
+            playerCurrentTime={currentTime}
+            playerDuration={playerDuration}
+            nextCommentTime={VIDEO_COMMENTS[index + 1]?.time}
+            commentValue={value}
+          />
+        ))}
       </Comments>
       <Bottom isScrollBottom={isScrollBottom} showCommentInput={showCommentInput}>
         <PlayerHandler>
@@ -139,7 +137,6 @@ function VideoArticle() {
             onClick={() => {
               setTargetVideoTime(secondToMinSec(currentTime));
               setShowCommentInput(true);
-              commentInputRef.current?.focus();
             }}
             split={
               showCommentInput
@@ -150,14 +147,14 @@ function VideoArticle() {
                 : undefined
             }
           >
-            {secondToMinSec(currentTime)}에 댓글
+            코멘트
           </Button>
         </PlayerHandler>
 
         <CommentBox style={{ display: showCommentInput ? "block" : "none" }}>
           <div className="comment-area">
             <p className="target-time">{targetVideoTime}</p>
-            <input type="text" ref={commentInputRef} className="target-comment" />
+            <input type="text" className="target-comment" />
             <button type="button">
               <PaperPlaneIcon width={20} height={20} />
             </button>
@@ -168,7 +165,7 @@ function VideoArticle() {
   );
 }
 
-type PlayerStyledProps = { showCommentInput: boolean; height: number };
+type PlayerStyledProps = { showCommentInput: boolean; height?: number; videoHeight?: number };
 const Container = styled(BaseContainer)`
   position: fixed;
   display: flex;
@@ -187,32 +184,20 @@ const PlayerTop = styled.div<PlayerStyledProps>`
   gap: 16px;
   padding: var(--safe-area-top) 0 0;
   background: linear-gradient(0deg, ${({ theme }) => theme.card} 50%, rgba(0, 0, 0, 0) 100%);
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
   box-shadow: 0 4px 12px 8px rgba(0, 0, 0, 0.05);
-  z-index: 1;
+  z-index: 2;
 
   ${({ showCommentInput }) =>
     showCommentInput &&
     ` 
     .video-wrapper {
       overflow: hidden;
-      border-bottom-left-radius: 20px;
-      border-bottom-right-radius: 20px;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
     }
   `}
-`;
-const VideoInfo = styled.div`
-  padding: 0 20px 16px;
-  .video-match {
-    margin-bottom: 8px;
-    ${FONTS.MD2};
-    color: ${({ theme }) => theme.gray1};
-  }
-  .video-title {
-    ${FONTS.HEAD1};
-    font-size: 2.2rem;
-  }
 `;
 
 const Wrapper = styled.div<{ width: number; height: number }>`
@@ -227,65 +212,28 @@ const Wrapper = styled.div<{ width: number; height: number }>`
   }
 `;
 const Comments = styled.ul<PlayerStyledProps>`
-  flex: 1;
-  display: flex;
-  gap: 16px;
-  margin: 0 -16px;
-  padding: 16px 16px 20px;
-  height: ${({ showCommentInput, height }) =>
-    `calc(100vh - var(--safe-area-top) - ${height}px - 88px - env(safe-area-inset-bottom) ${
-      showCommentInput ? "- 64px" : "- 80px"
-    })`};
-  margin-bottom: ${({ showCommentInput }) =>
-    showCommentInput ? "calc(88px + env(safe-area-inset-bottom) + 64px)" : "calc(88px + env(safe-area-inset-bottom))"};
-  flex-direction: column;
+  padding: 8px 16px 20px;
+  height: ${({ showCommentInput, videoHeight, height }) =>
+    showCommentInput
+      ? `calc(100vh - ${videoHeight}px - 140px - var(--safe-area-top))`
+      : `calc(100vh - ${height}px - 80px)`};
+  margin-top: ${({ showCommentInput, height }) => (showCommentInput ? 0 : `${height}px`)};
+  margin-bottom: ${({ showCommentInput }) => (showCommentInput ? "140px" : "80px")};
+  margin-left: -16px;
+  margin-right: -16px;
+  overflow-x: hidden;
   overflow-y: scroll;
   ${SCROLL_HIDE};
-
-  li {
-    gap: 8px;
-    padding: 12px 16px;
-    background-color: ${({ theme }) => theme.gray4};
-    border-radius: 12px;
-    transition: all 0.2s;
-    ${FONTS.MD1W500};
-    line-height: 2.4rem;
-    transition: transform 0.2s;
-    &::after {
-      content: attr(data-info);
-      display: block;
-      opacity: 0.6;
-      margin-top: 6px;
-      ${FONTS.MD3}
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
-    &.now-active {
-      background-color: ${({ theme }) => theme.main};
-      color: #fff;
-    }
-  }
-  .timeline {
-    display: inline-block;
-    min-width: 34px;
-    margin-right: 4px;
-    font-weight: 800;
-    opacity: 0.65;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.05rem;
-  }
 `;
 
 const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }>`
   position: fixed;
   bottom: 0;
-  height: ${({ showCommentInput }) => (showCommentInput ? "auto" : "calc(88px + env(safe-area-inset-bottom))")};
   margin: 0 -16px;
-  padding: 12px 16px calc(20px + env(safe-area-inset-bottom));
+  padding: 12px 16px calc(20px + env(safe-area-inset-bottom) / 2);
   width: 100%;
-  background-color: ${({ theme }) => theme.background};
+  background: rgb(var(--background-rgb));
+  z-index: 10;
 
   &::before {
     content: "";
@@ -296,11 +244,7 @@ const Bottom = styled.div<{ isScrollBottom: boolean; showCommentInput: boolean }
     top: -36px;
     left: 0;
     transition: opacity 0.2s;
-    background: linear-gradient(
-      0deg,
-      ${({ theme }) => theme.background} 15%,
-      rgba(${({ theme }) => theme.backgroundRgb}, 0) 100%
-    );
+    background: linear-gradient(to top, rgb(var(--background-rgb)) 0%, rgba(var(--background-rgb), 0) 90%);
   }
 `;
 
@@ -316,17 +260,17 @@ const PlayerHandler = styled.div`
 `;
 const CommentBox = styled.div`
   display: flex;
-  margin-top: 20px;
+  margin-top: 16px;
   ${FONTS.MD1};
 
   .comment-area {
     width: 100%;
-    padding: 12px 16px;
+    padding: 8px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 8px;
-    border-radius: 32px;
+    border-radius: 12px;
     background-color: ${({ theme }) => theme.gray4};
     .target-time {
       width: 42px;
@@ -354,25 +298,5 @@ const CommentBox = styled.div`
     }
   }
 `;
-
-const COMMENTS = [
-  { author: "홍길동", writtenAt: "2024-04-24T06:40", time: "03:20", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-24T06:42", time: "04:20", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-24T06:43", time: "07:11", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-24T06:06", time: "09:55", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-24T21:34", time: "10:01", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-24T20:30", time: "12:12", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-25T12:27", time: "14:33", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-25T12:32", time: "15:41", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-25T12:37", time: "19:11", contents: "여기임" },
-  {
-    author: "홍길동",
-    writtenAt: "2024-04-25T13:40",
-    time: "20:08",
-    contents: "내용입니다. 오른쪽에서 왼쪽으로 이동. 실수를 줄여야 합니다.",
-  },
-  { author: "홍길동", writtenAt: "2024-04-25T20:18", time: "21:48", contents: "여기임" },
-  { author: "홍길동", writtenAt: "2024-04-25T21:32", time: "24:34", contents: "여기임" },
-];
 
 export default dynamic(() => Promise.resolve(VideoArticle), { ssr: false });

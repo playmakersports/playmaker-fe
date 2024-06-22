@@ -6,18 +6,20 @@ import useToast from "@/hook/useToast";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
-import { BaseContainer } from "@/components/common/Container";
+import { BasicWhiteCard, BasicWhiteCardTitle, CardAreaTitle } from "@/components/common/Card";
+import { BaseContainer, WhiteSectionDivider, WhiteSectionWrapper } from "@/components/common/Container";
 import ScheduleSection from "@/components/Team/ScheduleSection";
 import Button from "@/components/common/Button";
+import MoreButton from "@/components/common/MoreButton";
 
 function TeamHome() {
-  usePageTitle("팀 페이지");
+  usePageTitle("", true);
   const PLAYING = true;
   const { trigger } = useToast();
   const router = useRouter();
   const teamId = router.query.teamId;
 
+  const COVER_IMAGE = "https://images.unsplash.com/photo-1434648957308-5e6a859697e8?q=80&w=1000";
   const requestTeamJoin = () => {};
   const addFavoriteTeam = () => {
     trigger("관심 팀에 추가했어요.");
@@ -25,7 +27,9 @@ function TeamHome() {
   const moveAdminPage = () => {};
 
   return (
-    <BaseContainer>
+    <>
+      <CoverImage src={COVER_IMAGE} />
+      <Description>최강 배구팀입니다. 0년 연속 전국 대회 수상한 팀입니다.</Description>
       <Top>
         <TeamInfo>
           <ProfileImgContainer>
@@ -39,13 +43,12 @@ function TeamHome() {
             </ProfileImg>
           </ProfileImgContainer>
           <Right>
-            <h2>
-              팀 이름
+            <h2>팀 이름</h2>
+            <p>창단 2024.04.20 | 현 14명</p>
+            <p className="team-category">
               <span>배구</span>
               <span>성균관대</span>
-            </h2>
-            <p>창단 2024.04.20 | 현 14명</p>
-            <p className="team-introduce">최강 배구팀입니다. 0년 연속 전국 대회 수상한 팀입니다</p>
+            </p>
           </Right>
         </TeamInfo>
         <TeamButtons>
@@ -60,22 +63,29 @@ function TeamHome() {
           </Button>
         </TeamButtons>
       </Top>
-      <Cards>
-        <Card onClick={() => router.push(`/team/${teamId}/board`)}>
-          <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
-        </Card>
-        <Card onClick={() => router.push(`/team/${teamId}/schedule`)}>
-          <BasicWhiteCardTitle>일정</BasicWhiteCardTitle>
-          <ScheduleSection />
-        </Card>
-        <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
-          <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
-        </Card>
-        <Card>
-          <BasicWhiteCardTitle>수상 이력</BasicWhiteCardTitle>
-        </Card>
-      </Cards>
-    </BaseContainer>
+      <BaseContainer>
+        <Cards>
+          <Card onClick={() => router.push(`/team/${teamId}/board`)}>
+            <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
+          </Card>
+          <Card onClick={() => router.push(`/team/${teamId}/schedule`)}>
+            <BasicWhiteCardTitle>일정</BasicWhiteCardTitle>
+            <ScheduleSection />
+          </Card>
+          <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
+            <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
+          </Card>
+          <Card>
+            <BasicWhiteCardTitle>수상 이력</BasicWhiteCardTitle>
+          </Card>
+          <WhiteSectionDivider />
+          <PlayerListWrapper>
+            <CardAreaTitle>팀원</CardAreaTitle>
+            <MoreButton text="전체 팀원 보기" href={`/team/${teamId}/players`} />
+          </PlayerListWrapper>
+        </Cards>
+      </BaseContainer>
+    </>
   );
 }
 
@@ -83,9 +93,27 @@ const rotateCircle = keyframes`
     from { transform: rotate(0deg) }
     to { transform: rotate(360deg) }
 `;
+
+const CoverImage = styled.section<{ src: string }>`
+  margin-top: calc(-1 * var(--safe-area-top));
+  width: 100%;
+  height: calc(245px + var(--env-sat));
+  background-color: rgb(var(--gray-h3));
+  background-image: url(${({ src }) => src});
+  background-size: cover;
+  background-repeat: no-repeat;
+`;
+const Description = styled.p`
+  ${FONTS.MD2};
+  text-align: center;
+  padding: 12px;
+  border-bottom: 1px solid rgb(var(--gray-h5));
+  text-wrap: pretty;
+`;
 const Top = styled.section`
-  padding: 0 8px;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  padding: 24px 20px;
+  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
 `;
 const TeamInfo = styled.article`
   display: flex;
@@ -167,39 +195,39 @@ const Right = styled.div`
   margin-top: 4px;
   flex-direction: column;
   gap: 8px;
-  h2 {
+  p {
+    ${FONTS.MD2};
+  }
+  .team-category {
     display: inline-flex;
-    gap: 6px;
+    gap: 4px;
+    line-height: 2rem;
+    font-weight: 400;
+
     span {
       display: inline-block;
       font-size: 1.3rem;
       line-height: 1.6rem;
       padding: 2px 4px;
-      border: 1px solid ${({ theme }) => theme.gray2};
-      color: ${({ theme }) => theme.gray1};
+      border: 1px solid rgb(var(--gray-h3));
+      color: var(--text);
       border-radius: 6px;
     }
-  }
-  p {
-    ${FONTS.MD2};
-  }
-  .team-introduce {
-    margin-top: 2px;
-    line-height: 2rem;
-    font-weight: 400;
-    opacity: 0.9;
   }
 `;
 const Cards = styled.section`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
 `;
 
 const Card = styled(BasicWhiteCard.withComponent("button"))`
   position: relative;
   text-align: left;
   ${CARD_ACTIVE};
+`;
+const PlayerListWrapper = styled(WhiteSectionWrapper)`
+  padding: 20px 24px 0;
 `;
 
 export default TeamHome;

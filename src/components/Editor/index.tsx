@@ -16,7 +16,7 @@ function EditorUI({ editor }: Props) {
   return (
     <EditorContainer>
       <div style={{ position: "relative" }}>
-        <EditorMenu editor={editor} />
+        {editor && <EditorMenu editor={editor} />}
         <div id="editor">{editor && <EditorContent editor={editor} />}</div>
       </div>
       <EditorMenuBottom editor={editor} />

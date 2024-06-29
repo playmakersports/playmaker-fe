@@ -1,10 +1,11 @@
 import styled from "@emotion/styled";
 import Head from "next/head";
 
+import Banner from "@/components/Main/Banner";
 import MyTeam from "@/components/Main/MyTeam";
+import MyWeekly from "@/components/Main/MyWeekly";
 import SportsSection from "@/components/Main/SportsSection";
 import { BaseContainer } from "@/components/common/Container";
-import Banner from "@/components/Main/Banner";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Container>
         <Banner />
         <MyTeam />
+        <MyWeekly />
         <SportsSection />
       </Container>
     </>

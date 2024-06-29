@@ -7,7 +7,7 @@ export const BasicWhiteCard = styled.div`
   background-color: var(--card);
   border: 1px solid var(--box-stroke);
   user-select: none;
-  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
+  box-shadow: 0 2px 14px 0 rgba(141, 141, 141, 0.2);
 `;
 
 export const CardAreaTitle = styled.div`

@@ -13,7 +13,7 @@ import Button from "@/components/common/Button";
 import MoreButton from "@/components/common/MoreButton";
 
 function TeamHome() {
-  usePageTitle("", true);
+  usePageTitle("", "", true);
   const PLAYING = true;
   const { trigger } = useToast();
   const router = useRouter();

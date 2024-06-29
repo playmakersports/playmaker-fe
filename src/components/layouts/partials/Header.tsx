@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtomValue } from "jotai";
@@ -23,7 +23,7 @@ function Header({ scrollActive }: Props) {
 
   const ICON_SIZE = 22;
   const router = useRouter();
-  const { getTitle, getTransparent } = usePageTitle();
+  const { getTitle, getSubTitle, getTransparent } = usePageTitle();
 
   if (router.asPath === "/") {
     return (
@@ -56,7 +56,10 @@ function Header({ scrollActive }: Props) {
         <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow width={ICON_SIZE} height={ICON_SIZE} />
         </Icon>
-        <PageTitle>{getTitle}</PageTitle>
+        <PageTitle>
+          {getSubTitle && <p>{getSubTitle}</p>}
+          {getTitle}
+        </PageTitle>
         <Icon
           className={showLnb ? "active-menu" : ""}
           type="button"
@@ -115,9 +118,12 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
     background-color: ${({ scrolled }) => (scrolled ? `rgba(var(--background-rgb), 0.7)` : "none")};
     backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   }
-  button > svg,
-  .logo {
+  button > svg {
     fill: ${({ theme }) => theme.gray1};
+  }
+  .logo {
+    width: 148px;
+    fill: var(--main);
   }
 
   button.active-menu {
@@ -148,13 +154,22 @@ const Menu = styled.div`
   color: ${({ theme }) => theme.gray1};
 `;
 const PageTitle = styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
   font-weight: 400;
   font-size: 1.6rem;
-  color: ${({ theme }) => theme.text};
-  opacity: 0.9;
+  color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  letter-spacing: -0.1px;
+  p {
+    font-weight: 700;
+    font-size: 1.4rem;
+    font-variant-numeric: tabular-nums;
+  }
 `;
 
 const Count = styled.div`

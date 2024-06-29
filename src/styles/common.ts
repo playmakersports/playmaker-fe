@@ -75,3 +75,20 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       z-index: 1;
     }};
  `;
+
+export const TEXT_ACTIVE = (
+  backgroundColor?: string,
+  props?: {
+    hover?: boolean;
+    scalable?: boolean;
+    focus?: boolean;
+  }
+) => `
+  transition: box-shadow 0.2s cubic-bezier(0.05, 0, 0, 1), background-color 0.2s cubic-bezier(0.05, 0, 0, 1),
+    transform 0.3s cubic-bezier(0.05, 0, 0, 1);
+  &:active ${props?.hover ? ", &:hover" : ""} ${props?.focus ? ", &:focus" : ""} {
+    background-color: ${backgroundColor ?? "var(--background)"};
+    box-shadow: 0 0 0 8px ${backgroundColor ?? "var(--background)"};
+    ${props?.scalable ? "transform: scale(0.97);" : ""}
+  }
+`;

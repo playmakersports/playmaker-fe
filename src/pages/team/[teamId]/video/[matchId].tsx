@@ -11,7 +11,6 @@ import { BaseContainer } from "@/components/common/Container";
 import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
 import { secondToMinSec } from "@/util/common";
 import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
-import VideoPlayTime from "@/components/Team/Video/VideoPlayTime";
 import VideoInfo from "@/components/Team/Video/VideoInfo";
 import { usePageTitle } from "@/hook/usePageTitle";
 
@@ -49,7 +48,6 @@ function VideoArticle() {
 
   return (
     <Container videoHeight={VIDEO_SIZE.height}>
-      <VideoPlayTime />
       <Video>
         <YouTube
           ref={playerRef}

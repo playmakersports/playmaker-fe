@@ -125,6 +125,7 @@ function VideoArticle() {
 
 const Container = styled(BaseContainer)<{ videoHeight: number }>`
   margin-top: ${({ videoHeight }) => videoHeight}px;
+  margin-bottom: calc(56px + env(safe-area-inset-bottom) * 1.2);
 `;
 const Video = styled.section`
   position: fixed;
@@ -147,7 +148,7 @@ const PlayerTop = styled.div`
 `;
 
 const Comments = styled.ul`
-  padding: 8px 16px 20px;
+  padding: 8px 16px;
   margin-left: -16px;
   margin-right: -16px;
   overflow-x: hidden;
@@ -156,9 +157,10 @@ const Comments = styled.ul`
 `;
 
 const Bottom = styled.div`
-  position: sticky;
+  position: fixed;
   bottom: 0;
-  margin: 0 -16px -20px;
+  width: 100%;
+  margin: 0 -16px;
   padding: 0 0 calc(20px + env(safe-area-inset-bottom) / 2);
   background: rgb(var(--background-rgb));
   z-index: 10;

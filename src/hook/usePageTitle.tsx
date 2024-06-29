@@ -1,10 +1,11 @@
 import { useAtom } from "jotai";
 import { useEffect } from "react";
 
-import { atomPageTitle, atomHeaderTransparent } from "@/atom/common";
+import { atomPageTitle, atomPageSubTitle, atomHeaderTransparent } from "@/atom/common";
 
-export const usePageTitle = (title?: string, transparent?: boolean) => {
+export const usePageTitle = (title?: string, subTitle?: string, transparent?: boolean) => {
   const [getTitle, setTitle] = useAtom(atomPageTitle);
+  const [getSubTitle, setSubTitle] = useAtom(atomPageSubTitle);
   const [getTransparent, setTransparent] = useAtom(atomHeaderTransparent);
 
   useEffect(() => {
@@ -14,7 +15,14 @@ export const usePageTitle = (title?: string, transparent?: boolean) => {
       setTitle("");
       setTransparent(false);
     };
-  }, []);
+  }, [title]);
 
-  return { getTitle, getTransparent };
+  useEffect(() => {
+    subTitle && setSubTitle(subTitle);
+    return () => {
+      setSubTitle("");
+    };
+  }, [subTitle]);
+
+  return { getTitle, getSubTitle, getTransparent };
 };

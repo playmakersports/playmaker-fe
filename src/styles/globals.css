@@ -1,11 +1,9 @@
 @import "./reset.css";
-@import url("https://cdn-uicons.flaticon.com/2.3.0/uicons-bold-straight/css/uicons-bold-straight.css");
-@import url("https://cdn.jsdelivr.net/gh/sun-typeface/SUIT/fonts/variable/woff2/SUIT-Variable.css");
 
 :root {
   --header-height: 54px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
-  --main: #336ef6; /*  수정  */
+  --main: #306def; /*  수정  */
   --box-stroke: #f2f2f2; /*  수정  */
   --main2: #004fe2;
   --main3: #bad6eb;
@@ -63,7 +61,7 @@
 }
 
 :root[data-dark="true"] {
-  --main: #336ef6;
+  --main: #306def;
   --box-stroke: #373737;
   --main2: #004fe2;
   --main3: #bad6eb;

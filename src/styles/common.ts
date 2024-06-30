@@ -79,6 +79,7 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
 export const TEXT_ACTIVE = (
   backgroundColor?: string,
   props?: {
+    activeRange?: number;
     hover?: boolean;
     scalable?: boolean;
     focus?: boolean;
@@ -88,7 +89,7 @@ export const TEXT_ACTIVE = (
     transform 0.3s cubic-bezier(0.05, 0, 0, 1);
   &:active ${props?.hover ? ", &:hover" : ""} ${props?.focus ? ", &:focus" : ""} {
     background-color: ${backgroundColor ?? "var(--background)"};
-    box-shadow: 0 0 0 8px ${backgroundColor ?? "var(--background)"};
+    box-shadow: 0 0 0 ${props?.activeRange ?? 8}px ${backgroundColor ?? "var(--background)"};
     ${props?.scalable ? "transform: scale(0.97);" : ""}
   }
 `;

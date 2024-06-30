@@ -96,19 +96,19 @@ const Item = styled.div`
   display: flex;
   height: 3.6rem;
   width: calc(100% - ${PADDING * 2}px);
-  top: -100%;
+  transform: translate3d(0, -100%, 0);
   align-items: center;
 
   &.prev {
-    top: -100%;
-    transition: top 0.4s ease;
+    transform: translate3d(0, -100%, 0);
+    transition: transform 0.4s ease;
   }
   &.current {
-    top: 0;
-    transition: top 0.4s ease;
+    transform: translate3d(0, 0, 0);
+    transition: transform 0.4s ease;
   }
   &.next {
-    top: 100%;
+    transform: translate3d(0, 100%, 0);
   }
 
   .create-at {
@@ -131,7 +131,7 @@ const Wrapper = styled.div`
   line-height: 2rem;
 
   user-select: none;
-  border-radius: 4px;
+  border-radius: 2px;
 
   ${TEXT_ACTIVE("rgba(var(--gray-h5), 0.6)")};
 `;

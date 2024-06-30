@@ -19,7 +19,7 @@ function MyWeekly() {
               onClick={() => setActiveDate(value)}
               className={`${activeDate === value ? "active-date" : ""} date-day`}
             >
-              <p>{value.split("-")[2]}</p>
+              <p>{+value.split("-")[2]}</p>
             </button>
           </div>
         ))}

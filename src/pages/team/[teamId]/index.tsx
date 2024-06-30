@@ -11,6 +11,7 @@ import { BaseContainer, WhiteSectionDivider, WhiteSectionWrapper } from "@/compo
 import ScheduleSection from "@/components/Team/ScheduleSection";
 import Button from "@/components/common/Button";
 import MoreButton from "@/components/common/MoreButton";
+import Notice from "@/components/Team/Notice";
 
 function TeamHome() {
   usePageTitle("", "", true);
@@ -63,7 +64,16 @@ function TeamHome() {
           </Button>
         </TeamButtons>
       </Top>
-      <BaseContainer>
+      <MainContainer>
+        <Notice
+          list={[
+            { title: "진짜 리얼로 공지사항입니다.", articleId: "5", createAt: "2024-06-30T00:04" },
+            { title: "공지사항입니다.", articleId: "1", createAt: "2024-06-29T12:33" },
+            { title: "새로운 공지사항입니다.", articleId: "32", createAt: "2024-06-29T21:57" },
+            { title: "진짜진짜 공지사항입니다.", articleId: "4", createAt: "2024-06-29T23:57" },
+          ]}
+        />
+
         <Cards>
           <Card onClick={() => router.push(`/team/${teamId}/board`)}>
             <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
@@ -72,19 +82,23 @@ function TeamHome() {
             <BasicWhiteCardTitle>일정</BasicWhiteCardTitle>
             <ScheduleSection />
           </Card>
+          <Card onClick={() => router.push(`/team/${teamId}/statistics`)}>
+            <BasicWhiteCardTitle>통계</BasicWhiteCardTitle>
+            <ScheduleSection />
+          </Card>
           <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
             <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
           </Card>
           <Card>
             <BasicWhiteCardTitle>수상 이력</BasicWhiteCardTitle>
           </Card>
-          <WhiteSectionDivider />
-          <PlayerListWrapper>
-            <CardAreaTitle>팀원</CardAreaTitle>
-            <MoreButton text="전체 팀원 보기" href={`/team/${teamId}/players`} />
-          </PlayerListWrapper>
         </Cards>
-      </BaseContainer>
+        <WhiteSectionDivider />
+        <PlayerListWrapper>
+          <CardAreaTitle>팀원</CardAreaTitle>
+          <MoreButton text="전체 팀원 보기" href={`/team/${teamId}/players`} />
+        </PlayerListWrapper>
+      </MainContainer>
     </>
   );
 }
@@ -114,6 +128,9 @@ const Top = styled.section`
   margin-bottom: 16px;
   padding: 24px 20px;
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
+`;
+const MainContainer = styled(BaseContainer)`
+  padding: 0px 16px 20px;
 `;
 const TeamInfo = styled.article`
   display: flex;
@@ -217,8 +234,9 @@ const Right = styled.div`
 `;
 const Cards = styled.section`
   display: flex;
+  padding: 0 0 24px;
   flex-direction: column;
-  /* gap: 16px; */
+  gap: 12px;
 `;
 
 const Card = styled(BasicWhiteCard.withComponent("button"))`

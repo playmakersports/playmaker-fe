@@ -14,7 +14,6 @@ function MyWeekly() {
 
   return (
     <Wrapper>
-      {activeDate}
       <Week>
         {getDatesOfCurrentWeek().map((value, i) => (
           <div key={value}>

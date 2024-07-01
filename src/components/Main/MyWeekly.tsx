@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { addDays, format, startOfWeek } from "date-fns";
 
@@ -6,10 +6,15 @@ import { FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "../common/Card";
 
 function MyWeekly() {
-  const [activeDate, setActiveDate] = useState(format(new Date(), "yyyy-MM-dd"));
+  const [activeDate, setActiveDate] = useState("");
+
+  useEffect(() => {
+    setActiveDate(format(new Date(), "yyyy-MM-dd"));
+  }, []);
 
   return (
     <Wrapper>
+      {activeDate}
       <Week>
         {getDatesOfCurrentWeek().map((value, i) => (
           <div key={value}>

@@ -40,6 +40,41 @@ function Schedule() {
     }
   };
 
+  // 캘린더 이동
+  const [swipeDirection, setSwipeDirection] = useState("");
+  const [touchStartX, setTouchStartX] = useState(0);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    const startTarget = e.changedTouches[0].pageX;
+    setTouchStartX(startTarget);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const targetX = e.changedTouches[0].pageX;
+    if (Math.abs(touchStartX - targetX) > 40) {
+      if (touchStartX > targetX) {
+        handleMonthMove("NEXT");
+      } else {
+        handleMonthMove("PREV");
+      }
+    }
+    setTouchStartX(0);
+    setSwipeDirection("");
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const targetX = e.changedTouches[0].pageX;
+    if (Math.abs(touchStartX - targetX) > 40) {
+      if (touchStartX > targetX) {
+        setSwipeDirection("R");
+      } else {
+        setSwipeDirection("L");
+      }
+    } else {
+      setSwipeDirection("");
+    }
+  };
+
   return (
     <Container>
       <CalendarContainer>
@@ -83,7 +118,14 @@ function Schedule() {
           </NowDate>
           <Control onClick={() => handleMonthMove("NEXT")}>다음달</Control>
         </Header>
-        <Days>
+        <Days
+          className={swipeDirection}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          <DirectionL className={swipeDirection}>이전달</DirectionL>
+          <DirectionR className={swipeDirection}>다음달</DirectionR>
           <Week>
             {dayList.map((value) => (
               <DayName key={value}>{value}</DayName>
@@ -203,11 +245,21 @@ const NowDate = styled.div`
   }
 `;
 const Days = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 4px;
   ${FONTS.MD1W500};
   font-size: 1.8rem;
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
+
+  &.L {
+    transform: translateX(5%);
+  }
+  &.R {
+    transform: translateX(-5%);
+  }
 `;
 
 const Week = styled.div`
@@ -225,12 +277,47 @@ const Control = styled.button`
   ${BUTTON_ACTIVE()};
   opacity: 0.7;
 `;
+
+const MonthDirection = styled.div`
+  position: absolute;
+  top: calc(50% - 32px);
+  text-align: center;
+  line-height: 6.4rem;
+  width: 64px;
+  height: 64px;
+  background-color: rgba(var(--gray-h3), 0.9);
+  border-radius: 100%;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #fff;
+  opacity: 0;
+  transform: scale(0.1);
+  transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1), opacity 0.3s cubic-bezier(0.05, 0, 0, 1);
+  z-index: 2;
+`;
+const DirectionL = styled(MonthDirection)`
+  left: 0;
+  transform: translate3d(-100%, 0, 0);
+  &.L {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+`;
+const DirectionR = styled(MonthDirection)`
+  right: 0;
+  transform: translate3d(100%, 0, 0);
+  &.R {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+`;
+
 const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   position: relative;
   flex: 1;
   padding: 16px 0 20px;
   text-align: center;
-  color: ${({ isHoliday, theme }) => (isHoliday ? theme.sub2 : theme.text)};
+  color: ${({ isHoliday }) => (isHoliday ? "var(--sub1)" : "var(--text)")};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
   ${BUTTON_ACTIVE()};
 
@@ -260,7 +347,7 @@ const ScheduleAreaTitle = styled(BasicWhiteCardTitle)`
   gap: 12px;
   font-size: 1.8rem;
   .holiday-name {
-    color: ${({ theme }) => theme.sub2};
+    color: var(--sub1);
     ${FONTS.MD2}
   }
 `;
@@ -318,7 +405,7 @@ const ScheduleList = styled.ul`
       display: inline-block;
       width: 8px;
       height: 8px;
-      background-color: ${({ theme }) => theme.main};
+      background-color: var(--main);
       border-radius: 100%;
     }
   }

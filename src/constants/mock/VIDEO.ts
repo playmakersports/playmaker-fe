@@ -31,5 +31,50 @@ export const VIDEO_DATA = {
   subTitle: "한양대 : 인하대",
   description: "01:06:50 ~ 02:01:30 TEAM1(과기대) vs Scuba(시립대) 상대는 56번이 메인이니까 56번 위주로 보기",
   createdAt: "2024-06-13",
-  players: ["지민", "석우", "미란", "지원", "현우", "대원", "재원", "주원", "도원", "강훈", "태민"],
+  players: [
+    {
+      playerName: "지민",
+      playerId: "827421",
+    },
+    {
+      playerName: "석우",
+      playerId: "800421",
+    },
+    {
+      playerName: "미란",
+      playerId: "98462",
+    },
+    {
+      playerName: "지원",
+      playerId: "123",
+    },
+    {
+      playerName: "현우",
+      playerId: "322",
+    },
+    {
+      playerName: "대원",
+      playerId: "12",
+    },
+    {
+      playerName: "재원",
+      playerId: "56",
+    },
+    {
+      playerName: "주원",
+      playerId: "78",
+    },
+    {
+      playerName: "도원",
+      playerId: "827421",
+    },
+    {
+      playerName: "강훈",
+      playerId: "827421",
+    },
+    {
+      playerName: "태민",
+      playerId: "827421",
+    },
+  ],
 };

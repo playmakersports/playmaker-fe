@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import ProfileTag from "../ProfileTag";
 
 type Props = {
   subTitle: string;
   title: string;
   description: string;
   createdAt: string;
-  players: string[];
+  players: Array<{ playerId: string; playerName: string }>;
 };
 
 function VideoInfo(props: Props) {
+  const [selectedProfile, setSelectedProfile] = useState<{
+    show: boolean;
+    playerId: string;
+    x?: number;
+    y?: number;
+  }>({ show: false, playerId: "", x: 0, y: 0 });
+
+  const onClickProfile = (playerId: string, event: React.MouseEvent<HTMLLIElement>) => {
+    const currentTarget = event.currentTarget;
+    const rect = currentTarget.getBoundingClientRect();
+    const x = rect.left + window.scrollX;
+    const y = rect.top + window.scrollY + currentTarget.clientHeight;
+
+    setSelectedProfile({
+      show: true,
+      playerId,
+      x,
+      y,
+    });
+  };
+
   return (
     <Container>
       <h3 className="video-match">{props.subTitle}</h3>
@@ -27,8 +49,14 @@ function VideoInfo(props: Props) {
       <div className="match-players-wrapper">
         <ul className="match-players" ref={scrollMaskedHandlerRef} onScroll={scrollMaskedHandler}>
           {props.players.map((player, index) => (
-            <li key={`${player}${index}`}>{player}</li>
+            <li key={`${player.playerId}${index}`} onClick={(event) => onClickProfile(player.playerId, event)}>
+              {player.playerName}
+            </li>
           ))}
+          <ProfileTag
+            showInfo={selectedProfile}
+            handleClose={() => setSelectedProfile({ show: false, playerId: "" })}
+          />
         </ul>
       </div>
     </Container>

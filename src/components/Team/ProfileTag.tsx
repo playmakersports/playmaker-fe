@@ -17,14 +17,14 @@ function ProfileTag(props: Props) {
 
   const outSideClick = useCallback((e: any) => {
     if (containerRef.current && !containerRef.current.contains(e.target)) {
-      document.getElementById("main_Container")!.style.overflow = "auto";
+      document.getElementById("main_Container")!.style.overflowY = "auto";
       handleClose();
     }
   }, []);
 
   useEffect(() => {
     if (showInfo.show) {
-      document.getElementById("main_Container")!.style.overflow = "hidden";
+      document.getElementById("main_Container")!.style.overflowY = "hidden";
     }
     document.addEventListener("mousedown", outSideClick);
     return () => {};

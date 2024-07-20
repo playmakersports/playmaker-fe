@@ -4,10 +4,10 @@ import styled from "@emotion/styled";
 export const BasicWhiteCard = styled.div`
   padding: 18px 20px;
   border-radius: 10px;
-  background-color: var(--card);
+  background-color: var(--background-light);
   border: 1px solid var(--box-stroke);
   user-select: none;
-  box-shadow: 0 2px 14px 0 rgba(141, 141, 141, 0.2);
+  box-shadow: var(--shadow-alpha20);
 `;
 
 export const CardAreaTitle = styled.div`

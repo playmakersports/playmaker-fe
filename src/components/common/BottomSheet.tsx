@@ -15,7 +15,7 @@ export type BottomSheetProps = {
   }[];
 };
 
-const ANIMATION_RUNNING_TIME = 200;
+const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
   const { setShow, children, header, expanded, buttons } = props;
   const [showModal, setShowModal] = useState(false);
@@ -98,16 +98,15 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 16px 20px;
-  left: 12px;
-  bottom: calc(28px + env(safe-area-inset-bottom) / 2);
-  width: calc(100% - 24px);
+  padding: 16px 16px calc(28px + env(safe-area-inset-bottom) / 2);
+  width: 100%;
+  left: 0;
+  bottom: 0;
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
   z-index: 1000;
   background: var(--drop-down-background);
   border-radius: 24px;
   transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);
-  scale: ${({ isShow }) => (isShow ? 1 : 0.9)};
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};
   transform-origin: center center;
   transition: all ${ANIMATION_RUNNING_TIME}ms;

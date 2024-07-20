@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { getDate, getDay, getMonth, subMonths } from "date-fns";
+import { getDate, getDay, getMonth, isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 
@@ -139,6 +139,7 @@ function Schedule() {
                   data-active={true}
                   thisMonth={!(day.nextMonth || day.previousMonth)}
                   isHoliday={day.holiday.isHoliday}
+                  className={isSameDay(day.date, currentDate) ? "current-date" : ""}
                   onClick={() => {
                     setCurrentDate(day.date);
                     setNowDateValue({ year: day.date.getFullYear(), month: day.date.getMonth() + 1 });
@@ -292,7 +293,7 @@ const MonthDirection = styled.div`
   color: #fff;
   opacity: 0;
   transform: scale(0.1);
-  transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1), opacity 0.3s cubic-bezier(0.05, 0, 0, 1);
+  transition: transform 0.3s var(--animation-cubic), opacity 0.3s var(--animation-cubic);
   z-index: 2;
 `;
 const DirectionL = styled(MonthDirection)`
@@ -317,7 +318,7 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   flex: 1;
   padding: 16px 0 20px;
   text-align: center;
-  color: ${({ isHoliday }) => (isHoliday ? "var(--sub1)" : "var(--text)")};
+  color: ${({ isHoliday }) => (isHoliday ? "var(--point)" : "var(--text)")};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
   ${BUTTON_ACTIVE()};
 
@@ -335,6 +336,10 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
     height: 6px;
     background-color: ${({ theme }) => theme.main};
     border-radius: 100%;
+  }
+  &.current-date {
+    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
+    transform: scale(1.03);
   }
 `;
 

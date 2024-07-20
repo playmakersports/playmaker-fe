@@ -56,7 +56,7 @@ function Header({ scrollActive }: Props) {
           {getSubTitle && <p>{getSubTitle}</p>}
           {getTitle}
         </PageTitle>
-        <Icon type="button">
+        <Icon type="button" onClick={() => router.push("/")}>
           <HomeIcon width={ICON_SIZE} height={ICON_SIZE} />
         </Icon>
       </Inner>

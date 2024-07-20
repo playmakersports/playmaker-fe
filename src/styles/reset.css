@@ -5,6 +5,7 @@
   padding: 0;
   border: 0;
   font-size: 100%;
+  color: var(--gray1);
   vertical-align: baseline;
   box-sizing: border-box;
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",

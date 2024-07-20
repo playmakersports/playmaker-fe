@@ -23,7 +23,7 @@ export const CARD_ACTIVE = `
     }
 `;
 export const BUTTON_ACTIVE = (color?: string) => `
-    border-radius: 16px;
+    border-radius: 8px;
     transition: all 0.2s;
     user-select: none;
     &:active {
@@ -33,7 +33,7 @@ export const BUTTON_ACTIVE = (color?: string) => `
 `;
 
 export const INNER_BUTTON_ACTIVE = (color?: string) => `
-    border-radius: 16px;
+    border-radius: 8px;
     transition: all 0.2s;
     &:active {
       background-color: ${color ?? "var(--background)"};

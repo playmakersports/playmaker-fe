@@ -1,100 +1,90 @@
 @import "./reset.css";
 
 :root {
-  --header-height: 54px;
-  --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
-  --main: #306def; /*  수정  */
-  --box-stroke: #f2f2f2; /*  수정  */
-  --main2: #004fe2;
-  --main3: #bad6eb;
-  --main-rgb: 0, 89, 255;
-  --main2-rgb: 0, 79, 226;
-  --main3-rgb: 186, 214, 235;
-  --lnb-back-drop-rgb: var(--main3-rgb);
-  --main-white: var(--main);
-  --sub1: #d12e26; /*  수정  */
-  --sub2: #6fcc75; /*  수정  */
-  --gray1: #777777;
-  --gray2: #979797;
-  --gray3: #dbdbdb;
-  --gray4: #e2e2e2;
-  --placeholder: #788991;
-  --warn: #ff5100;
-  --white: #fff;
-  --black: #000;
-  --text: rgb(21, 21, 21);
-  --green: #77d935;
-  --card: var(--white);
-  --card-rgb: 256, 256, 256;
-  --drop-down-background: var(--white);
-  --box-shadow: rgba(0, 0, 0, 0.05);
-  --card-active: #fafafa;
-  --background: #f3f3f3;
-  --background-rgb: 243, 243, 243;
-  --background-light: var(--white);
+  --background: #f2f4f6;
+  --background-rgb: 242, 244, 246;
+  --background-light: #fff;
   --background-light-rgb: 256, 256, 256;
 
+  --header-height: 54px;
+  --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
   --env-sat: env(safe-area-inset-top);
   --env-sab: env(safe-area-inset-bottom);
 
-  --gray10: 25, 26, 29;
-  --gray15: 32, 32, 34;
-  --gray20: 43, 44, 46;
-  --gray30: 68, 68, 71;
-  --gray40: 92, 93, 95;
-  --gray50: 116, 117, 119;
-  --gray60: 142, 142, 145;
-  --gray70: 169, 170, 172;
-  --gray80: 196, 196, 199;
-  --gray90: 225, 226, 227;
-  --gray95: 234, 234, 234;
-  --gray99: 250, 251, 253;
+  --radius-10: 10px;
 
-  --gray-h1: var(--gray20);
-  --gray-h2: var(--gray40);
-  --gray-h3: var(--gray50);
-  --gray-h3: var(--gray70);
-  --gray-h4: var(--gray80);
-  --gray-h5: var(--gray90);
-  --gray-h6: var(--gray95);
-  --gray-h7: var(--gray99);
+  --primary-m20: #f1f5ff;
+  --primary-m40: #e7eefd;
+  --primary-m60: #d0ddfb;
+  --primary-m80: #a0bcf8;
+  --primary-m100: #719af4;
+  --primary-m200: #4279f0;
+  --primary-m300: #306def;
+  --primary-m400: #0f46bd;
+  --primary-m500: #0b348e;
+  --primary-m600: #07235f;
+  --primary-m20-rgb: 241, 245, 255;
+  --primary-m40-rgb: 231, 238, 253;
+  --primary-m60-rgb: 208, 221, 251;
+  --primary-m80-rgb: 160, 188, 248;
+  --primary-m100-rgb: 113, 154, 244;
+  --primary-m200-rgb: 66, 121, 240;
+  --primary-m300-rgb: 48, 109, 239;
+  --primary-m400-rgb: 15, 70, 189;
+  --primary-m500-rgb: 11, 52, 142;
+  --primary-m600-rgb: 0, 0, 0;
+
+  --neutral-n20: #e6e6e6;
+  --neutral-n40: #cbcbcb;
+  --neutral-n60: #b0b0b0;
+  --neutral-n80: #9b9b9b;
+  --neutral-n100: #868686;
+  --neutral-n200: #727272;
+  --neutral-n300: #5e5e5e;
+  --neutral-n400: #4b4b4b;
+  --neutral-n500: #393939;
+  --neutral-n600: #000000;
+  --neutral-n20-rgb: 230, 230, 230;
+  --neutral-n40-rgb: 203, 203, 203;
+  --neutral-n60-rgb: 176, 176, 176;
+  --neutral-n80-rgb: 155, 155, 155;
+  --neutral-n100-rgb: 134, 134, 134;
+  --neutral-n200-rgb: 114, 114, 114;
+  --neutral-n300-rgb: 94, 94, 94;
+  --neutral-n400-rgb: 75, 75, 75;
+  --neutral-n500-rgb: 57, 57, 57;
+  --neutral-n600-rgb: 52, 52, 52;
+
+  --gray1: #000;
+  --gray2: #1e1e1e;
+  --gray3: #5e5e5e;
+  --gray4: #868686;
+  --gray5: #9b9b9b;
+  --gray6: #ededed;
+
+  --main: #306def;
+  --main-rgb: 0, 89, 255;
+  --point: #ff5831;
+  --point-rgb: ;
+  --sub1: #92b3ff;
+  --sub1-rgb: ;
+  --path-black: #151b1e;
+  --path-white: #fff;
+
+  --animation-cubic: cubic-bezier(0.05, 0, 0, 1);
+  --shadow-alpha20: 0 2px 8px 0 rgba(115, 115, 115, 0.15);
 }
 
 :root[data-dark="true"] {
-  --main: #306def;
-  --box-stroke: #373737;
-  --main2: #004fe2;
-  --main3: #bad6eb;
-  --main-white: #d5edff;
-  --lnb-back-drop-rgb: 68, 68, 71; /* --gray30 */
-  --sub1: #d12e26;
-  --sub2: #6fcc75;
-  --gray1: #b1b1b1;
-  --gray2: #909090;
-  --gray3: #8b8b8b;
-  --gray4: #4d4d4d;
-  --placeholder: #a1aeb3;
-  --warn: #ff5100;
-  --white: #000;
-  --black: #fff;
-  --text: #e0e0e0;
-  --green: #77d935;
-  --card: #1a1a1a;
-  --card-rgb: 26, 26, 26;
-  --drop-down-background: rgb(var(--gray-h7));
-  --box-shadow: #292929;
-  --card-active: rgb(35, 35, 35);
-  --background: #2c2c2c;
-  --background-rgb: 44, 44, 44;
-  --background-light: var(--card);
-  --background-light-rgb: 26, 26, 26;
+  --background: #111012;
+  --background-rgb: 17, 16, 18;
+  --background-light: #25262d;
+  --background-light-rgb: 37, 38, 45;
 
-  --gray-h1: var(--gray99);
-  --gray-h2: var(--gray80);
-  --gray-h3: var(--gray70);
-  --gray-h3: var(--gray60);
-  --gray-h4: var(--gray50);
-  --gray-h5: var(--gray40);
-  --gray-h6: var(--gray30);
-  --gray-h7: var(--gray20);
+  --gray1: #fff;
+  --gray2: #cbcbcb;
+  --gray3: #9b9b9b;
+  --gray4: #767676;
+  --gray5: #5e5e5e;
+  --gray6: #3b3b3b;
 }

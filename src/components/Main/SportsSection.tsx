@@ -2,21 +2,25 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import MainTab from "./MainTab";
-import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
-import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
-import RecruitTeamItem from "./RecruitTeamItem";
-import CompetitionScheduleItem from "./CompetitionScheduleItem";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
-import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import RecruitTeamItem from "./RecruitTeamItem";
+import MatchCard from "./MatchCard";
+import MainTab from "./MainTab";
+import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import MoreButton from "../common/MoreButton";
+import GroupTitle from "../common/GroupTitle";
 
 function SportsSection() {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState(SUPPORT_SPORTS[0].value);
 
   return (
-    <div>
+    <Wrapper>
+      <div className="divided-inner-shadow" />
+      <TabHead>
+        <span>{SUPPORT_SPORTS.find((v) => v.value === activeTab)?.name} 정보를 한 눈에</span>
+      </TabHead>
       <MainTab
         nowValue={(value) => {
           setActiveTab(value);
@@ -25,7 +29,7 @@ function SportsSection() {
       />
       <Cards>
         <Container>
-          <BasicWhiteCardTitle>모집 중인 팀</BasicWhiteCardTitle>
+          <BasicWhiteCardTitle>팀 살펴보기</BasicWhiteCardTitle>
           <ListWrapperColumn>
             {MOCK_TEAM_LIST.map((value, index) => (
               <RecruitTeamItem key={index} {...value} />
@@ -34,26 +38,46 @@ function SportsSection() {
           <LineBottom />
           <MoreButton text="더 많은 팀 보기" href={`/recruit?sports=${activeTab}`} />
         </Container>
-        <Container>
-          <BasicWhiteCardTitle>진행 중인 경기</BasicWhiteCardTitle>
-          <ListWrapperColumn></ListWrapperColumn>
-          <LineBottom />
-          <MoreButton text="더 많은 경기 보기" href={`/recruit?sports=${activeTab}`} />
-        </Container>
-        <Container>
-          <BasicWhiteCardTitle>대회 일정</BasicWhiteCardTitle>
-          <ListWrapperRow>
-            <div className="inner-scroll-wrapper" ref={scrollMaskedHandlerRef} onScroll={scrollMaskedHandler}>
-              {MOCK_MATCH_LIST.map((value, index) => (
-                <CompetitionScheduleItem key={index} {...value} />
-              ))}
-            </div>
-          </ListWrapperRow>
-          <LineBottom />
-          <MoreButton text="더 많은 대회 보기" href={`/recruit?sports=${activeTab}`} />
-        </Container>
+
+        <GroupTitle link="">경기 일정</GroupTitle>
+        <MatchCard
+          size="LARGE"
+          posterImg=""
+          competitionId=""
+          competitionName="리그 챔피언 배구"
+          matchDate="2024-07-31"
+          matchTime="15:30"
+          matchLocation="00대학교 실내체육관"
+          openedBy="국민체육진흥공단"
+          homeName="포이프"
+          awayName="archive"
+        />
+        <MatchCard
+          size="MEDIUM"
+          posterImg=""
+          competitionId=""
+          competitionName="리그 챔피언 배구"
+          matchDate="2024-07-31"
+          matchTime="15:30"
+          matchLocation="00대학교 실내체육관"
+          openedBy="국민체육진흥공단"
+          homeName="포이프"
+          awayName="archive"
+        />
+        <MatchCard
+          size="MEDIUM"
+          posterImg=" string"
+          competitionId=" string"
+          competitionName="리그 챔피언 배구"
+          matchDate="2024-07-31"
+          matchTime="15:30"
+          matchLocation="00대학교 실내체육관"
+          openedBy="국민체육진흥공단"
+          homeName="포이프"
+          awayName="archive"
+        />
       </Cards>
-    </div>
+    </Wrapper>
   );
 }
 
@@ -61,34 +85,69 @@ const MOCK_TEAM_LIST = [
   {
     teamId: "1",
     teamName: "SPABA",
-    isUnivTeam: true,
     univName: "서울과기대",
     location: "서울과학기술대학교 체육관",
-    date: "2024-04-12 20:00",
   },
   {
     teamId: "2",
     teamName: "프렌즈",
-    isUnivTeam: true,
     univName: "성균관대",
     location: "성균관대학교 체육관",
-    date: "2024-04-12 20:00",
   },
-];
-
-const MOCK_MATCH_LIST = [
   {
-    competitionId: "2",
-    posterImg:
-      "https://i.namu.wiki/i/83QhQJRkrjYOgRlz8WBlerxOxWfSDjs0nEag90x03uiA6hIMS9rdFCFuC7aCRxP53zCadhmwMlUHhjJX570WRg.webp",
-    matchName: "무슨무슨 배구 대회",
-    matchDate: "2024-06-04",
+    teamId: "3",
+    teamName: "여기로",
+    location: "서울 종로구",
   },
-  { competitionId: "3", posterImg: "0", matchName: "000 천하제일대박 대회", matchDate: "2024-05-02" },
-  { competitionId: "4", posterImg: "0", matchName: "2024 전국배구대회", matchDate: "2024-05-09" },
-  { competitionId: "5", posterImg: "0", matchName: "00배 경기도대회", matchDate: "2024-05-20" },
 ];
 
+const Wrapper = styled.div`
+  background-color: var(--background-light);
+  margin: 0 -16px;
+  padding: 0 16px;
+  .divided-inner-shadow {
+    display: block;
+    margin: 0 -16px;
+    width: calc(100% + 32px);
+    height: 12px;
+    background-color: var(--background);
+    box-shadow: inset 0 4px 4px 0 rgba(162, 162, 162, 0.25);
+  }
+`;
+const TabHead = styled.h3`
+  position: relative;
+  margin: 24px -16px;
+  width: calc(100% + 32px);
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-align: center;
+  &::before {
+    content: "";
+    position: absolute;
+    display: block;
+    top: 50%;
+    background-color: var(--gray5);
+    width: 100%;
+    height: 1px;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    background-color: var(--background-light);
+    &::before,
+    &::after {
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      border: 2px solid var(--gray5);
+      border-radius: 100%;
+    }
+  }
+`;
 const Container = styled(BasicWhiteCard)`
   padding: 24px 20px 2px;
 `;
@@ -118,7 +177,7 @@ const ListWrapperRow = styled.div`
 
 const LineBottom = styled.div`
   margin-bottom: 2px;
-  border-bottom: 1px solid var(--gray4);
+  border-bottom: 1px solid var(--gray6);
 `;
 
 export default SportsSection;

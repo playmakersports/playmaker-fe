@@ -65,7 +65,7 @@ const Container = styled.ul`
 const CommonItem = styled.li`
   cursor: pointer;
   z-index: 1;
-  margin: 10px 0;
+  margin: 8px 0;
   padding: 0 20px;
   display: flex;
   align-items: center;
@@ -79,10 +79,10 @@ const CommonItem = styled.li`
   }
 `;
 const Item = styled(CommonItem)`
-  color: rgb(var(--gray-h2));
+  color: var(--gray1);
   font-weight: 400;
   &.selected {
-    color: var(--black);
+    color: #fff;
     font-weight: 700;
   }
 `;
@@ -91,8 +91,8 @@ const SelectedBackground = styled(CommonItem)<{ offset: number }>`
   position: absolute;
   margin: 0;
   left: ${({ offset }) => offset}px;
-  padding: 10px 20px;
-  background-color: ${({ theme }) => theme.gray4};
+  padding: 8px 20px;
+  background-color: var(--main);
   border-radius: 16px;
   &::after {
     content: attr(data-value);

@@ -1,25 +1,26 @@
-import React, { useRef } from "react";
+import React from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 
-import { BasicWhiteCard } from "../common/Card";
-import PlusIcon from "@/assets/icon/global/Plus.svg";
 import { SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import { BasicWhiteCard } from "../common/Card";
+import PlusIcon from "@/assets/icon/global/Plus.svg";
 
 function MyTeam() {
+  const router = useRouter();
   const MOCK = [
-    { category: "배구", teamName: "팀이름1" },
-    { category: "농구", teamName: "팀이름2" },
-    { category: "축구", teamName: "팀이름3" },
-    { category: "배드민턴", teamName: "팀이름4" },
+    { teamId: "10", teamName: "팀이름1" },
+    { teamId: "11", teamName: "팀이름2" },
+    { teamId: "12", teamName: "팀이름3" },
   ];
 
   return (
     <TeamList>
       <ul className="team-list" ref={scrollMaskedHandlerRef} onScroll={(e) => scrollMaskedHandler(e)}>
         {MOCK.map((item) => (
-          <TeamItem key={item.teamName}>
-            <TeamImage data-category={item.category}></TeamImage>
+          <TeamItem key={item.teamName} onClick={() => router.push(`/team/${item.teamId}`)}>
+            <TeamImage />
             <p>{item.teamName}</p>
           </TeamItem>
         ))}
@@ -52,10 +53,11 @@ const TeamItem = styled.li`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  color: var(--gray1);
 
   p {
     font-size: 1.4rem;
-    font-weight: 500;
+    font-weight: 400;
   }
 `;
 
@@ -64,7 +66,7 @@ const TeamImage = styled.div`
   margin: 0 8px;
   width: 50px;
   height: 50px;
-  background-color: ${({ theme }) => theme.gray3};
+  background-color: var(--gray5);
   border-radius: 100%;
 `;
 
@@ -75,13 +77,13 @@ const More = styled.div`
   margin: 0 8px;
   width: 50px;
   height: 50px;
-  border: 1px solid ${({ theme }) => theme.gray3};
+  border: 1px solid var(--gray5);
   border-radius: 100%;
   & + p {
-    color: ${({ theme }) => theme.gray1};
+    color: var(--gray1);
   }
   svg {
-    fill: ${({ theme }) => theme.gray2};
+    fill: var(--gray4);
   }
 `;
 

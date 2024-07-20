@@ -42,6 +42,8 @@ const Container = styled.div`
   overflow: hidden;
   width: 100vw;
   height: calc(100vh - 1px);
+  overscroll-behavior: contain;
+
   #main_Container {
     width: 100%;
     height: calc(100vh - 1px);

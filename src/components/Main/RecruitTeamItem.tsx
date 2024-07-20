@@ -2,20 +2,17 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import { FONTS } from "@/styles/common";
-import { formattedDate } from "@/util/date";
 import { useRouter } from "next/router";
 
 type Props = {
   teamId: string;
   teamName: string;
-  isUnivTeam: boolean;
-  univName: string;
+  univName?: string;
   location: string;
-  date: string;
 };
 
 function RecruitTeamItem(props: Props) {
-  const { teamId, teamName, univName, isUnivTeam, location, date } = props;
+  const { teamId, teamName, univName, location } = props;
   const router = useRouter();
 
   return (
@@ -30,10 +27,7 @@ function RecruitTeamItem(props: Props) {
         <TeamInfo>
           <p className="name">
             <span className="team-name">{teamName}</span>
-            <span className="univ-name">{univName}</span>
-          </p>
-          <p className="location-time">
-            {univName} {location.split(" ")[1]} - {formattedDate(date, "m월 d일 hh:mm")}
+            <span className="univ-name">{univName ?? location}</span>
           </p>
         </TeamInfo>
       </ItemWrapper>
@@ -53,7 +47,7 @@ const Container = styled.button`
   transition: all 0.2s;
 
   &:active {
-    background-color: ${({ theme }) => theme.background};
+    background-color: var(--background);
   }
   &:active > ${ItemWrapper} {
     transform: scale(0.97);
@@ -62,7 +56,7 @@ const Container = styled.button`
 const TeamImage = styled.div`
   width: 40px;
   height: 40px;
-  background-color: #7a89b2;
+  background-color: var(--gray5);
   border-radius: 100%;
 `;
 const TeamInfo = styled.div`
@@ -70,7 +64,7 @@ const TeamInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  color: ${({ theme }) => theme.text};
+  color: var(--gray1);
   .name {
     display: inline-flex;
     align-items: center;

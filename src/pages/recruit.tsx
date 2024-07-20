@@ -41,7 +41,7 @@ function Recruit() {
           placeholder="팀 검색"
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
-          delButton={() => setSearchValue("")}
+          delButton={true}
         />
       </Contents>
       <Cards>

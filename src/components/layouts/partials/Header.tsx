@@ -1,25 +1,21 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtomValue } from "jotai";
 import Link from "next/link";
 
-import HeaderLNB from "./HeaderLNB";
-import { BUTTON_ACTIVE } from "@/styles/common";
+import { TEXT_ACTIVE } from "@/styles/common";
 import { atomBgWhite } from "@/atom/common";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import Logotype from "@/assets/logo/Logotype.svg";
 import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";
-import MenuIcon from "@/assets/icon/global/Menu.svg";
+import HomeIcon from "@/assets/icon/global/Home.svg";
 import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
 
 type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
   const isWhiteBg = useAtomValue(atomBgWhite);
-  const handleLnbState = useState(false);
-  const [showLnb, setShowLnb] = handleLnbState;
 
   const ICON_SIZE = 22;
   const router = useRouter();
@@ -60,16 +56,10 @@ function Header({ scrollActive }: Props) {
           {getSubTitle && <p>{getSubTitle}</p>}
           {getTitle}
         </PageTitle>
-        <Icon
-          className={showLnb ? "active-menu" : ""}
-          type="button"
-          aria-label="메뉴 보기"
-          onClick={() => setShowLnb((prev) => !prev)}
-        >
-          <MenuIcon width={ICON_SIZE} height={ICON_SIZE} />
+        <Icon type="button">
+          <HomeIcon width={ICON_SIZE} height={ICON_SIZE} />
         </Icon>
       </Inner>
-      {showLnb && <HeaderLNB handleLnbState={handleLnbState} />}
     </Wrapper>
   );
 }
@@ -79,9 +69,10 @@ const Icon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  ${BUTTON_ACTIVE("transparent")};
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-10);
+  ${TEXT_ACTIVE("var(--gray6)")};
 `;
 
 const Wrapper = styled.header<{ scrolled: boolean }>`
@@ -123,16 +114,7 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
   }
   .logo {
     width: 148px;
-    fill: var(--main);
-  }
-
-  button.active-menu {
-    z-index: 1001;
-    transform: scale(0.9);
-
-    svg {
-      fill: ${({ theme }) => theme.text};
-    }
+    fill: var(--gray1);
   }
 `;
 const Inner = styled.div`
@@ -148,7 +130,7 @@ const Inner = styled.div`
 
 const Menu = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 12px;
   font-weight: 400;
   font-size: 1.6rem;
   color: ${({ theme }) => theme.gray1};
@@ -177,7 +159,7 @@ const Count = styled.div`
   padding: 2px 4px;
   left: 50%;
   top: -2px;
-  background-color: ${({ theme }) => theme.sub1};
+  background-color: var(--point);
   color: #fff;
   font-size: 1.2rem;
   line-height: 1.4rem;

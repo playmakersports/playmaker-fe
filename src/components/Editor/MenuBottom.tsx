@@ -2,7 +2,7 @@ import React from "react";
 import { Editor } from "@tiptap/react";
 import styled from "@emotion/styled";
 
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 import ImageIcon from "@/assets/icon/editor/Image.svg";
 import PollIcon from "@/assets/icon/editor/Poll.svg";
 import Undo from "@/assets/icon/editor/Undo.svg";
@@ -24,26 +24,28 @@ function EditorMenuBottom({ editor }: Props) {
   return (
     <>
       <Container>
-        <ReUndo>
+        <OptionGroup>
+          <EditorButton type="button" onClick={showModal}>
+            <PollIcon width={20} height={20} /> 투표
+          </EditorButton>
+          <EditorButton type="button">
+            <ImageIcon width={20} height={20} /> 이미지
+          </EditorButton>
+        </OptionGroup>
+        <OptionGroup>
           <button
             onClick={() => editor.chain().focus().undo().run()}
             disabled={!editor.can().chain().focus().undo().run()}
           >
-            <Undo />
+            <Undo width={16} height={16} />
           </button>
           <button
             onClick={() => editor.chain().focus().redo().run()}
             disabled={!editor.can().chain().focus().redo().run()}
           >
-            <Redo />
+            <Redo width={16} height={16} />
           </button>
-        </ReUndo>
-        <DashedWrapper onClick={showModal}>
-          <PollIcon width={20} height={20} /> 투표 넣기
-        </DashedWrapper>
-        <DashedWrapper>
-          <ImageIcon width={20} height={20} /> 이미지 넣기
-        </DashedWrapper>
+        </OptionGroup>
       </Container>
       <ModalComponents
         title="투표 설정"
@@ -58,54 +60,28 @@ function EditorMenuBottom({ editor }: Props) {
   );
 }
 
-const ReUndo = styled.div`
-  margin-top: -16px;
+const Container = styled.div`
+  margin: 8px -16px 0;
+  padding: 8px 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+`;
+const OptionGroup = styled.div`
+  display: flex;
+  gap: 16px;
 
   button {
-    /* Menu와 통일 */
-    display: flex;
-    justify-content: center;
+    display: inline-flex;
     align-items: center;
-    padding: 6px 10px;
-    font-size: 1.6rem;
-    ${BUTTON_ACTIVE("var(--gray4)")};
-    transition: all 0.1s;
-    border: 1px solid transparent;
-
-    &.is-active {
-      font-weight: 700;
-      transform: scale(0.95);
-      background-color: var(--gray4);
-    }
-
-    svg {
-      fill: var(--text);
-    }
+    justify-content: center;
+    ${FONTS.MD2};
+    padding: 0 4px;
+    border-radius: 8px;
+    ${TEXT_ACTIVE("var(--gray6)", { focus: true })};
   }
 `;
-const Container = styled.div`
-  margin: 20px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-`;
-const DashedWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  min-height: 60px;
-  border: 1px dashed var(--gray2);
-  border-radius: 12px;
-  color: var(--gray1);
-  gap: 8px;
-  ${FONTS.MD1};
-  svg {
-    fill: var(--gray2);
-  }
-  ${BUTTON_ACTIVE("transparent")};
+const EditorButton = styled.button`
+  gap: 4px;
 `;
 
 export default EditorMenuBottom;

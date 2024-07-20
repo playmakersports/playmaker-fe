@@ -9,8 +9,11 @@ import EditorUI from "@/components/Editor";
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
 import DropDown from "@/components/common/DropDown";
+import { BasicInput } from "@/components/common/Input";
+import useBgWhite from "@/hook/useBgWhite";
 
 function ArticleEditor() {
+  useBgWhite();
   const [category, setCategory] = useState("");
   const editor = useEditorHandler();
   if (!editor) return null;
@@ -29,6 +32,7 @@ function ArticleEditor() {
   return (
     <Container>
       <DropDown
+        hasBorder
         id="category"
         getSelectedValue={setCategory}
         defaultValue=""
@@ -39,7 +43,7 @@ function ArticleEditor() {
           { name: "일정", value: "schedule" },
         ]}
       />
-      <Title type="text" placeholder="제목을 입력하세요." autoFocus />
+      <BasicInput type="text" placeholder="제목" hasBorder />
       <EditorUI editor={editor} />
       <Buttons>
         <Button type="button" flex={1} mode="OPTION2" onClick={onClear}>
@@ -56,15 +60,8 @@ function ArticleEditor() {
 const Container = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
-  gap: 24px;
-`;
-const Title = styled.input`
-  width: 100%;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: var(--card);
-  ${FONTS.HEAD1};
-  color: var(--text);
+  gap: 16px;
+  overscroll-behavior: none;
 `;
 const Buttons = styled.div`
   display: flex;

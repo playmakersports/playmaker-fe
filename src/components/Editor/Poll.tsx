@@ -37,14 +37,7 @@ function Poll() {
 
   return (
     <Container>
-      <BasicInput
-        control={control}
-        type="text"
-        name="pollTitle"
-        placeholder="투표 제목을 입력하세요."
-        delButton={() => setValue("pollTitle", "")}
-      />
-
+      <BasicInput type="text" placeholder="투표 제목을 입력하세요." {...register("pollTitle")} hasBorder />
       <Options>
         {fields.map((field, index) => (
           <Option key={field.id}>

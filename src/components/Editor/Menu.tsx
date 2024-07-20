@@ -7,6 +7,7 @@ import { BUTTON_ACTIVE } from "@/styles/common";
 
 import RightToggleArrow from "@/assets/icon/arrow/toggle/RightToggle.svg";
 import BoldText from "@/assets/icon/editor/BoldText.svg";
+import ItalicText from "@/assets/icon/editor/ItalicText.svg";
 import UnderlineText from "@/assets/icon/editor/UnderlineText.svg";
 import DeleteText from "@/assets/icon/editor/DeleteText.svg";
 import HighlightText from "@/assets/icon/editor/HighlightText.svg";
@@ -86,6 +87,13 @@ function EditorMenu({ editor }: Props) {
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "is-active" : ""}
+      >
+        <ItalicText />
+      </button>
+      <button
+        onClick={() => editor.chain().focus().toggleUnderline().run()}
+        disabled={!editor.can().chain().focus().toggleUnderline().run()}
+        className={editor.isActive("underline") ? "is-active" : ""}
       >
         <UnderlineText />
       </button>

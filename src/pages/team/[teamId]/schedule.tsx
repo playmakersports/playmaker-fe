@@ -5,7 +5,7 @@ import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
-import { BaseContainer, DividedContainer } from "@/components/common/Container";
+import { BaseContainer } from "@/components/common/Container";
 import { BasicWhiteCardTitle } from "@/components/common/Card";
 import Loading from "@/components/common/Loading";
 import useBgWhite from "@/hook/useBgWhite";
@@ -222,7 +222,7 @@ const Container = styled(BaseContainer)`
   gap: 32px;
 `;
 const CalendarContainer = styled.article``;
-const ScheduleContainer = styled(DividedContainer)`
+const ScheduleContainer = styled.div`
   padding-left: 24px;
   padding-right: 24px;
 `;

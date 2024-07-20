@@ -78,6 +78,10 @@ const OptionGroup = styled.div`
     padding: 0 4px;
     border-radius: 8px;
     ${TEXT_ACTIVE("var(--gray6)", { focus: true })};
+    color: var(--gray2);
+  }
+  svg {
+    fill: var(--gray2);
   }
 `;
 const EditorButton = styled.button`

@@ -52,9 +52,9 @@ export const EDITOR_ARTICLE_STYLE = css`
   }
 
   blockquote {
-    margin-bottom: 10px;
-    padding-left: 1rem;
-    border-left: 3px solid rgb(var(--gray-h3));
+    margin-bottom: 8px;
+    padding-left: 0.85rem;
+    border-left: 5px solid var(--gray4);
   }
 
   em {

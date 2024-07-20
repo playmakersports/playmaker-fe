@@ -39,19 +39,19 @@ function Button(props: Props) {
       color: "#fff",
     },
     OPTION1: {
-      background: "rgb(var(--gray-h2))",
-      color: "var(--white)",
+      background: "var(--gray4)",
+      color: "#fff",
     },
     OPTION2: {
-      background: "rgb(var(--gray-h5))",
-      color: "var(--black)",
+      background: "var(--gray6)",
+      color: "var(--gray1)",
     },
     SUB1: {
       background: "var(--sub1)",
-      color: "#fff",
+      color: "#000",
     },
     WARN: {
-      background: "var(--sub1)",
+      background: "var(--point)",
       color: "#fff",
     },
     SNS_LOGIN: {

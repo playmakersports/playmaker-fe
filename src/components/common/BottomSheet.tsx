@@ -104,7 +104,7 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   bottom: 0;
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
   z-index: 1000;
-  background: var(--drop-down-background);
+  background: var(--background-light);
   border-radius: 24px;
   transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};

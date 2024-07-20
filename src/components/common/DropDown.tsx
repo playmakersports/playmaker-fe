@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE, TEXT_ACTIVE } from "@/styles/common";
 import { InputStyledWrapper } from "./Wrapper";
 
 type Props = {
@@ -12,11 +12,10 @@ type Props = {
   }[];
   getSelectedValue: (target: string) => void;
   medium?: boolean;
-  hasBorder?: boolean;
 };
 
 function DropDown(props: Props) {
-  const { id, defaultValue, options, getSelectedValue, medium, hasBorder } = props;
+  const { id, defaultValue, options, getSelectedValue, medium } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
@@ -37,7 +36,7 @@ function DropDown(props: Props) {
   };
 
   return (
-    <Container ref={dropDownRef} isError={false} isMedium={medium} hasBorder={hasBorder} isOpen={showOptions}>
+    <Container ref={dropDownRef} isError={false} isMedium={medium} isOpen={showOptions}>
       <div
         role="button"
         onClick={() => setShowOptions((prev) => !prev)}
@@ -82,12 +81,12 @@ const Options = styled.ul<{ show: boolean }>`
   top: 100%;
   margin-top: 12px;
   padding: 8px;
-  left: 0;
-  width: 100%;
-  background-color: var(--drop-down-background);
+  left: -2px;
+  width: calc(100% + 4px);
+  background-color: var(--background);
   border-radius: 8px;
-  border: 1px solid var(--background);
-  box-shadow: 0 10px 16px 12px var(--box-shadow);
+  border: 1px solid var(--gray6);
+  box-shadow: var(--shadow-alpha20);
   transition: all 0.2s;
 
   transform: translateY(${({ show }) => (show ? "0px" : "-30px")});
@@ -99,11 +98,17 @@ const Option = styled.li`
   cursor: pointer;
   padding: 10px;
   user-select: none;
-  ${BUTTON_ACTIVE("var(--background)")};
+  border-radius: 8px;
+  transition: opacity 0.2s;
+  font-weight: 400;
 
+  &:active {
+    opacity: 0.5;
+  }
   &[aria-selected="true"] {
     background: var(--main);
     color: #fff;
+    font-weight: 600;
   }
 `;
 

@@ -32,7 +32,6 @@ function ArticleEditor() {
   return (
     <Container>
       <DropDown
-        hasBorder
         id="category"
         getSelectedValue={setCategory}
         defaultValue=""
@@ -43,7 +42,7 @@ function ArticleEditor() {
           { name: "일정", value: "schedule" },
         ]}
       />
-      <BasicInput type="text" placeholder="제목" hasBorder />
+      <BasicInput type="text" placeholder="제목" />
       <EditorUI editor={editor} />
       <Buttons>
         <Button type="button" flex={1} mode="OPTION2" onClick={onClear}>

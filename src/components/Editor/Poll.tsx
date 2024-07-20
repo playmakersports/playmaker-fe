@@ -37,12 +37,12 @@ function Poll() {
 
   return (
     <Container>
-      <BasicInput type="text" placeholder="투표 제목을 입력하세요." {...register("pollTitle")} hasBorder />
+      <BasicInput type="text" placeholder="투표 제목을 입력하세요." {...register("pollTitle")} />
       <Options>
         {fields.map((field, index) => (
           <Option key={field.id}>
             <div className="option-index">{index + 1}</div>
-            <input type="text" placeholder="입력..." {...register(`pollOptions.${index}.value`)} />
+            <BasicInput type="text" placeholder="입력..." {...register(`pollOptions.${index}.value`)} />
             <button onClick={() => removeOption(index)}>
               <SmallX />
             </button>
@@ -63,22 +63,8 @@ function Poll() {
         <SetItem>
           <InputCheckbox control={control} id="pollDue" name="pollDue" /> <label htmlFor="pollDue">종료</label>
           <DueInputs>
-            <BasicInput
-              disabled={!watch("pollDue")}
-              medium
-              styleType="BORDER"
-              type="date"
-              name="endDate"
-              control={control}
-            />
-            <BasicInput
-              disabled={!watch("pollDue")}
-              medium
-              styleType="BORDER"
-              type="time"
-              name="endTime"
-              control={control}
-            />
+            <BasicInput type="text" disabled={!watch("pollDue")} medium name="endDate" />
+            <BasicInput type="text" disabled={!watch("pollDue")} medium name="endTime" />
           </DueInputs>
         </SetItem>
         <SetItem>
@@ -105,13 +91,13 @@ const PollSetting = styled.div`
   gap: 20px 32px;
   justify-content: flex-start;
   flex-wrap: wrap;
-  border-top: 1px solid rgb(var(--gray-h4));
+  border-top: 1px solid var(--gray6);
 `;
 const SetItem = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   word-break: keep-all;
 
   &:has(input:checked) {
@@ -136,34 +122,34 @@ const Options = styled.ul`
 `;
 const Option = styled.li`
   display: flex;
-  gap: 12px;
+  align-items: center;
+  gap: 8px;
   margin-top: 12px;
-  padding: 12px 8px 0;
-  border-top: 1px solid rgb(var(--gray-h5));
+  padding: 12px 2px 0;
   .option-index {
     flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     text-align: center;
-    color: rgb(var(--gray-h2));
-    border: 2px solid rgb(var(--gray-h4));
+    color: var(--gray3);
+    border: 2px solid var(--gray3);
     border-radius: 100%;
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 700;
   }
   input {
     width: calc(100% - 20px);
-    color: var(--text);
+    color: var(--gray1);
     ${FONTS.MD1W500};
   }
   button {
     width: 20px;
     height: 20px;
     svg {
-      fill: var(--text);
+      fill: var(--gray4);
       opacity: 0.7;
     }
   }

@@ -1,7 +1,7 @@
 import { FONTS } from "@/styles/common";
 import styled from "@emotion/styled";
 
-export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boolean; hasBorder?: boolean }>`
+export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boolean }>`
   position: relative;
   display: flex;
   width: 100%;
@@ -18,19 +18,16 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
     height: 20px;
   }
 
-  ${({ isError, hasBorder }) =>
-    hasBorder
-      ? `
   background-color: transparent;
-  border: 1px solid ${isError ? "var(--point)" : "var(--gray6)"};
+  border: 1px solid ${({ isError }) => (isError ? "var(--point)" : "var(--gray6)")};
   border-radius: 6px;
-        `
-      : `
-  background-color: var(--gray6);
-  border: 1px solid transparent;
-      `} {
-  }
 
+  &:disabled,
+  &:has(input:disabled),
+  &:has(input:read-only) {
+    border: 1px solid transparent;
+    background-color: var(--gray6);
+  }
   &:focus,
   &:has(input:focus) {
     border: 1px solid var(--main);

@@ -13,12 +13,11 @@ type Props = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">> 
   search?: boolean;
   errorText?: string;
   delButton?: boolean;
-  hasBorder?: boolean;
   medium?: boolean;
 };
 
 export const BasicInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { search, errorText, delButton = false, hasBorder = false, medium = false, ...rest } = props;
+  const { search, errorText, delButton = false, medium = false, ...rest } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
@@ -34,7 +33,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   };
 
   return (
-    <InputStyledWrapper isMedium={medium} hasBorder={hasBorder} isError={!!props.errorText}>
+    <InputStyledWrapper isMedium={medium} isError={!!props.errorText}>
       {search && <SearchIcon />}
       <StyledInput ref={inputRef} placeholder={props.placeholder ?? " "} {...rest} />
       {errorText && (
@@ -76,7 +75,7 @@ const ClearIconArea = styled(IconArea)`
   fill: var(--gray5);
 `;
 const StyledInput = styled.input`
-  flex: 1;
+  width: 100%;
   ${FONTS.MD1};
   font-size: 1.8rem;
   font-weight: 500;

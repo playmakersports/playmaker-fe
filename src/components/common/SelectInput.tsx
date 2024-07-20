@@ -36,15 +36,17 @@ const Check = styled.input`
   height: 100%;
   opacity: 0;
   & + svg {
-    padding: 5px;
+    padding: 1px 3px 2px;
     width: 24px;
     height: 24px;
-    border-radius: 100%;
-    fill: rgba(var(--gray-h3), 0.7);
-    background-color: rgba(var(--gray-h6));
+    border-radius: 4px;
+    fill: none;
+    border: 1px solid var(--gray5);
+    background-color: transparent;
   }
   &:checked + svg {
     fill: #fff;
+    border: 1px solid transparent;
     background-color: var(--main);
   }
 `;

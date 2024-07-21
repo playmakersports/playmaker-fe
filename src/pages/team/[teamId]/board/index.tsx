@@ -14,7 +14,7 @@ import { BasicWhiteCard } from "@/components/common/Card";
 import ArticlePlus from "@/assets/icon/global/ArticlePlus.svg";
 
 function Board() {
-  usePageTitle("팀 게시판");
+  usePageTitle();
   useBgWhite();
   const tabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);
@@ -96,7 +96,7 @@ function Board() {
               <div className="article-inner">
                 <div>
                   <p className="article-head">글 공지입니다.</p>
-                  <p className="article-sub">공지사항 · 홍길동 · 2024.5.10</p>
+                  <p className="article-sub">공지사항 · 홍길동 · 2024.7.20</p>
                 </div>
                 <div className="article-info">
                   <p className="article-head">{article}</p>
@@ -134,17 +134,20 @@ const PAGE_MOCK = [1, 2, 3, 4, 5];
 
 const Page = styled.div`
   display: flex;
-  margin-top: 20px;
+  margin-top: 32px;
   justify-content: center;
   gap: 12px;
+
   div {
     ${FONTS.MD1};
-    padding: 8px 16px;
-    background-color: ${({ theme }) => theme.gray4};
+    padding: 8px 12px;
+    background-color: var(--background-light);
     border-radius: 8px;
+    user-select: none;
 
     &:active {
-      background-color: ${({ theme }) => theme.gray3};
+      color: #fff;
+      background-color: var(--main);
     }
   }
 `;
@@ -161,7 +164,7 @@ const TabWrapper = styled.div`
   z-index: 1;
 
   &.stuck {
-    border-bottom: 1px solid rgb(var(--gray-h5));
+    border-bottom: 1px solid var(--gray6);
     padding-bottom: 2px;
     background-color: var(--background-light);
   }
@@ -170,7 +173,7 @@ const FixedArticles = styled.div`
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
 `;
 const FixedArticle = styled.div`
-  border-bottom: 1px solid #e8e8e8;
+  border-bottom: 1px solid var(--gray6);
   .article-inner {
     display: flex;
     padding: 12px 20px;
@@ -178,35 +181,29 @@ const FixedArticle = styled.div`
     justify-content: space-between;
     gap: 12px;
     ${FONTS.MD1W500}
-    ${BUTTON_ACTIVE("transparent")}
   }
 
   label {
-    padding: 0 6px;
     color: #fff;
-    border-radius: 5px;
+    padding: 0 6px;
+    border-radius: 4px;
     font-size: 1.4rem;
   }
   label[color="red"] {
-    border: 1px solid #890101;
-    background-color: var(--sub1);
+    background-color: var(--point);
   }
   label[color="blue"] {
-    border: 1px solid #0658a5;
     background-color: var(--main);
   }
 
   .article-head {
     ${FONTS.MD1};
-    font-weight: 800;
+    font-weight: 600;
   }
   .article-sub {
+    font-weight: 400;
     font-size: 1.4rem;
-    color: rgba(var(--gray-h2), 0.8);
-  }
-
-  &:active {
-    opacity: 0.9;
+    color: var(--gray3);
   }
 `;
 const Articles = styled.div`
@@ -219,22 +216,20 @@ const Article = styled(BasicWhiteCard)`
   text-align: left;
 
   .article-head {
-    margin-bottom: 2px;
+    margin-bottom: 8px;
     ${FONTS.MD1};
-    font-weight: 700;
   }
   .article-sub {
-    ${FONTS.MD3};
-    color: ${({ theme }) => theme.gray1};
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--gray3);
   }
-
   .article-info {
     text-align: right;
     .article-head {
-      font-weight: 800;
+      font-weight: 600;
     }
   }
-
   .article-inner {
     display: flex;
     justify-content: space-between;
@@ -245,7 +240,7 @@ const Article = styled(BasicWhiteCard)`
     border-top: 1px solid transparent;
   }
 
-  ${BUTTON_ACTIVE("transparent")}
+  ${BUTTON_ACTIVE("var(--background-light)")}
 `;
 
 const WriteButton = styled.button`
@@ -254,8 +249,8 @@ const WriteButton = styled.button`
   justify-content: center;
   padding: 12px 0;
   border-radius: 10px;
-  border: 1px dashed rgb(var(--gray-h3));
-  color: rgb(var(--gray-h2));
+  border: 1px dashed var(--gray5);
+  color: var(--gray2);
   gap: 8px;
   ${FONTS.MD1};
   font-weight: 400;

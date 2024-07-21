@@ -3,13 +3,15 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
-import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
 import RecruitTeamItem from "./RecruitTeamItem";
 import MatchCard from "./MatchCard";
 import MainTab from "./MainTab";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
+import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { WhiteSectionDivider } from "../common/Container";
 
 function SportsSection() {
   const router = useRouter();
@@ -17,7 +19,7 @@ function SportsSection() {
 
   return (
     <Wrapper>
-      <div className="divided-inner-shadow" />
+      <WhiteSectionDivider />
       <TabHead>
         <span>{SUPPORT_SPORTS.find((v) => v.value === activeTab)?.name} 정보를 한 눈에</span>
       </TabHead>
@@ -31,7 +33,7 @@ function SportsSection() {
         <Container>
           <BasicWhiteCardTitle>팀 살펴보기</BasicWhiteCardTitle>
           <ListWrapperColumn>
-            {MOCK_TEAM_LIST.map((value, index) => (
+            {TEAM_LIST_MOCK.map((value, index) => (
               <RecruitTeamItem key={index} {...value} />
             ))}
           </ListWrapperColumn>
@@ -42,77 +44,48 @@ function SportsSection() {
         <GroupTitle link="">경기 일정</GroupTitle>
         <MatchCard
           size="LARGE"
-          posterImg=""
-          competitionId=""
-          competitionName="리그 챔피언 배구"
-          matchDate="2024-07-31"
+          posterImg="/images/mock/2024hongik-jump-competition.jpeg"
+          competitionId="19"
+          competitionName="홍익대학교 JUMP배 농구대회"
+          matchDate="2024-07-28"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
-          openedBy="국민체육진흥공단"
-          homeName="포이프"
-          awayName="archive"
+          openedBy="홍익대학교"
+          openedByLogo="/images/mock/hongik-univ-logo.png"
+          homeName="JUMP"
+          homeLogo="/images/mock/hongik-jump.png"
+          awayName="15ers"
+          awayLogo="/images/mock/15ers.png"
         />
         <MatchCard
           size="MEDIUM"
-          posterImg=""
-          competitionId=""
-          competitionName="리그 챔피언 배구"
-          matchDate="2024-07-31"
+          posterImg="/images/mock/seoul-tech-univ-poster.png"
+          competitionId="25"
+          competitionName="제7회 전국대학농구동아리대회"
+          matchDate="2024-07-30"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
-          openedBy="국민체육진흥공단"
-          homeName="포이프"
-          awayName="archive"
+          openedBy="서울과학기술대학교"
         />
         <MatchCard
           size="MEDIUM"
-          posterImg=" string"
-          competitionId=" string"
-          competitionName="리그 챔피언 배구"
-          matchDate="2024-07-31"
+          posterImg="/images/mock/2024hongik-jump-competition.jpeg"
+          competitionId="25"
+          competitionName="제7회 전국대학농구동아리대회"
+          matchDate="2024-07-30"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
-          openedBy="국민체육진흥공단"
-          homeName="포이프"
-          awayName="archive"
+          openedBy="서울과학기술대학교"
         />
       </Cards>
     </Wrapper>
   );
 }
 
-const MOCK_TEAM_LIST = [
-  {
-    teamId: "1",
-    teamName: "SPABA",
-    univName: "서울과기대",
-    location: "서울과학기술대학교 체육관",
-  },
-  {
-    teamId: "2",
-    teamName: "프렌즈",
-    univName: "성균관대",
-    location: "성균관대학교 체육관",
-  },
-  {
-    teamId: "3",
-    teamName: "여기로",
-    location: "서울 종로구",
-  },
-];
-
 const Wrapper = styled.div`
   background-color: var(--background-light);
   margin: 0 -16px;
   padding: 0 16px;
-  .divided-inner-shadow {
-    display: block;
-    margin: 0 -16px;
-    width: calc(100% + 32px);
-    height: 12px;
-    background-color: var(--background);
-    box-shadow: inset 0 4px 4px 0 rgba(162, 162, 162, 0.25);
-  }
 `;
 const TabHead = styled.h3`
   position: relative;

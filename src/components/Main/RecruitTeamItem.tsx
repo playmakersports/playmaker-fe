@@ -9,10 +9,11 @@ type Props = {
   teamName: string;
   univName?: string;
   location: string;
+  logoImg: string;
 };
 
 function RecruitTeamItem(props: Props) {
-  const { teamId, teamName, univName, location } = props;
+  const { teamId, teamName, univName, location, logoImg } = props;
   const router = useRouter();
 
   return (
@@ -23,7 +24,7 @@ function RecruitTeamItem(props: Props) {
       }}
     >
       <ItemWrapper>
-        <TeamImage />
+        <TeamImage src={logoImg} />
         <TeamInfo>
           <p className="name">
             <span className="team-name">{teamName}</span>
@@ -42,7 +43,7 @@ const ItemWrapper = styled.div`
 `;
 const Container = styled.button`
   margin: 0 -12px;
-  padding: 12px;
+  padding: 6px 12px;
   border-radius: 12px;
   transition: all 0.2s;
 
@@ -53,10 +54,12 @@ const Container = styled.button`
     transform: scale(0.97);
   }
 `;
-const TeamImage = styled.div`
+const TeamImage = styled.img`
+  padding: 2px;
   width: 40px;
   height: 40px;
-  background-color: var(--gray5);
+  background-color: #fff;
+  border: 1px solid var(--gray6);
   border-radius: 100%;
 `;
 const TeamInfo = styled.div`

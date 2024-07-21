@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import { FONTS } from "@/styles/common";
 import { countDayDiff } from "@/util/date";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 
@@ -15,8 +15,11 @@ type Props = {
   matchTime: string;
   matchLocation: string;
   openedBy: string;
-  homeName: string;
-  awayName: string;
+  openedByLogo?: string;
+  homeName?: string;
+  awayName?: string;
+  homeLogo?: string;
+  awayLogo?: string;
 };
 function MatchCard(props: Props) {
   const router = useRouter();
@@ -28,8 +31,11 @@ function MatchCard(props: Props) {
     matchTime,
     matchLocation,
     openedBy,
+    openedByLogo,
     homeName,
+    homeLogo,
     awayName,
+    awayLogo,
   } = props;
   const dayCount = () => {
     if (countDayDiff(matchDate) === 0) return "D-DAY";
@@ -43,20 +49,20 @@ function MatchCard(props: Props) {
         <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
           <div className="home-team team-wrapper">
             <div className="team-inner">
-              <img src="" alt={homeName} aria-disabled />
+              <img src={homeLogo} alt={homeName} aria-disabled />
               <span className="team-name">{homeName}</span>
             </div>
           </div>
           <p className="versers">vs</p>
           <div className="away-team team-wrapper">
             <div className="team-inner">
-              <img src="" alt={awayName} aria-disabled />
+              <img src={awayLogo} alt={awayName} aria-disabled />
               <span className="team-name">{awayName}</span>
             </div>
           </div>
         </MatchBox>
         <Opened>
-          <img className="opened-by-logo" /> {openedBy}
+          <img src={openedByLogo} className="opened-by-logo" /> {openedBy}
         </Opened>
         <DetailList>
           <li>
@@ -80,6 +86,10 @@ function MatchCard(props: Props) {
         <MediumContents>
           <h5>{competitionName}</h5>
           <DetailList>
+            <li>
+              <dt>주최</dt>
+              <dd>{openedBy}</dd>
+            </li>
             <li>
               <dt>일시</dt>
               <dd>
@@ -173,14 +183,19 @@ const MatchBox = styled.div`
     }
 
     img {
+      padding: 2px;
       flex-shrink: 0;
       width: 48px;
       height: 48px;
       border-radius: 100%;
+      background-color: #fff;
+      border: 1px solid var(--neutral-n20);
     }
     .team-name {
       ${FONTS.MD1};
       color: #fff;
+      font-size: 1.4rem;
+      text-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
     }
   }
 `;
@@ -196,9 +211,11 @@ const Opened = styled.p`
   border-bottom: 1px solid var(--gray6);
 
   .opened-by-logo {
+    padding: 2px;
     width: 28px;
     height: 28px;
-    background-color: var(--gray5);
+    background-color: #fff;
+    border: 1px solid var(--neutral-n20);
     border-radius: 100%;
   }
 `;

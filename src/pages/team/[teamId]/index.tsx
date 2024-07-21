@@ -1,101 +1,89 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
-import useToast from "@/hook/useToast";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import { BasicWhiteCard, BasicWhiteCardTitle, CardAreaTitle } from "@/components/common/Card";
+import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer, WhiteSectionDivider, WhiteSectionWrapper } from "@/components/common/Container";
 import ScheduleSection from "@/components/Team/ScheduleSection";
-import Button from "@/components/common/Button";
 import MoreButton from "@/components/common/MoreButton";
 import Notice from "@/components/Team/Notice";
+import ProfileImage from "@/components/Team/ProfileImage";
+import TeamWeekly from "@/components/Team/TeamWeekly";
+import Heart from "@/components/common/Heart";
+import ComingUpMatch from "@/components/Team/ComingUpMatch";
+
+import SettingsIcon from "@/assets/icon/global/Settings.svg";
 
 function TeamHome() {
-  usePageTitle("", "", true);
-  const PLAYING = true;
-  const { trigger } = useToast();
   const router = useRouter();
+  const [heart, setHeart] = useState(false);
   const teamId = router.query.teamId;
 
+  usePageTitle({
+    transparent: true,
+    subIcons: [
+      {
+        svgIcon: <SettingsIcon />,
+        linkTo: `/team/${teamId}/admin`,
+      },
+    ],
+  });
+
+  const PLAYING = true;
   const COVER_IMAGE = "https://images.unsplash.com/photo-1434648957308-5e6a859697e8?q=80&w=1000";
-  const requestTeamJoin = () => {};
-  const addFavoriteTeam = () => {
-    trigger("관심 팀에 추가했어요.");
-  };
-  const moveAdminPage = () => {};
 
   return (
     <>
       <CoverImage src={COVER_IMAGE} />
       <Description>최강 배구팀입니다. 0년 연속 전국 대회 수상한 팀입니다.</Description>
-      <Top>
-        <TeamInfo>
-          <ProfileImgContainer>
-            {PLAYING && <Playing />}
-            <ProfileImg playing={PLAYING}>
-              <img
-                className="image"
-                src="https://www.yonexmall.com/shop/data/skin_mobileV2/godobaby_C/mobileShopLogo.gif"
-                alt="팀 프로필 이미지"
-              />
-            </ProfileImg>
-          </ProfileImgContainer>
-          <Right>
-            <h2>팀 이름</h2>
-            <p>창단 2024.04.20 | 현 14명</p>
-            <p className="team-category">
-              <span>배구</span>
-              <span>성균관대</span>
-            </p>
-          </Right>
-        </TeamInfo>
-        <TeamButtons>
-          <Button type="button" mode="MAIN" flex={2} autoHeight onClick={requestTeamJoin}>
-            가입 요청
-          </Button>
-          <Button type="button" mode="OPTION1" flex={2} autoHeight onClick={addFavoriteTeam}>
-            관심 팀 추가
-          </Button>
-          <Button type="button" mode="OPTION2" flex={1} autoHeight onClick={moveAdminPage}>
-            관리
-          </Button>
-        </TeamButtons>
-      </Top>
-      <MainContainer>
+      <LightWrapper>
+        <Top>
+          <TeamInfo>
+            <ProfileImage
+              isPlaying={PLAYING}
+              imgSrc="https://previews.123rf.com/images/3t0n4k/3t0n4k1605/3t0n4k160500031/57480606-%EB%86%8D%EA%B5%AC-%ED%8C%80-%EB%98%90%EB%8A%94-%EB%A6%AC%EA%B7%B8-%EB%A1%9C%EA%B3%A0.jpg"
+            />
+            <Right>
+              <h2>
+                팀 이름
+                <Heart onHeart={setHeart} isHeart={heart} />
+              </h2>
+              <p className="team-detail-info">창단 2024.04.20 | 현 14명</p>
+              <p className="team-category">
+                <span>배구</span>
+                <span>성균관대</span>
+              </p>
+            </Right>
+          </TeamInfo>
+        </Top>
         <Notice
           list={[
-            { title: "진짜 리얼로 공지사항입니다.", articleId: "5", createAt: "2024-06-30T00:04" },
-            { title: "공지사항입니다.", articleId: "1", createAt: "2024-06-29T12:33" },
-            { title: "새로운 공지사항입니다.", articleId: "32", createAt: "2024-06-29T21:57" },
-            { title: "진짜진짜 공지사항입니다.", articleId: "4", createAt: "2024-06-29T23:57" },
+            { title: "8월 1주차 교류전 참가 여부 투표", articleId: "5", createAt: "2024-07-21T13:00" },
+            { title: "2024년 하계 단결 MT - 투표 진행중", articleId: "1", createAt: "2024-07-20T23:58" },
+            { title: "2024년 6월 회비 결산", articleId: "32", createAt: "2024-07-19T22:57" },
           ]}
         />
-
+      </LightWrapper>
+      <MainContainer>
         <Cards>
+          <TeamWeekly />
+          <ComingUpMatch />
+          <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
+            <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
+          </Card>
           <Card onClick={() => router.push(`/team/${teamId}/board`)}>
             <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
-          </Card>
-          <Card onClick={() => router.push(`/team/${teamId}/schedule`)}>
-            <BasicWhiteCardTitle>일정</BasicWhiteCardTitle>
-            <ScheduleSection />
           </Card>
           <Card onClick={() => router.push(`/team/${teamId}/statistics`)}>
             <BasicWhiteCardTitle>통계</BasicWhiteCardTitle>
             <ScheduleSection />
           </Card>
-          <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
-            <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
-          </Card>
-          <Card>
-            <BasicWhiteCardTitle>수상 이력</BasicWhiteCardTitle>
-          </Card>
         </Cards>
         <WhiteSectionDivider />
         <PlayerListWrapper>
-          <CardAreaTitle>팀원</CardAreaTitle>
+          <BasicWhiteCardTitle>팀원</BasicWhiteCardTitle>
           <MoreButton text="전체 팀원 보기" href={`/team/${teamId}/players`} />
         </PlayerListWrapper>
       </MainContainer>
@@ -103,31 +91,31 @@ function TeamHome() {
   );
 }
 
-const rotateCircle = keyframes`
-    from { transform: rotate(0deg) }
-    to { transform: rotate(360deg) }
-`;
-
 const CoverImage = styled.section<{ src: string }>`
   margin-top: calc(-1 * var(--safe-area-top));
   width: 100%;
   height: calc(245px + var(--env-sat));
-  background-color: rgb(var(--gray-h3));
+  background-color: var(--gray4);
   background-image: url(${({ src }) => src});
   background-size: cover;
   background-repeat: no-repeat;
 `;
 const Description = styled.p`
   ${FONTS.MD2};
+  color: var(--gray2);
   text-align: center;
   padding: 12px;
-  border-bottom: 1px solid rgb(var(--gray-h5));
+  border-bottom: 1px solid var(--gray6);
   text-wrap: pretty;
+  background-color: var(--background-light);
+`;
+const LightWrapper = styled.section`
+  background-color: var(--background-light);
 `;
 const Top = styled.section`
-  margin-bottom: 16px;
   padding: 24px 20px;
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
+  background-color: var(--background-light);
 `;
 const MainContainer = styled(BaseContainer)`
   padding: 0px 16px 20px;
@@ -135,108 +123,46 @@ const MainContainer = styled(BaseContainer)`
 const TeamInfo = styled.article`
   display: flex;
   gap: 20px;
-  h2 {
-    ${FONTS.HEAD1}
-  }
-`;
-const TeamButtons = styled.article`
-  display: flex;
-  margin-top: 12px;
-  gap: 8px;
-  justify-content: space-between;
-  button {
-    font-size: 1.4rem;
-  }
 `;
 
-const ProfileImgContainer = styled.div`
-  position: relative;
-  width: 80px;
-  height: 80px;
-`;
-const ProfileImg = styled.div<{ playing: boolean }>`
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 80px;
-  height: 80px;
-  border-radius: 100%;
-  overflow: hidden;
-
-  .image {
-    margin: ${({ playing }) => (playing ? "3px" : "0")};
-    border: 5px solid ${({ theme }) => theme.background};
-    border: ${({ playing }) => (playing ? "" : "none")};
-    width: calc(100% - 6px);
-    height: calc(100% - 6px);
-    z-index: 1;
-    border-radius: 100%;
-    object-fit: cover;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    display: ${({ playing }) => (playing ? "block" : "none")};
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: ${({ theme }) => theme.main};
-    background: linear-gradient(${({ theme }) => theme.main2} 0%, #10bfff 45%, #90d621 95%);
-    animation: ${rotateCircle} 2s linear infinite;
-  }
-`;
-const Playing = styled.p`
-  position: absolute;
-  padding: 4px 10px;
-  border-radius: 12px;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: ${({ theme }) => theme.main2};
-  border-top: 3px solid ${({ theme }) => theme.background};
-  border-left: 3px solid ${({ theme }) => theme.background};
-  border-right: 3px solid ${({ theme }) => theme.background};
-  color: #fff;
-  font-weight: 600;
-  font-size: 1.2rem;
-  z-index: 2;
-  word-break: keep-all;
-  &::before {
-    content: "경기중";
-  }
-`;
 const Right = styled.div`
   display: flex;
+  width: 100%;
   margin-top: 4px;
   flex-direction: column;
   gap: 8px;
-  p {
-    ${FONTS.MD2};
+  h2 {
+    ${FONTS.HEAD1};
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .team-detail-info {
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--gray4);
   }
   .team-category {
+    margin-top: 8px;
     display: inline-flex;
-    gap: 4px;
-    line-height: 2rem;
+    gap: 6px;
     font-weight: 400;
-
     span {
       display: inline-block;
       font-size: 1.3rem;
       line-height: 1.6rem;
       padding: 2px 4px;
-      border: 1px solid rgb(var(--gray-h3));
-      color: var(--text);
-      border-radius: 6px;
+      border: 1px solid var(--gray5);
+      color: var(--gray2);
+      border-radius: 4px;
     }
   }
 `;
 const Cards = styled.section`
   display: flex;
-  padding: 0 0 24px;
+  padding: 4px 0 24px;
   flex-direction: column;
-  gap: 12px;
+  gap: 36px;
 `;
 
 const Card = styled(BasicWhiteCard.withComponent("button"))`
@@ -245,7 +171,8 @@ const Card = styled(BasicWhiteCard.withComponent("button"))`
   ${CARD_ACTIVE};
 `;
 const PlayerListWrapper = styled(WhiteSectionWrapper)`
-  padding: 20px 24px 0;
+  padding: 20px 24px 32px;
+  background-color: var(--background-light);
 `;
 
 export default TeamHome;

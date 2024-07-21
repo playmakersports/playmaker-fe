@@ -13,8 +13,7 @@ type Props = {
   }[];
 };
 
-function Notice(props: Props) {
-  const { list } = props;
+function Notice({ list }: Props) {
   const router = useRouter();
   const teamId = router.query.teamId;
 
@@ -39,6 +38,7 @@ function Notice(props: Props) {
             start: new Date(item.createAt),
             end: new Date(),
           });
+          const isWithin24H = !dateInterval.years && !dateInterval.months && !dateInterval.days;
 
           return (
             <Item
@@ -61,13 +61,18 @@ function Notice(props: Props) {
               }
             >
               <Wrapper>
-                <span className="title">{item.title}</span>
+                <p>
+                  <span className="category">공지</span>
+                  <span className="title">{item.title}</span>
+                </p>
                 <span className="create-at">
-                  {dateInterval.hours ?? 0 > 0
-                    ? `${dateInterval.hours}시간 전`
-                    : (dateInterval.hours ?? 0 === 0) && (dateInterval.minutes ?? 0 > 0)
-                    ? `${dateInterval.minutes}분 전`
-                    : "방금"}
+                  {isWithin24H
+                    ? dateInterval.hours ?? 0 > 0
+                      ? `${dateInterval.hours}시간 전`
+                      : (dateInterval.hours ?? 0 === 0) && (dateInterval.minutes ?? 0 > 0)
+                      ? `${dateInterval.minutes}분 전`
+                      : "방금"
+                    : item.createAt.split("T")[0]}
                 </span>
               </Wrapper>
             </Item>
@@ -82,6 +87,8 @@ const PADDING = 24;
 
 const Container = styled.div`
   margin: 0 -16px 20px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--gray6);
 `;
 const Display = styled.div`
   position: relative;
@@ -111,29 +118,49 @@ const Item = styled.div`
     transform: translate3d(0, 100%, 0);
   }
 
-  .create-at {
-    color: rgba(var(--gray-h2));
+  p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  .category {
+    display: inline-flex;
+    margin-right: 6px;
+    align-items: center;
     font-weight: 700;
+    gap: 6px;
+    &::after {
+      content: "";
+      width: 5px;
+      height: 5px;
+      background-color: var(--gray5);
+      border-radius: 100%;
+    }
+  }
+  .title {
+    font-weight: 400;
+  }
+  .create-at {
+    flex-shrink: 0;
+    color: var(--gray5);
     font-size: 1.4rem;
+    text-align: right;
   }
 `;
 
 const Wrapper = styled.div`
   display: inline-flex;
+  gap: 2px;
   padding: 0 2px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
-  color: var(--text);
   font-size: 1.6rem;
-  font-weight: 500;
   line-height: 2rem;
-
   user-select: none;
   border-radius: 2px;
 
-  ${TEXT_ACTIVE("rgba(var(--gray-h5), 0.6)")};
+  ${TEXT_ACTIVE("var(--background)")};
 `;
 
 export default Notice;

@@ -2,17 +2,18 @@ import React, { useCallback, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import useYoutube from "@/hook/useYoutube";
 import dynamic from "next/dynamic";
-
-import { VIDEO_COMMENTS, VIDEO_DATA } from "@/constants/mock/VIDEO";
-import { FONTS, SCROLL_HIDE, TEXT_ACTIVE } from "@/styles/common";
-import { BaseContainer } from "@/components/common/Container";
-import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
-import { secondToMinSec } from "@/util/common";
-import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
-import VideoInfo from "@/components/Team/Video/VideoInfo";
+import useYoutube from "@/hook/useYoutube";
 import { usePageTitle } from "@/hook/usePageTitle";
+
+import { secondToMinSec } from "@/util/common";
+import { FONTS, SCROLL_HIDE, TEXT_ACTIVE } from "@/styles/common";
+import { VIDEO_COMMENTS, VIDEO_DATA } from "@/constants/mock/VIDEO";
+import { BaseContainer } from "@/components/common/Container";
+import VideoInfo from "@/components/Team/Video/VideoInfo";
+import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
+
+import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
 
 function VideoArticle() {
   const router = useRouter();
@@ -29,7 +30,7 @@ function VideoArticle() {
     height: Math.floor(window.innerWidth * (9 / 16)),
   };
   const { playerConnect, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
-  usePageTitle(VIDEO_DATA.title, secondToMinSec(currentTime));
+  usePageTitle({ title: VIDEO_DATA.title, subTitle: secondToMinSec(currentTime) });
 
   const matchId = router.query.matchId;
 
@@ -124,6 +125,7 @@ function VideoArticle() {
 }
 
 const Container = styled(BaseContainer)<{ videoHeight: number }>`
+  padding: 0 16px 20px;
   margin-top: ${({ videoHeight }) => videoHeight}px;
   margin-bottom: calc(56px + env(safe-area-inset-bottom) * 1.2);
 `;
@@ -138,13 +140,15 @@ const Video = styled.section`
 
 const PlayerTop = styled.div`
   display: flex;
+  padding-top: 12px;
   margin-left: -16px;
   margin-right: -16px;
   flex-direction: column;
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   gap: 16px;
-  background: linear-gradient(0deg, ${({ theme }) => theme.card} 50%, rgba(0, 0, 0, 0) 100%);
+  background: var(--background-light);
+  box-shadow: var(--shadow-alpha20);
 `;
 
 const Comments = styled.ul`
@@ -162,7 +166,7 @@ const Bottom = styled.div`
   width: 100%;
   margin: 0 -16px;
   padding: 0 0 calc(20px + env(safe-area-inset-bottom) / 2);
-  background: rgb(var(--background-rgb));
+  background: var(--gray6);
   z-index: 10;
 `;
 
@@ -175,7 +179,6 @@ const CommentBox = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  border-top: 1px solid rgb(var(--gray-h4));
 
   .target-time {
     width: 52px;
@@ -185,14 +188,14 @@ const CommentBox = styled.div`
     color: rgba(var(--gray-h1));
     text-align: center;
     border-radius: 8px;
-    ${TEXT_ACTIVE("rgb(var(--gray-h5))")}
+    ${TEXT_ACTIVE("var(--gray5)")}
   }
   .target-comment {
     width: calc(100% - 28px);
     font-size: 1.6rem;
     color: rgba(var(--gray--h2));
     border-radius: 2px;
-    ${TEXT_ACTIVE("rgb(var(--gray-h5))", { focus: true })};
+    ${TEXT_ACTIVE("var(--background-light)", { focus: true })};
   }
   .comment-submit {
     padding: 4px;
@@ -201,9 +204,9 @@ const CommentBox = styled.div`
     align-items: center;
     opacity: 0.8;
     border-radius: 100%;
-    ${TEXT_ACTIVE("rgb(var(--gray-h5))")}
+    ${TEXT_ACTIVE("var(--gray5)")}
     svg {
-      fill: var(--black);
+      fill: var(--gray1);
     }
   }
 `;

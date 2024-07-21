@@ -72,9 +72,9 @@ const Container = styled.div<{ showInfo: Props["showInfo"] }>`
   width: calc(100vw - 32px);
   height: max-content;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--background-light);
+  border: 1px solid var(--neutral-n40);
   z-index: 10;
-  box-shadow: 0 2px 12px 2px rgba(141, 141, 141, 0.2);
   animation: ${ShowProfile} 0.25s;
   transform-origin: ${({ showInfo }) => showInfo.x}px top;
 
@@ -83,8 +83,10 @@ const Container = styled.div<{ showInfo: Props["showInfo"] }>`
     left: ${({ showInfo }) => showInfo.x}px;
     width: 16px;
     height: 16px;
-    background-color: #fff;
-    transform: rotate(45deg) translateX(-50%);
+    background-color: var(--background-light);
+    border-top: 1px solid var(--neutral-n40);
+    border-left: 1px solid var(--neutral-n40);
+    transform: rotate(45deg) translateX(-76%);
     box-shadow: -8px -8px 12px 2px rgba(141, 141, 141, 0.1);
   }
 `;
@@ -98,16 +100,20 @@ const Wrapper = styled.div`
     flex-shrink: 0;
     width: calc(100px - 32px);
     height: calc(100px - 32px);
-    background-color: rgba(var(--gray-h4), 0.4);
+    border: 1px solid var(--gray6);
     border-radius: 100%;
   }
   .profile-info {
     padding: 1px 0;
     width: 100%;
     ${FONTS.MD1W500};
-    .profile-name {
+    p.profile-name {
       font-weight: 600;
       font-size: 1.8rem;
+    }
+    p {
+      font-weight: 400;
+      font-size: 1.6rem;
     }
   }
 

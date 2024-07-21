@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 
 import { minSecToSecond } from "@/util/common";
 import { FONTS } from "@/styles/common";
+import { BasicWhiteCard } from "@/components/common/Card";
 
 type Props = {
   commentValue: any;
@@ -29,7 +30,7 @@ function VideoCommentItem(props: Props) {
   const isActiveComment = thisTime <= playerCurrentTime && nextTime > playerCurrentTime;
 
   return (
-    <Container className={isActiveComment ? "now-active" : ""}>
+    <Container>
       <Time onClick={onClickSeekTo}>
         <div className={isActiveComment ? "now-active" : ""}>{commentValue.time}</div>
       </Time>
@@ -51,19 +52,15 @@ function VideoCommentItem(props: Props) {
 const Container = styled.li`
   position: relative;
   margin: 0 -16px;
-  padding: 8px 16px;
+  padding: 8px 16px 16px;
   display: flex;
   align-items: flex-start;
-  gap: 6px;
-
-  &.now-active {
-    background-color: rgba(var(--main-rgb), 0.1);
-  }
+  gap: 10px;
 
   &::before {
     content: "";
     position: absolute;
-    border-left: 1px dashed rgba(var(--gray-h3), 0.6);
+    border-left: 1px dashed var(--gray5);
     width: 1px;
     height: calc(100% - 2px);
     left: calc(27px + 16px);
@@ -93,8 +90,7 @@ const Time = styled.div`
     letter-spacing: -0.05rem;
     font-weight: 800;
     border-radius: 24px;
-    background-color: var(--white);
-    border: 1px solid rgba(var(--gray-h5));
+    background-color: var(--background-light);
     user-select: none;
     word-break: keep-all;
     transition: transform 0.2s;
@@ -109,14 +105,15 @@ const Time = styled.div`
   }
 `;
 
-const Contents = styled.div`
+const Contents = styled(BasicWhiteCard)`
   flex: 1;
   gap: 8px;
-  padding: 8px 12px;
+  padding: 12px 16px;
   border-radius: 12px;
   transition: all 0.2s;
   ${FONTS.MD1W500};
   line-height: 2.4rem;
+
   &::after {
     content: attr(data-info);
     display: block;

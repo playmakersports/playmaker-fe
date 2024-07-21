@@ -16,10 +16,8 @@ import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
 type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
   const isWhiteBg = useAtomValue(atomBgWhite);
-
-  const ICON_SIZE = 22;
   const router = useRouter();
-  const { getTitle, getSubTitle, getTransparent } = usePageTitle();
+  const { getTitle, getSubTitle, getTransparent, getSubIcons } = usePageTitle();
 
   if (router.asPath === "/") {
     return (
@@ -29,11 +27,11 @@ function Header({ scrollActive }: Props) {
           <Menu>
             <Icon onClick={() => router.push("/notification")}>
               <Count>3</Count>
-              <NoticeBellIcon width={ICON_SIZE} height={ICON_SIZE} />
+              <NoticeBellIcon />
             </Icon>
             <Link href="/user/login">
               <Icon>
-                <PersonIcon width={ICON_SIZE} height={ICON_SIZE} />
+                <PersonIcon />
               </Icon>
             </Link>
           </Menu>
@@ -50,15 +48,22 @@ function Header({ scrollActive }: Props) {
     >
       <Inner>
         <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
-          <HeaderLeftArrow width={ICON_SIZE} height={ICON_SIZE} />
+          <HeaderLeftArrow />
         </Icon>
         <PageTitle>
           {getSubTitle && <p>{getSubTitle}</p>}
           {getTitle}
         </PageTitle>
-        <Icon type="button" onClick={() => router.push("/")}>
-          <HomeIcon width={ICON_SIZE} height={ICON_SIZE} />
-        </Icon>
+        <RightIcons>
+          <Icon type="button" onClick={() => router.push("/")}>
+            <HomeIcon />
+          </Icon>
+          {getSubIcons.map((icon, index) => (
+            <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
+              {icon.svgIcon}
+            </Icon>
+          ))}
+        </RightIcons>
       </Inner>
     </Wrapper>
   );
@@ -73,6 +78,11 @@ const Icon = styled.button`
   height: 28px;
   border-radius: var(--radius-10);
   ${TEXT_ACTIVE("var(--gray6)")};
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
 `;
 
 const Wrapper = styled.header<{ scrolled: boolean }>`
@@ -153,7 +163,11 @@ const PageTitle = styled.div`
     font-variant-numeric: tabular-nums;
   }
 `;
-
+const RightIcons = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
 const Count = styled.div`
   position: absolute;
   padding: 2px 4px;

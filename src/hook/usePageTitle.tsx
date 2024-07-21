@@ -1,19 +1,33 @@
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 
-import { atomPageTitle, atomPageSubTitle, atomHeaderTransparent } from "@/atom/common";
+import { atomPageTitle, atomPageSubTitle, atomHeaderTransparent, atomIcons } from "@/atom/common";
 
-export const usePageTitle = (title?: string, subTitle?: string, transparent?: boolean) => {
+type HookProps = {
+  title?: string;
+  subTitle?: string;
+  transparent?: boolean;
+  subIcons?: Array<{
+    svgIcon: ReactNode;
+    linkTo: string;
+  }>;
+};
+
+export const usePageTitle = (props: HookProps = {}) => {
+  const { title, subTitle, transparent, subIcons } = props;
   const [getTitle, setTitle] = useAtom(atomPageTitle);
   const [getSubTitle, setSubTitle] = useAtom(atomPageSubTitle);
   const [getTransparent, setTransparent] = useAtom(atomHeaderTransparent);
+  const [getSubIcons, setSubIcons] = useAtom(atomIcons);
 
   useEffect(() => {
     transparent && setTransparent(true);
     title && setTitle(title);
+    subIcons && setSubIcons(subIcons);
     return () => {
       setTitle("");
       setTransparent(false);
+      setSubIcons([]);
     };
   }, [title]);
 
@@ -24,5 +38,5 @@ export const usePageTitle = (title?: string, subTitle?: string, transparent?: bo
     };
   }, [subTitle]);
 
-  return { getTitle, getSubTitle, getTransparent };
+  return { getTitle, getSubTitle, getTransparent, getSubIcons };
 };

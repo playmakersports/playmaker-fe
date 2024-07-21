@@ -14,5 +14,4 @@ export const WhiteSectionWrapper = styled.article`
   margin-left: -16px;
   margin-right: -16px;
   padding: 20px 24px;
-  background-color: var(--white);
 `;

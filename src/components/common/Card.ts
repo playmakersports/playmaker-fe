@@ -10,11 +10,6 @@ export const BasicWhiteCard = styled.div`
   box-shadow: var(--shadow-alpha20);
 `;
 
-export const CardAreaTitle = styled.div`
-  ${FONTS.MD1};
-  font-weight: 700;
-`;
-
 export const BasicWhiteSection = styled.div`
   padding: 16px;
   background-color: ${({ theme }) => theme.card};

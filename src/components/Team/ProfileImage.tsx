@@ -56,6 +56,7 @@ const ProfileImg = styled.img<{ playing: boolean }>`
   z-index: 1;
   border-radius: 100%;
   object-fit: cover;
+  background-color: #fff;
 `;
 const Playing = styled.p`
   position: absolute;

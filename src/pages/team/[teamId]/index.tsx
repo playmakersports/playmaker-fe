@@ -15,6 +15,7 @@ import Heart from "@/components/common/Heart";
 import ComingUpMatch from "@/components/Team/ComingUpMatch";
 
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
+import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 
 function TeamHome() {
   const router = useRouter();
@@ -32,28 +33,26 @@ function TeamHome() {
   });
 
   const PLAYING = true;
-  const COVER_IMAGE = "https://images.unsplash.com/photo-1434648957308-5e6a859697e8?q=80&w=1000";
 
   return (
     <>
-      <CoverImage src={COVER_IMAGE} />
-      <Description>최강 배구팀입니다. 0년 연속 전국 대회 수상한 팀입니다.</Description>
+      <CoverImage src={TEAM_INFO_MOCK.cover} />
+      <Description>{TEAM_INFO_MOCK.introduce}</Description>
       <LightWrapper>
         <Top>
           <TeamInfo>
-            <ProfileImage
-              isPlaying={PLAYING}
-              imgSrc="https://previews.123rf.com/images/3t0n4k/3t0n4k1605/3t0n4k160500031/57480606-%EB%86%8D%EA%B5%AC-%ED%8C%80-%EB%98%90%EB%8A%94-%EB%A6%AC%EA%B7%B8-%EB%A1%9C%EA%B3%A0.jpg"
-            />
+            <ProfileImage isPlaying={PLAYING} imgSrc={TEAM_INFO_MOCK.logo} />
             <Right>
               <h2>
-                팀 이름
+                {TEAM_INFO_MOCK.teamName}
                 <Heart onHeart={setHeart} isHeart={heart} />
               </h2>
-              <p className="team-detail-info">창단 2024.04.20 | 현 14명</p>
+              <p className="team-detail-info">
+                창단 {TEAM_INFO_MOCK.foundedAt} | 현 {TEAM_INFO_MOCK.memberCount}명
+              </p>
               <p className="team-category">
-                <span>배구</span>
-                <span>성균관대</span>
+                <span>{TEAM_INFO_MOCK.sports}</span>
+                <span>{TEAM_INFO_MOCK.univName}</span>
               </p>
             </Right>
           </TeamInfo>
@@ -94,7 +93,7 @@ function TeamHome() {
 const CoverImage = styled.section<{ src: string }>`
   margin-top: calc(-1 * var(--safe-area-top));
   width: 100%;
-  height: calc(245px + var(--env-sat));
+  height: calc(232px + var(--env-sat));
   background-color: var(--gray4);
   background-image: url(${({ src }) => src});
   background-size: cover;

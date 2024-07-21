@@ -15,9 +15,9 @@ function ComingUpMatch() {
       <Cards>
         <MatchCard
           size="MEDIUM"
-          posterImg=""
+          posterImg="/images/mock/2024hongik-jump-competition.jpeg"
           competitionId=""
-          competitionName="리그 챔피언 배구"
+          competitionName="전국대학동아리 농구대회"
           matchDate="2024-07-31"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
@@ -27,7 +27,7 @@ function ComingUpMatch() {
         />
         <MatchCard
           size="MEDIUM"
-          posterImg=""
+          posterImg="/images/mock/seoul-tech-univ-poster.png"
           competitionId=""
           competitionName="리그 챔피언 배구"
           matchDate="2024-07-31"

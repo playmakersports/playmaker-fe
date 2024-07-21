@@ -5,7 +5,7 @@ import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
-import { BaseContainer } from "@/components/common/Container";
+import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import { BasicWhiteCardTitle } from "@/components/common/Card";
 import Loading from "@/components/common/Loading";
 import useBgWhite from "@/hook/useBgWhite";
@@ -152,6 +152,7 @@ function Schedule() {
           ))}
         </Days>
       </CalendarContainer>
+      <WhiteSectionDivider />
       <ScheduleContainer>
         <ScheduleAreaTitle>
           {getMonth(currentDate) + 1}월 {getDate(currentDate)}일 {dayList[getDay(currentDate)]}요일{" "}
@@ -219,12 +220,14 @@ const Container = styled(BaseContainer)`
   display: flex;
   padding-bottom: 32px;
   flex-direction: column;
-  gap: 32px;
 `;
-const CalendarContainer = styled.article``;
+const CalendarContainer = styled.article`
+  padding-bottom: 20px;
+`;
 const ScheduleContainer = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
+  margin: 0 -16px -24px;
+  padding: 4px 20px var(--env-sab);
+  background-color: var(--background);
 `;
 const Header = styled.div`
   display: flex;
@@ -283,12 +286,12 @@ const MonthDirection = styled.div`
   position: absolute;
   top: calc(50% - 32px);
   text-align: center;
-  line-height: 6.4rem;
-  width: 64px;
-  height: 64px;
-  background-color: rgba(var(--gray-h3), 0.9);
+  line-height: 7.2rem;
+  width: 72px;
+  height: 72px;
+  background-color: var(--main);
   border-radius: 100%;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: #fff;
   opacity: 0;
@@ -318,6 +321,7 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   flex: 1;
   padding: 16px 0 20px;
   text-align: center;
+  border: 1px solid transparent;
   color: ${({ isHoliday }) => (isHoliday ? "var(--point)" : "var(--text)")};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
   ${BUTTON_ACTIVE()};
@@ -334,10 +338,11 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
     margin: 4px auto 0;
     width: 6px;
     height: 6px;
-    background-color: ${({ theme }) => theme.main};
+    background-color: var(--main);
     border-radius: 100%;
   }
   &.current-date {
+    border: 1px solid var(--gray6);
     box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
     transform: scale(1.03);
   }
@@ -352,7 +357,7 @@ const ScheduleAreaTitle = styled(BasicWhiteCardTitle)`
   gap: 12px;
   font-size: 1.8rem;
   .holiday-name {
-    color: var(--sub1);
+    color: var(--point);
     ${FONTS.MD2}
   }
 `;
@@ -388,7 +393,7 @@ const ScheduleList = styled.ul`
   li > button {
     padding: 12px;
     width: 100%;
-    ${INNER_BUTTON_ACTIVE()};
+    ${INNER_BUTTON_ACTIVE("var(--background-light)")};
     .inner-button {
       display: flex;
       flex-direction: column;

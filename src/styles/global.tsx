@@ -8,7 +8,7 @@ const baseTheme = (white?: boolean) => css`
     background: ${white ? "var(--background-light)" : "var(--background)"};
   }
   body {
-    color: var(--text);
+    color: var(--gray1);
     background: ${white ? "var(--background-light)" : "var(--background)"};
   }
 `;

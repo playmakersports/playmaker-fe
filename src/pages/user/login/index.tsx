@@ -9,7 +9,7 @@ import { VERCEL_BASE_URL } from "@/constants/baseUrl";
 import { BaseContainer } from "@/components/common/Container";
 
 function Login() {
-  usePageTitle("로그인");
+  usePageTitle({ title: "로그인" });
   const router = useRouter();
 
   const handleKakaoLogin = () => {

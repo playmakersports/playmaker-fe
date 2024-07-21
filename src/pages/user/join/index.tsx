@@ -9,7 +9,7 @@ import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
 
 function Join() {
-  usePageTitle("회원가입");
+  usePageTitle({ title: "회원가입" });
   const [termYn, setTermYn] = useState(false);
 
   return (

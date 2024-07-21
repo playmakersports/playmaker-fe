@@ -8,7 +8,7 @@ import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
 
 function Notification() {
-  usePageTitle("알림");
+  usePageTitle({ title: "알림" });
 
   return (
     <Container>

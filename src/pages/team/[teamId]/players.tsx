@@ -5,7 +5,7 @@ import PlayerSelector from "@/components/Team/PlayerSelector";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 function PlayerList() {
-  usePageTitle("팀원 목록");
+  usePageTitle({ title: "팀원 목록" });
   return (
     <Container>
       <PlayerSelector />

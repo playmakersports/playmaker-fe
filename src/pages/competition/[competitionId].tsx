@@ -9,7 +9,7 @@ import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 function CompetitionArticle() {
-  usePageTitle("대회 정보");
+  usePageTitle({ title: "대회 정보" });
   const competitionHeaderRef = useRef<HTMLDivElement>(null);
   useStickyMoment(competitionHeaderRef);
   const router = useRouter();

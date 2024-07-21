@@ -14,7 +14,7 @@ import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
 import Button from "@/components/common/Button";
 
 function Recruit() {
-  usePageTitle("모집 중인 팀");
+  usePageTitle({ title: "모집 중인 팀" });
   const sportsTabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(sportsTabRef);
   const router = useRouter();

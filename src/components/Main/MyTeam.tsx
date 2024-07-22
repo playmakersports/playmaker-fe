@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import { MY_TEAM_MOCK } from "@/constants/mock/HOME";
-import { SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import { BasicWhiteCard } from "../common/Card";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
@@ -50,6 +50,8 @@ const TeamItem = styled.li`
   align-items: center;
   gap: 10px;
   color: var(--gray1);
+  border-radius: 2px;
+  ${TEXT_ACTIVE("var(--gray6)", { scalable: true })}
 
   p {
     font-size: 1.4rem;
@@ -57,13 +59,16 @@ const TeamItem = styled.li`
   }
 `;
 
-const TeamImage = styled.img`
+const TeamImage = styled.div<{ src: string }>`
   display: block;
   margin: 0 8px;
-  padding: 2px;
   width: 50px;
   height: 50px;
   background-color: #fff;
+  background-image: url(${({ src }) => src});
+  background-size: 50px;
+  background-repeat: no-repeat;
+  background-position: center;
   border: 1px solid var(--gray6);
   border-radius: 100%;
 `;

@@ -108,7 +108,12 @@ function MatchCard(props: Props) {
   return null;
 }
 
-const LargeCardContainer = styled(BasicWhiteCard)``;
+const LargeCardContainer = styled(BasicWhiteCard)`
+  transition: transform 0.25s;
+  &:active {
+    transform: scale(0.97);
+  }
+`;
 const MediumCardContainer = styled(BasicWhiteCard)`
   display: flex;
   padding: 0;
@@ -135,6 +140,11 @@ const MediumCardContainer = styled(BasicWhiteCard)`
       text-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
       box-sizing: border-box;
     }
+  }
+
+  transition: transform 0.25s;
+  &:active {
+    transform: scale(0.97);
   }
 `;
 const MatchBox = styled.div`

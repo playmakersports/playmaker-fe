@@ -12,6 +12,7 @@ import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
 import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { WhiteSectionDivider } from "../common/Container";
+import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 
 function SportsSection() {
   const router = useRouter();
@@ -42,41 +43,24 @@ function SportsSection() {
         </Container>
 
         <GroupTitle link="">경기 일정</GroupTitle>
-        <MatchCard
-          size="LARGE"
-          posterImg="/images/mock/2024hongik-jump-competition.jpeg"
-          competitionId="19"
-          competitionName="홍익대학교 JUMP배 농구대회"
-          matchDate="2024-07-28"
-          matchTime="15:30"
-          matchLocation="00대학교 실내체육관"
-          openedBy="홍익대학교"
-          openedByLogo="/images/mock/hongik-univ-logo.png"
-          homeName="JUMP"
-          homeLogo="/images/mock/hongik-jump.png"
-          awayName="15ers"
-          awayLogo="/images/mock/15ers.png"
-        />
-        <MatchCard
-          size="MEDIUM"
-          posterImg="/images/mock/seoul-tech-univ-poster.png"
-          competitionId="25"
-          competitionName="제7회 전국대학농구동아리대회"
-          matchDate="2024-07-30"
-          matchTime="15:30"
-          matchLocation="00대학교 실내체육관"
-          openedBy="서울과학기술대학교"
-        />
-        <MatchCard
-          size="MEDIUM"
-          posterImg="/images/mock/2024hongik-jump-competition.jpeg"
-          competitionId="25"
-          competitionName="제7회 전국대학농구동아리대회"
-          matchDate="2024-07-30"
-          matchTime="15:30"
-          matchLocation="00대학교 실내체육관"
-          openedBy="서울과학기술대학교"
-        />
+        {COMPETITION_LIST_MOCK.map((competition, index) => (
+          <MatchCard
+            key={competition.competitionId}
+            size={index === 0 ? "LARGE" : "MEDIUM"}
+            posterImg={competition.posterImg}
+            competitionId={competition.competitionId}
+            competitionName={competition.competitionName}
+            matchDate={competition.matchDate}
+            matchTime={competition.matchTime}
+            matchLocation={competition.matchLocation}
+            openedBy={competition.openedBy}
+            openedByLogo={competition.openedByLogo}
+            homeName={competition.homeName}
+            homeLogo={competition.homeLogo}
+            awayName={competition.awayName}
+            awayLogo={competition.awayLogo}
+          />
+        ))}
       </Cards>
     </Wrapper>
   );

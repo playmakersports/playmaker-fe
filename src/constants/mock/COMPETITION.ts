@@ -1,0 +1,37 @@
+export const COMPETITION_LIST_MOCK = [
+  {
+    posterImg: "/images/mock/2024hongik-jump-competition.jpeg",
+    competitionId: "19",
+    competitionName: "홍익대학교 JUMP배 농구대회",
+    matchDate: "2024-07-28",
+    matchTime: "15:30",
+    matchLocation: "00대학교 실내체육관",
+    openedBy: "홍익대학교",
+    openedByLogo: "/images/mock/hongik-univ-logo.png",
+    homeName: "JUMP",
+    homeLogo: "/images/mock/hongik-jump.png",
+    awayName: "15ers",
+    awayLogo: "/images/mock/15ers.png",
+  },
+  {
+    posterImg: "/images/mock/seoul-tech-univ-poster.png",
+    competitionId: "25",
+    competitionName: "제7회 전국대학농구동아리대회",
+    matchDate: "2024-07-30",
+    matchTime: "15:30",
+    matchLocation: "00대학교 실내체육관",
+    openedBy: "서울과학기술대학교",
+    openedByLogo: "/images/mock/seoul-tech-univ-logo.gif",
+  },
+
+  {
+    posterImg: "/images/mock/2024hongik-jump-competition.jpeg",
+    competitionId: "25",
+    competitionName: "제7회 전국대학농구동아리대회",
+    matchDate: "2024-07-30",
+    matchTime: "15:30",
+    matchLocation: "00대학교 실내체육관",
+    openedBy: "서울과학기술대학교",
+    openedByLogo: "/images/mock/seoul-tech-univ-logo.gif",
+  },
+];

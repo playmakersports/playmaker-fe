@@ -19,6 +19,8 @@ function Header({ scrollActive }: Props) {
   const router = useRouter();
   const { getTitle, getSubTitle, getTransparent, getSubIcons } = usePageTitle();
 
+  const isTitleShow = getTransparent ? scrollActive > 160 : true;
+
   if (router.asPath === "/") {
     return (
       <Wrapper className="main-header" scrolled={scrollActive > 0}>
@@ -39,26 +41,49 @@ function Header({ scrollActive }: Props) {
       </Wrapper>
     );
   }
+  if (getTransparent) {
+    return (
+      <Wrapper
+        className={`page-header main-header transparent-header  ${isWhiteBg ? "white-bg-header" : ""}`}
+        scrolled={isTitleShow}
+      >
+        <Inner>
+          <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
+            <HeaderLeftArrow />
+          </Icon>
+          <PageTitle scrolled={isTitleShow}>
+            {getSubTitle && <p>{getSubTitle}</p>}
+            <h2 className="main-title">{getTitle}</h2>
+          </PageTitle>
+          <RightIcons>
+            <Icon type="button" onClick={() => router.push("/")}>
+              <HomeIcon />
+            </Icon>
+            {getSubIcons.map((icon) => (
+              <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
+                {icon.svgIcon}
+              </Icon>
+            ))}
+          </RightIcons>
+        </Inner>
+      </Wrapper>
+    );
+  }
   return (
-    <Wrapper
-      className={`page-header ${isWhiteBg ? "white-bg-header" : ""} ${
-        getTransparent ? "transparent-header main-header" : ""
-      }`}
-      scrolled={scrollActive > 130}
-    >
+    <Wrapper className={`page-header ${isWhiteBg ? "white-bg-header" : ""}`}>
       <Inner>
         <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow />
         </Icon>
-        <PageTitle>
+        <PageTitle scrolled>
           {getSubTitle && <p>{getSubTitle}</p>}
-          {getTitle}
+          <h2 className="main-title">{getTitle}</h2>
         </PageTitle>
         <RightIcons>
           <Icon type="button" onClick={() => router.push("/")}>
             <HomeIcon />
           </Icon>
-          {getSubIcons.map((icon, index) => (
+          {getSubIcons.map((icon) => (
             <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
               {icon.svgIcon}
             </Icon>
@@ -85,9 +110,11 @@ const Icon = styled.button`
   }
 `;
 
-const Wrapper = styled.header<{ scrolled: boolean }>`
+type StyledScrolled = { scrolled?: boolean };
+const Wrapper = styled.header<StyledScrolled>`
   position: fixed;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   top: 0;
@@ -116,11 +143,11 @@ const Wrapper = styled.header<{ scrolled: boolean }>`
     }
   }
   &.main-header {
-    background-color: ${({ scrolled }) => (scrolled ? `rgba(var(--background-rgb), 0.7)` : "none")};
+    background-color: ${({ scrolled }) => (scrolled ? `rgba(var(--background-rgb), 0.45)` : "none")};
     backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   }
   button > svg {
-    fill: ${({ theme }) => theme.gray1};
+    fill: var(--gray1);
   }
   .logo {
     width: 148px;
@@ -143,24 +170,41 @@ const Menu = styled.div`
   gap: 12px;
   font-weight: 400;
   font-size: 1.6rem;
-  color: ${({ theme }) => theme.gray1};
+  color: var(--gray1);
 `;
-const PageTitle = styled.div`
+
+const PageTitle = styled.div<StyledScrolled>`
+  visibility: ${({ scrolled }) => (scrolled ? "visible" : "hidden")};
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: inline-flex;
   flex-direction: column;
-  gap: 6px;
   align-items: center;
-  font-weight: 400;
-  font-size: 1.6rem;
+  gap: 6px;
   color: var(--text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   letter-spacing: -0.1px;
+  h2.main-title {
+    font-weight: 400;
+    font-size: 1.6rem;
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.25s;
+    transition-delay: 0.3s;
+    opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
+    transform: ${({ scrolled }) => (scrolled ? `translateY(0)` : `translateY(100%)`)};
+    will-change: transform;
+  }
   p {
     font-weight: 700;
     font-size: 1.4rem;
     font-variant-numeric: tabular-nums;
+    transition: transform 0.3s, opacity 0.3s;
+    transition-delay: 0.5s;
+    opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
+    transform: ${({ scrolled }) => (scrolled ? `translateY(0)` : `translateY(80%)`)};
+    will-change: transform;
   }
 `;
 const RightIcons = styled.div`

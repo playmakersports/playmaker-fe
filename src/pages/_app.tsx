@@ -7,15 +7,19 @@ import { ThemeProvider } from "@emotion/react";
 import { BASIC_THEME } from "@/styles/theme";
 import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
+import TokenRoute from "@/components/layouts/TokenRoute";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider>
       <EmotionProvider>
-        <GlobalComponents />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <GlobalComponents>
+          <Layout>
+            <TokenRoute>
+              <Component {...pageProps} />
+            </TokenRoute>
+          </Layout>
+        </GlobalComponents>
       </EmotionProvider>
     </Provider>
   );

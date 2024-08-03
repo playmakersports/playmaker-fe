@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
-import Header from "./partials/Header";
+import Header from "./Header";
 import { SCROLL_HIDE } from "@/styles/common";
 
 function Layout({ children }: { children: JSX.Element }) {

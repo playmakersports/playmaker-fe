@@ -26,7 +26,7 @@ export const COMPETITION_LIST_MOCK = [
 
   {
     posterImg: "/images/mock/2024hongik-jump-competition.jpeg",
-    competitionId: "25",
+    competitionId: "26",
     competitionName: "제7회 전국대학농구동아리대회",
     matchDate: "2024-07-30",
     matchTime: "15:30",

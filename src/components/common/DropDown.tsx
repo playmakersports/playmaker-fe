@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
-import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE, TEXT_ACTIVE } from "@/styles/common";
 import { InputStyledWrapper } from "./Wrapper";
 
 type Props = {
@@ -63,6 +62,7 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
   position: relative;
   border: ${({ isOpen }) => (isOpen ? `1px solid var(--main)` : "")};
   user-select: none;
+  background-color: var(--path-white);
 
   & div {
     cursor: pointer;
@@ -79,7 +79,7 @@ const Options = styled.ul<{ show: boolean }>`
   flex-direction: column;
   gap: 4px;
   top: 100%;
-  margin-top: 12px;
+  margin-top: 6px;
   padding: 8px;
   left: -2px;
   width: calc(100% + 4px);
@@ -89,7 +89,7 @@ const Options = styled.ul<{ show: boolean }>`
   box-shadow: var(--shadow-alpha20);
   transition: all 0.2s;
 
-  transform: translateY(${({ show }) => (show ? "0px" : "-30px")});
+  transform: translateY(${({ show }) => (show ? "0px" : "-20px")});
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
   opacity: ${({ show }) => (show ? 1 : 0)};
   z-index: 1;

@@ -23,6 +23,8 @@ function TeamHome() {
   const teamId = router.query.teamId;
 
   usePageTitle({
+    title: TEAM_INFO_MOCK.teamName,
+    subTitle: TEAM_INFO_MOCK.univName,
     transparent: true,
     subIcons: [
       {

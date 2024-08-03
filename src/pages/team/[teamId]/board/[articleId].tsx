@@ -28,7 +28,7 @@ function ArticleId() {
       <Contents
         dangerouslySetInnerHTML={{
           __html: MOCK.replace(
-            /<iframe[\s\S]*?<\/iframe>/gi,
+            /<(iframe|script)[\s\S]*?<\/\1>/gi,
             `<p class="wrong-iframe">[부적절한 코드가 감지되어 삭제되었습니다.]</p>`
           ),
         }}
@@ -163,6 +163,7 @@ const MOCK = ` <p>안녕하세요 손수철입니다.</p>
   </ul>
   <p>늦지 말고 모두 참석해주세요.</p>
   <p></p>
+  <script>document.query</script>
   <iframe>이상한 코드</iframe>
   <p>감사합니다.</p>
   <p>손수철 드림.</p>`;

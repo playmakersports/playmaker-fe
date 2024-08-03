@@ -16,6 +16,7 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
   & svg {
     width: 20px;
     height: 20px;
+    fill: var(--black);
   }
 
   background-color: transparent;

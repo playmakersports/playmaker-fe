@@ -61,6 +61,7 @@
   --gray4: #868686;
   --gray5: #9b9b9b;
   --gray6: #ededed;
+  --white: #fff;
 
   --main: #306def;
   --main-rgb: 0, 89, 255;
@@ -87,4 +88,5 @@
   --gray4: #767676;
   --gray5: #5e5e5e;
   --gray6: #3b3b3b;
+  --white: #000;
 }

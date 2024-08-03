@@ -95,14 +95,14 @@ const Container = styled.div<{ moveX: number }>`
 const Displayed = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 16px;
   padding: 12px 16px;
   width: 100%;
   .profile-image {
-    width: 44px;
-    height: 44px;
-    border: 1px solid rgba(var(--gray-h4));
-    border-radius: 100%;
+    width: 60px;
+    height: 60px;
+    border: 1px solid var(--neutral-n20);
+    border-radius: 50%;
   }
   .profile-info-right {
   }

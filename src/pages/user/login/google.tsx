@@ -10,19 +10,21 @@ function Google() {
   const router = useRouter();
   const [result, setResult] = useState("");
   const [apiState, setApiState] = useState("");
-  const GOOGLE_API_CODE = `${router.query.code}`;
-  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2`;
+  const GOOGLE_API_CODE = router.query.code;
+  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2?code=${GOOGLE_API_CODE}`;
 
   useEffect(() => {
     setApiState("LOADING");
     if (GOOGLE_API_CODE) {
       axios
-        .post(target, {
-          code: decodeURIComponent(GOOGLE_API_CODE),
-        })
+        .get(target)
         .then((res) => {
-          setApiState(res.status === 200 ? "SUCCESS" : "");
-          setResult(JSON.stringify(res));
+          if (res.status === 200) {
+            setApiState("SUCCESS");
+            setResult(JSON.stringify(res));
+            localStorage.setItem("Authorization", res.data.access_token);
+            localStorage.setItem("Refresh", res.data.refresh_token);
+          }
         })
         .catch((err) => {
           setApiState(`ERROR: ${err.code}`);

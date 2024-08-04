@@ -190,7 +190,7 @@ const PageTitle = styled.div<StyledScrolled>`
   h2.main-title {
     font-weight: 400;
     font-size: 1.6rem;
-    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.25s;
+    transition: transform 0.3s var(--animate-pop), opacity 0.25s;
     transition-delay: 0.3s;
     opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
     transform: ${({ scrolled }) => (scrolled ? `translateY(0)` : `translateY(100%)`)};

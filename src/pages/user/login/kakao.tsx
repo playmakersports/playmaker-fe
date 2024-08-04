@@ -19,8 +19,12 @@ function KakaoLogin() {
       axios
         .get(target)
         .then((res) => {
-          setApiState(res.status === 200 ? "SUCCESS" : "");
-          setResult(JSON.stringify(res));
+          if (res.status === 200) {
+            setApiState("SUCCESS");
+            setResult(JSON.stringify(res));
+            localStorage.setItem("Authorization", res.data.access_token);
+            localStorage.setItem("Refresh", res.data.refresh_token);
+          }
         })
         .catch((err) => {
           setApiState(`ERROR: ${err.code}`);

@@ -20,9 +20,11 @@ function Poll() {
       endTime: "00:00",
       pollTitle: "",
       pollOptions: [{ value: "" }, { value: "" }],
+      multiple: false,
+      anonymous: false,
     },
   });
-  const { register, watch, setValue, control } = form;
+  const { register, watch, control } = form;
   const { fields, append, remove } = useFieldArray({ control, name: "pollOptions" });
 
   const removeOption = (index: number) => {
@@ -61,18 +63,17 @@ function Poll() {
 
       <PollSetting>
         <SetItem>
-          <InputCheckbox control={control} id="pollDue" name="pollDue" /> <label htmlFor="pollDue">종료</label>
+          <InputCheckbox {...register("pollDue")} /> <label htmlFor="pollDue">종료</label>
           <DueInputs>
             <BasicInput type="text" disabled={!watch("pollDue")} medium name="endDate" />
             <BasicInput type="text" disabled={!watch("pollDue")} medium name="endTime" />
           </DueInputs>
         </SetItem>
         <SetItem>
-          <InputCheckbox control={control} id="multiple" name="multiple" /> <label htmlFor="multiple">복수선택</label>
+          <InputCheckbox {...register("multiple")} /> <label htmlFor="multiple">복수선택</label>
         </SetItem>
         <SetItem>
-          <InputCheckbox control={control} id="anonymous" name="anonymous" />{" "}
-          <label htmlFor="anonymous">익명투표</label>
+          <InputCheckbox {...register("anonymous")} /> <label htmlFor="anonymous">익명투표</label>
         </SetItem>
       </PollSetting>
     </Container>

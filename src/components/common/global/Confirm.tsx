@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
+import { keyframes } from "@emotion/react";
 
 type Props = {
   message: string;
@@ -24,6 +25,10 @@ function Confirm(props: Props) {
   );
 }
 
+const ShowContainer = keyframes`
+  from{transform: scale(0.9); opacity: 0.5;};
+  to{transform: scale(1); opacity: 1;};
+`;
 const Backdrop = styled.div`
   position: fixed;
   display: flex;
@@ -42,11 +47,12 @@ const Container = styled.section`
   background: var(--white);
   border-radius: 10px;
   overflow: hidden;
+  animation: ${ShowContainer} 0.3s var(--animate-pop);
 `;
 
 const Message = styled.p`
   ${FONTS.MD1};
-  padding: 32px 40px;
+  padding: 32px 16px;
   text-align: center;
   border-bottom: 1px solid var(--gray6);
 `;

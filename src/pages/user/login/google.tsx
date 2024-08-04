@@ -10,8 +10,8 @@ function Google() {
   const router = useRouter();
   const [result, setResult] = useState("");
   const [apiState, setApiState] = useState("");
-  const GOOGLE_API_CODE = encodeURIComponent(`${router.query.code}`);
-  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2?code=${GOOGLE_API_CODE}`;
+  const GOOGLE_API_CODE = router.query.code;
+  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2?code=${encodeURIComponent(`${GOOGLE_API_CODE}`)}`;
 
   useEffect(() => {
     setApiState("LOADING");

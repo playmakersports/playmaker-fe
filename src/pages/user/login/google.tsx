@@ -10,7 +10,7 @@ function Google() {
   const router = useRouter();
   const [result, setResult] = useState("");
   const [apiState, setApiState] = useState("");
-  const GOOGLE_API_CODE = router.query.code;
+  const GOOGLE_API_CODE = JSON.stringify(router.query.code);
   const target = `${BACK_END_REQUEST_URL}/api/login/goauth2`;
 
   useEffect(() => {
@@ -18,7 +18,7 @@ function Google() {
     if (GOOGLE_API_CODE) {
       axios
         .post(target, {
-          code: GOOGLE_API_CODE,
+          code: encodeURI(GOOGLE_API_CODE),
         })
         .then((res) => {
           setApiState(res.status === 200 ? "SUCCESS" : "");

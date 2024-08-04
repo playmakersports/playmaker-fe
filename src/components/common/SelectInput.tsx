@@ -1,30 +1,19 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Control, Controller } from "react-hook-form";
 
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
-type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> & {
-  control?: Control<any>;
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> & {
+  size?: "LARGE" | "MEDIUM";
 };
-export function InputCheckbox(props: Props) {
-  const { control } = props;
 
-  return (
-    <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
-      {control ? (
-        <Controller
-          control={control}
-          name={props.name as string}
-          render={({ field }) => <Check type="checkbox" id={props.id} {...field} />}
-        />
-      ) : (
-        <Check type="checkbox" {...props} />
-      )}
-      <CheckIcon />
-    </div>
-  );
-}
+export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", ...rest }, ref) => (
+  <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
+    <Check type="checkbox" ref={ref} {...rest} />
+    <CheckIcon />
+  </div>
+));
+InputCheckbox.displayName = "InputCheckBox";
 
 export function InputRadio() {
   return <input type="radio" />;

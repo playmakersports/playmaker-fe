@@ -8,12 +8,12 @@ import { SCROLL_HIDE } from "@/styles/common";
 function Layout({ children }: { children: JSX.Element }) {
   const container = useRef<HTMLDivElement>(null);
   const [scrollActive, setScrollActive] = useState(0);
-  const { asPath } = useRouter();
-  const isLoginIntro = asPath === "/user/login";
+  const router = useRouter();
+  const isLoginIntro = router.pathname === "/user/login" || router.pathname === "/user/login/intro";
 
   useEffect(() => {
     container.current?.scrollTo(0, 0);
-  }, [asPath]);
+  }, [router.asPath]);
 
   useEffect(() => {
     const handleScroll = () => {

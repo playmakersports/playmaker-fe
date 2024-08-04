@@ -8,7 +8,6 @@ import Loading from "@/components/common/Loading";
 
 function KakaoLogin() {
   const router = useRouter();
-  const [result, setResult] = useState("");
   const [apiState, setApiState] = useState("");
   const KAKAO_API_CODE = router.query.code;
   const target = `${BACK_END_REQUEST_URL}/api/login/koauth2?code=${KAKAO_API_CODE}`;
@@ -21,9 +20,9 @@ function KakaoLogin() {
         .then((res) => {
           if (res.status === 200) {
             setApiState("SUCCESS");
-            setResult(JSON.stringify(res));
             localStorage.setItem("Authorization", res.data.access_token);
             localStorage.setItem("Refresh", res.data.refresh_token);
+            router.push("/user/login/intro");
           }
         })
         .catch((err) => {
@@ -32,26 +31,7 @@ function KakaoLogin() {
     }
   }, [router.query]);
 
-  return (
-    <BaseContainer>
-      {apiState === "LOADING" && <Loading />}
-      {apiState.split(":")[0] === "ERROR" && <div style={{ fontWeight: 800, fontSize: "1.6rem" }}>{apiState}</div>}
-      {apiState === "SUCCESS" && (
-        <code
-          style={{
-            display: "block",
-            marginTop: "12px",
-            padding: "12px",
-            fontFamily: "monospace",
-            background: "#ececec",
-            wordBreak: "break-all",
-          }}
-        >
-          {result}
-        </code>
-      )}
-    </BaseContainer>
-  );
+  return <BaseContainer>{apiState === "LOADING" && <Loading />}</BaseContainer>;
 }
 
 export default KakaoLogin;

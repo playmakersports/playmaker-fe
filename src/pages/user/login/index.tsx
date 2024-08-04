@@ -1,16 +1,18 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-import { usePageTitle } from "@/hook/usePageTitle";
+import useBgWhite from "@/hook/useBgWhite";
 
 import Button from "@/components/common/Button";
 import { KAKAO_AUTH } from "@/apis/oauth";
 import { VERCEL_BASE_URL } from "@/constants/baseUrl";
 import { BaseContainer } from "@/components/common/Container";
 
-function Login() {
-  usePageTitle({ title: "로그인" });
+import LogoIconType from "@/assets/logo/LogoIconType.svg";
+import LogoTextType from "@/assets/logo/LogoTextType.svg";
 
+function Login() {
+  useBgWhite();
   const router = useRouter();
 
   const handleKakaoLogin = () => {
@@ -26,14 +28,18 @@ function Login() {
 
   return (
     <Container>
+      <LogoArea>
+        <LogoIconType className="logo-icon" />
+        <LogoTextType className="logo-text" />
+      </LogoArea>
       <LoginOptions>
-        <Button type="button" mode="SNS_LOGIN" onClick={handleKakaoLogin}>
-          카카오 로그인
+        <Button type="button" mode="OPTION1" borderType onClick={handleKakaoLogin}>
+          카카오로 계속하기
         </Button>
-        <Button type="button" mode="SNS_LOGIN" onClick={handleGoogleLogin}>
-          구글 로그인
+        <Button type="button" mode="OPTION1" borderType onClick={handleGoogleLogin}>
+          Google로 계속하기
         </Button>
-        <Button type="button" mode="OPTION2" onClick={() => router.push("/user/join")}>
+        <Button type="button" mode="MAIN" onClick={() => router.push("/user/join")}>
           이메일 로그인
         </Button>
       </LoginOptions>
@@ -43,14 +49,32 @@ function Login() {
 
 const Container = styled(BaseContainer)`
   display: flex;
-  height: 60vh;
-  justify-content: center;
+  height: calc(100vh - var(--safe-area-top) - 2px);
+  padding-bottom: calc(var(--env-sab) + 48px);
   flex-direction: column;
+  justify-content: space-between;
   gap: 16px;
 `;
 
+const LogoArea = styled.div`
+  display: flex;
+  margin: 60px 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  svg.logo-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+  }
+  svg.logo-text {
+    width: 190px;
+    height: 29px;
+  }
+`;
 const LoginOptions = styled.div`
   display: flex;
+  padding: 0 20px;
   flex-direction: column;
   gap: 8px;
 `;

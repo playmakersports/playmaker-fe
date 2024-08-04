@@ -9,6 +9,7 @@ function Layout({ children }: { children: JSX.Element }) {
   const container = useRef<HTMLDivElement>(null);
   const [scrollActive, setScrollActive] = useState(0);
   const { asPath } = useRouter();
+  const isLoginIntro = asPath === "/user/login";
 
   useEffect(() => {
     container.current?.scrollTo(0, 0);
@@ -29,7 +30,7 @@ function Layout({ children }: { children: JSX.Element }) {
 
   return (
     <Container>
-      <Header scrollActive={scrollActive} />
+      {!isLoginIntro && <Header scrollActive={scrollActive} />}
       <main id="main_Container" ref={container}>
         {children}
       </main>

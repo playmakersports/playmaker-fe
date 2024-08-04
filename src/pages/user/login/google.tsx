@@ -1,23 +1,25 @@
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
 import { BaseContainer } from "@/components/common/Container";
 import Loading from "@/components/common/Loading";
+import { useRouter } from "next/router";
 
-function KakaoLogin() {
+function Google() {
   const router = useRouter();
   const [result, setResult] = useState("");
   const [apiState, setApiState] = useState("");
-  const KAKAO_API_CODE = router.query.code;
-  const target = `${BACK_END_REQUEST_URL}/api/login/koauth2?code=${KAKAO_API_CODE}`;
+  const GOOGLE_API_CODE = router.query.code;
+  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2`;
 
   useEffect(() => {
     setApiState("LOADING");
-    if (KAKAO_API_CODE) {
+    if (GOOGLE_API_CODE) {
       axios
-        .get(target)
+        .post(target, {
+          code: GOOGLE_API_CODE,
+        })
         .then((res) => {
           setApiState(res.status === 200 ? "SUCCESS" : "");
           setResult(JSON.stringify(res));
@@ -50,4 +52,4 @@ function KakaoLogin() {
   );
 }
 
-export default KakaoLogin;
+export default Google;

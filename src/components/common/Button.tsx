@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
 import styled from "@emotion/styled";
-import { useTheme } from "@emotion/react";
 import { FONTS } from "@/styles/common";
 
 export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "SNS_LOGIN" | "WARN";

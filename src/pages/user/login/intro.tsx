@@ -5,19 +5,25 @@ import useBgWhite from "@/hook/useBgWhite";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 import { FONTS } from "@/styles/common";
+import JoinStep from "@/components/User/JoinStep";
 import LoginWrapper from "@/components/User/LoginWrapper";
 import { InputCheckbox } from "@/components/common/SelectInput";
-import JoinStep from "@/components/User/JoinStep";
+
+import RightArrowThin from "@/assets/icon/arrow/RightArrowThin.svg";
+import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
+import useModal from "@/hook/useModal";
 
 function Intro() {
   useBgWhite();
   const router = useRouter();
+  const { ModalComponents, showModal } = useModal();
   const confirm = useConfirm();
   const allCheckInput = useRef<HTMLInputElement>(null);
-  const [checkedList, setCheckedList] = useState({
-    essential01: false,
-    essential02: false,
-    essential03: false,
+  const [selectedTerm, setSelectedTerm] = useState("");
+  const [checkedList, setCheckedList] = useState<Record<string, boolean>>({
+    required1: false,
+    required2: false,
+    event1: false,
   });
 
   useEffect(() => {
@@ -35,8 +41,8 @@ function Intro() {
       button={{
         text: "확인",
         onClick: async () => {
-          if (checkedList.essential01 && checkedList.essential02) {
-            router.push(`/user/login/intro?agree=${checkedList.essential03 ? "T" : "F"}`);
+          if (checkedList.required1 && checkedList.required2) {
+            router.push(`/user/login/intro?agree=${checkedList.event1 ? "T" : "F"}`);
           } else {
             await confirm?.showConfirm("필수 약관에 모두 동의해야 합니다");
           }
@@ -51,49 +57,66 @@ function Intro() {
             onChange={(event) => {
               const isChecked = event.target.checked;
               setCheckedList({
-                essential01: isChecked,
-                essential02: isChecked,
-                essential03: isChecked,
+                required1: isChecked,
+                required2: isChecked,
+                event1: isChecked,
               });
             }}
           />
           <label htmlFor="allChecked">약관 전체 동의</label>
         </AllCheck>
         <TermList>
-          <li>
-            <div>
-              <InputCheckbox
-                id="essential01"
-                checked={checkedList.essential01}
-                onChange={(event) => setCheckedList((prev) => ({ ...prev, essential01: event.target.checked }))}
-              />
-              <label htmlFor="essential01">[필수] 이용약관</label>
-            </div>
-            <button type="button">{">"}</button>
-          </li>
-          <li>
-            <div>
-              <InputCheckbox
-                id="essential02"
-                checked={checkedList.essential02}
-                onChange={(event) => setCheckedList((prev) => ({ ...prev, essential02: event.target.checked }))}
-              />
-              <label htmlFor="essential02">[필수] 개인정보 수집 및 이용</label>
-            </div>
-            <button type="button">{">"}</button>
-          </li>
-          <li>
-            <div>
-              <InputCheckbox
-                id="essential03"
-                checked={checkedList.essential03}
-                onChange={(event) => setCheckedList((prev) => ({ ...prev, essential03: event.target.checked }))}
-              />
-              <label htmlFor="essential03">[선택] 이벤트 및 할인쿠폰 정보 수신</label>
-            </div>
-            <button type="button">{">"}</button>
-          </li>
+          {TERMS_LIST.map((term) => (
+            <li key={term.termId}>
+              <div>
+                <InputCheckbox
+                  id={term.termId}
+                  checked={checkedList[term.termId]}
+                  onChange={(event) => setCheckedList((prev) => ({ ...prev, [term.termId]: event.target.checked }))}
+                />
+                <label htmlFor={term.termId}>
+                  [{term.required ? "필수" : "선택"}] {term.termName}
+                </label>
+              </div>
+              <TermView
+                type="button"
+                onClick={() => {
+                  showModal();
+                  setSelectedTerm(term.termId);
+                }}
+              >
+                <RightArrowThin />
+              </TermView>
+            </li>
+          ))}
         </TermList>
+        <ModalComponents
+          title={TERMS_LIST.find((v) => v.termId === selectedTerm)?.termName}
+          buttons={[
+            {
+              mode: "OPTION2",
+              name: "닫기",
+              onClick: (close) => {
+                close();
+              },
+            },
+            {
+              flex: 2,
+              mode: "MAIN",
+              name: "위 약관에 동의",
+              onClick: (close) => {
+                setCheckedList((prev) => ({ ...prev, [selectedTerm]: true }));
+                close();
+              },
+            },
+          ]}
+        >
+          <TermContents>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum saepe perferendis nam reprehenderit!
+            Necessitatibus culpa quaerat iure vitae qui odit, nihil dolorem velit sapiente perferendis rem alias est
+            consequuntur praesentium.
+          </TermContents>
+        </ModalComponents>
       </Agreement>
     </LoginWrapper>
   );
@@ -107,7 +130,7 @@ const AllCheck = styled.div`
   width: 100%;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
   gap: 10px;
 
   label {
@@ -120,8 +143,10 @@ const TermList = styled.ul`
     padding: 14px 20px;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 
     div {
+      width: 100%;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -129,7 +154,21 @@ const TermList = styled.ul`
       font-weight: 400;
       color: var(--gray3);
     }
+    label {
+      width: 100%;
+    }
   }
 `;
+
+const TermView = styled.button`
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+
+  svg {
+    fill: var(--gray3);
+  }
+`;
+const TermContents = styled.div``;
 
 export default Intro;

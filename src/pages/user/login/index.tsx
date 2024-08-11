@@ -21,6 +21,10 @@ function Login() {
     window.open(GOOGLE_URL, "_self");
   };
 
+  const handleIntroPage = () => {
+    router.push("/user/login/intro");
+  };
+
   return (
     <LoginWrapper
       button={{
@@ -29,11 +33,14 @@ function Login() {
       }}
     >
       <LoginOptions>
-        <Button type="button" mode="OPTION1" borderType onClick={handleKakaoLogin}>
+        <Button type="button" mode="OPTION2" borderType onClick={handleKakaoLogin}>
           카카오로 계속하기
         </Button>
-        <Button type="button" mode="OPTION1" borderType onClick={handleGoogleLogin}>
+        <Button type="button" mode="OPTION2" borderType onClick={handleGoogleLogin}>
           Google로 계속하기
+        </Button>
+        <Button type="button" mode="OPTION2" borderType onClick={handleIntroPage}>
+          Intro
         </Button>
       </LoginOptions>
     </LoginWrapper>

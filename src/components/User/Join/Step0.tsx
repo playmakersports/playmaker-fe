@@ -5,16 +5,19 @@ import Stepper from "@/components/layouts/Stepper";
 import { FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "@/components/common/Card";
 
+import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
+
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
   return (
     <Stepper>
       <BackPoint />
       <Title>
+        <LogoSymbol />
         반가워요! <br />
         가입 방식을 선택해주세요
       </Title>
       <Buttons>
-        <Card>
+        <Card onClick={() => setStep(2)}>
           <strong>일반</strong>
           <p>
             내 주변이나 생활 지역에서
@@ -22,7 +25,7 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
             스포츠 팀을 찾고 참여합니다
           </p>
         </Card>
-        <Card>
+        <Card onClick={() => setStep(1)}>
           <strong>대학</strong>
           <p>
             대학 동아리나 리그 소속으로
@@ -50,6 +53,12 @@ const Title = styled.h3`
   text-align: center;
   font-size: 2.4rem;
   line-height: 3.8rem;
+
+  svg {
+    display: block;
+    width: 32px;
+    margin: 0 auto 20px;
+  }
 `;
 const Buttons = styled.div`
   display: flex;

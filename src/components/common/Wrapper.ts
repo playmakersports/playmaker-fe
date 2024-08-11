@@ -20,14 +20,13 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
   }
 
   background-color: transparent;
-  border: 1px solid ${({ isError }) => (isError ? "var(--point)" : "var(--gray6)")};
+  border: 1px solid ${({ isError }) => (isError ? "var(--point)" : "var(--gray7)")};
   border-radius: 6px;
 
   &:disabled,
-  &:has(input:disabled),
-  &:has(input:read-only) {
+  &:has(input:disabled) {
     border: 1px solid transparent;
-    background-color: var(--gray6);
+    background-color: var(--gray7);
   }
   &:focus,
   &:has(input:focus) {

@@ -61,7 +61,8 @@
   --gray3: #5e5e5e;
   --gray4: #868686;
   --gray5: #9b9b9b;
-  --gray6: #ededed;
+  --gray6: #cfcfcf;
+  --gray7: #ededed;
   --white: #fff;
 
   --main: #306def;
@@ -74,7 +75,7 @@
   --path-white: #fff;
 
   --animation-cubic: cubic-bezier(0.05, 0, 0, 1);
-  --shadow-alpha20: 0 2px 8px 0 rgba(115, 115, 115, 0.15);
+  --shadow-alpha20: 0 2px 6px 0 rgba(115, 115, 115, 0.1);
 }
 
 :root[data-dark="true"] {
@@ -89,5 +90,6 @@
   --gray4: #767676;
   --gray5: #5e5e5e;
   --gray6: #3b3b3b;
+  --gray7: #3b3b3b;
   --white: #000;
 }

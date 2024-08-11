@@ -166,7 +166,7 @@ const Bottom = styled.div`
   width: 100%;
   margin: 0 -16px;
   padding: 0 0 calc(20px + env(safe-area-inset-bottom) / 2);
-  background: var(--gray6);
+  background: var(--gray7);
   z-index: 10;
 `;
 

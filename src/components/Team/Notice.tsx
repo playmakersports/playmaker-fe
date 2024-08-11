@@ -88,7 +88,7 @@ const PADDING = 24;
 const Container = styled.div`
   margin: 0 -16px 20px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
 `;
 const Display = styled.div`
   position: relative;

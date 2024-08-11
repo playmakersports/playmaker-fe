@@ -126,7 +126,7 @@ const MediumCardContainer = styled(BasicWhiteCard)`
     height: 140px;
     background-size: cover;
     background-position: center;
-    background-color: var(--gray6);
+    background-color: var(--gray7);
     &::before {
       position: absolute;
       content: attr(data-d-day);
@@ -171,7 +171,7 @@ const MatchBox = styled.div`
     padding: 12px 24px;
     background-color: rgba(var(--neutral-n400-rgb), 0.4);
     backdrop-filter: blur(3px);
-    /* border: 1px solid var(--gray6); */
+    /* border: 1px solid var(--gray7); */
     gap: 2px;
 
     &.home-team {
@@ -218,7 +218,7 @@ const Opened = styled.p`
   padding: 8px 18px;
   width: calc(100% + 36px);
   color: var(--gray1);
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
 
   .opened-by-logo {
     padding: 2px;

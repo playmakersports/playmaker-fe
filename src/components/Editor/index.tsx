@@ -51,7 +51,7 @@ const EditorContainer = styled.div`
     width: 100%;
     height: auto;
     padding: 10px 12px;
-    border: 1px solid var(--gray6);
+    border: 1px solid var(--gray7);
     border-radius: 8px;
     overscroll-behavior: contain;
 

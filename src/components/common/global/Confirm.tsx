@@ -54,7 +54,7 @@ const Message = styled.p`
   ${FONTS.MD1};
   padding: 32px 16px;
   text-align: center;
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
 `;
 const Buttons = styled.div`
   display: flex;
@@ -64,7 +64,7 @@ const ModalButton = styled.button`
   flex: 1;
   font-size: 1.4rem;
   &:last-of-type {
-    background-color: var(--gray6);
+    background-color: var(--gray7);
   }
 `;
 

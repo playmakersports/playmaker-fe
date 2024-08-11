@@ -85,7 +85,7 @@ const Options = styled.ul<{ show: boolean }>`
   width: calc(100% + 4px);
   background-color: var(--background);
   border-radius: 8px;
-  border: 1px solid var(--gray6);
+  border: 1px solid var(--gray7);
   box-shadow: var(--shadow-alpha20);
   transition: all 0.2s;
 

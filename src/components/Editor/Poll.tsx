@@ -92,7 +92,7 @@ const PollSetting = styled.div`
   gap: 20px 32px;
   justify-content: flex-start;
   flex-wrap: wrap;
-  border-top: 1px solid var(--gray6);
+  border-top: 1px solid var(--gray7);
 `;
 const SetItem = styled.div`
   display: inline-flex;

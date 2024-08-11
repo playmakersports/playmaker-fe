@@ -5,7 +5,7 @@ export const BasicWhiteCard = styled.div`
   padding: 18px 20px;
   border-radius: 10px;
   background-color: var(--background-light);
-  border: 1px solid var(--gray6);
+  border: 1px solid var(--gray7);
   user-select: none;
   box-shadow: var(--shadow-alpha20);
 `;

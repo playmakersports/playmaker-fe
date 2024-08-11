@@ -121,7 +121,7 @@ const Schedules = styled.div`
   .team-group {
     padding-bottom: 12px;
     margin-bottom: 12px;
-    border-bottom: 1px solid var(--gray6);
+    border-bottom: 1px solid var(--gray7);
     &:last-of-type {
       border: none;
       padding-bottom: 0;

@@ -79,7 +79,7 @@ const Information = styled.div`
     li.info-opened-by {
       padding-bottom: 8px;
       margin-bottom: 8px;
-      border-bottom: 1px solid var(--gray6);
+      border-bottom: 1px solid var(--gray7);
     }
     img {
       width: 28px;

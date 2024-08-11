@@ -94,7 +94,7 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--gray6);
+    border-bottom: 1px solid var(--gray7);
     color: var(--gray3);
     ${FONTS.MD2};
 
@@ -129,7 +129,7 @@ const Container = styled.div`
       height: 32px;
       border-radius: 100%;
       overflow: hidden;
-      border: 1px solid var(--gray6);
+      border: 1px solid var(--gray7);
       font-size: 1.4rem;
       font-weight: 400;
       letter-spacing: -0.5px;

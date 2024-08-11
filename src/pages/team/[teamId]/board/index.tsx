@@ -164,7 +164,7 @@ const TabWrapper = styled.div`
   z-index: 1;
 
   &.stuck {
-    border-bottom: 1px solid var(--gray6);
+    border-bottom: 1px solid var(--gray7);
     padding-bottom: 2px;
     background-color: var(--background-light);
   }
@@ -173,7 +173,7 @@ const FixedArticles = styled.div`
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
 `;
 const FixedArticle = styled.div`
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
   .article-inner {
     display: flex;
     padding: 12px 20px;

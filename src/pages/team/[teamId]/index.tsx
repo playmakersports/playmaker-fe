@@ -106,7 +106,7 @@ const Description = styled.p`
   color: var(--gray2);
   text-align: center;
   padding: 12px;
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
   text-wrap: pretty;
   background-color: var(--background-light);
 `;

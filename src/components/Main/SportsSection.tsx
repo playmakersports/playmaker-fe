@@ -134,7 +134,7 @@ const ListWrapperRow = styled.div`
 
 const LineBottom = styled.div`
   margin-bottom: 2px;
-  border-bottom: 1px solid var(--gray6);
+  border-bottom: 1px solid var(--gray7);
 `;
 
 export default SportsSection;

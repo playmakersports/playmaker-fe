@@ -50,7 +50,7 @@ const RoundWrapper = styled.div<{ playing: boolean }>`
 const ProfileImg = styled.img<{ playing: boolean }>`
   margin: ${({ playing }) => (playing ? "3px" : "0")};
   border: 7px solid var(--background-light);
-  border: ${({ playing }) => (playing ? "" : "1px solid var(--gray6)")};
+  border: ${({ playing }) => (playing ? "" : "1px solid var(--gray7)")};
   width: calc(100% - 7px);
   height: calc(100% - 7px);
   z-index: 1;

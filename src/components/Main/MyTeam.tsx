@@ -51,7 +51,7 @@ const TeamItem = styled.li`
   gap: 10px;
   color: var(--gray1);
   border-radius: 2px;
-  ${TEXT_ACTIVE("var(--gray6)", { scalable: true })}
+  ${TEXT_ACTIVE("var(--gray7)", { scalable: true })}
 
   p {
     font-size: 1.4rem;
@@ -69,7 +69,7 @@ const TeamImage = styled.div<{ src: string }>`
   background-size: 50px;
   background-repeat: no-repeat;
   background-position: center;
-  border: 1px solid var(--gray6);
+  border: 1px solid var(--gray7);
   border-radius: 100%;
 `;
 

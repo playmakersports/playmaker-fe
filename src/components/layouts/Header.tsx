@@ -102,7 +102,7 @@ const Icon = styled.button`
   width: 28px;
   height: 28px;
   border-radius: var(--radius-10);
-  ${TEXT_ACTIVE("var(--gray6)")};
+  ${TEXT_ACTIVE("var(--gray7)")};
 
   svg {
     width: 22px;

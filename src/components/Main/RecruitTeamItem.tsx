@@ -59,7 +59,7 @@ const TeamImage = styled.img`
   width: 40px;
   height: 40px;
   background-color: #fff;
-  border: 1px solid var(--gray6);
+  border: 1px solid var(--gray7);
   border-radius: 100%;
 `;
 const TeamInfo = styled.div`

@@ -10,8 +10,9 @@ export type BottomSheetProps = {
   expanded?: boolean;
   buttons: {
     mode: ButtonStyleMode;
-    onClick: () => void;
+    onClick: (close: () => void) => void;
     name: string;
+    flex?: number;
   }[];
 };
 
@@ -50,10 +51,9 @@ function BottomSheet(props: BottomSheetProps) {
               type="button"
               mode={button.mode}
               onClick={() => {
-                closeBottomSheet();
-                button.onClick();
+                button.onClick(closeBottomSheet);
               }}
-              fullWidth
+              flex={button.flex ?? 1}
             >
               {button.name}
             </Button>
@@ -89,10 +89,11 @@ const Header = styled.header``;
 const Contents = styled.div`
   margin: 12px 0 20px;
   padding: 0 4px;
-  ${FONTS.MD1W500}
+  ${FONTS.MD2};
+  font-weight: 400;
 `;
 
-const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
+const Wrapper = styled.section<{ isShow: boolean; expanded: boolean }>`
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -105,12 +106,13 @@ const Wrapper = styled.div<{ isShow: boolean; expanded: boolean }>`
   min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
   z-index: 1000;
   background: var(--background-light);
-  border-radius: 24px;
+  border-radius: 24px 24px 0 0;
   transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};
   transform-origin: center center;
   transition: all ${ANIMATION_RUNNING_TIME}ms;
   box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);
+  will-change: transform;
 `;
 
 const ButtonWrapper = styled.div`

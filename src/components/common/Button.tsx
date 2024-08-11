@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
 
-export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "SNS_LOGIN" | "WARN";
+export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "WARN";
 type Props = {
   borderType?: boolean;
   mode: ButtonStyleMode;
@@ -38,12 +38,13 @@ function Button(props: Props) {
       color: "#fff",
     },
     OPTION1: {
-      background: "var(--gray4)",
-      color: "#fff",
+      background: "var(--gray2)",
+      color: "var(--white)",
     },
     OPTION2: {
-      background: "var(--gray6)",
-      color: "var(--gray1)",
+      background: "var(--gray5)",
+      color: "#fff",
+      borderTypeColor: "var(--gray3)",
     },
     SUB1: {
       background: "var(--sub1)",
@@ -53,27 +54,8 @@ function Button(props: Props) {
       background: "var(--point)",
       color: "#fff",
     },
-    SNS_LOGIN: {
-      background: "#fee500",
-      color: "#000",
-    },
   };
 
-  if (!split && mode === "SNS_LOGIN") {
-    return (
-      <SnsWrapper
-        type={type ?? "button"}
-        mode={BUTTON_STYLE[mode]}
-        onClick={onClick}
-        flex={flex}
-        fullWidth={fullWidth}
-        disabled={disabled}
-        autoHeight={autoHeight}
-      >
-        {children}
-      </SnsWrapper>
-    );
-  }
   if (!split) {
     return (
       <Wrapper
@@ -120,9 +102,9 @@ const Wrapper = styled.button<ButtonStyled>`
   width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   height: ${({ autoHeight }) => (autoHeight ? "auto" : "48px")};
   border: ${({ borderType, mode }) => (borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
-  border-radius: ${({ autoHeight }) => (autoHeight ? "6px" : "12px")};
+  border-radius: ${({ autoHeight }) => (autoHeight ? "6px" : "48px")};
   background-color: ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
-  color: ${({ borderType, mode }) => (borderType ? mode.background : mode.color)};
+  color: ${({ borderType, mode }) => (borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;
@@ -132,20 +114,13 @@ const Wrapper = styled.button<ButtonStyled>`
     outline: none;
   }
   &:disabled {
-    background-color: rgb(var(--gray-h5));
-    color: rgb(var(--gray-h3));
+    background-color: var(--gray7);
+    color: var(--gray5);
     cursor: not-allowed;
   }
   &:active {
     filter: brightness(1.05);
-    transform: scale(0.95);
-  }
-`;
-
-const SnsWrapper = styled(Wrapper)`
-  &:active {
-    filter: none;
-    background-color: #fee500;
+    transform: scale(0.98);
   }
 `;
 

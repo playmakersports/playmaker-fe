@@ -50,7 +50,13 @@ function EditorMenuBottom({ editor }: Props) {
       <ModalComponents
         title="투표 설정"
         buttons={[
-          { mode: "OPTION2", name: "취소", onClick: () => {} },
+          {
+            mode: "OPTION2",
+            name: "취소",
+            onClick: (close) => {
+              close();
+            },
+          },
           { mode: "MAIN", name: "완료", onClick: () => {} },
         ]}
       >
@@ -77,7 +83,7 @@ const OptionGroup = styled.div`
     ${FONTS.MD2};
     padding: 0 4px;
     border-radius: 8px;
-    ${TEXT_ACTIVE("var(--gray6)", { focus: true })};
+    ${TEXT_ACTIVE("var(--gray7)", { focus: true })};
     color: var(--gray2);
   }
   svg {

@@ -17,6 +17,7 @@ const CardInput = React.forwardRef<HTMLInputElement, Props>(({ type, value, chil
     </Card>
   </>
 ));
+CardInput.displayName = "CardInput";
 
 const Card = styled(BasicWhiteCard.withComponent("label"))`
   cursor: pointer;

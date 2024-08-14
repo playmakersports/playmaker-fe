@@ -61,7 +61,7 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
           information={
             !isSendSuccess
               ? {
-                  text: "이용 가능 학교 목록",
+                  text: "이용 가능한 학교 목록",
                   onClick: () => showModal(),
                 }
               : undefined
@@ -83,7 +83,7 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
         </div>
       </StepFormWrapper>
       <ModalComponents
-        title="이용 가능한 학교 목록 (가나다순)"
+        title="이용 가능한 학교 목록"
         buttons={[
           {
             name: "닫기",
@@ -109,7 +109,6 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
 
 const UnivListIndex = styled.p`
   margin: 16px 0 4px;
-  padding: 2px;
   font-weight: 500;
   font-size: 1.6rem;
 `;

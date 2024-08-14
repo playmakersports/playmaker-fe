@@ -1,14 +1,13 @@
 import { atomToast } from "@/atom/common";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import React, { useCallback, useEffect, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useCallback, useEffect, useRef } from "react";
 
 function useToast(time?: number) {
-  const defaultTime = time ?? 3000;
+  const defaultTime = time ?? 2300;
   const setToastAtom = useSetAtom(atomToast);
   const toastAtom = useAtomValue(atomToast);
   const ref = useRef<number | null>(null);
   const showRef = useRef<number | null>(null);
-  const notForcedClose = useRef<boolean | null>(true);
 
   const trigger = useCallback(
     (text: string, type?: "DEFAULT" | "ALERT") => {
@@ -17,18 +16,16 @@ function useToast(time?: number) {
       if (showRef.current) clearTimeout(showRef.current);
       ref.current = window.setTimeout(() => {
         setToastAtom((prev) => ({ ...prev, animate: false }));
-        notForcedClose.current = true;
       }, defaultTime);
       showRef.current = window.setTimeout(() => {
         setToastAtom((prev) => ({ ...prev, show: false }));
-        notForcedClose.current = false;
       }, defaultTime + 300);
     },
     [defaultTime]
   );
 
   useEffect(() => {
-    if (!toastAtom.animate && toastAtom.show && !notForcedClose.current) {
+    if (!toastAtom.animate && toastAtom.show) {
       showRef.current = window.setTimeout(() => {
         setToastAtom((prev) => ({ ...prev, show: false }));
         ref.current = null;

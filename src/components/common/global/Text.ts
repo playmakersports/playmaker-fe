@@ -1,8 +1,8 @@
 import styled from "@emotion/styled";
 
-export const PageTitle = styled.h2`
+export const StepPageTitle = styled.h2`
   display: block;
-  margin: 0 auto 32px;
+  margin: 32px auto;
   font-size: 2.4rem;
   text-align: center;
 `;

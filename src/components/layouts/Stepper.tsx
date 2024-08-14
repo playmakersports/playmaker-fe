@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { BaseContainer } from "../common/Container";
 import Button from "../common/Button";
-import { PageTitle } from "../common/global/Text";
+import { StepPageTitle } from "../common/global/Text";
 
 type Props = {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ function Stepper({ children, stage, title, button }: Props) {
             ))}
           </Stage>
         )}
-        {title && <PageTitle>{title}</PageTitle>}
+        {title && <StepPageTitle>{title}</StepPageTitle>}
         {children}
       </article>
       {button && (

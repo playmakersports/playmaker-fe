@@ -27,7 +27,7 @@ function useModal() {
   );
 
   const Title = styled.h3`
-    margin-bottom: 16px;
+    margin-bottom: 22px;
     ${FONTS.HEAD1}
   `;
 

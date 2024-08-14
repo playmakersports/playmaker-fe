@@ -6,20 +6,32 @@ import styled from "@emotion/styled";
 import { InputStyledWrapper } from "./Wrapper";
 import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
 import SearchIcon from "@/assets/icon/global/Search.svg";
+import QuestionIcon from "@/assets/icon/global/Question.svg";
 import ExclamationIcon from "@/assets/icon/global/Exclamation.svg";
 
 export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">> & {
-  type: "text" | "number" | "password" | "email";
+  type: "text" | "number" | "password" | "email" | "tel";
   title?: string;
   search?: boolean;
   errorText?: string;
   delButton?: boolean;
   medium?: boolean;
   onButtonWrapClick?: () => void;
+  information?: { text: string; onClick: () => void };
 };
 
 export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { title, search, errorText, delButton = false, medium = false, onButtonWrapClick, ...rest } = props;
+  const {
+    type,
+    title,
+    search,
+    errorText,
+    delButton = false,
+    medium = false,
+    onButtonWrapClick,
+    information,
+    ...rest
+  } = props;
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -41,11 +53,18 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
         {onButtonWrapClick ? (
           <>
             <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
-              <input ref={inputRef} readOnly={true} placeholder={props.placeholder ?? " "} {...rest} />
+              <input ref={inputRef} type={type} readOnly={true} placeholder={props.placeholder ?? " "} {...rest} />
             </ButtonWrapInput>
           </>
         ) : (
-          <StyledInput ref={inputRef} placeholder={props.placeholder ?? " "} {...rest} />
+          <StyledInput
+            ref={inputRef}
+            type={type}
+            placeholder={props.placeholder ?? " "}
+            pattern={type === "number" || type === "tel" ? "[0-9]*" : ""}
+            inputMode={type === "number" || type === "tel" ? "numeric" : undefined}
+            {...rest}
+          />
         )}
         {errorText && (
           <ErrorIconArea aria-label="다시 입력해주세요" role="alert">
@@ -57,6 +76,12 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
           <DeleteAllIcon />
         </ClearIconArea>
       </InputStyledWrapper>
+      {information && (
+        <span className="input-information" onClick={information.onClick}>
+          <QuestionIcon />
+          {information.text}
+        </span>
+      )}
     </Container>
   );
 });
@@ -71,10 +96,25 @@ const Container = styled.div`
   .input-title {
     font-size: 1.4rem;
     margin-bottom: 4px;
-    padding: 0 6px;
+    padding: 0 8px;
     font-weight: 600;
     color: var(--gray3);
     line-height: 2.4rem;
+  }
+
+  .input-information {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-top: 10px;
+    padding: 0 8px;
+    font-size: 1.2rem;
+    color: var(--gray3);
+    gap: 4px;
+    svg {
+      width: 16px;
+      height: 16px;
+    }
   }
 `;
 const IconArea = styled.div`

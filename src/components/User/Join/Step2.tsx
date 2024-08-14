@@ -20,6 +20,7 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
     >
       <StepFormWrapper>
         <BasicInput type="text" title="이름" {...register("name")} />
+        <BasicInput type="tel" title="휴대전화 번호" {...register("phoneNumber")} />
         <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birthday")} />
         <Radios>
           <InputRadio buttonType {...register("gender")} value="male" id="male" labelName="남성" />

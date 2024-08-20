@@ -41,7 +41,7 @@ function BottomSheet(props: BottomSheetProps) {
       <Wrapper isShow={showModal} expanded={!!expanded}>
         {expanded && <Bar onClick={closeBottomSheet} />}
         <Contents>
-          <Header>{header}</Header>
+          {header && <Header>{header}</Header>}
           {children}
         </Contents>
         <ButtonWrapper>

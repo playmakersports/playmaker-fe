@@ -17,7 +17,12 @@ function useModal() {
 
       if (showBottom) {
         return (
-          <BottomSheet header={<Title>{title}</Title>} setShow={setShowBottom} buttons={buttons} expanded={false}>
+          <BottomSheet
+            header={title && <Title>{title}</Title>}
+            setShow={setShowBottom}
+            buttons={buttons}
+            expanded={false}
+          >
             {children}
           </BottomSheet>
         );

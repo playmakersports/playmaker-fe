@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import Confirm from "./Confirm";
 
 type ConfirmContextType = Pick<ReturnType<typeof useConfirmLogic>, "showConfirm">;
@@ -33,7 +33,7 @@ const useConfirmLogic = () => {
   ) => {
     setMessage(message);
     setIsVisible(true);
-    buttonText && setButtonText(buttonText);
+    buttonText ? setButtonText(buttonText) : setButtonText({ yes: "확인", no: "취소" });
     return new Promise<boolean>((resolve) => {
       setResolveReject(() => resolve);
     });

@@ -94,7 +94,7 @@ const Contents = styled.div`
 `;
 
 const Wrapper = styled.section<{ isShow: boolean; expanded: boolean }>`
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

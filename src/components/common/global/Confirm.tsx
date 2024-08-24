@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
 import { keyframes } from "@emotion/react";
@@ -39,10 +39,13 @@ const Backdrop = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.2);
+  z-index: 999;
 `;
 
 const Container = styled.section`
-  width: calc(100% - 32px);
+  width: 100%;
+  max-width: 600px;
+  min-width: 320px;
   height: max-content;
   background: var(--white);
   border-radius: 10px;

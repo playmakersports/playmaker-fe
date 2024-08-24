@@ -18,8 +18,9 @@ function Intro() {
   const router = useRouter();
   const { ModalComponents, showModal } = useModal();
   const confirm = useConfirm();
-  const allCheckInput = useRef<HTMLInputElement>(null);
   const [selectedTerm, setSelectedTerm] = useState("");
+
+  const [allChecked, setAllChecked] = useState(false);
   const [checkedList, setCheckedList] = useState<Record<string, boolean>>({
     required1: false,
     required2: false,
@@ -27,13 +28,11 @@ function Intro() {
   });
 
   useEffect(() => {
-    if (allCheckInput.current) {
-      const isEveryChecked = Object.values(checkedList).every((v) => v);
-      allCheckInput.current!.checked = isEveryChecked;
-    }
+    const isEveryChecked = Object.values(checkedList).every((v) => v);
+    setAllChecked(isEveryChecked);
   }, [checkedList]);
 
-  if (router.query.agree === "T") {
+  if (router.query.agree) {
     return <JoinStep />;
   }
   return (
@@ -42,7 +41,7 @@ function Intro() {
         text: "확인",
         onClick: async () => {
           if (checkedList.required1 && checkedList.required2) {
-            router.push(`/user/login/intro?agree=${checkedList.event1 ? "T" : "F"}`);
+            await router.push(`/user/login/intro?agree=${checkedList.event1 ? "T" : "F"}`);
           } else {
             await confirm?.showConfirm("필수 약관에 모두 동의해야 합니다");
           }
@@ -53,9 +52,10 @@ function Intro() {
         <AllCheck>
           <InputCheckbox
             id="allChecked"
-            ref={allCheckInput}
+            checked={allChecked}
             onChange={(event) => {
               const isChecked = event.target.checked;
+              setAllChecked(isChecked);
               setCheckedList({
                 required1: isChecked,
                 required2: isChecked,

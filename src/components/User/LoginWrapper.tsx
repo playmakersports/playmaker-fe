@@ -8,20 +8,28 @@ import Button from "@/components/common/Button";
 import LogoIconType from "@/assets/logo/LogoIconType.svg";
 import LogoTextType from "@/assets/logo/LogoTextType.svg";
 
-type Props = { children: React.ReactNode; button: { text: string; onClick: () => void } };
-function LoginWrapper({ children, button }: Props) {
+type Props = {
+  children: React.ReactNode;
+  button: {
+    type?: HTMLButtonElement["type"];
+    text: string;
+    onClick: () => void;
+  };
+  logoFill?: string;
+};
+function LoginWrapper({ children, button, logoFill }: Props) {
   useBgWhite();
   return (
     <Container>
       <LogoArea>
-        <LogoIconType className="logo-icon" />
-        <LogoTextType className="logo-text" />
+        <LogoIconType className="logo-icon" fill={logoFill ?? "var(--main)"} />
+        <LogoTextType className="logo-text" fill={logoFill ?? "var(--main)"} />
       </LogoArea>
       <Bottom>
         <Wrapper>{children}</Wrapper>
         <ButtonWrapper>
           <WhiteSectionDivider style={{ marginBottom: "12px" }} />
-          <Button type="button" mode="MAIN" onClick={button.onClick} fullWidth>
+          <Button type={button.type ?? "button"} mode="MAIN" onClick={button.onClick} fullWidth>
             {button.text}
           </Button>
         </ButtonWrapper>

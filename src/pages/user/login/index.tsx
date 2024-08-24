@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import { VERCEL_BASE_URL } from "@/constants/baseUrl";
+import { FONTS } from "@/styles/common";
 import { KAKAO_AUTH } from "@/apis/oauth";
 import Button from "@/components/common/Button";
 import LoginWrapper from "@/components/User/LoginWrapper";
@@ -24,6 +25,9 @@ function Login() {
   const handleIntroPage = () => {
     router.push("/user/login/intro");
   };
+  const handleStaffLoginPage = () => {
+    router.push("/user/login/staff");
+  };
 
   return (
     <LoginWrapper
@@ -43,6 +47,11 @@ function Login() {
           Intro
         </Button>
       </LoginOptions>
+      <StaffLogin>
+        <button type="button" onClick={handleStaffLoginPage}>
+          협회 및 관계사 로그인
+        </button>
+      </StaffLogin>
     </LoginWrapper>
   );
 }
@@ -51,6 +60,21 @@ const LoginOptions = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+`;
+
+const StaffLogin = styled.p`
+  position: fixed;
+  left: 0;
+  width: 100%;
+  bottom: calc(var(--env-sab) + 16px);
+  text-align: center;
+  button {
+    padding: 2px 16px;
+    ${FONTS.MD2};
+    color: var(--gray3);
+    letter-spacing: -0.15px;
+    border-radius: 4px;
+  }
 `;
 
 export default Login;

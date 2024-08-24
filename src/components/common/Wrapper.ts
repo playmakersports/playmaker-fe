@@ -19,7 +19,7 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
     fill: var(--black);
   }
 
-  background-color: transparent;
+  background-color: var(--background-light);
   border: 1px solid ${({ isError }) => (isError ? "var(--point)" : "var(--gray7)")};
   border-radius: 6px;
 

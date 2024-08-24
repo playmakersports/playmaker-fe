@@ -4,11 +4,11 @@ import { useAtomValue } from "jotai";
 import { atomBgWhite } from "@/atom/common";
 
 const baseTheme = (white?: boolean) => css`
-  html {
-    background: ${white ? "var(--background-light)" : "var(--background)"};
-  }
   body {
     color: var(--gray1);
+    background: var(--white);
+  }
+  #mobile_Wrapper {
     background: ${white ? "var(--background-light)" : "var(--background)"};
   }
 `;

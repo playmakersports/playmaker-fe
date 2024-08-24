@@ -8,6 +8,7 @@
 
   --header-height: 54px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
+  --safe-area-bottom: calc(var(--env-sab) + 48px);
   --env-sat: env(safe-area-inset-top);
   --env-sab: env(safe-area-inset-bottom);
 

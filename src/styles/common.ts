@@ -19,7 +19,6 @@ export const CARD_ACTIVE = `
     transition: all 0.2s;
     &:active {
       transform: scale(0.97);
-      background-color: var(--card-active);
     }
 `;
 export const BUTTON_ACTIVE = (color?: string) => `

@@ -1,28 +1,35 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
-
-import useStickyMoment from "@/hook/useStickyMoment";
-import { BaseContainer } from "@/components/common/Container";
-import { usePageTitle } from "@/hook/usePageTitle";
 import { useRouter } from "next/router";
+import { usePageTitle } from "@/hook/usePageTitle";
+import useStickyMoment from "@/hook/useStickyMoment";
+
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
+import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
 import MainTab from "@/components/Main/MainTab";
+import { BaseContainer } from "@/components/common/Container";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import { BasicInput } from "@/components/common/Input";
 import { BasicWhiteCard } from "@/components/common/Card";
-import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
-import Button from "@/components/common/Button";
+
+import ArticlePlus from "@/assets/icon/global/ArticlePlus.svg";
+import useModal from "@/hook/useModal";
 
 function Recruit() {
-  usePageTitle({ title: "모집 중인 팀" });
+  usePageTitle({ title: "팀 목록", subIcons: [{ svgIcon: <ArticlePlus />, linkTo: "/team" }] });
+  const { ModalComponents, showModal } = useModal();
   const sportsTabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(sportsTabRef);
   const router = useRouter();
   const targetSports = router.query.sports as string;
   const [activeTab, setActiveTab] = useState(targetSports ?? SUPPORT_SPORTS[0].value);
   const [searchValue, setSearchValue] = useState("");
-  const [selectedTeam, setSelectedTeam] = useState("");
 
+  const RECRUIT_STATUS: Record<string, string> = {
+    PENDING: "모집중",
+    FINISHED: "모집완료",
+    NO_RECRUIT: "",
+  };
   return (
     <Container>
       <TabWrapper ref={sportsTabRef}>
@@ -38,7 +45,7 @@ function Recruit() {
         <BasicInput
           type="text"
           search={true}
-          placeholder="팀 검색"
+          placeholder="팀 이름으로 찾기.."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           delButton={true}
@@ -46,69 +53,38 @@ function Recruit() {
       </Contents>
       <Cards>
         {NOW_RECRUIT_LIST.map((item) => (
-          <Card
-            as="button"
-            key={item.teamId}
-            className={selectedTeam === item.teamId ? "selected" : ""}
-            onClick={(e) => {
-              setSelectedTeam(item.teamId);
-              e.currentTarget.scrollIntoView({
-                block: "center",
-                behavior: "smooth",
-              });
-            }}
-          >
-            <h2>{item.teamName}</h2>
+          <Card as="button" key={item.teamId} onClick={showModal}>
+            <CardHeader>
+              <img src={item.teamLogo} alt={item.teamName} />
+              <h2>
+                {item.teamName}
+                {item.status !== "NO_RECRUIT" && (
+                  <span className={`recruit-status ${item.status}`}>{RECRUIT_STATUS[item.status]}</span>
+                )}
+              </h2>
+            </CardHeader>
             <dl className="recruit-detail">
+              <div>{item.university}</div>
               <div>
-                <dt>장소</dt>
-                <dd>{item.place}</dd>
+                <dt>지역</dt>
+                <dd>{item.location}</dd>
               </div>
               <div>
-                <dt>일정</dt>
-                <dd>{item.date}</dd>
-              </div>
-              <div>
-                <dt>시간</dt>
-                <dd>
-                  {item.startTime} ~ {item.endTime}
-                </dd>
-              </div>
-              <div>
-                <dt>인원</dt>
-                <dd>{item.member}명</dd>
-              </div>
-              <div>
-                <dt>세부규정</dt>
-                <dd>{item.detailRule}</dd>
+                <dt>모집마감</dt>
+                <dd>{item.dueDate}</dd>
               </div>
             </dl>
           </Card>
         ))}
       </Cards>
-      <Bottom>
-        <Button
-          type="button"
-          flex={1}
-          mode="OPTION2"
-          onClick={() => {
-            console.log("신청");
-          }}
-        >
-          모집 올리기
-        </Button>
-        <Button
-          type="button"
-          flex={1}
-          mode={selectedTeam !== "" ? "MAIN" : "OPTION1"}
-          disabled={selectedTeam === ""}
-          onClick={() => {
-            console.log("신청");
-          }}
-        >
-          신청
-        </Button>
-      </Bottom>
+      <ModalComponents
+        buttons={[
+          { mode: "OPTION2", name: "팀 페이지 이동", onClick: () => console.log("") },
+          { mode: "MAIN", name: "입단 신청", onClick: () => console.log("") },
+        ]}
+      >
+        팀 정보
+      </ModalComponents>
     </Container>
   );
 }
@@ -145,13 +121,11 @@ const Card = styled(BasicWhiteCard)`
   border: 2px solid transparent;
   ${CARD_ACTIVE};
 
-  h2 {
-    font-size: 1.8rem;
-  }
   .recruit-detail {
-    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     div {
-      margin-top: 2px;
       display: flex;
       dt {
         flex: 0.35;
@@ -162,24 +136,47 @@ const Card = styled(BasicWhiteCard)`
       }
     }
   }
-
-  &.selected {
-    border: 2px solid var(--main);
-    transform: scale(1.02);
-    box-shadow: 0 0 10px 6px var(--box-shadow);
-  }
 `;
 
-const Bottom = styled.div`
-  position: fixed;
-  display: flex;
+const CardHeader = styled.div`
+  display: inline-flex;
+  margin-bottom: 12px;
+  align-items: center;
   gap: 8px;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 12px 16px calc(20px + env(safe-area-inset-bottom));
-  background-color: ${({ theme }) => theme.background};
-  transition: transform 0.2s;
+  ${FONTS.MD1W500};
+
+  h2 {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.8rem;
+    gap: 6px;
+  }
+  .recruit-status {
+    ${FONTS.MD1};
+    font-size: 1.3rem;
+    line-height: 1.25rem;
+    padding: 3px 4px;
+    border-radius: 4px;
+    border: 1px solid var(--main);
+    color: var(--main);
+
+    &.FINISHED {
+      border: 1px solid var(--gray4);
+      color: var(--gray4);
+    }
+  }
+
+  img {
+    display: inline-block;
+    padding: 3px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--background-light);
+    border: 1px solid var(--gray7);
+    overflow: hidden;
+    object-fit: cover;
+  }
 `;
 
 export default Recruit;

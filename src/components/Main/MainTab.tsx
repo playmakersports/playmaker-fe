@@ -26,7 +26,7 @@ function MainTab({ items, nowValue, initialValue }: Props) {
       const target = containerRef.current.getElementsByClassName("selected")[0];
       const scrollLeft = containerRef.current.scrollLeft;
       setSelected(initialValue);
-      setOffset(target.getBoundingClientRect().x - 24 + scrollLeft);
+      setOffset(target.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x + scrollLeft);
       nowValue(initialValue);
       target.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
     }

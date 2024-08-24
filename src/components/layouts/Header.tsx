@@ -112,7 +112,7 @@ const Icon = styled.button`
 
 type StyledScrolled = { scrolled?: boolean };
 const Wrapper = styled.header<StyledScrolled>`
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: space-between;
   align-items: center;

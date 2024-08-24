@@ -24,9 +24,8 @@ export default function Home() {
 }
 
 const Container = styled(BaseContainer)`
-  padding: 2px 16px 20px;
+  padding: 2px 16px 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding-bottom: calc(32px + var(--env-sab));
 `;

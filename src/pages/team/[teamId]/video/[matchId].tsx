@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
@@ -23,11 +23,18 @@ function VideoArticle() {
 
   const [currentActiveComment, setCurrentActiveComment] = useState("");
   const [targetVideoTime, setTargetVideoTime] = useState("");
+  const [clientWidth, setClientWidth] = useState({ ready: false, width: 600 });
   // const [playbackRate, setPlaybackRate] = useState(1);
 
+  useLayoutEffect(() => {
+    if (commentRef.current) {
+      setClientWidth({ ready: true, width: commentRef.current.clientWidth });
+    }
+  }, [commentRef.current]);
+
   const VIDEO_SIZE = {
-    width: window.innerWidth,
-    height: Math.floor(window.innerWidth * (9 / 16)),
+    width: clientWidth.width,
+    height: Math.floor(clientWidth.width * (9 / 16)),
   };
   const { playerConnect, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
   usePageTitle({ title: VIDEO_DATA.title, subTitle: secondToMinSec(currentTime) });
@@ -50,14 +57,16 @@ function VideoArticle() {
   return (
     <Container videoHeight={VIDEO_SIZE.height}>
       <Video>
-        <YouTube
-          ref={playerRef}
-          id="player_YouTube"
-          videoId={VIDEO_DATA.youtubeId}
-          opts={opts}
-          // onPlaybackRateChange={(event) => setPlaybackRate(event.target.getPlaybackRate())}
-          {...playerConnect}
-        />
+        {clientWidth.ready && (
+          <YouTube
+            ref={playerRef}
+            id="player_YouTube"
+            videoId={VIDEO_DATA.youtubeId}
+            opts={opts}
+            // onPlaybackRateChange={(event) => setPlaybackRate(event.target.getPlaybackRate())}
+            {...playerConnect}
+          />
+        )}
       </Video>
       <PlayerTop>
         <VideoInfo
@@ -130,7 +139,7 @@ const Container = styled(BaseContainer)<{ videoHeight: number }>`
   margin-bottom: calc(56px + env(safe-area-inset-bottom) * 1.2);
 `;
 const Video = styled.section`
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   padding: var(--safe-area-top) 0 0;
@@ -161,7 +170,7 @@ const Comments = styled.ul`
 `;
 
 const Bottom = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   width: 100%;
   margin: 0 -16px;

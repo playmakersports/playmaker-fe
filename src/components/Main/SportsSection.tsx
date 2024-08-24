@@ -42,11 +42,11 @@ function SportsSection() {
           <MoreButton text="더 많은 팀 보기" href={`/recruit?sports=${activeTab}`} />
         </Container>
 
-        <GroupTitle link="">경기 일정</GroupTitle>
+        <GroupTitle link="">대회 일정</GroupTitle>
         {COMPETITION_LIST_MOCK.map((competition, index) => (
           <MatchCard
             key={competition.competitionId}
-            size={index === 0 ? "LARGE" : "MEDIUM"}
+            size={index === 2 ? "LARGE" : "MEDIUM"}
             posterImg={competition.posterImg}
             competitionId={competition.competitionId}
             competitionName={competition.competitionName}
@@ -69,7 +69,7 @@ function SportsSection() {
 const Wrapper = styled.div`
   background-color: var(--background-light);
   margin: 0 -16px;
-  padding: 0 16px;
+  padding: 0 16px var(--safe-area-bottom);
 `;
 const TabHead = styled.h3`
   position: relative;

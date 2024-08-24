@@ -43,7 +43,7 @@ function VideoInfo(props: Props) {
       <h3 className="video-match">{props.subTitle}</h3>
       <h2 className="video-title">{props.title}</h2>
       <p className="video-description">{props.description}</p>
-      <p className="video-setting">
+      <div className="video-setting">
         <span>{props.createdAt}</span>
         <ul className="video-share">
           <li>
@@ -53,7 +53,7 @@ function VideoInfo(props: Props) {
             <ShareIcon />
           </li>
         </ul>
-      </p>
+      </div>
       <div className="match-players-wrapper">
         <ul className="match-players" ref={scrollMaskedHandlerRef} onScroll={scrollMaskedHandler}>
           {props.players.map((player, index) => (

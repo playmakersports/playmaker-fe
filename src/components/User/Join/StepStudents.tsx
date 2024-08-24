@@ -93,15 +93,17 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
         ]}
       >
         <UnivListIndex>가</UnivListIndex>
-        가천대학교, 가톨릭대학교, 건국대학교, 경기대학교, 경희대학교, 고려대학교, 국민대학교
+        가천대학교, 가톨릭대학교, 강원대학교, 건국대학교, 경기대학교, 경북대학교, 경희대학교, 고려대학교, 국민대학교
         <UnivListIndex>다, 마, 바</UnivListIndex>
         단국대학교, 동국대학교, 명지대학교, 부산대학교
         <UnivListIndex>사</UnivListIndex>
-        서울과학기술대학교, 서강대학교, 서울대학교, 서울시립대학교, 성균관대학교, 성신여자대학교, 세종대학교, 숭실대학교
-        <UnivListIndex>아, 자, 파</UnivListIndex>
-        아주대학교, 연세대학교, 용인대학교, 인하대학교, 이화여자대학교, 중앙대학교, 포항공과대학교(POSTECH)
+        상명대학교, 서강대학교, 서울과학기술대학교, 서울대학교, 서울시립대학교, 성균관대학교, 성신여자대학교,
+        세종대학교, 숭실대학교
+        <UnivListIndex>아, 자, 차</UnivListIndex>
+        아주대학교, 연세대학교, 용인대학교, 이화여자대학교, 인하대학교, 제주대학교, 전남대학교, 조선대학교, 중앙대학교,
+        충남대학교, 충북대학교
         <UnivListIndex>파, 하</UnivListIndex>
-        한국외국어대학교, 한국체육대학교, 한양대학교, 한국과학기술원(KAIST), 홍익대학교
+        포항공과대학교(POSTECH), 한국과학기술원(KAIST), 한국외국어대학교, 한국체육대학교, 한양대학교, 홍익대학교
       </ModalComponents>
     </Stepper>
   );

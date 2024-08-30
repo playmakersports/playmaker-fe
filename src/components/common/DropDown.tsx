@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { InputStyledWrapper } from "./Wrapper";
 
+import ToggleArrowIcon from "@/assets/icon/arrow/toggle/UpToggle.svg";
+
 type Props = {
   id: string;
   defaultValue: string;
@@ -36,13 +38,13 @@ function DropDown(props: Props) {
 
   return (
     <Container ref={dropDownRef} isError={false} isMedium={medium} isOpen={showOptions}>
-      <div
+      <p
         role="button"
         onClick={() => setShowOptions((prev) => !prev)}
         className={`button-area ${showOptions && `active`}`}
       >
         <p className="inner-button">{options.find((option) => option.value === selectedOption)?.name}</p>
-      </div>
+      </p>
       <Options show={showOptions}>
         {options.map((option) => (
           <Option
@@ -54,6 +56,9 @@ function DropDown(props: Props) {
           </Option>
         ))}
       </Options>
+      <ArrowWrapper toggle={showOptions}>
+        <ToggleArrowIcon />
+      </ArrowWrapper>
     </Container>
   );
 }
@@ -63,13 +68,24 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
   border: ${({ isOpen }) => (isOpen ? `1px solid var(--main)` : "")};
   user-select: none;
   background-color: var(--path-white);
+  gap: 0;
 
-  & div {
+  & p {
     cursor: pointer;
     width: 100%;
   }
-  div.active {
+  p.active {
     font-weight: 700;
+  }
+`;
+
+const ArrowWrapper = styled.div<{ toggle: boolean }>`
+  display: inline-flex;
+  align-items: center;
+  transform: rotate(${({ toggle }) => (toggle ? 0 : 180)}deg);
+  transition: transform 0.25s;
+  svg {
+    fill: var(--gray2);
   }
 `;
 

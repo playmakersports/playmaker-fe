@@ -109,9 +109,10 @@ const Wrapper = styled.button<ButtonStyled>`
   user-select: none;
   -webkit-font-smoothing: antialiased;
   transition: all 0.2s;
+  will-change: outline;
   ${FONTS.MD1};
   &:focus {
-    outline: none;
+    outline: 3px solid ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
   }
   &:disabled {
     background-color: var(--gray7);

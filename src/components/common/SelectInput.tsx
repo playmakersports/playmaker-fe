@@ -50,6 +50,12 @@ const Check = styled.input`
     border: 1px solid var(--gray5);
     background-color: transparent;
   }
+  &:focus:not(:checked) + svg {
+    outline: 3px solid var(--gray6);
+  }
+  &:focus + svg {
+    outline: 3px solid var(--sub1);
+  }
   &:checked + svg {
     fill: #fff;
     border: 1px solid transparent;
@@ -70,6 +76,12 @@ const Radio = styled.input`
     border-radius: 50%;
     border: 1px solid var(--gray5);
     background-color: transparent;
+  }
+  &:focus:not(:checked) + ${RadioIcon} {
+    outline: 3px solid var(--gray4);
+  }
+  &:focus:checked + ${RadioIcon} {
+    outline: 3px solid var(--sub1);
   }
   &:checked + ${RadioIcon} {
     display: flex;

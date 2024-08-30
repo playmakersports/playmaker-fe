@@ -17,7 +17,7 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
         가입 방식을 선택해주세요
       </Title>
       <Buttons>
-        <Card onClick={() => setStep(2)}>
+        <Card role="button" tabIndex={1} onClick={() => setStep(2)}>
           <strong>일반</strong>
           <p>
             내 주변이나 생활 지역에서
@@ -25,7 +25,7 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
             스포츠 팀을 찾고 참여합니다
           </p>
         </Card>
-        <Card onClick={() => setStep(1)}>
+        <Card role="button" tabIndex={2} onClick={() => setStep(1)}>
           <strong>대학</strong>
           <p>
             대학 동아리나 리그 소속으로
@@ -84,6 +84,10 @@ const Card = styled(BasicWhiteCard)`
   p {
     ${FONTS.MD2};
     text-align: center;
+  }
+
+  &:focus {
+    outline: 2px solid var(--gray6);
   }
 `;
 export default Step0;

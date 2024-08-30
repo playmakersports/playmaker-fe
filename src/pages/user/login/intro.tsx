@@ -134,6 +134,7 @@ const AllCheck = styled.div`
   gap: 10px;
 
   label {
+    width: 100%;
     ${FONTS.MD1W500}
   }
 `;

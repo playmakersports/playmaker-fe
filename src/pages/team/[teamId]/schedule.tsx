@@ -9,6 +9,7 @@ import { BaseContainer, WhiteSectionDivider } from "@/components/common/Containe
 import { BasicWhiteCardTitle } from "@/components/common/Card";
 import Loading from "@/components/common/Loading";
 import useBgWhite from "@/hook/useBgWhite";
+import { DateKeypadInput } from "@/components/common/PlainInput";
 
 function Schedule() {
   useBgWhite();
@@ -81,7 +82,7 @@ function Schedule() {
         <Header>
           <Control onClick={() => handleMonthMove("PREV")}>이전달</Control>
           <NowDate>
-            <DateInput
+            <DateKeypadInput
               type="number"
               pattern="[0-9]*"
               inputMode="numeric"
@@ -98,7 +99,7 @@ function Schedule() {
               }}
             />
             .
-            <DateInput
+            <DateKeypadInput
               type="number"
               pattern="[0-9]*"
               inputMode="numeric"
@@ -359,27 +360,6 @@ const ScheduleAreaTitle = styled(BasicWhiteCardTitle)`
   .holiday-name {
     color: var(--point);
     ${FONTS.MD2}
-  }
-`;
-
-const DateInput = styled.input`
-  width: max-content;
-  color: var(--text);
-  text-align: right;
-  -moz-appearance: textfield;
-
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  padding: 1px;
-  &:focus {
-    padding: 0px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid var(--main);
   }
 `;
 

@@ -50,6 +50,7 @@ function EditorMenu({ editor }: Props) {
   return (
     <Container ref={containerRef}>
       <button
+        tabIndex={-1}
         type="button"
         className={`toggle-button ${showStyle && "active"}`}
         onClick={() => setShowStyle((prev) => !prev)}
@@ -58,18 +59,21 @@ function EditorMenu({ editor }: Props) {
       </button>
       <HideMenu show={showStyle}>
         <button
+          tabIndex={-1}
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
           className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
         >
           대제목
         </button>
         <button
+          tabIndex={-1}
           onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
           className={editor.isActive("heading", { level: 2 }) ? "is-active" : ""}
         >
           중제목
         </button>
         <button
+          tabIndex={-1}
           onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
           className={editor.isActive("heading", { level: 3 }) ? "is-active" : ""}
         >
@@ -77,6 +81,7 @@ function EditorMenu({ editor }: Props) {
         </button>
       </HideMenu>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().toggleBold().run()}
         disabled={!editor.can().chain().focus().toggleBold().run()}
         className={editor.isActive("bold") ? "is-active" : ""}
@@ -84,6 +89,7 @@ function EditorMenu({ editor }: Props) {
         <BoldText />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().toggleItalic().run()}
         disabled={!editor.can().chain().focus().toggleItalic().run()}
         className={editor.isActive("italic") ? "is-active" : ""}
@@ -91,6 +97,7 @@ function EditorMenu({ editor }: Props) {
         <ItalicText />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().toggleUnderline().run()}
         disabled={!editor.can().chain().focus().toggleUnderline().run()}
         className={editor.isActive("underline") ? "is-active" : ""}
@@ -98,6 +105,7 @@ function EditorMenu({ editor }: Props) {
         <UnderlineText />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().toggleStrike().run()}
         disabled={!editor.can().chain().focus().toggleStrike().run()}
         className={editor.isActive("strike") ? "is-active" : ""}
@@ -105,6 +113,7 @@ function EditorMenu({ editor }: Props) {
         <DeleteText />
       </button>
       <button
+        tabIndex={-1}
         id="highlight-button"
         onClick={() => editor.chain().focus().toggleHighlight().run()}
         disabled={!editor.can().chain().focus().toggleHighlight().run()}
@@ -113,24 +122,28 @@ function EditorMenu({ editor }: Props) {
         <HighlightText />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().toggleBlockquote().run()}
         className={editor.isActive("blockquote") ? "is-active" : ""}
       >
         <Quote />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().setTextAlign("left").run()}
         className={editor.isActive({ textAlign: "left" }) ? "is-active" : ""}
       >
         <AlignLeft />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().setTextAlign("center").run()}
         className={editor.isActive({ textAlign: "center" }) ? "is-active" : ""}
       >
         <AlignCenter />
       </button>
       <button
+        tabIndex={-1}
         onClick={() => editor.chain().focus().setTextAlign("right").run()}
         className={editor.isActive({ textAlign: "right" }) ? "is-active" : ""}
       >

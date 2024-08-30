@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { EditorContent, Editor } from "@tiptap/react";
 
@@ -13,22 +13,9 @@ type Props = {
 };
 
 function EditorUI({ editor }: Props) {
-  useEffect(() => {
-    if (editor && editor.isFocused) {
-      document.body.style.overflow = "hidden";
-      document.body.style.pointerEvents = "none";
-      document.getElementById("main_Container")!.style.overflowY = "hidden";
-    }
-    return () => {
-      document.body.style.overflow = "auto";
-      document.body.style.removeProperty("pointer-events");
-      document.getElementById("main_Container")!.style.overflowY = "auto";
-    };
-  }, [editor]);
-
   return (
     <EditorContainer>
-      <div style={{ position: "relative" }}>
+      <div id="editorWrapper">
         {editor && <EditorMenu editor={editor} />}
         <div id="editor" className={editor?.isFocused ? "focused" : ""}>
           {editor && <EditorContent editor={editor} />}
@@ -41,15 +28,20 @@ function EditorUI({ editor }: Props) {
 }
 
 const EditorContainer = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
   overscroll-behavior: contain;
 
+  #editorWrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
   #editor {
+    flex: 1;
     width: 100%;
-    height: auto;
     padding: 10px 12px;
     border: 1px solid var(--gray7);
     border-radius: 8px;
@@ -62,7 +54,7 @@ const EditorContainer = styled.div`
       outline: none;
     }
     .tiptap {
-      min-height: 280px;
+      min-height: 360px;
       overflow-y: auto;
       ${EDITOR_ARTICLE_STYLE}
     }

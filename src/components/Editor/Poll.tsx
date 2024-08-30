@@ -1,14 +1,16 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { format } from "date-fns";
 import { useFieldArray, useForm } from "react-hook-form";
-import { FONTS } from "@/styles/common";
+import useToast from "@/hook/useToast";
 
 import SmallX from "@/assets/icon/editor/SmallX.svg";
+import { FONTS } from "@/styles/common";
 import Button from "../common/Button";
-import useToast from "@/hook/useToast";
-import { InputCheckbox } from "../common/SelectInput";
 import { BasicInput } from "../common/Input";
-import { format } from "date-fns";
+import { InputCheckbox } from "../common/SelectInput";
+import DateCalendarInput from "../common/DateCalendarInput";
+import TimeInput from "../common/TimeInput";
 
 function Poll() {
   const { trigger } = useToast();
@@ -45,35 +47,38 @@ function Poll() {
           <Option key={field.id}>
             <div className="option-index">{index + 1}</div>
             <BasicInput type="text" placeholder="입력..." {...register(`pollOptions.${index}.value`)} />
-            <button onClick={() => removeOption(index)}>
+            <button className="delete-option" onClick={() => removeOption(index)}>
               <SmallX />
             </button>
           </Option>
         ))}
       </Options>
-      <Button
-        fullWidth
-        autoHeight
-        mode="OPTION2"
-        type="button"
-        onClick={() => append({ value: "" }, { shouldFocus: false })}
-      >
-        선택지 추가
-      </Button>
+      <div className="add-option-wrapper">
+        <Button
+          autoHeight
+          fullWidth
+          borderType
+          mode="OPTION2"
+          type="button"
+          onClick={() => append({ value: "" }, { shouldFocus: false })}
+        >
+          선택지 추가
+        </Button>
+      </div>
 
       <PollSetting>
         <SetItem>
-          <InputCheckbox {...register("pollDue")} /> <label htmlFor="pollDue">종료</label>
+          <InputCheckbox id="pollDue" {...register("pollDue")} /> <label htmlFor="pollDue">종료</label>
           <DueInputs>
-            <BasicInput type="text" disabled={!watch("pollDue")} medium name="endDate" />
-            <BasicInput type="text" disabled={!watch("pollDue")} medium name="endTime" />
+            <DateCalendarInput disabled={!watch("pollDue")} name="endDate" />
+            <TimeInput disabled={!watch("pollDue")} name="endTime" />
           </DueInputs>
         </SetItem>
         <SetItem>
-          <InputCheckbox {...register("multiple")} /> <label htmlFor="multiple">복수선택</label>
+          <InputCheckbox id="multiple" {...register("multiple")} /> <label htmlFor="multiple">복수선택</label>
         </SetItem>
         <SetItem>
-          <InputCheckbox {...register("anonymous")} /> <label htmlFor="anonymous">익명투표</label>
+          <InputCheckbox id="anonymous" {...register("anonymous")} /> <label htmlFor="anonymous">익명투표</label>
         </SetItem>
       </PollSetting>
     </Container>
@@ -83,6 +88,11 @@ function Poll() {
 const Container = styled.div`
   width: 100%;
   margin-top: 20px;
+
+  div.add-option-wrapper {
+    margin: 0 auto;
+    width: 32%;
+  }
 `;
 
 const PollSetting = styled.div`
@@ -101,7 +111,7 @@ const SetItem = styled.div`
   font-size: 1.4rem;
   word-break: keep-all;
 
-  &:has(input:checked) {
+  &:has(input:checked) > label {
     color: var(--main);
     font-weight: 600;
   }
@@ -132,11 +142,8 @@ const Option = styled.li`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 20px;
-    height: 20px;
     text-align: center;
-    color: var(--gray3);
-    border: 2px solid var(--gray3);
+    color: var(--gray5);
     border-radius: 100%;
     font-size: 1.2rem;
     font-weight: 700;
@@ -146,12 +153,19 @@ const Option = styled.li`
     color: var(--gray1);
     ${FONTS.MD1W500};
   }
-  button {
-    width: 20px;
-    height: 20px;
+  .delete-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
     svg {
-      fill: var(--gray4);
+      fill: var(--gray3);
       opacity: 0.7;
+    }
+    &:focus {
+      background-color: var(--gray7);
     }
   }
   &:first-of-type {

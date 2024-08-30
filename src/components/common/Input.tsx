@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { useImperativeHandle, useRef } from "react";
 import { FONTS } from "@/styles/common";
 import { keyframes } from "@emotion/react";
 import styled from "@emotion/styled";
@@ -46,10 +46,10 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
   };
 
   return (
-    <Container>
-      <p className="input-title">{title}</p>
+    <Container style={{ width: "100%" }}>
+      {title && <p className="input-title">{title}</p>}
       <InputStyledWrapper isMedium={medium} isError={!!props.errorText}>
-        {search && <SearchIcon />}
+        {search && <SearchIcon fill="var(--gray1)" />}
         {onButtonWrapClick ? (
           <>
             <ButtonWrapInput type="button" onClick={onButtonWrapClick}>

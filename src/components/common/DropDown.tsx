@@ -38,14 +38,14 @@ function DropDown(props: Props) {
 
   return (
     <Container ref={dropDownRef} isError={false} isMedium={medium} isOpen={showOptions}>
-      <p
-        role="button"
+      <button
+        type="button"
         onClick={() => setShowOptions((prev) => !prev)}
         className={`button-area ${showOptions && `active`}`}
       >
-        <p className="inner-button">{options.find((option) => option.value === selectedOption)?.name}</p>
-      </p>
-      <Options show={showOptions}>
+        {options.find((option) => option.value === selectedOption)?.name}
+      </button>
+      <Options show={showOptions} aria-modal="true" role="modal">
         {options.map((option) => (
           <Option
             key={option.value}
@@ -67,14 +67,18 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
   position: relative;
   border: ${({ isOpen }) => (isOpen ? `1px solid var(--main)` : "")};
   user-select: none;
-  background-color: var(--path-white);
+  background-color: var(--background-light);
   gap: 0;
 
   & p {
     cursor: pointer;
     width: 100%;
   }
-  p.active {
+  button {
+    flex: 1;
+    text-align: left;
+  }
+  button.active {
     font-weight: 700;
   }
 `;
@@ -85,7 +89,7 @@ const ArrowWrapper = styled.div<{ toggle: boolean }>`
   transform: rotate(${({ toggle }) => (toggle ? 0 : 180)}deg);
   transition: transform 0.25s;
   svg {
-    fill: var(--gray2);
+    fill: var(--gray2) !important;
   }
 `;
 

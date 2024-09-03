@@ -10,7 +10,9 @@ function Toast() {
 
   return (
     <FixedWrapper style={{ display: toastAtom.show ? "block" : "none" }}>
-      <Container {...toastAtom}>{toastAtom.text}</Container>
+      <Container role="banner" {...toastAtom}>
+        {toastAtom.text}
+      </Container>
     </FixedWrapper>
   );
 }

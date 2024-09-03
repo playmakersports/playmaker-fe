@@ -12,15 +12,20 @@ function MyTeam() {
   const router = useRouter();
 
   return (
-    <TeamList>
+    <TeamList as="article" aria-label="나의 팀 목록">
       <ul className="team-list" ref={scrollMaskedHandlerRef} onScroll={(e) => scrollMaskedHandler(e)}>
         {MY_TEAM_MOCK.map((item) => (
-          <TeamItem key={item.teamName} onClick={() => router.push(`/team/${item.teamId}`)}>
+          <TeamItem
+            key={item.teamName}
+            aria-label={item.teamName}
+            role="button"
+            onClick={() => router.push(`/team/${item.teamId}`)}
+          >
             <TeamImage src={item.logoImg} />
             <p>{item.teamName}</p>
           </TeamItem>
         ))}
-        <TeamItem>
+        <TeamItem aria-label="새로운 팀 찾기">
           <More>
             <PlusIcon width={28} height={28} />
           </More>

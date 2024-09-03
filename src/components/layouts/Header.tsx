@@ -27,15 +27,13 @@ function Header({ scrollActive }: Props) {
         <Inner>
           <Logotype className="logo" width={120} height={36} />
           <Menu>
-            <Icon onClick={() => router.push("/notification")}>
+            <Icon onClick={() => router.push("/notification")} aria-label="내 알림 전체보기">
               <Count>3</Count>
               <NoticeBellIcon />
             </Icon>
-            <Link href="/user/login">
-              <Icon>
-                <PersonIcon />
-              </Icon>
-            </Link>
+            <Icon onClick={() => router.push("/user/login")} aria-label="로그인 페이지 이동">
+              <PersonIcon />
+            </Icon>
           </Menu>
         </Inner>
       </Wrapper>
@@ -56,7 +54,7 @@ function Header({ scrollActive }: Props) {
             <h2 className="main-title">{getTitle}</h2>
           </PageTitle>
           <RightIcons>
-            <Icon type="button" onClick={() => router.push("/")}>
+            <Icon type="button" onClick={() => router.push("/")} aria-label="홈화면 이동">
               <HomeIcon />
             </Icon>
             {getSubIcons.map((icon) => (
@@ -80,7 +78,7 @@ function Header({ scrollActive }: Props) {
           <h2 className="main-title">{getTitle}</h2>
         </PageTitle>
         <RightIcons>
-          <Icon type="button" onClick={() => router.push("/")}>
+          <Icon type="button" onClick={() => router.push("/")} aria-label="홈화면 이동">
             <HomeIcon />
           </Icon>
           {getSubIcons.map((icon) => (

@@ -38,10 +38,16 @@ function BottomSheet(props: BottomSheetProps) {
 
   return (
     <>
-      <Wrapper isShow={showModal} expanded={!!expanded}>
+      <Wrapper
+        isShow={showModal}
+        expanded={!!expanded}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="BottomModalHeader"
+      >
         {expanded && <Bar onClick={closeBottomSheet} />}
         <Contents>
-          {header && <Header>{header}</Header>}
+          {header && <Header id="BottomModalHeader">{header}</Header>}
           {children}
         </Contents>
         <ButtonWrapper>

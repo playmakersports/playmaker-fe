@@ -24,13 +24,14 @@ function MyWeekly() {
   ];
 
   return (
-    <Wrapper>
+    <Wrapper aria-label="이번주 나의 일정">
       <Week>
         {getDatesOfCurrentWeek().map((value, i) => (
           <div key={value}>
             <span className="date-name">{WEEK_NAME[i]}</span>
             <button
               type="button"
+              aria-label={`${value.split("-")[1]}월 ${value.split("-")[2]}일`}
               onClick={() => setActiveDate(value)}
               className={`${activeDate === value ? "active-date" : ""} date-day`}
             >

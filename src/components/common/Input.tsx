@@ -49,7 +49,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
     <Container style={{ width: "100%" }}>
       {title && <p className="input-title">{title}</p>}
       <InputStyledWrapper isMedium={medium} isError={!!props.errorText}>
-        {search && <SearchIcon fill="var(--gray1)" />}
+        {search && <SearchIcon className="search-icon" />}
         {onButtonWrapClick ? (
           <>
             <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
@@ -115,6 +115,10 @@ const Container = styled.div`
       width: 16px;
       height: 16px;
     }
+  }
+
+  svg.search-icon {
+    fill: var(--gray1);
   }
 `;
 const IconArea = styled.div`

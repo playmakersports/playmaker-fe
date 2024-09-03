@@ -80,6 +80,7 @@ function Intro() {
               </div>
               <TermView
                 type="button"
+                aria-label="해당 약관 내용을 자세히"
                 onClick={() => {
                   showModal();
                   setSelectedTerm(term.termId);

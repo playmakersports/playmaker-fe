@@ -165,6 +165,8 @@ const Container = styled.div`
   transition: all 0.2s;
 
   &.stuck {
+    margin: 0 -16px;
+    padding: 6px 13px;
     background-color: var(--background-light);
     border-bottom: 1px solid var(--gray7);
     z-index: 10;

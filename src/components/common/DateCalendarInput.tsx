@@ -16,6 +16,7 @@ type Props = Omit<InputProps, "type" | "search"> & {
 };
 const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0, isAbove: false });
   const { children, defaultValue, title, errorText, delButton = false, medium = false, ...rest } = props;
 
   const [showCalendar, setShowCalendar] = useState(false);
@@ -47,22 +48,30 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
     setMonthValue(targetDate.getMonth() + 1);
   };
 
+  const handleCalendarView = () => {
+    if (containerRef.current) {
+      const containerRect = containerRef.current!.getBoundingClientRect();
+      const isAbove = containerRect.bottom > window.innerHeight / 2;
+      setCalendarPosition({
+        top: isAbove ? containerRect.top : containerRect.bottom,
+        left: containerRect.left,
+        isAbove: isAbove,
+      });
+    }
+    setShowCalendar((prev) => !prev);
+  };
+
   return (
     <Container ref={containerRef}>
-      <BasicInput
-        ref={inputRef}
-        type="text"
-        title={title}
-        onButtonWrapClick={() => setShowCalendar((prev) => !prev)}
-        {...rest}
-      />
+      <BasicInput ref={inputRef} type="text" title={title} onButtonWrapClick={handleCalendarView} {...rest} />
       {showCalendar && (
-        <Wrapper left={containerRef.current ? containerRef.current!.offsetLeft : 0}>
+        <Wrapper left={containerRef.current ? containerRef.current!.offsetLeft : 0} position={calendarPosition}>
           <NowDate>
             <DoubleLeftArrowIcon onClick={() => handleMonthMove("PREV")} />
             <div className="date-input-wrapper">
               <DateKeypadInput
                 type="number"
+                aria-label="연도 입력"
                 pattern="[0-9]*"
                 inputMode="numeric"
                 style={{ width: "64px" }}
@@ -80,6 +89,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
               .
               <DateKeypadInput
                 type="number"
+                aria-label="월 입력"
                 pattern="[0-9]*"
                 inputMode="numeric"
                 style={{ width: "32px" }}
@@ -114,6 +124,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
                     thisMonth={!(day.nextMonth || day.previousMonth)}
                     isHoliday={day.holiday.isHoliday}
                     className={isSameDay(day.date, currentDate) && inputRef.current!.value ? "current-date" : ""}
+                    aria-label={`${day.date.getMonth() + 1}월 ${day.displayValue}일`}
                     onClick={() => {
                       const year = day.date.getFullYear();
                       const month = day.date.getMonth() + 1;
@@ -147,11 +158,12 @@ DateCalendarInput.displayName = "DateCalendarInput";
 const Container = styled.div`
   position: relative;
 `;
-const Wrapper = styled.div<{ left: number }>`
-  position: absolute;
-  margin-bottom: 60px;
-  bottom: 0;
-  left: -12px;
+type ContainerPositionType = { top: number; left: number; isAbove: boolean };
+const Wrapper = styled.div<{ left: number; position: ContainerPositionType }>`
+  position: fixed;
+  margin: 0 -8px;
+  top: ${({ position }) => position.top}px;
+  transform: ${({ position }) => (position.isAbove ? "translateY(calc(-200% - 16px))" : "translateY(16px)")};
   width: 340px;
   padding: 20px 12px;
   background-color: var(--white);
@@ -222,15 +234,15 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   &[aria-invalid] {
     visibility: hidden;
   }
-
+  &:focus {
+    background-color: var(--sub1);
+    color: #fff;
+  }
   &.current-date {
-    color: var(--main);
-    border: 1px solid var(--main);
+    background-color: var(--main);
     transform: scale(1.03);
     font-weight: 600;
-  }
-  &:focus {
-    background-color: var(--gray7);
+    color: #fff;
   }
 `;
 

@@ -19,10 +19,8 @@ InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
   ({ size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
-    <RadioWrapper>
-      <div
-        style={{ position: "relative", display: buttonType ? "none" : "inline-flex", width: "24px", height: "24px" }}
-      >
+    <RadioWrapper LARGE={size === "LARGE"}>
+      <div style={{ position: "relative", display: buttonType ? "none" : "inline-flex" }}>
         <Radio type="radio" id={id} ref={ref} {...rest} />
         <RadioIcon />
       </div>
@@ -91,8 +89,6 @@ const Radio = styled.input`
     border: 1px solid var(--main);
     &::after {
       content: "";
-      width: 13px;
-      height: 13px;
       background-color: var(--main);
       border-radius: 50%;
     }
@@ -109,10 +105,20 @@ const ButtonLabel = styled.label`
   color: var(--gray4);
   background-color: var(--gray7);
 `;
-const RadioWrapper = styled.div`
+const RadioWrapper = styled.div<{ LARGE: boolean }>`
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
+  & > div,
+  & > div > input[type="radio"] + ${RadioIcon} {
+    width: ${({ LARGE }) => (LARGE ? "24px" : "20px")};
+    height: ${({ LARGE }) => (LARGE ? "24px" : "20px")};
+
+    &::after {
+      width: ${({ LARGE }) => (LARGE ? "12px" : "10px")};
+      height: ${({ LARGE }) => (LARGE ? "12px" : "10px")};
+    }
+  }
 
   &:has(${Radio}:checked) {
     ${ButtonLabel} {
@@ -120,5 +126,9 @@ const RadioWrapper = styled.div`
       background-color: var(--main);
       font-weight: 600;
     }
+  }
+
+  & > ${BasicLabel} {
+    line-height: ${({ LARGE }) => (LARGE ? "2.2rem" : "2rem")};
   }
 `;

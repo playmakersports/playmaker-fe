@@ -16,6 +16,7 @@ import ComingUpMatch from "@/components/Team/ComingUpMatch";
 
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
+import MetaTitle from "@/components/layouts/MetaTitle";
 
 function TeamHome() {
   const router = useRouter();
@@ -30,6 +31,7 @@ function TeamHome() {
       {
         svgIcon: <SettingsIcon />,
         linkTo: `/team/${teamId}/admin`,
+        description: "팀 관리 페이지 이동",
       },
     ],
   });
@@ -38,6 +40,7 @@ function TeamHome() {
 
   return (
     <>
+      <MetaTitle title={TEAM_INFO_MOCK.teamName} />
       <CoverImage src={TEAM_INFO_MOCK.cover} />
       <Description>{TEAM_INFO_MOCK.introduce}</Description>
       <LightWrapper>

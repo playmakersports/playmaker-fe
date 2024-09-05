@@ -9,17 +9,12 @@ import { BaseContainer } from "@/components/common/Container";
 
 export default function Home() {
   return (
-    <>
-      <Head>
-        <title>플메 PLAYMAKER</title>
-      </Head>
-      <Container>
-        <Banner />
-        <MyTeam />
-        <MyWeekly />
-        <SportsSection />
-      </Container>
-    </>
+    <Container>
+      <Banner />
+      <MyTeam />
+      <MyWeekly />
+      <SportsSection />
+    </Container>
   );
 }
 

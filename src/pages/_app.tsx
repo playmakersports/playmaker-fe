@@ -2,18 +2,24 @@ import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Provider } from "jotai";
 import dynamic from "next/dynamic";
+import Head from "next/head";
 import { ThemeProvider } from "@emotion/react";
 
 import { BASIC_THEME } from "@/styles/theme";
 import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
+import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider>
       <EmotionProvider>
         <GlobalComponents>
+          <Head>
+            <title>{DEFAULT_HEAD_CONTENTS.title}</title>
+            <meta name="viewport" content="viewport-fit=cover" />
+          </Head>
           <Layout>
             <TokenRoute>
               <Component {...pageProps} />

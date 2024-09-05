@@ -264,7 +264,7 @@ const ImageItem = styled.div`
     overflow: hidden;
     svg {
       margin: -1px;
-      fill: var(--gray1);
+      fill: #333;
       background-color: #fff;
     }
   }

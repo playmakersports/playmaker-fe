@@ -207,6 +207,7 @@ const ImageContainer = styled.div`
   }
   label.image-empty {
     display: inline-flex;
+    user-select: none;
     flex: 1;
     align-items: center;
     padding: 12px 0;

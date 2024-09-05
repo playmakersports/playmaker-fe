@@ -47,6 +47,7 @@ export const EDITOR_ARTICLE_STYLE = css`
   }
 
   img {
+    margin: 12px 0;
     max-width: 100%;
     height: auto;
   }
@@ -66,7 +67,8 @@ export const EDITOR_ARTICLE_STYLE = css`
   }
 
   .wrong-iframe {
-    color: var(--warn);
-    font-weight: 800;
+    margin: 0 0 2px;
+    color: var(--point);
+    font-weight: 400;
   }
 `;

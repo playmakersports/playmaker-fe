@@ -158,19 +158,14 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   gap: 4px;
-  margin-left: -2px;
-  padding: 0 16px 0 22px;
-  margin-left: -16px;
-  margin-right: -16px;
-  margin-bottom: 8px;
+  padding: 6px 12px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   transition: all 0.2s;
 
   &.stuck {
-    padding: 8px 22px;
-    background-color: var(--background);
+    background-color: var(--background-light);
     border-bottom: 1px solid var(--gray7);
     z-index: 10;
   }
@@ -188,7 +183,10 @@ const Container = styled.div`
     &.is-active {
       font-weight: 700;
       transform: scale(0.95);
-      background-color: var(--gray7);
+      background-color: var(--main);
+      svg {
+        fill: #fff;
+      }
     }
   }
 

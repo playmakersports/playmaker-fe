@@ -41,15 +41,17 @@ const EditorContainer = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
+    border: 1px solid var(--gray7);
+    border-radius: 8px;
   }
 
   #editor {
     flex: 1;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid var(--gray7);
-    border-radius: 8px;
-    overscroll-behavior: contain;
+    border: 1px solid transparent;
+    border-top: 1px solid var(--gray7);
+    border-radius: 0 0 8px 8px;
 
     &.focused {
       border: 1px solid var(--main);

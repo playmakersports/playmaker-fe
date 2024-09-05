@@ -5,14 +5,18 @@ import styled from "@emotion/styled";
 import { EditorContent, Editor } from "@tiptap/react";
 
 import EditorMenu from "./Menu";
-import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 import EditorMenuBottom from "./MenuBottom";
+import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
+import { ArticlePollType } from "./Poll";
+import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
 
 type Props = {
   editor: Editor | null;
+  poll: EditorOptionalStateControl<ArticlePollType>;
+  images: EditorOptionalStateControl<EditorImageType>;
 };
 
-function EditorUI({ editor }: Props) {
+function EditorUI({ editor, poll, images }: Props) {
   return (
     <EditorContainer>
       <div id="editorWrapper">
@@ -21,7 +25,7 @@ function EditorUI({ editor }: Props) {
           {editor && <EditorContent editor={editor} />}
         </div>
       </div>
-      <EditorMenuBottom editor={editor} />
+      <EditorMenuBottom editor={editor} poll={poll} images={images} />
       <div id="make-scrollable" />
     </EditorContainer>
   );

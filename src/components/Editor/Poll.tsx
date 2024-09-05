@@ -12,6 +12,16 @@ import { InputCheckbox } from "../common/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
 import TimeInput from "../common/TimeInput";
 
+export type ArticlePollType = {
+  pollDue: boolean;
+  endDate: string;
+  endTime: string;
+  pollTitle: string;
+  pollOptions: Array<{ value: string; order?: number }>;
+  multiple: boolean;
+  anonymous: boolean;
+};
+
 function Poll() {
   const { trigger } = useToast();
   const today = format(new Date(), "yyyy-MM-dd");

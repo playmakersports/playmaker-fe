@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtomValue } from "jotai";
-import Link from "next/link";
 
 import { TEXT_ACTIVE } from "@/styles/common";
 import { atomBgWhite } from "@/atom/common";
@@ -58,7 +57,12 @@ function Header({ scrollActive }: Props) {
               <HomeIcon />
             </Icon>
             {getSubIcons.map((icon) => (
-              <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
+              <Icon
+                key={icon.linkTo}
+                type="button"
+                onClick={() => router.push(icon.linkTo)}
+                aria-label={icon.description}
+              >
                 {icon.svgIcon}
               </Icon>
             ))}

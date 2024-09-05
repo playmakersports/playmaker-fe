@@ -9,6 +9,7 @@ export const atomIcons = atom<
   Array<{
     svgIcon: ReactNode;
     linkTo: string;
+    description: string;
   }>
 >([]);
 

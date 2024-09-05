@@ -10,6 +10,7 @@ type HookProps = {
   subIcons?: Array<{
     svgIcon: ReactNode;
     linkTo: string;
+    description: string;
   }>;
 };
 

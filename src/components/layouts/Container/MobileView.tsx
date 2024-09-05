@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
+import { SCROLL_HIDE } from "@/styles/common";
 import Header from "../Header";
 import AppCode from "../AppCode";
-import { SCROLL_HIDE } from "@/styles/common";
+import StaffPageMover from "../StaffPageMover";
 
 function MobileView({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -35,6 +36,7 @@ function MobileView({ children }: { children: JSX.Element }) {
       <main id="main_Container" ref={container}>
         {children}
       </main>
+      <StaffPageMover />
       <AppCode />
     </Container>
   );

@@ -162,13 +162,14 @@ type ContainerPositionType = { top: number; left: number; isAbove: boolean };
 const Wrapper = styled.div<{ left: number; position: ContainerPositionType }>`
   position: fixed;
   margin: 0 -8px;
-  top: ${({ position }) => position.top}px;
-  transform: ${({ position }) => (position.isAbove ? "translateY(calc(-200% - 16px))" : "translateY(16px)")};
+  top: ${({ position }) => (position.isAbove ? "auto" : position.top)}px;
+  transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 340px;
   padding: 20px 12px;
   background-color: var(--white);
   border-radius: 12px;
   box-shadow: 0 2px 20px 2px rgba(115, 115, 115, 0.15);
+  z-index: 90;
 
   @media (max-width: 420px) {
     top: ${({ position }) => (position.isAbove ? 0 : position.top)}px;
@@ -176,7 +177,6 @@ const Wrapper = styled.div<{ left: number; position: ContainerPositionType }>`
     margin: 0;
     transform: ${({ position }) => (position.isAbove ? `translateY(calc(-46px - 16px))` : "translateY(16px)")};
     width: 100vw;
-    z-index: 90;
   }
 `;
 const NowDate = styled.div`

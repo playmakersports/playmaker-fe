@@ -14,7 +14,7 @@ function Confirm(props: Props) {
 
   return (
     <Backdrop>
-      <Container>
+      <Container role="dialog" aria-modal="true">
         <Message>{message}</Message>
         <Buttons>
           <ModalButton onClick={() => handleConfirm(false)}>{buttonText.no}</ModalButton>
@@ -43,8 +43,9 @@ const Backdrop = styled.div`
 `;
 
 const Container = styled.section`
+  margin: 0 12px;
   width: 100%;
-  max-width: 600px;
+  max-width: 420px;
   min-width: 320px;
   height: max-content;
   background: var(--white);
@@ -58,6 +59,7 @@ const Message = styled.p`
   padding: 32px 16px;
   text-align: center;
   border-bottom: 1px solid var(--gray7);
+  white-space: pre-wrap;
 `;
 const Buttons = styled.div`
   display: flex;
@@ -68,6 +70,11 @@ const ModalButton = styled.button`
   font-size: 1.4rem;
   &:last-of-type {
     background-color: var(--gray7);
+  }
+  &:focus {
+    box-shadow: var(--inset-shadow20);
+    background-color: var(--gray5);
+    color: var(--white);
   }
 `;
 

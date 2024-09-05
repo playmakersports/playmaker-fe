@@ -40,6 +40,10 @@ function DropDown(props: Props) {
     <Container ref={dropDownRef} isError={false} isMedium={medium} isOpen={showOptions}>
       <button
         type="button"
+        aria-label={`선택 팝업 열기. 현재 선택된 항목 - ${
+          options.find((option) => option.value === selectedOption)?.name
+        }`}
+        role="menu"
         onClick={() => setShowOptions((prev) => !prev)}
         className={`button-area ${showOptions && `active`}`}
       >
@@ -49,7 +53,7 @@ function DropDown(props: Props) {
         {options.map((option) => (
           <Option
             key={option.value}
-            aria-selected={selectedOption === option.value}
+            className={selectedOption === option.value ? "selected" : ""}
             onClick={() => onSelected(option.value)}
           >
             {option.name}
@@ -78,6 +82,9 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
     flex: 1;
     text-align: left;
   }
+  &:has(button.button-area:focus) {
+    border: 1px solid var(--main);
+  }
   button.active {
     font-weight: 700;
   }
@@ -93,7 +100,7 @@ const ArrowWrapper = styled.div<{ toggle: boolean }>`
   }
 `;
 
-const Options = styled.ul<{ show: boolean }>`
+const Options = styled.div<{ show: boolean }>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -114,21 +121,30 @@ const Options = styled.ul<{ show: boolean }>`
   opacity: ${({ show }) => (show ? 1 : 0)};
   z-index: 1;
 `;
-const Option = styled.li`
+const Option = styled.button`
   cursor: pointer;
   padding: 10px;
   user-select: none;
   border-radius: 8px;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
   font-weight: 400;
+  border: 1px solid transparent;
 
   &:active {
-    opacity: 0.5;
+    opacity: 0.7;
   }
-  &[aria-selected="true"] {
+  &:focus {
+    opacity: 0.7;
+    border: 1px solid var(--gray3);
+  }
+  &.selected {
     background: var(--main);
     color: #fff;
     font-weight: 600;
+    &:focus {
+      background: var(--gray7);
+      color: var(--gray1);
+    }
   }
 `;
 

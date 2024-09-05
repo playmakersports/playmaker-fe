@@ -33,11 +33,12 @@ function MainTab({ items, nowValue, initialValue }: Props) {
   }, [initialValue, offset, containerRef, nowValue]);
 
   return (
-    <Container ref={containerRef}>
+    <Container ref={containerRef} role="tablist">
       <SelectedBackground offset={offset} data-value={items.find((item) => item.value === selected)?.name} />
       {items.map((item) => (
         <Item
           key={item.value}
+          role="tab"
           className={selected === item.value ? "selected" : ""}
           onClick={(event) => {
             handleClickItem(item.value, event);

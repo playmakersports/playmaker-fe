@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import Logotype from "@/assets/logo/Logotype.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
+import Link from "next/link";
 
 function PcView({ children }: { children: JSX.Element }) {
   return (
@@ -11,15 +12,21 @@ function PcView({ children }: { children: JSX.Element }) {
       <Container>
         <Header>
           <Menu>
-            <li className="logo-area">
-              <Logotype width={168} height="auto" fill="var(--gray1)" />
+            <div className="logo-area">
+              <Link href="/" aria-label="홈으로 이동. 협회 및 관계자 전용 화면에서 벗어납니다.">
+                <Logotype width={168} height="auto" fill="var(--gray1)" />
+              </Link>
               <p>협회 및 관계사 전용</p>
+            </div>
+            <li className="menu-item">
+              <Link href="/staff/competition">대회 관리</Link>
             </li>
-            <li className="menu-item">대회 관리</li>
-            <li className="menu-item">결제 정보</li>
+            <li className="menu-item">
+              <Link href="/staff/payment">결제 정보</Link>
+            </li>
           </Menu>
           <Icons>
-            <button type="button">
+            <button type="button" aria-label="내 정보 이동">
               <PersonIcon />
             </button>
           </Icons>
@@ -56,14 +63,14 @@ const Header = styled.nav`
   align-items: center;
   height: 60px;
   padding: 16px 2.5vw;
-  border-bottom: 1px solid var(--gray7);
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 `;
 const Menu = styled.ul`
   display: flex;
   align-items: center;
   gap: 24px;
 
-  li.logo-area {
+  div.logo-area {
     margin-right: 32px;
     p {
       padding-left: 10px;
@@ -73,8 +80,7 @@ const Menu = styled.ul`
       font-weight: 400;
     }
   }
-  li.menu-item {
-    cursor: pointer;
+  li.menu-item > a {
     padding: 1px 8px;
     color: var(--gray2);
     border-radius: 4px;

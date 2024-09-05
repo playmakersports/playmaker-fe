@@ -53,7 +53,15 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
         {onButtonWrapClick ? (
           <>
             <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
-              <input ref={inputRef} type={type} readOnly={true} placeholder={props.placeholder ?? " "} {...rest} />
+              <input
+                ref={inputRef}
+                type={type}
+                readOnly={true}
+                placeholder={props.placeholder ?? " "}
+                aria-disabled="true"
+                tabIndex={-1}
+                {...rest}
+              />
             </ButtonWrapInput>
           </>
         ) : (

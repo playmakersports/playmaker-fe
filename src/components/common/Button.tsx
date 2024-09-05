@@ -112,7 +112,7 @@ const Wrapper = styled.button<ButtonStyled>`
   will-change: outline;
   ${FONTS.MD1};
   &:focus {
-    outline: 3px solid ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
+    box-shadow: 0 0 0 2px ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
   }
   &:disabled {
     background-color: var(--gray7);

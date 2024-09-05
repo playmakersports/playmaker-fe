@@ -171,7 +171,10 @@ const Wrapper = styled.div<{ left: number; position: ContainerPositionType }>`
   box-shadow: 0 2px 20px 2px rgba(115, 115, 115, 0.15);
 
   @media (max-width: 420px) {
-    left: ${({ left }) => left * -1}px;
+    top: ${({ position }) => (position.isAbove ? 0 : position.top)}px;
+    left: 0;
+    margin: 0;
+    transform: ${({ position }) => (position.isAbove ? `translateY(calc(-46px - 16px))` : "translateY(16px)")};
     width: 100vw;
     z-index: 90;
   }

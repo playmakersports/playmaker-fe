@@ -10,7 +10,7 @@
   font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI",
     "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
     sans-serif;
-  font-style: normal;
+  font-style: inherit;
   -webkit-tap-highlight-color: transparent !important;
 }
 
@@ -20,7 +20,6 @@ body {
   line-height: 1;
   overflow: hidden;
   height: calc(100vh - 1px); /* iOS에서 body scroll 방지 */
-  overscroll-behavior: none;
 }
 
 ol,

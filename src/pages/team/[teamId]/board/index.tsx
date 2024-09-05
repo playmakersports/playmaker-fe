@@ -165,7 +165,6 @@ const TabWrapper = styled.div`
 
   &.stuck {
     border-bottom: 1px solid var(--gray7);
-    padding-bottom: 2px;
     background-color: var(--background-light);
   }
 `;

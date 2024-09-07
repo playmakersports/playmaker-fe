@@ -10,7 +10,6 @@ import MainTab from "./MainTab";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
-import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { WhiteSectionDivider } from "../common/Container";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 
@@ -21,15 +20,17 @@ function SportsSection() {
   return (
     <Wrapper>
       <WhiteSectionDivider />
-      <TabHead>
+      <SportsTitle>
         <span>{SUPPORT_SPORTS.find((v) => v.value === activeTab)?.name} 정보를 한 눈에</span>
-      </TabHead>
-      <MainTab
-        nowValue={(value) => {
-          setActiveTab(value);
-        }}
-        items={SUPPORT_SPORTS}
-      />
+      </SportsTitle>
+      <TabWrapper>
+        <MainTab
+          nowValue={(value) => {
+            setActiveTab(value);
+          }}
+          items={SUPPORT_SPORTS}
+        />
+      </TabWrapper>
       <Cards>
         <Container>
           <BasicWhiteCardTitle>팀 살펴보기</BasicWhiteCardTitle>
@@ -71,9 +72,17 @@ const Wrapper = styled.div`
   margin: 0 -16px;
   padding: 0 16px var(--safe-area-bottom);
 `;
-const TabHead = styled.h3`
+const TabWrapper = styled.div`
+  position: sticky;
+  top: 0;
+  margin: -8px -16px 0;
+  padding: 8px 16px 6px;
+  background-color: var(--background-light);
+  z-index: 1;
+`;
+const SportsTitle = styled.h3`
   position: relative;
-  margin: 24px -16px;
+  margin: 24px -16px 16px;
   width: calc(100% + 32px);
   font-weight: 600;
   font-size: 1.8rem;
@@ -118,18 +127,6 @@ const Cards = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-`;
-
-const ListWrapperRow = styled.div`
-  margin: 0 -20px;
-  ${SCROLL_HIDE};
-  .inner-scroll-wrapper {
-    margin: 0 12px;
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  ${SCROLL_MASKED_GRADIENT("var(--card-rgb)")};
 `;
 
 const LineBottom = styled.div`

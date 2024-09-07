@@ -65,7 +65,7 @@ const Container = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overscroll-behavior: none;
+  padding-bottom: var(--env-sab);
 `;
 const Buttons = styled.div`
   display: flex;

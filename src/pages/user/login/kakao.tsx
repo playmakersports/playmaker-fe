@@ -22,7 +22,7 @@ function KakaoLogin() {
             setApiState("SUCCESS");
             localStorage.setItem("Authorization", res.data.access_token);
             localStorage.setItem("Refresh", res.data.refresh_token);
-            router.push("/user/login/intro");
+            router.push("/user/login/intro?from=kakao");
           }
         })
         .catch((err) => {

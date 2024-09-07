@@ -28,11 +28,12 @@ const Container = styled.button`
   justify-content: center;
   margin: 12px 0;
   width: 100%;
-  color: var(--gray3);
+  color: var(--gray500);
   border-radius: 10px;
   ${FONTS.MD2};
+  font-weight: 400;
   svg {
-    fill: var(--gray3);
+    fill: var(--gray500);
   }
 
   ${TEXT_ACTIVE("var(--background)", {

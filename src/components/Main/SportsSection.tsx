@@ -92,7 +92,7 @@ const SportsTitle = styled.h3`
     position: absolute;
     display: block;
     top: 50%;
-    background-color: var(--gray5);
+    background-color: var(--sub1);
     width: 100%;
     height: 1px;
   }
@@ -109,7 +109,7 @@ const SportsTitle = styled.h3`
       display: inline-block;
       width: 5px;
       height: 5px;
-      border: 2px solid var(--gray5);
+      border: 2px solid var(--sub1);
       border-radius: 100%;
     }
   }

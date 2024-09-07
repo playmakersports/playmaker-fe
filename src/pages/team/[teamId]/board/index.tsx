@@ -162,8 +162,10 @@ const TabWrapper = styled.div`
   padding: 4px 16px 0;
   top: 0;
   z-index: 1;
+  transition: padding 0.2s;
 
   &.stuck {
+    padding-bottom: 4px;
     border-bottom: 1px solid var(--gray7);
     background-color: var(--background-light);
   }

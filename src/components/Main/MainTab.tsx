@@ -55,7 +55,7 @@ function MainTab({ items, nowValue, initialValue }: Props) {
 const Container = styled.ul`
   position: relative;
   display: flex;
-  margin: 0 8px 8px;
+  margin: 4px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;

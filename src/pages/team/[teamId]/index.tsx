@@ -122,7 +122,7 @@ const Top = styled.section`
   background-color: var(--background-light);
 `;
 const MainContainer = styled(BaseContainer)`
-  padding: 0px 16px 20px;
+  padding: 0px 16px;
 `;
 const TeamInfo = styled.article`
   display: flex;
@@ -175,7 +175,7 @@ const Card = styled(BasicWhiteCard.withComponent("button"))`
   ${CARD_ACTIVE};
 `;
 const PlayerListWrapper = styled(WhiteSectionWrapper)`
-  padding: 20px 24px 32px;
+  padding: 20px 24px calc(var(--env-sab) + 12px);
   background-color: var(--background-light);
 `;
 

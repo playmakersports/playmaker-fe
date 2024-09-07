@@ -101,10 +101,11 @@ const TabWrapper = styled.div`
   padding: 4px 16px 0;
   top: 0;
   z-index: 1;
+  transition: padding 0.2s;
 
   &.stuck {
+    padding-bottom: 4px;
     border-bottom: 1px solid rgb(var(--gray-h6));
-    padding-bottom: 2px;
     background-color: var(--background);
   }
 `;

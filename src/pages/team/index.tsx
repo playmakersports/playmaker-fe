@@ -1,22 +1,22 @@
-import React from "react";
-import { usePageTitle } from "@/hook/usePageTitle";
+import React, { ReactElement, useState } from "react";
 
 import Stepper from "@/components/layouts/Stepper";
+import useBgWhite from "@/hook/useBgWhite";
+import TeamCreateStep1 from "@/components/Team/Create/TeamCreateStep1";
+import TeamCreateStep2 from "@/components/Team/Create/TeamCreateStep2";
 
 function Team() {
-  usePageTitle();
+  useBgWhite();
+  const [step, setStep] = useState(1);
+  const STEP_PAGE: Record<string, ReactElement> = {
+    1: <TeamCreateStep1 setStep={setStep} />,
+    2: <TeamCreateStep2 setStep={setStep} />,
+    // 3: <Step3 setStep={setStep} />,
+    // 4: <Step4 setStep={setStep} />,
+    // 5: <Step5 />,
+  };
 
-  return (
-    <Stepper
-      title="팀의 종목을 선택해주세요"
-      button={{
-        text: "다음",
-        onClick: () => console.log(""),
-      }}
-    >
-      Team
-    </Stepper>
-  );
+  return <>{STEP_PAGE[step]}</>;
 }
 
 export default Team;

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Global, css } from "@emotion/react";
 import { useAtomValue } from "jotai";
 import { atomBgWhite } from "@/atom/common";
@@ -15,21 +14,22 @@ const baseTheme = (white?: boolean) => css`
 
 const GlobalStyle = () => {
   const isWhiteBg = useAtomValue(atomBgWhite);
-  const updateThemeMode = () => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      document.getElementsByTagName("html")[0].setAttribute("data-dark", "true");
-    } else {
-      document.getElementsByTagName("html")[0].removeAttribute("data-dark");
-    }
-  };
+  // 다크모드 제거 NOTE: 추후 필요 시 다시 추가 예정
+  // const updateThemeMode = () => {
+  //   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+  //     document.getElementsByTagName("html")[0].setAttribute("data-dark", "true");
+  //   } else {
+  //     document.getElementsByTagName("html")[0].removeAttribute("data-dark");
+  //   }
+  // };
 
-  useEffect(() => {
-    updateThemeMode();
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateThemeMode);
-    return () => {
-      window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", updateThemeMode);
-    };
-  }, []);
+  // useEffect(() => {
+  //   updateThemeMode();
+  //   window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", updateThemeMode);
+  //   return () => {
+  //     window.matchMedia("(prefers-color-scheme: dark)").removeEventListener("change", updateThemeMode);
+  //   };
+  // }, []);
 
   return <Global styles={baseTheme(isWhiteBg)} />;
 };

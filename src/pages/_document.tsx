@@ -7,8 +7,8 @@ export default function Document() {
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-title" content="플메" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f3f3" />
-        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#2c2c2c" />
+        <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f7fafc" />
+        <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#111012" />
         <link rel="apple-touch-icon" sizes="192x192" href="/images/icons/icon-192x192.png" />
         <link rel="apple-touch-icon" sizes="512x512" href="/images/icons/icon-512x512.png" />
         <link

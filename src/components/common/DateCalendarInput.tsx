@@ -63,7 +63,14 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
 
   return (
     <Container ref={containerRef}>
-      <BasicInput ref={inputRef} type="text" title={title} onButtonWrapClick={handleCalendarView} {...rest} />
+      <BasicInput
+        ref={inputRef}
+        type="text"
+        title={title}
+        onButtonWrapClick={handleCalendarView}
+        defaultValue={defaultValue && `${yearValue}-${monthValue}-${+defaultValue.split("-")[2]}`}
+        {...rest}
+      />
       {showCalendar && (
         <Wrapper left={containerRef.current ? containerRef.current!.offsetLeft : 0} position={calendarPosition}>
           <NowDate>

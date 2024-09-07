@@ -90,7 +90,14 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <>
-      <BasicInput ref={inputRef} type="text" title={title} onButtonWrapClick={() => showModal()} {...rest} />
+      <BasicInput
+        ref={inputRef}
+        type="text"
+        title={title}
+        onButtonWrapClick={() => showModal()}
+        defaultValue={`${yearValue}-${monthValue}-${dayValue}`}
+        {...rest}
+      />
 
       <ModalComponents
         buttons={[

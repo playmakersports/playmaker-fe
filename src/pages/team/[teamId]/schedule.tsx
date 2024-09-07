@@ -215,37 +215,49 @@ const SCHEDULE_DUMMY = [
     scheduleName: "연습게임 3",
     schedulePlace: "성균관대학교 경기장",
   },
+  {
+    scheduleType: "B",
+    startTime: "21:30",
+    endTime: "22:00",
+    date: "2024-09-10",
+    scheduleName: "연습게임 4",
+    schedulePlace: "성균관대학교 경기장",
+  },
 ];
 
 const Container = styled(BaseContainer)`
   display: flex;
   padding-bottom: 32px;
+  height: calc(100vh - var(--safe-area-top) - 1px);
   flex-direction: column;
+  overflow: hidden;
 `;
 const CalendarContainer = styled.article`
-  padding-bottom: 20px;
+  padding-bottom: 14px;
 `;
 const ScheduleContainer = styled.div`
+  flex: 1;
   margin: 0 -16px -24px;
   padding: 4px 20px var(--env-sab);
   background-color: var(--background);
+  overflow-y: scroll;
 `;
 const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
 `;
 const NowDate = styled.div`
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  line-height: 3rem;
+  line-height: 2.8rem;
   font-size: 2.4rem;
   font-weight: 900;
   input {
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-weight: 900;
   }
 `;
@@ -253,9 +265,9 @@ const Days = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
   ${FONTS.MD1W500};
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   transform: translateX(0);
   transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
 
@@ -275,6 +287,7 @@ const DayName = styled.div`
   margin-bottom: -8px;
   text-align: center;
   font-size: 1.4rem;
+  opacity: 0.6;
 `;
 const Control = styled.button`
   padding: 12px 20px;
@@ -320,7 +333,7 @@ const DirectionR = styled(MonthDirection)`
 const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   position: relative;
   flex: 1;
-  padding: 16px 0 20px;
+  padding: 8px 0 20px;
   text-align: center;
   border: 1px solid transparent;
   color: ${({ isHoliday }) => (isHoliday ? "var(--point)" : "var(--text)")};
@@ -337,8 +350,8 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
     transform: translateX(-50%);
     display: block;
     margin: 4px auto 0;
-    width: 6px;
-    height: 6px;
+    width: 4px;
+    height: 4px;
     background-color: var(--main);
     border-radius: 100%;
   }
@@ -366,12 +379,12 @@ const ScheduleAreaTitle = styled(BasicWhiteCardTitle)`
 const ScheduleList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 4px;
   li {
     margin: 0 -12px;
   }
   li > button {
-    padding: 12px;
+    padding: 8px 12px;
     width: 100%;
     ${INNER_BUTTON_ACTIVE("var(--background-light)")};
     .inner-button {
@@ -383,20 +396,22 @@ const ScheduleList = styled.ul`
   }
   .schedule-info {
     opacity: 0.8;
-    ${FONTS.MD2}
+    ${FONTS.MD2};
+    font-weight: 400;
   }
   .schedule-name {
     display: inline-flex;
+    padding-left: 2px;
     align-items: center;
     gap: 8px;
     ${FONTS.MD1}
     &::before {
       content: "";
       display: inline-block;
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background-color: var(--main);
-      border-radius: 100%;
+      border-radius: 50%;
     }
   }
 `;

@@ -11,21 +11,12 @@
   --animate-pop: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animation-cubic: cubic-bezier(0.05, 0, 0, 1);
   --inset-shadow20: inset 0 0 8px rgba(0, 0, 0, 0.2);
-  --shadow-alpha20: 0 2px 6px 0 rgba(115, 115, 115, 0.1);
+  --shadow-alpha20: 0 2px 6px 0 rgba(141, 141, 141, 0.15);
 
   --background: #f7fafc;
   --background-rgb: 247, 250, 252;
   --background-light: #fff;
   --background-light-rgb: 256, 256, 256;
-
-  --gray1: #000;
-  --gray2: #1e1e1e;
-  --gray3: #5e5e5e;
-  --gray4: #868686;
-  --gray5: #9b9b9b;
-  --gray6: #cfcfcf;
-  --gray7: #ededed;
-  --white: #fff;
 
   --gray900: #212121;
   --gray800: #424242;
@@ -55,15 +46,6 @@
   --background-rgb: 17, 16, 18;
   --background-light: #25262d;
   --background-light-rgb: 37, 38, 45;
-
-  --gray1: #fff;
-  --gray2: #cbcbcb;
-  --gray3: #9b9b9b;
-  --gray4: #767676;
-  --gray5: #5e5e5e;
-  --gray6: #3b3b3b;
-  --gray7: #3b3b3b;
-  --white: #000;
 
   --gray900: #f0f0f0;
   --gray800: #dadae3;

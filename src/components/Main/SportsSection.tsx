@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
@@ -12,9 +12,12 @@ import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
 import { WhiteSectionDivider } from "../common/Container";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
+import useStickyMoment from "@/hook/useStickyMoment";
 
 function SportsSection() {
   const router = useRouter();
+  const tabRef = useRef<HTMLDivElement>(null);
+  useStickyMoment(tabRef);
   const [activeTab, setActiveTab] = useState(SUPPORT_SPORTS[0].value);
 
   return (
@@ -23,7 +26,7 @@ function SportsSection() {
       <SportsTitle>
         <span>{SUPPORT_SPORTS.find((v) => v.value === activeTab)?.name} 정보를 한 눈에</span>
       </SportsTitle>
-      <TabWrapper>
+      <TabWrapper ref={tabRef}>
         <MainTab
           nowValue={(value) => {
             setActiveTab(value);
@@ -74,11 +77,24 @@ const Wrapper = styled.div`
 `;
 const TabWrapper = styled.div`
   position: sticky;
-  top: 0;
+  top: -1px;
+  width: 100%;
   margin: -8px -16px 0;
-  padding: 8px 16px 6px;
+  padding: 8px 16px;
   background-color: var(--background-light);
   z-index: 1;
+  transition: all 0.3s;
+  will-change: padding transform;
+  &.stuck {
+    margin: 0 auto;
+    width: 85%;
+    padding: 6px 6px;
+    background-color: rgba(var(--sub1-rgb), 0.2);
+    backdrop-filter: blur(16px);
+    border-radius: 32px;
+    transform: translateY(12px);
+    overflow: hidden;
+  }
 `;
 const SportsTitle = styled.h3`
   position: relative;
@@ -131,7 +147,7 @@ const Cards = styled.div`
 
 const LineBottom = styled.div`
   margin-bottom: 2px;
-  border-bottom: 1px solid var(--gray7);
+  border-bottom: 1px solid var(--gray300);
 `;
 
 export default SportsSection;

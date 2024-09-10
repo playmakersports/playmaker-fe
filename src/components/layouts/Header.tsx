@@ -104,7 +104,7 @@ const Icon = styled.button`
   width: 28px;
   height: 28px;
   border-radius: var(--radius-10);
-  ${TEXT_ACTIVE("var(--gray7)")};
+  ${TEXT_ACTIVE("var(--gray300)")};
 
   svg {
     width: 22px;
@@ -149,11 +149,11 @@ const Wrapper = styled.header<StyledScrolled>`
     backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
   }
   button > svg {
-    fill: var(--gray1);
+    fill: var(--gray900);
   }
   .logo {
     width: 148px;
-    fill: var(--gray1);
+    fill: var(--gray900);
   }
 `;
 const Inner = styled.div`
@@ -172,7 +172,7 @@ const Menu = styled.div`
   gap: 12px;
   font-weight: 400;
   font-size: 1.6rem;
-  color: var(--gray1);
+  color: var(--gray900);
 `;
 
 const PageTitle = styled.div<StyledScrolled>`

@@ -55,7 +55,6 @@ function MainTab({ items, nowValue, initialValue }: Props) {
 const Container = styled.ul`
   position: relative;
   display: flex;
-  margin: 4px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
@@ -95,6 +94,7 @@ const SelectedBackground = styled(CommonItem)<{ offset: number }>`
   padding: 8px 20px;
   background-color: var(--main);
   border-radius: 16px;
+  will-change: left;
   &::after {
     content: attr(data-value);
     visibility: hidden;

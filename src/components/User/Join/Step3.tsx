@@ -61,7 +61,7 @@ const ImageUpload = styled.label`
   width: 152px;
   height: 152px;
   border-radius: 50%;
-  background-color: var(--gray7);
+  background-color: var(--gray300);
   align-items: center;
   justify-content: center;
   user-select: none;
@@ -69,7 +69,7 @@ const ImageUpload = styled.label`
   svg {
     width: 96px;
     height: 96px;
-    fill: var(--gray6);
+    fill: var(--gray400);
   }
   .camera-icon-wrapper {
     position: absolute;

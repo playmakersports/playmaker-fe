@@ -45,7 +45,7 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", d
             (timeValue.am && +timeValue.hour === 12 ? 12 : 0)
         ).padStart(2, "0")}:${timeValue.minute.padStart(2, "0")}`}
       />
-      <ClockIcon fill={rest.disabled ? "var(--gray5)" : "var(--gray3)"} />
+      <ClockIcon fill={rest.disabled ? "var(--gray500)" : "var(--gray700)"} />
       <button
         type="button"
         disabled={rest.disabled}
@@ -111,7 +111,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   gap: 1px;
-  border: 1px solid var(--gray7);
+  border: 1px solid var(--gray300);
   border-radius: 8px;
   font-size: 1.8rem;
 
@@ -135,18 +135,18 @@ const Container = styled.div`
     margin-right: 2px;
     border-radius: 2px;
     &:focus {
-      background-color: var(--gray7);
-      outline: 3px solid var(--gray7);
+      background-color: var(--gray300);
+      outline: 3px solid var(--gray300);
     }
     &:disabled {
-      color: var(--gray5);
+      color: var(--gray500);
     }
   }
   &:has(input:disabled) {
     appearance: none;
-    color: var(--gray5);
+    color: var(--gray500);
     border: 1px solid transparent;
-    background-color: var(--gray7);
+    background-color: var(--gray300);
   }
   &:has(input:focus) {
     border: 1px solid var(--main);

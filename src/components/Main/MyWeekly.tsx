@@ -81,7 +81,7 @@ const Week = styled.div`
     }
     span.date-name {
       display: block;
-      color: var(--gray4);
+      color: var(--gray600);
       font-size: 1.4rem;
     }
     button.date-day {
@@ -122,7 +122,7 @@ const Schedules = styled.div`
   .team-group {
     padding-bottom: 12px;
     margin-bottom: 12px;
-    border-bottom: 1px solid var(--gray7);
+    border-bottom: 1px solid var(--gray300);
     &:last-of-type {
       border: none;
       padding-bottom: 0;
@@ -149,7 +149,7 @@ const Schedules = styled.div`
         letter-spacing: -0.2px;
       }
       span {
-        color: var(--gray2);
+        color: var(--gray800);
       }
       &::before {
         display: inline-flex;
@@ -157,7 +157,7 @@ const Schedules = styled.div`
         content: "";
         width: 5px;
         height: 5px;
-        background-color: var(--neutral-n40);
+        background-color: var(--gray300);
         border-radius: 100%;
       }
     }

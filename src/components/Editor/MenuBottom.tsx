@@ -180,13 +180,13 @@ const ImageContainer = styled.div`
   margin: 8px 0 12px;
   padding: 8px 12px;
   align-items: center;
-  background-color: var(--gray7);
+  background-color: var(--gray300);
   border-radius: 8px;
   overflow-x: auto;
 
   &:has(label.image-exist) {
     background: transparent;
-    border: 1px solid var(--gray7);
+    border: 1px solid var(--gray300);
     gap: 12px;
   }
   label {
@@ -198,11 +198,11 @@ const ImageContainer = styled.div`
   label.image-exist {
     padding: 0 12px;
     height: 110px;
-    background-color: var(--gray7);
+    background-color: var(--gray300);
     border-radius: 4px;
     font-size: 2rem;
     svg {
-      fill: var(--gray3);
+      fill: var(--gray700);
     }
   }
   label.image-empty {
@@ -213,9 +213,9 @@ const ImageContainer = styled.div`
     padding: 12px 0;
     font-size: 1.6rem;
     gap: 8px;
-    color: var(--gray3);
+    color: var(--gray700);
     svg {
-      fill: var(--gray3);
+      fill: var(--gray700);
     }
   }
 `;
@@ -230,15 +230,15 @@ const OptionGroup = styled.div`
     ${FONTS.MD2};
     padding: 0 4px;
     border-radius: 8px;
-    color: var(--gray2);
-    ${TEXT_ACTIVE("var(--gray7)", { focus: true })};
+    color: var(--gray800);
+    ${TEXT_ACTIVE("var(--gray300)", { focus: true })};
 
     &:disabled {
       opacity: 0.2;
     }
   }
   svg {
-    fill: var(--gray2);
+    fill: var(--gray800);
   }
 `;
 const EditorButton = styled.button`

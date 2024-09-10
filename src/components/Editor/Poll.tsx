@@ -112,7 +112,7 @@ const PollSetting = styled.div`
   gap: 20px 32px;
   justify-content: flex-start;
   flex-wrap: wrap;
-  border-top: 1px solid var(--gray7);
+  border-top: 1px solid var(--gray300);
 `;
 const SetItem = styled.div`
   display: inline-flex;
@@ -153,14 +153,14 @@ const Option = styled.li`
     align-items: center;
     justify-content: center;
     text-align: center;
-    color: var(--gray5);
+    color: var(--gray500);
     border-radius: 100%;
     font-size: 1.2rem;
     font-weight: 700;
   }
   input {
     width: calc(100% - 20px);
-    color: var(--gray1);
+    color: var(--gray900);
     ${FONTS.MD1W500};
   }
   .delete-option {
@@ -171,11 +171,11 @@ const Option = styled.li`
     height: 24px;
     border-radius: 4px;
     svg {
-      fill: var(--gray3);
+      fill: var(--gray700);
       opacity: 0.7;
     }
     &:focus {
-      background-color: var(--gray7);
+      background-color: var(--gray300);
     }
   }
   &:first-of-type {

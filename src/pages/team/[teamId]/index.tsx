@@ -99,17 +99,17 @@ const CoverImage = styled.section<{ src: string }>`
   margin-top: calc(-1 * var(--safe-area-top));
   width: 100%;
   height: calc(232px + var(--env-sat));
-  background-color: var(--gray4);
+  background-color: var(--gray600);
   background-image: url(${({ src }) => src});
   background-size: cover;
   background-repeat: no-repeat;
 `;
 const Description = styled.p`
   ${FONTS.MD2};
-  color: var(--gray2);
+  color: var(--gray800);
   text-align: center;
   padding: 12px;
-  border-bottom: 1px solid var(--gray7);
+  border-bottom: 1px solid var(--gray300);
   text-wrap: pretty;
   background-color: var(--background-light);
 `;
@@ -144,7 +144,7 @@ const Right = styled.div`
   .team-detail-info {
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--gray4);
+    color: var(--gray600);
   }
   .team-category {
     margin-top: 8px;
@@ -156,8 +156,8 @@ const Right = styled.div`
       font-size: 1.3rem;
       line-height: 1.6rem;
       padding: 2px 4px;
-      border: 1px solid var(--gray5);
-      color: var(--gray2);
+      border: 1px solid var(--gray500);
+      color: var(--gray800);
       border-radius: 4px;
     }
   }

@@ -28,14 +28,14 @@ const Container = styled.div`
     margin-top: 0;
   }
   h4 {
-    color: var(--gray2);
+    color: var(--gray800);
     font-weight: 700;
     font-size: 1.8rem;
   }
   svg {
     width: 24px;
     height: 24px;
-    fill: var(--gray4);
+    fill: var(--gray600);
   }
 `;
 

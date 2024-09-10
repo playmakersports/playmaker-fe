@@ -27,7 +27,7 @@ const Container = styled.aside`
   left: calc(50% + 300px);
   margin-left: 20px;
   padding: 20px;
-  /* background-color: var(--gray7); */
+  /* background-color: var(--gray300); */
 
   .qr-area {
     width: 80px;
@@ -46,7 +46,7 @@ const Container = styled.aside`
   p {
     ${FONTS.MD3};
     margin-top: 6px;
-    color: var(--gray4);
+    color: var(--gray600);
   }
 
   @media (max-width: 820px) {

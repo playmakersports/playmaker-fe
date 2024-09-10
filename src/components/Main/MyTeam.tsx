@@ -54,9 +54,9 @@ const TeamItem = styled.li`
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  color: var(--gray1);
+  color: var(--gray900);
   border-radius: 2px;
-  ${TEXT_ACTIVE("var(--gray7)", { scalable: true })}
+  ${TEXT_ACTIVE("var(--gray300)", { scalable: true })}
 
   p {
     font-size: 1.4rem;
@@ -74,7 +74,7 @@ const TeamImage = styled.div<{ src: string }>`
   background-size: 50px;
   background-repeat: no-repeat;
   background-position: center;
-  border: 1px solid var(--gray7);
+  border: 1px solid var(--gray300);
   border-radius: 100%;
 `;
 
@@ -85,13 +85,13 @@ const More = styled.div`
   margin: 0 8px;
   width: 50px;
   height: 50px;
-  border: 1px solid var(--gray5);
+  border: 1px dashed var(--gray200);
   border-radius: 100%;
   & + p {
-    color: var(--gray1);
+    color: var(--gray900);
   }
   svg {
-    fill: var(--gray4);
+    fill: var(--gray500);
   }
 `;
 

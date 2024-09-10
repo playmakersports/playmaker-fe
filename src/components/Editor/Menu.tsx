@@ -168,7 +168,7 @@ const Container = styled.div`
     margin: 0 -16px;
     padding: 6px 13px;
     background-color: var(--background-light);
-    border-bottom: 1px solid var(--gray7);
+    border-bottom: 1px solid var(--gray300);
     z-index: 10;
   }
   button {
@@ -178,7 +178,7 @@ const Container = styled.div`
     align-items: center;
     padding: 6px 10px;
     font-size: 1.6rem;
-    ${BUTTON_ACTIVE("var(--gray7)")};
+    ${BUTTON_ACTIVE("var(--gray300)")};
     transition: all 0.1s;
     border: 1px solid transparent;
 
@@ -196,7 +196,7 @@ const Container = styled.div`
     padding: 2px 8px;
     margin: 4px 2px 4px 0;
     font-size: 1.4rem;
-    background-color: var(--gray7);
+    background-color: var(--gray300);
 
     svg {
       width: 16px;
@@ -216,7 +216,7 @@ const Container = styled.div`
   svg {
     width: 18px;
     height: 20px;
-    fill: var(--gray2);
+    fill: var(--gray800);
   }
   #highlight-button svg {
     fill: #000;
@@ -237,7 +237,7 @@ const HideMenu = styled.div<{ show: boolean }>`
   width: ${({ show }) => (show ? "100%" : "0%")};
   opacity: ${({ show }) => (show ? 1 : 0)};
   transition: all 0.2s;
-  border-right: 1px solid var(--gray7);
+  border-right: 1px solid var(--gray300);
 `;
 
 export default EditorMenu;

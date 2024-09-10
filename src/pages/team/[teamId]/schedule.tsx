@@ -356,7 +356,7 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
     border-radius: 100%;
   }
   &.current-date {
-    border: 1px solid var(--gray7);
+    border: 1px solid var(--gray300);
     box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
     transform: scale(1.03);
   }

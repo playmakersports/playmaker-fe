@@ -59,7 +59,7 @@ const TeamImage = styled.img`
   width: 40px;
   height: 40px;
   background-color: #fff;
-  border: 1px solid var(--gray7);
+  border: 1px solid var(--gray300);
   border-radius: 100%;
 `;
 const TeamInfo = styled.div`
@@ -67,7 +67,7 @@ const TeamInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  color: var(--gray1);
+  color: var(--gray900);
   .name {
     display: inline-flex;
     align-items: center;

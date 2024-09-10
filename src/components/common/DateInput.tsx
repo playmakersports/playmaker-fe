@@ -216,7 +216,7 @@ const Wrapper = styled.div`
 `;
 const PickList = styled.ul`
   flex: 1;
-  border-left: 1px solid var(--gray6);
+  border-left: 1px solid var(--gray400);
   &:first-of-type {
     border-left: none;
   }
@@ -225,7 +225,7 @@ const PickList = styled.ul`
     display: block;
     text-align: center;
     ${FONTS.MD1W500};
-    color: var(--gray4);
+    color: var(--gray600);
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.5px;
     transition: all 0.25s;

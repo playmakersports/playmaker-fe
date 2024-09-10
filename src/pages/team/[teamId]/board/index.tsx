@@ -166,15 +166,13 @@ const TabWrapper = styled.div`
 
   &.stuck {
     padding-bottom: 4px;
-    border-bottom: 1px solid var(--gray7);
+    border-bottom: 1px solid var(--gray300);
     background-color: var(--background-light);
   }
 `;
-const FixedArticles = styled.div`
-  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
-`;
+const FixedArticles = styled.div``;
 const FixedArticle = styled.div`
-  border-bottom: 1px solid var(--gray7);
+  border-bottom: 1px solid var(--gray300);
   .article-inner {
     display: flex;
     padding: 12px 20px;
@@ -204,7 +202,7 @@ const FixedArticle = styled.div`
   .article-sub {
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--gray3);
+    color: var(--gray700);
   }
 `;
 const Articles = styled.div`
@@ -223,7 +221,7 @@ const Article = styled(BasicWhiteCard)`
   .article-sub {
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--gray3);
+    color: var(--gray700);
   }
   .article-info {
     text-align: right;
@@ -250,8 +248,8 @@ const WriteButton = styled.button`
   justify-content: center;
   padding: 12px 0;
   border-radius: 10px;
-  border: 1px dashed var(--gray5);
-  color: var(--gray2);
+  border: 1px dashed var(--gray500);
+  color: var(--gray800);
   gap: 8px;
   ${FONTS.MD1};
   font-weight: 400;

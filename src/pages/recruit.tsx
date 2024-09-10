@@ -165,8 +165,8 @@ const CardHeader = styled.div`
     color: var(--main);
 
     &.FINISHED {
-      border: 1px solid var(--gray4);
-      color: var(--gray4);
+      border: 1px solid var(--gray600);
+      color: var(--gray600);
     }
   }
 
@@ -177,7 +177,7 @@ const CardHeader = styled.div`
     height: 48px;
     border-radius: 50%;
     background-color: var(--background-light);
-    border: 1px solid var(--gray7);
+    border: 1px solid var(--gray300);
     overflow: hidden;
     object-fit: cover;
   }

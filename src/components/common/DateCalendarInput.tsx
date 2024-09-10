@@ -173,7 +173,7 @@ const Wrapper = styled.div<{ left: number; position: ContainerPositionType }>`
   transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 340px;
   padding: 20px 12px;
-  background-color: var(--white);
+  background-color: var(--gray50);
   border-radius: 12px;
   box-shadow: 0 2px 20px 2px rgba(115, 115, 115, 0.15);
   z-index: 90;
@@ -198,7 +198,7 @@ const NowDate = styled.div`
     display: flex;
   }
   svg {
-    fill: var(--gray4);
+    fill: var(--gray600);
   }
   ${DateKeypadInput} {
     max-width: 56px;

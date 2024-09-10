@@ -14,7 +14,7 @@ function PcView({ children }: { children: JSX.Element }) {
           <Menu>
             <div className="logo-area">
               <Link href="/" aria-label="홈으로 이동. 협회 및 관계자 전용 화면에서 벗어납니다.">
-                <Logotype width={168} height="auto" fill="var(--gray1)" />
+                <Logotype width={168} height="auto" fill="var(--gray900)" />
               </Link>
               <p>협회 및 관계사 전용</p>
             </div>
@@ -82,10 +82,10 @@ const Menu = styled.ul`
   }
   li.menu-item > a {
     padding: 1px 8px;
-    color: var(--gray2);
+    color: var(--gray800);
     border-radius: 4px;
     ${FONTS.MD1W500};
-    ${TEXT_ACTIVE("var(--gray7)", { hover: true })};
+    ${TEXT_ACTIVE("var(--gray300)", { hover: true })};
   }
 `;
 const Icons = styled.div`
@@ -98,10 +98,10 @@ const Icons = styled.div`
     svg {
       width: 22px;
       height: auto;
-      fill: var(--gray1);
+      fill: var(--gray900);
     }
     border-radius: 4px;
-    ${TEXT_ACTIVE("var(--gray7)", { hover: true })};
+    ${TEXT_ACTIVE("var(--gray300)", { hover: true })};
   }
 `;
 const Children = styled.main`

@@ -77,7 +77,7 @@ const Container = styled.div`
   .video-match {
     margin-bottom: 2px;
     ${FONTS.MD2};
-    color: var(--gray4);
+    color: var(--gray600);
   }
   .video-title {
     ${FONTS.HEAD1};
@@ -85,7 +85,7 @@ const Container = styled.div`
   }
   .video-description {
     margin: 12px 0 8px;
-    color: var(--gray2);
+    color: var(--gray800);
     ${FONTS.MD2};
   }
   .video-setting {
@@ -94,8 +94,8 @@ const Container = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--gray7);
-    color: var(--gray3);
+    border-bottom: 1px solid var(--gray300);
+    color: var(--gray700);
     ${FONTS.MD2};
 
     .video-share {
@@ -104,7 +104,7 @@ const Container = styled.div`
       svg {
         width: 16px;
         height: 16px;
-        fill: var(--gray3);
+        fill: var(--gray700);
       }
     }
   }
@@ -129,7 +129,7 @@ const Container = styled.div`
       height: 32px;
       border-radius: 100%;
       overflow: hidden;
-      border: 1px solid var(--gray7);
+      border: 1px solid var(--gray300);
       font-size: 1.4rem;
       font-weight: 400;
       letter-spacing: -0.5px;

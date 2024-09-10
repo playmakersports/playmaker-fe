@@ -126,7 +126,7 @@ const MediumCardContainer = styled(BasicWhiteCard)`
     height: 140px;
     background-size: cover;
     background-position: center;
-    background-color: var(--gray7);
+    background-color: var(--gray300);
     &::before {
       position: absolute;
       content: attr(data-d-day);
@@ -171,7 +171,7 @@ const MatchBox = styled.div`
     padding: 12px 24px;
     background-color: rgba(var(--neutral-n400-rgb), 0.4);
     backdrop-filter: blur(3px);
-    /* border: 1px solid var(--gray7); */
+    /* border: 1px solid var(--gray300); */
     gap: 2px;
 
     &.home-team {
@@ -217,8 +217,8 @@ const Opened = styled.p`
   margin: 0 -18px;
   padding: 8px 18px;
   width: calc(100% + 36px);
-  color: var(--gray1);
-  border-bottom: 1px solid var(--gray7);
+  color: var(--gray900);
+  border-bottom: 1px solid var(--gray300);
 
   .opened-by-logo {
     padding: 2px;
@@ -240,12 +240,12 @@ const DetailList = styled.ul`
     display: inline-flex;
     gap: 20px;
     dt {
-      color: var(--gray1);
+      color: var(--gray900);
       word-break: keep-all;
     }
     dd {
       font-weight: 400;
-      color: var(--gray3);
+      color: var(--gray700);
     }
   }
 `;
@@ -255,7 +255,7 @@ const MediumContents = styled.div`
 
   h5 {
     ${FONTS.MD1};
-    color: var(--gray1);
+    color: var(--gray900);
   }
 `;
 

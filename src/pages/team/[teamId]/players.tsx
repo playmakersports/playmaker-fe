@@ -42,7 +42,7 @@ const Filter = styled.div`
   display: flex;
   margin: 16px -16px 0;
   padding: 16px;
-  background: var(--gray7);
+  background: var(--gray300);
   align-items: center;
   gap: 40px;
   p {

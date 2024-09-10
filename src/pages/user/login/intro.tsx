@@ -131,7 +131,7 @@ const AllCheck = styled.div`
   width: 100%;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid var(--gray7);
+  border-bottom: 1px solid var(--gray300);
   gap: 10px;
 
   label {
@@ -154,7 +154,7 @@ const TermList = styled.ul`
       gap: 10px;
       ${FONTS.MD2};
       font-weight: 400;
-      color: var(--gray3);
+      color: var(--gray700);
     }
     label {
       width: 100%;
@@ -168,7 +168,7 @@ const TermView = styled.button`
   height: 16px;
 
   svg {
-    fill: var(--gray3);
+    fill: var(--gray700);
   }
 `;
 const TermContents = styled.div``;

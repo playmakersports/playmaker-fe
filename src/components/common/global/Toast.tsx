@@ -46,8 +46,8 @@ const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT"
   ${FONTS.MD2};
   display: ${({ show }) => (show ? "block" : "none")};
   width: calc(100vw - 32px);
-  background-color: ${({ type }) => (type === "ALERT" ? "var(--point)" : "var(--gray3)")};
-  color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--white)")};
+  background-color: ${({ type }) => (type === "ALERT" ? "var(--point)" : "var(--gray700)")};
+  color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--gray50)")};
   padding: 10px 16px;
   margin: calc(env(safe-area-inset-top) + 8px) 16px;
   margin: calc(constant(safe-area-inset-top) + 8px) 16px;

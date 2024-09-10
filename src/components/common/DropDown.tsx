@@ -96,7 +96,7 @@ const ArrowWrapper = styled.div<{ toggle: boolean }>`
   transform: rotate(${({ toggle }) => (toggle ? 0 : 180)}deg);
   transition: transform 0.25s;
   svg {
-    fill: var(--gray2) !important;
+    fill: var(--gray800) !important;
   }
 `;
 
@@ -112,7 +112,7 @@ const Options = styled.div<{ show: boolean }>`
   width: calc(100% + 4px);
   background-color: var(--background);
   border-radius: 8px;
-  border: 1px solid var(--gray7);
+  border: 1px solid var(--gray300);
   box-shadow: var(--shadow-alpha20);
   transition: all 0.2s;
 
@@ -135,15 +135,15 @@ const Option = styled.button`
   }
   &:focus {
     opacity: 0.7;
-    border: 1px solid var(--gray3);
+    border: 1px solid var(--gray700);
   }
   &.selected {
     background: var(--main);
     color: #fff;
     font-weight: 600;
     &:focus {
-      background: var(--gray7);
-      color: var(--gray1);
+      background: var(--gray300);
+      color: var(--gray900);
     }
   }
 `;

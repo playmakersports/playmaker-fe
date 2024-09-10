@@ -4,8 +4,8 @@ import { atomBgWhite } from "@/atom/common";
 
 const baseTheme = (white?: boolean) => css`
   body {
-    color: var(--gray1);
-    background: var(--white);
+    color: var(--gray900);
+    background: #fff;
   }
   #mobile_Wrapper {
     background: ${white ? "var(--background-light)" : "var(--background)"};

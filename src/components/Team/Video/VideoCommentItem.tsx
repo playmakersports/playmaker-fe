@@ -60,7 +60,7 @@ const Container = styled.li`
   &::before {
     content: "";
     position: absolute;
-    border-left: 1px dashed var(--gray5);
+    border-left: 1px dashed var(--gray500);
     width: 1px;
     height: calc(100% - 2px);
     left: calc(27px + 16px);

@@ -106,7 +106,7 @@ const Container = styled.div`
     margin-bottom: 4px;
     padding: 0 8px;
     font-weight: 600;
-    color: var(--gray3);
+    color: var(--gray700);
     line-height: 2.4rem;
   }
 
@@ -117,7 +117,7 @@ const Container = styled.div`
     margin-top: 10px;
     padding: 0 8px;
     font-size: 1.2rem;
-    color: var(--gray3);
+    color: var(--gray700);
     gap: 4px;
     svg {
       width: 16px;
@@ -126,7 +126,7 @@ const Container = styled.div`
   }
 
   svg.search-icon {
-    fill: var(--gray1);
+    fill: var(--gray900);
   }
 `;
 const IconArea = styled.div`
@@ -149,7 +149,7 @@ const ClearIconArea = styled(IconArea)`
   visibility: hidden;
   transition: opacity 0.15s, visibility 0.1s;
   transition-delay: 0.1s;
-  fill: var(--gray5);
+  fill: var(--gray500);
 `;
 const StyledInput = styled.input`
   width: 100%;
@@ -160,7 +160,7 @@ const StyledInput = styled.input`
   color: var(--black);
 
   &::placeholder {
-    color: var(--gray5);
+    color: var(--gray500);
   }
 
   &:not(:placeholder-shown):focus + ${ClearIconArea} {
@@ -168,7 +168,7 @@ const StyledInput = styled.input`
     opacity: 1;
   }
   &:disabled {
-    color: var(--gray3);
+    color: var(--gray700);
     & + ${ClearIconArea} {
       display: none;
     }
@@ -181,10 +181,10 @@ const ButtonWrapInput = styled(StyledInput.withComponent("button"))`
     color: var(--black);
 
     &::placeholder {
-      color: var(--gray5);
+      color: var(--gray500);
     }
     &:disabled {
-      color: var(--gray3);
+      color: var(--gray700);
     }
   }
 

@@ -66,7 +66,7 @@ const Wrapper = styled.div`
     padding-left: 2px;
     padding-right: 2px;
     font-weight: 400;
-    border-top: 1px solid var(--gray3);
+    border-top: 1px solid var(--gray700);
     transition: all 0.2s;
     transition-delay: 0.15s;
   }

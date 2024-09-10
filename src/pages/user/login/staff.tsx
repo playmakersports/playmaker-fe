@@ -67,7 +67,7 @@ const PageText = styled.div`
   p {
     margin-top: 40px;
     ${FONTS.MD2};
-    color: var(--gray4);
+    color: var(--gray600);
     line-height: 2.4rem;
   }
 `;

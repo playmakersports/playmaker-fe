@@ -44,7 +44,7 @@ const Aside = styled.aside`
   padding: 20px 20px 0 4px;
   flex-direction: column;
   min-width: 280px;
-  border-right: 1px solid var(--gray7);
+  border-right: 1px solid var(--gray300);
 `;
 const Filter = styled.div`
   display: flex;
@@ -66,7 +66,7 @@ const Item = styled.li`
   padding: 12px 16px;
   border-radius: 10px;
   background-color: var(--background-light);
-  border: 1px solid var(--gray7);
+  border: 1px solid var(--gray300);
   &:hover {
     border: 1px solid var(--main);
   }

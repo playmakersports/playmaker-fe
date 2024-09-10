@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect } from "react";
+import { RefObject, useEffect } from "react";
 
 function useStickyMoment(ref: RefObject<any>, className?: string) {
   useEffect(() => {
@@ -9,16 +9,19 @@ function useStickyMoment(ref: RefObject<any>, className?: string) {
     const safeAreaTop = +getComputedStyle(document.documentElement).getPropertyValue("--env-sat").replace("px", "");
 
     const handleScroll = () => {
-      ref.current!.classList.toggle(
-        className ?? "stuck",
-        ref.current?.getBoundingClientRect().top === headerHeight + safeAreaTop
-      );
+      if (ref.current) {
+        ref.current!.classList.toggle(
+          className ?? "stuck",
+          ref.current?.getBoundingClientRect().top - 12 < headerHeight + safeAreaTop
+        );
+      }
     };
-    mainContainerEl!.addEventListener("scroll", handleScroll);
+
+    mainContainerEl.addEventListener("scroll", handleScroll);
     return () => {
-      mainContainerEl!.removeEventListener("scroll", handleScroll);
+      mainContainerEl.removeEventListener("scroll", handleScroll);
     };
-  }, [ref]);
+  }, [ref, className]);
 
   return null;
 }

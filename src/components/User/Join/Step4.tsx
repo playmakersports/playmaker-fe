@@ -66,7 +66,7 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
 const Description = styled.p`
   margin-bottom: 20px;
   ${FONTS.MD2};
-  color: var(--gray3);
+  color: var(--gray700);
   text-align: center;
 `;
 const List = styled.div`

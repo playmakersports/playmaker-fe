@@ -38,13 +38,13 @@ function Button(props: Props) {
       color: "#fff",
     },
     OPTION1: {
-      background: "var(--gray2)",
-      color: "var(--white)",
+      background: "var(--gray800)",
+      color: "var(--gray50)",
     },
     OPTION2: {
-      background: "var(--gray5)",
+      background: "var(--gray500)",
       color: "#fff",
-      borderTypeColor: "var(--gray3)",
+      borderTypeColor: "var(--gray700)",
     },
     SUB1: {
       background: "var(--sub1)",
@@ -115,8 +115,8 @@ const Wrapper = styled.button<ButtonStyled>`
     box-shadow: 0 0 0 2px ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
   }
   &:disabled {
-    background-color: var(--gray7);
-    color: var(--gray5);
+    background-color: var(--gray300);
+    color: var(--gray500);
     cursor: not-allowed;
   }
   &:active {

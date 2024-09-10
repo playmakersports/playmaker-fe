@@ -100,7 +100,7 @@ const Wrapper = styled.div`
     flex-shrink: 0;
     width: calc(100px - 32px);
     height: calc(100px - 32px);
-    border: 1px solid var(--gray7);
+    border: 1px solid var(--gray300);
     border-radius: 100%;
   }
   .profile-info {

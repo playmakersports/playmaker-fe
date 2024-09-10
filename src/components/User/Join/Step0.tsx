@@ -87,7 +87,7 @@ const Card = styled(BasicWhiteCard)`
   }
 
   &:focus {
-    outline: 2px solid var(--gray6);
+    outline: 2px solid var(--gray400);
   }
 `;
 export default Step0;

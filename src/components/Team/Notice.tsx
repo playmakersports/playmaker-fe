@@ -88,7 +88,7 @@ const PADDING = 24;
 const Container = styled.div`
   margin: 0 -16px 20px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--gray7);
+  border-bottom: 1px solid var(--gray300);
 `;
 const Display = styled.div`
   position: relative;
@@ -133,7 +133,7 @@ const Item = styled.div`
       content: "";
       width: 5px;
       height: 5px;
-      background-color: var(--gray5);
+      background-color: var(--gray500);
       border-radius: 100%;
     }
   }
@@ -142,7 +142,7 @@ const Item = styled.div`
   }
   .create-at {
     flex-shrink: 0;
-    color: var(--gray5);
+    color: var(--gray500);
     font-size: 1.4rem;
     text-align: right;
   }

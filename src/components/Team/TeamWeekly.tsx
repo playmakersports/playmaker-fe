@@ -78,7 +78,7 @@ const DaySelector = styled.button`
   span.date-name {
     // 요일명
     display: block;
-    color: var(--gray4);
+    color: var(--gray600);
     font-size: 1.4rem;
   }
   span.date-number {
@@ -127,7 +127,7 @@ const Schedules = styled(BasicWhiteCard.withComponent("ul"))`
       letter-spacing: -0.2px;
     }
     span {
-      color: var(--gray2);
+      color: var(--gray800);
     }
     &::before {
       display: inline-flex;

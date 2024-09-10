@@ -45,11 +45,11 @@ const Check = styled.input`
     height: 24px;
     border-radius: 4px;
     fill: none;
-    border: 1px solid var(--gray5);
+    border: 1px solid var(--gray500);
     background-color: transparent;
   }
   &:focus:not(:checked) + svg {
-    outline: 3px solid var(--gray6);
+    outline: 3px solid var(--gray400);
   }
   &:focus + svg {
     outline: 3px solid var(--sub1);
@@ -72,11 +72,11 @@ const Radio = styled.input`
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    border: 1px solid var(--gray5);
+    border: 1px solid var(--gray500);
     background-color: transparent;
   }
   &:focus:not(:checked) + ${RadioIcon} {
-    outline: 3px solid var(--gray4);
+    outline: 3px solid var(--gray600);
   }
   &:focus:checked + ${RadioIcon} {
     outline: 3px solid var(--sub1);
@@ -102,8 +102,8 @@ const ButtonLabel = styled.label`
   padding: 8px 32px;
   ${FONTS.MD1W500};
   border-radius: 20px;
-  color: var(--gray4);
-  background-color: var(--gray7);
+  color: var(--gray600);
+  background-color: var(--gray300);
 `;
 const RadioWrapper = styled.div<{ LARGE: boolean }>`
   display: flex;

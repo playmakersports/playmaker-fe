@@ -71,7 +71,7 @@ const StaffLogin = styled.p`
   button {
     padding: 2px 16px;
     ${FONTS.MD2};
-    color: var(--gray3);
+    color: var(--gray700);
     letter-spacing: -0.15px;
     border-radius: 4px;
   }

@@ -175,7 +175,7 @@ const Bottom = styled.div`
   width: 100%;
   margin: 0 -16px;
   padding: 0 0 calc(20px + env(safe-area-inset-bottom) / 2);
-  background: var(--gray7);
+  background: var(--gray300);
   z-index: 10;
 `;
 
@@ -197,7 +197,7 @@ const CommentBox = styled.div`
     color: rgba(var(--gray-h1));
     text-align: center;
     border-radius: 8px;
-    ${TEXT_ACTIVE("var(--gray5)")}
+    ${TEXT_ACTIVE("var(--gray500)")}
   }
   .target-comment {
     width: calc(100% - 28px);
@@ -213,9 +213,9 @@ const CommentBox = styled.div`
     align-items: center;
     opacity: 0.8;
     border-radius: 100%;
-    ${TEXT_ACTIVE("var(--gray5)")}
+    ${TEXT_ACTIVE("var(--gray500)")}
     svg {
-      fill: var(--gray1);
+      fill: var(--gray900);
     }
   }
 `;

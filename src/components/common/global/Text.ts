@@ -12,7 +12,7 @@ export const StepPageTitle = styled.h2`
 export const StepPageDescription = styled.p`
   margin: -20px 0 28px;
   ${FONTS.MD2};
-  color: var(--gray3);
+  color: var(--gray700);
   text-align: center;
 `;
 

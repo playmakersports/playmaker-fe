@@ -51,8 +51,8 @@ const Container = styled.div`
   max-width: 600px;
   height: calc(100vh - 1px);
   overscroll-behavior: contain;
-  border-left: 1px solid var(--gray7);
-  border-right: 1px solid var(--gray7);
+  border-left: 1px solid var(--gray300);
+  border-right: 1px solid var(--gray300);
 
   @media (max-width: 600px) {
     border: none;

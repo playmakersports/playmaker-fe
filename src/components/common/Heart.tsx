@@ -29,7 +29,7 @@ const HeartButton = styled.button`
     fill: var(--main);
   }
   svg.stroke-heart {
-    fill: var(--gray4);
+    fill: var(--gray600);
   }
 `;
 

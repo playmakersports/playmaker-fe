@@ -64,7 +64,7 @@ const Stage = styled.ul`
     margin-left: 32px;
     width: 12px;
     height: 12px;
-    background: var(--gray6);
+    background: var(--gray400);
     border-radius: 50%;
     border: 2px solid var(--background-light);
     box-sizing: content-box;
@@ -88,7 +88,7 @@ const Stage = styled.ul`
       display: block;
       width: 32px;
       height: 2px;
-      border-top: 1px dashed var(--gray6);
+      border-top: 1px dashed var(--gray400);
       left: calc((32px + 2px) * -1);
       top: 50%;
     }

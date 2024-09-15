@@ -1,12 +1,12 @@
 import React from "react";
+import { formatDate } from "date-fns";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 
-import Stepper from "@/components/layouts/Stepper";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 import DateInput from "@/components/common/DateInput";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateCalendarInput from "@/components/common/DateCalendarInput";
-import { formatDate } from "date-fns";
 import { InputCheckbox, InputRadio } from "@/components/common/SelectInput";
 import { FONTS } from "@/styles/common";
 
@@ -16,7 +16,7 @@ function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
   const MOCK_NAME = "아무개";
 
   return (
-    <Stepper
+    <StagePageContainer
       title={`회장 ${MOCK_NAME} 님의\n팀 창단을 시작할게요`}
       description="경희대학교 농구"
       button={{
@@ -42,7 +42,7 @@ function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
           <label htmlFor="adult">만 19세 이상으로 구성된 팀입니다.</label>
         </AdultOption>
       </StepFormWrapper>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 

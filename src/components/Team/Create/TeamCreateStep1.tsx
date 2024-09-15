@@ -3,14 +3,14 @@ import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
-import Stepper from "@/components/layouts/Stepper";
 import CardInput from "@/components/common/CardInput";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
 
   return (
-    <Stepper
+    <StagePageContainer
       title="팀의 종목을 선택해주세요"
       button={{
         text: "다음",
@@ -26,7 +26,7 @@ function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
           </CardInput>
         ))}
       </List>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 

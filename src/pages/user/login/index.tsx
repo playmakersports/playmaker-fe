@@ -3,10 +3,13 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
 import { VERCEL_BASE_URL } from "@/constants/baseUrl";
-import { FONTS } from "@/styles/common";
+import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import { KAKAO_AUTH } from "@/apis/oauth";
 import Button from "@/components/common/Button";
 import LoginWrapper from "@/components/User/LoginWrapper";
+
+import KakaoLogo from "@/assets/logo/external/KakaoLogo.svg";
+import GoogleLogo from "@/assets/logo/external/GoogleLogo.svg";
 
 function Login() {
   const router = useRouter();
@@ -30,28 +33,23 @@ function Login() {
   };
 
   return (
-    <LoginWrapper
-      button={{
-        text: "로그인",
-        onClick: () => console.log(""),
-      }}
-    >
+    <LoginWrapper>
       <LoginOptions>
-        <Button type="button" mode="OPTION2" borderType onClick={handleKakaoLogin}>
-          카카오로 계속하기
-        </Button>
-        <Button type="button" mode="OPTION2" borderType onClick={handleGoogleLogin}>
-          Google로 계속하기
-        </Button>
+        <KakaoBtn type="button" onClick={handleKakaoLogin}>
+          <KakaoLogo /> 카카오로 시작하기
+        </KakaoBtn>
+        <GoogleBtn type="button" onClick={handleGoogleLogin}>
+          <GoogleLogo /> Google로 시작하기
+        </GoogleBtn>
         <Button type="button" mode="OPTION2" borderType onClick={handleIntroPage}>
           Intro
         </Button>
+        <StaffLogin>
+          <button type="button" onClick={handleStaffLoginPage}>
+            협회 및 관계사 로그인
+          </button>
+        </StaffLogin>
       </LoginOptions>
-      <StaffLogin>
-        <button type="button" onClick={handleStaffLoginPage}>
-          협회 및 관계사 로그인
-        </button>
-      </StaffLogin>
     </LoginWrapper>
   );
 }
@@ -60,20 +58,38 @@ const LoginOptions = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  padding: 0 12px calc(var(--env-sab) + 16px);
 `;
 
+const LoginBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  ${FONTS.MD1W500}
+  padding: 12px 0;
+  border-radius: 48px;
+  border: 1px solid var(--gray200);
+  gap: 10px;
+  transition: transform 0.2s;
+  &:active {
+    transform: scale(0.97);
+  }
+`;
+const KakaoBtn = styled(LoginBtn)`
+  background-color: #fee500;
+  border-color: transparent;
+`;
+const GoogleBtn = styled(LoginBtn)``;
 const StaffLogin = styled.p`
-  position: fixed;
-  left: 0;
-  width: 100%;
-  bottom: calc(var(--env-sab) + 16px);
+  margin-top: 32px;
   text-align: center;
   button {
-    padding: 2px 16px;
+    padding: 0 16px;
     ${FONTS.MD2};
-    color: var(--gray700);
+    color: var(--gray500);
     letter-spacing: -0.15px;
     border-radius: 4px;
+    ${TEXT_ACTIVE("var(--gray100)", { hover: true })}
   }
 `;
 

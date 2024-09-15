@@ -1,7 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import useBgWhite from "@/hook/useBgWhite";
+import useModal from "@/hook/useModal";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 import { FONTS } from "@/styles/common";
@@ -11,7 +12,6 @@ import { InputCheckbox } from "@/components/common/SelectInput";
 
 import RightArrowThin from "@/assets/icon/arrow/RightArrowThin.svg";
 import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
-import useModal from "@/hook/useModal";
 
 function Intro() {
   useBgWhite();

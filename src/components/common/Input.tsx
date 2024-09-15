@@ -104,8 +104,8 @@ const Container = styled.div`
   .input-title {
     font-size: 1.4rem;
     margin-bottom: 4px;
-    padding: 0 8px;
-    font-weight: 600;
+    padding: 0 10px;
+    font-weight: 500;
     color: var(--gray700);
     line-height: 2.4rem;
   }

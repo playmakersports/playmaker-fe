@@ -1,6 +1,5 @@
 import React, { ReactElement, useState } from "react";
 
-import Stepper from "@/components/layouts/Stepper";
 import useBgWhite from "@/hook/useBgWhite";
 import TeamCreateStep1 from "@/components/Team/Create/TeamCreateStep1";
 import TeamCreateStep2 from "@/components/Team/Create/TeamCreateStep2";

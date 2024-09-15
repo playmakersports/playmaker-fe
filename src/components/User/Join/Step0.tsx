@@ -1,58 +1,72 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 
-import Stepper from "@/components/layouts/Stepper";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "@/components/common/Card";
 
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
+import { InputCheckbox } from "@/components/common/SelectInput";
+import { usePageTitle } from "@/hook/usePageTitle";
 
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
+  usePageTitle({ transparent: true });
+  const [checked, setChecked] = useState(0);
+  const moveNextStep = () => {
+    setStep(checked);
+  };
+
   return (
-    <Stepper>
+    <StagePageContainer
+      button={{
+        text: "다음",
+        onClick: moveNextStep,
+        disabled: checked === 0,
+      }}
+    >
       <BackPoint />
-      <Title>
-        <LogoSymbol />
-        반가워요! <br />
-        가입 방식을 선택해주세요
-      </Title>
-      <Buttons>
-        <Card role="button" tabIndex={1} onClick={() => setStep(2)}>
-          <strong>일반</strong>
-          <p>
-            내 주변이나 생활 지역에서
-            <br />
-            스포츠 팀을 찾고 참여합니다
-          </p>
-        </Card>
-        <Card role="button" tabIndex={2} onClick={() => setStep(1)}>
-          <strong>대학</strong>
-          <p>
-            대학 동아리나 리그 소속으로
-            <br />
-            스포츠 팀에 참여합니다
-          </p>
-        </Card>
-      </Buttons>
-    </Stepper>
+      <div style={{ position: "relative" }}>
+        <Title>
+          <LogoSymbol />
+          반가워요! <br />
+          가입 방식을 선택해주세요
+        </Title>
+        <Buttons>
+          <Card role="button" className={checked === 2 ? "checked" : ""} tabIndex={1} onClick={() => setChecked(2)}>
+            <InputCheckbox size="LARGE" checked={checked === 2} />
+            <div className="contents">
+              <strong>일반</strong>
+              <p>내 주변이나 생활 지역에서 스포츠 팀을 찾고 참여</p>
+            </div>
+          </Card>
+          <Card role="button" className={checked === 1 ? "checked" : ""} tabIndex={2} onClick={() => setChecked(1)}>
+            <InputCheckbox size="LARGE" checked={checked === 1} />
+            <div className="contents">
+              <strong>대학</strong>
+              <p>대학 동아리나 리그 소속으로 스포츠 팀에 참여</p>
+            </div>
+          </Card>
+        </Buttons>
+      </div>
+    </StagePageContainer>
   );
 }
 const BackPoint = styled.div`
   position: absolute;
   left: 0;
-  top: -10px;
+  top: 0;
   width: 100vw;
   height: 100vw;
-  background: linear-gradient(135deg, var(--main) 0%, rgba(var(--main-rgb), 0) 50%);
+  background: linear-gradient(155deg, var(--main) 0%, rgba(var(--main-rgb), 0) 50%);
   opacity: 0.25;
-  z-index: -1;
+  z-index: 0;
 `;
 
 const Title = styled.h3`
   ${FONTS.HEAD2};
   text-align: center;
-  font-size: 2.4rem;
-  line-height: 3.8rem;
+  font-size: 2rem;
+  line-height: 3rem;
 
   svg {
     display: block;
@@ -62,32 +76,37 @@ const Title = styled.h3`
 `;
 const Buttons = styled.div`
   display: flex;
-  margin-top: 80px;
+  margin-top: 70px;
   flex-direction: column;
   gap: 24px;
 `;
 const Card = styled(BasicWhiteCard)`
   display: flex;
-  flex-direction: column;
+  padding: 24px 16px;
   align-items: center;
-  gap: 8px;
+  gap: 16px;
 
   strong {
+    display: block;
+    margin-bottom: 6px;
     ${FONTS.MD1};
-    font-size: 2rem;
-    padding: 0 8px;
+    font-size: 1.8rem;
     flex-shrink: 0;
     word-break: keep-all;
-    color: var(--main);
+    color: var(--gray900);
   }
 
   p {
     ${FONTS.MD2};
-    text-align: center;
+    font-weight: 400;
+    color: var(--gray600);
   }
 
-  &:focus {
-    outline: 2px solid var(--gray400);
+  &.checked {
+    border: 1px solid var(--main);
   }
 `;
+
+const Bottom = styled.div``;
+
 export default Step0;

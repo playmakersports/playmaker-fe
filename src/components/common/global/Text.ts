@@ -1,19 +1,19 @@
 import { FONTS } from "@/styles/common";
 import styled from "@emotion/styled";
 
-export const StepPageTitle = styled.h2`
+export const StepPageTitle = styled.h3`
   display: block;
-  margin: 16px auto 32px;
-  font-size: 2.4rem;
-  text-align: center;
+  margin: 16px 10px 4px;
+  font-size: 2.2rem;
+  font-weight: 600;
   white-space: pre-line;
-  line-height: 3.4rem;
+  line-height: 3rem;
 `;
 export const StepPageDescription = styled.p`
-  margin: -20px 0 28px;
+  margin: 0 10px;
   ${FONTS.MD2};
+  font-weight: 400;
   color: var(--gray700);
-  text-align: center;
 `;
 
 export const StepFormWrapper = styled.div`

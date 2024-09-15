@@ -2,10 +2,10 @@ import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 
-import Stepper from "@/components/layouts/Stepper";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 function Step3({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
@@ -26,8 +26,8 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
   };
 
   return (
-    <Stepper
-      stage={{ now: 2, length: 3 }}
+    <StagePageContainer
+      stepper
       button={{
         text: "다음",
         onClick: () => setStep(4),
@@ -49,7 +49,7 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
           </div>
         </ImageUpload>
       </StepFormWrapper>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 

@@ -43,9 +43,9 @@ const Check = styled.input`
     padding: 1px 3px 2px;
     width: 24px;
     height: 24px;
-    border-radius: 4px;
-    fill: none;
-    border: 1px solid var(--gray500);
+    border-radius: 50%;
+    fill: var(--gray200);
+    border: 2px solid var(--gray300);
     background-color: transparent;
   }
   &:focus:not(:checked) + svg {

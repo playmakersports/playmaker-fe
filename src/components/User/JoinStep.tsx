@@ -6,6 +6,7 @@ import Step2 from "./Join/Step2";
 import Step3 from "./Join/Step3";
 import Step4 from "./Join/Step4";
 import Step5 from "./Join/Step5";
+import Stepper from "../common/Stepper";
 
 function JoinStep() {
   useBgWhite();
@@ -19,7 +20,14 @@ function JoinStep() {
     5: <Step5 />,
   };
 
-  return <>{STEP_PAGE[step]}</>;
+  if (step === 0 || step === 5) {
+    return <>{STEP_PAGE[step]}</>;
+  }
+  return (
+    <Stepper length={4} now={step}>
+      {STEP_PAGE[step]}
+    </Stepper>
+  );
 }
 
 export default JoinStep;

@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Head from "next/head";
 
 import Banner from "@/components/Main/Banner";
 import MyTeam from "@/components/Main/MyTeam";

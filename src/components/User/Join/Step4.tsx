@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import useToast from "@/hook/useToast";
 
 import { FONTS } from "@/styles/common";
-import Stepper from "@/components/layouts/Stepper";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 function Step4({ setStep }: { setStep: (prev: number) => void }) {
   const { register, watch, setValue } = useForm<{ favSports: string[] }>();
@@ -33,15 +33,15 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
   };
 
   return (
-    <Stepper
-      stage={{ now: 3, length: 3 }}
+    <StagePageContainer
+      stepper
       title="관심 스포츠를 선택해주세요"
+      description="최대 3개 선택 가능해요"
       button={{
         text: "다음",
         onClick: handleNextStep,
       }}
     >
-      <Description>최대 3개까지 선택 가능</Description>
       <List>
         {SUPPORT_SPORTS.map((item) => (
           <CardInput
@@ -59,16 +59,10 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
           </CardInput>
         ))}
       </List>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 
-const Description = styled.p`
-  margin-bottom: 20px;
-  ${FONTS.MD2};
-  color: var(--gray700);
-  text-align: center;
-`;
 const List = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);

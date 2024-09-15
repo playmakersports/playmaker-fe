@@ -2,17 +2,18 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 
-import Stepper from "@/components/layouts/Stepper";
 import { BasicInput } from "@/components/common/Input";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";
 import { InputRadio } from "@/components/common/SelectInput";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 function Step2({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
   return (
-    <Stepper
-      stage={{ now: 1, length: 3 }}
+    <StagePageContainer
+      stepper
+      title="기본 정보를 입력해 주세요"
       button={{
         text: "다음",
         onClick: () => setStep(3),
@@ -27,7 +28,7 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
           <InputRadio buttonType {...register("gender")} value="female" id="female" labelName="여성" />
         </Radios>
       </StepFormWrapper>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 

@@ -139,7 +139,7 @@ const Container = styled(BaseContainer)`
 `;
 const ButtonWrapper = styled.div`
   opacity: 0;
-  padding-bottom: var(--env-sab);
+  padding-bottom: calc(var(--env-sab) + 48px - 20px);
   animation: ${ButtonShowAnimate} 0.5s forwards;
   animation-delay: 1.55s;
 `;

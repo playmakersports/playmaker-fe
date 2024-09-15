@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import useModal from "@/hook/useModal";
 
-import Stepper from "@/components/layouts/Stepper";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { BasicInput } from "@/components/common/Input";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
@@ -35,8 +35,10 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
   };
 
   return (
-    <Stepper
+    <StagePageContainer
+      stepper
       title="먼저 대학생 인증이 필요해요"
+      description="대학생 인증하면 대학팀 생성 및 참가가 가능해요"
       button={
         isSendSuccess
           ? {
@@ -105,7 +107,7 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
         <UnivListIndex>파, 하</UnivListIndex>
         포항공과대학교(POSTECH), 한국과학기술원(KAIST), 한국외국어대학교, 한국체육대학교, 한양대학교, 홍익대학교
       </ModalComponents>
-    </Stepper>
+    </StagePageContainer>
   );
 }
 

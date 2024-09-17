@@ -47,6 +47,7 @@ const Container = styled(BaseContainer)<{ stepper: boolean }>`
 const ButtonWrapper = styled.div`
   margin-bottom: -20px;
   padding-bottom: calc(var(--env-sab) + 48px);
+  z-index: 10;
 `;
 
 const Header = styled.header`

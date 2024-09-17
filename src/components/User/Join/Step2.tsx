@@ -21,7 +21,16 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
     >
       <StepFormWrapper>
         <BasicInput type="text" title="이름" {...register("name")} />
-        <BasicInput type="tel" title="휴대전화 번호" {...register("phoneNumber")} />
+        <BasicInput
+          type="tel"
+          title="휴대전화 번호"
+          {...register("phoneNumber", {
+            onChange: (event) =>
+              (event.target.value = event.target.value
+                .replace(/[^0-9]/g, "")
+                .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)),
+          })}
+        />
         <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birthday")} />
         <Radios>
           <InputRadio buttonType {...register("gender")} value="male" id="male" labelName="남성" />

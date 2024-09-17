@@ -1,18 +1,25 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
+import { usePageTitle } from "@/hook/usePageTitle";
 
-import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { FONTS } from "@/styles/common";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
+import { InputCheckbox } from "@/components/common/SelectInput";
 import { BasicWhiteCard } from "@/components/common/Card";
 
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
-import { InputCheckbox } from "@/components/common/SelectInput";
-import { usePageTitle } from "@/hook/usePageTitle";
 
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });
+  const router = useRouter();
+
   const [checked, setChecked] = useState(0);
   const moveNextStep = () => {
+    router.push({
+      pathname: "/user/login/intro",
+      query: { agree: "T", type: checked === 2 ? "adult" : "univ" },
+    });
     setStep(checked);
   };
 
@@ -55,7 +62,7 @@ const BackPoint = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
+  width: min(600px, 100vw);
   height: 100vw;
   background: linear-gradient(155deg, var(--main) 0%, rgba(var(--main-rgb), 0) 50%);
   opacity: 0.25;

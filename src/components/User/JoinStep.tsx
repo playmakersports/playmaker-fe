@@ -1,5 +1,7 @@
-import useBgWhite from "@/hook/useBgWhite";
 import React, { ReactElement, useState } from "react";
+import { useRouter } from "next/router";
+import useBgWhite from "@/hook/useBgWhite";
+
 import Step0 from "./Join/Step0";
 import StepStudents from "./Join/StepStudents";
 import Step2 from "./Join/Step2";
@@ -10,6 +12,9 @@ import Stepper from "../common/Stepper";
 
 function JoinStep() {
   useBgWhite();
+  const router = useRouter();
+  const userType = router.query.type;
+
   const [step, setStep] = useState(0);
   const STEP_PAGE: Record<string, ReactElement> = {
     0: <Step0 setStep={setStep} />,
@@ -24,7 +29,7 @@ function JoinStep() {
     return <>{STEP_PAGE[step]}</>;
   }
   return (
-    <Stepper length={4} now={step}>
+    <Stepper length={userType === "univ" ? 4 : 3} now={userType === "univ" ? step : step - 1}>
       {STEP_PAGE[step]}
     </Stepper>
   );

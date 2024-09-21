@@ -2,12 +2,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import useToast from "@/hook/useToast";
 
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { useRouter } from "next/router";
 
 function Step4() {
   const router = useRouter();

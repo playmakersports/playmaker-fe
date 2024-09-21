@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
 
@@ -21,7 +22,7 @@ function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
         {SUPPORT_SPORTS.map((item) => (
           <CardInput type="radio" key={item.value} id={item.value} value={item.value} {...register("teamSports")}>
             <Item>
-              {item.iconSvg} {item.name}
+              <Image src={item.icon} alt={item.name} width={52} /> {item.name}
             </Item>
           </CardInput>
         ))}

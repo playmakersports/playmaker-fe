@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import { FONTS } from "@/styles/common";
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { InputCheckbox } from "@/components/common/SelectInput";
 import { BasicWhiteCard } from "@/components/common/Card";
@@ -92,6 +92,7 @@ const Card = styled(BasicWhiteCard)`
   padding: 24px 16px;
   align-items: center;
   gap: 16px;
+  ${CARD_ACTIVE};
 
   strong {
     display: block;

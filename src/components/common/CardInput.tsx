@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import { BasicWhiteCard } from "./Card";
-import { FONTS } from "@/styles/common";
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value"> & {
   type: "checkbox" | "radio";
@@ -23,10 +23,7 @@ const Card = styled(BasicWhiteCard.withComponent("label"))`
   cursor: pointer;
   ${FONTS.MD1W500};
   font-weight: 400;
-  transition: transform 0.2s;
-  &:active {
-    transform: scale(0.98);
-  }
+  ${CARD_ACTIVE}
 `;
 const Input = styled.input`
   display: none;

@@ -47,6 +47,7 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", d
       />
       <ClockIcon fill={rest.disabled ? "var(--gray500)" : "var(--gray700)"} />
       <button
+        className="am-pm-button"
         type="button"
         disabled={rest.disabled}
         onClick={() => {
@@ -131,10 +132,10 @@ const Container = styled.div`
     }
   }
 
-  button {
+  button.am-pm-button {
     margin-right: 2px;
     border-radius: 2px;
-    &:focus {
+    &:hover {
       background-color: var(--gray300);
       outline: 3px solid var(--gray300);
     }

@@ -65,10 +65,10 @@ const Container = styled(BaseContainer)`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-bottom: var(--env-sab);
 `;
 const Buttons = styled.div`
   display: flex;
+  padding-bottom: var(--env-sab);
   gap: 8px;
   justify-content: space-between;
 `;

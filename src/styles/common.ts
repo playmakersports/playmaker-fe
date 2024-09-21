@@ -15,11 +15,11 @@ export const SCROLL_HIDE = `
 }`;
 
 export const CARD_ACTIVE = `
-    border-radius: 16px;
-    transition: all 0.2s;
-    &:active {
-      transform: scale(0.97);
-    }
+  transition: all 0.2s;
+  &:active {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.01);
+    transform: translateY(2px);
+  }
 `;
 export const BUTTON_ACTIVE = (color?: string) => `
     border-radius: 8px;

@@ -1,28 +1,34 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
 import useToast from "@/hook/useToast";
 
-import { FONTS } from "@/styles/common";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
+import { useRouter } from "next/router";
 
-function Step4({ setStep }: { setStep: (prev: number) => void }) {
+function Step4() {
+  const router = useRouter();
   const { register, watch, setValue } = useForm<{ favSports: string[] }>();
   const { trigger } = useToast();
   const favSportsValue = watch("favSports");
 
   const handleNextStep = () => {
     if (favSportsValue?.length > 0 && favSportsValue?.length <= 3) {
-      window.alert("다음으로 고고");
-      setStep(5);
-    } else {
-      window.alert("선택을 하세요.");
+      // 회원가입 POST 로직
+      router.push({
+        pathname: "/user/login/complete",
+        query: {
+          name: "손수철",
+          gender: "male",
+        },
+      });
     }
   };
 
-  const checkSelectedLength = async (event: any, target: string) => {
+  const checkSelectedLength = (event: any, target: string) => {
     if (favSportsValue.length === 3 && event.target.checked) {
       trigger("최대 3개까지 선택 가능합니다.", "ALERT");
       setValue(
@@ -40,6 +46,7 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
       button={{
         text: "다음",
         onClick: handleNextStep,
+        disabled: favSportsValue.length === 0,
       }}
     >
       <List>
@@ -54,7 +61,7 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
             })}
           >
             <Item>
-              {item.iconSvg} {item.name}
+              <Image src={item.icon} alt={item.name} width={52} /> {item.name}
             </Item>
           </CardInput>
         ))}
@@ -65,13 +72,14 @@ function Step4({ setStep }: { setStep: (prev: number) => void }) {
 
 const List = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px 16px;
 `;
 const Item = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
 
   svg {
     width: 24px;

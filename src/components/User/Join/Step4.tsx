@@ -46,7 +46,7 @@ function Step4() {
       button={{
         text: "다음",
         onClick: handleNextStep,
-        disabled: favSportsValue.length === 0,
+        disabled: !favSportsValue || favSportsValue?.length === 0,
       }}
     >
       <List>

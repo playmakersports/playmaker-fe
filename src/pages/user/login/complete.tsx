@@ -3,20 +3,18 @@ import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
 
-import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
-import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
 import { BaseContainer } from "@/components/common/Container";
+import CharacterWelcome from "../../../components/User/Join/CharacterWelcome";
 
-function Step5() {
+function JoinComplete() {
   const router = useRouter();
+
   return (
     <Container>
       <Contents>
         <Title>
-          <LogoSymbol />
-          <p>환영합니다</p>
-          <p>플메와 함께 달려볼까요</p>
+          <CharacterWelcome name={router.query.name as string} gender={router.query.gender as "male" | "female"} />
         </Title>
         <Background>
           <svg
@@ -28,7 +26,7 @@ function Step5() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <g filter="url(#filter0_f_1862_2164)">
-              <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fill-opacity="0.4" />
+              <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fill-opacity="0.6" />
             </g>
             <defs>
               <filter
@@ -55,7 +53,7 @@ function Step5() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <g filter="url(#filter0_f_1862_2163)">
-              <circle cx="77" cy="77" r="40" stroke="#20FF76" stroke-opacity="0.5" stroke-width="4" />
+              <circle cx="77" cy="77" r="40" stroke="#20FF76" stroke-opacity="0.8" stroke-width="4" />
             </g>
             <defs>
               <filter
@@ -73,33 +71,7 @@ function Step5() {
               </filter>
             </defs>
           </svg>
-          <svg
-            className="blue-small"
-            width="372"
-            height="469"
-            viewBox="0 0 460 469"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g filter="url(#filter0_f_1862_2160)">
-              <circle cx="234.5" cy="234.5" r="84.5" fill="#92C5FF" fill-opacity="0.4" />
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_1862_2160"
-                x="0"
-                y="0"
-                width="469"
-                height="469"
-                filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_1862_2160" />
-              </filter>
-            </defs>
-          </svg>
+          <span className="blue-small" />
         </Background>
       </Contents>
       <ButtonWrapper>
@@ -111,16 +83,6 @@ function Step5() {
   );
 }
 
-const TextShowAnimate = keyframes`
-    from {
-        opacity: 0;
-        transform: translateY(-35%);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
 const ButtonShowAnimate = keyframes`
     from {
         opacity: 0;
@@ -141,7 +103,7 @@ const ButtonWrapper = styled.div`
   opacity: 0;
   padding-bottom: calc(var(--env-sab) + 48px - 20px);
   animation: ${ButtonShowAnimate} 0.5s forwards;
-  animation-delay: 1.55s;
+  animation-delay: 0.75s;
 `;
 const Contents = styled.article`
   flex: 1;
@@ -153,7 +115,7 @@ const Contents = styled.article`
 `;
 const Background = styled.div`
   position: absolute;
-  width: 100vw;
+  width: 100%;
   top: 0;
 
   svg {
@@ -169,36 +131,23 @@ const Background = styled.div`
     transform: translateX(-50%);
   }
   .blue-small {
-    right: -15%;
+    position: absolute;
+    width: min(55vw, 600px);
+    max-width: 300px;
+    height: 55vw;
+    max-height: 300px;
+    background-color: #92c5ff;
+    margin-top: 35%;
+    right: -5%;
+    border-radius: 50%;
+    box-shadow: 0 0 40px 32px #92c5ff;
+    filter: blur(20px);
+    opacity: 0.3;
   }
 `;
 
-const Title = styled.h3`
-  ${FONTS.HEAD2};
-  text-align: center;
-  font-size: 2.4rem;
-  line-height: 3.8rem;
-
-  svg {
-    display: block;
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 20px;
-  }
-
-  p {
-    opacity: 0;
-    animation: ${TextShowAnimate} 0.4s forwards;
-    color: var(--main);
-    user-select: none;
-
-    &:first-of-type {
-      animation-delay: 0.35s;
-    }
-    &:last-of-type {
-      animation-delay: 0.95s;
-    }
-  }
+const Title = styled.div`
+  z-index: 1;
 `;
 
-export default Step5;
+export default JoinComplete;

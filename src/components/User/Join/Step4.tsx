@@ -19,7 +19,7 @@ function Step4() {
     if (favSportsValue?.length > 0 && favSportsValue?.length <= 3) {
       // 회원가입 POST 로직
       router.push({
-        pathname: "/user/login/complete",
+        pathname: "/user/apply/complete",
         query: {
           name: "손수철",
           gender: "male",

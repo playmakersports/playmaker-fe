@@ -24,7 +24,7 @@ function Google() {
             setResult(JSON.stringify(res));
             localStorage.setItem("Authorization", res.data.access_token);
             localStorage.setItem("Refresh", res.data.refresh_token);
-            router.push("/user/login/intro?from=google");
+            router.push({ pathname: "/user/apply", query: { from: "google" } });
           }
         })
         .catch((err) => {

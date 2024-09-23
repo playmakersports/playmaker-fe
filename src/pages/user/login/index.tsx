@@ -26,7 +26,7 @@ function Login() {
   };
 
   const handleIntroPage = () => {
-    router.push("/user/login/intro");
+    router.push("/user/apply");
   };
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");

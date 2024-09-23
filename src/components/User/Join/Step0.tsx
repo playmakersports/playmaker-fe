@@ -17,7 +17,7 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
   const [checked, setChecked] = useState(0);
   const moveNextStep = () => {
     router.push({
-      pathname: "/user/login/intro",
+      pathname: "/user/apply",
       query: { agree: "T", type: checked === 2 ? "adult" : "univ" },
     });
     setStep(checked);

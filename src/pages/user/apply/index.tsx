@@ -41,7 +41,12 @@ function Intro() {
         text: "확인",
         onClick: async () => {
           if (checkedList.required1 && checkedList.required2) {
-            await router.push(`/user/login/intro?agree=${checkedList.event1 ? "T" : "F"}`);
+            await router.push({
+              pathname: "/user/apply",
+              query: {
+                agree: checkedList.event1 ? "T" : "F",
+              },
+            });
           } else {
             await confirm?.showConfirm("필수 약관에 모두 동의해야 합니다");
           }

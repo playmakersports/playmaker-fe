@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { SCROLL_HIDE } from "@/styles/common";
-import Header from "../Header";
+import Header from "../Header/Header";
 import AppCode from "../AppCode";
 import StaffPageMover from "../StaffPageMover";
 

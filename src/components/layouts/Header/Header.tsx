@@ -2,13 +2,10 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtomValue } from "jotai";
 
-import { TEXT_ACTIVE } from "@/styles/common";
 import { atomBgWhite } from "@/atom/common";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import Logotype from "@/assets/logo/Logotype.svg";
-import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
-import PersonIcon from "@/assets/icon/global/Person.svg";
+import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
 import HomeIcon from "@/assets/icon/global/Home.svg";
 import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
 
@@ -21,22 +18,7 @@ function Header({ scrollActive }: Props) {
   const isTitleShow = getTransparent ? scrollActive > 160 : true;
 
   if (router.asPath === "/") {
-    return (
-      <Wrapper className="main-header" scrolled={scrollActive > 0}>
-        <Inner>
-          <Logotype className="logo" width={120} height={36} />
-          <Menu>
-            <Icon onClick={() => router.push("/notification")} aria-label="내 알림 전체보기">
-              <Count>3</Count>
-              <NoticeBellIcon />
-            </Icon>
-            <Icon onClick={() => router.push("/user/login")} aria-label="로그인 페이지 이동">
-              <PersonIcon />
-            </Icon>
-          </Menu>
-        </Inner>
-      </Wrapper>
-    );
+    return null;
   }
   if (getTransparent) {
     return (
@@ -44,7 +26,7 @@ function Header({ scrollActive }: Props) {
         className={`page-header main-header transparent-header  ${isWhiteBg ? "white-bg-header" : ""}`}
         scrolled={isTitleShow}
       >
-        <Inner>
+        <HeaderInner>
           <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
             <HeaderLeftArrow />
           </Icon>
@@ -67,16 +49,16 @@ function Header({ scrollActive }: Props) {
               </Icon>
             ))}
           </RightIcons>
-        </Inner>
+        </HeaderInner>
       </Wrapper>
     );
   }
   return (
     <Wrapper className={`page-header ${isWhiteBg ? "white-bg-header" : ""}`}>
-      <Inner>
-        <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
+      <HeaderInner>
+        <HeaderIcon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow />
-        </Icon>
+        </HeaderIcon>
         <PageTitle scrolled>
           {getSubTitle && <p>{getSubTitle}</p>}
           <h2 className="main-title">{getTitle}</h2>
@@ -91,41 +73,14 @@ function Header({ scrollActive }: Props) {
             </Icon>
           ))}
         </RightIcons>
-      </Inner>
+      </HeaderInner>
     </Wrapper>
   );
 }
 
-const Icon = styled.button`
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-10);
-  ${TEXT_ACTIVE("var(--gray300)")};
-
-  svg {
-    width: 22px;
-    height: 22px;
-  }
-`;
-
 type StyledScrolled = { scrolled?: boolean };
-const Wrapper = styled.header<StyledScrolled>`
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  top: 0;
-  padding: env(safe-area-inset-top) 16px;
-  padding: constant(safe-area-inset-top) 16px;
-  height: var(--header-height);
-  z-index: 999;
-  transition: background-color 0.3s, backdrop-filter 0.3s, transform 0.2s;
-
+const Icon = styled(HeaderIcon)``;
+const Wrapper = styled(HeaderWrapper)<StyledScrolled>`
   &.page-header {
     background-color: var(--background);
   }
@@ -144,35 +99,6 @@ const Wrapper = styled.header<StyledScrolled>`
       `}
     }
   }
-  &.main-header {
-    background-color: ${({ scrolled }) => (scrolled ? `rgba(var(--background-rgb), 0.45)` : "none")};
-    backdrop-filter: ${({ scrolled }) => (scrolled ? `blur(16px)` : `none`)};
-  }
-  button > svg {
-    fill: var(--gray900);
-  }
-  .logo {
-    width: 148px;
-    fill: var(--gray900);
-  }
-`;
-const Inner = styled.div`
-  display: flex;
-  width: 100%;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  padding-top: env(safe-area-inset-top);
-  padding-top: constant(safe-area-inset-top);
-`;
-
-const Menu = styled.div`
-  display: flex;
-  gap: 12px;
-  font-weight: 400;
-  font-size: 1.6rem;
-  color: var(--gray900);
 `;
 
 const PageTitle = styled.div<StyledScrolled>`
@@ -213,20 +139,6 @@ const RightIcons = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-`;
-const Count = styled.div`
-  position: absolute;
-  padding: 2px 4px;
-  left: 50%;
-  top: -2px;
-  background-color: var(--point);
-  color: #fff;
-  font-size: 1.2rem;
-  line-height: 1.4rem;
-  font-weight: 700;
-  border-radius: 9px;
-  min-width: 18px;
-  text-align: center;
 `;
 
 export default Header;

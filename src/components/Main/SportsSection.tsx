@@ -10,7 +10,6 @@ import MainTab from "./MainTab";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
-import { WhiteSectionDivider } from "../common/Container";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 import useStickyMoment from "@/hook/useStickyMoment";
 
@@ -22,12 +21,12 @@ function SportsSection() {
 
   return (
     <Wrapper>
-      <WhiteSectionDivider />
       <SportsTitle>
         <span>{SUPPORT_SPORTS.find((v) => v.value === activeTab)?.name} 정보를 한 눈에</span>
       </SportsTitle>
       <TabWrapper ref={tabRef}>
         <MainTab
+          padding={20}
           nowValue={(value) => {
             setActiveTab(value);
           }}
@@ -73,14 +72,15 @@ function SportsSection() {
 const Wrapper = styled.div`
   background-color: var(--background-light);
   margin: 0 -16px;
-  padding: 0 16px var(--safe-area-bottom);
+  padding: 16px 16px var(--safe-area-bottom);
+  border-radius: 30px 30px 0 0;
 `;
 const TabWrapper = styled.div`
   position: sticky;
   top: -1px;
   width: 100%;
-  margin: -8px -16px 0;
-  padding: 8px 16px;
+  margin: -8px -16px 8px;
+  padding: 8px 0;
   background-color: var(--background-light);
   z-index: 1;
   transition: all 0.3s;
@@ -97,36 +97,25 @@ const TabWrapper = styled.div`
   }
 `;
 const SportsTitle = styled.h3`
-  position: relative;
-  margin: 24px -16px 16px;
-  width: calc(100% + 32px);
+  margin: 16px -16px 24px;
   font-weight: 600;
   font-size: 1.8rem;
   text-align: center;
-  &::before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 50%;
-    background-color: var(--sub1);
-    width: 100%;
-    height: 1px;
-  }
 
   span {
     display: inline-flex;
     align-items: center;
     gap: 12px;
     position: relative;
-    background-color: var(--background-light);
     &::before,
     &::after {
       content: "";
       display: inline-block;
-      width: 5px;
-      height: 5px;
-      border: 2px solid var(--sub1);
-      border-radius: 100%;
+      width: 8px;
+      height: 8px;
+      background: var(--sub1);
+      border-radius: 50%;
+      filter: blur(2px);
     }
   }
 `;
@@ -146,8 +135,8 @@ const Cards = styled.div`
 `;
 
 const LineBottom = styled.div`
-  margin-bottom: 2px;
-  border-bottom: 1px solid var(--gray300);
+  margin: 0 -20px 2px;
+  border-bottom: 1px solid var(--gray200);
 `;
 
 export default SportsSection;

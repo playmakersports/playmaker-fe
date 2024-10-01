@@ -28,8 +28,8 @@ const Container = styled.div`
     margin-top: 0;
   }
   h4 {
-    color: var(--gray800);
-    font-weight: 700;
+    color: var(--gray900);
+    font-weight: 600;
     font-size: 1.8rem;
   }
   svg {

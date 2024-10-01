@@ -61,6 +61,8 @@ function MyWeekly() {
 
 const Wrapper = styled(BasicWhiteCard)`
   padding: 0;
+  background-color: var(--background-light);
+  z-index: 1;
 `;
 const Week = styled.div`
   display: flex;
@@ -81,15 +83,15 @@ const Week = styled.div`
     }
     span.date-name {
       display: block;
-      color: var(--gray600);
+      color: var(--gray500);
       font-size: 1.4rem;
+      font-weight: 400;
     }
     button.date-day {
       text-align: center;
       width: 100%;
 
       &:active > p {
-        color: #fff !important;
         background-color: var(--background);
         box-shadow: 0 0 0 2px var(--background);
         transform: scale(0.97);
@@ -108,7 +110,7 @@ const Week = styled.div`
 
     button.active-date > p {
       color: #fff;
-      background-color: var(--main);
+      background-color: var(--art-purple);
       font-weight: 700;
       transition: background-color 0.2s;
     }
@@ -122,7 +124,7 @@ const Schedules = styled.div`
   .team-group {
     padding-bottom: 12px;
     margin-bottom: 12px;
-    border-bottom: 1px solid var(--gray300);
+    border-bottom: 1px solid var(--gray200);
     &:last-of-type {
       border: none;
       padding-bottom: 0;

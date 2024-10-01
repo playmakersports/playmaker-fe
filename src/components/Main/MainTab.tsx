@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 
 type Props = {
+  padding?: number;
   items: {
     value: string;
     name: string;
@@ -10,10 +11,10 @@ type Props = {
   initialValue?: string;
 };
 
-function MainTab({ items, nowValue, initialValue }: Props) {
+function MainTab({ padding = 0, items, nowValue, initialValue }: Props) {
   const containerRef = useRef<HTMLUListElement>(null);
   const [selected, setSelected] = useState(items[0].value);
-  const [offset, setOffset] = useState(0);
+  const [offset, setOffset] = useState(padding ?? 0);
 
   const handleClickItem = (value: string, event: React.MouseEvent<HTMLLIElement>) => {
     setSelected(value);
@@ -33,7 +34,7 @@ function MainTab({ items, nowValue, initialValue }: Props) {
   }, [initialValue, offset, containerRef, nowValue]);
 
   return (
-    <Container ref={containerRef} role="tablist">
+    <Container ref={containerRef} role="tablist" padding={padding}>
       <SelectedBackground offset={offset} data-value={items.find((item) => item.value === selected)?.name} />
       {items.map((item) => (
         <Item
@@ -52,8 +53,9 @@ function MainTab({ items, nowValue, initialValue }: Props) {
   );
 }
 
-const Container = styled.ul`
+const Container = styled.ul<{ padding: number }>`
   position: relative;
+  padding: ${({ padding }) => `0 ${padding}px`};
   display: flex;
   overflow-x: auto;
   overflow-y: hidden;

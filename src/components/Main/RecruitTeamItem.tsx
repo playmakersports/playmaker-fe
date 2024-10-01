@@ -67,15 +67,16 @@ const TeamInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   text-align: left;
-  color: var(--gray900);
   .name {
     display: inline-flex;
     align-items: center;
     gap: 4px;
+    color: var(--gray800);
   }
   .univ-name {
     opacity: 0.8;
     ${FONTS.MD3};
+    color: var(--gray700);
     &::before {
       content: "• ";
     }

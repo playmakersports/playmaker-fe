@@ -7,6 +7,7 @@ import { CARD_ACTIVE, FONTS } from "@/styles/common";
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "value"> & {
   type: "checkbox" | "radio";
   value: string;
+  id: string;
   children: React.ReactNode;
 };
 const CardInput = React.forwardRef<HTMLInputElement, Props>(({ type, value, children, id, ...rest }, ref) => (
@@ -22,6 +23,7 @@ CardInput.displayName = "CardInput";
 const Card = styled(BasicWhiteCard.withComponent("label"))`
   cursor: pointer;
   ${FONTS.MD1W500};
+  width: 100%;
   font-weight: 400;
   ${CARD_ACTIVE}
 `;

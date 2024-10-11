@@ -18,7 +18,7 @@ export default function Home() {
       <Banner />
       <MyTeam />
       <MyWeekly />
-      {/* <MyTeamSchedule /> */}
+      <MyTeamSchedule />
       <SportsSection />
     </Container>
   );
@@ -40,7 +40,7 @@ const BackGradient = styled.div`
   top: 0;
   width: 100%;
   height: 900px;
-  background: linear-gradient(165deg, rgba(48, 108, 239, 0.9) 0%, rgb(48, 109, 239, 0) 80%);
+  background: linear-gradient(165deg, rgba(48, 108, 239, 0.8) 20%, rgb(48, 109, 239, 0) 90%);
   z-index: 0;
   opacity: 0.15;
 `;

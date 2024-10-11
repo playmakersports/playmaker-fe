@@ -57,7 +57,8 @@ const Container = styled.ul<{ padding: number }>`
   position: relative;
   padding: ${({ padding }) => `0 ${padding}px`};
   display: flex;
-  overflow-x: auto;
+  width: 100%;
+  overflow-x: scroll;
   overflow-y: hidden;
   white-space: nowrap;
   &::-webkit-scrollbar {
@@ -92,11 +93,13 @@ const Item = styled(CommonItem)`
 const SelectedBackground = styled(CommonItem)<{ offset: number }>`
   position: absolute;
   margin: 0;
-  left: ${({ offset }) => offset}px;
+  left: 0;
+  transform: translate3d(${({ offset }) => offset}px, 0, 0);
   padding: 8px 20px;
   background-color: var(--main);
   border-radius: 16px;
-  will-change: left;
+  will-change: transform;
+
   &::after {
     content: attr(data-value);
     visibility: hidden;

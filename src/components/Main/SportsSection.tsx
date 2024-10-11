@@ -78,22 +78,16 @@ const Wrapper = styled.div`
 const TabWrapper = styled.div`
   position: sticky;
   top: -1px;
-  width: 100%;
+  width: calc(100% + 32px);
   margin: -8px -16px 8px;
   padding: 8px 0;
   background-color: var(--background-light);
   z-index: 1;
   transition: all 0.3s;
-  will-change: padding transform;
+
   &.stuck {
-    margin: 0 auto;
-    width: 85%;
-    padding: 6px 6px;
-    background-color: rgba(var(--sub1-rgb), 0.2);
-    backdrop-filter: blur(16px);
-    border-radius: 32px;
-    transform: translateY(12px);
-    overflow: hidden;
+    margin: 0 -16px;
+    box-shadow: 0 1px 5px 0 rgba(107, 119, 172, 0.2);
   }
 `;
 const SportsTitle = styled.h3`

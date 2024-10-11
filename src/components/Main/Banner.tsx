@@ -17,7 +17,13 @@ function Banner() {
 
   return (
     <Container>
-      <Flicking ref={flickRef} circular={true} onWillChange={onPanelChanged} onChanged={onPanelChanged}>
+      <Flicking
+        ref={flickRef}
+        moveType="strict"
+        circular={true}
+        onWillChange={onPanelChanged}
+        onChanged={onPanelChanged}
+      >
         {BANNER_MOCK.map((banner, index) => (
           <Panel key={index} style={{ backgroundColor: banner.background }}></Panel>
         ))}

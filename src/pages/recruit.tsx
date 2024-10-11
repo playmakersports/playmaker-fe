@@ -18,7 +18,7 @@ import useModal from "@/hook/useModal";
 function Recruit() {
   usePageTitle({
     title: "팀 목록",
-    subIcons: [{ svgIcon: <ArticlePlus />, linkTo: "/team", description: "팀 만들기" }],
+    subIcons: [{ svgIcon: <ArticlePlus />, linkTo: "/team/create", description: "팀 만들기" }],
   });
   const { ModalComponents, showModal } = useModal();
   const sportsTabRef = useRef<HTMLDivElement>(null);

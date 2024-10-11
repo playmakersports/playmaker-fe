@@ -6,9 +6,9 @@ import { useForm } from "react-hook-form";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import DateInput from "@/components/common/DateInput";
 import { StepFormWrapper } from "@/components/common/global/Text";
-import DateCalendarInput from "@/components/common/DateCalendarInput";
 import { InputCheckbox, InputRadio } from "@/components/common/SelectInput";
 import { FONTS } from "@/styles/common";
+import { BasicInput } from "@/components/common/Input";
 
 function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
@@ -17,7 +17,8 @@ function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
 
   return (
     <StagePageContainer
-      title={`회장 ${MOCK_NAME} 님의\n팀 창단을 시작할게요`}
+      stepper={true}
+      title={`${MOCK_NAME} 회장님의\n팀 창단을 시작할게요`}
       description="경희대학교 농구"
       button={{
         text: "다음",
@@ -25,13 +26,13 @@ function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
       }}
     >
       <StepFormWrapper>
+        <BasicInput type="text" title="팀 이름" {...register("teamName")} />
         <DateInput
           title="창단일"
           pickType="ONLY_PAST"
           defaultValue={today}
           information={{ text: "팀 창단이 완료되면 창단일 변경이 어려워요.", onClick: () => {} }}
         />
-        {/* <DateCalendarInput title="창단일" defaultValue={today} /> */}
         <GenderOptions>
           <InputRadio buttonType {...register("gender")} value="male" id="male" labelName="남성" />
           <InputRadio buttonType {...register("gender")} value="female" id="female" labelName="여성" />

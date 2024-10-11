@@ -43,6 +43,10 @@ const Container = styled(BaseContainer)<{ stepper: boolean }>`
   flex-direction: column;
   justify-content: space-between;
   height: ${({ stepper }) => `calc(100vh - var(--safe-area-top) - 1px - ${stepper ? "24px" : "0px"})`};
+
+  article {
+    flex: 1;
+  }
 `;
 const ButtonWrapper = styled.div`
   margin-bottom: -20px;

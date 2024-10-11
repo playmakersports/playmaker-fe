@@ -27,3 +27,33 @@ export const TEAM_LIST_MOCK = [
     logoImg: "/images/mock/zoo-logo.png",
   },
 ];
+
+export const HOME_TEAM_SCHEDULE_MOCK = [
+  {
+    matchId: "123",
+    teamName: "SPABA",
+    matchTitle: "10월 주간 연습경기",
+    matchDate: "2024-10-2018:00",
+    matchPlace: "서울 잠실체육관",
+    category: "농구",
+    matchImage: "/images/mock/2024hongik-jump-competition.jpeg",
+  },
+  {
+    matchId: "1323",
+    teamName: "SPABA",
+    matchTitle: "경기 진행합니다",
+    matchDate: "2024-11-2418:00",
+    matchPlace: "광명 농구 경기장",
+    category: "농구",
+    matchImage: "",
+  },
+  {
+    matchId: "1523",
+    teamName: "SPABA",
+    matchTitle: "3차 연습경기",
+    matchDate: "2024-11-2418:00",
+    matchPlace: "서울 잠실체육관",
+    category: "농구",
+    matchImage: "",
+  },
+];

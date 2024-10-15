@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
-import { FONTS } from "@/styles/common";
-import { countDayDiff } from "@/util/date";
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
+import { countDayDiff, formattedDate } from "@/util/date";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 
 type Props = {
@@ -20,6 +20,7 @@ type Props = {
   awayName?: string;
   homeLogo?: string;
   awayLogo?: string;
+  attendMembers?: number;
 };
 function MatchCard(props: Props) {
   const router = useRouter();
@@ -36,6 +37,7 @@ function MatchCard(props: Props) {
     homeLogo,
     awayName,
     awayLogo,
+    attendMembers,
   } = props;
   const dayCount = () => {
     if (countDayDiff(matchDate) === 0) return "D-DAY";
@@ -87,19 +89,21 @@ function MatchCard(props: Props) {
           <h5>{competitionName}</h5>
           <DetailList>
             <li>
-              <dt>주최</dt>
-              <dd>{openedBy}</dd>
-            </li>
-            <li>
               <dt>일시</dt>
               <dd>
-                {matchDate} {matchTime}
+                {formattedDate(`${matchDate}${matchTime}`, {
+                  displayYear: "not-this-year",
+                  displayDateType: "kr",
+                  displayDayName: "short-with-parenthesis",
+                  displayTime: "12h-kr",
+                })}
               </dd>
             </li>
             <li>
               <dt>장소</dt>
               <dd>{matchLocation}</dd>
             </li>
+            {!!attendMembers && <li className="attend-number">우리 팀에서 {attendMembers}명 출전</li>}
           </DetailList>
         </MediumContents>
       </MediumCardContainer>
@@ -110,9 +114,7 @@ function MatchCard(props: Props) {
 
 const LargeCardContainer = styled(BasicWhiteCard)`
   transition: transform 0.25s;
-  &:active {
-    transform: scale(0.97);
-  }
+  ${CARD_ACTIVE}
 `;
 const MediumCardContainer = styled(BasicWhiteCard)`
   display: flex;
@@ -123,29 +125,24 @@ const MediumCardContainer = styled(BasicWhiteCard)`
     position: relative;
     ${FONTS.MD1};
     width: 112px;
-    height: 140px;
+    height: 128px;
     background-size: cover;
     background-position: center;
     background-color: var(--gray300);
     &::before {
       position: absolute;
       content: attr(data-d-day);
-      padding: 8px 16px;
       top: 0;
       left: 0;
-      width: 100%;
-      height: max-content;
+      margin: 8px;
+      padding: 2px 6px;
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      background-color: rgba(0, 0, 0, 0.1);
       color: #fff;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
-      text-shadow: 0 0 16px rgba(0, 0, 0, 0.8);
-      box-sizing: border-box;
     }
   }
-
-  transition: transform 0.25s;
-  &:active {
-    transform: scale(0.97);
-  }
+  ${CARD_ACTIVE}
 `;
 const MatchBox = styled.div`
   display: flex;
@@ -154,7 +151,7 @@ const MatchBox = styled.div`
   margin: 0 -18px;
   padding: 24px 0;
   width: calc(100% + 36px);
-  background-color: var(--neutral-n40);
+  background-color: var(--gray100);
   background-size: cover;
   background-position: center;
 
@@ -169,9 +166,7 @@ const MatchBox = styled.div`
     flex: 1;
     display: flex;
     padding: 12px 24px;
-    background-color: rgba(var(--neutral-n400-rgb), 0.4);
     backdrop-filter: blur(3px);
-    /* border: 1px solid var(--gray300); */
     gap: 2px;
 
     &.home-team {
@@ -225,26 +220,27 @@ const Opened = styled.p`
     width: 28px;
     height: 28px;
     background-color: #fff;
-    border: 1px solid var(--neutral-n20);
+    border: 1px solid var(--gray200);
     border-radius: 100%;
   }
 `;
 
 const DetailList = styled.ul`
   ${FONTS.MD2};
-  margin: 12px 0 0;
+  margin: 10px 0 0;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  font-weight: 400;
   li {
     display: inline-flex;
-    gap: 20px;
+    gap: 14px;
     dt {
       color: var(--gray900);
+      font-weight: 500;
       word-break: keep-all;
     }
     dd {
-      font-weight: 400;
       color: var(--gray700);
     }
   }
@@ -256,6 +252,9 @@ const MediumContents = styled.div`
   h5 {
     ${FONTS.MD1};
     color: var(--gray900);
+  }
+  li.attend-number {
+    color: var(--main);
   }
 `;
 

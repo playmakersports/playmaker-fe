@@ -7,7 +7,7 @@ import { BasicWhiteCard } from "../common/Card";
 import GroupTitle from "../common/GroupTitle";
 import { HOME_TEAM_SCHEDULE_MOCK } from "@/constants/mock/HOME";
 import { FONTS } from "@/styles/common";
-import { countDayDiff } from "@/util/date";
+import { countDayDiff, formattedDate } from "@/util/date";
 
 function MyTeamSchedule() {
   const flickRef = useRef<Flicking>(null);
@@ -44,7 +44,14 @@ function MyTeamSchedule() {
                     <ul className="match-date-place">
                       <dl>
                         <dt>일시</dt>
-                        <dd>{match.matchDate}</dd>
+                        <dd>
+                          {formattedDate(match.matchDate, {
+                            displayDateType: "kr",
+                            displayDayName: "short-with-parenthesis",
+                            displayYear: "always",
+                            displayTime: "12h-kr",
+                          })}
+                        </dd>
                       </dl>
                       <dl>
                         <dt>장소</dt>
@@ -129,7 +136,7 @@ const CardImg = styled.div<{ img: string }>`
   div.match-d-day {
     ${FONTS.MD2};
     position: absolute;
-    margin: 5px 10px;
+    margin: 3px 10px 0;
     padding: 5px 0;
     right: 0;
     font-weight: 800;

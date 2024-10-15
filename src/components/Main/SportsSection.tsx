@@ -114,7 +114,7 @@ const SportsTitle = styled.h3`
   }
 `;
 const Container = styled(BasicWhiteCard)`
-  padding: 24px 20px 2px;
+  padding: 24px 20px 12px;
 `;
 const ListWrapperColumn = styled.div`
   padding-bottom: 12px;

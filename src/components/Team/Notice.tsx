@@ -86,9 +86,9 @@ function Notice({ list }: Props) {
 const PADDING = 24;
 
 const Container = styled.div`
-  margin: 0 -16px 20px;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--gray300);
+  margin: 0 -16px;
+  padding: 10px 16px;
+  background-color: rgba(247, 250, 252, 0.5);
 `;
 const Display = styled.div`
   position: relative;
@@ -127,13 +127,14 @@ const Item = styled.div`
     display: inline-flex;
     margin-right: 6px;
     align-items: center;
-    font-weight: 700;
+    font-weight: 600;
     gap: 6px;
+    color: var(--main);
     &::after {
       content: "";
-      width: 5px;
-      height: 5px;
-      background-color: var(--gray500);
+      width: 4px;
+      height: 4px;
+      background-color: var(--gray400);
       border-radius: 100%;
     }
   }
@@ -160,7 +161,7 @@ const Wrapper = styled.div`
   user-select: none;
   border-radius: 2px;
 
-  ${TEXT_ACTIVE("var(--background)")};
+  ${TEXT_ACTIVE("var(--gray100)")};
 `;
 
 export default Notice;

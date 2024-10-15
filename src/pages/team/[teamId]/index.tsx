@@ -17,6 +17,9 @@ import ComingUpMatch from "@/components/Team/ComingUpMatch";
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import MetaTitle from "@/components/layouts/MetaTitle";
+import RecentMatch from "@/components/Team/RecentMatch";
+import BoardList from "@/components/Team/BoardList";
+import GroupTitle from "@/components/common/GroupTitle";
 
 function TeamHome() {
   const router = useRouter();
@@ -52,6 +55,7 @@ function TeamHome() {
                 {TEAM_INFO_MOCK.teamName}
                 <Heart onHeart={setHeart} isHeart={heart} />
               </h2>
+              <p className="team-location">{TEAM_INFO_MOCK.location}</p>
               <p className="team-detail-info">
                 창단 {TEAM_INFO_MOCK.foundedAt} | 현 {TEAM_INFO_MOCK.memberCount}명
               </p>
@@ -74,11 +78,19 @@ function TeamHome() {
         <Cards>
           <TeamWeekly />
           <ComingUpMatch />
+          <RecentMatch
+            matchId={"123"}
+            teamName={TEAM_INFO_MOCK.teamName}
+            teamLogo={TEAM_INFO_MOCK.logo}
+            matchTeamScore={20}
+            counterpartTeamName="SPABA"
+            counterpartTeamLogo=""
+            matchCounterpartScore={10}
+            matchDate="2024.10.12"
+          />
+          <BoardList />
           <Card onClick={() => router.push(`/team/${teamId}/video/1`)}>
             <BasicWhiteCardTitle>경기 영상</BasicWhiteCardTitle>
-          </Card>
-          <Card onClick={() => router.push(`/team/${teamId}/board`)}>
-            <BasicWhiteCardTitle>게시판</BasicWhiteCardTitle>
           </Card>
           <Card onClick={() => router.push(`/team/${teamId}/statistics`)}>
             <BasicWhiteCardTitle>통계</BasicWhiteCardTitle>
@@ -87,8 +99,7 @@ function TeamHome() {
         </Cards>
         <WhiteSectionDivider />
         <PlayerListWrapper>
-          <BasicWhiteCardTitle>팀원</BasicWhiteCardTitle>
-          <MoreButton text="전체 팀원 보기" href={`/team/${teamId}/players`} />
+          <GroupTitle link={`/team/${teamId}/players`}>팀원</GroupTitle>
         </PlayerListWrapper>
       </MainContainer>
     </>
@@ -118,11 +129,12 @@ const LightWrapper = styled.section`
 `;
 const Top = styled.section`
   padding: 24px 20px;
-  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.25);
+  box-shadow: 0 2px 4px 0 rgba(195, 220, 243, 0.5);
   background-color: var(--background-light);
 `;
 const MainContainer = styled(BaseContainer)`
-  padding: 0px 16px;
+  padding: 16px;
+  background-color: var(--background-light);
 `;
 const TeamInfo = styled.article`
   display: flex;
@@ -141,10 +153,15 @@ const Right = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+  .team-location {
+    font-weight: 400;
+    font-size: 1.4rem;
+    color: var(--gray800);
+  }
   .team-detail-info {
     font-weight: 400;
     font-size: 1.4rem;
-    color: var(--gray600);
+    color: var(--gray500);
   }
   .team-category {
     margin-top: 8px;
@@ -153,12 +170,12 @@ const Right = styled.div`
     font-weight: 400;
     span {
       display: inline-block;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
       line-height: 1.6rem;
-      padding: 2px 4px;
-      border: 1px solid var(--gray500);
+      padding: 2px 6px;
+      border: 1px solid var(--gray200);
       color: var(--gray800);
-      border-radius: 4px;
+      border-radius: 5px;
     }
   }
 `;
@@ -175,7 +192,7 @@ const Card = styled(BasicWhiteCard.withComponent("button"))`
   ${CARD_ACTIVE};
 `;
 const PlayerListWrapper = styled(WhiteSectionWrapper)`
-  padding: 20px 24px calc(var(--env-sab) + 12px);
+  padding: 20px 24px calc(var(--env-sab) + 20px);
   background-color: var(--background-light);
 `;
 

@@ -18,19 +18,20 @@ function ComingUpMatch() {
           posterImg="/images/mock/2024hongik-jump-competition.jpeg"
           competitionId=""
           competitionName="전국대학동아리 농구대회"
-          matchDate="2024-07-31"
+          matchDate="2024-10-30"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
           openedBy="국민체육진흥공단"
           homeName="포이프"
           awayName="archive"
+          attendMembers={12}
         />
         <MatchCard
           size="MEDIUM"
           posterImg="/images/mock/seoul-tech-univ-poster.png"
           competitionId=""
           competitionName="리그 챔피언 배구"
-          matchDate="2024-07-31"
+          matchDate="2024-11-20"
           matchTime="15:30"
           matchLocation="00대학교 실내체육관"
           openedBy="국민체육진흥공단"
@@ -42,11 +43,14 @@ function ComingUpMatch() {
   );
 }
 
-const Container = styled.article``;
+const Container = styled.article`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+`;
 const Cards = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 12px 0 0px;
   gap: 16px;
 `;
 

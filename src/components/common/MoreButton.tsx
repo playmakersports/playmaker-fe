@@ -26,7 +26,7 @@ const Container = styled.button`
   gap: 8px;
   align-items: center;
   justify-content: center;
-  margin: 12px 0;
+  margin: 12px 0 0;
   width: 100%;
   color: var(--gray500);
   border-radius: 10px;
@@ -36,7 +36,7 @@ const Container = styled.button`
     fill: var(--gray500);
   }
 
-  ${TEXT_ACTIVE("var(--background)", {
+  ${TEXT_ACTIVE("var(--gray100)", {
     scalable: true,
   })};
 `;

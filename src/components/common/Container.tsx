@@ -10,7 +10,7 @@ export const WhiteSectionDivider = styled.div`
   width: calc(100% + 32px);
   height: 12px;
   background-color: var(--background);
-  box-shadow: inset 0 4px 4px 0 rgba(162, 162, 162, 0.2);
+  box-shadow: inset 0 4px 4px 0 rgba(195, 220, 243, 0.5);
 `;
 export const WhiteSectionWrapper = styled.article`
   margin-left: -16px;

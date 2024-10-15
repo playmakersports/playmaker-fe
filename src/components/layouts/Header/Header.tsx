@@ -22,10 +22,7 @@ function Header({ scrollActive }: Props) {
   }
   if (getTransparent) {
     return (
-      <Wrapper
-        className={`page-header main-header transparent-header  ${isWhiteBg ? "white-bg-header" : ""}`}
-        scrolled={isTitleShow}
-      >
+      <TransparentWrapper bgWhite={isWhiteBg} scrolled={isTitleShow}>
         <HeaderInner>
           <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
             <HeaderLeftArrow />
@@ -50,11 +47,11 @@ function Header({ scrollActive }: Props) {
             ))}
           </RightIcons>
         </HeaderInner>
-      </Wrapper>
+      </TransparentWrapper>
     );
   }
   return (
-    <Wrapper className={`page-header ${isWhiteBg ? "white-bg-header" : ""}`}>
+    <Wrapper bgWhite={isWhiteBg}>
       <HeaderInner>
         <HeaderIcon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow />
@@ -79,25 +76,25 @@ function Header({ scrollActive }: Props) {
 }
 
 type StyledScrolled = { scrolled?: boolean };
+type WrapperStyledType = { bgWhite: boolean };
 const Icon = styled(HeaderIcon)``;
-const Wrapper = styled(HeaderWrapper)<StyledScrolled>`
-  &.page-header {
-    background-color: var(--background);
-  }
-  &.white-bg-header {
-    background-color: var(--background-light);
-  }
-  &.transparent-header {
-    background: transparent;
-    ${Icon} {
-      ${({ scrolled }) =>
-        !scrolled &&
-        `svg {
+const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
+  background-color: ${({ bgWhite }) => (bgWhite ? "var(--background-light)" : "var(--background)")};
+`;
+
+const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
+  background-color: ${({ scrolled, bgWhite }) =>
+    !scrolled ? "transparent" : bgWhite ? "var(--background-light)" : "var(--background)"};
+
+  ${Icon} {
+    ${({ scrolled }) =>
+      !scrolled &&
+      `svg {
+          transition: all 0.25s;
           fill: #fff;
           filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.35));
         }
       `}
-    }
   }
 `;
 
@@ -105,7 +102,8 @@ const PageTitle = styled.div<StyledScrolled>`
   visibility: ${({ scrolled }) => (scrolled ? "visible" : "hidden")};
   position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate3d(-50%, 0, 0);
+  will-change: transform;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -131,7 +129,7 @@ const PageTitle = styled.div<StyledScrolled>`
     transition: transform 0.3s, opacity 0.3s;
     transition-delay: 0.5s;
     opacity: ${({ scrolled }) => (scrolled ? 1 : 0)};
-    transform: ${({ scrolled }) => (scrolled ? `translateY(0)` : `translateY(80%)`)};
+    transform: ${({ scrolled }) => (scrolled ? `translate3d(0,0,0)` : `translate3d(0,80%,0)`)};
     will-change: transform;
   }
 `;

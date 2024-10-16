@@ -15,6 +15,7 @@ import Plus from "@/assets/icon/global/Plus.svg";
 import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
 import { InputRadio } from "../common/SelectInput";
 import Loading from "../common/Loading";
+import Image from "next/image";
 
 type Props = {
   editor: Editor | null;
@@ -131,7 +132,7 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
           )}
           {getter()?.list.map((image, index) => (
             <ImageItem key={`image-${index}`}>
-              <img src={image} />
+              <Image src={image} alt={`첨부된 이미지 ${index}번`} />
               <button type="button" onClick={() => removeImageItem(index)} aria-label={`${index + 1}번 이미지 삭제`}>
                 <DeleteAllIcon width={24} height={24} />
               </button>

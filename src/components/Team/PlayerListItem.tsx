@@ -35,7 +35,7 @@ function PlayerListItem(props: Props) {
       <Name>
         <p className="position">{POSITION_NAME[position]}</p>
         <p className="player-name">{name}</p>
-        <p className="player-tags">{typeof tag === "string" ? tag : tag.map((i) => <span>#{i}</span>)}</p>
+        <p className="player-tags">{typeof tag === "string" ? tag : tag.map((i) => <span key={i}>#{i}</span>)}</p>
       </Name>
       <Info>
         <li>

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { InputStyledWrapper } from "./Wrapper";
 
 import ToggleArrowIcon from "@/assets/icon/arrow/toggle/UpToggle.svg";
+import { FONTS } from "@/styles/common";
 
 type Props = {
   id: string;
@@ -16,7 +17,7 @@ type Props = {
 };
 
 function DropDown(props: Props) {
-  const { id, defaultValue, options, getSelectedValue, medium } = props;
+  const { id, defaultValue, options, getSelectedValue, medium = false } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
@@ -37,18 +38,23 @@ function DropDown(props: Props) {
   };
 
   return (
-    <Container ref={dropDownRef} isError={false} isMedium={medium} isOpen={showOptions}>
-      <button
+    <Container ref={dropDownRef} isError={false} isOpen={showOptions}>
+      <DisplayValue
         type="button"
         aria-label={`선택 팝업 열기. 현재 선택된 항목 - ${
           options.find((option) => option.value === selectedOption)?.name
         }`}
         role="menu"
         onClick={() => setShowOptions((prev) => !prev)}
-        className={`button-area ${showOptions && `active`}`}
+        isMedium={medium}
+        className={showOptions ? "active" : ""}
       >
-        {options.find((option) => option.value === selectedOption)?.name}
-      </button>
+        <p className="dropdown-current-value">{options.find((option) => option.value === selectedOption)?.name}</p>
+
+        <ArrowWrapper toggle={showOptions}>
+          <ToggleArrowIcon />
+        </ArrowWrapper>
+      </DisplayValue>
       <Options show={showOptions} aria-modal="true" role="modal">
         {options.map((option) => (
           <Option
@@ -60,14 +66,28 @@ function DropDown(props: Props) {
           </Option>
         ))}
       </Options>
-      <ArrowWrapper toggle={showOptions}>
-        <ToggleArrowIcon />
-      </ArrowWrapper>
     </Container>
   );
 }
 
+const DisplayValue = styled.button<{ isMedium: boolean }>`
+  flex: 1;
+  display: flex;
+  padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "10px 12px")};
+  align-items: center;
+  text-align: left;
+  ${FONTS.MD1W500}
+  font-weight: 400;
+
+  p.dropdown-current-value {
+    flex: 1;
+  }
+  &.active {
+    font-weight: 500;
+  }
+`;
 const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
+  padding: 0;
   position: relative;
   border: ${({ isOpen }) => (isOpen ? `1px solid var(--main)` : "")};
   user-select: none;
@@ -78,16 +98,6 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
     cursor: pointer;
     width: 100%;
   }
-  button {
-    flex: 1;
-    text-align: left;
-  }
-  &:has(button.button-area:focus) {
-    border: 1px solid var(--main);
-  }
-  button.active {
-    font-weight: 700;
-  }
 `;
 
 const ArrowWrapper = styled.div<{ toggle: boolean }>`
@@ -96,7 +106,7 @@ const ArrowWrapper = styled.div<{ toggle: boolean }>`
   transform: rotate(${({ toggle }) => (toggle ? 0 : 180)}deg);
   transition: transform 0.25s;
   svg {
-    fill: var(--gray800) !important;
+    fill: var(--gray400) !important;
   }
 `;
 
@@ -106,44 +116,49 @@ const Options = styled.div<{ show: boolean }>`
   flex-direction: column;
   gap: 4px;
   top: 100%;
-  margin-top: 6px;
+  margin-top: 10px;
   padding: 8px;
   left: -2px;
   width: calc(100% + 4px);
-  background-color: var(--background);
-  border-radius: 8px;
-  border: 1px solid var(--gray300);
-  box-shadow: var(--shadow-alpha20);
+  background-color: var(--background-light);
+  border-radius: 10px;
   transition: all 0.2s;
+  box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.07);
 
-  transform: translateY(${({ show }) => (show ? "0px" : "-20px")});
+  transform: translateY(${({ show }) => (show ? "0px" : "-12px")});
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
   opacity: ${({ show }) => (show ? 1 : 0)};
   z-index: 1;
 `;
 const Option = styled.button`
-  cursor: pointer;
-  padding: 10px;
-  user-select: none;
-  border-radius: 8px;
-  transition: all 0.2s;
+  ${FONTS.MD1W500}
   font-weight: 400;
+  cursor: pointer;
+  padding: 8px 10px;
+  user-select: none;
+  text-align: left;
+  border-radius: 6px;
   border: 1px solid transparent;
+  transition: all 0.2s;
 
-  &:active {
-    opacity: 0.7;
-  }
   &:focus {
-    opacity: 0.7;
-    border: 1px solid var(--gray700);
+    background: var(--gray200);
+  }
+  &:hover {
+    background: var(--gray100);
+  }
+  &:active {
+    color: var(--gray800);
+    background: var(--gray200);
   }
   &.selected {
     background: var(--main);
+    font-weight: 500;
     color: #fff;
-    font-weight: 600;
+
     &:focus {
-      background: var(--gray300);
-      color: var(--gray900);
+      background: var(--gray200);
+      color: var(--black);
     }
   }
 `;

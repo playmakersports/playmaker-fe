@@ -28,15 +28,18 @@ const Container = styled.button`
   justify-content: center;
   margin: 12px 0 0;
   width: 100%;
-  color: var(--gray500);
+  color: var(--gray600);
   border-radius: 10px;
   ${FONTS.MD2};
   font-weight: 400;
   svg {
-    fill: var(--gray500);
+    fill: var(--gray600);
   }
-
-  ${TEXT_ACTIVE("var(--gray100)", {
+  &:hover {
+    background-color: var(--gray100);
+    box-shadow: 0 0 0 4px var(--gray100);
+  }
+  ${TEXT_ACTIVE("var(--gray200)", {
     scalable: true,
   })};
 `;

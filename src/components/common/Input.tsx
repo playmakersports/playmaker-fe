@@ -126,7 +126,7 @@ const Container = styled.div`
   }
 
   svg.search-icon {
-    fill: var(--gray900);
+    fill: var(--gray800);
   }
 `;
 const IconArea = styled.div`
@@ -154,7 +154,7 @@ const ClearIconArea = styled(IconArea)`
 const StyledInput = styled.input`
   width: 100%;
   ${FONTS.MD1};
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 400;
   transition: all 0.2s;
   color: var(--black);

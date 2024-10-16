@@ -5,6 +5,7 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
   position: relative;
   display: flex;
   width: 100%;
+  height: 44px;
   padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "10px 12px")};
   gap: 10px;
   align-items: center;
@@ -14,9 +15,9 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
   font-weight: 500;
 
   & svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--black);
+    width: 18px;
+    height: 18px;
+    fill: var(--gray900);
   }
 
   background-color: var(--background-light);

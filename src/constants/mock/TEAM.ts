@@ -10,3 +10,39 @@ export const TEAM_INFO_MOCK = {
   univName: "홍익대",
   location: "서울",
 };
+
+export const TEAM_PLAYERS_MOCK = [
+  {
+    playerId: "21",
+    name: "백종원",
+    position: "president",
+    profileImg: "",
+    tag: ["리더"],
+    attendRate: 0.85,
+    birthDate: "1999-10-20",
+    // generation: 1,
+    gender: "m",
+  },
+  {
+    playerId: "34",
+    name: "안성재",
+    position: "vice",
+    profileImg: "",
+    tag: ["요리사"],
+    attendRate: 0.85,
+    birthDate: "1999-01-20",
+    generation: 1,
+    gender: "m",
+  },
+  {
+    playerId: "65",
+    name: "최현석",
+    position: "manager",
+    profileImg: "",
+    tag: ["요리사"],
+    attendRate: 0.65,
+    birthDate: "1996-08-30",
+    generation: 12,
+    gender: "m",
+  },
+];

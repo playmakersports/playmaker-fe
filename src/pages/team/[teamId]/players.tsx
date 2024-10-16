@@ -7,6 +7,7 @@ import useBgWhite from "@/hook/useBgWhite";
 import { BasicInput } from "@/components/common/Input";
 import DropDown from "@/components/common/DropDown";
 import { FONTS } from "@/styles/common";
+import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 
 function PlayerList() {
   const [filter, setFilter] = useState("");
@@ -21,15 +22,28 @@ function PlayerList() {
   ];
   return (
     <Container>
-      <BasicInput type="text" search placeholder="이름으로 찾기" />
-      <Filter>
-        <DropDown id="" getSelectedValue={setFilter} defaultValue="" options={PLAYERS_FILTER} />
-        <p>총 10명</p>
-      </Filter>
+      <Top>
+        <BasicInput type="text" search placeholder="이름으로 찾기" />
+        <Filter>
+          <DropDown id="" getSelectedValue={setFilter} defaultValue="" options={PLAYERS_FILTER} />
+          <p>총 {TEAM_PLAYERS_MOCK.length}명</p>
+        </Filter>
+      </Top>
       <Players>
-        <PlayerSelector />
-        <PlayerSelector />
-        <PlayerSelector />
+        {TEAM_PLAYERS_MOCK.map((player) => {
+          const { position, gender, birthDate, tag, ...rest } = player;
+          const [birthYear] = birthDate.split("-");
+          const displayBirth = !!rest.generation ? [`${birthYear}년생`] : [];
+          return (
+            <PlayerSelector
+              key={player.playerId}
+              position={position}
+              birthDate={birthDate}
+              tag={[gender === "m" ? "남성" : "여성", ...displayBirth, ...tag]}
+              {...rest}
+            />
+          );
+        })}
       </Players>
     </Container>
   );
@@ -38,16 +52,17 @@ function PlayerList() {
 const Container = styled.div`
   padding: 8px 16px;
 `;
+const Top = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
 const Filter = styled.div`
   display: flex;
-  margin: 16px -16px 0;
-  padding: 16px;
-  background: var(--gray300);
   align-items: center;
   gap: 40px;
   p {
     flex-shrink: 0;
-    ${FONTS.MD1W500}
   }
 `;
 const Players = styled.div`

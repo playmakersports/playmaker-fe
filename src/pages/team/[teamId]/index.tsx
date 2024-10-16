@@ -20,6 +20,7 @@ import MetaTitle from "@/components/layouts/MetaTitle";
 import RecentMatch from "@/components/Team/RecentMatch";
 import BoardList from "@/components/Team/BoardList";
 import GroupTitle from "@/components/common/GroupTitle";
+import HomeTeamList from "@/components/Team/HomeTeamList";
 
 function TeamHome() {
   const router = useRouter();
@@ -100,6 +101,7 @@ function TeamHome() {
         <WhiteSectionDivider />
         <PlayerListWrapper>
           <GroupTitle link={`/team/${teamId}/players`}>팀원</GroupTitle>
+          <HomeTeamList />
         </PlayerListWrapper>
       </MainContainer>
     </>

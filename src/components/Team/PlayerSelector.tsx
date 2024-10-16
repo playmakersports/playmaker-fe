@@ -3,8 +3,20 @@ import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
 
 import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
+import PlayerListItem from "./PlayerListItem";
 
-function PlayerSelector() {
+type Props = {
+  playerId: string;
+  name: string;
+  position: string;
+  // "president" | "vice" | "manager" | "member"
+  profileImg: string;
+  tag: string[] | string;
+  attendRate: number;
+  birthDate: string;
+  generation?: number;
+};
+function PlayerSelector(props: Props) {
   const [width, setWidth] = useState(0);
   const [activeButton, setActiveButton] = useState(false);
   const [touchX, setTouchX] = useState(0);
@@ -54,11 +66,7 @@ function PlayerSelector() {
           </Button>
         </Buttons>
         <Displayed onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-          <p className="profile-image"></p>
-          <div className="profile-info-right">
-            <p>이름</p>
-            <p>1999.09.09 | 남자 | 리베로</p>
-          </div>
+          <PlayerListItem {...props} />
         </Displayed>
         <Buttons bgColor="var(--sub1)">
           <Button bgColor="var(--sub1)">
@@ -80,7 +88,7 @@ const Container = styled.div<{ moveX: number }>`
     flex-wrap: nowrap;
     transform: translate3d(${({ moveX }) => moveX}px, 0, 0);
     transition: transform 0.3s;
-    border-bottom: 1px solid #d9d9d9;
+    border-bottom: 1px solid var(--gray200);
     overflow: hidden;
   }
   user-select: none;
@@ -93,19 +101,8 @@ const Container = styled.div<{ moveX: number }>`
 `;
 
 const Displayed = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 16px;
   width: 100%;
-  .profile-image {
-    width: 60px;
-    height: 60px;
-    border: 1px solid var(--neutral-n20);
-    border-radius: 50%;
-  }
-  .profile-info-right {
-  }
+  padding: 12px 16px;
 `;
 const Buttons = styled.div<{ bgColor: string }>`
   position: relative;

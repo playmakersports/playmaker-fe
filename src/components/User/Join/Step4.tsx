@@ -11,6 +11,7 @@ import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { ACCESS_TOKEN, atomServiceApply } from "@/atom/user";
 import { useAtom } from "jotai";
 import axios from "axios";
+import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
 
 function Step4() {
   const router = useRouter();
@@ -23,9 +24,8 @@ function Step4() {
   const handleNextStep = () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
       setter((prev) => ({ ...prev, preferredSport: "축구" }));
-      const url = "https://port-0-playmaker-be-e9btb72blgj562lo.sel3.cloudtype.app/api/login/signup";
       const request = axios.post(
-        url,
+        `${BACK_END_REQUEST_URL}/api/login/signup`,
         {
           data: getter,
         },

@@ -5,26 +5,33 @@ import { addDays, format, startOfWeek } from "date-fns";
 
 import LogoSymbolType from "@/assets/logo/LogoSymbol.svg";
 import { FONTS } from "@/styles/common";
-import { BasicWhiteCard } from "../common/Card";
+import { BasicWhiteCard } from "./Card";
 
-function TeamWeekly() {
+type Props = {
+  grouping: boolean;
+  activeDate: string;
+  setActiveDate: (prev: string) => void;
+  schedulesList: Array<{
+    teamName: string;
+    schedules: Array<Schedule>;
+  }>;
+};
+type Schedule = {
+  startTime: string;
+  scheduleTitle: string;
+  scheduleId: string;
+};
+function WeeklyCalender({ grouping = false, activeDate, setActiveDate, schedulesList }: Props) {
   const router = useRouter();
   const teamId = router.query.teamId;
-
-  const [activeDate, setActiveDate] = useState("");
 
   useEffect(() => {
     setActiveDate(format(new Date(), "yyyy-MM-dd"));
   }, []);
 
-  const SCHEDULE_MOCK = [
-    { startTime: "09:30", contents: "팀 훈련" },
-    { startTime: "16:30", contents: "교류전 (VS 성균관대)" },
-  ];
-
   return (
     <Container>
-      <Week>
+      <Week isGroup={grouping}>
         {getDatesOfCurrentWeek().map((value, i) => (
           <DaySelector
             type="button"
@@ -38,17 +45,38 @@ function TeamWeekly() {
         ))}
       </Week>
       <List>
-        <p className="active-date">
-          <LogoSymbolType width={18} height={18} />
-          <span>{activeDate.split("-").join(".")}</span>
-        </p>
+        {!grouping && (
+          <p className="active-date">
+            <LogoSymbolType width={18} height={18} />
+            <span>{activeDate.split("-").join(".")}</span>
+          </p>
+        )}
         <Schedules>
-          {SCHEDULE_MOCK.map((item) => (
-            <li key={item.startTime} className="team-group-schedules">
-              <span className="team-group-schedule-time">{item.startTime}</span>
-              <span>{item.contents}</span>
-            </li>
-          ))}
+          {!grouping
+            ? schedulesList[0].schedules.map((item) => (
+                <li key={item.startTime} className="team-group-schedules">
+                  <span className="team-group-schedule-time">{item.startTime}</span>
+                  <span>{item.scheduleTitle}</span>
+                </li>
+              ))
+            : schedulesList.map((schedule) => (
+                <GroupingByTeam key={schedule.teamName}>
+                  <div className="group-team">
+                    <div className="team-list-head">
+                      <LogoSymbolType width={18} height={18} />
+                      {schedule.teamName}
+                    </div>
+                    <ul className="group-team-schedule-wrapper">
+                      {schedule.schedules.map((item) => (
+                        <li key={item.startTime} className="team-group-schedules">
+                          <span className="team-group-schedule-time">{item.startTime}</span>
+                          <span>{item.scheduleTitle}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </GroupingByTeam>
+              ))}
         </Schedules>
       </List>
     </Container>
@@ -56,13 +84,13 @@ function TeamWeekly() {
 }
 
 const Container = styled(BasicWhiteCard)``;
-const Week = styled.div`
+const Week = styled.div<{ isGroup: boolean }>`
   display: flex;
   padding-bottom: 10px;
   margin: 0 0 10px;
   user-select: none;
   gap: 4px;
-  border-bottom: 1px solid var(--gray200);
+  border-bottom: ${({ isGroup }) => (isGroup ? "none" : "1px solid var(--gray200)")};
 `;
 
 const DaySelector = styled.button`
@@ -175,6 +203,28 @@ const Schedules = styled.ul`
   }
 `;
 
+const GroupingByTeam = styled.li`
+  padding-bottom: 8px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--gray200);
+  div.team-list-head {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  ul.group-team-schedule-wrapper {
+    padding-top: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  &:last-of-type {
+    border: none;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+`;
+
 const WEEK_NAME = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 function getDatesOfCurrentWeek() {
   const today = new Date();
@@ -188,4 +238,4 @@ function getDatesOfCurrentWeek() {
   return dates;
 }
 
-export default TeamWeekly;
+export default WeeklyCalender;

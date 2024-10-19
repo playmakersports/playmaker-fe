@@ -10,7 +10,7 @@ import ScheduleSection from "@/components/Team/ScheduleSection";
 import MoreButton from "@/components/common/MoreButton";
 import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
-import TeamWeekly from "@/components/Team/TeamWeekly";
+import WeeklyCalender from "@/components/common/WeeklyCalender";
 import Heart from "@/components/common/Heart";
 import ComingUpMatch from "@/components/Team/ComingUpMatch";
 
@@ -25,6 +25,7 @@ import HomeTeamList from "@/components/Team/HomeTeamList";
 function TeamHome() {
   const router = useRouter();
   const [heart, setHeart] = useState(false);
+  const [weeklyDate, setWeeklyDate] = useState("");
   const teamId = router.query.teamId;
 
   usePageTitle({
@@ -77,7 +78,20 @@ function TeamHome() {
       </LightWrapper>
       <MainContainer>
         <Cards>
-          <TeamWeekly />
+          <WeeklyCalender
+            grouping={false}
+            activeDate={weeklyDate}
+            setActiveDate={setWeeklyDate}
+            schedulesList={[
+              {
+                teamName: "",
+                schedules: [
+                  { scheduleId: "", startTime: "09:30", scheduleTitle: "팀 훈련" },
+                  { scheduleId: "", startTime: "16:30", scheduleTitle: "교류전 (VS 성균관대)" },
+                ],
+              },
+            ]}
+          />
           <ComingUpMatch />
           <RecentMatch
             matchId={"123"}

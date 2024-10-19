@@ -25,18 +25,22 @@ function Step4() {
   const handleNextStep = () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
       setter((prev) => ({ ...prev, preferredSport: "축구" }));
-      const request = axios.post(
-        `${BACK_END_REQUEST_URL}/api/login/signup`,
-        {
-          data: { userInfo: { ...getter, preferredSport: "축구" }, image: getterImg },
+
+      const formData = new FormData();
+
+      // userInfo를 JSON 문자열로 변환하여 추가
+      formData.append("userInfo", JSON.stringify({ ...getter, preferredSport: "축구" }));
+
+      // image 파일 추가 (getterImg는 image/png 파일이어야 함)
+      formData.append("image", getterImg);
+
+      // axios 요청 설정
+      const request = axios.post(`${BACK_END_REQUEST_URL}/api/login/signup`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${accessToken}`,
         },
-        {
-          headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      });
 
       request
         .then((req) => {

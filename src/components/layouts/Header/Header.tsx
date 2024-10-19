@@ -53,9 +53,9 @@ function Header({ scrollActive }: Props) {
   return (
     <Wrapper bgWhite={isWhiteBg}>
       <HeaderInner>
-        <HeaderIcon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
+        <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow />
-        </HeaderIcon>
+        </Icon>
         <PageTitle scrolled>
           {getSubTitle && <p>{getSubTitle}</p>}
           <h2 className="main-title">{getTitle}</h2>
@@ -77,7 +77,11 @@ function Header({ scrollActive }: Props) {
 
 type StyledScrolled = { scrolled?: boolean };
 type WrapperStyledType = { bgWhite: boolean };
-const Icon = styled(HeaderIcon)``;
+const Icon = styled(HeaderIcon)`
+  svg {
+    fill: var(--gray600);
+  }
+`;
 const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
   background-color: ${({ bgWhite }) => (bgWhite ? "var(--background-light)" : "var(--background)")};
 `;
@@ -88,11 +92,16 @@ const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledT
 
   ${Icon} {
     ${({ scrolled }) =>
-      !scrolled &&
-      `svg {
+      !scrolled
+        ? `svg {
           transition: all 0.25s;
           fill: #fff;
           filter: drop-shadow(0 0 16px rgba(0, 0, 0, 0.35));
+        }
+      `
+        : `
+        svg {
+          fill: var(--gray600)
         }
       `}
   }
@@ -135,7 +144,7 @@ const PageTitle = styled.div<StyledScrolled>`
 `;
 const RightIcons = styled.div`
   display: flex;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
 `;
 

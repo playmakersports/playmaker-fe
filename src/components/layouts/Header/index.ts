@@ -24,10 +24,6 @@ export const HeaderWrapper = styled.header`
   height: var(--header-height);
   z-index: 999;
   transition: background-color 0.3s, backdrop-filter 0.3s, transform 0.2s;
-
-  button > svg {
-    fill: var(--gray900);
-  }
   .logo {
     width: 148px;
     fill: var(--gray900);
@@ -39,13 +35,13 @@ export const HeaderIcon = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 26px;
-  height: 26px;
+  width: 24px;
+  height: 24px;
   border-radius: var(--radius-10);
   ${TEXT_ACTIVE("var(--gray100)")};
 
   svg {
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
   }
 `;

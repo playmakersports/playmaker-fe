@@ -7,16 +7,23 @@ import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";
 import { InputRadio } from "@/components/common/SelectInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
+import { useAtom } from "jotai";
+import { atomServiceApply } from "@/atom/user";
 
 function Step2({ setStep }: { setStep: (prev: number) => void }) {
-  const { register } = useForm();
+  const { register, watch } = useForm();
+  const [getter, setter] = useAtom(atomServiceApply);
+
   return (
     <StagePageContainer
       stepper
       title="기본 정보를 입력해 주세요"
       button={{
         text: "다음",
-        onClick: () => setStep(3),
+        onClick: () => {
+          setter((prev) => ({ ...prev, ...watch() }));
+          setStep(3);
+        },
       }}
     >
       <StepFormWrapper>
@@ -24,17 +31,17 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
         <BasicInput
           type="tel"
           title="휴대전화 번호"
-          {...register("phoneNumber", {
+          {...register("contact", {
             onChange: (event) =>
               (event.target.value = event.target.value
                 .replace(/[^0-9]/g, "")
                 .replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)),
           })}
         />
-        <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birthday")} />
+        <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birth")} />
         <Radios>
-          <InputRadio buttonType {...register("gender")} value="male" id="male" labelName="남성" />
-          <InputRadio buttonType {...register("gender")} value="female" id="female" labelName="여성" />
+          <InputRadio buttonType {...register("sexKey")} value="MALE" id="MALE" labelName="남성" />
+          <InputRadio buttonType {...register("sexKey")} value="FEMALE" id="FEMALE" labelName="여성" />
         </Radios>
       </StepFormWrapper>
     </StagePageContainer>

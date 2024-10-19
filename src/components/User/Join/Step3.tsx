@@ -1,16 +1,19 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
 
 import { StepFormWrapper } from "@/components/common/global/Text";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
+import { atomServiceApply } from "@/atom/user";
 
 function Step3({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [imgFile, setImgFile] = useState<string>("");
+  const [getter, setter] = useAtom(atomServiceApply);
 
   const previewImg = () => {
     const file = imgInputRef.current?.files?.[0];
@@ -30,7 +33,10 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
       stepper
       button={{
         text: "다음",
-        onClick: () => setStep(4),
+        onClick: () => {
+          setStep(4);
+          setter((prev) => ({ ...prev, image: imgFile }));
+        },
       }}
     >
       <StepFormWrapper>

@@ -3,6 +3,7 @@ import useBgWhite from "@/hook/useBgWhite";
 
 import { BaseContainer } from "@/components/common/Container";
 import MainHeader from "@/components/layouts/Header/MainHeader";
+import FixedNotice from "@/components/Main/FixedNotice";
 import Banner from "@/components/Main/Banner";
 import MyTeam from "@/components/Main/MyTeam";
 import MyWeekly from "@/components/Main/MyWeekly";
@@ -15,6 +16,7 @@ export default function Home() {
     <Container>
       <BackGradient />
       <MainHeader />
+      <FixedNotice />
       <Banner />
       <MyTeam />
       <MyWeekly />

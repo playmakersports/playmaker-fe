@@ -11,6 +11,7 @@ type ServiceApplyType = {
   university: string;
   username: string;
 };
+export const atomServiceApplyImage = atom<string>("");
 export const atomServiceApply = atom<ServiceApplyType>({
   birth: "",
   contact: "",

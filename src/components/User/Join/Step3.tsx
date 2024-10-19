@@ -7,13 +7,14 @@ import { StepFormWrapper } from "@/components/common/global/Text";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { atomServiceApply } from "@/atom/user";
+import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 
 function Step3({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [imgFile, setImgFile] = useState<string>("");
-  const [getter, setter] = useAtom(atomServiceApply);
+  // const [getter, setter] = useAtom(atomServiceApply);
+  const [getterImg, setterImg] = useAtom(atomServiceApplyImage);
 
   const previewImg = () => {
     const file = imgInputRef.current?.files?.[0];
@@ -35,7 +36,7 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
         text: "다음",
         onClick: () => {
           setStep(4);
-          setter((prev) => ({ ...prev, image: imgFile }));
+          setterImg(imgFile);
         },
       }}
     >

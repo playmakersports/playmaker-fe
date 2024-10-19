@@ -8,7 +8,7 @@ import useToast from "@/hook/useToast";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { ACCESS_TOKEN, atomServiceApply } from "@/atom/user";
+import { ACCESS_TOKEN, atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 import { useAtom } from "jotai";
 import axios from "axios";
 import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
@@ -20,6 +20,7 @@ function Step4() {
   const preferredSportValue = watch("preferredSport");
   const [getter, setter] = useAtom(atomServiceApply);
   const [accessToken] = useAtom(ACCESS_TOKEN);
+  const [getterImg, setterImg] = useAtom(atomServiceApplyImage);
 
   const handleNextStep = () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
@@ -27,9 +28,14 @@ function Step4() {
       const request = axios.post(
         `${BACK_END_REQUEST_URL}/api/login/signup`,
         {
-          data: getter,
+          data: { userInfo: { ...getter, preferredSport: "축구" }, image: getterImg },
         },
-        { headers: { Authorization: `Bearer ${accessToken}` } }
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
 
       request

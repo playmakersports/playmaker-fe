@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 type Props = {
   children: React.ReactNode;
-  link: string;
+  link?: string;
 };
 
 function GroupTitle({ children, link }: Props) {
@@ -14,7 +14,7 @@ function GroupTitle({ children, link }: Props) {
   return (
     <Container>
       <h4>{children}</h4>
-      <RightArrowSmallIcon onClick={() => router.push(link)} />
+      {link && <RightArrowSmallIcon onClick={() => router.push(link)} />}
     </Container>
   );
 }
@@ -28,6 +28,7 @@ const Container = styled.div`
     margin-top: 0;
   }
   h4 {
+    user-select: none;
     color: var(--gray900);
     font-weight: 600;
     font-size: 1.8rem;

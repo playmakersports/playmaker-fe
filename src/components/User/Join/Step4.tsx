@@ -26,15 +26,15 @@ function Step4() {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
       setter((prev) => ({ ...prev, preferredSport: "축구" }));
 
+      // JSON 데이터를 Blob으로 변환하면서 Content-Type을 명시
+      const jsonBlob = new Blob([JSON.stringify({ ...getter, preferredSport: "축구" })], {
+        type: "application/json",
+      });
+
       const formData = new FormData();
+      formData.append("userInfo", jsonBlob); // Blob을 사용해 userInfo 추가
+      formData.append("image", getterImg); // 이미지 파일 추가
 
-      // userInfo를 JSON 문자열로 변환하여 추가
-      formData.append("userInfo", JSON.stringify({ ...getter, preferredSport: "축구" }));
-
-      // image 파일 추가 (getterImg는 image/png 파일이어야 함)
-      formData.append("image", getterImg);
-
-      // axios 요청 설정
       const request = axios.post(`${BACK_END_REQUEST_URL}/api/login/signup`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

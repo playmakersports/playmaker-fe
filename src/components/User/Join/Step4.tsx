@@ -33,7 +33,9 @@ function Step4() {
 
       const formData = new FormData();
       formData.append("userInfo", jsonBlob); // Blob을 사용해 userInfo 추가
-      formData.append("image", getterImg); // 이미지 파일 추가
+      if (getterImg) {
+        formData.append("image", getterImg); // 이미지 파일 추가
+      }
 
       const request = axios.post(`${BACK_END_REQUEST_URL}/api/login/signup`, formData, {
         headers: {

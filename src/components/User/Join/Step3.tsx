@@ -13,6 +13,7 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
   const { register } = useForm();
   const imgInputRef = useRef<HTMLInputElement>(null);
   const [imgFile, setImgFile] = useState<string>("");
+  const [reqImgFile, setReqImgFile] = useState<File | null>(null);
   // const [getter, setter] = useAtom(atomServiceApply);
   const [getterImg, setterImg] = useAtom(atomServiceApplyImage);
 
@@ -20,6 +21,7 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
     const file = imgInputRef.current?.files?.[0];
     const reader = new FileReader();
     if (file) {
+      setReqImgFile(file);
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (reader.result) {
@@ -36,7 +38,7 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
         text: "다음",
         onClick: () => {
           setStep(4);
-          setterImg(imgFile);
+          setterImg(reqImgFile);
         },
       }}
     >

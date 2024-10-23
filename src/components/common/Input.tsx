@@ -149,7 +149,9 @@ const ClearIconArea = styled(IconArea)`
   visibility: hidden;
   transition: opacity 0.15s, visibility 0.1s;
   transition-delay: 0.1s;
-  fill: var(--gray500);
+  svg {
+    fill: var(--gray500);
+  }
 `;
 const StyledInput = styled.input`
   width: 100%;

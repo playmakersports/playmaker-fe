@@ -43,15 +43,15 @@ const FixedWrapper = styled.div`
   z-index: 1999;
 `;
 const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT" | "ALERT" }>`
-  ${FONTS.MD2};
+  ${FONTS.MD1W500};
   display: ${({ show }) => (show ? "block" : "none")};
   width: calc(100vw - 32px);
-  background-color: ${({ type }) => (type === "ALERT" ? "var(--point)" : "var(--gray700)")};
+  background-color: ${({ type }) => (type === "ALERT" ? "var(--point-red)" : "var(--gray700)")};
   color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--gray50)")};
   padding: 10px 16px;
-  margin: calc(env(safe-area-inset-top) + 8px) 16px;
-  margin: calc(constant(safe-area-inset-top) + 8px) 16px;
-  border-radius: 8px;
+  margin: calc(env(safe-area-inset-top) + 10px) 16px;
+  margin: calc(constant(safe-area-inset-top) + 10px) 16px;
+  border-radius: 10px;
   animation: 0.3s ${({ animate }) => (animate ? showToastAnim : hideToastAnim)};
   animation-fill-mode: forwards;
   white-space: pre-line;

@@ -26,7 +26,7 @@ function JoinComplete() {
             xmlns="http://www.w3.org/2000/svg"
           >
             <g filter="url(#filter0_f_1862_2164)">
-              <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fill-opacity="0.6" />
+              <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fillOpacity="0.6" />
             </g>
             <defs>
               <filter

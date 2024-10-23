@@ -26,12 +26,12 @@ function LoginWrapper({ children, button, logoFill }: Props) {
           <path
             d="M145 193.5C73 66.7 3 12 -23 0.5L-38 721.5L440 709.5V330L418 240.5C357 277.667 217 320.3 145 193.5Z"
             fill="url(#paint0_linear_2198_3712)"
-            fill-opacity="0.1"
+            fillOpacity="0.1"
           />
           <path
             d="M220 223C75.9086 245.359 3 60.5 -23 49L-38 770L440 758V378.5L423 196.5C376.5 145 249 218.5 220 223Z"
             fill="url(#paint1_linear_2198_3712)"
-            fill-opacity="0.1"
+            fillOpacity="0.1"
           />
           <defs>
             <linearGradient
@@ -42,8 +42,8 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               y2="269.69"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#306DEF" />
-              <stop offset="1" stop-color="#306DEF" stop-opacity="0" />
+              <stop stopColor="#306DEF" />
+              <stop offset="1" stopColor="#306DEF" stop-opacity="0" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_2198_3712"
@@ -53,8 +53,8 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               y2="372.539"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stop-color="#306DEF" />
-              <stop offset="1" stop-color="#306DEF" stop-opacity="0" />
+              <stop stopColor="#306DEF" />
+              <stop offset="1" stopColor="#306DEF" stop-opacity="0" />
             </linearGradient>
           </defs>
         </Background>

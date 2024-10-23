@@ -6,12 +6,11 @@ import useModal from "@/hook/useModal";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 import { FONTS } from "@/styles/common";
-import JoinStep from "@/components/User/JoinStep";
 import LoginWrapper from "@/components/User/LoginWrapper";
+import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
 import { InputCheckbox } from "@/components/common/SelectInput";
 
 import RightArrowThin from "@/assets/icon/arrow/RightArrowThin.svg";
-import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
 
 function Intro() {
   useBgWhite();
@@ -32,9 +31,6 @@ function Intro() {
     setAllChecked(isEveryChecked);
   }, [checkedList]);
 
-  if (router.query.agree) {
-    return <JoinStep />;
-  }
   return (
     <LoginWrapper
       button={{
@@ -42,9 +38,9 @@ function Intro() {
         onClick: async () => {
           if (checkedList.required1 && checkedList.required2) {
             await router.push({
-              pathname: "/user/apply",
+              pathname: "/user/apply/process",
               query: {
-                agree: checkedList.event1 ? "T" : "F",
+                eventAgree: checkedList.event1 ? "T" : "F",
               },
             });
           } else {

@@ -1,18 +1,25 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useForm } from "react-hook-form";
+import { useAtom, useSetAtom } from "jotai";
 
+import { atomServiceApply } from "@/atom/user";
 import { BasicInput } from "@/components/common/Input";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";
 import { InputRadio } from "@/components/common/SelectInput";
-import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { useAtom } from "jotai";
-import { atomServiceApply } from "@/atom/user";
 
 function Step2({ setStep }: { setStep: (prev: number) => void }) {
-  const { register, watch } = useForm();
-  const [getter, setter] = useAtom(atomServiceApply);
+  const [applyValues, setApplyValues] = useAtom(atomServiceApply);
+  const { register, watch } = useForm({
+    defaultValues: {
+      username: applyValues.username,
+      contact: applyValues.contact,
+      birth: applyValues.birth,
+      sexKey: applyValues.sexKey,
+    },
+  });
 
   return (
     <StagePageContainer
@@ -21,13 +28,13 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
       button={{
         text: "다음",
         onClick: () => {
-          setter((prev) => ({ ...prev, ...watch() }));
+          setApplyValues((prev) => ({ ...prev, ...watch() }));
           setStep(3);
         },
       }}
     >
       <StepFormWrapper>
-        <BasicInput type="text" title="이름" {...register("name")} />
+        <BasicInput type="text" title="이름" {...register("username")} />
         <BasicInput
           type="tel"
           title="휴대전화 번호"

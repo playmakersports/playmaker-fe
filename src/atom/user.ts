@@ -11,8 +11,8 @@ type ServiceApplyType = {
   university: string;
   username: string;
 };
-export const atomServiceApplyImage = atom<File | null>(null);
-export const atomServiceApply = atom<ServiceApplyType>({
+
+const initialServiceApply: ServiceApplyType = {
   birth: "",
   contact: "",
   memberType: "",
@@ -22,6 +22,12 @@ export const atomServiceApply = atom<ServiceApplyType>({
   sexKey: "",
   university: "",
   username: "",
+};
+
+export const atomServiceApplyImage = atom<File | null>(null);
+export const atomServiceApply = atom<ServiceApplyType>(initialServiceApply);
+export const resetAtomServiceApply = atom(null, (get, set) => {
+  set(atomServiceApply, initialServiceApply);
 });
 
 export const ACCESS_TOKEN = atom<string>(

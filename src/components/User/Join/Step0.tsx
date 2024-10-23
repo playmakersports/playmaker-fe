@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";
 
+import { atomServiceApply } from "@/atom/user";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { InputCheckbox } from "@/components/common/SelectInput";
@@ -13,13 +15,13 @@ import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });
   const router = useRouter();
+  const [applyValues, setApplyValues] = useAtom(atomServiceApply);
+  const [checked, setChecked] = useState(
+    applyValues.memberType !== "" ? (applyValues.memberType === "일반" ? 2 : 1) : 0
+  );
 
-  const [checked, setChecked] = useState(0);
   const moveNextStep = () => {
-    router.push({
-      pathname: "/user/apply",
-      query: { agree: "T", type: checked === 2 ? "adult" : "univ" },
-    });
+    setApplyValues((prev) => ({ ...prev, memberType: checked === 2 ? "일반" : "대학" }));
     setStep(checked);
   };
 
@@ -40,14 +42,24 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
         </Title>
         <Buttons>
           <Card role="button" className={checked === 2 ? "checked" : ""} tabIndex={1} onClick={() => setChecked(2)}>
-            <InputCheckbox size="LARGE" checked={checked === 2} />
+            <InputCheckbox
+              size="LARGE"
+              checked={checked === 2}
+              defaultChecked={applyValues.memberType === "일반"}
+              onChange={() => {}}
+            />
             <div className="contents">
               <strong>일반</strong>
               <p>내 주변이나 생활 지역에서 스포츠 팀을 찾고 참여</p>
             </div>
           </Card>
           <Card role="button" className={checked === 1 ? "checked" : ""} tabIndex={2} onClick={() => setChecked(1)}>
-            <InputCheckbox size="LARGE" checked={checked === 1} />
+            <InputCheckbox
+              size="LARGE"
+              checked={checked === 1}
+              defaultChecked={applyValues.memberType === "대학"}
+              onChange={() => {}}
+            />
             <div className="contents">
               <strong>대학</strong>
               <p>대학 동아리나 리그 소속으로 스포츠 팀에 참여</p>

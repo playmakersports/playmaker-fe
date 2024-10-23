@@ -1,21 +1,25 @@
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
-import { useAtom } from "jotai";
 import { useForm } from "react-hook-form";
+import styled from "@emotion/styled";
+import { useAtom, useSetAtom } from "jotai";
 
+import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
+import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
+
 import PersonIcon from "@/assets/icon/global/Person.svg";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
-import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
+import { TextArea } from "@/components/common/TextArea";
 
 function Step3({ setStep }: { setStep: (prev: number) => void }) {
-  const { register } = useForm();
   const imgInputRef = useRef<HTMLInputElement>(null);
+  const [applyValues, setApplyValues] = useAtom(atomServiceApply);
+  const [applyProfileImg, setApplyProfileImg] = useAtom(atomServiceApplyImage);
+
   const [imgFile, setImgFile] = useState<string>("");
   const [reqImgFile, setReqImgFile] = useState<File | null>(null);
-  // const [getter, setter] = useAtom(atomServiceApply);
-  const [getterImg, setterImg] = useAtom(atomServiceApplyImage);
+
+  const { register, getValues } = useForm({ defaultValues: { selfIntro: applyValues.selfIntro } });
 
   const previewImg = () => {
     const file = imgInputRef.current?.files?.[0];
@@ -34,11 +38,13 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
   return (
     <StagePageContainer
       stepper
+      title="프로필을 작성해주세요"
       button={{
         text: "다음",
         onClick: () => {
           setStep(4);
-          setterImg(reqImgFile);
+          setApplyValues((prev) => ({ ...prev, selfIntro: getValues("selfIntro") }));
+          setApplyProfileImg(reqImgFile);
         },
       }}
     >
@@ -57,6 +63,8 @@ function Step3({ setStep }: { setStep: (prev: number) => void }) {
             <CameraIcon />
           </div>
         </ImageUpload>
+
+        <TextArea title="자기소개" displayLength maxLength={300} {...register("selfIntro")} />
       </StepFormWrapper>
     </StagePageContainer>
   );

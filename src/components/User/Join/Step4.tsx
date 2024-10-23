@@ -1,61 +1,47 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useAtom, useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import useToast from "@/hook/useToast";
+import { useMutate } from "@/apis/post";
 
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { ACCESS_TOKEN, atomServiceApply, atomServiceApplyImage } from "@/atom/user";
-import { useAtom } from "jotai";
-import axios from "axios";
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
+import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 
 function Step4() {
   const router = useRouter();
+  const { mutate } = useMutate("/api/login/signup");
   const { register, watch, setValue } = useForm<{ preferredSport: string[] }>();
   const { trigger } = useToast();
   const preferredSportValue = watch("preferredSport");
-  const [getter, setter] = useAtom(atomServiceApply);
-  const [accessToken] = useAtom(ACCESS_TOKEN);
-  const [getterImg, setterImg] = useAtom(atomServiceApplyImage);
-
-  const handleNextStep = () => {
+  const applyValues = useAtomValue(atomServiceApply);
+  const applyProfileImgValue = useAtomValue(atomServiceApplyImage);
+  console.log(applyValues);
+  const handleNextStep = async () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
-      setter((prev) => ({ ...prev, preferredSport: "축구" }));
-
-      // JSON 데이터를 Blob으로 변환하면서 Content-Type을 명시
-      const jsonBlob = new Blob([JSON.stringify({ ...getter, preferredSport: "축구" })], {
+      const formData = new FormData();
+      const jsonBlob = new Blob([JSON.stringify({ ...applyValues, preferredSport: preferredSportValue })], {
         type: "application/json",
       });
-
-      const formData = new FormData();
-      formData.append("userInfo", jsonBlob); // Blob을 사용해 userInfo 추가
-      if (getterImg) {
-        formData.append("image", getterImg); // 이미지 파일 추가
+      formData.append("userInfo", jsonBlob);
+      if (applyProfileImgValue) {
+        formData.append("image", applyProfileImgValue);
       }
 
-      const request = axios.post(`${BACK_END_REQUEST_URL}/api/login/signup`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-
-      request
-        .then((req) => {
-          window.alert(req.data);
-          router.push({
-            pathname: "/user/apply/complete",
-            query: {
-              name: "손수철",
-              gender: "male",
-            },
-          });
-        })
-        .catch((err) => window.alert(err));
+      const success = await mutate("post", formData, "form-data");
+      if (success) {
+        router.push({
+          pathname: "/user/apply/complete",
+          query: {
+            name: "손수철",
+            gender: "male",
+          },
+        });
+      }
     }
   };
 

@@ -10,6 +10,7 @@ export type BottomSheetProps = {
   expanded?: boolean;
   buttons: {
     mode: ButtonStyleMode;
+    disabled?: boolean;
     onClick: (close: () => void) => void;
     name: string;
     flex?: number;
@@ -56,6 +57,7 @@ function BottomSheet(props: BottomSheetProps) {
               key={button.name}
               type="button"
               mode={button.mode}
+              disabled={button.disabled}
               onClick={() => {
                 button.onClick(closeBottomSheet);
               }}

@@ -7,7 +7,6 @@ import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer, WhiteSectionDivider, WhiteSectionWrapper } from "@/components/common/Container";
 import ScheduleSection from "@/components/Team/ScheduleSection";
-import MoreButton from "@/components/common/MoreButton";
 import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
 import WeeklyCalender from "@/components/common/WeeklyCalender";

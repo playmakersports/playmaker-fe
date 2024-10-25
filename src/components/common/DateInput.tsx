@@ -326,7 +326,7 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   padding: 16px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ isHoliday }) => (isHoliday ? "var(--point)" : "var(--text)")};
+  color: ${({ isHoliday }) => (isHoliday ? "var(--point-red)" : "var(--text)")};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
   font-size: 1.8rem;
   ${BUTTON_ACTIVE()};

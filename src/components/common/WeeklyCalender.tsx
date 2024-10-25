@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { addDays, format, startOfWeek } from "date-fns";
 
 import LogoSymbolType from "@/assets/logo/LogoSymbol.svg";
-import { FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "./Card";
 
 type Props = {
@@ -25,6 +25,10 @@ function WeeklyCalender({ grouping = false, activeDate, setActiveDate, schedules
   const router = useRouter();
   const teamId = router.query.teamId;
 
+  const moveSchedule = () => {
+    router.push(`/team/${teamId}/schedule`);
+  };
+
   useEffect(() => {
     setActiveDate(format(new Date(), "yyyy-MM-dd"));
   }, []);
@@ -44,7 +48,7 @@ function WeeklyCalender({ grouping = false, activeDate, setActiveDate, schedules
           </DaySelector>
         ))}
       </Week>
-      <List>
+      <List onClick={moveSchedule}>
         {!grouping && (
           <p className="active-date">
             <LogoSymbolType width={18} height={18} />
@@ -87,7 +91,7 @@ const Container = styled(BasicWhiteCard)``;
 const Week = styled.div<{ isGroup: boolean }>`
   display: flex;
   padding-bottom: 10px;
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   user-select: none;
   gap: 4px;
   border-bottom: ${({ isGroup }) => (isGroup ? "none" : "1px solid var(--gray200)")};
@@ -154,6 +158,9 @@ const DaySelector = styled.button`
 `;
 
 const List = styled.div`
+  margin: -8px -12px -8px;
+  padding: 8px 12px 8px;
+  ${BUTTON_ACTIVE("var(--gray100)")}
   p.active-date {
     margin-bottom: 10px;
     display: flex;

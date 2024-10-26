@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "turbo run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "turbo run lint",
+    "test": "turbo run test"
   },
   "dependencies": {
     "@egjs/react-flicking": "^4.11.3",
@@ -37,6 +38,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
+    "turbo": "^2.2.3",
     "typescript": "^5"
   }
 }

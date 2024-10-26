@@ -58,6 +58,7 @@ function UserPage() {
       <TopWrapper>
         <p>내가 좋아요 한 팀, 게시글 // 내가 쓴 글 팀 // 경기 참여 신청 내역</p>
         <WeeklyCalender
+          clickable={false}
           grouping={true}
           activeDate={weeklyDate}
           setActiveDate={setWeeklyDate}

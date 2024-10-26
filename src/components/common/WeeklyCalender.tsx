@@ -8,6 +8,7 @@ import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "./Card";
 
 type Props = {
+  clickable: boolean;
   grouping: boolean;
   activeDate: string;
   setActiveDate: (prev: string) => void;
@@ -21,7 +22,8 @@ type Schedule = {
   scheduleTitle: string;
   scheduleId: string;
 };
-function WeeklyCalender({ grouping = false, activeDate, setActiveDate, schedulesList }: Props) {
+function WeeklyCalender(props: Props) {
+  const { clickable = true, grouping = false, activeDate, setActiveDate, schedulesList } = props;
   const router = useRouter();
   const teamId = router.query.teamId;
 
@@ -48,7 +50,7 @@ function WeeklyCalender({ grouping = false, activeDate, setActiveDate, schedules
           </DaySelector>
         ))}
       </Week>
-      <List onClick={moveSchedule}>
+      <List clickable={clickable} onClick={clickable ? moveSchedule : () => {}}>
         {!grouping && (
           <p className="active-date">
             <LogoSymbolType width={18} height={18} />
@@ -157,10 +159,10 @@ const DaySelector = styled.button`
   }
 `;
 
-const List = styled.div`
+const List = styled.div<{ clickable: boolean }>`
   margin: -8px -12px -8px;
   padding: 8px 12px 8px;
-  ${BUTTON_ACTIVE("var(--gray100)")}
+  ${({ clickable }) => (clickable ? BUTTON_ACTIVE("var(--gray100)") : "")}
   p.active-date {
     margin-bottom: 10px;
     display: flex;

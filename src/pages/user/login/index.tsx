@@ -28,6 +28,9 @@ function Login() {
   const handleIntroPage = () => {
     router.push("/user/apply");
   };
+  const handleMyPage = () => {
+    router.push("/room/1");
+  };
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");
   };
@@ -43,6 +46,9 @@ function Login() {
         </GoogleBtn>
         <Button type="button" mode="OPTION2" borderType onClick={handleIntroPage}>
           Intro
+        </Button>
+        <Button type="button" mode="OPTION2" borderType onClick={handleMyPage}>
+          My Page
         </Button>
         <StaffLogin>
           <button type="button" onClick={handleStaffLoginPage}>

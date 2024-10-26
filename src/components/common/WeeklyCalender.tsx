@@ -8,7 +8,7 @@ import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "./Card";
 
 type Props = {
-  clickable: boolean;
+  clickable?: boolean;
   grouping: boolean;
   activeDate: string;
   setActiveDate: (prev: string) => void;

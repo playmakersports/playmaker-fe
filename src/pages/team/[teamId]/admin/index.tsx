@@ -10,9 +10,14 @@ import AdminList from "@/components/Team/AdminList";
 import useBgWhite from "@/hook/useBgWhite";
 import { differenceInCalendarDays } from "date-fns";
 import { keyframes } from "@emotion/react";
+import useModal from "@/hook/useModal";
+import ToggleInput from "@/components/common/ToggleInput";
 
 function AdminIndex() {
   const [countFounded, setCountFounded] = useState(0);
+  const { showModal: showPublicTeamModal, ModalComponents: PublicTeamModal } = useModal();
+  const [publicTeam, setPublicTeam] = useState(true);
+
   useBgWhite();
   usePageTitle({
     title: "팀 관리",
@@ -23,30 +28,61 @@ function AdminIndex() {
   }, []);
 
   return (
-    <Container>
-      <Header>
-        <ProfileImage imgSrc={TEAM_INFO_MOCK.logo} />
-        <TeamInfo>
-          <h2>{TEAM_INFO_MOCK.teamName}</h2>
-          <TeamInfoLabel>
-            <span className="team-credit">Premium</span>
-            <span className="team-univ">{TEAM_INFO_MOCK.univName}</span>
-          </TeamInfoLabel>
-          <div className="team-description">
-            <p>
-              <span>Since {foundedDate.split("-").join(".")}</span>
-              <span>우리가 달려온 {countFounded}일</span>
-            </p>
+    <>
+      <Container>
+        <Header>
+          <ProfileImage imgSrc={TEAM_INFO_MOCK.logo} />
+          <TeamInfo>
+            <h2>{TEAM_INFO_MOCK.teamName}</h2>
+            <TeamInfoLabel>
+              <span className="team-credit">Premium</span>
+              <span className="team-univ">{TEAM_INFO_MOCK.univName}</span>
+            </TeamInfoLabel>
+            <div className="team-description">
+              <p>
+                <span>Since {foundedDate.split("-").join(".")}</span>
+                <span>우리가 달려온 {countFounded}일</span>
+              </p>
+            </div>
+          </TeamInfo>
+        </Header>
+        <TeamInfoSettings>
+          <button type="button">기본 정보 수정</button>
+          <button type="button">팀원 관리</button>
+          <button type="button" onClick={showPublicTeamModal}>
+            팀 공개 여부
+          </button>
+        </TeamInfoSettings>
+        <AdminList />
+      </Container>
+      <PublicTeamModal
+        buttons={[
+          {
+            mode: "OPTION1",
+            name: "닫기",
+            onClick: (close) => {
+              close();
+            },
+          },
+        ]}
+      >
+        <PublicHandlerContainer>
+          <div className="handler-wrapper">
+            <p>팀 공개 여부</p>
+            <ToggleInput toggled={publicTeam} setToggle={setPublicTeam} />
           </div>
-        </TeamInfo>
-      </Header>
-      <TeamInfoSettings>
-        <button type="button">기본 정보 수정</button>
-        <button type="button">팀원 관리</button>
-        <button type="button">팀 공개 여부</button>
-      </TeamInfoSettings>
-      <AdminList />
-    </Container>
+          <p className="description">
+            비공개 팀이 되면 다른 사용자는 우리 팀을 볼 수 없으며, 아래의 제한이 생겨요.
+            <ul className="information">
+              <li>초대 링크로만 새 팀원을 영입할 수 있어요.</li>
+              <li>다른 팀은 우리 팀에 교류전 제안을 할 수 없어요.</li>
+              <li>단, 우리 팀에서 교류전을 제안하면 상대 팀은 우리 팀을 볼 수 있어요.</li>
+              <li>팀 순위에서 제외돼요.</li>
+            </ul>
+          </p>
+        </PublicHandlerContainer>
+      </PublicTeamModal>
+    </>
   );
 }
 
@@ -173,6 +209,38 @@ const TeamInfoSettings = styled.div`
       &::after {
         width: 0;
       }
+    }
+  }
+`;
+
+const PublicHandlerContainer = styled.div`
+  ${FONTS.MD1};
+  padding: 0 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  div.handler-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    p {
+      flex: 1;
+    }
+  }
+  p.description {
+    ${FONTS.MD2};
+    font-weight: 400;
+    color: var(--gray700);
+    word-break: keep-all;
+    ul.information {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      margin: 10px 0 0 10px;
+      padding: 0 0 0 6px;
+      color: var(--gray600);
+      list-style-type: disc;
     }
   }
 `;

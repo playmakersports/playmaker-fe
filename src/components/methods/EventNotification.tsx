@@ -37,7 +37,7 @@ function EventNotification() {
     }
 
     return () => {};
-  }, []);
+  }, [accessToken]);
 
   return null;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAtomValue } from "jotai";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
@@ -32,6 +32,7 @@ function EventNotification() {
       };
       eventSource.onerror = (event: any) => {
         console.log("on-err", event);
+        console.log("token", accessToken);
       };
     }
 

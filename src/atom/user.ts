@@ -30,6 +30,4 @@ export const resetAtomServiceApply = atom(null, (get, set) => {
   set(atomServiceApply, initialServiceApply);
 });
 
-export const ACCESS_TOKEN = atom<string>(
-  "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ6ZXJvemVyb2Jhc2VAZ21haWwuY29tIiwiaWQiOjIsImVtYWlsIjoiemVyb3plcm9iYXNlQGdtYWlsLmNvbSIsImlhdCI6MTcyOTMyMDU2MSwiZXhwIjoxNzI5MzI0MTYxfQ.oQ47UEmdmO8Q_K29GIDddSa5FXN1t2AashV6JuhrrTc"
-);
+export const ACCESS_TOKEN = atom<string>("");

@@ -8,6 +8,7 @@ import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
 import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
+import EventNotification from "@/components/methods/EventNotification";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -26,6 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
               <Component {...pageProps} />
             </TokenRoute>
           </Layout>
+          <EventNotification />
         </GlobalComponents>
       </EmotionProvider>
     </Provider>

@@ -34,6 +34,9 @@ function Login() {
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");
   };
+  const handleUnivAbbNamePage = () => {
+    router.push("/user/login/univ");
+  };
 
   return (
     <LoginWrapper>
@@ -49,6 +52,9 @@ function Login() {
         </Button>
         <Button type="button" mode="OPTION2" borderType onClick={handleMyPage}>
           My Page
+        </Button>
+        <Button type="button" mode="OPTION2" borderType onClick={handleUnivAbbNamePage}>
+          대학 약칭 입력
         </Button>
         <StaffLogin>
           <button type="button" onClick={handleStaffLoginPage}>

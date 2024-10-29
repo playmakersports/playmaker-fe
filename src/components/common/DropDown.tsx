@@ -19,7 +19,6 @@ type Props = {
 };
 
 function DropDown(props: Props) {
-  console.log("rerender?");
   const { title, placeholder, id, defaultValue = "", options, getSelectedValue, medium = false } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);

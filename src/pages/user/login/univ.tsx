@@ -35,11 +35,10 @@ function UnivName({ univData }: UnivNameProps) {
 
   const [univValue, setUnivValue] = useState<string>();
 
-  const onClick = async (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     const post = axios.post(`${BACK_END_REQUEST_URL}/api/code/university/${univValue}?alias=${data.alias}`);
     if (await post) {
-      window.alert("약칭이 저장되었습니다.");
-      router.replace(router.asPath);
+      await router.replace(router.asPath);
       reset();
     } else {
       window.alert("약칭 저장에 실패했습니다.");
@@ -49,7 +48,7 @@ function UnivName({ univData }: UnivNameProps) {
   return (
     <BaseContainer>
       <form
-        onSubmit={handleSubmit(onClick)}
+        onSubmit={handleSubmit(onSubmit)}
         style={{
           display: "flex",
           flexDirection: "column",

@@ -1,8 +1,8 @@
 import { ACCESS_TOKEN } from "@/atom/user";
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
 import axios from "axios";
 import { useAtomValue } from "jotai/react";
 import { useState } from "react";
+import { baseBackendURL } from ".";
 
 type MutateMethod = "post" | "put";
 type ContentType = "json" | "form-data";
@@ -30,14 +30,14 @@ export const useMutate = (url: string) => {
     try {
       let response;
       if (method === "post") {
-        response = await axios.post(`${BACK_END_REQUEST_URL}${url}`, requestData, {
+        response = await axios.post(`${baseBackendURL}${url}`, requestData, {
           headers: {
             "Content-Type": CONTENT_TYPE[contentType],
             Authorization: `Bearer ${access_token}`,
           },
         });
       } else if (method === "put") {
-        response = await axios.put(`${BACK_END_REQUEST_URL}${url}`, requestData, {
+        response = await axios.put(`${baseBackendURL}${url}`, requestData, {
           headers: {
             "Content-Type": CONTENT_TYPE[contentType],
             Authorization: `Bearer ${access_token}`,

@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Provider } from "jotai";
 import dynamic from "next/dynamic";
 import Head from "next/head";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
@@ -11,6 +12,15 @@ import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
 import EventNotification from "@/components/methods/EventNotification";
 
 export default function App({ Component, pageProps }: AppProps) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  });
+
   return (
     <Provider>
       <EmotionProvider>
@@ -22,11 +32,13 @@ export default function App({ Component, pageProps }: AppProps) {
               content="width=device-width, initial-scale=1, minimum-scale=1,  maximum-scale=1, user-scalable=no, viewport-fit=cover"
             />
           </Head>
-          <Layout>
-            <TokenRoute>
-              <Component {...pageProps} />
-            </TokenRoute>
-          </Layout>
+          <QueryClientProvider client={queryClient}>
+            <Layout>
+              <TokenRoute>
+                <Component {...pageProps} />
+              </TokenRoute>
+            </Layout>
+          </QueryClientProvider>
           <EventNotification />
         </GlobalComponents>
       </EmotionProvider>

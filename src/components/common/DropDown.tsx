@@ -6,8 +6,10 @@ import ToggleArrowIcon from "@/assets/icon/arrow/toggle/UpToggle.svg";
 import { FONTS } from "@/styles/common";
 
 type Props = {
+  title?: string;
+  placeholder?: string;
   id: string;
-  defaultValue: string;
+  defaultValue?: string;
   options: {
     name: string;
     value: string;
@@ -17,7 +19,8 @@ type Props = {
 };
 
 function DropDown(props: Props) {
-  const { id, defaultValue, options, getSelectedValue, medium = false } = props;
+  console.log("rerender?");
+  const { title, placeholder, id, defaultValue = "", options, getSelectedValue, medium = false } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
@@ -38,38 +41,59 @@ function DropDown(props: Props) {
   };
 
   return (
-    <Container ref={dropDownRef} isError={false} isOpen={showOptions}>
-      <DisplayValue
-        type="button"
-        aria-label={`선택 팝업 열기. 현재 선택된 항목 - ${
-          options.find((option) => option.value === selectedOption)?.name
-        }`}
-        role="menu"
-        onClick={() => setShowOptions((prev) => !prev)}
-        isMedium={medium}
-        className={showOptions ? "active" : ""}
-      >
-        <p className="dropdown-current-value">{options.find((option) => option.value === selectedOption)?.name}</p>
-
-        <ArrowWrapper toggle={showOptions}>
-          <ToggleArrowIcon />
-        </ArrowWrapper>
-      </DisplayValue>
-      <Options show={showOptions} aria-modal="true" role="modal">
-        {options.map((option) => (
-          <Option
-            key={option.value}
-            className={selectedOption === option.value ? "selected" : ""}
-            onClick={() => onSelected(option.value)}
-          >
-            {option.name}
-          </Option>
-        ))}
-      </Options>
-    </Container>
+    <Wrapper>
+      {title && <p className="input-title">{title}</p>}
+      <Container ref={dropDownRef} isError={false} isOpen={showOptions}>
+        <DisplayValue
+          type="button"
+          aria-label={`선택 팝업 열기. 현재 선택된 항목 - ${
+            options?.find((option) => option.value === selectedOption)?.name
+          }`}
+          role="menu"
+          onClick={() => setShowOptions((prev) => !prev)}
+          isMedium={medium}
+          className={showOptions ? "active" : ""}
+        >
+          {!!selectedOption ? (
+            <p className="dropdown-current-value">{options?.find((option) => option.value === selectedOption)?.name}</p>
+          ) : (
+            <p className="dropdown-placeholder">{placeholder}</p>
+          )}
+          <ArrowWrapper toggle={showOptions}>
+            <ToggleArrowIcon />
+          </ArrowWrapper>
+        </DisplayValue>
+        <Options show={showOptions} aria-modal="true" role="modal">
+          {options.length > 0 ? (
+            options?.map((option) => (
+              <Option
+                key={option.value}
+                type="button"
+                className={selectedOption === option.value ? "selected" : ""}
+                onClick={() => onSelected(option.value)}
+              >
+                {option.name}
+              </Option>
+            ))
+          ) : (
+            <Error>옵션을 불러오지 못했어요</Error>
+          )}
+        </Options>
+      </Container>
+    </Wrapper>
   );
 }
 
+const Wrapper = styled.div`
+  p.input-title {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+    padding: 0 10px;
+    font-weight: 500;
+    color: var(--gray700);
+    line-height: 2.4rem;
+  }
+`;
 const DisplayValue = styled.button<{ isMedium: boolean }>`
   flex: 1;
   display: flex;
@@ -81,6 +105,10 @@ const DisplayValue = styled.button<{ isMedium: boolean }>`
 
   p.dropdown-current-value {
     flex: 1;
+  }
+  p.dropdown-placeholder {
+    flex: 1;
+    color: var(--gray500);
   }
   &.active {
     font-weight: 500;
@@ -120,10 +148,13 @@ const Options = styled.div<{ show: boolean }>`
   padding: 8px;
   left: -2px;
   width: calc(100% + 4px);
+  height: max-content;
+  max-height: 47vh;
   background-color: var(--background-light);
   border-radius: 10px;
   transition: all 0.2s;
   box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.07);
+  overflow-y: auto;
 
   transform: translateY(${({ show }) => (show ? "0px" : "-12px")});
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
@@ -140,6 +171,7 @@ const Option = styled.button`
   border-radius: 6px;
   border: 1px solid transparent;
   transition: all 0.2s;
+  color: var(--gray800);
 
   &:focus {
     background: var(--gray200);
@@ -148,7 +180,7 @@ const Option = styled.button`
     background: var(--gray100);
   }
   &:active {
-    color: var(--gray800);
+    color: var(--gray1000);
     background: var(--gray200);
   }
   &.selected {
@@ -161,6 +193,14 @@ const Option = styled.button`
       color: var(--black);
     }
   }
+`;
+
+const Error = styled.div`
+  ${FONTS.MD1W500}
+  padding: 20px 0;
+  width: 100%;
+  text-align: center;
+  color: var(--point);
 `;
 
 export default DropDown;

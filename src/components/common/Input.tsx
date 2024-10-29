@@ -69,7 +69,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
             ref={inputRef}
             type={type}
             placeholder={props.placeholder ?? " "}
-            pattern={type === "number" || type === "tel" ? "[0-9]*" : ""}
+            pattern={type === "number" || type === "tel" ? "[0-9]*" : undefined}
             inputMode={type === "number" || type === "tel" ? "numeric" : undefined}
             {...rest}
           />

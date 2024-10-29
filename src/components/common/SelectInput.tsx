@@ -7,7 +7,7 @@ import { FONTS } from "@/styles/common";
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> & {
   size?: "LARGE" | "MEDIUM";
 };
-type RadioProps = Props & { labelName: string; buttonType?: boolean };
+type RadioProps = Props & { fullWidth?: boolean; labelName: string; buttonType?: boolean };
 
 export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", ...rest }, ref) => (
   <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
@@ -18,8 +18,8 @@ export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size =
 InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
-  ({ size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
-    <RadioWrapper LARGE={size === "LARGE"}>
+  ({ fullWidth = false, size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
+    <RadioWrapper LARGE={size === "LARGE"} fullWidth={fullWidth}>
       <div style={{ position: "relative", display: buttonType ? "none" : "inline-flex" }}>
         <Radio type="radio" id={id} ref={ref} {...rest} />
         <RadioIcon />
@@ -99,14 +99,17 @@ const BasicLabel = styled.label`
   font-weight: 400;
 `;
 const ButtonLabel = styled.label`
+  width: 100%;
   padding: 8px 32px;
   ${FONTS.MD1W500};
-  border-radius: 20px;
-  color: var(--gray600);
-  background-color: var(--gray300);
+  border-radius: 10px;
+  color: var(--gray500);
+  background-color: var(--gray100);
+  text-align: center;
 `;
-const RadioWrapper = styled.div<{ LARGE: boolean }>`
+const RadioWrapper = styled.div<{ fullWidth: boolean; LARGE: boolean }>`
   display: flex;
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   align-items: center;
   gap: 4px;
   & > div,

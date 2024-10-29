@@ -12,7 +12,7 @@ type Props = {
   type?: "button" | "submit" | "reset" | undefined;
   flex?: number;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
   split?: {
     text: string;
     onClick: () => void;

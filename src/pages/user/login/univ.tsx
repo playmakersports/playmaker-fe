@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { GetServerSideProps } from "next";
 
-import { useMutate } from "@/apis/post";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
 import DropDown from "@/components/common/DropDown";
@@ -38,7 +37,8 @@ function UnivName({ univData }: UnivNameProps) {
   const onSubmit = async (data: FieldValues) => {
     const post = axios.post(`${BACK_END_REQUEST_URL}/api/code/university/${univValue}?alias=${data.alias}`);
     if (await post) {
-      await router.replace(router.asPath);
+      window.alert("약칭이 저장되었습니다.");
+      router.replace(`${router.asPath}`);
       reset();
     } else {
       window.alert("약칭 저장에 실패했습니다.");
@@ -66,7 +66,9 @@ function UnivName({ univData }: UnivNameProps) {
               Array.isArray(univData)
                 ? univData.map((item) => ({
                     value: `${item.universityId}`,
-                    name: `${item.universityName}(${item.universityId}) - 약어: ${item.universityAlias ?? "(없음)"}`,
+                    name: `${item.universityName}(${item.universityId}) - ${
+                      item.universityAlias ?? "(저장된 약어 없음)"
+                    }`,
                   }))
                 : []
             }

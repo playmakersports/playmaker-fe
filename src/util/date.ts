@@ -13,7 +13,7 @@ export const formattedDate = (target: string, type: FormattedDateType) => {
   const targetDate = new Date(date);
   const currentYear = new Date().getFullYear();
   const year = getYear(targetDate);
-  const month = getMonth(targetDate);
+  const month = getMonth(targetDate) + 1;
   const day = getDate(targetDate);
   const dayName = getDay(targetDate);
   const DAY_NAME_KOREAN = ["일", "월", "화", "수", "목", "금", "토"];

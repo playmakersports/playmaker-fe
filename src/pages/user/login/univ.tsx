@@ -3,14 +3,13 @@ import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { GetServerSideProps } from "next";
 
+import { useGet, usePost } from "@/apis/hook/query";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
 import DropDown from "@/components/common/DropDown";
 import { BasicInput } from "@/components/common/Input";
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
-import axios from "axios";
 import { usePageTitle } from "@/hook/usePageTitle";
-import { useRouter } from "next/router";
+import { baseBackendURL } from "@/apis";
 
 type UnivData = {
   universityId: number;
@@ -24,7 +23,7 @@ interface UnivNameProps {
 
 function UnivName({ univData }: UnivNameProps) {
   usePageTitle({ title: "대학 약칭 설정" });
-  const router = useRouter();
+  const [univValue, setUnivValue] = useState<string>();
   const {
     register,
     handleSubmit,
@@ -32,17 +31,23 @@ function UnivName({ univData }: UnivNameProps) {
     reset,
   } = useForm<FieldValues>();
 
-  const [univValue, setUnivValue] = useState<string>();
+  const { data: univList, refetch } = useGet<UnivData>("/api/code/university", {}, { initialData: univData });
+  const { mutateAsync } = usePost(`/api/code/university/${univValue}`);
 
   const onSubmit = async (data: FieldValues) => {
-    const post = axios.post(`${BACK_END_REQUEST_URL}/api/code/university/${univValue}?alias=${data.alias}`);
-    if (await post) {
-      window.alert("약칭이 저장되었습니다.");
-      router.replace(`${router.asPath}`);
-      reset();
-    } else {
-      window.alert("약칭 저장에 실패했습니다.");
-    }
+    await mutateAsync(
+      { data: {}, queryParams: { alias: data.alias } },
+      {
+        onSuccess: () => {
+          refetch();
+          reset();
+        },
+
+        onError: () => {
+          console.log("error");
+        },
+      }
+    );
   };
 
   return (
@@ -63,8 +68,8 @@ function UnivName({ univData }: UnivNameProps) {
             placeholder="대학을 선택해주세요"
             getSelectedValue={(value) => setUnivValue(value)}
             options={
-              Array.isArray(univData)
-                ? univData.map((item) => ({
+              univList
+                ? univList.map((item) => ({
                     value: `${item.universityId}`,
                     name: `${item.universityName}(${item.universityId}) - ${
                       item.universityAlias ?? "(저장된 약어 없음)"
@@ -101,7 +106,7 @@ const FormContents = styled.div`
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const response = await fetch(`${BACK_END_REQUEST_URL}/api/code/university`);
+    const response = await fetch(`${baseBackendURL}/api/code/university`);
     const univData: UnivData = await response.json();
     return { props: { univData } };
   } catch (error) {

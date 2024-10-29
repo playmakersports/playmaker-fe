@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-type Props = { type: "line" | "simple"; length: number; now: number; children: React.ReactNode };
-function Stepper({ type, length, now, children }: Props) {
+type Props = { type?: "line" | "simple"; length: number; now: number; children: React.ReactNode };
+function Stepper({ type = "line", length, now, children }: Props) {
   return (
     <>
       <Container length={length}>

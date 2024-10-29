@@ -35,11 +35,10 @@ function UnivName({ univData }: UnivNameProps) {
 
   const [univValue, setUnivValue] = useState<string>();
 
-  const onClick = async (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     const post = axios.post(`${BACK_END_REQUEST_URL}/api/code/university/${univValue}?alias=${data.alias}`);
     if (await post) {
-      window.alert("약칭이 저장되었습니다.");
-      router.replace(router.asPath);
+      await router.replace(router.asPath);
       reset();
     } else {
       window.alert("약칭 저장에 실패했습니다.");
@@ -49,7 +48,7 @@ function UnivName({ univData }: UnivNameProps) {
   return (
     <BaseContainer>
       <form
-        onSubmit={handleSubmit(onClick)}
+        onSubmit={handleSubmit(onSubmit)}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -76,9 +75,10 @@ function UnivName({ univData }: UnivNameProps) {
             type="text"
             title="약칭 입력"
             errorText={errors.alias ? (errors.alias.message as string) : ""}
-            information={{ text: "약칭은 최대 6자까지 입력 가능합니다.", onClick: () => {} }}
+            information={{ text: "약칭은 최대 8자까지 입력 가능합니다.", onClick: () => {} }}
             {...register("alias", {
-              maxLength: { value: 6, message: "약칭은 최대 6자까지 입력 가능합니다." },
+              setValueAs: (value) => value.trim(),
+              maxLength: { value: 8, message: "약칭은 최대 8자까지 입력 가능합니다." },
             })}
           />
         </FormContents>

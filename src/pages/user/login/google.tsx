@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
 import { BaseContainer } from "@/components/common/Container";
 import Loading from "@/components/common/Loading";
 import { useRouter } from "next/router";
 import { ACCESS_TOKEN } from "@/atom/user";
 import { useAtom } from "jotai";
+import { baseBackendURL } from "@/apis";
 
 function Google() {
   const router = useRouter();
@@ -14,7 +14,7 @@ function Google() {
   const [apiState, setApiState] = useState("");
   const [, setAccessToken] = useAtom(ACCESS_TOKEN);
   const GOOGLE_API_CODE = router.query.code;
-  const target = `${BACK_END_REQUEST_URL}/api/login/goauth2?code=${encodeURIComponent(`${GOOGLE_API_CODE}`)}`;
+  const target = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(`${GOOGLE_API_CODE}`)}`;
 
   useEffect(() => {
     setApiState("LOADING");

@@ -1,7 +1,8 @@
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
+import React, { useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+
+import { baseBackendURL } from "@/apis";
 
 function TokenRoute({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -11,7 +12,7 @@ function TokenRoute({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     const refreshAPI = axios.create({
-      baseURL: BACK_END_REQUEST_URL,
+      baseURL: baseBackendURL,
       headers: { "Content-Type": "application/json" }, // header의 Content-Type을 JSON 형식의 데이터를 전송한다
     });
 
@@ -31,7 +32,7 @@ function TokenRoute({ children }: { children: JSX.Element }) {
             // console.log("토큰 재발급 요청");
             await axios
               .post(
-                `${BACK_END_REQUEST_URL}/api/token/reissue`,
+                `${baseBackendURL}/api/token/reissue`,
                 {},
                 {
                   headers: {

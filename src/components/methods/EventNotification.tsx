@@ -3,7 +3,7 @@ import { useAtomValue } from "jotai";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
 import { ACCESS_TOKEN } from "@/atom/user";
-import { BACK_END_REQUEST_URL } from "@/constants/baseUrl";
+import { baseBackendURL } from "@/apis";
 
 function EventNotification() {
   const HEARTBEAT_TIMEOUT = 360000;
@@ -13,7 +13,7 @@ function EventNotification() {
     const EventSource = EventSourcePolyfill || NativeEventSource;
 
     if (accessToken) {
-      const eventSource = new EventSource(`${BACK_END_REQUEST_URL}/api/event/emitter`, {
+      const eventSource = new EventSource(`${baseBackendURL}/api/event/emitter`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

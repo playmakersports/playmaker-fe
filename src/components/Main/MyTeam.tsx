@@ -42,6 +42,7 @@ const TeamList = styled(BasicWhiteCard)`
 
   .team-list {
     display: flex;
+    justify-content: space-around;
     gap: 12px;
     padding: 12px 16px;
     overflow-x: auto;
@@ -88,7 +89,7 @@ const More = styled.div`
   border: 1px dashed var(--gray200);
   border-radius: 100%;
   & + p {
-    color: var(--gray900);
+    color: var(--gray700);
   }
   svg {
     fill: var(--gray500);

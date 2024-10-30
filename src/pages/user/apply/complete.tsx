@@ -2,13 +2,16 @@ import React from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
 import { useRouter } from "next/router";
+import { usePageTitle } from "@/hook/usePageTitle";
 
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
 import CharacterWelcome from "../../../components/User/Join/CharacterWelcome";
+import GradientBg from "@/components/common/GradientBg";
 
 function JoinComplete() {
   const router = useRouter();
+  usePageTitle({ transparent: true });
 
   return (
     <Container>
@@ -16,63 +19,7 @@ function JoinComplete() {
         <Title>
           <CharacterWelcome name={router.query.name as string} gender={router.query.gender as "male" | "female"} />
         </Title>
-        <Background>
-          <svg
-            className="blue-large"
-            width="368"
-            height="483"
-            viewBox="0 0 368 483"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g filter="url(#filter0_f_1862_2164)">
-              <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fillOpacity="0.6" />
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_1862_2164"
-                x="-115"
-                y="0"
-                width="483"
-                height="483"
-                filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_1862_2164" />
-              </filter>
-            </defs>
-          </svg>
-          <svg
-            className="green"
-            width="154"
-            height="154"
-            viewBox="0 0 154 154"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g filter="url(#filter0_f_1862_2163)">
-              <circle cx="77" cy="77" r="40" stroke="#20FF76" stroke-opacity="0.8" stroke-width="4" />
-            </g>
-            <defs>
-              <filter
-                id="filter0_f_1862_2163"
-                x="0.853657"
-                y="0.853657"
-                width="152.293"
-                height="152.293"
-                filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
-              >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                <feGaussianBlur stdDeviation="17.0732" result="effect1_foregroundBlur_1862_2163" />
-              </filter>
-            </defs>
-          </svg>
-          <span className="blue-small" />
-        </Background>
+        <GradientBg position="fixed" />
       </Contents>
       <ButtonWrapper>
         <Button type="button" mode="MAIN" onClick={() => router.push("/")} fullWidth>

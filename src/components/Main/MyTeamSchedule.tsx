@@ -84,8 +84,8 @@ const Container = styled.article`
   padding: 0;
 `;
 const Cards = styled.div`
-  margin: 16px -16px 0;
-  padding: 0 16px;
+  margin: 16px -16px -4px;
+  padding: 0 16px 8px;
   width: calc(100% + 32px);
   overflow: hidden;
 

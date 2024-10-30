@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
+import { differenceInCalendarDays } from "date-fns";
+import { keyframes } from "@emotion/react";
+import useModal from "@/hook/useModal";
 
 import { FONTS } from "@/styles/common";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
@@ -8,9 +11,6 @@ import { BaseContainer } from "@/components/common/Container";
 import ProfileImage from "@/components/Team/ProfileImage";
 import AdminList from "@/components/Team/AdminList";
 import useBgWhite from "@/hook/useBgWhite";
-import { differenceInCalendarDays } from "date-fns";
-import { keyframes } from "@emotion/react";
-import useModal from "@/hook/useModal";
 import ToggleInput from "@/components/common/ToggleInput";
 
 function AdminIndex() {

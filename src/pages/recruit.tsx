@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
+import useModal from "@/hook/useModal";
+import useBgWhite from "@/hook/useBgWhite";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
@@ -13,9 +15,9 @@ import { BasicInput } from "@/components/common/Input";
 import { BasicWhiteCard } from "@/components/common/Card";
 
 import ArticlePlus from "@/assets/icon/global/ArticlePlus.svg";
-import useModal from "@/hook/useModal";
 
 function Recruit() {
+  useBgWhite();
   usePageTitle({
     title: "팀 목록",
     subIcons: [{ svgIcon: <ArticlePlus />, linkTo: "/team/create", description: "팀 만들기" }],
@@ -37,6 +39,7 @@ function Recruit() {
     <Container>
       <TabWrapper ref={sportsTabRef}>
         <MainTab
+          type="line"
           initialValue={activeTab}
           nowValue={(value) => {
             setActiveTab(value);
@@ -104,13 +107,14 @@ const TabWrapper = styled.div`
   transition: padding 0.2s;
 
   &.stuck {
-    padding-bottom: 4px;
     border-bottom: 1px solid rgb(var(--gray-h6));
-    background-color: var(--background);
+    background-color: var(--background-light);
   }
 `;
 const Contents = styled.section`
-  margin-top: 20px;
+  margin: 0 -16px;
+  padding: 12px 16px;
+  background-color: var(--background);
 `;
 const Cards = styled.section`
   display: flex;

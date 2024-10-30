@@ -14,10 +14,10 @@ type Props = {
   }>;
 };
 
-const MEDAL_COLORS: Record<string, string> = {
-  1: "#FBBC00",
-  2: "var(--gray400)",
-  3: "#BF7C00",
+const RANK_DISPLAY: Record<string, { name: string; color: string }> = {
+  1: { name: "1위", color: "#FBBC00" },
+  2: { name: "2위", color: "var(--gray500)" },
+  3: { name: "3위", color: "#BF7C00" },
 };
 
 function RoomAwarded({ awardsList }: Props) {
@@ -35,8 +35,8 @@ function RoomAwarded({ awardsList }: Props) {
             <li key={`awarded-${idx}`}>
               <span className="award-year">{award.awardedYear}</span>
               <span className="award-name">{award.competitionName}</span>
-              <span className="award-rank">
-                <MedalIcon fill={MEDAL_COLORS[award.awardedRank]} width={28} height={32} />
+              <span className="award-rank" style={{ color: RANK_DISPLAY[award.awardedRank].color }}>
+                {RANK_DISPLAY[award.awardedRank].name}
               </span>
             </li>
           ))}

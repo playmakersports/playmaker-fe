@@ -11,12 +11,12 @@ import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
 import UserSetting from "@/components/Room/UserSetting";
 
-import SettingsIcon from "@/assets/icon/global/Settings.svg";
-import FemaleIcon from "@/assets/icon/gender/Female.svg";
-import MaleIcon from "@/assets/icon/gender/Male.svg";
+import GenderIcon from "@/components/common/GenderIcon";
+import PencilIcon from "@/assets/icon/global/Pencil.svg";
 
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
+import { BasicWhiteCard } from "@/components/common/Card";
 
 function UserPage() {
   useBgWhite();
@@ -27,10 +27,11 @@ function UserPage() {
     "안녕하세요! 농구와 배드민턴을 좋아하는 김이프라고 합니다!항상 새로운 도전을 즐기며, 팀원들과 함께하는 시간을 소중히 여기고 있습니다.";
 
   usePageTitle({
+    title: "마이 페이지",
     subIcons: [
       {
-        svgIcon: <SettingsIcon />,
-        linkTo: `/team/${userId}/admin`,
+        svgIcon: <PencilIcon />,
+        linkTo: `/room/${userId}/edit`,
         description: "내 정보 수정",
       },
     ],
@@ -43,10 +44,7 @@ function UserPage() {
         </div>
         <Info>
           <p className="player-name">
-            <strong>김이프</strong> 님{" "}
-            <Badges>
-              <FemaleIcon />
-            </Badges>
+            <strong>김이프</strong> 님 <GenderIcon type="FEMALE" />
           </p>
           <p className="player-detail">
             <span className="detail-tags">2000년생</span>
@@ -55,8 +53,12 @@ function UserPage() {
         </Info>
       </Profile>
       <Introduce>{INTRODUCE_MOCK}</Introduce>
+      <MyPageButtons>
+        <button type="button">나의 좋아요</button>
+        <button type="button">내가 쓴 글</button>
+        <button type="button">출전 경기</button>
+      </MyPageButtons>
       <TopWrapper>
-        <p>내가 좋아요 한 팀, 게시글 // 내가 쓴 글 팀 // 경기 참여 신청 내역</p>
         <WeeklyCalender
           clickable={false}
           grouping={true}
@@ -129,11 +131,39 @@ const Info = styled.div`
     }
   }
 `;
-const Badges = styled.span`
-  display: inline-flex;
-  margin-left: -2px;
+
+const MyPageButtons = styled(BasicWhiteCard)`
+  display: flex;
+  margin: 16px 0 20px;
+  padding: 0 2px;
+  justify-content: center;
   align-items: center;
-  gap: 4px;
+  border-radius: 10px;
+  & > button {
+    user-select: none;
+    position: relative;
+    ${FONTS.MD2};
+    flex: 1;
+    padding: 12px 0;
+    font-weight: 400;
+
+    &::after {
+      position: absolute;
+      content: "";
+      right: 0;
+      top: 0;
+      display: block;
+      margin: 12px 0;
+      width: 1px;
+      height: calc(100% - 24px);
+      background-color: var(--gray100);
+    }
+    &:last-of-type {
+      &::after {
+        width: 0;
+      }
+    }
+  }
 `;
 
 const Introduce = styled.p`

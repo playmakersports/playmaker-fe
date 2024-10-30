@@ -58,7 +58,7 @@ function UnivName({ univData }: UnivNameProps) {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          height: "calc(100vh - 100px)",
+          height: "calc(90vh - 120px)",
         }}
       >
         <FormContents>

@@ -6,7 +6,6 @@ import { atomBgWhite } from "@/atom/common";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
-import HomeIcon from "@/assets/icon/global/Home.svg";
 import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
 
 type Props = { scrollActive: number };
@@ -32,9 +31,6 @@ function Header({ scrollActive }: Props) {
             <h2 className="main-title">{getTitle}</h2>
           </PageTitle>
           <RightIcons>
-            <Icon type="button" onClick={() => router.push("/")} aria-label="홈화면 이동">
-              <HomeIcon />
-            </Icon>
             {getSubIcons.map((icon) => (
               <Icon
                 key={icon.linkTo}
@@ -61,9 +57,6 @@ function Header({ scrollActive }: Props) {
           <h2 className="main-title">{getTitle}</h2>
         </PageTitle>
         <RightIcons>
-          <Icon type="button" onClick={() => router.push("/")} aria-label="홈화면 이동">
-            <HomeIcon />
-          </Icon>
           {getSubIcons.map((icon) => (
             <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
               {icon.svgIcon}

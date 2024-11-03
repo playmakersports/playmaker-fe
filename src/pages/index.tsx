@@ -9,6 +9,7 @@ import MyTeam from "@/components/Main/MyTeam";
 import MyWeekly from "@/components/Main/MyWeekly";
 import SportsSection from "@/components/Main/SportsSection";
 import MyTeamSchedule from "@/components/Main/MyTeamSchedule";
+import Navigation from "@/components/layouts/Navigation";
 
 export default function Home() {
   useBgWhite();
@@ -22,6 +23,7 @@ export default function Home() {
       <MyWeekly />
       <MyTeamSchedule />
       <SportsSection />
+      <Navigation />
     </Container>
   );
 }

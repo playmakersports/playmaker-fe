@@ -1,11 +1,11 @@
-import React, { use, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { InputStyledWrapper } from "./Wrapper";
 import styled from "@emotion/styled";
-import { CARD_ACTIVE, FONTS } from "@/styles/common";
-
-import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
 import useModal from "@/hook/useModal";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
+
+import { CARD_ACTIVE, FONTS } from "@/styles/common";
+import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
 
 const SIDO = [
   { sidoname: "서울특별시", sidocode: 11 },

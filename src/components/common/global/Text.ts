@@ -19,5 +19,5 @@ export const StepPageDescription = styled.p`
 export const StepFormWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 26px;
+  gap: 32px;
 `;

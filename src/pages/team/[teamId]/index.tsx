@@ -20,6 +20,7 @@ import RecentMatch from "@/components/Team/RecentMatch";
 import BoardList from "@/components/Team/BoardList";
 import GroupTitle from "@/components/common/GroupTitle";
 import HomeTeamList from "@/components/Team/HomeTeamList";
+import FloatButton from "@/components/common/FloatButton";
 
 function TeamHome() {
   const router = useRouter();
@@ -45,6 +46,7 @@ function TeamHome() {
   return (
     <>
       <MetaTitle title={TEAM_INFO_MOCK.teamName} />
+      <FloatButton onClick={() => {}}>가입 신청</FloatButton>
       <CoverImage src={TEAM_INFO_MOCK.cover} />
       <Description>{TEAM_INFO_MOCK.introduce}</Description>
       <LightWrapper>

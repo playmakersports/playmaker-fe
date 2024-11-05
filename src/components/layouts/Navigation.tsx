@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/router";
 import { keyframes } from "@emotion/react";
 
 import SearchListIcon from "@/assets/icon/global/SearchList.svg";
@@ -12,7 +13,11 @@ const BUTTON_WIDTH = 40;
 const BUTTONS_GAP = 28;
 
 function Navigation() {
+  const router = useRouter();
   const [showListType, setShowListType] = useState(false);
+  const movePage = (target: string) => {
+    router.push(target);
+  };
 
   return (
     <Container>
@@ -27,9 +32,15 @@ function Navigation() {
             <SearchListIcon />
           </button>
           <ListSelector show={showListType}>
-            <button type="button">팀</button>
-            <button type="button">대회</button>
-            <button type="button">매치</button>
+            <button type="button" onClick={() => movePage("/team/list")}>
+              팀
+            </button>
+            <button type="button" onClick={() => movePage("/competition")}>
+              대회
+            </button>
+            <button type="button" onClick={() => movePage("/match")}>
+              매치
+            </button>
           </ListSelector>
           <button type="button" className={showListType ? "hide main-menu" : " main-menu"}>
             <CalendarIcon />
@@ -165,11 +176,18 @@ const Inner = styled.div`
       background-color: var(--gray700);
       color: var(--gray0);
       opacity: 0;
+      visibility: hidden;
       transition: transform 0.2s, opacity 0.2s;
     }
     &:hover::before {
+      visibility: visible;
       opacity: 1;
       transform: translate3d(-50%, -10px, 0);
+    }
+    @media (max-width: 600px) {
+      &:hover::before {
+        display: none;
+      }
     }
   }
 `;

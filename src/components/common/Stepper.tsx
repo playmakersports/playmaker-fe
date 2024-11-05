@@ -3,18 +3,33 @@ import styled from "@emotion/styled";
 
 type Props = { type?: "line" | "simple"; length: number; now: number; children: React.ReactNode };
 function Stepper({ type = "line", length, now, children }: Props) {
-  return (
-    <>
-      <Container length={length}>
-        {Array.from({ length }).map((_, index) => (
-          <li key={index} className={now === index + 1 ? "active-step" : index + 1 < now ? "past-step" : ""}>
-            <i />
-          </li>
-        ))}
-      </Container>
-      {children}
-    </>
-  );
+  if (type === "line") {
+    return (
+      <>
+        <Container length={length}>
+          {Array.from({ length }).map((_, index) => (
+            <li key={index} className={now === index + 1 ? "active-step" : index + 1 < now ? "past-step" : ""}>
+              <i />
+            </li>
+          ))}
+        </Container>
+        {children}
+      </>
+    );
+  }
+
+  if (type === "simple") {
+    return (
+      <>
+        <SimpleContainer>
+          {Array.from({ length }).map((_, index) => (
+            <i key={index} className={now === index + 1 ? "active" : ""} />
+          ))}
+        </SimpleContainer>
+        {children}
+      </>
+    );
+  }
 }
 
 const Container = styled.ul<{ length: number }>`
@@ -36,7 +51,6 @@ const Container = styled.ul<{ length: number }>`
       background: var(--gray300);
       border: 2px solid var(--background-light);
       box-sizing: content-box;
-      transition: all 0.15s;
     }
 
     &.active-step > i {
@@ -66,6 +80,27 @@ const Container = styled.ul<{ length: number }>`
     &:first-of-type::before {
       display: none;
     }
+  }
+`;
+
+const SimpleContainer = styled.div`
+  display: flex;
+  margin: 18px 16px 0;
+  padding: 0 10px;
+  justify-content: center;
+  gap: 5px;
+
+  i {
+    width: 6px;
+    height: 6px;
+    background-color: var(--gray300);
+    border-radius: 50%;
+    transition: all 0.15s;
+  }
+  i.active {
+    width: 20px;
+    background-color: var(--sub1);
+    border-radius: 5px;
   }
 `;
 

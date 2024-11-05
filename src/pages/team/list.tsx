@@ -6,21 +6,22 @@ import useStickyMoment from "@/hook/useStickyMoment";
 import useModal from "@/hook/useModal";
 import useBgWhite from "@/hook/useBgWhite";
 
+import MainTab from "@/components/Main/MainTab";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
-import MainTab from "@/components/Main/MainTab";
 import { BaseContainer } from "@/components/common/Container";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import { BasicInput } from "@/components/common/Input";
 import { BasicWhiteCard } from "@/components/common/Card";
+import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
-import ArticlePlus from "@/assets/icon/global/ArticlePlus.svg";
+import PlusIcon from "@/assets/icon/global/Plus.svg";
+import TeamListDetail from "@/components/Main/TeamListDetail";
 
-function Recruit() {
+function TeamList() {
   useBgWhite();
   usePageTitle({
     title: "팀 목록",
-    subIcons: [{ svgIcon: <ArticlePlus />, linkTo: "/team/create", description: "팀 만들기" }],
   });
   const { ModalComponents, showModal } = useModal();
   const sportsTabRef = useRef<HTMLDivElement>(null);
@@ -29,6 +30,7 @@ function Recruit() {
   const targetSports = router.query.sports as string;
   const [activeTab, setActiveTab] = useState(targetSports ?? SUPPORT_SPORTS[0].value);
   const [searchValue, setSearchValue] = useState("");
+  const [selectedFilterQuery, setSelectedFilterQuery] = useState("default");
 
   const RECRUIT_STATUS: Record<string, string> = {
     PENDING: "모집중",
@@ -37,6 +39,11 @@ function Recruit() {
   };
   return (
     <Container>
+      <Floating>
+        <AddTeamButton type="button" onClick={() => router.push("/team/create")}>
+          <PlusIcon /> 팀 만들기
+        </AddTeamButton>
+      </Floating>
       <TabWrapper ref={sportsTabRef}>
         <MainTab
           type="line"
@@ -57,17 +64,30 @@ function Recruit() {
           delButton={true}
         />
       </Contents>
+      <Filter>
+        <DropDownBottomSheet
+          defaultValue={selectedFilterQuery}
+          getCurrentValue={setSelectedFilterQuery}
+          options={[
+            { value: "default", name: "기본순" },
+            { value: "like", name: "좋아요순" },
+            { value: "members", name: "팀 인원순" },
+            { value: "date", name: "마감 임박순" },
+          ]}
+        />
+      </Filter>
+
       <Cards>
         {NOW_RECRUIT_LIST.map((item) => (
           <Card as="button" key={item.teamId} onClick={showModal}>
             <CardHeader>
               <img src={item.teamLogo} alt={item.teamName} />
-              <h2>
+              <h3>
                 {item.teamName}
                 {item.status !== "NO_RECRUIT" && (
                   <span className={`recruit-status ${item.status}`}>{RECRUIT_STATUS[item.status]}</span>
                 )}
-              </h2>
+              </h3>
             </CardHeader>
             <dl className="recruit-detail">
               <div>{item.university}</div>
@@ -84,12 +104,13 @@ function Recruit() {
         ))}
       </Cards>
       <ModalComponents
+        // title="팀원 신청"
         buttons={[
           { mode: "OPTION2", name: "팀 페이지 이동", onClick: () => console.log("") },
-          { mode: "MAIN", name: "입단 신청", onClick: () => console.log("") },
+          { mode: "MAIN", name: "가입 신청", onClick: () => console.log("") },
         ]}
       >
-        팀 정보
+        <TeamListDetail />
       </ModalComponents>
     </Container>
   );
@@ -97,6 +118,26 @@ function Recruit() {
 
 const Container = styled(BaseContainer)`
   padding-bottom: calc(88px + var(--env-sab) + 12px);
+`;
+const Floating = styled.div`
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+`;
+const AddTeamButton = styled.button`
+  ${FONTS.MD1}
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 10px 20px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  background-color: var(--main);
+  color: var(--gray0);
+  svg {
+    fill: var(--gray0);
+  }
 `;
 const TabWrapper = styled.div`
   position: sticky;
@@ -126,23 +167,17 @@ const Card = styled(BasicWhiteCard)`
   ${FONTS.MD1W500};
   font-weight: 400;
   text-align: left;
-  border: 2px solid transparent;
+  border: 1px solid var(--gray200);
+  box-shadow: 0 6px 12px 0 rgba(112, 144, 178, 0.08), 0 2px 4px 0 rgba(112, 144, 178, 0.06);
   ${CARD_ACTIVE};
 
   .recruit-detail {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    div {
-      display: flex;
-      dt {
-        flex: 0.35;
-        font-weight: 600;
-      }
-      dd {
-        flex: 1;
-      }
-    }
+    ${FONTS.MD2};
+    font-weight: 400;
+    color: var(--gray600);
   }
 `;
 
@@ -153,24 +188,25 @@ const CardHeader = styled.div`
   gap: 8px;
   ${FONTS.MD1W500};
 
-  h2 {
+  h3 {
     display: inline-flex;
     align-items: center;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
+    font-weight: 600;
     gap: 6px;
   }
   .recruit-status {
-    ${FONTS.MD1};
+    ${FONTS.MD2};
     font-size: 1.3rem;
     line-height: 1.25rem;
-    padding: 3px 4px;
+    padding: 4px 5px;
     border-radius: 4px;
-    border: 1px solid var(--main);
+    background-color: rgba(160, 188, 248, 0.3);
     color: var(--main);
 
     &.FINISHED {
-      border: 1px solid var(--gray600);
-      color: var(--gray600);
+      background-color: var(--gray200);
+      color: var(--gray700);
     }
   }
 
@@ -187,4 +223,10 @@ const CardHeader = styled.div`
   }
 `;
 
-export default Recruit;
+const Filter = styled.div`
+  display: flex;
+  padding: 6px 0;
+  justify-content: space-between;
+`;
+
+export default TeamList;

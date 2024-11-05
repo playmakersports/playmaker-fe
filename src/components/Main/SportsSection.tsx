@@ -42,7 +42,7 @@ function SportsSection() {
             ))}
           </ListWrapperColumn>
           <LineBottom />
-          <MoreButton text="더 많은 팀 보기" href={`/recruit?sports=${activeTab}`} />
+          <MoreButton text="더 많은 팀 보기" href={`/team/list?sports=${activeTab}`} />
         </Container>
 
         <GroupTitle link="">대회 일정</GroupTitle>

@@ -72,7 +72,7 @@ function SportsSection() {
 const Wrapper = styled.div`
   background-color: var(--background-light);
   margin: 0 -16px;
-  padding: 16px 16px var(--safe-area-bottom);
+  padding: 16px 16px calc(var(--safe-area-bottom) + 52px);
   border-radius: 30px 30px 0 0;
 `;
 const TabWrapper = styled.div`

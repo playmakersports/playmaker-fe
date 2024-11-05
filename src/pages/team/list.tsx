@@ -130,9 +130,9 @@ const AddTeamButton = styled.button`
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 10px 20px;
-  padding: 8px 16px;
-  border-radius: 20px;
+  margin: 0 16px var(--env-sab);
+  padding: 12px 24px;
+  border-radius: 24px;
   background-color: var(--main);
   color: var(--gray0);
   svg {

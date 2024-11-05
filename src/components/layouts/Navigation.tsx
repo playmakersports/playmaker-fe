@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { keyframes } from "@emotion/react";
@@ -18,6 +18,12 @@ function Navigation() {
   const movePage = (target: string) => {
     router.push(target);
   };
+
+  useEffect(() => {
+    return () => {
+      setShowListType(false);
+    };
+  }, []);
 
   return (
     <Container>

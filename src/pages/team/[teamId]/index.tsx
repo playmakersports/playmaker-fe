@@ -209,7 +209,7 @@ const Card = styled(BasicWhiteCard.withComponent("button"))`
   ${CARD_ACTIVE};
 `;
 const PlayerListWrapper = styled(WhiteSectionWrapper)`
-  padding: 20px 24px calc(var(--env-sab) + 20px);
+  padding: 20px 24px calc(var(--env-sab) + 100px);
   background-color: var(--background-light);
 `;
 

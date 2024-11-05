@@ -9,6 +9,7 @@ import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";
 import { InputRadio } from "@/components/common/SelectInput";
+import InputRadioWrapper from "@/components/common/InputRadioWrapper";
 
 function Step2({ setStep }: { setStep: (prev: number) => void }) {
   const [applyValues, setApplyValues] = useAtom(atomServiceApply);
@@ -46,18 +47,13 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
           })}
         />
         <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birth")} />
-        <Radios>
-          <InputRadio buttonType {...register("sexKey")} value="MALE" id="MALE" labelName="남성" />
-          <InputRadio buttonType {...register("sexKey")} value="FEMALE" id="FEMALE" labelName="여성" />
-        </Radios>
+        <InputRadioWrapper title="성별">
+          <InputRadio buttonType {...register("sexKey")} fullWidth value="MALE" id="MALE" labelName="남성" />
+          <InputRadio buttonType {...register("sexKey")} fullWidth value="FEMALE" id="FEMALE" labelName="여성" />
+        </InputRadioWrapper>
       </StepFormWrapper>
     </StagePageContainer>
   );
 }
-
-const Radios = styled.div`
-  display: flex;
-  gap: 12px;
-`;
 
 export default Step2;

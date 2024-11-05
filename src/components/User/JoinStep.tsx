@@ -39,8 +39,8 @@ function JoinStep() {
     4: <Step4 />,
   };
 
-  if (queryStepValue === "0") {
-    return <>{STEP_PAGE[0]}</>;
+  if (queryStepValue === "0" || queryStepValue === "1") {
+    return <>{STEP_PAGE[`${router.query.step}`]}</>;
   }
   if (!queryStepValue) return null;
   return (

@@ -36,7 +36,6 @@ function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
 
   return (
     <StagePageContainer
-      stepper
       title="먼저 대학생 인증이 필요해요"
       description="대학생 인증하면 대학팀 생성 및 참가가 가능해요"
       button={

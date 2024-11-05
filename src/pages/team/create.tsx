@@ -1,16 +1,18 @@
 import React, { ReactElement, useEffect } from "react";
 import { useResetAtom } from "jotai/utils";
 import { useRouter } from "next/router";
+import useBgWhite from "@/hook/useBgWhite";
 
 import { resetAtomTeamCreate } from "@/atom/team";
-import useBgWhite from "@/hook/useBgWhite";
+import Stepper from "@/components/common/Stepper";
 import TeamCreateStart from "@/components/Team/Create/TeamCreateStart";
 import TeamCreateStep1 from "@/components/Team/Create/TeamCreateStep1";
 import TeamCreateStep2 from "@/components/Team/Create/TeamCreateStep2";
 import TeamCreateStep3 from "@/components/Team/Create/TeamCreateStep3";
 import TeamCreateStep4 from "@/components/Team/Create/TeamCreateStep4";
 import TeamCreateStep5 from "@/components/Team/Create/TeamCreateStep5";
-import Stepper from "@/components/common/Stepper";
+import TeamCreateStep6 from "@/components/Team/Create/TeamCreateStep6";
+import TeamCreateFinish from "@/components/Team/Create/TeamCreateFinish";
 
 function TeamCreate() {
   useBgWhite();
@@ -42,14 +44,16 @@ function TeamCreate() {
     3: <TeamCreateStep3 setStep={handleStepper} />,
     4: <TeamCreateStep4 setStep={handleStepper} />,
     5: <TeamCreateStep5 setStep={handleStepper} />,
+    6: <TeamCreateStep6 setStep={handleStepper} />,
+    7: <TeamCreateFinish />,
   };
 
   if (!queryStepValue) return null;
-  if (router.query.step === "0") {
+  if (router.query.step === "0" || router.query.step === "7") {
     return STEP_PAGE[`${router.query.step}`];
   }
   return (
-    <Stepper type="simple" length={5} now={+queryStepValue}>
+    <Stepper type="simple" length={6} now={+queryStepValue}>
       {STEP_PAGE[`${router.query.step}`]}
     </Stepper>
   );

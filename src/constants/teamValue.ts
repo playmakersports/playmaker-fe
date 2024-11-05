@@ -10,7 +10,7 @@ export const TEAM_COLORS = {
   green3: "#009688",
   blue1: "#00bcd4",
   blue2: "#2196f3",
-  blue3: "#2196f3",
+  blue3: "#4279F0",
   purple1: "#3f51b5",
   purple2: "#673ab7",
   purple3: "#954276",

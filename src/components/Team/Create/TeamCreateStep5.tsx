@@ -1,33 +1,19 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
+import { keyframes } from "@emotion/react";
 
-import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 import CameraIcon from "@/assets/icon/global/Camera.svg";
 import { TEAM_COLORS } from "@/constants/teamValue";
-import { BasicWhiteCard } from "@/components/common/Card";
 import { hexToRgb } from "@/util/common";
+import { FONTS } from "@/styles/common";
 
 function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
-  const coverImageInputRef = useRef<HTMLInputElement>(null);
   const logoImageInputRef = useRef<HTMLInputElement>(null);
-  const [coverImgFile, setCoverImgFile] = useState<string>("");
   const [logoImgFile, setLogoImgFile] = useState<string>("");
   const [teamColor, setTeamColor] = useState("");
 
-  const previewCoverImg = () => {
-    const file = coverImageInputRef.current?.files?.[0];
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (reader.result) {
-          setCoverImgFile(reader.result.toString());
-        }
-      };
-    }
-  };
   const previewLogoImg = () => {
     const file = logoImageInputRef.current?.files?.[0];
     const reader = new FileReader();
@@ -44,20 +30,14 @@ function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
   return (
     <StagePageContainer
       stepper={true}
-      title={`팀 이미지와 색상을\n선택해주세요`}
+      headerAlign="center"
+      title="팀 상징"
+      description="팀 로고와 상징색을 선택하세요"
       button={{
         text: "다음",
-        onClick: () => setStep(4),
+        onClick: () => setStep(6),
       }}
     >
-      <input
-        style={{ display: "none" }}
-        type="file"
-        accept="image/*"
-        id="coverImgUpload"
-        ref={coverImageInputRef}
-        onChange={previewCoverImg}
-      />
       <input
         style={{ display: "none" }}
         type="file"
@@ -66,13 +46,7 @@ function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
         ref={logoImageInputRef}
         onChange={previewLogoImg}
       />
-      <CoverUpload htmlFor="coverImgUpload" src={coverImgFile}>
-        {!coverImgFile && (
-          <div className="camera-icon-wrapper">
-            <CameraIcon />팀 커버 이미지를 넣어주세요
-          </div>
-        )}
-      </CoverUpload>
+
       <LogoRound targetColor={teamColor}>
         <LogoUpload htmlFor="logoImgUpload" src={logoImgFile}>
           {!logoImgFile && <CameraIcon />}
@@ -90,46 +64,20 @@ function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
           </li>
         ))}
       </Colors>
+      <DisplayAboveBottom>거의 다 왔어요!</DisplayAboveBottom>
     </StagePageContainer>
   );
 }
 
-const CoverUpload = styled.label<{ src: string }>`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 28px -16px 0;
-  width: calc(100% + 32px);
-  height: 180px;
-  background: ${({ src }) => `url(${src})`};
-  background-color: var(--gray200);
-  background-size: 100%;
-  background-position: center;
-
-  .camera-icon-wrapper {
-    ${FONTS.MD3};
-    display: flex;
-    padding-bottom: 8px;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-    color: var(--gray500);
-  }
-  svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--gray500);
-  }
-`;
 const LogoRound = styled.div<{ targetColor: string }>`
   display: flex;
   padding: 3px;
-  margin: -40px auto 0;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  width: 96px;
-  height: 96px;
+  width: 120px;
+  height: 120px;
   border: 4px solid ${({ targetColor }) => targetColor};
   box-sizing: content-box;
   background-color: var(--background-light);
@@ -140,8 +88,8 @@ const LogoUpload = styled.label<{ src: string }>`
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  width: 88px;
-  height: 88px;
+  width: 112px;
+  height: 112px;
 
   background: ${({ src }) => `url(${src})`};
   border: 1px solid var(--gray300);
@@ -156,12 +104,12 @@ const LogoUpload = styled.label<{ src: string }>`
   }
 `;
 
-const Colors = styled(BasicWhiteCard.withComponent("ul"))`
+const Colors = styled.ul`
   display: grid;
-  margin-top: 20px;
-  padding: 20px;
+  margin-top: 32px;
+  padding: 20px 4px;
   grid-template-columns: repeat(6, 1fr);
-  gap: 16px 8px;
+  gap: 28px 8px;
 
   li {
     display: flex;
@@ -171,22 +119,22 @@ const Colors = styled(BasicWhiteCard.withComponent("ul"))`
 
 const ColorButton = styled.button<{ targetColor: string }>`
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: ${({ targetColor }) => targetColor};
   box-sizing: content-box;
 
   &.selected {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     outline: 2px solid ${({ targetColor }) => targetColor};
     border: 2px solid var(--background-light);
     &::before {
       content: "✓";
       color: #fff;
       font-weight: 600;
-      font-size: 1.6rem;
+      font-size: 2rem;
       opacity: 0.9;
     }
   }
@@ -197,4 +145,33 @@ const ColorButton = styled.button<{ targetColor: string }>`
     transition: all 0.3s;
   }
 `;
+
+const showAboveBottom = keyframes`
+  from {
+    transform: translate3d(-50%, 20%, 0);
+  } to {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(-50%, 0, 0);
+  }
+`;
+const DisplayAboveBottom = styled.div`
+  user-select: none;
+  position: fixed;
+  margin-bottom: 12px;
+  left: 50%;
+  bottom: calc(var(--env-sab) + 60px);
+  padding: 8px 20px;
+  width: max-content;
+  ${FONTS.MD1W500};
+  color: var(--art-purple);
+  border-radius: 10px;
+  background-color: #fff;
+  letter-spacing: 0.2px;
+  animation: ${showAboveBottom} 0.65s forwards;
+  opacity: 0;
+  animation-delay: 0.15s;
+  animation-timing-function: cubic-bezier(0.2, 0.7, 0.3, 1);
+`;
+
 export default TeamCreateStep5;

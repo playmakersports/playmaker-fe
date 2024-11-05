@@ -102,7 +102,7 @@ const UnivNameTag = styled.div`
   position: fixed;
   margin-bottom: 20px;
   left: 50%;
-  bottom: calc(var(--env-sab) + 48px * 2);
+  bottom: calc(var(--env-sab) + 60px);
   padding: 8px 20px;
   width: max-content;
   ${FONTS.MD1W500};

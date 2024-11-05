@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { InputCheckbox } from "@/components/common/SelectInput";
 
 function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
   const { register, watch } = useForm();
@@ -14,7 +13,9 @@ function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
   return (
     <StagePageContainer
       stepper={true}
-      title="팀의 종목을 선택해주세요"
+      headerAlign="center"
+      title="종목 선택"
+      description="생성할 팀의 종목을 선택하세요"
       button={{
         text: "다음",
         onClick: () => setStep(2),

@@ -5,10 +5,15 @@ import React, { ReactNode, useCallback, useState } from "react";
 
 type ModalProps = { title?: string; children: ReactNode; buttons: BottomSheetProps["buttons"] };
 
+const ANIMATION_RUNNING_TIME = 250;
 function useModal() {
   const [showBottom, setShowBottom] = useState(false);
   const showModal = () => {
     setShowBottom(true);
+  };
+  const hideModal = () => {
+    setShowBottom(false);
+    // setTimeout(() => {}, ANIMATION_RUNNING_TIME);
   };
 
   const ModalComponents = useCallback(
@@ -36,7 +41,7 @@ function useModal() {
     ${FONTS.HEAD1}
   `;
 
-  return { ModalComponents, showModal };
+  return { ModalComponents, showModal, hideModal };
 }
 
 export default useModal;

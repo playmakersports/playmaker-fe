@@ -43,7 +43,7 @@ const Container = styled.div`
   flex-direction: column;
 
   @media (max-width: 960px) {
-    display: none;
+    /* display: none; */
   }
 `;
 const PcAlert = styled.section`
@@ -54,7 +54,7 @@ const PcAlert = styled.section`
   font-size: 2rem;
 
   @media (max-width: 960px) {
-    display: flex;
+    /* display: flex; */
   }
 `;
 const Header = styled.nav`
@@ -62,7 +62,7 @@ const Header = styled.nav`
   justify-content: space-between;
   align-items: center;
   height: 60px;
-  padding: 16px 2.5vw;
+  padding: 16px 2vw;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
 `;
 const Menu = styled.ul`
@@ -85,7 +85,7 @@ const Menu = styled.ul`
     color: var(--gray800);
     border-radius: 4px;
     ${FONTS.MD1W500};
-    ${TEXT_ACTIVE("var(--gray300)", { hover: true })};
+    ${TEXT_ACTIVE("var(--gray100)", { hover: true })};
   }
 `;
 const Icons = styled.div`
@@ -101,11 +101,11 @@ const Icons = styled.div`
       fill: var(--gray900);
     }
     border-radius: 4px;
-    ${TEXT_ACTIVE("var(--gray300)", { hover: true })};
+    ${TEXT_ACTIVE("var(--gray100)", { hover: true })};
   }
 `;
 const Children = styled.main`
-  padding: 0 2.5vw;
+  padding: 0 2vw;
   height: calc(100vh - 60px);
   overflow-y: auto;
 `;

@@ -99,13 +99,15 @@ const BasicLabel = styled.label`
   font-weight: 400;
 `;
 const ButtonLabel = styled.label`
+  cursor: pointer;
   width: 100%;
-  padding: 8px 32px;
+  padding: 8px 4px;
   ${FONTS.MD1W500};
   border-radius: 10px;
   color: var(--gray500);
   background-color: var(--gray100);
   text-align: center;
+  word-break: keep-all;
 `;
 const RadioWrapper = styled.div<{ fullWidth: boolean; LARGE: boolean }>`
   display: flex;

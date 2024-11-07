@@ -79,6 +79,7 @@ const TextAreaWrapper = styled(InputStyledWrapper)`
 `;
 const StyledTextArea = styled.textarea`
   width: 100%;
+  padding: 10px 0;
   resize: none;
   ${FONTS.MD1};
   font-size: 1.6rem;

@@ -17,7 +17,7 @@ export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement
   delButton?: boolean;
   medium?: boolean;
   onButtonWrapClick?: () => void;
-  information?: { text: string; onClick: () => void };
+  information?: { text: string; onClick?: () => void };
 };
 
 export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -80,9 +80,11 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
             <ExclamationIcon />
           </ErrorIconArea>
         )}
-        <ClearIconArea role="button" onClick={handleClearInputValue} aria-label="입력값 초기화">
-          <DeleteAllIcon />
-        </ClearIconArea>
+        {delButton && (
+          <ClearIconArea role="button" onClick={handleClearInputValue} aria-label="입력값 초기화">
+            <DeleteAllIcon />
+          </ClearIconArea>
+        )}
       </InputStyledWrapper>
       {information && (
         <span className="input-information" onClick={information.onClick}>
@@ -111,7 +113,6 @@ const Container = styled.div`
   }
 
   .input-information {
-    cursor: pointer;
     display: inline-flex;
     align-items: center;
     margin-top: 10px;
@@ -155,6 +156,7 @@ const ClearIconArea = styled(IconArea)`
 `;
 const StyledInput = styled.input`
   width: 100%;
+  padding: 10px 0;
   ${FONTS.MD1};
   font-size: 1.6rem;
   font-weight: 400;
@@ -177,7 +179,6 @@ const StyledInput = styled.input`
   }
 `;
 const ButtonWrapInput = styled(StyledInput.withComponent("button"))`
-  height: 2.4rem;
   input {
     width: 100%;
     color: var(--black);

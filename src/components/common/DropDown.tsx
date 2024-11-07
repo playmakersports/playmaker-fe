@@ -7,8 +7,8 @@ import { FONTS } from "@/styles/common";
 
 type Props = {
   title?: string;
+  fullWidth?: boolean;
   placeholder?: string;
-  id: string;
   defaultValue?: string;
   options: {
     name: string;
@@ -19,8 +19,9 @@ type Props = {
 };
 
 function DropDown(props: Props) {
-  const { title, placeholder, id, defaultValue = "", options, getSelectedValue, medium = false } = props;
+  const { title, fullWidth = false, placeholder, defaultValue = "", options, getSelectedValue, medium = false } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
+  const optionsRefs = useRef<HTMLInputElement[]>([]);
   const [showOptions, setShowOptions] = useState(false);
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
 
@@ -40,7 +41,7 @@ function DropDown(props: Props) {
   };
 
   return (
-    <Wrapper>
+    <Wrapper fullWidth={fullWidth}>
       {title && <p className="input-title">{title}</p>}
       <Container ref={dropDownRef} isError={false} isOpen={showOptions}>
         <DisplayValue
@@ -52,6 +53,17 @@ function DropDown(props: Props) {
           onClick={() => setShowOptions((prev) => !prev)}
           isMedium={medium}
           className={showOptions ? "active" : ""}
+          onKeyDown={(e) => {
+            if (e.key === "Escape") {
+              setShowOptions(false);
+            }
+
+            if (e.key === "ArrowDown") {
+              e.preventDefault();
+              const nextOption = optionsRefs.current[0];
+              nextOption?.focus();
+            }
+          }}
         >
           {!!selectedOption ? (
             <p className="dropdown-current-value">{options?.find((option) => option.value === selectedOption)?.name}</p>
@@ -64,12 +76,32 @@ function DropDown(props: Props) {
         </DisplayValue>
         <Options show={showOptions} aria-modal="true" role="modal">
           {options.length > 0 ? (
-            options?.map((option) => (
+            options?.map((option, index) => (
               <Option
                 key={option.value}
+                ref={(element) => {
+                  if (element) {
+                    optionsRefs.current[index] = element as HTMLInputElement;
+                  }
+                }}
                 type="button"
+                role="option"
                 className={selectedOption === option.value ? "selected" : ""}
                 onClick={() => onSelected(option.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Escape") {
+                    setShowOptions(false);
+                  }
+                  if (e.key === "ArrowDown") {
+                    e.preventDefault();
+                    const nextOption = optionsRefs.current[index + 1];
+                    nextOption?.focus();
+                  } else if (e.key === "ArrowUp") {
+                    e.preventDefault();
+                    const prevOption = optionsRefs.current[index - 1];
+                    prevOption?.focus();
+                  }
+                }}
               >
                 {option.name}
               </Option>
@@ -83,7 +115,8 @@ function DropDown(props: Props) {
   );
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ fullWidth: boolean }>`
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
   p.input-title {
     font-size: 1.4rem;
     margin-bottom: 4px;
@@ -96,17 +129,22 @@ const Wrapper = styled.div`
 const DisplayValue = styled.button<{ isMedium: boolean }>`
   flex: 1;
   display: flex;
+  min-width: 90px;
   padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "10px 12px")};
   align-items: center;
   text-align: left;
   ${FONTS.MD1W500}
   font-weight: 400;
+  word-break: keep-all;
+  gap: 6px;
 
   p.dropdown-current-value {
     flex: 1;
+    white-space: nowrap;
   }
   p.dropdown-placeholder {
     flex: 1;
+    white-space: nowrap;
     color: var(--gray500);
   }
   &.active {
@@ -124,6 +162,10 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
   & p {
     cursor: pointer;
     width: 100%;
+  }
+
+  &:has(button:focus) {
+    border: 1px solid var(--main);
   }
 `;
 
@@ -143,22 +185,23 @@ const Options = styled.div<{ show: boolean }>`
   flex-direction: column;
   gap: 4px;
   top: 100%;
-  margin-top: 10px;
+  margin: 10px 0 12px;
   padding: 8px;
   left: -2px;
   width: calc(100% + 4px);
+  min-width: 90px;
   height: max-content;
   max-height: 47vh;
   background-color: var(--background-light);
   border-radius: 10px;
   transition: all 0.2s;
-  box-shadow: 0 0 10px 6px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.07);
   overflow-y: auto;
 
   transform: translateY(${({ show }) => (show ? "0px" : "-12px")});
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
   opacity: ${({ show }) => (show ? 1 : 0)};
-  z-index: 1;
+  z-index: 5;
 `;
 const Option = styled.button`
   ${FONTS.MD1W500}
@@ -171,6 +214,7 @@ const Option = styled.button`
   border: 1px solid transparent;
   transition: all 0.2s;
   color: var(--gray800);
+  white-space: nowrap;
 
   &:focus {
     background: var(--gray200);

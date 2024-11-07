@@ -6,7 +6,7 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
   display: flex;
   width: 100%;
   height: 44px;
-  padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "10px 12px")};
+  padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "0 12px")};
   gap: 10px;
   align-items: center;
   border-radius: 8px;
@@ -26,8 +26,7 @@ export const InputStyledWrapper = styled.div<{ isMedium?: boolean; isError?: boo
 
   &:disabled,
   &:has(input:disabled) {
-    border: 1px solid transparent;
-    background-color: var(--gray300);
+    background-color: var(--gray200);
   }
   &:focus,
   &:has(input:focus) {

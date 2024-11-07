@@ -55,7 +55,11 @@ function VideoInfo(props: Props) {
         </ul>
       </div>
       <div className="match-players-wrapper">
-        <ul className="match-players" ref={scrollMaskedHandlerRef} onScroll={scrollMaskedHandler}>
+        <ul
+          className="match-players"
+          ref={(prev) => scrollMaskedHandlerRef(prev, "horizontal")}
+          onScroll={(prev) => scrollMaskedHandler(prev, "horizontal")}
+        >
           {props.players.map((player, index) => (
             <li key={`${player.playerId}${index}`} onClick={(event) => onClickProfile(player.playerId, event)}>
               {player.playerName}

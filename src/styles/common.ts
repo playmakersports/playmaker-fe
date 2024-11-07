@@ -49,7 +49,6 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
 
     .prev-scroll-mask {
       ${SCROLL_HIDE};
-
       &:before {
       content: "";
       position: absolute;
@@ -61,8 +60,7 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       z-index: 1;
     }};
     .next-scroll-mask {
-    ${SCROLL_HIDE};
-    
+      ${SCROLL_HIDE};
       &:after {
       content: "";
       position: absolute;
@@ -71,6 +69,30 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       top: 0;
       right: -1px;
       background-image: linear-gradient(to left, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      z-index: 1;
+    }};
+    .top-scroll-mask {
+      ${SCROLL_HIDE};
+      &:before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 36px;
+      top: 0;
+      left: -1px;
+      background-image: linear-gradient(to bottom, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      z-index: 1;
+    }};
+    .bottom-scroll-mask {
+      ${SCROLL_HIDE};
+      &:after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 36px;
+      bottom: 0;
+      left: -1px;
+      background-image: linear-gradient(to top, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
       z-index: 1;
     }};
  `;

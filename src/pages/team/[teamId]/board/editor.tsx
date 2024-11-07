@@ -37,7 +37,6 @@ function ArticleEditor() {
     <Container>
       <MetaTitle title="글쓰기" />
       <DropDown
-        id="category"
         getSelectedValue={setCategory}
         defaultValue=""
         options={[

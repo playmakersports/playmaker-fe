@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-
-import PlayerSelector from "@/components/Team/PlayerSelector";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useBgWhite from "@/hook/useBgWhite";
+
+import PlayerSelector from "@/components/Team/PlayerSelector";
 import { BasicInput } from "@/components/common/Input";
 import DropDown from "@/components/common/DropDown";
-import { FONTS } from "@/styles/common";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 
 function PlayerList() {
@@ -25,7 +24,7 @@ function PlayerList() {
       <Top>
         <BasicInput type="text" search placeholder="이름으로 찾기" />
         <Filter>
-          <DropDown id="" getSelectedValue={setFilter} defaultValue="" options={PLAYERS_FILTER} />
+          <DropDown getSelectedValue={setFilter} defaultValue="" options={PLAYERS_FILTER} />
           <p>총 {TEAM_PLAYERS_MOCK.length}명</p>
         </Filter>
       </Top>

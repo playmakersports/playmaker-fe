@@ -2,13 +2,13 @@ import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { GetServerSideProps } from "next";
-
+import { usePageTitle } from "@/hook/usePageTitle";
 import { useGet, usePost } from "@/apis/hook/query";
+
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
 import DropDown from "@/components/common/DropDown";
 import { BasicInput } from "@/components/common/Input";
-import { usePageTitle } from "@/hook/usePageTitle";
 import { baseBackendURL } from "@/apis";
 
 type UnivData = {
@@ -64,7 +64,6 @@ function UnivName({ univData }: UnivNameProps) {
         <FormContents>
           <DropDown
             title="대학 선택"
-            id="univList"
             placeholder="대학을 선택해주세요"
             getSelectedValue={(value) => setUnivValue(value)}
             options={

@@ -13,7 +13,11 @@ function MyTeam() {
 
   return (
     <TeamList as="article" aria-label="나의 팀 목록">
-      <ul className="team-list" ref={scrollMaskedHandlerRef} onScroll={(e) => scrollMaskedHandler(e)}>
+      <ul
+        className="team-list"
+        ref={(ref) => scrollMaskedHandlerRef(ref, "horizontal")}
+        onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
+      >
         {MY_TEAM_MOCK.map((item) => (
           <TeamItem
             key={item.teamName}
@@ -38,7 +42,7 @@ function MyTeam() {
 
 const TeamList = styled(BasicWhiteCard)`
   padding: 0;
-  ${SCROLL_MASKED_GRADIENT("var(--card-rgb)")}
+  ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")}
 
   .team-list {
     display: flex;

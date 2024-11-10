@@ -32,10 +32,10 @@ const Container = styled.aside`
   align-items: flex-start;
   flex-direction: column;
   top: 12px;
-  left: calc(50% + 300px);
+  left: calc(50% + var(--mobile-max-width) / 2);
   overflow: hidden;
 
-  @media (max-width: 800px) {
+  @media (max-width: 600px) {
     display: none;
   }
 `;

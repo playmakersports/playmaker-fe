@@ -26,7 +26,7 @@ export const BUTTON_ACTIVE = (color?: string) => `
     transition: all 0.2s;
     user-select: none;
     &:active {
-      transform: scale(0.97);
+      transform: scale(0.98);
       background-color: ${color ?? "var(--background)"};
     }
 `;

@@ -31,7 +31,7 @@ function MainHeader() {
 const Wrapper = styled(HeaderWrapper)`
   position: fixed;
   margin: 0 -16px;
-  max-width: calc(600px - 2px);
+  max-width: calc(var(--mobile-max-width) - 2px);
   background-color: var(--background-light);
   border-radius: 0 0 10px 10px;
 `;

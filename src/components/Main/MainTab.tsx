@@ -64,7 +64,7 @@ function MainTab({ type = "fill", padding = 0, items, nowValue, initialValue }: 
 const LineBottom = styled.div<{ type: Props["type"] }>`
   width: ${({ type }) => (type === "line" ? "calc(100% + 32px)" : "100%")};
   margin: 0 -16px;
-  padding: 0 16px;
+  padding: 1px 16px 0;
   border-bottom: ${({ type }) => (type === "line" ? "1px solid var(--gray200)" : "none")};
 `;
 const Container = styled.ul<{ padding: number; type: Props["type"] }>`

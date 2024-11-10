@@ -2,6 +2,7 @@
 
 :root {
   --header-height: 54px;
+  --mobile-max-width: 460px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
   --safe-area-bottom: calc(var(--env-sab) + 48px);
   --env-sat: env(safe-area-inset-top);
@@ -37,6 +38,7 @@
   --point-rgb: 254, 158, 42;
   --point-red: #ff5831;
   --point-red-rgb: 234, 39, 29;
+  --sub0: #719af4;
   --sub1: #92b3ff;
   --sub1-rgb: 146, 179, 255;
   --sub2: #dee9ff;

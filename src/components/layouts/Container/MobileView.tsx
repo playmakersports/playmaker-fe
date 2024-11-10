@@ -48,14 +48,15 @@ const Container = styled.div`
   margin: 0 auto;
   width: 100%;
   min-width: 320px;
-  max-width: 600px;
+  max-width: var(--mobile-max-width);
   height: calc(100vh - 1px);
-  overscroll-behavior: contain;
+  /* overscroll-behavior: contain; */
   border-left: 1px solid var(--gray300);
   border-right: 1px solid var(--gray300);
 
-  @media (max-width: 600px) {
+  @media (max-width: 540px) {
     border: none;
+    max-width: 100%;
   }
 
   #main_Container {

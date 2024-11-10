@@ -41,7 +41,7 @@ function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
           </div>
         </RangeWrapper>
         <InputRadioWrapper title="팀 성별">
-          <InputRadio buttonType fullWidth {...register("gender")} value="mixed" id="mixed" labelName="다같이" />
+          <InputRadio buttonType fullWidth {...register("gender")} value="mixed" id="mixed" labelName="혼성" />
           <InputRadio buttonType fullWidth {...register("gender")} value="male" id="male" labelName="남성" />
           <InputRadio buttonType fullWidth {...register("gender")} value="female" id="female" labelName="여성" />
         </InputRadioWrapper>

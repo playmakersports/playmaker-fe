@@ -9,7 +9,7 @@ import DateCalendarInput from "@/components/common/DateCalendarInput";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import Button from "@/components/common/Button";
-import { InputRadio } from "@/components/common/SelectInput";
+import { InputCheckbox, InputRadio } from "@/components/common/SelectInput";
 import { TextArea } from "@/components/common/TextArea";
 
 function CompetitionCreatePC() {
@@ -181,7 +181,7 @@ function CompetitionCreatePC() {
                 {...register("experience")}
                 value="athlete"
                 id="athlete"
-                labelName="고교시절 이후 선출 허용"
+                labelName="고교 이후 선출 허용"
               />
             </InputRadioWrapper>
             <InputRadioWrapper title="연령">
@@ -237,6 +237,7 @@ function CompetitionCreatePC() {
                 <BasicInput type="text" title="계좌 예금주" {...register("accountOwnerName")} />
               </div>
             </section>
+
             <BasicInput
               delButton={false}
               type="text"
@@ -250,6 +251,16 @@ function CompetitionCreatePC() {
                 setValueAs: (value) => +value.replaceAll(",", "").trim(),
               })}
             />
+            <InputRadioWrapper title="입금 기한">
+              <DateCalendarInput
+                displayIcon
+                fullWidth
+                placeholder="입금 마감일"
+                {...register("payEndDate", {
+                  valueAsDate: true,
+                })}
+              />
+            </InputRadioWrapper>
             <TextArea title="환불 규정" {...register("refundInfo")} />
           </section>
         </section>

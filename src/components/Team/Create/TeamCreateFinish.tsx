@@ -11,6 +11,7 @@ import GradientBg from "@/components/common/GradientBg";
 import Loading from "@/components/common/Loading";
 import { atomTeamCreate } from "@/atom/team";
 import FloatButton from "@/components/common/FloatButton";
+import Button from "@/components/common/Button";
 
 function TeamCreateFinish() {
   usePageTitle({ transparent: true });
@@ -35,7 +36,11 @@ function TeamCreateFinish() {
         <p>팀 생성이 완료되었어요</p>
         <p className="last">멋진 활동 기대할게요</p>
       </Message>
-      <FloatButton onClick={() => router.push("/")}>홈 화면으로 이동</FloatButton>
+      <FloatButton>
+        <Button mode="MAIN" fullWidth onClick={() => router.push("/")} type="button">
+          홈 화면으로 이동
+        </Button>
+      </FloatButton>
     </StagePageContainer>
   );
 }

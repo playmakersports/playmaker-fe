@@ -73,7 +73,7 @@ function GradientBg({
 
 const Background = styled.div`
   width: 100%;
-  max-width: 600px;
+  max-width: var(--mobile-max-width);
   top: 0;
   left: 50%;
   transform: translateX(-50%);

@@ -1,11 +1,12 @@
-import React, { useImperativeHandle, useRef, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import useModal from "@/hook/useModal";
 
 import { InputStyledWrapper } from "./Wrapper";
-import { CARD_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
+import { BUTTON_ACTIVE, CARD_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 
 import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrow.svg";
+import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
 type Props = {
   mode?: "card" | "default";
@@ -19,15 +20,12 @@ type Props = {
 
 export const DropDownBottomSheet = (props: Props) => {
   const { mode = "default", title = false, information, options, defaultValue, getCurrentValue, placeholder } = props;
-  const { showModal, hideModal, ModalComponents } = useModal();
-  const [showOptions, setShowOptions] = useState(false);
+  const { showModal, ModalComponents } = useModal();
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
 
   const onSelected = (target: string) => {
     getCurrentValue(target);
     setSelectedOption(target);
-    setShowOptions(false);
-    hideModal();
   };
 
   return (
@@ -65,31 +63,30 @@ export const DropDownBottomSheet = (props: Props) => {
         )}
       </Container>
       <ModalComponents
-        buttons={[
-          {
-            mode: "MAIN",
-            name: "다음",
-            onClick: (close) => {
-              close();
-            },
-          },
-        ]}
-      >
-        <ModalInner>
-          {options.map((option) => (
-            <label key={option.value}>
-              {option.name}
-              <input
-                type="radio"
-                name="dropdown-option"
-                defaultChecked={selectedOption === option.value ? true : false}
-                value={option.value}
-                onClick={() => onSelected(option.value)}
-              />
-            </label>
-          ))}
-        </ModalInner>
-      </ModalComponents>
+        // eslint-disable-next-line react/no-children-prop
+        children={(closeModal) => (
+          <ModalInner>
+            {options.map((option) => (
+              <label key={option.value}>
+                {option.name}
+                <input
+                  type="radio"
+                  name="dropdown-option"
+                  defaultChecked={selectedOption === option.value ? true : false}
+                  value={option.value}
+                  onClick={() => {
+                    onSelected(option.value);
+                    closeModal();
+                  }}
+                />
+                <i>
+                  <CheckIcon />
+                </i>
+              </label>
+            ))}
+          </ModalInner>
+        )}
+      />
     </>
   );
 };
@@ -184,8 +181,29 @@ const ModalInner = styled.div`
     justify-content: space-between;
     padding: 16px 12px;
     color: var(--gray700);
+
+    ${BUTTON_ACTIVE("var(--gray100)")}
+  }
+  i,
+  input[type="radio"] {
+    display: none;
   }
   label:has(input:checked) {
     color: var(--gray900);
+
+    i {
+      display: flex;
+      padding: 2px;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background-color: var(--main);
+      border-radius: 50%;
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
   }
 `;

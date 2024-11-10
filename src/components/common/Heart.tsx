@@ -10,7 +10,10 @@ function Heart(props: Props) {
   return (
     <HeartButton
       type="button"
-      onClick={() => onHeart(!isHeart)}
+      onClick={(event) => {
+        onHeart(!isHeart);
+        event.stopPropagation();
+      }}
       aria-label={`내가 좋아요 ${isHeart ? "한 팀" : "하지 않은 팀"}. 좋아요를 ${
         isHeart ? "해제" : ""
       }하려면 선택하세요.`}

@@ -12,7 +12,9 @@ type RadioProps = Props & { fullWidth?: boolean; labelName: string; buttonType?:
 export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", ...rest }, ref) => (
   <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
     <Check type="checkbox" ref={ref} {...rest} />
-    <CheckIcon />
+    <i>
+      <CheckIcon />
+    </i>
   </div>
 ));
 InputCheckbox.displayName = "InputCheckBox";
@@ -39,25 +41,33 @@ const Check = styled.input`
   width: 100%;
   height: 100%;
   opacity: 0;
-  & + svg {
-    padding: 1px 3px 2px;
+  & + i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    fill: var(--gray200);
+    svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--gray200);
+    }
     border: 2px solid var(--gray300);
     background-color: transparent;
   }
-  &:focus:not(:checked) + svg {
+  &:focus:not(:checked) + i {
     outline: 3px solid var(--gray400);
   }
-  &:focus + svg {
+  &:focus + i {
     outline: 3px solid var(--sub1);
   }
-  &:checked + svg {
-    fill: #fff;
+  &:checked + i {
     border: 1px solid transparent;
     background-color: var(--main);
+    svg {
+      fill: #fff;
+    }
   }
 `;
 

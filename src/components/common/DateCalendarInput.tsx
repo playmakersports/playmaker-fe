@@ -243,9 +243,9 @@ const Icon = styled.div`
 `;
 type ContainerPositionType = { top: number; left: number; isAbove: boolean };
 const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPositionType }>`
-  position: fixed;
+  position: absolute;
   margin: 0 -4px;
-  top: ${({ position }) => (position.isAbove ? "auto" : position.top)}px;
+  top: ${({ position }) => (position.isAbove ? "auto" : `${position.top}px`)};
   transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 340px;
   padding: 20px 12px;

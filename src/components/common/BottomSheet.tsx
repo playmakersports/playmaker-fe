@@ -5,10 +5,10 @@ import { FONTS } from "@/styles/common";
 
 export type BottomSheetProps = {
   setShow: (prev: boolean) => void;
-  children: ReactNode;
+  children: ReactNode | ((closeModal: () => void) => ReactNode);
   header?: ReactNode;
   expanded?: boolean;
-  buttons: {
+  buttons?: {
     mode: ButtonStyleMode;
     disabled?: boolean;
     onClick: (close: () => void) => void;
@@ -49,24 +49,26 @@ function BottomSheet(props: BottomSheetProps) {
         {expanded && <Bar onClick={closeBottomSheet} />}
         <Contents>
           {header && <Header id="BottomModalHeader">{header}</Header>}
-          {children}
+          {typeof children === "function" ? children(closeBottomSheet) : children}
         </Contents>
-        <ButtonWrapper>
-          {buttons.map((button) => (
-            <Button
-              key={button.name}
-              type="button"
-              mode={button.mode}
-              disabled={button.disabled}
-              onClick={() => {
-                button.onClick(closeBottomSheet);
-              }}
-              flex={button.flex ?? 1}
-            >
-              {button.name}
-            </Button>
-          ))}
-        </ButtonWrapper>
+        {buttons && (
+          <ButtonWrapper>
+            {buttons.map((button) => (
+              <Button
+                key={button.name}
+                type="button"
+                mode={button.mode}
+                disabled={button.disabled}
+                onClick={() => {
+                  button.onClick(closeBottomSheet);
+                }}
+                flex={button.flex ?? 1}
+              >
+                {button.name}
+              </Button>
+            ))}
+          </ButtonWrapper>
+        )}
       </Wrapper>
       <Backdrop isShow={showModal} onClick={closeBottomSheet} />
     </>

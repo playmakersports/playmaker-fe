@@ -3,60 +3,103 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { keyframes } from "@emotion/react";
 
+import HomeIcon from "@/assets/icon/global/Home.svg";
 import SearchListIcon from "@/assets/icon/global/SearchList.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
 import CrownIcon from "@/assets/icon/global/CrownSolid.svg";
+import TeamHomeIcon from "@/assets/icon/global/TeamHome.svg";
+import TreeChartIcon from "@/assets/icon/global/TreeChart.svg";
+import PhysicsIcon from "@/assets/icon/global/Physics.svg";
 
-const INNER_LR_PADDING = 24;
-const BUTTON_WIDTH = 40;
-const BUTTONS_GAP = 28;
+const INNER_LR_PADDING = 36;
+const BUTTON_WIDTH = 36;
+const BUTTONS_GAP = 32;
 
 function Navigation() {
   const router = useRouter();
-  const [showListType, setShowListType] = useState(false);
+  const asPath = router.asPath;
+  const [showSubList, setShowSubList] = useState(false);
+
   const movePage = (target: string) => {
     router.push(target);
   };
 
   useEffect(() => {
     return () => {
-      setShowListType(false);
+      setShowSubList(false);
     };
   }, []);
+  const MAIN_NAV = ["/", "/team/list", "/calendar", "/match"];
 
+  if (MAIN_NAV.includes(asPath)) {
+    return (
+      <Container>
+        <NavWrap>
+          <Inner>
+            <Button
+              type="button"
+              data-label="홈"
+              className={asPath === "/" ? "active" : ""}
+              opacity={showSubList ? 0 : 1}
+            >
+              <HomeIcon />
+            </Button>
+            <SubList show={showSubList}>
+              <Button type="button" data-label="팀" onClick={() => movePage("/team/list")}>
+                <TeamHomeIcon />
+              </Button>
+              <Button type="button" data-label="대회">
+                <TreeChartIcon />
+              </Button>
+              <Button type="button" data-label="매치">
+                <PhysicsIcon />
+              </Button>
+            </SubList>
+            <Button
+              type="button"
+              data-label="둘러보기"
+              onClick={() => setShowSubList((prev) => !prev)}
+              showList={showSubList}
+            >
+              <SearchListIcon />
+            </Button>
+            <Button
+              type="button"
+              data-label="캘린더"
+              className={asPath === "/user" ? "active" : ""}
+              opacity={showSubList ? 0 : 1}
+            >
+              <CalendarIcon />
+            </Button>
+            {/* <Button
+              type="button"
+              data-label="경기"
+              className={asPath === "/" ? "active" : ""}
+              opacity={showSubList ? 0 : 1}
+            >
+              <CrownIcon />
+            </Button> */}
+          </Inner>
+        </NavWrap>
+      </Container>
+    );
+  }
   return (
     <Container>
-      <NavWrap show={showListType}>
+      <NavWrap>
         <Inner>
-          <button
-            type="button"
-            data-label="둘러보기"
-            onClick={() => setShowListType((prev) => !prev)}
-            className={showListType ? "active main-menu" : " main-menu"}
-          >
+          <Button type="button" data-label="홈" className={asPath === "/" ? "active" : ""}>
+            <HomeIcon />
+          </Button>
+          <Button type="button" data-label="살펴보기" className={asPath === "/team/list" ? "active" : ""}>
             <SearchListIcon />
-          </button>
-          <ListSelector show={showListType}>
-            <button type="button" onClick={() => movePage("/team/list")}>
-              팀
-            </button>
-            <button type="button" onClick={() => movePage("/competition")}>
-              대회
-            </button>
-            <button type="button" onClick={() => movePage("/match")}>
-              매치
-            </button>
-          </ListSelector>
-          <button type="button" className={showListType ? "hide main-menu" : " main-menu"}>
+          </Button>
+          <Button type="button" data-label="캘린더" className={asPath === "/" ? "active" : ""}>
             <CalendarIcon />
-          </button>
-          <button type="button" className={showListType ? "hide main-menu" : " main-menu"}>
-            <PaperPlaneIcon />
-          </button>
-          <button type="button" data-label="팀 관리" className={showListType ? "hide main-menu" : " main-menu"}>
+          </Button>
+          <Button type="button" data-label="경기" className={asPath === "/" ? "active" : ""}>
             <CrownIcon />
-          </button>
+          </Button>
         </Inner>
       </NavWrap>
     </Container>
@@ -66,22 +109,22 @@ function Navigation() {
 const showNavAnimate = keyframes`
     0% {
         opacity: 0.3;
-        width: 64px;
+        width: 68px;
         transform: scale(0.2) translate3d(0, 40%, 0);
     }
     18% {
         opacity: 1;
-        width: 64px;
+        width: 68px;
         transform: scale(1.2) translate3d(0, 0, 0);
     }
     26% {
         opacity: 1;
-        width: 64px;
+        width: 68px;
         transform: scale(0.95);
     }
     36% {
         opacity: 1;
-        width: 64px;
+        width: 68px;
         transform: scale(1);
     }
     60% {
@@ -111,140 +154,121 @@ const Container = styled.nav`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 320px;
-  bottom: calc(16px + var(--env-sab) / 1.5);
+  bottom: calc(12px + var(--env-sab) / 1.8);
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
   pointer-events: none;
 `;
-const SHOW_SUB_GRADIENT = "linear-gradient(to right, rgba(108, 108, 108, 0.8) 27%, rgba(256, 256, 256, 0.75) 27%)";
-const NavWrap = styled.div<{ show: boolean }>`
+const NavWrap = styled.div`
+  display: flex;
+  align-items: center;
   width: ${INNER_LR_PADDING * 2 + BUTTON_WIDTH * 4 + BUTTONS_GAP * 3}px;
-  padding: 12px ${INNER_LR_PADDING}px;
-  border-radius: 32px;
-  background: ${({ show }) => (show ? SHOW_SUB_GRADIENT : "rgba(255, 255, 255, 0.75)")};
+  height: 68px;
+  padding: 0 ${INNER_LR_PADDING}px;
+  border-radius: 48px;
+  background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(7px);
   pointer-events: auto;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   opacity: 0;
   animation: ${showNavAnimate} 1.4s forwards;
-  animation-delay: 0.2s;
-  box-shadow: 0 2px 20px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px 0 rgba(208, 214, 226, 0.5);
+  overflow: hidden;
 `;
 const Inner = styled.div`
   position: relative;
+  width: 100%;
   display: flex;
+  justify-content: space-between;
   gap: ${BUTTONS_GAP}px;
   opacity: 0;
   animation: ${showInnerMenu} 0.5s forwards;
-  animation-delay: 1.1s;
+  animation-delay: 0.65s;
+`;
 
-  button.main-menu {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: ${BUTTON_WIDTH}px;
-    height: ${BUTTON_WIDTH}px;
-    opacity: 1;
+const Button = styled.button<{ opacity?: number; showList?: boolean }>`
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: ${BUTTON_WIDTH}px;
+  opacity: ${({ opacity }) => opacity ?? 1};
+  transform: translate3d(
+    ${({ showList }) => (showList ? `-${(BUTTON_WIDTH * 4 + BUTTONS_GAP * 3) / 3 + 20}px` : "0")},
+    0,
+    0
+  );
+  /* 
+  4개일 때
+  transform: translate3d(${({ showList }) => (showList ? `-${BUTTON_WIDTH + BUTTONS_GAP}px` : "0")}, 0, 0); */
+  transition: opacity 0.15s, transform 0.15s;
+  transition-delay: opacity 0.15s;
+
+  &::before {
+    content: "";
+    position: absolute;
+    visibility: ${({ showList }) => (showList ? "visible" : "hidden")};
+    right: -3px;
+    width: 1px;
+    height: ${({ showList }) => (showList ? BUTTON_WIDTH + 8 : 0)}px;
+    background-color: var(--gray300);
+    opacity: ${({ showList }) => (showList ? "0.9" : "0")};
+    transition: opacity 0.45s, height 0.55s;
+  }
+
+  svg {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    fill: ${({ showList }) => (showList ? "var(--sub1)" : "var(--gray500)")};
+    z-index: 1;
+    transition: fill 0.4s;
+  }
+
+  &.active {
     svg {
-      width: 28px;
-      height: 28px;
-      fill: var(--gray700);
+      fill: var(--main);
+      transition: fill 0.25s;
     }
+    &::after {
+      transition: color 0.25s;
+      color: var(--main);
+    }
+  }
 
-    &.active {
-      border-radius: 8px;
-      transition: background-color 0.25s;
-      svg {
-        fill: var(--gray0);
-      }
-    }
-
-    &.hide {
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    &::before {
-      content: attr(data-label);
-      position: absolute;
-      display: inline-block;
-      top: -100%;
-      left: 50%;
-      transform: translate3d(-50%, 5px, 0);
-      width: max-content;
-      font-size: 1.6rem;
-      font-weight: 400;
-      padding: 6px 10px;
-      border-radius: 5px;
-      background-color: var(--gray700);
-      color: var(--gray0);
-      opacity: 0;
-      visibility: hidden;
-      transition: transform 0.2s, opacity 0.2s;
-    }
-    &:hover::before {
-      visibility: visible;
-      opacity: 1;
-      transform: translate3d(-50%, -10px, 0);
-    }
-    @media (max-width: 600px) {
-      &:hover::before {
-        display: none;
-      }
-    }
+  &::after {
+    content: attr(data-label);
+    width: max-content;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: ${({ showList }) => (showList ? "var(--sub1)" : "var(--gray500)")};
+    z-index: 1;
+    transition: color 0.4s;
   }
 `;
-const ListSelector = styled.div<{ show: boolean }>`
-  position: absolute;
-  left: calc(40px + 8px);
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: -3px ${({ show }) => (show ? "0" : "-24px")} -3px 0;
-  padding: 4px 10px 0 8px;
-  width: ${({ show }) => (show ? "216px" : "0%")};
-  height: 100%;
-  opacity: ${({ show }) => (show ? "1" : "0")};
-  overflow: hidden;
-  transition: width 0.2s, opacity 0.25s;
-  z-index: 2;
 
-  button:nth-child(2n) {
-    position: relative;
-    padding: 0 10px;
-    &::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: 4px;
-      transform: translateY(-50%);
-      display: inline-block;
-      height: 70%;
-      border-right: 1px solid var(--gray700);
-      opacity: 0.4;
-    }
-    &::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 4px;
-      transform: translateY(-50%);
-      display: inline-block;
-      height: 70%;
-      border-left: 1px solid var(--gray700);
-      opacity: 0.4;
-    }
-  }
-  button {
-    flex: 0.9;
-    gap: 4px;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: var(--gray700);
-    word-break: keep-all;
+const SubList = styled.div<{ show: boolean }>`
+  position: absolute;
+  display: flex;
+  left: ${BUTTON_WIDTH + BUTTONS_GAP}px;
+  justify-content: space-between;
+  align-items: center;
+  width: ${BUTTON_WIDTH * 3 + BUTTONS_GAP * 2}px;
+  gap: ${BUTTONS_GAP}px;
+  background-color: transparent;
+  z-index: ${({ show }) => (show ? 1 : 0)};
+  opacity: ${({ show }) => (show ? 1 : 0)};
+  transition: opacity 0.15s;
+  transition-delay: opacity 0.25s;
+
+  ${Button} > svg {
+    margin-top: -2px;
+    width: 26px;
+    height: 26px;
   }
 `;
 

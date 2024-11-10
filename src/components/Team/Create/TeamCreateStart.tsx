@@ -88,12 +88,12 @@ const fadeIn = keyframes`
   from {
     opacity: 0;
     letter-spacing: 0;
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
   to {
     opacity: 1;
     letter-spacing: 1.5px;
-    font-size: 3.2rem;
+    font-size: 3rem;
   }
 `;
 

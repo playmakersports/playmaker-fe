@@ -14,7 +14,7 @@ const Container = styled.div`
   position: fixed;
   display: flex;
   width: 100%;
-  max-width: calc(var(--mobile-max-width) - 2px);
+  max-width: var(--mobile-max-width);
   bottom: 0;
   padding: 0 16px calc(16px + var(--env-sab));
   justify-content: center;

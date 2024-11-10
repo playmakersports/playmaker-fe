@@ -365,6 +365,7 @@ const Bottom = styled.footer`
   gap: 60px;
   background-color: var(--background-light);
   border-top: 1px solid var(--gray200);
+  z-index: 51;
 
   div.bottom-left-side {
     flex: 0.25;

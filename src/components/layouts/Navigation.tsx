@@ -51,7 +51,7 @@ function Navigation() {
               <Button type="button" data-label="대회">
                 <TreeChartIcon />
               </Button>
-              <Button type="button" data-label="매치">
+              <Button type="button" data-label="교류전">
                 <PhysicsIcon />
               </Button>
             </SubList>
@@ -73,7 +73,7 @@ function Navigation() {
             </Button>
             {/* <Button
               type="button"
-              data-label="경기"
+              data-label="커뮤니티"
               className={asPath === "/" ? "active" : ""}
               opacity={showSubList ? 0 : 1}
             >

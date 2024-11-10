@@ -16,7 +16,6 @@ export default function Home() {
   return (
     <Container>
       <BackGradient />
-      <MainHeader />
       <FixedNotice />
       <Banner />
       <MyTeam />

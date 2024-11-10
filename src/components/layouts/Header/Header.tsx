@@ -1,11 +1,12 @@
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import { useAtomValue } from "jotai";
-
-import { atomBgWhite } from "@/atom/common";
 import { usePageTitle } from "@/hook/usePageTitle";
 
+import { atomBgWhite } from "@/atom/common";
 import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
+import MainHeader from "./MainHeader";
+
 import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
 
 type Props = { scrollActive: number };
@@ -17,7 +18,7 @@ function Header({ scrollActive }: Props) {
   const isTitleShow = getTransparent ? scrollActive > 160 : true;
 
   if (router.asPath === "/") {
-    return null;
+    return <MainHeader />;
   }
   if (getTransparent) {
     return (

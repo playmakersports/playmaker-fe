@@ -2,7 +2,7 @@
 
 :root {
   --header-height: 54px;
-  --mobile-max-width: 460px;
+  --mobile-max-width: 480px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
   --safe-area-bottom: calc(var(--env-sab) + 48px);
   --env-sat: env(safe-area-inset-top);

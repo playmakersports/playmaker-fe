@@ -31,14 +31,16 @@ function MobileView({ children }: { children: JSX.Element }) {
   }, []);
 
   return (
-    <Container id="mobile_Wrapper">
-      <Header scrollActive={scrollActive} />
-      <main id="main_Container" ref={container}>
-        {children}
-      </main>
+    <>
+      <Container id="mobile_Wrapper">
+        <Header scrollActive={scrollActive} />
+        <main id="main_Container" ref={container}>
+          {children}
+        </main>
+      </Container>
       <StaffPageMover />
       <AppCode />
-    </Container>
+    </>
   );
 }
 
@@ -50,12 +52,10 @@ const Container = styled.div`
   min-width: 320px;
   max-width: var(--mobile-max-width);
   height: calc(100vh - 1px);
-  /* overscroll-behavior: contain; */
-  border-left: 1px solid var(--gray300);
-  border-right: 1px solid var(--gray300);
+  box-shadow: rgba(0, 0, 0, 0.125) 0px 8px 36px;
 
   @media (max-width: 540px) {
-    border: none;
+    box-shadow: none;
     max-width: 100%;
   }
 

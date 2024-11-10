@@ -245,14 +245,14 @@ type ContainerPositionType = { top: number; left: number; isAbove: boolean };
 const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPositionType }>`
   position: absolute;
   margin: 0 -4px;
-  top: ${({ position }) => (position.isAbove ? "auto" : `${position.top}px`)};
+  /* top: ${({ position }) => (position.isAbove ? "auto" : `${position.top}px`)}; */
   transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 340px;
   padding: 20px 12px;
   background-color: var(--background-light);
   border-radius: 10px;
   box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.07);
-  z-index: 90;
+  z-index: 50;
 
   @media (max-width: 420px) {
     top: ${({ position }) => (position.isAbove ? 0 : position.top)}px;

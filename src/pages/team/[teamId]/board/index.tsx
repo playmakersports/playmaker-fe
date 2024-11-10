@@ -11,27 +11,41 @@ import { BaseContainer } from "@/components/common/Container";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "@/components/common/Card";
 
-import ArticlePlus from "@/assets/icon/global/ArticlePlus.svg";
+import PlusIcon from "@/assets/icon/global/Plus.svg";
+import { BasicInput } from "@/components/common/Input";
 
 function Board() {
-  usePageTitle();
+  const router = useRouter();
+  const teamId = router.query.teamId;
+  usePageTitle({
+    title: "게시판",
+    subTitle: "SPABA",
+    subIcons: [
+      {
+        svgIcon: <PlusIcon />,
+        linkTo: `/team/${teamId}/board/editor?type=new`,
+        description: "새 게시글",
+      },
+    ],
+  });
   useBgWhite();
   const tabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);
   const [, setTab] = useState("ALL");
-  const router = useRouter();
-  const teamId = router.query.teamId;
   const currentPage = router.query.page;
 
   return (
     <>
+      <Search>
+        <BasicInput type="text" search />
+      </Search>
       <TabWrapper ref={tabRef}>
         <MainTab
           items={[
             { value: "ALL", name: "전체" },
-            { value: "notice", name: "공지사항" },
-            { value: "photo", name: "사진" },
-            { value: "schedule", name: "일정" },
+            { value: "notice", name: "공지" },
+            { value: "free", name: "자유" },
+            { value: "introduce", name: "가입인사" },
           ]}
           nowValue={setTab}
         />
@@ -66,20 +80,6 @@ function Board() {
       </FixedArticles>
       <Container>
         <Articles>
-          <WriteButton
-            type="button"
-            onClick={() =>
-              router.push({
-                pathname: "/team/[teamId]/board/editor",
-                query: {
-                  teamId: teamId,
-                  type: "new",
-                },
-              })
-            }
-          >
-            <ArticlePlus /> 새 게시글 올리기
-          </WriteButton>
           {MOCK.map((article) => (
             <Article
               key={article}
@@ -132,6 +132,10 @@ function Board() {
 const MOCK = [1, 10, 12, 14, 16, 8, 9, 28, 4, 2];
 const PAGE_MOCK = [1, 2, 3, 4, 5];
 
+const Search = styled.div`
+  display: flex;
+  padding: 12px 16px 0px;
+`;
 const Page = styled.div`
   display: flex;
   margin-top: 32px;

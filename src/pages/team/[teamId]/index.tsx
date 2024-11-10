@@ -21,6 +21,7 @@ import BoardList from "@/components/Team/BoardList";
 import GroupTitle from "@/components/common/GroupTitle";
 import HomeTeamList from "@/components/Team/HomeTeamList";
 import FloatButton from "@/components/common/FloatButton";
+import Button from "@/components/common/Button";
 
 function TeamHome() {
   const router = useRouter();
@@ -30,7 +31,6 @@ function TeamHome() {
 
   usePageTitle({
     title: TEAM_INFO_MOCK.teamName,
-    subTitle: TEAM_INFO_MOCK.univName,
     transparent: true,
     subIcons: [
       {
@@ -46,7 +46,11 @@ function TeamHome() {
   return (
     <>
       <MetaTitle title={TEAM_INFO_MOCK.teamName} />
-      <FloatButton onClick={() => {}}>가입 신청</FloatButton>
+      <FloatButton>
+        <Button type="button" mode="MAIN" fullWidth onClick={() => {}}>
+          가입 신청
+        </Button>
+      </FloatButton>
       <CoverImage src={TEAM_INFO_MOCK.cover} />
       <Description>{TEAM_INFO_MOCK.introduce}</Description>
       <LightWrapper>

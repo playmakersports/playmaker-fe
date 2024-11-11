@@ -25,9 +25,8 @@ const Container = styled.aside`
   height: 240px;
   bottom: 40px;
   left: calc(50% + var(--mobile-max-width) / 2);
-  margin-left: 20px;
-  padding: 20px;
-  background-color: var(--gray50);
+  margin-left: 36px;
+  padding: 20px 0;
 
   .qr-area {
     width: 80px;

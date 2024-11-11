@@ -37,8 +37,8 @@ export const HeaderIcon = styled.button`
   justify-content: center;
   width: 24px;
   height: 24px;
-  border-radius: var(--radius-10);
-  ${TEXT_ACTIVE("var(--gray100)")};
+  ${TEXT_ACTIVE("rgba(var(--gray100-rgb),0.5)")};
+  border-radius: 5px;
 
   svg {
     width: 22px;

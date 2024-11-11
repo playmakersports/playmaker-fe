@@ -7,7 +7,7 @@ import { atomBgWhite } from "@/atom/common";
 import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
 import MainHeader from "./MainHeader";
 
-import HeaderLeftArrow from "@/assets/icon/arrow/HeaderLeftArrow.svg";
+import HeaderLeftArrow from "@/assets/icon/arrow/LeftArrowThin.svg";
 
 type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
@@ -73,7 +73,7 @@ type StyledScrolled = { scrolled?: boolean };
 type WrapperStyledType = { bgWhite: boolean };
 const Icon = styled(HeaderIcon)`
   svg {
-    fill: var(--gray600);
+    fill: var(--gray700);
   }
 `;
 const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
@@ -95,7 +95,7 @@ const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledT
       `
         : `
         svg {
-          fill: var(--gray600)
+          fill: var(--gray700)
         }
       `}
   }

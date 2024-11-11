@@ -14,6 +14,8 @@ import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 import TeamListCard from "@/components/Team/TeamListCard";
+import ToggleInput from "@/components/common/ToggleInput";
+import { FONTS } from "@/styles/common";
 
 function TeamList() {
   useBgWhite();
@@ -27,7 +29,8 @@ function TeamList() {
   const targetSports = router.query.sports as string;
   const [activeTab, setActiveTab] = useState(targetSports ?? SUPPORT_SPORTS[0].value);
   const [searchValue, setSearchValue] = useState("");
-  const [selectedFilterQuery, setSelectedFilterQuery] = useState("default");
+  const [sortQuery, setSortQuery] = useState("default");
+  const [filterRecruit, setFilterRecruit] = useState(false);
 
   return (
     <Container>
@@ -53,8 +56,8 @@ function TeamList() {
       </Contents>
       <Filter>
         <DropDownBottomSheet
-          defaultValue={selectedFilterQuery}
-          getCurrentValue={setSelectedFilterQuery}
+          defaultValue={sortQuery}
+          getCurrentValue={setSortQuery}
           options={[
             { value: "default", name: "추천순" },
             { value: "like", name: "좋아요순" },
@@ -62,6 +65,7 @@ function TeamList() {
             { value: "date", name: "마감 임박순" },
           ]}
         />
+        <ToggleInput toggled={filterRecruit} setToggle={setFilterRecruit} label="모집중인 팀만" />
       </Filter>
 
       <Cards>
@@ -109,12 +113,12 @@ const Cards = styled.section`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: 16px;
+  margin-top: 8px;
 `;
 
 const Filter = styled.div`
   display: flex;
-  padding: 6px 0;
+  padding: 12px 6px 6px;
   justify-content: space-between;
 `;
 

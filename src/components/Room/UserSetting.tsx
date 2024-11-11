@@ -107,10 +107,10 @@ const Group = styled.ul`
     justify-content: space-between;
 
     &:hover {
-      background-color: var(--gray100);
+      background-color: var(--gray50);
     }
     &:active {
-      background-color: var(--gray200);
+      background-color: var(--gray100);
     }
   }
   span.title-wrapper {

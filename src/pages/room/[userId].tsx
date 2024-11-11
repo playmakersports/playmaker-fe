@@ -11,7 +11,6 @@ import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
 import UserSetting from "@/components/Room/UserSetting";
 
-import GenderIcon from "@/components/common/GenderIcon";
 import PencilIcon from "@/assets/icon/global/Pencil.svg";
 
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
@@ -23,11 +22,9 @@ function UserPage() {
   const [weeklyDate, setWeeklyDate] = useState("");
   const router = useRouter();
   const userId = router.query.userId;
-  const INTRODUCE_MOCK =
-    "안녕하세요! 농구와 배드민턴을 좋아하는 김이프라고 합니다!항상 새로운 도전을 즐기며, 팀원들과 함께하는 시간을 소중히 여기고 있습니다.";
+  const INTRODUCE_MOCK = "농구와 배드민턴을 좋아해요\n항상 새로운 도전";
 
   usePageTitle({
-    title: "마이 페이지",
     subIcons: [
       {
         svgIcon: <PencilIcon />,
@@ -39,27 +36,25 @@ function UserPage() {
   return (
     <Container>
       <Profile>
-        <div className="profile-image">
-          <Image src={MaleCharacter} alt="" width={80} height={80} />
-        </div>
         <Info>
-          <p className="player-name">
-            <strong>김이프</strong> 님 <GenderIcon type="FEMALE" />
-          </p>
-          <p className="player-detail">
-            <span className="detail-tags">2000년생</span>
-            <span className="detail-tags">성신여대</span>
+          <p className="player-name">김이프</p>
+          <p className="introduce">{INTRODUCE_MOCK}</p>
+          <p className="tag-list">
+            <span className="tag">2000년생</span>
+            <span className="tag">성신여대</span>
           </p>
         </Info>
+        <div className="profile-image">
+          <Image src={MaleCharacter} alt="" width={92} height={92} />
+        </div>
       </Profile>
-      <Introduce>{INTRODUCE_MOCK}</Introduce>
       <MyPageButtons>
         <button type="button">나의 좋아요</button>
         <button type="button">내가 쓴 글</button>
         <button type="button">출전 경기</button>
       </MyPageButtons>
       <TopWrapper>
-        <WeeklyCalender
+        {/* <WeeklyCalender
           clickable={false}
           grouping={true}
           activeDate={weeklyDate}
@@ -80,7 +75,7 @@ function UserPage() {
               ],
             },
           ]}
-        />
+        /> */}
         <RoomAwarded
           awardsList={[
             { awardedYear: 2024, competitionName: "경기1", awardedRank: 1 },
@@ -99,16 +94,20 @@ const Container = styled(BaseContainer)``;
 const Profile = styled.div`
   user-select: none;
   display: flex;
-  align-items: center;
-  gap: 12px;
+  padding: 0 6px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 30px;
   div.profile-image {
-    border-radius: 10px;
+    border-radius: 50%;
     overflow: hidden;
     background-color: #eef8fe;
   }
 `;
 const Info = styled.div`
+  flex: 1;
   display: flex;
+  padding-top: 8px;
   flex-direction: column;
   gap: 10px;
   p.player-name {
@@ -118,23 +117,29 @@ const Info = styled.div`
       color: var(--main);
     }
   }
+  p.introduce {
+    ${FONTS.MD2}
+    font-weight: 400;
+    color: var(--gray800);
+    white-space: pre-line;
+  }
 
-  p.player-detail {
+  p.tag-list {
     display: inline-flex;
     gap: 6px;
-    span.detail-tags {
+    span.tag {
       padding: 4px 6px;
       font-size: 1.3rem;
       border-radius: 5px;
-      border: 1px solid var(--sub1);
-      color: var(--gray800);
+      background-color: rgba(var(--sub2-rgb), 0.4);
+      color: var(--main);
     }
   }
 `;
 
 const MyPageButtons = styled(BasicWhiteCard)`
   display: flex;
-  margin: 16px 0 20px;
+  margin: 16px 0 32px;
   padding: 0 2px;
   justify-content: center;
   align-items: center;
@@ -164,17 +169,6 @@ const MyPageButtons = styled(BasicWhiteCard)`
       }
     }
   }
-`;
-
-const Introduce = styled.p`
-  ${FONTS.MD2}
-  margin: 20px 0;
-  padding: 16px 20px;
-  width: 100%;
-  background-color: var(--background);
-  border-radius: 5px;
-  font-weight: 400;
-  color: var(--gray800);
 `;
 
 const TopWrapper = styled.div`

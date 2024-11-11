@@ -35,7 +35,7 @@ function RoomAwarded({ awardsList }: Props) {
             <li key={`awarded-${idx}`}>
               <span className="award-year">{award.awardedYear}</span>
               <span className="award-name">{award.competitionName}</span>
-              <span className="award-rank" style={{ color: RANK_DISPLAY[award.awardedRank].color }}>
+              <span className="award-rank" style={{ color: RANK_DISPLAY[award.awardedRank].color, fontWeight: 600 }}>
                 {RANK_DISPLAY[award.awardedRank].name}
               </span>
             </li>
@@ -49,7 +49,7 @@ function RoomAwarded({ awardsList }: Props) {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
 `;
 const Contents = styled(BasicWhiteCard)``;
 const AwardList = styled.ul`
@@ -58,16 +58,24 @@ const AwardList = styled.ul`
   gap: 8px;
 
   li.title-items {
-    padding: 0;
-    ${FONTS.MD2};
-    color: var(--gray500);
+    padding: 0 4px;
+    font-weight: 400;
+    color: var(--gray600);
   }
   li {
-    padding: 8px 0;
     ${FONTS.MD2};
+    padding: 10px 4px;
     font-weight: 400;
     display: flex;
     justify-content: space-between;
+    border-bottom: 1px solid var(--gray100);
+    &:first-of-type,
+    &:last-of-type {
+      border-bottom: none;
+    }
+    &:last-of-type {
+      padding-bottom: 4px;
+    }
 
     span {
       display: inline-flex;

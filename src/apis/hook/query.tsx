@@ -1,4 +1,4 @@
-import { useMutation, useQuery, UseQueryOptions } from "@tanstack/react-query";
+import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
 import { useAtomValue } from "jotai";
 import { typedGet, typedPost } from "..";
 import { ACCESS_TOKEN } from "@/atom/user";
@@ -9,11 +9,11 @@ const CONTENT_TYPE: Record<ContentType, string> = {
   "form-data": "multipart/form-data",
 };
 
-type QueryConfig<T> = Omit<UseQueryOptions<T, unknown, T, [string, ...unknown[]]>, "queryKey" | "queryFn">;
+type QueryConfig<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 
 export const useGet = <T,>(url: string, params?: Record<string, string>, config?: QueryConfig<T>) =>
-  useQuery({
-    queryKey: [url, ...(params ? Object.values(params) : [])],
+  useQuery<T>({
+    queryKey: [url, ...(params ? Object.values(params) : [])] as QueryKey,
     queryFn: async () => {
       const response = await typedGet<T>(url, { params: params || {} });
       return response.data;

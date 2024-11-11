@@ -66,11 +66,12 @@ const Container = styled.ul<{ length: number }>`
     &::before {
       content: "";
       position: absolute;
-      left: ${({ length }) => `calc(((min(600px, 100vw) - 26px) / ${length - 1} - 34px) * -1)`};
-      width: ${({ length }) => `calc(((min(600px, 100vw) - 26px) / ${length - 1} - 40px))`};
+      left: ${({ length }) => `calc(((var(--mobile-max-width) - 24px) / ${length - 1} - 34px) * -1)`};
+      width: ${({ length }) => `calc(((var(--mobile-max-width) - 24px) / ${length - 1} - 40px))`};
       height: 2px;
       border-top: 1px dashed var(--gray300);
       top: 50%;
+      z-index: -1;
     }
     &.active-step::before,
     &.past-step::before {

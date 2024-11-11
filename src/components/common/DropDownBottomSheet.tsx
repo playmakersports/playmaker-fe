@@ -19,7 +19,7 @@ type Props = {
 };
 
 export const DropDownBottomSheet = (props: Props) => {
-  const { mode = "default", title = false, information, options, defaultValue, getCurrentValue, placeholder } = props;
+  const { mode = "default", title, information, options, defaultValue, getCurrentValue, placeholder } = props;
   const { showModal, ModalComponents } = useModal();
   const [selectedOption, setSelectedOption] = useState(defaultValue ?? "");
 
@@ -31,7 +31,7 @@ export const DropDownBottomSheet = (props: Props) => {
   return (
     <>
       <Container>
-        <p className="input-title">{title ?? "주소"}</p>
+        {title && <p className="input-title">{title}</p>}
         {mode === "default" ? (
           <Select onClick={showModal}>
             {!!selectedOption ? (

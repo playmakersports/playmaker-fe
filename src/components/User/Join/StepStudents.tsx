@@ -1,119 +1,108 @@
-import React, { useRef, useState } from "react";
+import React, { FocusEvent, useState } from "react";
 import styled from "@emotion/styled";
-import useModal from "@/hook/useModal";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { BasicInput } from "@/components/common/Input";
-import { StepFormWrapper } from "@/components/common/global/Text";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+
+import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
 function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
-  const confirm = useConfirm();
-  const { ModalComponents, showModal } = useModal();
-  const [univEmail, setUnivEmail] = useState("");
-  const [verifyCode, setVerifyCode] = useState("");
-  const [isSendSuccess, setIsSendSuccess] = useState(false);
+  const [inputValue, setInputValue] = useState("");
+  const [selectedUniv, setSelectedUniv] = useState("");
 
-  const VerifyCodeInput = useRef<HTMLInputElement>(null);
+  // Debounce
+  const onFocusInput = (e: FocusEvent<HTMLInputElement>) => {
+    const intervalId = setInterval(() => {
+      setInputValue(e.target.value);
+    }, 900);
 
-  const requestUnivEmail = () => {
-    setIsSendSuccess(true);
-    if (VerifyCodeInput.current) VerifyCodeInput.current!.focus();
+    e.target.addEventListener("blur", () => clearInterval(intervalId), { once: true });
   };
-  const checkVerifyCode = async () => {
-    const wrongCodeConfirm = await confirm?.showConfirm("잘못된 인증번호입니다", {
-      yes: "다시 입력",
-      no: "인증번호 재전송",
-    });
-
-    if (wrongCodeConfirm) {
-      VerifyCodeInput.current!.focus();
-    } else {
-      window.alert("재전송");
-      setStep(2);
-    }
+  const onBlurInput = (e: FocusEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
   };
 
   return (
     <StagePageContainer
-      title="먼저 대학생 인증이 필요해요"
-      description="대학생 인증하면 대학팀 생성 및 참가가 가능해요"
-      button={
-        isSendSuccess
-          ? {
-              text: "다음",
-              onClick: checkVerifyCode,
-              disabled: verifyCode.length === 0,
-            }
-          : {
-              text: "인증번호 전송",
-              onClick: requestUnivEmail,
-              disabled: univEmail.length === 0,
-            }
-      }
+      title="소속 대학을 선택해주세요"
+      button={{
+        text: "다음",
+        disabled: selectedUniv === "",
+        onClick: () => {
+          setStep(2);
+        },
+      }}
     >
-      <StepFormWrapper>
-        <BasicInput
-          type="email"
-          title="학교 이메일"
-          value={univEmail}
-          onChange={(e) => setUnivEmail(e.target.value)}
-          disabled={isSendSuccess}
-          information={
-            !isSendSuccess
-              ? {
-                  text: "이용 가능한 학교 목록",
-                  onClick: () => showModal(),
-                }
-              : undefined
-          }
-        />
-
-        <div style={{ height: isSendSuccess ? "max-content" : "0px", overflow: "hidden" }}>
-          <BasicInput
-            type="text"
-            ref={VerifyCodeInput}
-            title="인증번호"
-            value={verifyCode}
-            onChange={(e) => setVerifyCode(e.target.value)}
-            information={{
-              text: "이메일을 받지 못하셨나요?",
-              onClick: () => console.log(""),
-            }}
-          />
-        </div>
-      </StepFormWrapper>
-      <ModalComponents
-        title="이용 가능한 학교 목록"
-        buttons={[
-          {
-            name: "닫기",
-            mode: "OPTION2",
-            onClick: (close) => close(),
-          },
-        ]}
-      >
-        <UnivListIndex>가</UnivListIndex>
-        가천대학교, 가톨릭대학교, 강원대학교, 건국대학교, 경기대학교, 경북대학교, 경희대학교, 고려대학교, 국민대학교
-        <UnivListIndex>다, 마, 바</UnivListIndex>
-        단국대학교, 동국대학교, 명지대학교, 부산대학교
-        <UnivListIndex>사</UnivListIndex>
-        상명대학교, 서강대학교, 서울과학기술대학교, 서울대학교, 서울시립대학교, 성균관대학교, 성신여자대학교,
-        세종대학교, 숭실대학교
-        <UnivListIndex>아, 자, 차</UnivListIndex>
-        아주대학교, 연세대학교, 용인대학교, 이화여자대학교, 인하대학교, 제주대학교, 전남대학교, 조선대학교, 중앙대학교,
-        충남대학교, 충북대학교
-        <UnivListIndex>파, 하</UnivListIndex>
-        포항공과대학교(POSTECH), 한국과학기술원(KAIST), 한국외국어대학교, 한국체육대학교, 한양대학교, 홍익대학교
-      </ModalComponents>
+      <BasicInput
+        type="text"
+        id="univNameSearch"
+        onFocus={onFocusInput}
+        onBlur={onBlurInput}
+        placeholder="대학명을 입력해주세요"
+      />
+      <UnivList>
+        {MOCK_UNIV.map((univ) => (
+          <li
+            key={univ.universityId}
+            className={selectedUniv === univ.universityId ? "selected" : ""}
+            onClick={() => setSelectedUniv(univ.universityId)}
+          >
+            {univ.universityName}
+            {selectedUniv === univ.universityId && (
+              <i className="check-icon">
+                <CheckIcon />
+              </i>
+            )}
+          </li>
+        ))}
+      </UnivList>
     </StagePageContainer>
   );
 }
 
-const UnivListIndex = styled.p`
+const MOCK_UNIV = [
+  { universityId: "1", universityName: "성신여자대학교" },
+  { universityId: "2", universityName: "서울대학교" },
+  { universityId: "13", universityName: "한양대학교" },
+];
+
+const UnivList = styled.ul`
   margin: 16px 0 4px;
   font-weight: 500;
   font-size: 1.6rem;
+  li {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 400;
+    line-height: 2.4rem;
+    padding: 20px 10px;
+    border-bottom: 1px solid var(--gray100);
+    &:last-of-type {
+      border-bottom: none;
+    }
+    &.selected {
+      font-weight: 500;
+      color: var(--main);
+    }
+
+    i {
+      display: flex;
+      padding: 2px;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      background-color: var(--main);
+      border-radius: 50%;
+      svg {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
 `;
 
 export default StepStudents;

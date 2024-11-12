@@ -58,6 +58,7 @@
 
   --art-cyan: #07d9cc;
   --art-purple: #9490df;
+  --art-purple-rgb: 148, 144, 223;
 }
 @media (max-width: 540px) {
   :root {

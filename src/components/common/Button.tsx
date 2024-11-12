@@ -123,6 +123,11 @@ const Wrapper = styled.button<ButtonStyled>`
     filter: brightness(1.05);
     transform: scale(0.98);
   }
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: ${({ borderType, mode }) => (borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
+  }
 `;
 
 const SplitWrapper = styled(Wrapper)`

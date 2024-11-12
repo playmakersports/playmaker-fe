@@ -3,14 +3,15 @@ import styled from "@emotion/styled";
 
 type Props = {
   children: React.ReactNode;
+  gap?: string;
 };
 function FloatButton(props: Props) {
-  const { children } = props;
+  const { children, gap = "0" } = props;
 
-  return <Container>{children}</Container>;
+  return <Container gap={gap}>{children}</Container>;
 }
 
-const Container = styled.div`
+const Container = styled.div<{ gap: string }>`
   position: fixed;
   display: flex;
   width: 100%;
@@ -23,6 +24,7 @@ const Container = styled.div`
   z-index: 30;
   backdrop-filter: blur(2px);
   background: linear-gradient(to top, rgba(256, 256, 256, 0.8) 0%, rgba(256, 256, 256, 0.05) 100%);
+  gap: ${(props) => props.gap};
 `;
 
 export default FloatButton;

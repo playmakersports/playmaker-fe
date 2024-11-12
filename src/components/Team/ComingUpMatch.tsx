@@ -2,7 +2,7 @@ import React from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
-import MatchCard from "../Main/MatchCard";
+import MainMatchCard from "../Main/MainMatchCard";
 import GroupTitle from "../common/GroupTitle";
 
 function ComingUpMatch() {
@@ -13,7 +13,7 @@ function ComingUpMatch() {
     <Container>
       <GroupTitle link={`/team/${teamId}/schedule`}>다가오는 경기</GroupTitle>
       <Cards>
-        <MatchCard
+        <MainMatchCard
           size="MEDIUM"
           posterImg="/images/mock/2024hongik-jump-competition.jpeg"
           competitionId=""
@@ -26,7 +26,7 @@ function ComingUpMatch() {
           awayName="archive"
           attendMembers={12}
         />
-        <MatchCard
+        <MainMatchCard
           size="MEDIUM"
           posterImg="/images/mock/seoul-tech-univ-poster.png"
           competitionId=""

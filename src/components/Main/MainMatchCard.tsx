@@ -22,7 +22,7 @@ type Props = {
   awayLogo?: string;
   attendMembers?: number;
 };
-function MatchCard(props: Props) {
+function MainMatchCard(props: Props) {
   const router = useRouter();
   const {
     posterImg,
@@ -258,4 +258,4 @@ const MediumContents = styled.div`
   }
 `;
 
-export default MatchCard;
+export default MainMatchCard;

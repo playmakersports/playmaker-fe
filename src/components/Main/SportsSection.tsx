@@ -1,17 +1,17 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
+import useStickyMoment from "@/hook/useStickyMoment";
 import { useRouter } from "next/router";
 
-import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
-import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
-import RecruitTeamItem from "./RecruitTeamItem";
-import MatchCard from "./MatchCard";
 import MainTab from "./MainTab";
-import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
+import MainMatchCard from "./MainMatchCard";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
+import RecruitTeamItem from "./RecruitTeamItem";
+import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
+import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
+import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
-import useStickyMoment from "@/hook/useStickyMoment";
 
 function SportsSection() {
   const router = useRouter();
@@ -47,7 +47,7 @@ function SportsSection() {
 
         <GroupTitle link="">대회 일정</GroupTitle>
         {COMPETITION_LIST_MOCK.map((competition, index) => (
-          <MatchCard
+          <MainMatchCard
             key={competition.competitionId}
             size={index === 2 ? "LARGE" : "MEDIUM"}
             posterImg={competition.posterImg}

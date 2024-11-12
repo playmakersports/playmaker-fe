@@ -19,7 +19,7 @@ function MobileView({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (container.current && (container.current.scrollTop % 10 === 0 || container.current.scrollTop < 5)) {
+      if (container.current && (container.current.scrollTop % 5 === 0 || container.current.scrollTop < 5)) {
         setScrollActive(container.current.scrollTop);
       }
     };

@@ -172,7 +172,7 @@ const StyledInput = styled.input`
     opacity: 1;
   }
   &:disabled {
-    color: var(--gray700);
+    color: var(--gray600);
     & + ${ClearIconArea} {
       display: none;
     }
@@ -187,7 +187,7 @@ const ButtonWrapInput = styled(StyledInput.withComponent("button"))`
       color: var(--gray500);
     }
     &:disabled {
-      color: var(--gray700);
+      color: var(--gray600);
     }
   }
 

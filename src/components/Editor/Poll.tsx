@@ -5,12 +5,13 @@ import { useFieldArray, useForm } from "react-hook-form";
 import useToast from "@/hook/useToast";
 
 import SmallX from "@/assets/icon/editor/SmallX.svg";
-import { FONTS } from "@/styles/common";
+import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import Button from "../common/Button";
 import { BasicInput } from "../common/Input";
 import { InputCheckbox } from "../common/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
 import TimeInput from "../common/TimeInput";
+import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 
 export type ArticlePollType = {
   pollDue: boolean;
@@ -47,22 +48,27 @@ function Poll() {
     }
   };
 
-  console.log(watch());
-
   return (
     <Container>
       <BasicInput type="text" placeholder="투표 제목을 입력하세요." {...register("pollTitle")} />
       <Options>
-        {fields.map((field, index) => (
-          <Option key={field.id}>
-            <div className="option-index">{index + 1}</div>
-            <BasicInput type="text" placeholder="입력..." {...register(`pollOptions.${index}.value`)} />
-            <button className="delete-option" onClick={() => removeOption(index)}>
-              <SmallX />
-            </button>
-          </Option>
-        ))}
+        <div
+          className="options-list-inner"
+          ref={(ref) => scrollMaskedHandlerRef(ref, "vertical")}
+          onScroll={(e) => scrollMaskedHandler(e, "vertical")}
+        >
+          {fields.map((field, index) => (
+            <Option key={field.id}>
+              <div className="option-index">{index + 1}</div>
+              <BasicInput type="text" placeholder="입력..." {...register(`pollOptions.${index}.value`)} />
+              <button className="delete-option" onClick={() => removeOption(index)}>
+                <SmallX />
+              </button>
+            </Option>
+          ))}
+        </div>
       </Options>
+
       <div className="add-option-wrapper">
         <Button
           autoHeight
@@ -101,7 +107,58 @@ const Container = styled.div`
 
   div.add-option-wrapper {
     margin: 0 auto;
-    width: 32%;
+  }
+`;
+const Options = styled.div`
+  margin: 4px 0 20px;
+  ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")}
+
+  div.options-list-inner {
+    display: flex;
+    flex-direction: column;
+    max-height: 32vh;
+    min-height: calc(56px * 2.5);
+    overflow-x: hidden;
+    overflow-y: auto;
+    gap: 12px;
+    ${SCROLL_HIDE};
+  }
+`;
+const Option = styled.li`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 2px;
+  .option-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--gray500);
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+  input {
+    width: calc(100% - 20px);
+    color: var(--gray900);
+  }
+  .delete-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+    svg {
+      fill: var(--gray600);
+    }
+    &:focus {
+      background-color: var(--gray100);
+    }
+  }
+
+  &:first-of-type {
+    padding-top: 12px;
   }
 `;
 
@@ -131,57 +188,6 @@ const DueInputs = styled.div`
   margin-left: 4px;
   display: flex;
   gap: 8px;
-`;
-
-const Options = styled.ul`
-  display: flex;
-  margin: 12px 0 20px;
-  flex-direction: column;
-  justify-content: flex-end;
-  max-height: 28vh;
-  overflow-y: auto;
-`;
-const Option = styled.li`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 12px;
-  padding: 12px 2px 0;
-  .option-index {
-    flex-shrink: 0;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    color: var(--gray500);
-    border-radius: 100%;
-    font-size: 1.2rem;
-    font-weight: 700;
-  }
-  input {
-    width: calc(100% - 20px);
-    color: var(--gray900);
-    ${FONTS.MD1W500};
-  }
-  .delete-option {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    svg {
-      fill: var(--gray700);
-      opacity: 0.7;
-    }
-    &:focus {
-      background-color: var(--gray300);
-    }
-  }
-  &:first-of-type {
-    margin-top: 0;
-    border-top: none;
-  }
 `;
 
 export default Poll;

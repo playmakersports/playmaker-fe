@@ -140,14 +140,14 @@ const Container = styled.div`
       outline: 3px solid var(--gray300);
     }
     &:disabled {
-      color: var(--gray500);
+      color: var(--gray600);
     }
   }
   &:has(input:disabled) {
     appearance: none;
-    color: var(--gray500);
+    color: var(--gray600);
     border: 1px solid transparent;
-    background-color: var(--gray300);
+    background-color: var(--gray200);
   }
   &:has(input:focus) {
     border: 1px solid var(--main);

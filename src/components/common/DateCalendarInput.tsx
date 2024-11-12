@@ -108,7 +108,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   return (
     <Container ref={containerRef} fullWidth={fullWidth}>
       {displayIcon && (
-        <Icon onClick={handleCalendarView}>
+        <Icon onClick={!props.disabled ? handleCalendarView : () => {}}>
           <CalendarIcon />
         </Icon>
       )}
@@ -118,7 +118,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
         ref={inputRef}
         type="text"
         title={title}
-        onButtonWrapClick={handleCalendarView}
+        onButtonWrapClick={!props.disabled ? handleCalendarView : () => {}}
         defaultValue={defaultValue && `${yearValue}-${monthValue}-${+defaultValue.split("-")[2]}`}
         {...rest}
       />

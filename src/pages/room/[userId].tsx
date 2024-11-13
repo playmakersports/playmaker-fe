@@ -4,25 +4,30 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
+import { useGet } from "@/apis/hook/query";
 
 import { FONTS } from "@/styles/common";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
 import UserSetting from "@/components/Room/UserSetting";
+import { BasicWhiteCard } from "@/components/common/Card";
+import { ApiSelectMember } from "@/apis/types/user";
 
 import PencilIcon from "@/assets/icon/global/Pencil.svg";
-
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
-import { BasicWhiteCard } from "@/components/common/Card";
+import Loading from "@/components/common/Loading";
+import GenderIcon from "@/components/common/GenderIcon";
 
 function UserPage() {
   useBgWhite();
   const [weeklyDate, setWeeklyDate] = useState("");
   const router = useRouter();
   const userId = router.query.userId;
-  const INTRODUCE_MOCK = "농구와 배드민턴을 좋아해요\n항상 새로운 도전";
+
+  const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmember");
+  console.log(data);
 
   usePageTitle({
     subIcons: [
@@ -33,19 +38,28 @@ function UserPage() {
       },
     ],
   });
+
+  if (isLoading) return <Loading />;
+
   return (
     <Container>
       <Profile>
         <Info>
-          <p className="player-name">김이프</p>
-          <p className="introduce">{INTRODUCE_MOCK}</p>
+          <p className="player-name">
+            {data?.username} <GenderIcon type={data?.sexKey === "남성" ? "MALE" : "FEMALE"} />
+          </p>
+          <p className="introduce">{data?.selfIntro}</p>
           <p className="tag-list">
-            <span className="tag">2000년생</span>
-            <span className="tag">성신여대</span>
+            <span className="tag">{data?.birth.slice(0, 4)}년생</span>
+            <span className="tag">{data?.university}</span>
           </p>
         </Info>
         <div className="profile-image">
-          <Image src={MaleCharacter} alt="" width={92} height={92} />
+          {data?.imageUrl ? (
+            <img src={data?.imageUrl} alt="" width={92} height={92} />
+          ) : (
+            <Image src={data?.sexKey === "남성" ? MaleCharacter : FemaleCharacter} alt="" width={92} height={92} />
+          )}
         </div>
       </Profile>
       <MyPageButtons>

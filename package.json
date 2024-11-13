@@ -26,6 +26,7 @@
     "@tiptap/starter-kit": "^2.4.0",
     "axios": "^1.6.8",
     "babel-plugin-styled-components": "^2.1.4",
+    "cookies-next": "^5.0.2",
     "date-fns": "^3.6.0",
     "event-source-polyfill": "^1.0.31",
     "jotai": "^2.8.0",

@@ -29,5 +29,3 @@ export const atomServiceApply = atom<ServiceApplyType>(initialServiceApply);
 export const resetAtomServiceApply = atom(null, (get, set) => {
   set(atomServiceApply, initialServiceApply);
 });
-
-export const ACCESS_TOKEN = atom<string | null>(null);

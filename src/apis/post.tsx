@@ -1,8 +1,7 @@
-import { ACCESS_TOKEN } from "@/atom/user";
 import axios from "axios";
-import { useAtomValue } from "jotai/react";
 import { useState } from "react";
 import { baseBackendURL } from ".";
+import { getCookie } from "cookies-next";
 
 type MutateMethod = "post" | "put";
 type ContentType = "json" | "form-data";
@@ -13,7 +12,7 @@ const CONTENT_TYPE: Record<ContentType, string> = {
 };
 
 export const useMutate = (url: string) => {
-  const access_token = useAtomValue(ACCESS_TOKEN);
+  const access_token = getCookie("access-token");
   const [status, setStatus] = useState<number>();
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);

@@ -1,24 +1,20 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useAtom } from "jotai";
 import { useGet } from "@/apis/hook/query";
+import { setCookie } from "cookies-next";
 
-import { baseBackendURL } from "@/apis";
-import { ACCESS_TOKEN } from "@/atom/user";
 import Button from "@/components/common/Button";
 import Loading from "@/components/common/Loading";
 
 function TestLogin() {
   const router = useRouter();
-  const [, setAccessToken] = useAtom(ACCESS_TOKEN);
-  const target = `${baseBackendURL}/api/test/login/random`;
-  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>(target, {});
+  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>("/api/test/login/random", {});
 
   useEffect(() => {
-    if (isSuccess) {
-      setAccessToken(data.access_token);
+    if (data) {
+      setCookie("access-token", data.access_token, { secure: true });
     }
-  }, [isSuccess]);
+  }, [data]);
 
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "40vh" }}>

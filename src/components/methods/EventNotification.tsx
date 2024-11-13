@@ -1,13 +1,12 @@
 import { useEffect } from "react";
-import { useAtomValue } from "jotai";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
-import { ACCESS_TOKEN } from "@/atom/user";
 import { baseBackendURL } from "@/apis";
+import { getCookie } from "cookies-next";
 
 function EventNotification() {
   const HEARTBEAT_TIMEOUT = 360000;
-  const accessToken = useAtomValue(ACCESS_TOKEN);
+  const accessToken = getCookie("access-token");
 
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;

@@ -1,7 +1,6 @@
 import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
-import { useAtomValue } from "jotai";
 import { typedGet, typedPost } from "..";
-import { ACCESS_TOKEN } from "@/atom/user";
+import { getCookie } from "cookies-next";
 
 type ContentType = "json" | "form-data";
 const CONTENT_TYPE: Record<ContentType, string> = {
@@ -11,22 +10,29 @@ const CONTENT_TYPE: Record<ContentType, string> = {
 
 type QueryConfig<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 
-export const useGet = <T,>(url: string, params?: Record<string, string>, config?: QueryConfig<T>) =>
-  useQuery<T>({
+export const useGet = <T,>(url: string, params?: Record<string, string>, config?: QueryConfig<T>) => {
+  const accessToken = getCookie("access-token");
+  return useQuery<T>({
     queryKey: [url, ...(params ? Object.values(params) : [])] as QueryKey,
     queryFn: async () => {
-      const response = await typedGet<T>(url, { params: params || {} });
+      const response = await typedGet<T>(url, {
+        params: params || {},
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
       return response.data;
     },
     ...config,
   });
+};
 
 interface MutationFnAsyncType {
   data: unknown;
   queryParams?: Record<string, string>;
 }
 export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
-  const access_token = useAtomValue(ACCESS_TOKEN);
+  const accessToken = getCookie("access-token");
   return useMutation({
     mutationFn: async ({ data, queryParams }: MutationFnAsyncType) => {
       let finalUrl = url;
@@ -39,7 +45,7 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
 
       const response = await typedPost<T>(finalUrl, data, {
         headers: {
-          Authorization: `Bearer ${access_token}`,
+          Authorization: `Bearer ${accessToken}`,
           "Content-Type": CONTENT_TYPE[contentType],
         },
       });

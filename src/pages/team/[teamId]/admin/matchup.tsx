@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
@@ -8,9 +8,11 @@ import DirectionIncomeSvg from "@/assets/icon/arrow/DirectionIncome.svg";
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import { differenceInCalendarDays } from "date-fns";
+import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
 function TeamMatchUp() {
   useBgWhite();
+  const [filter, setFilter] = useState("all");
   usePageTitle({
     subTitle: "JUMP",
     title: "교류전 제안 현황",
@@ -71,6 +73,19 @@ function TeamMatchUp() {
 
   return (
     <Container>
+      <div className="filter-dropdown">
+        <div style={{ minWidth: "96px", maxWidth: "104px" }}>
+          <DropDownBottomSheet
+            defaultValue={filter}
+            getCurrentValue={setFilter}
+            options={[
+              { value: "all", name: "전체" },
+              { value: "receive", name: "받은 제안만" },
+              { value: "request", name: "보낸 제안만" },
+            ]}
+          />
+        </div>
+      </div>
       <List>
         {MOCK.map((item, idx) => {
           const EXPIRED_DAY_INTERVAL = 7;
@@ -115,6 +130,9 @@ function TeamMatchUp() {
 
 const Container = styled(BaseContainer)`
   padding-bottom: calc(20px + var(--env-sab));
+  div.filter-dropdown {
+    margin: 0 0 24px;
+  }
 `;
 const List = styled.div`
   display: flex;

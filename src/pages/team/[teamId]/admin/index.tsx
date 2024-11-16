@@ -5,7 +5,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { keyframes } from "@emotion/react";
 import useModal from "@/hook/useModal";
 
-import { FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import { BaseContainer } from "@/components/common/Container";
 import ProfileImage from "@/components/Team/ProfileImage";
@@ -193,6 +193,7 @@ const TeamInfoSettings = styled.div`
     flex: 1;
     padding: 12px 0;
     font-weight: 400;
+    ${BUTTON_ACTIVE("var(--gray300)")}
 
     &::after {
       position: absolute;

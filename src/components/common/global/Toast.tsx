@@ -20,7 +20,7 @@ function Toast() {
 const showToastAnim = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(-130%);
+    transform: translateY(-100%);
   }
   100% {
     opacity: 1;
@@ -34,27 +34,31 @@ const hideToastAnim = keyframes`
     }
     100% {
       opacity: 0;
-      transform: translateY(-130%);
+      transform: translateY(-150%);
     }
 `;
 
 const FixedWrapper = styled.div`
   position: fixed;
+  display: flex;
+  width: 100%;
+  justify-content: center;
   z-index: 1999;
 `;
 const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT" | "ALERT" }>`
   ${FONTS.MD1W500};
+  font-weight: 400;
   display: ${({ show }) => (show ? "block" : "none")};
-  width: calc(100vw - 32px);
-  background-color: ${({ type }) => (type === "ALERT" ? "var(--point-red)" : "var(--gray700)")};
+  width: calc(var(--mobile-max-width) - 16px);
+  background-color: ${({ type }) => (type === "ALERT" ? "var(--point-red)" : "var(--gray800)")};
   color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--gray50)")};
-  padding: 10px 16px;
-  margin: calc(env(safe-area-inset-top) + 10px) 16px;
-  margin: calc(constant(safe-area-inset-top) + 10px) 16px;
+  padding: 16px 12px;
+  margin: calc(env(safe-area-inset-top) + 10px) auto 0;
+  margin: calc(constant(safe-area-inset-top) + 10px) auto 0;
   border-radius: 10px;
-  animation: 0.3s ${({ animate }) => (animate ? showToastAnim : hideToastAnim)};
-  animation-fill-mode: forwards;
+  animation: 0.25s ${({ animate }) => (animate ? showToastAnim : hideToastAnim)} forwards;
   white-space: pre-line;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.15);
 `;
 
 export default Toast;

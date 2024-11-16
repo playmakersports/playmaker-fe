@@ -117,16 +117,18 @@ const Container = styled.div`
   }
 `;
 const Select = styled.div`
-  ${TEXT_ACTIVE("var(--gray100)", { activeRange: 4 })}
+  cursor: pointer;
+  ${TEXT_ACTIVE("var(--gray100)", { activeRange: 3 })}
   ${FONTS.MD2}
   font-weight: 400;
   user-select: none;
   display: flex;
   padding: 0 2px 0 6px;
   align-items: center;
+  justify-content: space-between;
   color: var(--gray500);
-  gap: 10px;
-  border-radius: 2px;
+  gap: 8px;
+  border-radius: 4px;
 
   i.arrow-icon {
     display: flex;

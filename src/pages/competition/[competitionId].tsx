@@ -9,7 +9,6 @@ import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
-import { BasicWhiteCard } from "@/components/common/Card";
 import { BasicInput } from "@/components/common/Input";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";

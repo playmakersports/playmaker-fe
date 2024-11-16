@@ -43,23 +43,27 @@ function TeamListCard(props: Props) {
         <CardHeader>
           <div className="left-side">
             <img src={teamLogo} alt={teamName} />
-            <h3>{teamName}</h3>
+            <div>
+              <h3>{teamName}</h3>
+              {university ? (
+                <div className="team-based">
+                  <GraduationIcon />
+                  <span>{university}</span>
+                </div>
+              ) : (
+                <div className="team-based">
+                  <LocationIcon />
+                  <span>{location}</span>
+                </div>
+              )}
+            </div>
           </div>
           <Heart isHeart={heart} onHeart={setHeart} />
         </CardHeader>
         <div className="recruit-detail">
-          {university ? (
-            <div className="recruit-detail-item">
-              <GraduationIcon />
-              <span>{university}</span>
-            </div>
-          ) : (
-            <div className="recruit-detail-item">
-              <LocationIcon />
-              <span>{location}</span>
-            </div>
-          )}
           <TeamLabels>
+            <li className={`recruit-status ${!!university ? "UNIV" : "CLUB"}`}>{!!university ? "대학" : "동호회"}</li>
+            <li className={`recruit-status ${gender}`}>{RECRUIT_GENDER[gender]}</li>
             {status === "PENDING" && (
               <>
                 {dueDate && countDayDiff(dueDate) < 6 ? (
@@ -69,7 +73,6 @@ function TeamListCard(props: Props) {
                 )}
               </>
             )}
-            <li className={`recruit-status ${gender}`}>{RECRUIT_GENDER[gender]}</li>
           </TeamLabels>
         </div>
       </Card>
@@ -93,27 +96,6 @@ const Card = styled(BasicWhiteCard)`
   pointer-events: auto;
   box-shadow: 0 6px 12px 0 rgba(112, 144, 178, 0.08), 0 2px 4px 0 rgba(112, 144, 178, 0.06);
   ${CARD_ACTIVE};
-
-  .recruit-detail {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-left: 4px;
-    gap: 8px;
-    ${FONTS.MD2};
-    font-weight: 400;
-    div.recruit-detail-item {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--gray700);
-    }
-    svg {
-      width: 18px;
-      height: 18px;
-      fill: var(--gray500);
-    }
-  }
 `;
 
 const CardHeader = styled.div`
@@ -124,17 +106,34 @@ const CardHeader = styled.div`
   justify-content: space-between;
 
   div.left-side {
-    ${FONTS.MD1W500};
     display: inline-flex;
     align-items: center;
     gap: 8px;
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+    }
   }
   h3 {
+    ${FONTS.MD1W500};
     display: inline-flex;
     align-items: center;
     font-size: 1.6rem;
     font-weight: 600;
     gap: 6px;
+  }
+  div.team-based {
+    display: inline-flex;
+    align-items: center;
+    font-size: 1.3rem;
+    color: var(--gray700);
+    gap: 4px;
+    svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--gray500);
+    }
   }
   img {
     display: inline-block;
@@ -150,14 +149,15 @@ const CardHeader = styled.div`
 `;
 
 const TeamLabels = styled.ul`
-  display: inline-flex;
+  display: flex;
   align-items: center;
+  margin-left: 56px;
   gap: 4px;
 
   .recruit-status {
     ${FONTS.MD2};
     font-size: 1.3rem;
-    font-weight: 400;
+    font-weight: 500;
     display: inline-flex;
     align-items: center;
     line-height: 1.25rem;
@@ -171,11 +171,11 @@ const TeamLabels = styled.ul`
       color: var(--gray700);
     }
     &.count {
-      background-color: #fff4ed;
-      color: var(--point);
+      background-color: rgba(var(--art-purple-rgb), 0.15);
+      color: #6a65bf;
     }
     &.MALE {
-      background-color: rgba(var(--sub2-rgb), 0.3);
+      background-color: rgba(var(--sub2-rgb), 0.35);
       color: var(--sub0);
     }
     &.FEMALE {
@@ -183,8 +183,16 @@ const TeamLabels = styled.ul`
       color: #ef8e8d;
     }
     &.MIXED {
-      background-color: rgba(241, 245, 255, 1);
+      background-color: rgba(var(--art-purple-rgb), 0.1);
       color: var(--art-purple);
+    }
+    &.CLUB {
+      background-color: rgba(var(--point-rgb), 0.1);
+      color: var(--point);
+    }
+    &.UNIV {
+      background-color: rgba(var(--art-cyan-rgb), 0.1);
+      color: #05aca2;
     }
   }
 `;

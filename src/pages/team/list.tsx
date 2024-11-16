@@ -15,7 +15,6 @@ import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 import TeamListCard from "@/components/Team/TeamListCard";
 import ToggleInput from "@/components/common/ToggleInput";
-import { FONTS } from "@/styles/common";
 
 function TeamList() {
   useBgWhite();

@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
+import { formattedDate } from "@/util/date";
 
 type Props = {
   category: string;
@@ -15,11 +16,15 @@ function ArticleHead(props: Props) {
 
   return (
     <Container>
-      <Category>{category}</Category>
       <Title>{title}</Title>
       <Info>
         <p>
-          {writer} · {createAt}
+          {writer} |{" "}
+          {formattedDate(createAt, {
+            displayDateType: ".",
+            displayYear: "always",
+            displayDayName: "hide",
+          })}
         </p>
         <p>조회 {viewCount}</p>
       </Info>
@@ -29,12 +34,8 @@ function ArticleHead(props: Props) {
 
 const Container = styled.div`
   margin-bottom: 20px;
-  padding: 0 8px 12px;
-  border-bottom: 1px solid rgb(var(--gray-h4));
-`;
-const Category = styled.p`
-  margin-bottom: 4px;
-  ${FONTS.MD1};
+  padding: 0 4px 12px;
+  border-bottom: 1px solid var(--gray200);
 `;
 const Title = styled.h2`
   margin-bottom: 12px;
@@ -44,7 +45,8 @@ const Info = styled.div`
   ${FONTS.MD2};
   display: flex;
   justify-content: space-between;
-  opacity: 0.8;
+  font-weight: 400;
+  color: var(--gray600);
 `;
 
 export default ArticleHead;

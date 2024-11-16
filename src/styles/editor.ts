@@ -68,7 +68,9 @@ export const EDITOR_ARTICLE_STYLE = css`
 
   .wrong-iframe {
     margin: 0 0 2px;
-    color: var(--point);
+    font-size: 1.3rem;
+    line-height: 1.35rem;
+    color: var(--gray500);
     font-weight: 400;
   }
 `;

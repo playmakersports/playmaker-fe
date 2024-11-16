@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
+import useBgWhite from "@/hook/useBgWhite";
+import { usePageTitle } from "@/hook/usePageTitle";
 
 import { FONTS } from "@/styles/common";
 import ArticleHead from "@/components/Article/Head";
@@ -9,12 +11,42 @@ import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 import { COMMENTS_MOCK } from "@/constants/mock/COMMENTS";
 
 import ReplyIcon from "@/assets/icon/editor/Reply.svg";
-import Button from "@/components/common/Button";
+import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
+import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
 
 function ArticleId() {
+  useBgWhite();
+  usePageTitle({ title: "공지사항" });
   const router = useRouter();
   const articleId = router.query.articleId;
-  const [isRead, setIsRead] = useState(false);
+  const [like, setLike] = useState(false);
+  const [showFixedTitle, setShowFixedTitle] = useState(false);
+
+  const handleLike = () => {
+    setLike((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const mainContainer = document.getElementById("main_Container");
+
+    const handleScroll = () => {
+      if (mainContainer && mainContainer.scrollTop > 100) {
+        setShowFixedTitle(true);
+      } else {
+        setShowFixedTitle(false);
+      }
+    };
+
+    if (mainContainer) {
+      mainContainer.addEventListener("scroll", handleScroll);
+    }
+
+    return () => {
+      if (mainContainer) {
+        mainContainer.removeEventListener("scroll", handleScroll);
+      }
+    };
+  }, []);
 
   return (
     <Container>
@@ -25,17 +57,23 @@ function ArticleId() {
         writer="관리자"
         viewCount={20}
       />
+      <ScrollFixedTitle show={showFixedTitle}>5월 정기 경기 일정 알려드립니다.</ScrollFixedTitle>
       <Contents
         dangerouslySetInnerHTML={{
           __html: MOCK.replace(
             /<(iframe|script)[\s\S]*?<\/\1>/gi,
-            `<p class="wrong-iframe">[부적절한 코드가 감지되어 삭제되었습니다.]</p>`
+            `<p class="wrong-iframe">(허용되지 않는 코드 삽입)</p>`
           ),
         }}
       />
-      <Button type="button" mode={isRead ? "MAIN" : "OPTION2"} fullWidth onClick={() => setIsRead((prev) => !prev)}>
-        {isRead ? "이 글을 읽었습니다" : "이 글을 읽었다면 눌러주세요"}
-      </Button>
+      <Like>
+        <button type="button" className={like ? "active" : ""} onClick={handleLike}>
+          <span className="like-button-inner">
+            {like ? <HeartFillIcon width={20} height={20} /> : <HeartStrokeIcon width={20} height={20} />}
+            {like ? 1 : 0}
+          </span>
+        </button>
+      </Like>
       <Comments>
         <CommentCount>댓글 {COMMENTS_MOCK.length}개</CommentCount>
         <CommentList>
@@ -66,45 +104,96 @@ function ArticleId() {
             </li>
           ))}
         </CommentList>
+        <CommentInput>
+          <input type="text" />
+          <button type="button">등록</button>
+        </CommentInput>
       </Comments>
     </Container>
   );
 }
 
-const Container = styled(BaseContainer)``;
+const Container = styled(BaseContainer)`
+  padding: 12px 16px 0;
+`;
+const ScrollFixedTitle = styled.div<{ show: boolean }>`
+  position: absolute;
+  visibility: ${({ show }) => (show ? "visible" : "hidden")};
+  transform: ${({ show }) => (show ? "translateY(0)" : "translateY(-100%)")};
+  padding: 8px 24px 12px;
+  top: var(--safe-area-top);
+  left: 0;
+  width: var(--mobile-max-width);
+  background-color: var(--background-light);
+  font-size: 1.6rem;
+  font-weight: 600;
+  z-index: 5;
+  box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
 const Contents = styled.article`
   padding: 0 8px;
   ${EDITOR_ARTICLE_STYLE}
 `;
+const Like = styled.div`
+  display: flex;
+  justify-content: center;
+  & > button {
+    ${FONTS.MD2};
+    padding: 8px 20px;
+    border-radius: 24px;
+    background-color: var(--gray100);
+    color: var(--gray800);
+    font-variant-numeric: tabular-nums;
+
+    span.like-button-inner {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    &.active {
+      color: var(--point-red);
+      svg {
+        fill: var(--point-red);
+      }
+    }
+
+    svg {
+      fill: var(--gray800);
+      width: 18px;
+      height: 18px;
+    }
+  }
+`;
 const Comments = styled.div`
+  position: relative;
   margin-top: 24px;
-  padding: 16px 8px 20px;
-  border-top: 1px solid rgb(var(--gray-h4));
+  padding: 16px 4px 0;
 `;
 const CommentCount = styled.div`
   ${FONTS.HEAD2};
-  font-weight: 800;
+  font-weight: 600;
   font-size: 1.8rem;
   margin-bottom: 16px;
 `;
 const CommentList = styled.ul`
   display: flex;
-  margin: 0 -8px;
+  margin: 0 0 28px;
   flex-direction: column;
   gap: 12px;
-  ${FONTS.MD1W500};
 
   li {
-    padding: 12px 16px;
-    border-radius: 12px;
-    background-color: var(--card);
-    line-height: 2.4rem;
-
+    ${FONTS.MD2};
+    font-weight: 400;
     .comment-info {
       display: block;
-      opacity: 0.6;
       margin-top: 6px;
-      ${FONTS.MD3};
+      color: var(--gray600);
     }
     .reply-comment-wrapper {
       position: relative;
@@ -118,23 +207,55 @@ const CommentList = styled.ul`
         left: 0;
         top: 4px;
         margin-left: -20px;
-        fill: rgb(var(--gray-h3));
+        fill: var(--gray400);
         width: 14px;
         height: 14px;
       }
       li {
         padding: 0 4px 8px;
         margin-bottom: 8px;
-        ${FONTS.MD1W500};
-        font-size: 1.4rem;
-        line-height: 2.2rem;
-        border-radius: 0;
-        border-bottom: 1px solid rgb(var(--gray-h6));
+        border-bottom: 1px solid var(--gray100);
         &:last-of-type {
           border-bottom: none;
           margin-bottom: 0;
         }
       }
+    }
+  }
+`;
+
+const CommentInput = styled.div`
+  position: sticky;
+  margin: 0 -20px;
+  padding: 12px 12px calc(var(--env-sab) / 1.5 + 16px);
+  bottom: 0;
+  display: flex;
+  gap: 10px;
+  background-color: var(--gray0);
+  border-top: 1px solid var(--gray300);
+
+  & > input {
+    flex: 1;
+    padding: 0 12px;
+    ${FONTS.MD1W500};
+    font-weight: 400;
+    background-color: var(--gray0);
+    border: 1px solid var(--gray300);
+    border-radius: 6px;
+    &:focus {
+      border-color: var(--main);
+    }
+  }
+  & > button {
+    width: 64px;
+    padding: 10px 0;
+    background-color: var(--gray200);
+    color: var(--gray900);
+    border-radius: 6px;
+    ${FONTS.MD2};
+    font-size: 1.5rem;
+    &:active {
+      background-color: var(--gray300);
     }
   }
 `;

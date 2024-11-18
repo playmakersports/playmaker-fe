@@ -117,12 +117,13 @@ const Container = styled.div`
     align-items: center;
     margin-top: 10px;
     padding: 0 8px;
-    font-size: 1.2rem;
-    color: var(--gray700);
+    font-size: 1.3rem;
+    color: var(--gray600);
     gap: 4px;
     svg {
       width: 16px;
       height: 16px;
+      fill: var(--gray500);
     }
   }
 

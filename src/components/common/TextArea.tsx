@@ -76,6 +76,9 @@ const Container = styled.div`
 
 const TextAreaWrapper = styled(InputStyledWrapper)`
   height: auto;
+  &:has(textarea:disabled) {
+    background-color: var(--gray200);
+  }
 `;
 const StyledTextArea = styled.textarea`
   width: 100%;
@@ -92,6 +95,9 @@ const StyledTextArea = styled.textarea`
   }
   &::placeholder {
     color: var(--gray500);
+  }
+  &:disabled {
+    color: var(--gray600);
   }
 `;
 

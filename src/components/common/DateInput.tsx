@@ -1,6 +1,6 @@
 import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
 import styled from "@emotion/styled";
-import { format, getMonth, getYear, isSameDay, subMonths } from "date-fns";
+import { format, getMonth, getYear, isSameDay, subMonths, addMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 
@@ -12,13 +12,14 @@ import DoubleRightArrowIcon from "@/assets/icon/arrow/DoubleRightArrow.svg";
 import useToast from "@/hook/useToast";
 
 type Props = Omit<InputProps, "type" | "value"> & {
+  displayIcon?: boolean;
   value?: string;
   defaultValue?: string;
-  pickType?: "EVERYDAY" | "ONLY_PAST";
+  pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
 };
 
 const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { defaultValue, title, errorText, value, ...rest } = props;
+  const { displayIcon = false, defaultValue, title, errorText, value, ...rest } = props;
 
   const { ModalComponents, showModal } = useModal();
   const { trigger } = useToast();
@@ -64,7 +65,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
 
   const handleMonthMove = (direction: "PREV" | "NEXT") => {
-    const targetDate = subMonths(currentDate, direction === "PREV" ? +1 : -1);
+    const targetDate = direction === "PREV" ? subMonths(currentDate, 1) : addMonths(currentDate, 1);
     setCurrentDate(targetDate);
     setYearValue(targetDate.getFullYear());
     setMonthValue(targetDate.getMonth() + 1);
@@ -120,6 +121,9 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
                       setTargetDate();
                       trigger("미래로 날짜를 설정할 수 없어요.", "ALERT");
+                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
+                      setTargetDate();
+                      trigger("과거로 날짜를 설정할 수 없어요.", "ALERT");
                     } else {
                       setTargetDate(`${newYear}/${monthValue}/01`);
                     }
@@ -145,6 +149,9 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
                       setTargetDate();
                       trigger("미래로 날짜를 설정할 수 없어요.", "ALERT");
+                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
+                      setTargetDate();
+                      trigger("과거로 날짜를 설정할 수 없어요.", "ALERT");
                     } else {
                       setTargetDate(`${yearValue}/${newMonth}/${currentDate.getDate()}`);
                     }
@@ -165,13 +172,15 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
             >
               <DoubleRightArrowIcon />
             </MonthMoverButton>
-            <SetTodayBtn
-              type="button"
-              className={isSameDay(new Date(), currentDate) ? "" : "current-date-show"}
-              onClick={() => setTargetDate(format(new Date(), "yyyy/MM/dd"))}
-            >
-              오늘로 이동
-            </SetTodayBtn>
+            {props.pickType != "ONLY_FUTURE" && (
+              <SetTodayBtn
+                type="button"
+                className={isSameDay(new Date(), currentDate) ? "" : "current-date-show"}
+                onClick={() => setTargetDate(format(new Date(), "yyyy/MM/dd"))}
+              >
+                오늘로 이동
+              </SetTodayBtn>
+            )}
           </NowDate>
 
           <Days>
@@ -186,7 +195,10 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                   <Day
                     key={day.date.toString()}
                     type="button"
-                    disabled={props.pickType === "ONLY_PAST" ? day.date > new Date() : false}
+                    disabled={
+                      (props.pickType === "ONLY_PAST" && !isSameDay(day.date, new Date()) && day.date > new Date()) ||
+                      (props.pickType === "ONLY_FUTURE" && !isSameDay(day.date, new Date()) && day.date < new Date())
+                    }
                     thisMonth={!(day.nextMonth || day.previousMonth)}
                     isHoliday={day.holiday.isHoliday}
                     className={

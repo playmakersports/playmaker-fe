@@ -51,7 +51,7 @@ function Button(props: Props) {
       color: "#000",
     },
     WARN: {
-      background: "var(--point)",
+      background: "var(--point-red)",
       color: "#fff",
     },
   };

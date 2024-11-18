@@ -3,10 +3,11 @@ import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useBgWhite from "@/hook/useBgWhite";
 
-import PlayerSelector from "@/components/Team/PlayerSelector";
+import SwipeSelector from "@/components/common/SwipeSelector";
 import { BasicInput } from "@/components/common/Input";
 import DropDown from "@/components/common/DropDown";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
+import PlayerListItem from "@/components/Team/PlayerListItem";
 
 function PlayerList() {
   const [filter, setFilter] = useState("");
@@ -34,13 +35,14 @@ function PlayerList() {
           const [birthYear] = birthDate.split("-");
           const displayBirth = !!rest.generation ? [`${birthYear}년생`] : [];
           return (
-            <PlayerSelector
-              key={player.playerId}
-              position={position}
-              birthDate={birthDate}
-              tag={[gender === "m" ? "남성" : "여성", ...displayBirth, ...tag]}
-              {...rest}
-            />
+            <SwipeSelector key={player.playerId}>
+              <PlayerListItem
+                position={position}
+                birthDate={birthDate}
+                tag={[gender === "m" ? "남성" : "여성", ...displayBirth, ...tag]}
+                {...rest}
+              />
+            </SwipeSelector>
           );
         })}
       </Players>

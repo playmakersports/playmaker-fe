@@ -3,20 +3,8 @@ import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
 
 import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
-import PlayerListItem from "./PlayerListItem";
 
-type Props = {
-  playerId: string;
-  name: string;
-  position: string;
-  // "president" | "vice" | "manager" | "member"
-  profileImg: string;
-  tag: string[] | string;
-  attendRate: number;
-  birthDate: string;
-  generation?: number;
-};
-function PlayerSelector(props: Props) {
+function SwipeSelector({ children }: { children: React.ReactNode }) {
   const [width, setWidth] = useState(0);
   const [activeButton, setActiveButton] = useState(false);
   const [touchX, setTouchX] = useState(0);
@@ -66,7 +54,7 @@ function PlayerSelector(props: Props) {
           </Button>
         </Buttons>
         <Displayed onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
-          <PlayerListItem {...props} />
+          {children}
         </Displayed>
         <Buttons bgColor="var(--sub1)">
           <Button bgColor="var(--sub1)">
@@ -139,4 +127,4 @@ const Button = styled.button<{ bgColor: string }>`
   }
 `;
 
-export default PlayerSelector;
+export default SwipeSelector;

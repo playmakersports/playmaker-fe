@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import "@/components/Methods/NotifyFCM";
+// import "@/components/Methods/NotifyFCM";
 import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";

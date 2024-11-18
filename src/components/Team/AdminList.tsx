@@ -74,7 +74,7 @@ function AdminList() {
             },
             {
               icon: "📋",
-              title: "가입 신청자 목록",
+              title: "가입 신청 목록",
               linkTo: `/team/${teamId}/admin/recruit-applicant`,
               subText: <span className="sub-highlight">+3</span>,
             },
@@ -83,6 +83,16 @@ function AdminList() {
               title: "팀 가입 허용",
               onClick: showApplyAllowModal,
               subText: <span className="sub-status">비허용</span>,
+            },
+          ]}
+        />
+        <AdminListGroup
+          title="게시판 설정"
+          pages={[
+            {
+              icon: "📝",
+              title: "카테고리 관리",
+              linkTo: `/team/${teamId}/admin/board-category`,
             },
           ]}
         />

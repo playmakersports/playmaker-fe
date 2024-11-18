@@ -10,7 +10,7 @@ import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
 import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
-import EventNotification from "@/components/Methods/EventNotification";
+// import EventNotification from "@/components/Methods/EventNotification";
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -40,7 +40,7 @@ export default function App({ Component, pageProps }: AppProps) {
               </TokenRoute>
             </Layout>
           </QueryClientProvider>
-          <EventNotification />
+          {/* <EventNotification /> */}
         </GlobalComponents>
       </EmotionProvider>
     </Provider>

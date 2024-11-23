@@ -55,8 +55,9 @@ const Container = styled.section`
 `;
 
 const Message = styled.p`
-  ${FONTS.MD1};
-  padding: 32px 16px;
+  ${FONTS.MD1W500};
+  line-height: 2.6rem;
+  padding: 36px 12px;
   text-align: center;
   border-bottom: 1px solid var(--gray300);
   white-space: pre-wrap;
@@ -65,16 +66,14 @@ const Buttons = styled.div`
   display: flex;
 `;
 const ModalButton = styled.button`
-  padding: 16px 0;
+  padding: 20px 0;
   flex: 1;
   font-size: 1.4rem;
   &:last-of-type {
-    background-color: var(--gray300);
+    background-color: var(--gray200);
   }
   &:focus {
-    box-shadow: var(--inset-shadow20);
-    background-color: var(--gray500);
-    color: var(--gray50);
+    background-color: var(--gray300);
   }
 `;
 

@@ -1,4 +1,4 @@
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext } from "react";
 import Confirm from "./Confirm";
 
 type ConfirmContextType = Pick<ReturnType<typeof useConfirmLogic>, "showConfirm">;

@@ -10,7 +10,6 @@ import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
 import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
-import PushRequestModal from "@/components/Methods/PushRequestModal";
 // import EventNotification from "@/components/Methods/EventNotification";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -41,7 +40,6 @@ export default function App({ Component, pageProps }: AppProps) {
               </TokenRoute>
             </Layout>
           </QueryClientProvider>
-          <PushRequestModal />
           {/* <EventNotification /> */}
         </GlobalComponents>
       </EmotionProvider>

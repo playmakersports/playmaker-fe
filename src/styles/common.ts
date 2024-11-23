@@ -21,8 +21,8 @@ export const CARD_ACTIVE = `
     transform: translateY(2px);
   }
 `;
-export const BUTTON_ACTIVE = (color?: string) => `
-    border-radius: 8px;
+export const BUTTON_ACTIVE = (color?: string, radius?: number) => `
+    border-radius: ${radius ?? 8}px;
     transition: all 0.2s;
     user-select: none;
     &:active {
@@ -52,11 +52,11 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       &:before {
       content: "";
       position: absolute;
-      width: 32px;
+      width: 36px;
       height: 100%;
       top: 0;
       left: -1px;
-      background-image: linear-gradient(to right, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      background-image: linear-gradient(to right, rgba(${rgbColor}) 10%, rgba(${rgbColor}, 0) 100%);
       z-index: 1;
     }};
     .next-scroll-mask {
@@ -64,11 +64,11 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       &:after {
       content: "";
       position: absolute;
-      width: 32px;
+      width: 36px;
       height: 100%;
       top: 0;
       right: -1px;
-      background-image: linear-gradient(to left, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      background-image: linear-gradient(to left, rgba(${rgbColor}) 10%, rgba(${rgbColor}, 0) 100%);
       z-index: 1;
     }};
     .top-scroll-mask {
@@ -80,7 +80,7 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       height: 36px;
       top: 0;
       left: -1px;
-      background-image: linear-gradient(to bottom, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      background-image: linear-gradient(to bottom, rgba(${rgbColor}) 10%, rgba(${rgbColor}, 0) 100%);
       z-index: 1;
     }};
     .bottom-scroll-mask {
@@ -92,7 +92,7 @@ export const SCROLL_MASKED_GRADIENT = (rgbColor: string) => `
       height: 36px;
       bottom: 0;
       left: -1px;
-      background-image: linear-gradient(to top, rgba(${rgbColor}) 33%, rgba(${rgbColor}, 0) 100%);
+      background-image: linear-gradient(to top, rgba(${rgbColor}) 10%, rgba(${rgbColor}, 0) 100%);
       z-index: 1;
     }};
  `;

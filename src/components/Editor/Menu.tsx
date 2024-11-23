@@ -157,7 +157,6 @@ const Container = styled.div`
   display: flex;
   position: sticky;
   top: 0;
-  gap: 4px;
   padding: 6px 12px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -174,18 +173,20 @@ const Container = styled.div`
   button {
     /* MenuBottom과 통일 */
     display: flex;
+    margin-right: 3px;
     justify-content: center;
     align-items: center;
-    padding: 6px 10px;
-    font-size: 1.6rem;
-    ${BUTTON_ACTIVE("var(--gray300)")};
+    padding: 4px 10px;
+    font-size: 1.5rem;
+    ${BUTTON_ACTIVE("var(--gray300)", 6)};
     transition: all 0.1s;
     border: 1px solid transparent;
 
     &.is-active {
-      font-weight: 700;
+      font-weight: 500;
       transform: scale(0.95);
       background-color: var(--main);
+      color: #fff;
       svg {
         fill: #fff;
       }
@@ -196,7 +197,7 @@ const Container = styled.div`
     padding: 2px 8px;
     margin: 4px 2px 4px 0;
     font-size: 1.4rem;
-    background-color: var(--gray300);
+    background-color: var(--gray200);
 
     svg {
       width: 16px;
@@ -206,8 +207,10 @@ const Container = styled.div`
     }
     &.active {
       font-weight: 600;
-      opacity: 0.6;
+      color: var(--gray700);
+      background-color: var(--gray100);
       svg {
+        fill: var(--gray600);
         transform: rotate(-180deg);
       }
     }
@@ -231,13 +234,15 @@ const HideMenu = styled.div<{ show: boolean }>`
   transform: translateX(${({ show }) => (show ? "0" : "-60px")});
   display: flex;
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
-  padding-right: 4px;
-  margin-right: ${({ show }) => (show ? "8px" : "-6px")};
+  margin-right: 6px;
   gap: 4px;
   width: ${({ show }) => (show ? "100%" : "0%")};
   opacity: ${({ show }) => (show ? 1 : 0)};
   transition: all 0.2s;
   border-right: 1px solid var(--gray300);
+  & > button:last-of-type {
+    margin-right: 10px;
+  }
 `;
 
 export default EditorMenu;

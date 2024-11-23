@@ -7,6 +7,7 @@ type FormattedDateType = {
   displayTime?: "24h" | "12h-kr" | "12h-en" | "hide";
 };
 const padStartNumber = (target: string | number) => String(target).padStart(2, "0");
+export const DAY_NAME_KOREAN = ["일", "월", "화", "수", "목", "금", "토"];
 export const formattedDate = (target: string, type: FormattedDateType) => {
   if (!target) return "";
   const [date, time] = [target.slice(0, 10), target.slice(10)];
@@ -16,7 +17,6 @@ export const formattedDate = (target: string, type: FormattedDateType) => {
   const month = getMonth(targetDate) + 1;
   const day = getDate(targetDate);
   const dayName = getDay(targetDate);
-  const DAY_NAME_KOREAN = ["일", "월", "화", "수", "목", "금", "토"];
 
   // Day name formatting
   let formattedDayName = "";

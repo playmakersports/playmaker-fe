@@ -7,7 +7,7 @@ firebase.initializeApp({
   projectId: "playermaker-a5720",
   storageBucket: "playermaker-a5720.firebasestorage.app",
   messagingSenderId: "776682212633",
-  appId: "1:776682212633 :web: c066627f235b691b160988",
+  appId: "1:776682212633:web:c066627f235b691b160988",
   measurementId: "G-T2W0J0KEKZ",
 });
 

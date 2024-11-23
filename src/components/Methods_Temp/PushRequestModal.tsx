@@ -1,8 +1,19 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { handleClickToPushActive } from "./NotifyFCM";
 
 function PushRequestModal() {
+  const handleClickToPushActive = () => {
+    Notification.requestPermission().then((permission) => {
+      if (permission !== "granted") {
+        // 푸시 거부됐을 때 처리할 내용
+        console.log("푸시 거부됨");
+      } else {
+        // 푸시 승인됐을 때 처리할 내용
+        console.log("푸시 승인됨");
+      }
+    });
+  };
+
   return (
     <Container>
       <button onClick={handleClickToPushActive}>푸시 알림 허용</button>

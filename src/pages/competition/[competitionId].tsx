@@ -1,12 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import useBgWhite from "@/hook/useBgWhite";
 import useStickyMoment from "@/hook/useStickyMoment";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import { FONTS } from "@/styles/common";
-import { formattedDate } from "@/util/date";
+import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import { DAY_NAME_KOREAN, formattedDate } from "@/util/date";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import { BasicInput } from "@/components/common/Input";
@@ -19,11 +19,15 @@ import PersonIcon from "@/assets/icon/global/Person24.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import ShareIcon from "@/assets/icon/global/Share.svg";
 import MatchCard from "@/components/Team/MatchCard";
+import { eachDayOfInterval, isSameDay, isToday } from "date-fns";
+import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import Badge from "@/components/common/Badge";
 
 function CompetitionArticle() {
-  const MOCK = COMPETITION_LIST_MOCK[1];
+  const MOCK = COMPETITION_LIST_MOCK[0];
   useBgWhite();
   usePageTitle({ title: MOCK.competitionName, transparent: true });
+  const todayScrollLeft = useRef<number>(0);
   const competitionHeaderRef = useRef<HTMLDivElement>(null);
   useStickyMoment(competitionHeaderRef);
   const router = useRouter();
@@ -46,10 +50,11 @@ function CompetitionArticle() {
           <Information>
             <h2 className="competition-name">{MOCK.competitionName}</h2>
             <Label>
-              <span>모집중</span>
-              <span>8강</span>
-              <span>남자</span>
-              <span>대학팀</span>
+              <Badge type="main">모집중</Badge>
+              <Badge type="yellow">8강</Badge>
+              <Badge type="subMain">남자부</Badge>
+              <Badge type="subMain">단체전</Badge>
+              <Badge type="gray">대학부</Badge>
             </Label>
             <ul className="competition-detail">
               <li>
@@ -59,13 +64,13 @@ function CompetitionArticle() {
               <li>
                 <CalendarIcon />
                 <span>
-                  {formattedDate(MOCK.matchDate, {
+                  {formattedDate(MOCK.startDate, {
                     displayDateType: "kr",
                     displayYear: "always",
                     displayDayName: "hide",
                   })}{" "}
                   ~{" "}
-                  {formattedDate(MOCK.matchDate, {
+                  {formattedDate(MOCK.endDate, {
                     displayDateType: "kr",
                     displayYear: "not-this-year",
                     displayDayName: "hide",
@@ -74,7 +79,7 @@ function CompetitionArticle() {
               </li>
               <li>
                 <PersonIcon />
-                <span>{MOCK.matchTime}명</span>
+                <span>{MOCK.competitionId}팀 참여</span>
               </li>
             </ul>
           </Information>
@@ -92,86 +97,42 @@ function CompetitionArticle() {
           </div>
         </Participants>
         <Schedule>
-          <Weekly>
-            <li>
-              <span className="day-name">화</span>
-              <span>3</span>
-              <p>예선</p>
-            </li>
-            <li>
-              <span className="day-name">수</span>
-              <span>4</span>
-            </li>
-            <li>
-              <span className="day-name">목</span>
-              <span>5</span>
-            </li>
-            <li>
-              <span className="day-name">금</span>
-              <span>6</span>
-            </li>
-            <li className="no-match">
-              <span className="day-name">토</span>
-              <span>7</span>
-            </li>
-            <li className="today">
-              <span className="day-name">오늘</span>
-              <span>8</span>
-            </li>
-            <li className="no-match">
-              <span className="day-name">월</span>
-              <span>9</span>
-            </li>
-            <li>
-              <span className="day-name">화</span>
-              <span>10</span>
-              <p>결승</p>
-            </li>
-            <WeeklyButton type="button">
-              <RightArrowIcon />
-            </WeeklyButton>
+          <Weekly
+            onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
+            ref={(ref) => {
+              scrollMaskedHandlerRef(ref, "horizontal");
+              ref?.scrollTo({ left: (todayScrollLeft.current / 2) * (52 + 8), behavior: "smooth" });
+            }}
+          >
+            {eachDayOfInterval({
+              start: new Date(MOCK.startDate),
+              end: new Date(MOCK.endDate),
+            }).map((date, index) => (
+              <li
+                key={date.toISOString()}
+                ref={(element) => {
+                  if (isToday(date)) {
+                    if (element) {
+                      todayScrollLeft.current = index;
+                    }
+                  }
+                }}
+                className={
+                  isToday(date) ? "today" : MOCK.schedule?.find((s) => isSameDay(s.date, date)) ? "has-match" : ""
+                }
+              >
+                <span className="day-name">{DAY_NAME_KOREAN[date.getDay()]}</span>
+                <span>{date.getDate()}</span>
+                <p className="rounds">
+                  {MOCK.schedule
+                    ?.find((s) => isSameDay(s.date, date))
+                    ?.rounds?.map((round) => (
+                      <span key={round}>{round}</span>
+                    ))}
+                </p>
+              </li>
+            ))}
           </Weekly>
-          <Matches>
-            <MatchCard
-              status="FINISHED"
-              roundName="예선1"
-              matchId="123"
-              teamName="SPABA"
-              teamSubName="서울시립대"
-              counterpartTeamName="BABABA"
-              counterpartTeamSubName="홍익대"
-              matchTeamScore={93}
-              matchCounterpartScore={53}
-              teamLogo=""
-              counterpartTeamLogo=""
-              mvpId="김농구"
-            />
-            <MatchCard
-              status="PENDING"
-              matchId="123"
-              teamName="SPABA"
-              teamSubName="서울시립대"
-              counterpartTeamName="BABABA"
-              counterpartTeamSubName="홍익대"
-              matchTeamScore={113}
-              matchCounterpartScore={129}
-              teamLogo=""
-              counterpartTeamLogo=""
-            />
-            <MatchCard
-              status="NOT_STARTED"
-              roundName="예선1"
-              matchId="123"
-              teamName="SPABA"
-              teamSubName="서울시립대"
-              counterpartTeamName="BABABA"
-              counterpartTeamSubName="홍익대"
-              matchTeamScore={0}
-              matchCounterpartScore={0}
-              teamLogo=""
-              counterpartTeamLogo=""
-            />
-          </Matches>
         </Schedule>
         <Search>
           <BasicInput type="text" placeholder="어떤 팀을 찾고 있나요" search />
@@ -190,7 +151,7 @@ function CompetitionArticle() {
         </RoundTab>
         <Matches>
           <MatchCard
-            status="FINISHED"
+            status="NOT_STARTED"
             matchId="123"
             teamName="SPABA"
             teamSubName="서울과기대"
@@ -199,6 +160,22 @@ function CompetitionArticle() {
             matchTeamScore={99}
             matchCounterpartScore={98}
             matchDate="2024-11-15"
+            matchTime="10:20"
+            teamLogo=""
+            counterpartTeamLogo=""
+            mvpId="김농구"
+          />
+          <MatchCard
+            status="PENDING"
+            matchId="123"
+            teamName="SPABA"
+            teamSubName="서울과기대"
+            counterpartTeamName="BABABA"
+            counterpartTeamSubName="홍익대"
+            matchTeamScore={99}
+            matchCounterpartScore={98}
+            matchDate="2024-11-15"
+            matchTime="11:20"
             teamLogo=""
             counterpartTeamLogo=""
             mvpId="김농구"
@@ -213,6 +190,7 @@ function CompetitionArticle() {
             matchTeamScore={100}
             matchCounterpartScore={112}
             matchDate="2024-11-15"
+            matchTime="13:30"
             teamLogo=""
             counterpartTeamLogo=""
             mvpId="박농구"
@@ -253,18 +231,6 @@ const Label = styled.div`
   padding: 12px 16px;
   width: calc(100% + 32px);
   border-top: 1px solid var(--gray200);
-  span {
-    ${FONTS.MD2};
-    font-size: 1.3rem;
-    font-weight: 400;
-    display: inline-flex;
-    align-items: center;
-    line-height: 1.25rem;
-    padding: 6px 10px 5px;
-    border-radius: 7px;
-    background-color: rgba(160, 188, 248, 0.3);
-    color: var(--main);
-  }
 `;
 const Participants = styled.div`
   ${FONTS.MD2};
@@ -325,20 +291,26 @@ const Information = styled.div`
 `;
 
 const Schedule = styled.section`
+  display: flex;
+  align-items: flex-start;
   margin: 0 -16px;
-  padding: 20px 16px 36px;
+  padding: 20px 0 36px;
   border-top: 1px solid var(--gray100);
+  ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")};
 `;
 const Weekly = styled.ul`
-  position: relative;
-  display: flex;
-  flex-wrap: nowrap;
+  display: inline-flex;
+  padding: 0 12px;
+  white-space: nowrap;
   gap: 8px;
+  overflow-x: auto;
+  ${SCROLL_HIDE}
+
   li {
     user-select: none;
     cursor: pointer;
     flex-shrink: 0;
-    width: 40px;
+    width: 52px;
     display: inline-flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -351,52 +323,64 @@ const Weekly = styled.ul`
 
     span.day-name {
       font-size: 1.3rem;
+      color: var(--gray600);
     }
-    &.no-match {
-      cursor: default;
-      color: var(--gray400);
+
+    &.has-match {
+      cursor: pointer;
+      color: var(--gray900);
+
+      p.rounds > span {
+        background-color: var(--gray100);
+        color: var(--gray400);
+      }
     }
     &.today {
+      cursor: pointer;
       color: var(--main);
-      font-weight: 700;
+      font-weight: 500;
+      span.day-name {
+        color: var(--main);
+      }
     }
+    /* 경기 없는 날 */
+    cursor: default;
+    color: var(--gray400);
 
-    p {
-      padding: 4px 8px;
+    p.rounds {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 8px;
       font-size: 1.3rem;
-      border-radius: 10px;
       font-weight: 600;
-      background-color: rgba(var(--sub2-rgb), 0.35);
-      color: var(--main);
+
+      span {
+        padding: 4px 8px;
+        border-radius: 10px;
+        background-color: rgba(var(--sub2-rgb), 0.35);
+        color: var(--main);
+      }
     }
   }
 `;
 
-const WeeklyButton = styled.button`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  top: 12px;
-  padding: 6px;
-  right: 0;
-  border-radius: 50%;
-  background-color: var(--gray0);
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.15);
-  z-index: 1;
-  transition: all 0.2s;
+// const WeeklyButton = styled.button`
+//   display: flex;
+//   padding: 12px 0;
+//   align-items: center;
+//   justify-content: center;
 
-  &:active {
-    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05), 0 0 8px rgba(0, 0, 0, 0.05);
-    transform: translateY(2px);
-  }
+//   &.left > svg {
+//     transform: rotate(180deg);
+//   }
 
-  svg {
-    width: 26px;
-    height: 26px;
-    fill: var(--gray800);
-  }
-`;
+//   svg {
+//     width: 24px;
+//     height: 24px;
+//     fill: var(--gray500);
+//   }
+// `;
 
 const Matches = styled.div`
   display: flex;

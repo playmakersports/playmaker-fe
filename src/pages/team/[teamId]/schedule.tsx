@@ -1,18 +1,35 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 import { getDate, getDay, getMonth, isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
+import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
+import useBgWhite from "@/hook/useBgWhite";
 
+import Loading from "@/components/common/Loading";
 import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import { BasicWhiteCardTitle } from "@/components/common/Card";
-import Loading from "@/components/common/Loading";
-import useBgWhite from "@/hook/useBgWhite";
 import { DateKeypadInput } from "@/components/common/PlainInput";
 
+import PlusIcon from "@/assets/icon/global/Plus.svg";
+
 function Schedule() {
+  const router = useRouter();
+  const teamId = router.query.teamId;
   useBgWhite();
+  usePageTitle({
+    title: "일정",
+    subIcons: [
+      {
+        svgIcon: <PlusIcon />,
+        linkTo: `/team/${teamId}/board/editor?type=new&via=schedule`,
+        description: "일정 생성",
+      },
+    ],
+  });
+
   const { dayList, weekCalendarList, currentDate, currentDateHoliday, setCurrentDate } = useCalendar();
   const { ModalComponents, showModal } = useModal();
   const [nowDateValue, setNowDateValue] = useState<{ year: number | string; month: number | string }>({

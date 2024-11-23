@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { FONTS } from "@/styles/common";
 
-import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
-
-function SwipeSelector({ children }: { children: React.ReactNode }) {
+type ButtonsProps = { svg: React.ReactNode; bgColor: string; text: string; onClick: () => void };
+type Props = {
+  left: [ButtonsProps, ButtonsProps];
+  children: React.ReactNode;
+  right: ButtonsProps;
+};
+function SwipeSelector(props: Props) {
+  const { children, left, right } = props;
   const [width, setWidth] = useState(0);
   const [activeButton, setActiveButton] = useState(false);
   const [touchX, setTouchX] = useState(0);
@@ -17,10 +22,10 @@ function SwipeSelector({ children }: { children: React.ReactNode }) {
 
   const handleShowButton = (targetX: number) => {
     if (touchStartX < targetX) {
-      setTouchX(width / 2 - 30);
+      setTouchX(width / 2 + 10);
       setActiveButton(true);
     } else {
-      setTouchX(-1 * (width / 2 - 30));
+      setTouchX(-1 * (width / 2 - 60));
       setActiveButton(true);
     }
   };
@@ -45,20 +50,21 @@ function SwipeSelector({ children }: { children: React.ReactNode }) {
   return (
     <Container ref={(ref) => setWidth(ref?.clientWidth ?? 0)} moveX={touchX}>
       <div className="inner-wrapper">
-        <Buttons bgColor="var(--main)">
-          <Button bgColor="var(--main)">
-            <NoticeBellIcon fill="#fff" />
-          </Button>
-          <Button bgColor="orange">
-            <NoticeBellIcon fill="#fff" />
-          </Button>
+        <Buttons bgColor={left[0].bgColor}>
+          {left.map((btn) => (
+            <Button key={btn.bgColor} bgColor={btn.bgColor} onClick={btn.onClick}>
+              {btn.svg}
+              <span>{btn.text}</span>
+            </Button>
+          ))}
         </Buttons>
         <Displayed onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           {children}
         </Displayed>
-        <Buttons bgColor="var(--sub1)">
-          <Button bgColor="var(--sub1)">
-            <NoticeBellIcon fill="#fff" />
+        <Buttons bgColor={right.bgColor}>
+          <Button bgColor={right.bgColor} onClick={right.onClick}>
+            {right.svg}
+            <span>{right.text}</span>
           </Button>
         </Buttons>
       </div>
@@ -68,15 +74,14 @@ function SwipeSelector({ children }: { children: React.ReactNode }) {
 
 const Container = styled.div<{ moveX: number }>`
   position: relative;
-  left: -50%;
+  left: calc(-50% - 150px / 2);
   ${FONTS.MD1};
   .inner-wrapper {
-    width: 200%;
+    width: calc(200% + 150px);
     display: flex;
     flex-wrap: nowrap;
     transform: translate3d(${({ moveX }) => moveX}px, 0, 0);
     transition: transform 0.3s;
-    border-bottom: 1px solid var(--gray200);
     overflow: hidden;
   }
   user-select: none;
@@ -89,8 +94,10 @@ const Container = styled.div<{ moveX: number }>`
 `;
 
 const Displayed = styled.div`
-  width: 100%;
-  padding: 12px 16px;
+  flex-shrink: 0;
+  width: min(var(--mobile-max-width), 100vw);
+  padding: 16px;
+  background-color: var(--background-light);
 `;
 const Buttons = styled.div<{ bgColor: string }>`
   position: relative;
@@ -107,7 +114,8 @@ const Buttons = styled.div<{ bgColor: string }>`
     right: 0;
     width: 10px;
     height: 100%;
-    background: linear-gradient(to left, rgba(78, 78, 78, 0.2) 0%, rgba(78, 78, 78, 0) 100%);
+    background: var(--background-light);
+    border-radius: 10px 0 0 10px;
   }
   &:last-of-type::before {
     content: "";
@@ -115,15 +123,32 @@ const Buttons = styled.div<{ bgColor: string }>`
     left: 0;
     width: 10px;
     height: 100%;
-    background: linear-gradient(to right, rgba(78, 78, 78, 0.2) 0%, rgba(78, 78, 78, 0) 100%);
+    background: var(--background-light);
+    border-radius: 0 10px 10px 0;
   }
 `;
 const Button = styled.button<{ bgColor: string }>`
-  width: 72px;
+  display: flex;
+  padding: 0 22px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
   background-color: ${({ bgColor }) => bgColor};
+  color: var(--gray0);
+  font-size: 1.4rem;
+  font-weight: 500;
+
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+  }
+
+  &:nth-child(1) {
+    padding-left: 42px;
+  }
+  &:nth-child(2) {
+    padding-right: 32px;
   }
 `;
 

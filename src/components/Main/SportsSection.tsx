@@ -53,8 +53,8 @@ function SportsSection() {
             posterImg={competition.posterImg}
             competitionId={competition.competitionId}
             competitionName={competition.competitionName}
-            matchDate={competition.matchDate}
-            matchTime={competition.matchTime}
+            startDate={competition.startDate}
+            endDate={competition.endDate}
             matchLocation={competition.matchLocation}
             openedBy={competition.openedBy}
             openedByLogo={competition.openedByLogo}

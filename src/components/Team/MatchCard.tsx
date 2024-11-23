@@ -21,6 +21,7 @@ type Props = {
   counterpartTeamLogo: string;
   matchCounterpartScore: number;
   matchDate?: string;
+  matchTime?: string;
   mvpId?: string;
 };
 function MatchCard(props: Props) {
@@ -37,6 +38,7 @@ function MatchCard(props: Props) {
     counterpartTeamLogo,
     matchCounterpartScore,
     matchDate,
+    matchTime,
     mvpId,
   } = props;
   const router = useRouter();
@@ -61,15 +63,15 @@ function MatchCard(props: Props) {
           {status !== "FINISHED" && <p className="match-date">{STATUS_NAME[status]}</p>}
           {matchDate && (
             <p className="match-date">
-              {formattedDate(matchDate, {
+              {formattedDate(`${matchDate}${matchTime}`, {
                 displayDateType: ".",
-                displayTime: "hide",
+                displayTime: "24h",
                 displayYear: "not-this-year",
                 displayDayName: "hide",
               })}
             </p>
           )}
-          {status !== "NOT_STARTED" && (
+          {status === "FINISHED" && (
             <div className="match-score">
               <div className={`${matchTeamScore > matchCounterpartScore ? "winner-score" : ""}`}>{matchTeamScore}</div>
               <div className="score-separator">:</div>
@@ -78,7 +80,9 @@ function MatchCard(props: Props) {
               </div>
             </div>
           )}
-          {mvpId && <MVPLabel leftWin={matchTeamScore > matchCounterpartScore}>MVP {mvpId}</MVPLabel>}
+          {status === "FINISHED" && mvpId && (
+            <MVPLabel leftWin={matchTeamScore > matchCounterpartScore}>MVP {mvpId}</MVPLabel>
+          )}
         </MatchInfo>
         <Team>
           <img src={counterpartTeamLogo} alt={counterpartTeamName} />
@@ -158,8 +162,8 @@ const MatchInfo = styled.div`
     }
   }
   p.match-date {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 1.3rem;
+    font-weight: 400;
     color: var(--gray700);
     text-align: center;
   }

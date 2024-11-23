@@ -11,8 +11,8 @@ type Props = {
   posterImg: string;
   competitionId: string;
   competitionName: string;
-  matchDate: string;
-  matchTime: string;
+  startDate: string;
+  endDate: string;
   matchLocation: string;
   openedBy: string;
   openedByLogo?: string;
@@ -28,8 +28,8 @@ function MainMatchCard(props: Props) {
     posterImg,
     competitionId,
     competitionName,
-    matchDate,
-    matchTime,
+    startDate,
+    endDate,
     matchLocation,
     openedBy,
     openedByLogo,
@@ -40,8 +40,8 @@ function MainMatchCard(props: Props) {
     attendMembers,
   } = props;
   const dayCount = () => {
-    if (countDayDiff(matchDate) === 0) return "D-DAY";
-    return `D${countDayDiff(matchDate) > 0 ? -countDayDiff(matchDate) : "+" + -countDayDiff(matchDate)}`;
+    if (countDayDiff(startDate) === 0) return "D-DAY";
+    return `D${countDayDiff(startDate) > 0 ? -countDayDiff(startDate) : "+" + -countDayDiff(startDate)}`;
   };
 
   if (props.size === "LARGE") {
@@ -70,7 +70,19 @@ function MainMatchCard(props: Props) {
           <li>
             <dt>일시</dt>
             <dd>
-              {matchDate} {matchTime}
+              {formattedDate(startDate, {
+                displayYear: "always",
+                displayDateType: "kr",
+                displayDayName: "hide",
+                displayTime: "hide",
+              })}{" "}
+              ~{" "}
+              {formattedDate(endDate, {
+                displayYear: "not-this-year",
+                displayDateType: "kr",
+                displayDayName: "hide",
+                displayTime: "hide",
+              })}
             </dd>
           </li>
           <li>
@@ -91,11 +103,18 @@ function MainMatchCard(props: Props) {
             <li>
               <dt>일시</dt>
               <dd>
-                {formattedDate(`${matchDate}${matchTime}`, {
+                {formattedDate(startDate, {
                   displayYear: "not-this-year",
                   displayDateType: "kr",
-                  displayDayName: "short-with-parenthesis",
-                  displayTime: "12h-kr",
+                  displayDayName: "hide",
+                  displayTime: "hide",
+                })}{" "}
+                ~{" "}
+                {formattedDate(endDate, {
+                  displayYear: "not-this-year",
+                  displayDateType: "kr",
+                  displayDayName: "hide",
+                  displayTime: "hide",
                 })}
               </dd>
             </li>

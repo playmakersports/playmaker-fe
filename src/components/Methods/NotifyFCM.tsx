@@ -22,11 +22,13 @@ export const NotifyFCM = async () => {
     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPI_KEY,
   })
     .then(async (currentToken) => {
+      window.alert(currentToken);
       if (!currentToken) {
         // 토큰 생성 불가시 처리할 내용, 주로 브라우저 푸시 허용이 안된 경우에 해당한다.
         console.log("No Token");
       } else {
         console.log("token: ", currentToken);
+        return currentToken;
       }
     })
     .catch((error) => {

@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { NextApiRequest, NextApiResponse } from "next";
+import { sendFCMNotification } from "./NotificationFCMFunc";
 
 function PushRequestModal() {
   const handleClickToPushActive = () => {
@@ -14,9 +16,21 @@ function PushRequestModal() {
     });
   };
 
+  const sendFCMHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+    if (req.method === "POST") {
+      const { message } = req.body;
+      await sendFCMNotification(message)
+        .then((result) => res.status(200).json({ result }))
+        .catch((error) => console.log(error));
+    } else {
+      res.status(405).end();
+    }
+  };
+
   return (
     <Container>
       <button onClick={handleClickToPushActive}>푸시 알림 허용</button>
+      {/* <button onClick={}>푸시 알림 허용</button> */}
     </Container>
   );
 }

@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { differenceInCalendarDays } from "date-fns";
 import { keyframes } from "@emotion/react";
+import useBgWhite from "@/hook/useBgWhite";
 import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
@@ -10,10 +11,15 @@ import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import { BaseContainer } from "@/components/common/Container";
 import ProfileImage from "@/components/Team/ProfileImage";
 import AdminList from "@/components/Team/AdminList";
-import useBgWhite from "@/hook/useBgWhite";
 import ToggleInput from "@/components/common/ToggleInput";
+import Badge from "@/components/common/Badge";
+
+import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import { useRouter } from "next/router";
 
 function AdminIndex() {
+  const router = useRouter();
+  const teamId = router.query.teamId as string;
   const [countFounded, setCountFounded] = useState(0);
   const { showModal: showPublicTeamModal, ModalComponents: PublicTeamModal } = useModal();
   const [publicTeam, setPublicTeam] = useState(true);
@@ -35,8 +41,10 @@ function AdminIndex() {
           <TeamInfo>
             <h2>{TEAM_INFO_MOCK.teamName}</h2>
             <TeamInfoLabel>
-              <span className="team-credit">Premium</span>
-              <span className="team-univ">{TEAM_INFO_MOCK.univName}</span>
+              <Badge type="yellow">Premium</Badge>
+              <Badge type="main">
+                {TEAM_INFO_MOCK.univName} <CheckIcon />
+              </Badge>
             </TeamInfoLabel>
             <div className="team-description">
               <p>
@@ -48,7 +56,9 @@ function AdminIndex() {
         </Header>
         <TeamInfoSettings>
           <button type="button">기본 정보 수정</button>
-          <button type="button">팀원 관리</button>
+          <button type="button" onClick={() => router.push(`/team/${teamId}/players`)}>
+            팀원 관리
+          </button>
           <button type="button" onClick={showPublicTeamModal}>
             팀 공개 여부
           </button>
@@ -151,31 +161,8 @@ const TeamInfoLabel = styled.div`
   span {
     display: inline-flex;
     align-items: center;
-    padding: 4px 8px;
     font-weight: 600;
-    border-radius: 12px;
-  }
-  .team-credit {
-    background-color: rgba(var(--point-rgb), 0.19);
-    color: #f16616;
-  }
-  .team-univ {
-    gap: 2px;
-    background-color: rgba(var(--main-rgb), 0.1);
-    color: var(--main);
-    &::after {
-      content: "✓";
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background-color: var(--main);
-      color: var(--gray0);
-      font-size: 1.2rem;
-      opacity: 0.8;
-    }
+    border-radius: 8px;
   }
 `;
 const TeamInfoSettings = styled.div`

@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 import React, { ReactNode, useState } from "react";
 import ToggleInput from "../common/ToggleInput";
+import useDeviceAgent from "@/hook/useDeviceAgent";
 
 type GroupProps = {
   title: string;
@@ -12,11 +13,13 @@ type GroupProps = {
     title: string;
     subText?: React.ReactNode;
     linkTo?: string;
+    onlyPc?: boolean;
     onClick?: () => void;
   }[];
 };
 function AdminListGroup({ title, pages }: GroupProps) {
   const router = useRouter();
+  const { isMobile } = useDeviceAgent();
   const handleClick = (target?: string | (() => void)) => {
     if (typeof target === "string") {
       router.push(target);
@@ -30,11 +33,23 @@ function AdminListGroup({ title, pages }: GroupProps) {
       <List>
         {pages &&
           pages.map((page) => (
-            <li key={page.linkTo} onClick={() => handleClick(page.linkTo ?? page.onClick)}>
+            <li
+              key={page.linkTo}
+              role="button"
+              aria-disabled={page.onlyPc}
+              className={page.onlyPc && isMobile ? "invalid" : "valid"}
+              onClick={() => (page.onlyPc && isMobile ? {} : handleClick(page.linkTo ?? page.onClick))}
+            >
               <div className="page-title-wrapper">
                 <span className="icon-wrapper">{page.icon}</span> {page.title}
               </div>
-              <SubTextWrapper>{page.subText}</SubTextWrapper>
+              {page.onlyPc && isMobile ? (
+                <SubTextWrapper>
+                  <span className="pc-only">PC에서만 지원</span>
+                </SubTextWrapper>
+              ) : (
+                <SubTextWrapper>{page.subText}</SubTextWrapper>
+              )}
             </li>
           ))}
       </List>
@@ -83,6 +98,23 @@ function AdminList() {
               title: "팀 가입 허용",
               onClick: showApplyAllowModal,
               subText: <span className="sub-status">비허용</span>,
+            },
+          ]}
+        />
+        <AdminListGroup
+          title="대회"
+          pages={[
+            {
+              icon: "🏆",
+              title: "주최 대회 목록",
+              linkTo: `/staff/competition`,
+              onlyPc: true,
+            },
+            {
+              icon: "🔗",
+              title: "신규 대회 주최",
+              linkTo: `/staff/competition/create`,
+              onlyPc: true,
             },
           ]}
         />
@@ -167,12 +199,19 @@ const List = styled.ul`
   margin: 0 -16px;
   ${FONTS.MD1W500};
   li {
-    ${BUTTON_ACTIVE("var(--gray100)")};
     user-select: none;
     cursor: pointer;
     display: flex;
     padding: 10px 20px 10px 16px;
     justify-content: space-between;
+
+    &.valid {
+      ${BUTTON_ACTIVE("var(--gray100)")};
+    }
+    &.invalid {
+      cursor: not-allowed;
+      opacity: 0.5;
+    }
 
     div.page-title-wrapper {
       display: flex;
@@ -197,18 +236,19 @@ const SubTextWrapper = styled.div`
 
   span.sub-highlight {
     display: inline-block;
-    padding: 1px 8px;
-    font-size: 1.4rem;
-    background-color: var(--main);
-    color: var(--gray0);
-    border-radius: 12px;
+    font-size: 1.5rem;
+    color: var(--main);
     font-weight: 600;
-    line-height: 2rem;
   }
   span.sub-status {
     font-size: 1.4rem;
     font-weight: 400;
     color: var(--gray700);
+  }
+  span.pc-only {
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--main);
   }
 `;
 

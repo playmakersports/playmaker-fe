@@ -38,9 +38,6 @@ function RecruitApplicant() {
               <PlayerInner htmlFor={`player-${player.playerId}`} role="button">
                 <ProfileImage></ProfileImage>
                 <Name>
-                  {10 + countDayDiff(player.applyDate) < 6 && (
-                    <p className="deny">{10 + countDayDiff(player.applyDate)}일 뒤 자동 거절</p>
-                  )}
                   <p className="player-name">{player.name}</p>
                   <p className="player-tags">
                     <Badge type="gray">{player.birth.split("-")[0]}년생</Badge>

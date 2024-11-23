@@ -67,7 +67,9 @@ function TeamListCard(props: Props) {
             {status === "PENDING" && (
               <>
                 {dueDate && countDayDiff(dueDate) < 6 ? (
-                  <li className="recruit-status count">마감 D-{countDayDiff(dueDate)}</li>
+                  <li className="recruit-status count">
+                    {countDayDiff(dueDate) === 0 ? "오늘 마감" : `마감 D-${countDayDiff(dueDate)}`}
+                  </li>
                 ) : (
                   <li className="recruit-status">모집중</li>
                 )}

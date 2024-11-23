@@ -5,11 +5,12 @@ import dynamic from "next/dynamic";
 import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-// import "@/components/Methods/NotifyFCM";
 import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
 import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
+import "@/components/Methods/NotifyFCM";
+import { PushRequestModal } from "@/components/Methods/NotifyFCM";
 // import EventNotification from "@/components/Methods/EventNotification";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -40,6 +41,7 @@ export default function App({ Component, pageProps }: AppProps) {
               </TokenRoute>
             </Layout>
           </QueryClientProvider>
+          <PushRequestModal />
           {/* <EventNotification /> */}
         </GlobalComponents>
       </EmotionProvider>

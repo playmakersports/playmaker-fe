@@ -12,9 +12,12 @@ import { BasicInput } from "@/components/common/Input";
 import useBgWhite from "@/hook/useBgWhite";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 import MetaTitle from "@/components/layouts/MetaTitle";
+import { useRouter } from "next/router";
 
 function ArticleEditor() {
   useBgWhite();
+  const router = useRouter();
+  const { teamId, type, via } = router.query;
   const confirm = useConfirm();
   const [category, setCategory] = useState("");
   const { editor, poll, images } = useEditorHandler();
@@ -38,12 +41,13 @@ function ArticleEditor() {
       <MetaTitle title="글쓰기" />
       <DropDown
         getSelectedValue={setCategory}
-        defaultValue=""
+        placeholder="카테고리 선택"
+        defaultValue={category}
         options={[
-          { name: "카테고리 선택", value: "" },
           { name: "공지사항", value: "notice" },
           { name: "사진", value: "photo" },
-          { name: "일정", value: "schedule" },
+          { name: "자유", value: "free" },
+          { name: "가입인사", value: "intro" },
         ]}
       />
       <BasicInput type="text" placeholder="제목" />

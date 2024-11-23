@@ -2,7 +2,7 @@ importScripts("https://www.gstatic.com/firebasejs/9.0.2/firebase-app-compat.js")
 importScripts("https://www.gstatic.com/firebasejs/9.0.2/firebase-messaging-compat.js");
 
 firebase.initializeApp({
-  apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd40fg4SZs_Vo",
+  apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
   authDomain: "playermaker-a5720.firebaseapp.com",
   projectId: "playermaker-a5720",
   storageBucket: "playermaker-a5720.firebasestorage.app",

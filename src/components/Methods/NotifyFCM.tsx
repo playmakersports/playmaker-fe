@@ -2,7 +2,7 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd40fg4SZs_Vo",
+  apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
   authDomain: "playermaker-a5720.firebaseapp.com",
   projectId: "playermaker-a5720",
   storageBucket: "playermaker-a5720.firebasestorage.app",
@@ -25,6 +25,7 @@ export const handleNotifyFCM = async () => {
       if (!currentToken) {
         console.log("No Token");
       } else {
+        window.alert("currentToken: " + currentToken);
         console.log("token: ", currentToken);
         return currentToken;
       }

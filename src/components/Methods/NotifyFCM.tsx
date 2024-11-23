@@ -1,5 +1,5 @@
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken, MessagePayload, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
@@ -34,7 +34,18 @@ export const handleNotifyFCM = async () => {
       console.error(error);
     });
 
-  onMessage(messaging, (payload) => {
+  onMessage(messaging, (payload: MessagePayload) => {
     console.log("Message received. ", payload);
+    self.addEventListener("push", function (event: any) {
+      if (payload.data && payload.notification) {
+        const options = {
+          body: payload.notification.body,
+        };
+
+        event.waitUntil((self as any).registration.showNotification(payload.notification.title, options));
+      } else {
+        console.log("This push event has no data.");
+      }
+    });
   });
 };

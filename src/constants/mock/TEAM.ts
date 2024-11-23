@@ -20,7 +20,7 @@ export const TEAM_PLAYERS_MOCK = [
     tag: ["리더"],
     attendRate: 0.85,
     birthDate: "1999-10-20",
-    // generation: 1,
+    generation: 1,
     gender: "m",
   },
   {
@@ -31,7 +31,7 @@ export const TEAM_PLAYERS_MOCK = [
     tag: ["요리사"],
     attendRate: 0.85,
     birthDate: "1999-01-20",
-    generation: 1,
+    generation: 4,
     gender: "m",
   },
   {

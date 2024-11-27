@@ -2,7 +2,6 @@ import styled from "@emotion/styled";
 import useBgWhite from "@/hook/useBgWhite";
 
 import { BaseContainer } from "@/components/common/Container";
-import MainHeader from "@/components/layouts/Header/MainHeader";
 import FixedNotice from "@/components/Main/FixedNotice";
 import Banner from "@/components/Main/Banner";
 import MyTeam from "@/components/Main/MyTeam";

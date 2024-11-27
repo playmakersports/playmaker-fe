@@ -1,5 +1,6 @@
+import { setCookie } from "cookies-next";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getMessaging, getToken, MessagePayload, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
@@ -22,30 +23,11 @@ export const handleNotifyFCM = async () => {
     vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPI_KEY,
   })
     .then(async (currentToken) => {
-      if (!currentToken) {
-        console.log("No Token");
-      } else {
-        window.alert("currentToken: " + currentToken);
-        console.log("token: ", currentToken);
-        return currentToken;
+      if (currentToken) {
+        setCookie("fcm_token", currentToken);
       }
     })
     .catch((error) => {
       console.error(error);
     });
-
-  onMessage(messaging, (payload: MessagePayload) => {
-    console.log("Message received. ", payload);
-    self.addEventListener("push", function (event: any) {
-      if (payload.data && payload.notification) {
-        const options = {
-          body: payload.notification.body,
-        };
-
-        event.waitUntil((self as any).registration.showNotification(payload.notification.title, options));
-      } else {
-        console.log("This push event has no data.");
-      }
-    });
-  });
 };

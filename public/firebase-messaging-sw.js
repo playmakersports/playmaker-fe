@@ -12,3 +12,19 @@ firebase.initializeApp({
 });
 
 const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage((payload) => {
+  if (!(self.Notification && self.Notification.permission === "granted")) {
+    return;
+  }
+
+  console.log("background", payload);
+  const notificationTitle = payload.data.title;
+  const notificationOptions = {
+    body: payload.data.body,
+    icon: payload.data.icon,
+    image: payload.data.image,
+  };
+
+  self.registration.showNotification(notificationTitle, notificationOptions);
+});

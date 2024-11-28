@@ -100,8 +100,15 @@ function CompetitionArticle() {
           <Weekly
             onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
             ref={(ref) => {
-              scrollMaskedHandlerRef(ref, "horizontal");
-              ref?.scrollTo({ left: (todayScrollLeft.current / 2) * (52 + 8), behavior: "smooth" });
+              if (ref) {
+                scrollMaskedHandlerRef(ref, "horizontal");
+                const WEEKLY_WIDTH = ref.clientWidth / 2;
+                const TARGET_LEFT_WIDTH = todayScrollLeft.current * (52 + 8) - WEEKLY_WIDTH;
+                ref?.scrollTo({
+                  left: TARGET_LEFT_WIDTH,
+                  behavior: "smooth",
+                });
+              }
             }}
           >
             {eachDayOfInterval({
@@ -113,7 +120,8 @@ function CompetitionArticle() {
                 ref={(element) => {
                   if (isToday(date)) {
                     if (element) {
-                      todayScrollLeft.current = index;
+                      todayScrollLeft.current = index + 1;
+                      console.log(todayScrollLeft.current);
                     }
                   }
                 }}

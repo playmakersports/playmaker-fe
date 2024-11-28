@@ -28,7 +28,7 @@ function RecruitPost() {
         </div>
         <p>활성화하면 전체 팀 목록에서 우리 팀이 우선 노출돼요.</p>
       </div>
-      <form action="#" className={activePost ? "" : "inactive"}>
+      <form className={activePost ? "" : "inactive"}>
         <TextArea disabled={!activePost} title="모집 소개글" />
         <DateInput
           disabled={!activePost}

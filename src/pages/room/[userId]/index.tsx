@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { useGet } from "@/apis/hook/query";
@@ -20,14 +20,11 @@ import FemaleCharacter from "@/assets/character/character_girl_happy.png";
 import Loading from "@/components/common/Loading";
 import GenderIcon from "@/components/common/GenderIcon";
 
-function UserPage() {
+function UserPage({ userId }: { userId: string }) {
   useBgWhite();
   const [weeklyDate, setWeeklyDate] = useState("");
-  const router = useRouter();
-  const userId = router.query.userId;
 
   const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmember");
-  console.log(data);
 
   usePageTitle({
     subIcons: [
@@ -103,6 +100,15 @@ function UserPage() {
     </Container>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { userId } = context.params as { userId: string };
+  return {
+    props: {
+      userId,
+    },
+  };
+};
 
 const Container = styled(BaseContainer)``;
 const Profile = styled.div`

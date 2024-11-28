@@ -10,7 +10,7 @@ import QuestionIcon from "@/assets/icon/global/Question.svg";
 import ExclamationIcon from "@/assets/icon/global/Exclamation.svg";
 
 export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">> & {
-  type: "text" | "number" | "password" | "email" | "tel";
+  type: "text" | "number" | "password" | "email" | "tel" | "file";
   title?: string;
   search?: boolean;
   errorText?: string;

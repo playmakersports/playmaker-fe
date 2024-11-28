@@ -191,7 +191,7 @@ const Options = styled.div<{ show: boolean }>`
   width: calc(100% + 4px);
   min-width: 90px;
   height: max-content;
-  max-height: 47vh;
+  max-height: 42vh;
   background-color: var(--background-light);
   border-radius: 10px;
   transition: all 0.2s;
@@ -201,7 +201,7 @@ const Options = styled.div<{ show: boolean }>`
   transform: translateY(${({ show }) => (show ? "0px" : "-12px")});
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
   opacity: ${({ show }) => (show ? 1 : 0)};
-  z-index: 5;
+  z-index: 100;
 `;
 const Option = styled.button`
   ${FONTS.MD1W500}

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { WhiteSectionDivider } from "../common/Container";
-import { FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 
@@ -11,6 +11,7 @@ import PersonIcon from "@/assets/icon/global/Person24.svg";
 import HeadphoneIcon from "@/assets/icon/global/Headphone.svg";
 import InformationIcon from "@/assets/icon/global/Information.svg";
 import BuildingsIcon from "@/assets/icon/global/Buildings.svg";
+import { useRouter } from "next/router";
 
 function GroupList({
   list,
@@ -25,7 +26,7 @@ function GroupList({
   return (
     <Group>
       {list.map((item, idx) => (
-        <li key={idx}>
+        <li key={idx} onClick={item.onClick}>
           <span className="title-wrapper">
             {item.icon}
             {item.title}
@@ -46,6 +47,9 @@ function GroupList({
   );
 }
 function UserSetting() {
+  const router = useRouter();
+  const userId = router.query.userId;
+
   return (
     <Container>
       <GroupTitle>계정 관리</GroupTitle>
@@ -54,7 +58,13 @@ function UserSetting() {
           {
             icon: <GraduationIcon />,
             title: "재학증명서 인증",
-            onClick: () => {},
+            onClick: () =>
+              router.push({
+                pathname: "/room/[userId]/school",
+                query: {
+                  userId,
+                },
+              }),
             subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
           },
           { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
@@ -105,13 +115,7 @@ const Group = styled.ul`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    &:hover {
-      background-color: var(--gray50);
-    }
-    &:active {
-      background-color: var(--gray100);
-    }
+    ${BUTTON_ACTIVE("rgba(var(--sub2-rgb),0.3)")}
   }
   span.title-wrapper {
     display: inline-flex;

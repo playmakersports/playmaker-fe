@@ -178,7 +178,7 @@ const TeamLabels = styled.ul`
     }
     &.MALE {
       background-color: rgba(var(--sub2-rgb), 0.35);
-      color: var(--sub0);
+      color: var(--primary-m100);
     }
     &.FEMALE {
       background-color: rgba(239, 142, 141, 0.1);

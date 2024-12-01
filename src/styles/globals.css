@@ -56,6 +56,17 @@
   --sub2: #dee9ff;
   --sub2-rgb: 222, 233, 255;
 
+  --primary-m20: #f1f5ff;
+  --primary-m40: #e7eefd;
+  --primary-m60: #d0ddfb;
+  --primary-m80: #a0bcf8;
+  --primary-m100: #719af4;
+  --primary-m200: #4279f0;
+  --primary-m300: #306def;
+  --primary-m400: #0f46bd;
+  --primary-m500: #0b348e;
+  --primary-m600: #07235f;
+
   --art-cyan: #07d9cc;
   --art-cyan-rgb: 7, 217, 204;
   --art-purple: #9490df;

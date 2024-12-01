@@ -10,7 +10,7 @@ type ColorType = { bg: string; text: string };
 const TYPE_COLOR: Record<string, ColorType> = {
   gray: { bg: "var(--gray200)", text: "var(--gray700)" },
   main: { bg: "rgba(var(--sub2-rgb), 0.7)", text: "var(--main)" },
-  subMain: { bg: "rgba(var(--sub2-rgb), 0.35)", text: "var(--sub0)" },
+  subMain: { bg: "rgba(var(--sub2-rgb), 0.35)", text: "var(--primary-m100)" },
   subRed: { bg: "rgba(239, 142, 141, 0.1)", text: "#ef8e8d" },
   purple: { bg: "rgba(var(--art-purple-rgb), 0.1)", text: "var(--art-purple)" },
   green: { bg: "rgba(var(--art-cyan-rgb), 0.1)", text: "#05aca2" },

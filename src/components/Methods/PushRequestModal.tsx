@@ -2,9 +2,20 @@ import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { handleNotifyFCM } from "./NotifyFCM";
 import { getCookie } from "cookies-next";
+import { usePost } from "@/apis/hook/query";
 
+interface FcmNotification {
+  notification: {
+    title: string;
+    body: string;
+    image: string;
+  };
+  token: string;
+}
 function PushRequestModal() {
   const [showPushButton, setShowPushButton] = useState(true);
+
+  const { mutate } = usePost<FcmNotification>("/api/v1/fcm/send");
 
   const hideButton = () => {
     setShowPushButton(false);
@@ -25,32 +36,15 @@ function PushRequestModal() {
     const token = getCookie("fcm_token") as string;
 
     const data = {
+      notification: {
+        title: "푸시 테스트",
+        body: "푸시 테스트입니다.",
+        image: "",
+      },
       token: token,
-      title: "푸시 테스트",
-      body: "푸시 테스트입니다.",
-      image: "",
-      click_action: "",
     };
 
-    try {
-      const res = await fetch("/api/fcm", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      const result = await res.json();
-      if (res.ok) {
-        window.alert("푸시 전송 성공");
-      } else {
-        window.alert(`푸시 전송 실패: ${result.error}`);
-      }
-    } catch (error) {
-      console.error("Error sending notification:", error);
-      window.alert("푸시 전송 중 오류 발생");
-    }
+    mutate({ data });
   };
 
   useEffect(() => {

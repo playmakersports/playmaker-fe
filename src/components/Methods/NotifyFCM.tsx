@@ -1,6 +1,6 @@
 import { setCookie } from "cookies-next";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getMessaging, getToken } from "firebase/messaging";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
@@ -25,9 +25,14 @@ export const handleNotifyFCM = async () => {
     .then(async (currentToken) => {
       if (currentToken) {
         setCookie("fcm_token", currentToken);
+        return currentToken;
       }
     })
     .catch((error) => {
       console.error(error);
     });
+
+  onMessage(messaging, (payload) => {
+    console.log("Message received. ", payload);
+  });
 };

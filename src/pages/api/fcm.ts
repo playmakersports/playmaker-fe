@@ -1,17 +1,6 @@
-import { getCookie } from "cookies-next";
 import admin, { ServiceAccount } from "firebase-admin";
 import { NextApiRequest, NextApiResponse } from "next";
 
-interface NotificationData {
-  data: {
-    title: string;
-    body: string;
-    image: string;
-    click_action: string;
-  };
-}
-
-// const sendFCMNotification = async (data: NotificationData) => {
 const serviceAccount: ServiceAccount = {
   projectId: "playermaker-a5720",
   privateKey: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY,
@@ -23,12 +12,6 @@ if (!admin.apps.length) {
     credential: admin.credential.cert(serviceAccount),
   });
 }
-// const fcm_token = getCookie("fcm_token") as string;
-// const notificationData = { ...data, token: fcm_token };
-// const res = await admin.messaging().send(notificationData);
-
-// return res;
-// };
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {

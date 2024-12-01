@@ -35,7 +35,7 @@ function PushRequestModal() {
   const sendFCMNotification = async () => {
     const token = getCookie("fcm_token") as string;
 
-    const data = {
+    const fcmSendDto = {
       notification: {
         title: "푸시 테스트",
         body: "푸시 테스트입니다.",
@@ -44,7 +44,7 @@ function PushRequestModal() {
       token: token,
     };
 
-    mutate({ data });
+    mutate({ data: { fcmSendDto } });
   };
 
   useEffect(() => {

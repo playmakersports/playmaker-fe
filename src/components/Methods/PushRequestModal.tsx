@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { handleNotifyFCM } from "./NotifyFCM";
+import { getCookie } from "cookies-next";
 
 function PushRequestModal() {
   const [showPushButton, setShowPushButton] = useState(true);
@@ -20,6 +21,38 @@ function PushRequestModal() {
     });
   };
 
+  const sendFCMNotification = async () => {
+    const token = getCookie("fcm_token") as string;
+
+    const data = {
+      token: token,
+      title: "푸시 테스트",
+      body: "푸시 테스트입니다.",
+      image: "",
+      click_action: "",
+    };
+
+    try {
+      const res = await fetch("/api/fcm", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+      if (res.ok) {
+        window.alert("푸시 전송 성공");
+      } else {
+        window.alert(`푸시 전송 실패: ${result.error}`);
+      }
+    } catch (error) {
+      console.error("Error sending notification:", error);
+      window.alert("푸시 전송 중 오류 발생");
+    }
+  };
+
   useEffect(() => {
     handleNotifyFCM();
   }, []);
@@ -28,6 +61,7 @@ function PushRequestModal() {
     return (
       <Container>
         <button onClick={handleClickToPushActive}>푸시 허용</button>
+        <button onClick={sendFCMNotification}>푸시 보내기</button>
         <button onClick={hideButton}>닫기</button>
       </Container>
     );

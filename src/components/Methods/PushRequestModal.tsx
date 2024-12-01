@@ -34,17 +34,13 @@ function PushRequestModal() {
 
   const sendFCMNotification = async () => {
     const token = getCookie("fcm_token") as string;
-
-    const fcmSendDto = {
-      notification: {
-        title: "푸시 테스트",
-        body: "푸시 테스트입니다.",
-        image: "",
-      },
+    const data = {
+      title: "플메 - 푸시 테스트",
+      body: "푸시 테스트입니다.",
       token: token,
     };
 
-    mutate({ data: { fcmSendDto } });
+    mutate({ data });
   };
 
   useEffect(() => {
@@ -55,7 +51,7 @@ function PushRequestModal() {
     return (
       <Container>
         <button onClick={handleClickToPushActive}>푸시 허용</button>
-        <button onClick={sendFCMNotification}>푸시 보내기</button>
+        <button onClick={sendFCMNotification}>보내기</button>
         <button onClick={hideButton}>닫기</button>
       </Container>
     );
@@ -80,9 +76,6 @@ const Container = styled.div`
     opacity: 0.25;
     &:hover {
       opacity: 1;
-    }
-    &:first-of-type {
-      margin-right: 12px;
     }
   }
 `;

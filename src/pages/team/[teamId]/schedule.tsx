@@ -1,23 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useRouter } from "next/router";
 import styled from "@emotion/styled";
-import { getDate, getDay, getMonth, isSameDay, subMonths } from "date-fns";
+import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
 import useBgWhite from "@/hook/useBgWhite";
+import useStickyMoment from "@/hook/useStickyMoment";
 
+import { TEAM_SCHEDULE_MOCK } from "@/constants/mock/TEAM";
 import Loading from "@/components/common/Loading";
-import { BUTTON_ACTIVE, FONTS, INNER_BUTTON_ACTIVE } from "@/styles/common";
-import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
-import { BasicWhiteCardTitle } from "@/components/common/Card";
-import { DateKeypadInput } from "@/components/common/PlainInput";
+import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import { BaseContainer } from "@/components/common/Container";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";
+import LocationIcon from "@/assets/icon/global/Location.svg";
+import CalendarIcon from "@/assets/icon/global/Calendar.svg";
+import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 
 function Schedule() {
   const router = useRouter();
   const teamId = router.query.teamId;
+  const calendarRef = useRef<HTMLDivElement>(null);
+  useStickyMoment(calendarRef);
   useBgWhite();
   usePageTitle({
     title: "일정",
@@ -30,32 +37,12 @@ function Schedule() {
     ],
   });
 
-  const { dayList, weekCalendarList, currentDate, currentDateHoliday, setCurrentDate } = useCalendar();
+  const { dayList, weekCalendarList, currentDate, setCurrentDate } = useCalendar();
   const { ModalComponents, showModal } = useModal();
-  const [nowDateValue, setNowDateValue] = useState<{ year: number | string; month: number | string }>({
-    year: currentDate.getFullYear(),
-    month: currentDate.getMonth() + 1,
-  });
 
   const handleMonthMove = (direction: "PREV" | "NEXT") => {
     const targetDate = subMonths(currentDate, direction === "PREV" ? +1 : -1);
     setCurrentDate(targetDate);
-    setNowDateValue({
-      year: targetDate.getFullYear(),
-      month: targetDate.getMonth() + 1,
-    });
-  };
-
-  const setTargetDate = (target?: string) => {
-    if (target) {
-      const [year, month] = target?.split("/");
-      setCurrentDate(new Date(`${year}/${month}/01`));
-      setNowDateValue({ year, month });
-    } else {
-      // 빈 값이면 오늘로 이동
-      setCurrentDate(new Date());
-      setNowDateValue({ year: new Date().getFullYear(), month: new Date().getMonth() + 1 });
-    }
   };
 
   // 캘린더 이동
@@ -97,44 +84,28 @@ function Schedule() {
     <Container>
       <CalendarContainer>
         <Header>
-          <Control onClick={() => handleMonthMove("PREV")}>이전달</Control>
           <NowDate>
-            <DateKeypadInput
-              type="number"
-              pattern="[0-9]*"
-              inputMode="numeric"
-              style={{ width: "64px" }}
-              value={nowDateValue.year}
-              onFocus={(e) => e.target.select()}
-              onChange={(e) => setNowDateValue((prev) => ({ ...prev, year: e.target.value }))}
-              onBlur={(e) => {
-                if (e.target.value !== "" && Number(e.target.value) > 1900 && Number(e.target.value) < 2999) {
-                  setTargetDate(`${nowDateValue.year}/${nowDateValue.month}/01`);
-                } else {
-                  setTargetDate();
-                }
+            <DateSwiperSelect
+              defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
+              getCurrentValue={({ y, m, d }) => {
+                setCurrentDate(new Date(y, m - 1, d));
               }}
+              // eslint-disable-next-line react/no-children-prop
+              children={(showModal) => (
+                <button type="button" onClick={showModal} className="date-control-button">
+                  {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
+                </button>
+              )}
             />
-            .
-            <DateKeypadInput
-              type="number"
-              pattern="[0-9]*"
-              inputMode="numeric"
-              style={{ width: "32px" }}
-              value={nowDateValue.month}
-              onFocus={(e) => e.target.select()}
-              onChange={(e) => setNowDateValue((prev) => ({ ...prev, month: e.target.value }))}
-              onBlur={(e) => {
-                if (e.target.value !== "" && Number(e.target.value) > 0 && Number(e.target.value) < 13) {
-                  setTargetDate(`${nowDateValue.year}/${nowDateValue.month}/01`);
-                } else {
-                  setTargetDate();
-                }
-              }}
-            />
-            .
           </NowDate>
-          <Control onClick={() => handleMonthMove("NEXT")}>다음달</Control>
+          <MonthMover>
+            <MonthArrow onClick={() => handleMonthMove("PREV")}>
+              <LeftArrowIcon />
+            </MonthArrow>
+            <MonthArrow onClick={() => handleMonthMove("NEXT")}>
+              <RightArrowIcon />
+            </MonthArrow>
+          </MonthMover>
         </Header>
         <Days
           className={swipeDirection}
@@ -149,45 +120,49 @@ function Schedule() {
               <DayName key={value}>{value}</DayName>
             ))}
           </Week>
-          {weekCalendarList.map((week, weekNum) => (
-            <Week key={weekNum}>
-              {week.map((day) => (
-                <Day
-                  key={day.date.toString()}
-                  data-active={true}
-                  thisMonth={!(day.nextMonth || day.previousMonth)}
-                  isHoliday={day.holiday.isHoliday}
-                  className={isSameDay(day.date, currentDate) ? "current-date" : ""}
-                  onClick={() => {
-                    setCurrentDate(day.date);
-                    setNowDateValue({ year: day.date.getFullYear(), month: day.date.getMonth() + 1 });
-                  }}
-                >
-                  {day.displayValue}
-                </Day>
-              ))}
-            </Week>
-          ))}
+          <Weeks ref={calendarRef}>
+            {weekCalendarList.map((week, weekNum) => {
+              const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
+              return (
+                <Week key={weekNum} className={isActiveWeek ? "active-week" : ""}>
+                  {week.map((day) => (
+                    <Day
+                      key={day.date.toString()}
+                      data-active={true}
+                      thisMonth={!(day.nextMonth || day.previousMonth)}
+                      isHoliday={day.holiday.isHoliday}
+                      className={isSameDay(day.date, currentDate) ? "current-date" : ""}
+                      onClick={() => {
+                        setCurrentDate(day.date);
+                      }}
+                    >
+                      {day.displayValue}
+                    </Day>
+                  ))}
+                </Week>
+              );
+            })}
+          </Weeks>
         </Days>
       </CalendarContainer>
-      <WhiteSectionDivider />
       <ScheduleContainer>
-        <ScheduleAreaTitle>
-          {getMonth(currentDate) + 1}월 {getDate(currentDate)}일 {dayList[getDay(currentDate)]}요일{" "}
-          <span className="holiday-name">{currentDateHoliday.holidayName}</span>
-        </ScheduleAreaTitle>
         {/* <Loading /> */}
         <ScheduleList>
-          {SCHEDULE_DUMMY.map((item, index) => (
-            <li key={`${item.date}+${index}`}>
-              <button type="button" onClick={() => showModal()}>
-                <div className="inner-button">
-                  <div className="schedule-info">
-                    {item.startTime} - {item.endTime} / {item.schedulePlace}
-                  </div>
-                  <p className="schedule-name">{item.scheduleName}</p>
-                </div>
-              </button>
+          {TEAM_SCHEDULE_MOCK.map((item, index) => (
+            <li key={`${item.date}+${index}`} onClick={() => showModal()}>
+              <p className="schedule-emoji">{item.emoji}</p>
+              <p className="schedule-title">{item.title}</p>
+              <p className="schedule-description">{item.description}</p>
+              <div className="schedule-info">
+                <p>
+                  <LocationIcon />
+                  {item.place}
+                </p>
+                <p>
+                  <CalendarIcon />
+                  {item.startTime} - {item.endTime}
+                </p>
+              </div>
             </li>
           ))}
         </ScheduleList>
@@ -207,85 +182,61 @@ function Schedule() {
   );
 }
 
-const SCHEDULE_DUMMY = [
-  {
-    scheduleType: "A",
-    startTime: "16:30",
-    endTime: "23:00",
-    date: "2024-05-10",
-    scheduleName: "연습게임 1",
-    schedulePlace: "성균관대학교 경기장",
-  },
-  {
-    scheduleType: "B",
-    startTime: "16:30",
-    endTime: "23:00",
-    date: "2024-05-10",
-    scheduleName: "연습게임 2",
-    schedulePlace: "한양대학교 경기장",
-  },
-  {
-    scheduleType: "A",
-    startTime: "16:30",
-    endTime: "23:00",
-    date: "2024-05-10",
-    scheduleName: "연습게임 3",
-    schedulePlace: "성균관대학교 경기장",
-  },
-  {
-    scheduleType: "B",
-    startTime: "21:30",
-    endTime: "22:00",
-    date: "2024-09-10",
-    scheduleName: "연습게임 4",
-    schedulePlace: "성균관대학교 경기장",
-  },
-];
-
+const CalendarContainer = styled.article`
+  margin: 0 -16px 14px;
+  padding: 0 0 20px;
+  &:has(.stuck) {
+    padding-bottom: 32px;
+  }
+`;
+const ScheduleContainer = styled.div`
+  flex: 1;
+  margin: 0 -16px -24px;
+  height: max-content;
+  padding: 20px 16px calc(var(--env-sab) + 32px);
+  background-color: var(--background);
+  border-radius: 20px 20px 0 0;
+  border-top: 1px solid var(--gray100);
+`;
 const Container = styled(BaseContainer)`
   display: flex;
   padding-bottom: 32px;
   height: calc(100vh - var(--safe-area-top) - 1px);
   flex-direction: column;
-  overflow: hidden;
+
+  &:has(.stuck) {
+    ${ScheduleContainer} {
+      border-top: none;
+    }
+  }
 `;
-const CalendarContainer = styled.article`
-  padding-bottom: 14px;
-`;
-const ScheduleContainer = styled.div`
-  flex: 1;
-  margin: 0 -16px -24px;
-  padding: 4px 20px var(--env-sab);
-  background-color: var(--background);
-  overflow-y: scroll;
-`;
+
 const Header = styled.div`
   display: flex;
-  justify-content: center;
+  padding: 0 28px;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
 `;
 const NowDate = styled.div`
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-end;
   line-height: 2.8rem;
-  font-size: 2.4rem;
-  font-weight: 900;
-  input {
+  button.date-control-button {
+    margin: -8px;
+    padding: 6px 12px;
     font-size: 2.2rem;
-    font-weight: 900;
+    font-weight: 600;
+    ${BUTTON_ACTIVE("var(--gray50)")};
   }
 `;
 const Days = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2px;
   ${FONTS.MD1W500};
   font-size: 1.6rem;
-  transform: translateX(0);
   transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
 
   &.L {
@@ -298,19 +249,64 @@ const Days = styled.div`
 
 const Week = styled.div`
   display: flex;
+  padding: 0 20px;
+`;
+const Weeks = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  &.stuck {
+    ${Week}.active-week {
+      position: fixed;
+      width: 100%;
+      max-width: var(--mobile-max-width);
+      height: max-content;
+      padding-top: 12px;
+      padding-bottom: 20px;
+      top: var(--safe-area-top);
+      opacity: 1;
+      z-index: 1;
+      background-color: var(--background-light);
+      &::after {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 100%;
+        height: 36px;
+        left: 0;
+        bottom: -24px;
+        background: linear-gradient(to bottom, rgba(var(--background-rgb), 1) 0%, rgba(var(--background-rgb), 0) 100%);
+        border-radius: 20px 20px 0 0;
+        border-top: 1px solid var(--gray100);
+      }
+    }
+    ${Week} {
+      margin-top: -4px;
+      height: 12px;
+      opacity: 0;
+      transition: padding 0.3s, opacity 0.3s, height 0.3s, opacity 0.3s;
+    }
+  }
 `;
 const DayName = styled.div`
   flex: 1;
-  margin-bottom: -8px;
   text-align: center;
   font-size: 1.4rem;
-  opacity: 0.6;
+  font-weight: 400;
+  color: var(--gray700);
 `;
-const Control = styled.button`
-  padding: 12px 20px;
-  font-size: 1.4rem;
-  ${BUTTON_ACTIVE()};
-  opacity: 0.7;
+const MonthMover = styled.div`
+  display: flex;
+  gap: 4px;
+`;
+const MonthArrow = styled.button`
+  padding: 10px;
+  ${BUTTON_ACTIVE("var(--gray50)")};
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--gray500);
+  }
 `;
 
 const MonthDirection = styled.div`
@@ -350,12 +346,12 @@ const DirectionR = styled(MonthDirection)`
 const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
   position: relative;
   flex: 1;
-  padding: 8px 0 20px;
+  padding: 12px 0 24px;
   text-align: center;
   border: 1px solid transparent;
   color: ${({ isHoliday }) => (isHoliday ? "var(--point-red)" : "var(--text)")};
   opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
-  ${BUTTON_ACTIVE()};
+  ${BUTTON_ACTIVE("var(--primary-m20)")};
 
   &[aria-invalid] {
     visibility: hidden;
@@ -366,74 +362,58 @@ const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
     left: 50%;
     transform: translateX(-50%);
     display: block;
-    margin: 4px auto 0;
+    margin: 8px auto 0;
     width: 4px;
     height: 4px;
-    background-color: var(--main);
+    background-color: var(--sub0);
     border-radius: 100%;
   }
   &.current-date {
-    border: 1px solid var(--gray300);
-    box-shadow: 0 0 12px 2px rgba(0, 0, 0, 0.1);
+    background-color: var(--primary-m20);
     transform: scale(1.03);
-  }
-`;
-
-const ScheduleAreaTitle = styled(BasicWhiteCardTitle)`
-  margin: 4px 0 8px;
-  padding: 0;
-  width: 100%;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 1.8rem;
-  .holiday-name {
-    color: var(--point);
-    ${FONTS.MD2}
   }
 `;
 
 const ScheduleList = styled.ul`
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
+
   li {
-    margin: 0 -12px;
-  }
-  li > button {
-    padding: 8px 12px;
+    cursor: pointer;
+    padding: 16px 20px;
+    background-color: var(--background-light);
     width: 100%;
-    ${INNER_BUTTON_ACTIVE("var(--background-light)")};
-    .inner-button {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
-    }
+    ${BUTTON_ACTIVE("var(--background-light)")};
   }
-  .schedule-info {
-    opacity: 0.8;
+
+  p.schedule-emoji {
+    font-size: 1.6rem;
+  }
+  p.schedule-title {
+    margin-bottom: 6px;
+    ${FONTS.MD1}
+  }
+  p.schedule-description {
     ${FONTS.MD2};
     font-weight: 400;
+    color: var(--gray800);
   }
-  .schedule-name {
-    display: inline-flex;
-    padding-left: 2px;
-    align-items: center;
-    gap: 8px;
-    ${FONTS.MD1}
-    &::before {
-      content: "";
-      display: inline-block;
-      width: 6px;
-      height: 6px;
-      background-color: var(--main);
-      border-radius: 50%;
+  div.schedule-info {
+    margin-top: 12px;
+    ${FONTS.MD2};
+    font-weight: 400;
+    p {
+      display: flex;
+      padding: 2px 0;
+      align-items: center;
+      gap: 10px;
+      color: var(--gray600);
+      svg {
+        fill: var(--gray600);
+      }
     }
   }
 `;
 
-Schedule.getInitialProps = async () => {
-  return {};
-};
 export default Schedule;

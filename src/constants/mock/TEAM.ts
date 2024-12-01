@@ -46,3 +46,51 @@ export const TEAM_PLAYERS_MOCK = [
     gender: "m",
   },
 ];
+
+export const TEAM_SCHEDULE_MOCK = [
+  {
+    emoji: "⚡️",
+    startTime: "16:30",
+    endTime: "23:00",
+    date: "2024-05-10",
+    title: "연습게임 1",
+    place: "성균관대학교 경기장",
+    description: "올해의 마지막 경기. 모두 화이팅!",
+  },
+  {
+    emoji: "🍖",
+    startTime: "16:30",
+    endTime: "23:00",
+    date: "2024-12-10",
+    title: "종강 회식",
+    place: "전통주점",
+    description: "필참",
+  },
+  {
+    emoji: "🏀",
+    startTime: "16:30",
+    endTime: "23:00",
+    date: "2024-05-10",
+    title: "연습게임 3",
+    place: "성균관대학교 경기장",
+    description: "가장 중요한 대회",
+  },
+  {
+    emoji: "🏀",
+    startTime: "21:30",
+    endTime: "22:00",
+    date: "2024-09-10",
+    title: "연습게임 4",
+    place: "성균관대학교 경기장",
+    description: "가장 중요한 대회",
+  },
+  {
+    emoji: "",
+    startTime: "21:30",
+    endTime: "22:00",
+    date: "2024-09-10",
+    title: "연습게임 4",
+    place: "성균관대학교 경기장",
+    description: "가장 중요한 대회",
+  },
+];

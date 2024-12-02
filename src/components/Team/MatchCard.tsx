@@ -42,7 +42,7 @@ function MatchCard(props: Props) {
     mvpId,
   } = props;
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const competitionId = router.query.competitionId;
 
   const STATUS_NAME: Record<string, string> = {
     PENDING: "경기 중",
@@ -51,7 +51,7 @@ function MatchCard(props: Props) {
   };
 
   return (
-    <Container>
+    <Container role="button" onClick={() => router.push(`/match/${matchId}`)}>
       <MatchWrapper>
         <Team>
           <img src={teamLogo} alt={teamName} />

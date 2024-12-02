@@ -45,7 +45,7 @@ function Intro() {
                 },
               });
             } else {
-              await confirm?.showConfirm("필수 약관에 모두 동의해야 합니다");
+              await confirm?.showAlert("필수 약관에 모두 동의해야 합니다");
             }
           },
         }}

@@ -33,7 +33,7 @@ function GradientBg({
             filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
             <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur_1862_2164" />
           </filter>
@@ -48,7 +48,7 @@ function GradientBg({
         xmlns="http://www.w3.org/2000/svg"
       >
         <g filter="url(#filter0_f_1862_2163)">
-          <circle cx="77" cy="77" r="40" stroke="#20FF76" stroke-opacity="0.8" stroke-width="4" />
+          <circle cx="77" cy="77" r="40" stroke="#20FF76" strokeOpacity="0.8" strokeWidth="4" />
         </g>
         <defs>
           <filter
@@ -58,7 +58,7 @@ function GradientBg({
             width="152.293"
             height="152.293"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />

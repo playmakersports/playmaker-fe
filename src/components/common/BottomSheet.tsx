@@ -4,6 +4,7 @@ import Button, { ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
 
 export type BottomSheetProps = {
+  disabledDimOut?: boolean;
   setShow: (prev: boolean) => void;
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   header?: ReactNode;
@@ -19,7 +20,7 @@ export type BottomSheetProps = {
 
 const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
-  const { setShow, children, header, expanded, buttons } = props;
+  const { disabledDimOut = false, setShow, children, header, expanded, buttons } = props;
   const [showModal, setShowModal] = useState(false);
 
   const closeBottomSheet = () => {
@@ -70,7 +71,7 @@ function BottomSheet(props: BottomSheetProps) {
           </ButtonWrapper>
         )}
       </Wrapper>
-      <Backdrop isShow={showModal} onClick={closeBottomSheet} />
+      <Backdrop isShow={showModal} onClick={disabledDimOut ? () => {} : closeBottomSheet} />
     </>
   );
 }

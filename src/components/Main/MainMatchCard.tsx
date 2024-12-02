@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { countDayDiff, formattedDate } from "@/util/date";
@@ -16,10 +17,10 @@ type Props = {
   matchLocation: string;
   openedBy: string;
   openedByLogo?: string;
-  homeName?: string;
-  awayName?: string;
-  homeLogo?: string;
-  awayLogo?: string;
+  homeName: string;
+  awayName: string;
+  homeLogo: string;
+  awayLogo: string;
   attendMembers?: number;
 };
 function MainMatchCard(props: Props) {
@@ -51,21 +52,23 @@ function MainMatchCard(props: Props) {
         <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
           <div className="home-team team-wrapper">
             <div className="team-inner">
-              <img src={homeLogo} alt={homeName} aria-disabled />
+              <Image src={homeLogo} alt={homeName} width={48} height={48} aria-disabled />
               <span className="team-name">{homeName}</span>
             </div>
           </div>
           <p className="versers">vs</p>
           <div className="away-team team-wrapper">
             <div className="team-inner">
-              <img src={awayLogo} alt={awayName} aria-disabled />
+              <Image src={awayLogo} alt={awayName} width={48} height={48} aria-disabled />
               <span className="team-name">{awayName}</span>
             </div>
           </div>
         </MatchBox>
-        <Opened>
-          <img src={openedByLogo} className="opened-by-logo" /> {openedBy}
-        </Opened>
+        {openedBy && openedByLogo && (
+          <Opened>
+            <Image src={openedByLogo} width={28} height={28} alt="" className="opened-by-logo" /> {openedBy}
+          </Opened>
+        )}
         <DetailList>
           <li>
             <dt>일시</dt>
@@ -209,8 +212,6 @@ const MatchBox = styled.div`
     img {
       padding: 2px;
       flex-shrink: 0;
-      width: 48px;
-      height: 48px;
       border-radius: 100%;
       background-color: #fff;
       border: 1px solid var(--neutral-n20);
@@ -236,8 +237,6 @@ const Opened = styled.p`
 
   .opened-by-logo {
     padding: 2px;
-    width: 28px;
-    height: 28px;
     background-color: #fff;
     border: 1px solid var(--gray200);
     border-radius: 100%;

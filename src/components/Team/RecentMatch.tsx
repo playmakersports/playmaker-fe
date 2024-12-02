@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 import { BasicWhiteCard } from "../common/Card";
 import GroupTitle from "../common/GroupTitle";
@@ -37,7 +38,7 @@ function RecentMatch(props: Props) {
         <MatchWrapper>
           <Team>
             <span>{teamName}</span>
-            <img src={teamLogo} alt={teamName} />
+            <Image src={teamLogo} alt={teamName} width={40} height={40} />
           </Team>
           <MatchInfo>
             <p className="match-score">
@@ -53,7 +54,7 @@ function RecentMatch(props: Props) {
           </MatchInfo>
           <Team className="reversed-order">
             <span>{counterpartTeamName}</span>
-            <img src={counterpartTeamLogo} alt={counterpartTeamName} />
+            <Image src={counterpartTeamLogo} alt={counterpartTeamName} width={40} height={40} />
           </Team>
         </MatchWrapper>
         <MoreButton text="경기 자세히 보기" href={""} />
@@ -88,8 +89,6 @@ const Team = styled.div`
   }
   img {
     padding: 2px;
-    width: 40px;
-    height: 40px;
     border-radius: 50%;
     border: 1px solid var(--gray200);
   }

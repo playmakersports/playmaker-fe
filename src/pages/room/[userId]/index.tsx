@@ -53,7 +53,7 @@ function UserPage({ userId }: { userId: string }) {
         </Info>
         <div className="profile-image">
           {data?.imageUrl ? (
-            <img src={data?.imageUrl} alt="" width={92} height={92} />
+            <Image src={data?.imageUrl} alt="" width={92} height={92} />
           ) : (
             <Image src={data?.sexKey === "남성" ? MaleCharacter : FemaleCharacter} alt="" width={92} height={92} />
           )}

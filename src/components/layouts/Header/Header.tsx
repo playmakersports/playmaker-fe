@@ -13,14 +13,15 @@ type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
   const isWhiteBg = useAtomValue(atomBgWhite);
   const router = useRouter();
-  const { getTitle, getSubTitle, getTransparent, getSubIcons } = usePageTitle();
+  const { titleValue, subTitleValue, isTransparent, scrollBgColorValue, subIconsValue } = usePageTitle();
 
-  const isTitleShow = getTransparent ? scrollActive > 160 : true;
+  const isScrolled = scrollActive > (scrollBgColorValue ? scrollBgColorValue.trigger : 160);
+  const isTitleShow = isTransparent ? isScrolled : true;
 
   if (router.asPath === "/") {
     return <MainHeader />;
   }
-  if (getTransparent) {
+  if (isTransparent) {
     return (
       <TransparentWrapper bgWhite={isWhiteBg} scrolled={isTitleShow}>
         <HeaderInner>
@@ -28,11 +29,11 @@ function Header({ scrollActive }: Props) {
             <HeaderLeftArrow />
           </Icon>
           <PageTitle scrolled={isTitleShow}>
-            {getSubTitle && <p>{getSubTitle}</p>}
-            <h2 className="main-title">{getTitle}</h2>
+            {subTitleValue && <p>{subTitleValue}</p>}
+            <h2 className="main-title">{titleValue}</h2>
           </PageTitle>
           <RightIcons>
-            {getSubIcons.map((icon) => (
+            {subIconsValue.map((icon) => (
               <Icon
                 key={icon.linkTo}
                 type="button"
@@ -48,17 +49,21 @@ function Header({ scrollActive }: Props) {
     );
   }
   return (
-    <Wrapper bgWhite={isWhiteBg}>
+    <Wrapper
+      bgWhite={isWhiteBg}
+      bgColor={scrollBgColorValue && [scrollBgColorValue.beforeBg, scrollBgColorValue.afterBg]}
+      scrolled={isScrolled}
+    >
       <HeaderInner>
         <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
           <HeaderLeftArrow />
         </Icon>
         <PageTitle scrolled>
-          {getSubTitle && <p>{getSubTitle}</p>}
-          <h2 className="main-title">{getTitle}</h2>
+          {subTitleValue && <p>{subTitleValue}</p>}
+          <h2 className="main-title">{titleValue}</h2>
         </PageTitle>
         <RightIcons>
-          {getSubIcons.map((icon) => (
+          {subIconsValue.map((icon) => (
             <Icon key={icon.linkTo} type="button" onClick={() => router.push(icon.linkTo)}>
               {icon.svgIcon}
             </Icon>
@@ -70,14 +75,19 @@ function Header({ scrollActive }: Props) {
 }
 
 type StyledScrolled = { scrolled?: boolean };
-type WrapperStyledType = { bgWhite: boolean };
+type WrapperStyledType = { bgWhite: boolean; bgColor?: [string, string] | null };
 const Icon = styled(HeaderIcon)`
   svg {
     fill: var(--gray700);
   }
 `;
 const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
-  background-color: ${({ bgWhite }) => (bgWhite ? "var(--background-light)" : "var(--background)")};
+  background-color: ${({ scrolled, bgColor, bgWhite }) => {
+    if (bgColor) {
+      return scrolled ? bgColor[1] : bgColor[0];
+    }
+    return bgWhite ? "var(--background-light)" : "var(--background)";
+  }};
 `;
 
 const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`

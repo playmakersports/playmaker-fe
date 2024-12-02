@@ -4,21 +4,22 @@ import { FONTS } from "@/styles/common";
 import { keyframes } from "@emotion/react";
 
 type Props = {
+  isAlert?: boolean;
   message: string;
   buttonText: { yes: string; no: string };
   handleConfirm: (props: boolean) => void;
 };
 
 function Confirm(props: Props) {
-  const { message, buttonText, handleConfirm } = props;
+  const { isAlert = false, message, buttonText, handleConfirm } = props;
 
   return (
     <Backdrop>
       <Container role="dialog" aria-modal="true">
         <Message>{message}</Message>
         <Buttons>
-          <ModalButton onClick={() => handleConfirm(false)}>{buttonText.no}</ModalButton>
-          <ModalButton onClick={() => handleConfirm(true)}>{buttonText.yes}</ModalButton>
+          <ModalButton onClick={() => handleConfirm(false)}>{isAlert ? "닫기" : buttonText.no}</ModalButton>
+          {!isAlert && <ConfirmButton onClick={() => handleConfirm(true)}>{buttonText.yes}</ConfirmButton>}
         </Buttons>
       </Container>
     </Backdrop>
@@ -49,31 +50,44 @@ const Container = styled.section`
   min-width: 320px;
   height: max-content;
   background: var(--gray50);
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   animation: ${ShowContainer} 0.3s var(--animate-pop);
 `;
 
 const Message = styled.p`
   ${FONTS.MD1W500};
+  font-size: 1.8rem;
   line-height: 2.6rem;
-  padding: 36px 12px;
+  padding: 40px 12px 36px;
   text-align: center;
-  border-bottom: 1px solid var(--gray300);
   white-space: pre-wrap;
 `;
 const Buttons = styled.div`
   display: flex;
+  gap: 16px;
+  padding: 0 16px 16px;
 `;
 const ModalButton = styled.button`
-  padding: 20px 0;
   flex: 1;
-  font-size: 1.4rem;
-  &:last-of-type {
-    background-color: var(--gray200);
-  }
-  &:focus {
+  ${FONTS.MD1W500};
+  padding: 14px 0;
+  border: 1px solid var(--gray100);
+  background-color: var(--gray200);
+  border-radius: 10px;
+  color: var(--gray800);
+
+  &:active {
     background-color: var(--gray300);
+  }
+`;
+const ConfirmButton = styled(ModalButton)`
+  border: 1px solid transparent;
+  background-color: var(--main);
+  color: var(--gray0);
+
+  &:active {
+    background-color: var(--primary-m200);
   }
 `;
 

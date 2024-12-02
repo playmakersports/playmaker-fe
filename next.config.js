@@ -4,13 +4,23 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
   runtimeCaching,
-  // disable: prod ? false : true
+  // disable: process.env.NODE_ENV !== "production", // Enable PWA only in production
 });
 
 const nextConfig = withPWA({
   reactStrictMode: true,
+  swcMinify: true,
   compiler: { emotion: true },
   webpack(config) {
+    // Centralize fallback
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      net: false,
+      fs: false,
+      tls: false,
+    };
+
+    // Add SVG support
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
@@ -19,4 +29,5 @@ const nextConfig = withPWA({
     return config;
   },
 });
+
 module.exports = nextConfig;

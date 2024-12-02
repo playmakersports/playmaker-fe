@@ -1,13 +1,16 @@
 import React from "react";
 import Toast from "./Toast";
 import ConfirmProvider from "./ConfirmProvider";
+import ErrorBoundary from "./QueryErrorBoundary";
 
 function GlobalComponents({ children }: { children: React.ReactNode }) {
   return (
-    <ConfirmProvider>
-      <Toast />
-      {children}
-    </ConfirmProvider>
+    <ErrorBoundary>
+      <ConfirmProvider>
+        <Toast />
+        {children}
+      </ConfirmProvider>
+    </ErrorBoundary>
   );
 }
 

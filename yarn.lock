@@ -8122,6 +8122,7 @@ __metadata:
     next-pwa: "npm:^5.6.0"
     react: "npm:^18"
     react-dom: "npm:^18"
+    react-error-boundary: "npm:^4.1.2"
     react-hook-form: "npm:^7.51.3"
     react-youtube: "npm:^10.1.0"
     turbo: "npm:^2.2.3"
@@ -8457,6 +8458,17 @@ __metadata:
   peerDependencies:
     react: ^18.2.0
   checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+  languageName: node
+  linkType: hard
+
+"react-error-boundary@npm:^4.1.2":
+  version: 4.1.2
+  resolution: "react-error-boundary@npm:4.1.2"
+  dependencies:
+    "@babel/runtime": "npm:^7.12.5"
+  peerDependencies:
+    react: ">=16.13.1"
+  checksum: 10c0/0737e5259bed40ce14eb0823b3c7b152171921f2179e604f48f3913490cdc594d6c22d43d7abb4ffb1512c832850228db07aa69d3b941db324953a5e393cb399
   languageName: node
   linkType: hard
 

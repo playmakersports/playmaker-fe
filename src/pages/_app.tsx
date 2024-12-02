@@ -16,6 +16,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
+        throwOnError: true,
         refetchOnWindowFocus: false,
         retry: false,
       },
@@ -25,23 +26,23 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <Provider>
       <EmotionProvider>
-        <GlobalComponents>
-          <Head>
-            <title>{DEFAULT_HEAD_CONTENTS.title}</title>
-            <meta
-              name="viewport"
-              content="width=device-width, initial-scale=1, minimum-scale=1,  maximum-scale=1, user-scalable=no, viewport-fit=cover"
-            />
-          </Head>
-          <QueryClientProvider client={queryClient}>
-            <Layout>
+        <Head>
+          <title>{DEFAULT_HEAD_CONTENTS.title}</title>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1,  maximum-scale=1, user-scalable=no, viewport-fit=cover"
+          />
+        </Head>
+        <QueryClientProvider client={queryClient}>
+          <Layout>
+            <GlobalComponents>
               <TokenRoute>
                 <Component {...pageProps} />
               </TokenRoute>
-            </Layout>
-          </QueryClientProvider>
-          {/* <EventNotification /> */}
-        </GlobalComponents>
+            </GlobalComponents>
+          </Layout>
+        </QueryClientProvider>
+        {/* <EventNotification /> */}
       </EmotionProvider>
     </Provider>
   );

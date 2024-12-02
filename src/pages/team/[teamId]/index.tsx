@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
-
+import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
+
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
 import { BaseContainer, WhiteSectionDivider, WhiteSectionWrapper } from "@/components/common/Container";
@@ -13,8 +14,8 @@ import WeeklyCalender from "@/components/common/WeeklyCalender";
 import Heart from "@/components/common/Heart";
 import ComingUpMatch from "@/components/Team/ComingUpMatch";
 
-import SettingsIcon from "@/assets/icon/global/Settings.svg";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
+import SettingsIcon from "@/assets/icon/global/Settings.svg";
 import MetaTitle from "@/components/layouts/MetaTitle";
 import RecentMatch from "@/components/Team/RecentMatch";
 import BoardList from "@/components/Team/BoardList";
@@ -29,6 +30,7 @@ function TeamHome() {
   const [weeklyDate, setWeeklyDate] = useState("");
   const teamId = router.query.teamId;
 
+  useBgWhite();
   usePageTitle({
     title: TEAM_INFO_MOCK.teamName,
     transparent: true,

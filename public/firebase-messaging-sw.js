@@ -31,4 +31,3 @@ const showNotification = (payload) => {
 };
 
 messaging.onBackgroundMessage(showNotification);
-messaging.onMessage(showNotification);

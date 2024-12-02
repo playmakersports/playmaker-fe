@@ -1,6 +1,6 @@
 import { setCookie } from "cookies-next";
 import { getApp, getApps, initializeApp } from "firebase/app";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken, MessagePayload, onMessage } from "firebase/messaging";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCb34mKn7GABXRPWBg5WJjd4Ofg4SZs_Vo",
@@ -13,6 +13,24 @@ const firebaseConfig = {
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
+
+/**
+ * 알림 데이터 설정
+ * @param payload
+ */
+const showNotification = (payload: MessagePayload) => {
+  if (self.Notification && self.Notification.permission === "granted") {
+    if (payload.notification) {
+      const title = payload.notification?.title ?? "PlayerMaker";
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification(title, {
+          body: payload.notification?.body ?? "",
+          icon: payload.notification?.icon ?? "",
+        });
+      });
+    }
+  }
+};
 
 /**
  * FCM 토큰 발급
@@ -33,6 +51,6 @@ export const handleNotifyFCM = async () => {
     });
 
   onMessage(messaging, (payload) => {
-    console.log("Message received. ", payload);
+    showNotification(payload);
   });
 };

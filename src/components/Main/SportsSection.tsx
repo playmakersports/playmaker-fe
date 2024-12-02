@@ -4,7 +4,7 @@ import useStickyMoment from "@/hook/useStickyMoment";
 import { useRouter } from "next/router";
 
 import MainTab from "./MainTab";
-import MainMatchCard from "./MainMatchCard";
+import CompetitionCard from "./CompetitionCard";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
 import RecruitTeamItem from "./RecruitTeamItem";
@@ -47,21 +47,14 @@ function SportsSection() {
 
         <GroupTitle link="">대회 일정</GroupTitle>
         {COMPETITION_LIST_MOCK.map((competition, index) => (
-          <MainMatchCard
+          <CompetitionCard
             key={competition.competitionId}
-            size={index === 2 ? "LARGE" : "MEDIUM"}
             posterImg={competition.posterImg}
             competitionId={competition.competitionId}
             competitionName={competition.competitionName}
             startDate={competition.startDate}
             endDate={competition.endDate}
             matchLocation={competition.matchLocation}
-            openedBy={competition.openedBy}
-            openedByLogo={competition.openedByLogo}
-            homeName={competition.homeName}
-            homeLogo={competition.homeLogo}
-            awayName={competition.awayName}
-            awayLogo={competition.awayLogo}
           />
         ))}
       </Cards>

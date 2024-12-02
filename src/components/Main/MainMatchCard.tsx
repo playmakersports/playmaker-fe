@@ -1,14 +1,12 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import { countDayDiff, formattedDate } from "@/util/date";
+import { formattedDate } from "@/util/date";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
 
 type Props = {
-  size: "LARGE" | "MEDIUM";
   posterImg: string;
   competitionId: string;
   competitionName: string;
@@ -23,149 +21,78 @@ type Props = {
   awayLogo: string;
   attendMembers?: number;
 };
+
 function MainMatchCard(props: Props) {
-  const router = useRouter();
   const {
     posterImg,
-    competitionId,
     competitionName,
     startDate,
     endDate,
     matchLocation,
+    homeLogo,
+    homeName,
+    awayLogo,
+    awayName,
     openedBy,
     openedByLogo,
-    homeName,
-    homeLogo,
-    awayName,
-    awayLogo,
-    attendMembers,
   } = props;
-  const dayCount = () => {
-    if (countDayDiff(startDate) === 0) return "D-DAY";
-    return `D${countDayDiff(startDate) > 0 ? -countDayDiff(startDate) : "+" + -countDayDiff(startDate)}`;
-  };
 
-  if (props.size === "LARGE") {
-    return (
-      <LargeCardContainer>
-        <BasicWhiteCardTitle>{competitionName}</BasicWhiteCardTitle>
-        <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
-          <div className="home-team team-wrapper">
-            <div className="team-inner">
-              <Image src={homeLogo} alt={homeName} width={48} height={48} aria-disabled />
-              <span className="team-name">{homeName}</span>
-            </div>
+  return (
+    <LargeCardContainer>
+      <BasicWhiteCardTitle>{competitionName}</BasicWhiteCardTitle>
+      <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
+        <div className="home-team team-wrapper">
+          <div className="team-inner">
+            <Image src={homeLogo} alt={homeName} width={48} height={48} aria-disabled />
+            <span className="team-name">{homeName}</span>
           </div>
-          <p className="versers">vs</p>
-          <div className="away-team team-wrapper">
-            <div className="team-inner">
-              <Image src={awayLogo} alt={awayName} width={48} height={48} aria-disabled />
-              <span className="team-name">{awayName}</span>
-            </div>
+        </div>
+        <p className="versers">vs</p>
+        <div className="away-team team-wrapper">
+          <div className="team-inner">
+            <Image src={awayLogo} alt={awayName} width={48} height={48} aria-disabled />
+            <span className="team-name">{awayName}</span>
           </div>
-        </MatchBox>
-        {openedBy && openedByLogo && (
-          <Opened>
-            <Image src={openedByLogo} width={28} height={28} alt="" className="opened-by-logo" /> {openedBy}
-          </Opened>
-        )}
-        <DetailList>
-          <li>
-            <dt>일시</dt>
-            <dd>
-              {formattedDate(startDate, {
-                displayYear: "always",
-                displayDateType: "kr",
-                displayDayName: "hide",
-                displayTime: "hide",
-              })}{" "}
-              ~{" "}
-              {formattedDate(endDate, {
-                displayYear: "not-this-year",
-                displayDateType: "kr",
-                displayDayName: "hide",
-                displayTime: "hide",
-              })}
-            </dd>
-          </li>
-          <li>
-            <dt>장소</dt>
-            <dd>{matchLocation}</dd>
-          </li>
-        </DetailList>
-      </LargeCardContainer>
-    );
-  }
-  if (props.size === "MEDIUM") {
-    return (
-      <MediumCardContainer onClick={() => router.push(`/competition/${competitionId}`)}>
-        <div className="match-poster" style={{ backgroundImage: `url(${posterImg})` }} data-d-day={dayCount()} />
-        <MediumContents>
-          <h5>{competitionName}</h5>
-          <DetailList>
-            <li>
-              <dt>일시</dt>
-              <dd>
-                {formattedDate(startDate, {
-                  displayYear: "not-this-year",
-                  displayDateType: "kr",
-                  displayDayName: "hide",
-                  displayTime: "hide",
-                })}{" "}
-                ~{" "}
-                {formattedDate(endDate, {
-                  displayYear: "not-this-year",
-                  displayDateType: "kr",
-                  displayDayName: "hide",
-                  displayTime: "hide",
-                })}
-              </dd>
-            </li>
-            <li>
-              <dt>장소</dt>
-              <dd>{matchLocation}</dd>
-            </li>
-            {!!attendMembers && <li className="attend-number">우리 팀에서 {attendMembers}명 출전</li>}
-          </DetailList>
-        </MediumContents>
-      </MediumCardContainer>
-    );
-  }
-  return null;
+        </div>
+      </MatchBox>
+      {openedBy && openedByLogo && (
+        <Opened>
+          <Image src={openedByLogo} width={28} height={28} alt="" className="opened-by-logo" /> {openedBy}
+        </Opened>
+      )}
+      <DetailList>
+        <li>
+          <dt>일시</dt>
+          <dd>
+            {formattedDate(startDate, {
+              displayYear: "always",
+              displayDateType: "kr",
+              displayDayName: "hide",
+              displayTime: "hide",
+            })}{" "}
+            ~{" "}
+            {formattedDate(endDate, {
+              displayYear: "not-this-year",
+              displayDateType: "kr",
+              displayDayName: "hide",
+              displayTime: "hide",
+            })}
+          </dd>
+        </li>
+        <li>
+          <dt>장소</dt>
+          <dd>{matchLocation}</dd>
+        </li>
+      </DetailList>
+    </LargeCardContainer>
+  );
 }
 
 const LargeCardContainer = styled(BasicWhiteCard)`
   transition: transform 0.25s;
   ${CARD_ACTIVE}
 `;
-const MediumCardContainer = styled(BasicWhiteCard)`
-  display: flex;
-  padding: 0;
-  overflow: hidden;
 
-  .match-poster {
-    position: relative;
-    ${FONTS.MD1};
-    width: 112px;
-    height: 128px;
-    background-size: cover;
-    background-position: center;
-    background-color: var(--gray300);
-    &::before {
-      position: absolute;
-      content: attr(data-d-day);
-      top: 0;
-      left: 0;
-      margin: 8px;
-      padding: 2px 6px;
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      background-color: rgba(0, 0, 0, 0.1);
-      color: #fff;
-    }
-  }
-  ${CARD_ACTIVE}
-`;
 const MatchBox = styled.div`
   display: flex;
   align-items: center;
@@ -261,18 +188,6 @@ const DetailList = styled.ul`
     dd {
       color: var(--gray700);
     }
-  }
-`;
-
-const MediumContents = styled.div`
-  padding: 12px 18px;
-
-  h5 {
-    ${FONTS.MD1};
-    color: var(--gray900);
-  }
-  li.attend-number {
-    color: var(--main);
   }
 `;
 

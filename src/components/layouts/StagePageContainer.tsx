@@ -11,6 +11,7 @@ type Props = {
   title?: string;
   description?: string;
   button?: {
+    type?: "button" | "submit" | "reset";
     text: string;
     onClick: () => void;
     disabled?: boolean;
@@ -30,7 +31,13 @@ function StagePageContainer({ children, headerAlign = "left", stepper = false, t
       </article>
       {button && (
         <ButtonWrapper>
-          <Button type="button" mode="MAIN" onClick={button.onClick} disabled={button.disabled} fullWidth>
+          <Button
+            type={button.type ?? "button"}
+            mode="MAIN"
+            onClick={button.onClick}
+            disabled={button.disabled}
+            fullWidth
+          >
             {button.text}
           </Button>
         </ButtonWrapper>

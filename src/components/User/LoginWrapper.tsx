@@ -43,7 +43,7 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="#306DEF" />
-              <stop offset="1" stopColor="#306DEF" stop-opacity="0" />
+              <stop offset="1" stopColor="#306DEF" stopOpacity="0" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_2198_3712"
@@ -54,7 +54,7 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               gradientUnits="userSpaceOnUse"
             >
               <stop stopColor="#306DEF" />
-              <stop offset="1" stopColor="#306DEF" stop-opacity="0" />
+              <stop offset="1" stopColor="#306DEF" stopOpacity="0" />
             </linearGradient>
           </defs>
         </Background>

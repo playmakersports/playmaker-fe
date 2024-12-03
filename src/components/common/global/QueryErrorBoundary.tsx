@@ -10,11 +10,10 @@ function QueryErrorBoundary({ children }: { children: React.ReactNode }) {
       {({ reset }) => (
         <ErrorBoundary
           FallbackComponent={({ error, resetErrorBoundary }) => {
-            console.log(error);
             return (
               <ErrorFallback
-                status={error.response.status}
-                message={error.message}
+                status={error?.response?.status}
+                message={error?.message}
                 retry={() => resetErrorBoundary()}
               />
             );

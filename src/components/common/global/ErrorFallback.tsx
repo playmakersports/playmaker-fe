@@ -9,7 +9,7 @@ import FloatButton from "@/components/common/FloatButton";
 
 import Surprised from "@/assets/character/Surprised.svg";
 
-type Props = { status: number; message: string; retry: () => void };
+type Props = { status?: number; message?: string; retry: () => void };
 function ErrorFallback({ status, message, retry }: Props) {
   const router = useRouter();
 

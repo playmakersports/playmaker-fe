@@ -35,6 +35,10 @@ const Input = styled.input`
     border: 2px solid var(--main);
     color: var(--main);
   }
+  &:disabled + ${Card} {
+    transform: translateY(0);
+    box-shadow: none;
+  }
 `;
 
 export default CardInput;

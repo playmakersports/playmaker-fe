@@ -58,8 +58,8 @@ const Container = styled.section`
 const Message = styled.p`
   ${FONTS.MD1W500};
   font-size: 1.8rem;
-  line-height: 2.6rem;
-  padding: 40px 12px 36px;
+  line-height: 3rem;
+  padding: 40px 12px 32px;
   text-align: center;
   white-space: pre-wrap;
 `;

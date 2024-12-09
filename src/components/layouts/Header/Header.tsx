@@ -13,7 +13,8 @@ type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
   const isWhiteBg = useAtomValue(atomBgWhite);
   const router = useRouter();
-  const { titleValue, subTitleValue, isTransparent, scrollBgColorValue, subIconsValue } = usePageTitle();
+  const { titleValue, subTitleValue, isTransparent, scrollBgColorValue, subIconsValue, scrolledShadowValue } =
+    usePageTitle();
 
   const isScrolled = scrollActive > (scrollBgColorValue ? scrollBgColorValue.trigger : 160);
   const isTitleShow = isTransparent ? isScrolled : true;
@@ -23,7 +24,7 @@ function Header({ scrollActive }: Props) {
   }
   if (isTransparent) {
     return (
-      <TransparentWrapper bgWhite={isWhiteBg} scrolled={isTitleShow}>
+      <TransparentWrapper bgWhite={isWhiteBg} scrolled={isTitleShow} scrolledShadow={scrolledShadowValue}>
         <HeaderInner>
           <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
             <HeaderLeftArrow />
@@ -53,6 +54,7 @@ function Header({ scrollActive }: Props) {
       bgWhite={isWhiteBg}
       bgColor={scrollBgColorValue && [scrollBgColorValue.beforeBg, scrollBgColorValue.afterBg]}
       scrolled={isScrolled}
+      scrolledShadow={scrolledShadowValue}
     >
       <HeaderInner>
         <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
@@ -74,7 +76,7 @@ function Header({ scrollActive }: Props) {
   );
 }
 
-type StyledScrolled = { scrolled?: boolean };
+type StyledScrolled = { scrolled?: boolean; scrolledShadow?: boolean };
 type WrapperStyledType = { bgWhite: boolean; bgColor?: [string, string] | null };
 const Icon = styled(HeaderIcon)`
   svg {
@@ -88,11 +90,17 @@ const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
     }
     return bgWhite ? "var(--background-light)" : "var(--background)";
   }};
+  box-shadow: ${({ scrolledShadow, scrolled }) =>
+    scrolled && scrolledShadow ? "0 4px 10px 2px rgba(0, 0, 0, 0.1)" : "none"};
+  transition: box-shadow 0.25s;
 `;
 
 const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
   background-color: ${({ scrolled, bgWhite }) =>
     !scrolled ? "transparent" : bgWhite ? "var(--background-light)" : "var(--background)"};
+  box-shadow: ${({ scrolledShadow, scrolled }) =>
+    scrolled && scrolledShadow ? "0 4px 10px 2px rgba(0, 0, 0, 0.1)" : "none"};
+  transition: box-shadow 0.25s;
 
   ${Icon} {
     ${({ scrolled }) =>

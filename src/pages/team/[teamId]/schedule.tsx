@@ -28,6 +28,7 @@ function Schedule() {
   useBgWhite();
   usePageTitle({
     title: "일정",
+    scrolledShadow: false,
     subIcons: [
       {
         svgIcon: <PlusIcon />,
@@ -284,7 +285,7 @@ const Weeks = styled.div`
       margin-top: -4px;
       height: 12px;
       opacity: 0;
-      transition: padding 0.3s, opacity 0.3s, height 0.3s, opacity 0.3s;
+      transition: all 0.3s;
     }
   }
 `;

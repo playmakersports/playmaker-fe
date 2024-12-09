@@ -7,6 +7,7 @@ import {
   atomHeaderTransparent,
   atomIcons,
   atomHeaderScrolledBgColor,
+  atomHeaderScrolledShadow,
 } from "@/atom/common";
 
 type HookProps = {
@@ -19,27 +20,33 @@ type HookProps = {
     linkTo: string;
     description: string;
   }>;
+  scrolledShadow?: boolean;
 };
 
 export const usePageTitle = (props: HookProps = {}) => {
-  const { title, subTitle, transparent, scrollBgColor, subIcons } = props;
+  const { title, subTitle, transparent, scrollBgColor, subIcons, scrolledShadow } = props;
   const [titleValue, setTitle] = useAtom(atomPageTitle);
   const [subTitleValue, setSubTitle] = useAtom(atomPageSubTitle);
   const [isTransparent, setTransparent] = useAtom(atomHeaderTransparent);
   const [scrollBgColorValue, setScrollBgColor] = useAtom(atomHeaderScrolledBgColor);
   const [subIconsValue, setSubIcons] = useAtom(atomIcons);
+  const [scrolledShadowValue, setScrolledShadow] = useAtom(atomHeaderScrolledShadow);
 
   useEffect(() => {
     title && setTitle(title);
     transparent && setTransparent(true);
     subIcons && setSubIcons(subIcons);
+    if (scrolledShadow === false) {
+      setScrolledShadow(false);
+    }
 
     return () => {
       setTitle("");
       setTransparent(false);
       setSubIcons([]);
+      setScrolledShadow(true);
     };
-  }, [title]);
+  }, [title, scrolledShadow]);
 
   useEffect(() => {
     scrollBgColor &&
@@ -47,7 +54,7 @@ export const usePageTitle = (props: HookProps = {}) => {
     return () => {
       setScrollBgColor(null);
     };
-  }, [scrollBgColor]);
+  }, []);
 
   useEffect(() => {
     subTitle && setSubTitle(subTitle);
@@ -62,5 +69,6 @@ export const usePageTitle = (props: HookProps = {}) => {
     isTransparent,
     scrollBgColorValue,
     subIconsValue,
+    scrolledShadowValue,
   };
 };

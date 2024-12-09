@@ -5,6 +5,7 @@ import { ReactNode } from "react";
 export const atomPageTitle = atom<string>("");
 export const atomPageSubTitle = atom<string>("");
 export const atomHeaderTransparent = atom<boolean>(false);
+export const atomHeaderScrolledShadow = atom<boolean>(true);
 export const atomHeaderScrolledBgColor = atom<{
   trigger: number;
   beforeBg: string;

@@ -38,17 +38,17 @@ function Button(props: Props) {
       color: "#fff",
     },
     OPTION1: {
-      background: "var(--gray800)",
+      background: "var(--gray600)",
       color: "var(--gray50)",
     },
     OPTION2: {
-      background: "var(--gray500)",
-      color: "#fff",
-      borderTypeColor: "var(--gray700)",
+      background: "var(--gray300)",
+      color: "var(--gray800)",
+      borderTypeColor: "var(--gray500)",
     },
     SUB1: {
-      background: "var(--sub1)",
-      color: "#000",
+      background: "var(--primary-m100)",
+      color: "var(--gray0)",
     },
     WARN: {
       background: "var(--point-red)",

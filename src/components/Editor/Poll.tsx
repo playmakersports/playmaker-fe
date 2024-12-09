@@ -5,8 +5,7 @@ import { useFieldArray, useForm } from "react-hook-form";
 import useToast from "@/hook/useToast";
 
 import SmallX from "@/assets/icon/editor/SmallX.svg";
-import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
-import Button from "../common/Button";
+import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicInput } from "../common/Input";
 import { InputCheckbox } from "../common/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
@@ -52,7 +51,7 @@ function Poll() {
     <Container>
       <BasicInput type="text" placeholder="투표 제목을 입력하세요." {...register("pollTitle")} />
       <Options>
-        <div
+        <ul
           className="options-list-inner"
           ref={(ref) => scrollMaskedHandlerRef(ref, "vertical")}
           onScroll={(e) => scrollMaskedHandler(e, "vertical")}
@@ -66,20 +65,13 @@ function Poll() {
               </button>
             </Option>
           ))}
-        </div>
+        </ul>
       </Options>
 
       <div className="add-option-wrapper">
-        <Button
-          autoHeight
-          fullWidth
-          borderType
-          mode="OPTION2"
-          type="button"
-          onClick={() => append({ value: "" }, { shouldFocus: false })}
-        >
+        <button type="button" onClick={() => append({ value: "" }, { shouldFocus: false })}>
           선택지 추가
-        </Button>
+        </button>
       </div>
 
       <PollSetting>
@@ -107,13 +99,24 @@ const Container = styled.div`
 
   div.add-option-wrapper {
     margin: 0 auto;
+    button {
+      ${FONTS.MD2};
+      padding: 12px 0;
+      width: 100%;
+      background-color: var(--gray100);
+      color: var(--gray600);
+      border-radius: 10px;
+      &:active {
+        background-color: var(--gray200);
+      }
+    }
   }
 `;
 const Options = styled.div`
   margin: 4px 0 20px;
   ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")}
 
-  div.options-list-inner {
+  ul.options-list-inner {
     display: flex;
     flex-direction: column;
     max-height: 32vh;

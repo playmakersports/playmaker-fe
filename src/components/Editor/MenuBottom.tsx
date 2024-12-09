@@ -132,7 +132,7 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
           )}
           {getter()?.list.map((image, index) => (
             <ImageItem key={`image-${index}`}>
-              <Image src={image} alt={`첨부된 이미지 ${index}번`} />
+              <Image src={image} alt={`첨부된 이미지 ${index}번`} width={150} height={110} />
               <button type="button" onClick={() => removeImageItem(index)} aria-label={`${index + 1}번 이미지 삭제`}>
                 <DeleteAllIcon width={24} height={24} />
               </button>
@@ -181,7 +181,7 @@ const ImageContainer = styled.div`
   margin: 8px 0 12px;
   padding: 8px 12px;
   align-items: center;
-  background-color: var(--gray300);
+  background-color: var(--gray200);
   border-radius: 8px;
   overflow-x: auto;
 
@@ -232,7 +232,7 @@ const OptionGroup = styled.div`
     padding: 0 4px;
     border-radius: 8px;
     color: var(--gray800);
-    ${TEXT_ACTIVE("var(--gray300)", { focus: true })};
+    ${TEXT_ACTIVE("var(--gray200)", { focus: true })};
 
     &:disabled {
       opacity: 0.2;
@@ -248,8 +248,6 @@ const EditorButton = styled.button`
 const ImageItem = styled.div`
   position: relative;
   img {
-    width: 150px;
-    height: 110px;
     object-fit: cover;
     border-radius: 4px;
     box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -266,7 +264,7 @@ const ImageItem = styled.div`
     overflow: hidden;
     svg {
       margin: -1px;
-      fill: #333;
+      fill: var(--gray700);
       background-color: #fff;
     }
   }

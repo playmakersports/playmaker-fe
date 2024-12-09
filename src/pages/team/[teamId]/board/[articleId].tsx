@@ -16,7 +16,7 @@ import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
 
 function ArticleId() {
   useBgWhite();
-  usePageTitle({ title: "공지사항" });
+  usePageTitle({ title: "공지사항", scrolledShadow: false });
   const router = useRouter();
   const articleId = router.query.articleId;
   const [like, setLike] = useState(false);

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
 
 import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
@@ -14,12 +15,12 @@ import { BasicWhiteCard } from "@/components/common/Card";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 import { BasicInput } from "@/components/common/Input";
 
-function Board() {
+function Board({ teamId }: { teamId: string }) {
   const router = useRouter();
-  const teamId = router.query.teamId;
+
   usePageTitle({
     title: "게시판",
-    subTitle: "SPABA",
+    scrolledShadow: false,
     subIcons: [
       {
         svgIcon: <PlusIcon />,
@@ -128,6 +129,14 @@ function Board() {
     </>
   );
 }
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { teamId } = context.params as { teamId: string };
+  return {
+    props: {
+      teamId,
+    },
+  };
+};
 
 const MOCK = [1, 10, 12, 14, 16, 8, 9, 28, 4, 2];
 const PAGE_MOCK = [1, 2, 3, 4, 5];
@@ -169,8 +178,8 @@ const TabWrapper = styled.div`
   transition: padding 0.2s;
 
   &.stuck {
-    padding-bottom: 4px;
-    border-bottom: 1px solid var(--gray300);
+    padding: 6px 16px 8px;
+    box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.1);
     background-color: var(--background-light);
   }
 `;

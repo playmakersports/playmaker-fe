@@ -14,6 +14,8 @@ export const StepPageDescription = styled.p`
   ${FONTS.MD2};
   font-weight: 400;
   color: var(--gray700);
+  white-space: pre-line;
+  text-align: center;
 `;
 
 export const StepFormWrapper = styled.div`

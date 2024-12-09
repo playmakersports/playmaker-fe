@@ -8,7 +8,6 @@ import { atomTeamCreate } from "@/atom/team";
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import Badge from "@/components/common/Badge";
 
 function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
   const { register, watch } = useForm();
@@ -19,7 +18,7 @@ function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
       stepper={true}
       headerAlign="center"
       title="종목 선택"
-      description="생성할 팀의 종목을 선택하세요"
+      description={`생성할 팀의 종목을 선택하세요\n지금은 농구만 선택 가능해요`}
       button={{
         text: "다음",
         onClick: () => {
@@ -42,10 +41,7 @@ function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
             >
               <Item aria-disabled={item.value !== "basketball"}>
                 <Image src={item.icon} alt={item.name} width={36} />
-                <div className="name">
-                  {item.name}
-                  {item.value !== "basketball" && <Badge type="gray">준비중</Badge>}
-                </div>
+                <div className="name">{item.name}</div>
               </Item>
             </CardInput>
           ))}
@@ -78,7 +74,7 @@ const Item = styled.div`
     gap: 4px;
   }
   &[aria-disabled="true"] {
-    opacity: 0.7;
+    opacity: 0.45;
     filter: grayscale(1);
   }
 `;

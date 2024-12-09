@@ -1,9 +1,9 @@
 export const FONTS = {
   HEAD1: `font-weight: 700; font-size: 2rem; line-height: 2.2rem;`,
-  HEAD2: `font-weight: 600; font-size: 1.6rem; line-height: 2rem;`,
+  HEAD2: `font-weight: 600; font-size: 1.6rem; line-height: 2.2rem;`,
   MD1: `font-weight: 600; font-size: 1.6rem; line-height: 2.4rem;`,
   MD1W500: `font-weight: 500; font-size: 1.6rem; line-height: 2.4rem;`,
-  MD2: `font-weight: 500; font-size: 1.4rem; line-height: 2rem;`,
+  MD2: `font-weight: 500; font-size: 1.4rem; line-height: 2.2rem;`,
   MD3: `font-weight: 400; font-size: 1.3rem; line-height: 1.8rem;`,
 };
 

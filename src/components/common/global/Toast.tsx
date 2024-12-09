@@ -41,6 +41,7 @@ const hideToastAnim = keyframes`
 const FixedWrapper = styled.div`
   position: fixed;
   display: flex;
+  top: 0;
   width: 100%;
   justify-content: center;
   z-index: 1999;
@@ -53,8 +54,8 @@ const Container = styled.div<{ animate: boolean; show: boolean; type?: "DEFAULT"
   background-color: ${({ type }) => (type === "ALERT" ? "var(--point-red)" : "var(--gray800)")};
   color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--gray50)")};
   padding: 16px 12px;
-  margin: calc(env(safe-area-inset-top) + 10px) auto 0;
-  margin: calc(constant(safe-area-inset-top) + 10px) auto 0;
+  margin: calc(env(safe-area-inset-top) + 10px) 8px 0;
+  margin: calc(constant(safe-area-inset-top) + 10px) 8px 0;
   border-radius: 10px;
   animation: 0.25s ${({ animate }) => (animate ? showToastAnim : hideToastAnim)} forwards;
   white-space: pre-line;

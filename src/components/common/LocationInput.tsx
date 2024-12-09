@@ -2,76 +2,18 @@ import React, { useRef, useState } from "react";
 import { InputStyledWrapper } from "./Wrapper";
 import styled from "@emotion/styled";
 import useModal from "@/hook/useModal";
+import { useGet } from "@/apis/hook/query";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
+import { ApiCodeArea } from "@/apis/types/code";
 
-const SIDO = [
-  { sidoname: "서울특별시", sidocode: 11 },
-  { sidoname: "부산광역시", sidocode: 26 },
-  { sidoname: "대구광역시", sidocode: 27 },
-  { sidoname: "인천광역시", sidocode: 28 },
-  { sidoname: "광주광역시", sidocode: 29 },
-  { sidoname: "대전광역시", sidocode: 30 },
-  { sidoname: "울산광역시", sidocode: 31 },
-  { sidoname: "세종특별자치시", sidocode: 36 },
-  { sidoname: "경기도", sidocode: 41 },
-  { sidoname: "강원도", sidocode: 42 },
-  { sidoname: "충청북도", sidocode: 43 },
-  { sidoname: "충청남도", sidocode: 44 },
-  { sidoname: "전라북도", sidocode: 45 },
-  { sidoname: "전라남도", sidocode: 46 },
-  { sidoname: "경상북도", sidocode: 47 },
-  { sidoname: "경상남도", sidocode: 48 },
-  { sidoname: "제주특별자치도", sidocode: 50 },
-];
-
-const SEOUL_SIGUNGU = [
-  { sigungu: "강남구", sigungucode: 11680 },
-  { sigungu: "강동구", sigungucode: 11740 },
-  { sigungu: "강북구", sigungucode: 11305 },
-  { sigungu: "강서구", sigungucode: 11500 },
-  { sigungu: "관악구", sigungucode: 11620 },
-  { sigungu: "광진구", sigungucode: 11215 },
-  { sigungu: "구로구", sigungucode: 11530 },
-  { sigungu: "금천구", sigungucode: 11545 },
-  { sigungu: "노원구", sigungucode: 11350 },
-  { sigungu: "도봉구", sigungucode: 11320 },
-  { sigungu: "동대문구", sigungucode: 11230 },
-  { sigungu: "동작구", sigungucode: 11590 },
-  { sigungu: "마포구", sigungucode: 11440 },
-  { sigungu: "서대문구", sigungucode: 11410 },
-  { sigungu: "서초구", sigungucode: 11650 },
-  { sigungu: "성동구", sigungucode: 11200 },
-  { sigungu: "성북구", sigungucode: 11290 },
-  { sigungu: "송파구", sigungucode: 11710 },
-  { sigungu: "양천구", sigungucode: 11470 },
-  { sigungu: "영등포구", sigungucode: 11560 },
-  { sigungu: "용산구", sigungucode: 11170 },
-  { sigungu: "은평구", sigungucode: 11380 },
-  { sigungu: "종로구", sigungucode: 11110 },
-  { sigungu: "중구", sigungucode: 11140 },
-  { sigungu: "중랑구", sigungucode: 11260 },
-];
-
-const incheon_sigungu = [
-  { sigungu: "강화군", sigungucode: 28710 },
-  { sigungu: "계양구", sigungucode: 28185 },
-  { sigungu: "남동구", sigungucode: 28200 },
-  { sigungu: "동구", sigungucode: 28110 },
-  { sigungu: "미추홀구", sigungucode: 28177 },
-  { sigungu: "부평구", sigungucode: 28237 },
-  { sigungu: "서구", sigungucode: 28245 },
-  { sigungu: "연수구", sigungucode: 28237 },
-  { sigungu: "옹진군", sigungucode: 28720 },
-  { sigungu: "중구", sigungucode: 28140 },
-];
-
-type Props = { title?: string };
-function LocationInput({ title }: Props) {
-  const [sido, setSido] = useState(0);
-  const [sigungu, setSigungu] = useState(0);
+type Props = { title?: string; defaultValue?: number; setLocationKey: (key: number) => void };
+function LocationInput({ title, defaultValue, setLocationKey }: Props) {
+  const { data, isLoading } = useGet<ApiCodeArea>("/api/code/area");
+  const [sido, setSido] = useState(defaultValue ? Math.floor(defaultValue / 1000) : 0);
+  const [sigungu, setSigungu] = useState(defaultValue ?? 0);
 
   const sidoRef = useRef<Flicking>(null);
   const sigunguRef = useRef<Flicking>(null);
@@ -80,10 +22,16 @@ function LocationInput({ title }: Props) {
   const { showModal: showSigungu, ModalComponents: ModalSigungu } = useModal();
 
   const onSidoChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setSido(SIDO[e.index].sidocode);
+    if (data) {
+      setSido(data?.parent[e.index].locationkey);
+    }
   };
   const onSigunguChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setSigungu(SEOUL_SIGUNGU[e.index].sigungucode);
+    if (data) {
+      setSigungu(
+        data?.child.filter((location) => Math.floor(location.locationkey / 1000) === sido)[e.index].locationkey
+      );
+    }
   };
 
   const setSidoSelected = (index: number, target: number) => {
@@ -108,7 +56,9 @@ function LocationInput({ title }: Props) {
         <Selects>
           <Select onClick={showSiDo}>
             {sido ? (
-              <div className="selected-value">{SIDO.find((item) => item.sidocode === sido)?.sidoname}</div>
+              <div className="selected-value">
+                {data?.parent.find((item) => item.locationkey === sido)?.locationname}
+              </div>
             ) : (
               <div className="placeholder">시도 선택</div>
             )}
@@ -119,7 +69,7 @@ function LocationInput({ title }: Props) {
           <Select onClick={showSigungu}>
             {sigungu ? (
               <div className="selected-value">
-                {SEOUL_SIGUNGU.find((item) => item.sigungucode === sigungu)?.sigungu}
+                {data?.child.find((item) => item.locationkey === sigungu)?.locationname}
               </div>
             ) : (
               <div className="placeholder">시군구 선택</div>
@@ -131,6 +81,7 @@ function LocationInput({ title }: Props) {
         </Selects>
       </Container>
       <ModalSido
+        disabledDimOut
         buttons={[
           {
             mode: "MAIN",
@@ -148,27 +99,30 @@ function LocationInput({ title }: Props) {
             horizontal={false}
             onWillChange={onSidoChanged}
             onChanged={onSidoChanged}
-            defaultIndex={SIDO.findIndex((item) => item.sidocode === sido)}
+            defaultIndex={data?.parent.findIndex((item) => item.locationkey === sido)}
           >
-            {SIDO.map((item, index) => (
+            {data?.parent.map((item, index) => (
               <Panel
-                key={item.sidocode}
-                className={item.sidocode === sido ? "active-pick" : ""}
-                onClick={() => setSidoSelected(index, item.sidocode)}
+                key={item.locationkey}
+                className={item.locationkey === sido ? "active-pick" : ""}
+                onClick={() => setSidoSelected(index, item.locationkey)}
               >
-                {item.sidoname}
+                {item.locationname}
               </Panel>
             ))}
           </Flicking>
         </Wrapper>
       </ModalSido>
       <ModalSigungu
+        disabledDimOut
         buttons={[
           {
             mode: "MAIN",
+            disabled: sido !== Math.floor(sigungu / 1000),
             name: "선택",
             onClick: (close) => {
               close();
+              setLocationKey(sigungu);
             },
           },
         ]}
@@ -179,18 +133,20 @@ function LocationInput({ title }: Props) {
             horizontal={false}
             onWillChange={onSigunguChanged}
             onChanged={onSigunguChanged}
-            defaultIndex={SEOUL_SIGUNGU.findIndex((item) => item.sigungucode === sigungu)}
+            defaultIndex={data?.child.findIndex((item) => item.locationkey === sigungu)}
           >
-            {SEOUL_SIGUNGU.map((item, index) => (
-              <Panel
-                key={item.sigungucode}
-                className={item.sigungucode === sigungu ? "active-pick" : ""}
-                data-code={item.sigungucode}
-                onClick={() => setSigunguSelected(index, item.sigungucode)}
-              >
-                {item.sigungu}
-              </Panel>
-            ))}
+            {data?.child
+              .filter((location) => Math.floor(location.locationkey / 1000) === sido)
+              .map((item, index) => (
+                <Panel
+                  key={item.locationkey}
+                  className={item.locationkey === sigungu ? "active-pick" : ""}
+                  data-code={item.locationkey}
+                  onClick={() => setSigunguSelected(index, item.locationkey)}
+                >
+                  {item.locationname}
+                </Panel>
+              ))}
           </Flicking>
         </Wrapper>
       </ModalSigungu>
@@ -298,20 +254,21 @@ const Wrapper = styled.div`
   }
 `;
 const Panel = styled.div`
-  padding: 8px 12px;
+  padding: 18px 12px;
   display: block;
   text-align: center;
   ${FONTS.MD1W500};
+  font-size: 1.8rem;
   color: var(--gray600);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.5px;
-  transition: all 0.25s;
+  transition: all 0.2s;
   transition-delay: 0.2s;
 
   &.active-pick {
     color: var(--main);
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 `;
 

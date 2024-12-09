@@ -11,11 +11,13 @@ import GradientBg from "@/components/common/GradientBg";
 
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
 import GloveIcon from "@/assets/icon/global/Globe.svg";
+import { useGet } from "@/apis/hook/query";
 
 function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });
+  const UNIVERSITY = "인하대학교";
   const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);
-  const [teamType, setTeamType] = useState<"univ" | "basic" | null>(teamCreateValue.teamType);
+  const [teamType, setTeamType] = useState<"univ" | "basic" | null>(null);
   const [hideStartCont, setHideStartCont] = useState(false);
 
   useEffect(() => {
@@ -39,14 +41,14 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
               text: "다음",
               onClick: () => {
                 setStep(1);
-                setTeamCreateValue((prev) => ({ ...prev, teamType }));
+                setTeamCreateValue((prev) => ({ ...prev, university: UNIVERSITY }));
               },
             }
           : undefined
       }
     >
       <Container>
-        <UnivNameTag className={teamType === "univ" ? "show" : "hide"}>한양대 에리카캠</UnivNameTag>
+        <UnivNameTag className={teamType === "univ" ? "show" : "hide"}>{UNIVERSITY}</UnivNameTag>
         <List next={hideStartCont}>
           <Item className={teamType === "univ" ? "selected" : ""} type="button" onClick={() => setTeamType("univ")}>
             <div className="title-wrapper">

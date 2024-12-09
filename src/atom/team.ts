@@ -2,36 +2,34 @@ import { atom } from "jotai";
 
 type CreateTeamType = {
   teamName: string;
-  teamType: "univ" | "basic" | null;
-  sports: string;
-  teamIntro: string;
-  teamFoundedAt: string;
-  teamLogo: string;
-  teamBanner: string;
-  teamGender: "male" | "female" | "mixed" | null;
+  activeArea: number; // 활동지역
+  createDt: string; // 팀 창단일
+  item: string; // 스포츠 종목 (농구: "1")
+  joinYn: string;
+  message: string;
+  maxBirthYear: number;
+  minBirthYear: number;
+  sex: "MALE" | "FEMALE" | "MIXTURE" | null;
   teamColor: string;
-  locationSido: string;
-  locationSigungu: string;
-  birthYearMin: number;
-  birthYearMax: number;
-  generation: boolean;
+  teamIntro: string;
+  university: string | null;
+  generationYn: string;
 };
 
 const initialTeamCreate: CreateTeamType = {
   teamName: "",
-  teamType: null,
-  sports: "",
-  teamIntro: "",
-  teamFoundedAt: "",
-  teamLogo: "",
-  teamBanner: "",
-  teamGender: null,
+  activeArea: 0,
+  createDt: "",
+  item: "",
+  joinYn: "",
+  message: "",
+  maxBirthYear: 0,
+  minBirthYear: 0,
+  sex: null,
   teamColor: "",
-  locationSido: "",
-  locationSigungu: "",
-  birthYearMin: 0,
-  birthYearMax: 0,
-  generation: false,
+  teamIntro: "",
+  university: null,
+  generationYn: "",
 };
 
 export const atomTeamCreateLogo = atom<File | null>(null);

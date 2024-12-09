@@ -18,7 +18,7 @@ function TeamCreateFinish() {
   const { trigger } = useToast();
   const router = useRouter();
   const teamCreateValue = useAtomValue(atomTeamCreate);
-  const { mutate, isPending, isError, error, isSuccess } = usePost("");
+  const { mutate, isPending, isError, error, isSuccess } = usePost("/api/team/create");
 
   useEffect(() => {
     mutate({ data: teamCreateValue });

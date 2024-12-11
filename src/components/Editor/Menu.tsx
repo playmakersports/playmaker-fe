@@ -1,5 +1,3 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tiptap/react";
 import styled from "@emotion/styled";

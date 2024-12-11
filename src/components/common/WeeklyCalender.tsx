@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
 import { addDays, format, startOfWeek } from "date-fns";
 
 import LogoSymbolType from "@/assets/logo/LogoSymbol.svg";
@@ -25,7 +25,8 @@ type Schedule = {
 function WeeklyCalender(props: Props) {
   const { clickable = true, grouping = false, activeDate, setActiveDate, schedulesList } = props;
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const params = useParams();
+  const teamId = params["teamId"];
 
   const moveSchedule = () => {
     router.push(`/team/${teamId}/schedule`);

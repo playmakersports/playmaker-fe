@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import Flicking, { ChangedEvent, WillChangeEvent } from "@egjs/react-flicking";

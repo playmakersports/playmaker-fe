@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useBgWhite from "@/hook/useBgWhite";
 import { useResetAtom } from "jotai/utils";
 
@@ -14,15 +14,16 @@ import Stepper from "../common/Stepper";
 function JoinStep() {
   useBgWhite();
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = new URLSearchParams(useSearchParams().toString());
+
   const resetServiceApply = useResetAtom(resetAtomServiceApply);
-  const userType = router.query.type;
-  const queryStepValue = router.query.step;
+  const userType = searchParams.get("type");
+  const queryStepValue = searchParams.get("step");
 
   const handleStepper = (target: number) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...router.query, step: target },
-    });
+    searchParams.set("step", target.toString());
+    router.push(`${pathname}?${searchParams.toString()}`);
   };
 
   useEffect(() => {
@@ -40,12 +41,12 @@ function JoinStep() {
   };
 
   if (queryStepValue === "0" || queryStepValue === "1") {
-    return <>{STEP_PAGE[`${router.query.step}`]}</>;
+    return <>{STEP_PAGE[`${queryStepValue}`]}</>;
   }
   if (!queryStepValue) return null;
   return (
     <Stepper length={userType === "univ" ? 4 : 3} now={userType === "univ" ? +queryStepValue : +queryStepValue - 1}>
-      {STEP_PAGE[`${router.query.step}`]}
+      {STEP_PAGE[`${queryStepValue}`]}
     </Stepper>
   );
 }

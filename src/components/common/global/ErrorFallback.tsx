@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -36,7 +38,7 @@ function ErrorFallback({ status, message, retry }: Props) {
           mode="MAIN"
           fullWidth
           onClick={() => {
-            router.replace("/").then(() => router.reload());
+            router.replace("/");
           }}
         >
           홈 화면 이동
@@ -52,7 +54,7 @@ const HideHeader = styled.div`
   left: 50%;
   width: var(--mobile-max-width);
   height: var(--safe-area-top);
-  background-color: var(--background);
+  background-color: var(--background-light);
   z-index: 8999; // 9000 -1
   transform: translateX(-50%);
 `;

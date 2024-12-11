@@ -144,10 +144,10 @@ const Button = styled.button<{ bgColor: string }>`
     height: 24px;
   }
 
-  &:nth-child(1) {
+  &:nth-of-type(1) {
     padding-left: 42px;
   }
-  &:nth-child(2) {
+  &:nth-of-type(2) {
     padding-right: 32px;
   }
 `;

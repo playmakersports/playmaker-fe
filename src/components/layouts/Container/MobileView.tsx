@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
 import styled from "@emotion/styled";
 
 import { SCROLL_HIDE } from "@/styles/common";
@@ -7,15 +6,9 @@ import Header from "../Header/Header";
 import AppCode from "../AppCode";
 import StaffPageMover from "../StaffPageMover";
 
-function MobileView({ children }: { children: JSX.Element }) {
-  const router = useRouter();
+function MobileView({ children }: { children: React.ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
   const [scrollActive, setScrollActive] = useState(0);
-  // const isLoginIntro = router.pathname === "/user/login" || router.pathname === "/user/login/intro";
-
-  useEffect(() => {
-    container.current?.scrollTo(0, 0);
-  }, [router.asPath]);
 
   useEffect(() => {
     const handleScroll = () => {

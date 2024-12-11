@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import styled from "@emotion/styled";
 import { useAtom } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";
@@ -15,6 +15,7 @@ import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [applyValues, setApplyValues] = useAtom(atomServiceApply);
   const [checked, setChecked] = useState(
     applyValues.memberType !== "" ? (applyValues.memberType === "일반" ? 2 : 1) : 0

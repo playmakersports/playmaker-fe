@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
 import Image from "next/image";
 
 import { BasicWhiteCard } from "../common/Card";
@@ -29,7 +29,8 @@ function RecentMatch(props: Props) {
     matchDate,
   } = props;
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const params = useParams();
+  const teamId = params["teamId"];
 
   return (
     <Wrapper>

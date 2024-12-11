@@ -6,7 +6,7 @@ import PersonIcon from "@/assets/icon/global/Person.svg";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import Link from "next/link";
 
-function PcView({ children }: { children: JSX.Element }) {
+function PcView({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Container>

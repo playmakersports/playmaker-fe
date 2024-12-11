@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { baseBackendURL } from "@/apis";
 
 function TokenRoute({ children }: { children: JSX.Element }) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const isLogin = true;
   const isAllowedPage = false;
   const isAllowed = true;

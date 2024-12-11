@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useAtom, useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import useToast from "@/hook/useToast";
 import { useMutate } from "@/apis/post";
 
@@ -14,6 +14,7 @@ import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 
 function Step4() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { mutate } = useMutate("/api/login/signup");
   const { register, watch, setValue } = useForm<{ preferredSport: string[] }>();
   const { trigger } = useToast();

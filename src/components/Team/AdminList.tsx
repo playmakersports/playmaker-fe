@@ -1,10 +1,11 @@
-import useModal from "@/hook/useModal";
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import React, { useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
-import React, { ReactNode, useState } from "react";
-import ToggleInput from "../common/ToggleInput";
 import useDeviceAgent from "@/hook/useDeviceAgent";
+import useModal from "@/hook/useModal";
+
+import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import ToggleInput from "../common/ToggleInput";
 
 type GroupProps = {
   title: string;
@@ -32,9 +33,9 @@ function AdminListGroup({ title, pages }: GroupProps) {
       <Title>{title}</Title>
       <List>
         {pages &&
-          pages.map((page) => (
+          pages.map((page, index) => (
             <li
-              key={page.linkTo}
+              key={`${page.linkTo}-${index}`}
               role="button"
               aria-disabled={page.onlyPc}
               className={page.onlyPc && isMobile ? "invalid" : "valid"}
@@ -58,13 +59,14 @@ function AdminListGroup({ title, pages }: GroupProps) {
 }
 
 function AdminList() {
+  const params = useParams();
+  const teamId = params["teamId"];
+
   const { showModal: showApplyAllowModal, ModalComponents: ApplyAllowModal } = useModal();
   const { showModal: showPublicTeamModal, ModalComponents: PublicTeamModal } = useModal();
 
   const [applyAllow, setApplyAllow] = useState(true);
   const [publicTeam, setPublicTeam] = useState(true);
-  const router = useRouter();
-  const teamId = router.query.teamId;
 
   return (
     <>

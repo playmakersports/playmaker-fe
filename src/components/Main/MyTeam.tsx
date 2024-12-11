@@ -1,6 +1,8 @@
+"use client";
+
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { MY_TEAM_MOCK } from "@/constants/mock/HOME";
 import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
@@ -10,6 +12,7 @@ import PlusIcon from "@/assets/icon/global/Plus.svg";
 
 function MyTeam() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <TeamList as="article" aria-label="나의 팀 목록">

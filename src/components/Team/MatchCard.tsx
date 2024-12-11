@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { BasicWhiteCard } from "../common/Card";
 import GroupTitle from "../common/GroupTitle";
@@ -42,7 +42,8 @@ function MatchCard(props: Props) {
     mvpId,
   } = props;
   const router = useRouter();
-  const competitionId = router.query.competitionId;
+  const searchParams = useSearchParams();
+  const competitionId = searchParams.get("competitionId");
 
   const STATUS_NAME: Record<string, string> = {
     PENDING: "경기 중",

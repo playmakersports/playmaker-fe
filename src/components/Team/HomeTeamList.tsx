@@ -1,13 +1,14 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import PlayerListItem from "./PlayerListItem";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 
 function HomeTeamList() {
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const searchParams = useSearchParams();
+  const teamId = searchParams.get("teamId");
 
   return (
     <Wrapper>

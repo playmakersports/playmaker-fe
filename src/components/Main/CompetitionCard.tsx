@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
@@ -18,6 +18,7 @@ type Props = {
 };
 function CompetitionCard(props: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { posterImg, competitionId, competitionName, startDate, endDate, matchLocation, attendMembers } = props;
   const dayCount = () => {
     if (countDayDiff(startDate) === 0) return "D-DAY";

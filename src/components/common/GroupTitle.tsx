@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import RightArrowSmallIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
@@ -11,6 +11,7 @@ type Props = {
 
 function GroupTitle({ children, link }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
   return (
     <Container>
       <h4>{children}</h4>

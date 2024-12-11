@@ -11,7 +11,7 @@ import PersonIcon from "@/assets/icon/global/Person24.svg";
 import HeadphoneIcon from "@/assets/icon/global/Headphone.svg";
 import InformationIcon from "@/assets/icon/global/Information.svg";
 import BuildingsIcon from "@/assets/icon/global/Buildings.svg";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 function GroupList({
   list,
@@ -48,7 +48,8 @@ function GroupList({
 }
 function UserSetting() {
   const router = useRouter();
-  const userId = router.query.userId;
+  const searchParams = useSearchParams();
+  const userId = searchParams.get("userId");
 
   return (
     <Container>

@@ -1,5 +1,7 @@
+"use client";
+
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";
 
@@ -13,13 +15,14 @@ type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
   const isWhiteBg = useAtomValue(atomBgWhite);
   const router = useRouter();
+  const pathname = usePathname();
   const { titleValue, subTitleValue, isTransparent, scrollBgColorValue, subIconsValue, scrolledShadowValue } =
     usePageTitle();
 
   const isScrolled = scrollActive > (scrollBgColorValue ? scrollBgColorValue.trigger : 160);
   const isTitleShow = isTransparent ? isScrolled : true;
 
-  if (router.asPath === "/") {
+  if (pathname === "/") {
     return <MainHeader />;
   }
   if (isTransparent) {

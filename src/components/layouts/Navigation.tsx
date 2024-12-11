@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { keyframes } from "@emotion/react";
 
 import HomeIcon from "@/assets/icon/global/Home.svg";
@@ -17,7 +19,8 @@ const BUTTONS_GAP = 32;
 
 function Navigation() {
   const router = useRouter();
-  const asPath = router.asPath;
+  const searchParams = useSearchParams();
+  const asPath = usePathname();
   const [showSubList, setShowSubList] = useState(false);
 
   const movePage = (target: string) => {

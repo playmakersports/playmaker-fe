@@ -1,7 +1,8 @@
+"use client";
+
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import useStickyMoment from "@/hook/useStickyMoment";
-import { useRouter } from "next/router";
 
 import MainTab from "./MainTab";
 import CompetitionCard from "./CompetitionCard";
@@ -14,7 +15,6 @@ import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 
 function SportsSection() {
-  const router = useRouter();
   const tabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);
   const [activeTab, setActiveTab] = useState(SUPPORT_SPORTS[0].value);

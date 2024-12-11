@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import styled from "@emotion/styled";
 
 import GroupTitle from "../common/GroupTitle";
@@ -7,7 +7,8 @@ import CompetitionCard from "../Main/CompetitionCard";
 
 function ComingUpMatch() {
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const searchParams = useSearchParams();
+  const teamId = searchParams.get("teamId");
 
   return (
     <Container>

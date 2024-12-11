@@ -1,3 +1,5 @@
+"use client";
+
 import { useAtom } from "jotai";
 import { ReactNode, useEffect } from "react";
 
@@ -46,7 +48,7 @@ export const usePageTitle = (props: HookProps = {}) => {
       setSubIcons([]);
       setScrolledShadow(true);
     };
-  }, [title, scrolledShadow]);
+  }, [title, transparent, scrolledShadow]);
 
   useEffect(() => {
     scrollBgColor &&

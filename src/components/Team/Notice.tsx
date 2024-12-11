@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { intervalToDuration } from "date-fns";
 
 import { TEXT_ACTIVE } from "@/styles/common";
@@ -15,7 +15,8 @@ type Props = {
 
 function Notice({ list }: Props) {
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const searchParams = useSearchParams();
+  const teamId = searchParams.get("teamId");
 
   const [order, setOrder] = useState(0);
   const ANIMATE_INTERVAL = 3000;

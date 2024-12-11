@@ -1,3 +1,5 @@
+"use client";
+
 import { atomBgWhite } from "@/atom/common";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
@@ -13,6 +13,7 @@ type Props = {
 function MoreButton(props: Props) {
   const { text, href } = props;
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <Container type="button" onClick={() => router.push(href)}>

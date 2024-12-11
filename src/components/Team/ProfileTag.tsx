@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { FONTS } from "@/styles/common";
 import Button from "../common/Button";
@@ -14,6 +14,7 @@ function ProfileTag(props: Props) {
   const { showInfo, handleClose } = props;
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const outSideClick = useCallback((e: any) => {
     if (containerRef.current && !containerRef.current.contains(e.target)) {

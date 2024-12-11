@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import LoadingAnimatedSvg from "@/assets/icon/global/LoadingSpinner.svg";
 

@@ -20,7 +20,7 @@ function QueryErrorBoundary({ children }: { children: React.ReactNode }) {
           }}
           onReset={reset}
         >
-          <Suspense fallback={<Loading />}>{children}</Suspense>
+          <Suspense fallback={<Loading page />}>{children}</Suspense>
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

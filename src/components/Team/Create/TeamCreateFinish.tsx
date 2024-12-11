@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
 import { usePost } from "@/apis/hook/query";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useToast from "@/hook/useToast";
 
@@ -17,6 +17,7 @@ function TeamCreateFinish() {
   usePageTitle({ transparent: true });
   const { trigger } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const teamCreateValue = useAtomValue(atomTeamCreate);
   const { mutate, isPending, isError, error, isSuccess } = usePost("/api/team/create");
 

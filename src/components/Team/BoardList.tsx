@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter } from "next/router";
+import { useRouter, useParams } from "next/navigation";
 
 import GroupTitle from "../common/GroupTitle";
 import { BasicWhiteCard } from "../common/Card";
@@ -9,7 +9,8 @@ import { formattedDate } from "@/util/date";
 
 function BoardList() {
   const router = useRouter();
-  const teamId = router.query.teamId;
+  const params = useParams();
+  const teamId = params["teamId"];
   const moveArticlePage = (articleId: string) => {
     router.push(`/team/${teamId}/board/${articleId}`);
   };

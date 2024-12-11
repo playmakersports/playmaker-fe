@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 
 import { FONTS } from "@/styles/common";
-import { useRouter } from "next/router";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 type Props = {
   teamId: string;
@@ -15,6 +15,7 @@ type Props = {
 function RecruitTeamItem(props: Props) {
   const { teamId, teamName, univName, location, logoImg } = props;
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   return (
     <Container

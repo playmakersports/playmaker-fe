@@ -17,10 +17,12 @@ function useStickyMoment(ref: RefObject<any>, className?: string) {
       }
     };
 
-    mainContainerEl.addEventListener("scroll", handleScroll);
-    return () => {
-      mainContainerEl.removeEventListener("scroll", handleScroll);
-    };
+    if (mainContainerEl) {
+      mainContainerEl.addEventListener("scroll", handleScroll);
+      return () => {
+        mainContainerEl.removeEventListener("scroll", handleScroll);
+      };
+    }
   }, [ref, className]);
 
   return null;

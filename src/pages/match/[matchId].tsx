@@ -93,6 +93,7 @@ function MatchPage() {
           </button>
           {TEAM_SCORES.scores.map((score) => (
             <MatchRoundCard
+              key={score.stage}
               roundName={score.stage}
               homeTeamName={TEAM_SCORES.homeName}
               homeTeamLogo={TEAM_SCORES.homeLogo}

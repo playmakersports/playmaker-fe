@@ -1,17 +1,15 @@
 import styled from "@emotion/styled";
 import React from "react";
 
-function GradientBg({
-  height = "100vh",
-  position,
-  opacity = 1,
-}: {
+type Props = {
+  colorRgb?: string;
   height?: string;
   position: "absolute" | "fixed";
   opacity?: number;
-}) {
+};
+function GradientBg({ colorRgb, height = "100vh", position, opacity = 1 }: Props) {
   return (
-    <Background style={{ position, opacity, height }}>
+    <Background style={{ position, opacity, height }} colorRgb={colorRgb ?? "148, 144, 223"}>
       <svg
         className="blue-large"
         width="368"
@@ -21,7 +19,7 @@ function GradientBg({
         xmlns="http://www.w3.org/2000/svg"
       >
         <g filter="url(#filter0_f_1862_2164)">
-          <circle cx="126.5" cy="241.5" r="91.5" fill="#306DEF" fillOpacity="0.6" />
+          <circle cx="126.5" cy="241.5" r="91.5" fill={colorRgb ? `rgb(${colorRgb})` : "#306DEF"} fillOpacity="0.6" />
         </g>
         <defs>
           <filter
@@ -71,14 +69,18 @@ function GradientBg({
   );
 }
 
-const Background = styled.div`
+const Background = styled.div<{ colorRgb: string }>`
   width: 100%;
   max-width: var(--mobile-max-width);
   top: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 0;
-  background: linear-gradient(to bottom, rgb(148, 144, 223, 0.1) 0%, rgb(148, 144, 223, 0.2) 100%);
+  background: linear-gradient(
+    to bottom,
+    rgb(${({ colorRgb }) => colorRgb}, 0.2) 0%,
+    rgb(${({ colorRgb }) => colorRgb}, 0.4) 100%
+  );
   transition: opacity 0.6s;
   overflow: hidden;
 

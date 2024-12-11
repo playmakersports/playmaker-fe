@@ -47,11 +47,11 @@ const Container = styled.div`
   h3.round-name {
     width: max-content;
     margin: 0 auto;
-    padding: 4px 32px;
+    padding: 2px 40px;
     ${FONTS.MD2};
     color: var(--gray800);
     background-color: var(--gray100);
-    border-radius: 10px;
+    border-radius: 16px;
   }
   div.score-group {
     display: flex;

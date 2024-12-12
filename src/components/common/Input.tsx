@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useImperativeHandle, useRef } from "react";
 import { FONTS } from "@/styles/common";
 import { keyframes } from "@emotion/react";

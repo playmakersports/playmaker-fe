@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/router";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -11,7 +11,7 @@ import Surprised from "@/assets/character/Surprised.svg";
 
 function Page500() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
   return (
     <Container>
       <Surprised />

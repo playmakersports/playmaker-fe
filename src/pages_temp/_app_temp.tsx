@@ -6,7 +6,7 @@ import Head from "next/head";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import "@/components/Methods/NotifyFCM";
-import Layout from "@/components/layouts";
+// import Layout from "@/components/layouts";
 import GlobalComponents from "@/components/common/global";
 import TokenRoute from "@/components/layouts/TokenRoute";
 import { DEFAULT_HEAD_CONTENTS } from "@/constants/baseTag";
@@ -34,13 +34,13 @@ export default function App({ Component, pageProps }: AppProps) {
           />
         </Head>
         <QueryClientProvider client={queryClient}>
-          <Layout>
-            <GlobalComponents>
-              <TokenRoute>
-                <Component {...pageProps} />
-              </TokenRoute>
-            </GlobalComponents>
-          </Layout>
+          {/* <Layout> */}
+          <GlobalComponents>
+            <TokenRoute>
+              <Component {...pageProps} />
+            </TokenRoute>
+          </GlobalComponents>
+          {/* </Layout> */}
         </QueryClientProvider>
         {/* <EventNotification /> */}
       </EmotionProvider>

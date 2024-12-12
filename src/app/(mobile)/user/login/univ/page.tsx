@@ -2,7 +2,6 @@
 import styled from "@emotion/styled";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { GetServerSideProps } from "next";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { useGet, usePost } from "@/apis/hook/query";
 
@@ -18,11 +17,9 @@ type UnivData = {
   universityAlias: string | null;
 }[];
 
-interface UnivNameProps {
-  univData: UnivData;
-}
-
-function UnivName({ univData }: UnivNameProps) {
+async function UnivName() {
+  // const fetchUnivList = await fetch(`${baseBackendURL}/api/code/university`);
+  // const univData = await fetchUnivList.json();
   usePageTitle({ title: "대학 약칭 설정" });
   const [univValue, setUnivValue] = useState<string>();
   const {
@@ -32,7 +29,11 @@ function UnivName({ univData }: UnivNameProps) {
     reset,
   } = useForm<FieldValues>();
 
-  const { data: univList, refetch } = useGet<UnivData>("/api/code/university", {}, { initialData: univData });
+  const { data: univList, refetch } = useGet<UnivData>(
+    "/api/code/university",
+    {}
+    // , { initialData: univData }
+  );
   const { mutateAsync } = usePost(`/api/code/university/${univValue}`);
 
   const onSubmit = async (data: FieldValues) => {
@@ -103,16 +104,5 @@ const FormContents = styled.div`
   gap: 20px;
   margin-bottom: 40px;
 `;
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    const response = await fetch(`${baseBackendURL}/api/code/university`);
-    const univData: UnivData = await response.json();
-    return { props: { univData } };
-  } catch (error) {
-    console.error("Failed to fetch university names:", error);
-    return { props: { univData: [] } };
-  }
-};
 
 export default UnivName;

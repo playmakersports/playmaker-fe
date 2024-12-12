@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import { intervalToDuration } from "date-fns";
 
 import { TEXT_ACTIVE } from "@/styles/common";
@@ -15,8 +15,8 @@ type Props = {
 
 function Notice({ list }: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const teamId = searchParams.get("teamId");
+  const params = useParams();
+  const teamId = params["teamId"];
 
   const [order, setOrder] = useState(0);
   const ANIMATE_INTERVAL = 3000;
@@ -44,15 +44,7 @@ function Notice({ list }: Props) {
           return (
             <Item
               key={item.articleId}
-              onClick={() =>
-                router.push({
-                  pathname: "/team/[teamId]/board/[articleId]",
-                  query: {
-                    teamId: teamId,
-                    articleId: item.articleId,
-                  },
-                })
-              }
+              onClick={() => router.push(`/team/${teamId}/board/${item.articleId}`)}
               className={
                 order === index
                   ? "current"

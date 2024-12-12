@@ -1,17 +1,17 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { useRouter, useParams } from "next/navigation";
+
 import { WhiteSectionDivider } from "../common/Container";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
 import LockIcon from "@/assets/icon/global/Lock.svg";
 import PersonIcon from "@/assets/icon/global/Person24.svg";
 import HeadphoneIcon from "@/assets/icon/global/Headphone.svg";
 import InformationIcon from "@/assets/icon/global/Information.svg";
 import BuildingsIcon from "@/assets/icon/global/Buildings.svg";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 function GroupList({
   list,
@@ -48,8 +48,8 @@ function GroupList({
 }
 function UserSetting() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const userId = searchParams.get("userId");
+  const params = useParams();
+  const userId = params["userId"];
 
   return (
     <Container>
@@ -59,13 +59,7 @@ function UserSetting() {
           {
             icon: <GraduationIcon />,
             title: "재학증명서 인증",
-            onClick: () =>
-              router.push({
-                pathname: "/room/[userId]/school",
-                query: {
-                  userId,
-                },
-              }),
+            onClick: () => router.push(`/room/${userId}/school`),
             subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
           },
           { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },

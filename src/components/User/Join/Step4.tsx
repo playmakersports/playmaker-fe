@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { useAtom, useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useToast from "@/hook/useToast";
 import { useMutate } from "@/apis/post";
 
@@ -14,14 +14,14 @@ import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 
 function Step4() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
   const { mutate } = useMutate("/api/login/signup");
   const { register, watch, setValue } = useForm<{ preferredSport: string[] }>();
   const { trigger } = useToast();
   const preferredSportValue = watch("preferredSport");
   const applyValues = useAtomValue(atomServiceApply);
   const applyProfileImgValue = useAtomValue(atomServiceApplyImage);
-  console.log(applyValues);
+
   const handleNextStep = async () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
       const formData = new FormData();
@@ -35,13 +35,7 @@ function Step4() {
 
       const success = await mutate("post", formData, "form-data");
       if (success) {
-        router.push({
-          pathname: "/user/apply/complete",
-          query: {
-            name: "손수철",
-            gender: "male",
-          },
-        });
+        router.push(`/user/apply/complete?name=${applyValues.username}&gender=${applyValues.sexKey}`);
       }
     }
   };

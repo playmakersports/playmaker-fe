@@ -1,3 +1,5 @@
+"use client";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 import React from "react";
 

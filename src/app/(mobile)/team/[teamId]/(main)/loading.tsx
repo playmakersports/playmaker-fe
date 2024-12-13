@@ -1,6 +1,6 @@
 import React from "react";
 
-function TeamLoading() {
+function TeamMainLoading() {
   return (
     <>
       <div
@@ -22,4 +22,4 @@ function TeamLoading() {
   );
 }
 
-export default TeamLoading;
+export default TeamMainLoading;

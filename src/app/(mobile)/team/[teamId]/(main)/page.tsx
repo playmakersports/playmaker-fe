@@ -9,8 +9,8 @@ import useBgWhite from "@/hook/useBgWhite";
 import { FONTS } from "@/styles/common";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
-import TeamMainTop from "./components/TeamMainTop";
-import TeamMainContents from "./components/TeamMainContents";
+import TeamMainTop from "../(sub)/components/TeamMainTop";
+import TeamMainContents from "../(sub)/components/TeamMainContents";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 

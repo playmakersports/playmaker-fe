@@ -4,7 +4,7 @@ const withPWA = require("next-pwa")({
   register: true,
   skipWaiting: true,
   runtimeCaching,
-  // disable: process.env.NODE_ENV !== "production", // Enable PWA only in production
+  disable: process.env.NODE_ENV !== "production", // Enable PWA only in production
 });
 
 const nextConfig = withPWA({

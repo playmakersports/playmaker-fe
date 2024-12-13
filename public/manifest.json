@@ -1,6 +1,8 @@
 {
   "name": "플메 PLAYERMAKER",
   "short_name": "플메",
+  "display": "standalone",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "/images/icons/icon-192x192.png",
@@ -26,7 +28,5 @@
   "theme_color": "#fff",
   "background_color": "#fff",
   "scope": "./",
-  "start_url": "./",
-  "display": "standalone",
-  "orientation": "portrait"
+  "start_url": "./"
 }

@@ -27,40 +27,30 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <Container id="mobile_Wrapper">
-        <Header scrollActive={scrollActive} />
-        <main id="main_Container" ref={container}>
-          {children}
-        </main>
-      </Container>
+      <Header scrollActive={scrollActive} />
+      <Main id="main_Container" ref={container}>
+        {children}
+      </Main>
       <StaffPageMover />
       <AppCode />
     </>
   );
 }
 
-const Container = styled.div`
-  position: relative;
-  overflow: hidden;
+const Main = styled.main`
   margin: 0 auto;
   width: 100%;
   min-width: 320px;
   max-width: var(--mobile-max-width);
   height: calc(100vh - 1px);
+  padding-top: var(--safe-area-top);
   box-shadow: rgba(0, 0, 0, 0.125) 0px 8px 36px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  ${SCROLL_HIDE};
 
-  @media (max-width: 540px) {
+  @media (max-width: var(--mobile-max-width)) {
     box-shadow: none;
-    max-width: 100%;
-  }
-
-  #main_Container {
-    width: 100%;
-    height: calc(100vh - 1px);
-    padding-top: calc(env(safe-area-inset-top) + var(--header-height));
-    overflow-x: hidden;
-    overflow-y: auto;
-    ${SCROLL_HIDE};
   }
 `;
 

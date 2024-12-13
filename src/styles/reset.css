@@ -14,12 +14,14 @@
   -webkit-tap-highlight-color: transparent !important;
 }
 
-html,
-body {
+html {
   font-size: 62.5%;
+  height: 100dvh;
+}
+body {
   line-height: 1;
   overflow: hidden;
-  height: calc(100vh - 1px); /* iOS에서 body scroll 방지 */
+  /* height: calc(100vh - 1px); iOS에서 body scroll 방지  */
   overscroll-behavior: auto none;
 }
 

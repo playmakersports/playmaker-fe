@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { HeaderIcon, HeaderInner, HeaderWrapper } from ".";
 import Logotype from "@/assets/logo/Logotype.svg";
@@ -10,7 +10,6 @@ import PersonIcon from "@/assets/icon/global/Person.svg";
 
 function MainHeader() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   return (
     <Wrapper>
@@ -31,7 +30,6 @@ function MainHeader() {
 
 const Wrapper = styled(HeaderWrapper)`
   position: fixed;
-  max-width: var(--mobile-max-width);
   background-color: var(--background-light);
   border-radius: 0 0 10px 10px;
 

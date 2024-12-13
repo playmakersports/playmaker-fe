@@ -1,7 +1,6 @@
+import React from "react";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
-import React, { Suspense } from "react";
-import Loading from "../Loading";
 import ErrorFallback from "./ErrorFallback";
 
 function QueryErrorBoundary({ children }: { children: React.ReactNode }) {
@@ -9,18 +8,19 @@ function QueryErrorBoundary({ children }: { children: React.ReactNode }) {
     <QueryErrorResetBoundary>
       {({ reset }) => (
         <ErrorBoundary
+          onReset={reset}
           FallbackComponent={({ error, resetErrorBoundary }) => {
             return (
               <ErrorFallback
                 status={error?.response?.status}
                 message={error?.message}
-                retry={() => resetErrorBoundary()}
+                retry={resetErrorBoundary}
+                reset={() => window.location.replace("/")}
               />
             );
           }}
-          onReset={reset}
         >
-          <Suspense fallback={<Loading page />}>{children}</Suspense>
+          {children}
         </ErrorBoundary>
       )}
     </QueryErrorResetBoundary>

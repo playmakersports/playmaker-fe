@@ -11,8 +11,8 @@ import FloatButton from "@/components/common/FloatButton";
 
 import Surprised from "@/assets/character/Surprised.svg";
 
-type Props = { status?: number; message?: string; retry: () => void };
-function ErrorFallback({ status, message, retry }: Props) {
+type Props = { status?: number; message?: string; retry: () => void; reset: () => void };
+function ErrorFallback({ status, message, retry, reset }: Props) {
   const router = useRouter();
 
   return (
@@ -33,14 +33,7 @@ function ErrorFallback({ status, message, retry }: Props) {
         <Button type="button" mode="OPTION1" fullWidth onClick={retry}>
           다시 시도
         </Button>
-        <Button
-          type="button"
-          mode="MAIN"
-          fullWidth
-          onClick={() => {
-            router.replace("/");
-          }}
-        >
+        <Button type="button" mode="MAIN" fullWidth onClick={reset}>
           홈 화면 이동
         </Button>
       </FloatButton>

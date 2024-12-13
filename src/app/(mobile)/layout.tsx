@@ -38,6 +38,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
 }
 
 const Main = styled.main`
+  position: relative;
   margin: 0 auto;
   width: 100%;
   min-width: 320px;

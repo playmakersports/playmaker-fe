@@ -17,7 +17,7 @@ type UnivData = {
   universityAlias: string | null;
 }[];
 
-async function UnivName() {
+function UnivName() {
   // const fetchUnivList = await fetch(`${baseBackendURL}/api/code/university`);
   // const univData = await fetchUnivList.json();
   usePageTitle({ title: "대학 약칭 설정" });

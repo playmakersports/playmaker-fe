@@ -1,15 +1,21 @@
 import "@/styles/globals.css";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
 import GlobalProviders from "./components/GlobalProviders";
 
-export const metadata: Metadata = {
-  title: { default: "플메 PlayerMaker", template: "%s - 플메 PlayerMaker" },
-  manifest: "/manifest.json",
-  viewport: "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover",
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1.0,
+  maximumScale: 1.0,
+  userScalable: false,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f7fafc" },
     { media: "(prefers-color-scheme: dark)", color: "#111012" },
   ],
+};
+export const metadata: Metadata = {
+  title: { default: "플메 PlayerMaker", template: "%s - 플메 PlayerMaker" },
+  manifest: "/manifest.json",
   appleWebApp: {
     title: "플메",
     statusBarStyle: "black-translucent",

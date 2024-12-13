@@ -1,5 +1,23 @@
 @import "./reset.css";
 
+@keyframes loading-frames {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+div.loading-ui {
+  background-color: var(--gray200);
+  background: linear-gradient(100deg, var(--gray200) 25%, var(--gray300) 50%, var(--gray200) 75%);
+  background-size: 200% 100%;
+  -webkit-animation: loading-frames 1.5s infinite;
+  -moz-animation: loading-frames 1.5s infinite;
+  -o-animation: loading-frames 1.5s infinite;
+  animation: loading-frames 1.5s infinite;
+}
+
 :root {
   --header-height: 54px;
   --mobile-max-width: 480px;

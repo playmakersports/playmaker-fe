@@ -46,7 +46,7 @@ function TeamMainContents() {
           teamLogo={TEAM_INFO_MOCK.logo}
           matchTeamScore={20}
           counterpartTeamName="SPABA"
-          counterpartTeamLogo=""
+          counterpartTeamLogo={TEAM_INFO_MOCK.logo}
           matchCounterpartScore={10}
           matchDate="2024.10.12"
         />

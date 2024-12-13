@@ -2,8 +2,9 @@
 
 import React from "react";
 import styled from "@emotion/styled";
-import { usePageTitle } from "@/hook/usePageTitle";
 import { useParams } from "next/navigation";
+import { usePageTitle } from "@/hook/usePageTitle";
+import useBgWhite from "@/hook/useBgWhite";
 
 import { FONTS } from "@/styles/common";
 import FloatButton from "@/components/common/FloatButton";
@@ -16,6 +17,7 @@ import SettingsIcon from "@/assets/icon/global/Settings.svg";
 function TeamHome() {
   const params = useParams();
   const teamId = params["teamId"];
+  useBgWhite();
   usePageTitle({
     title: TEAM_INFO_MOCK.teamName,
     transparent: true,

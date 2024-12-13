@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 
 import { BasicWhiteCard } from "../common/Card";

@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 
-import { ApiSelectMember } from "@/apis/types/user";
 import Loading from "../common/Loading";
+import { ApiSelectMember } from "@/apis/types/user";
 import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import { BasicWhiteCard } from "../common/Card";
@@ -16,6 +16,7 @@ function MyTeam() {
   const router = useRouter();
 
   const { data } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile"); // 임시
+  const myTeamList = data?.team;
 
   return (
     <TeamList as="article" aria-label="나의 팀 목록">
@@ -25,23 +26,34 @@ function MyTeam() {
         onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
       >
         <Suspense fallback={<Loading />}>
-          {data?.team.map((item) => (
-            <TeamItem
-              key={item.teamName}
-              aria-label={item.teamName}
-              role="button"
-              onClick={() => router.push(`/team/${item.teamId}`)}
-            >
-              <TeamImage src={item.logoUrl} />
-              <p>{item.teamName}</p>
-            </TeamItem>
-          ))}
-          <TeamItem aria-label="새로운 팀 찾기">
-            <More>
-              <PlusIcon width={28} height={28} />
-            </More>
-            <p>추가</p>
-          </TeamItem>
+          {myTeamList ? (
+            <>
+              {myTeamList?.map((item) => (
+                <TeamItem
+                  key={item.teamName}
+                  aria-label={item.teamName}
+                  role="button"
+                  onClick={() => router.push(`/team/${item.teamId}`)}
+                >
+                  <TeamImage src={item.logoUrl} />
+                  <p>{item.teamName}</p>
+                </TeamItem>
+              ))}
+              <TeamItem aria-label="새로운 팀 찾기" onClick={() => router.push("/team/list")}>
+                <More>
+                  <PlusIcon width={20} height={20} />
+                </More>
+                <p>팀 찾기</p>
+              </TeamItem>
+            </>
+          ) : (
+            <NoTeamList aria-label="새로운 팀 찾기" onClick={() => router.push("/team/list")}>
+              <More>
+                <PlusIcon width={20} height={20} />
+              </More>
+              <p>운동을 함께할 나만의 팀을 찾아보세요</p>
+            </NoTeamList>
+          )}
         </Suspense>
       </ul>
     </TeamList>
@@ -69,7 +81,7 @@ const TeamItem = styled.li`
   gap: 10px;
   color: var(--gray900);
   border-radius: 2px;
-  ${TEXT_ACTIVE("var(--gray300)", { scalable: true })}
+  ${TEXT_ACTIVE("var(--gray100)", { scalable: true })}
 
   p {
     font-size: 1.4rem;
@@ -98,13 +110,21 @@ const More = styled.div`
   margin: 0 8px;
   width: 50px;
   height: 50px;
-  border: 1px dashed var(--gray200);
+  border: 1px dashed var(--gray300);
   border-radius: 100%;
   & + p {
     color: var(--gray700);
   }
   svg {
     fill: var(--gray500);
+  }
+`;
+
+const NoTeamList = styled(TeamItem)`
+  padding: 0 8px;
+  flex-direction: row;
+  ${More} + p {
+    color: var(--gray500);
   }
 `;
 

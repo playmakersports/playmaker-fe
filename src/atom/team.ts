@@ -6,7 +6,6 @@ type CreateTeamType = {
   createDt: string; // 팀 창단일
   item: string; // 스포츠 종목 (농구: "1")
   joinYn: string;
-  message: string;
   maxBirthYear: number;
   minBirthYear: number;
   sex: "MALE" | "FEMALE" | "MIXTURE" | null;
@@ -22,7 +21,6 @@ const initialTeamCreate: CreateTeamType = {
   createDt: "",
   item: "",
   joinYn: "",
-  message: "",
   maxBirthYear: 0,
   minBirthYear: 0,
   sex: null,

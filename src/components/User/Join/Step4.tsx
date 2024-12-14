@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { useAtom, useAtomValue } from "jotai";
+import { useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { usePost } from "@/apis/hook/query";
 import useToast from "@/hook/useToast";
-import { useMutate } from "@/apis/post";
 
 import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
@@ -15,14 +15,14 @@ import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 function Step4() {
   const router = useRouter();
 
-  const { mutate } = useMutate("/api/login/signup");
+  const { mutate, isError, error, isSuccess } = usePost("/api/login/signup", "form-data");
   const { register, watch, setValue } = useForm<{ preferredSport: string[] }>();
   const { trigger } = useToast();
   const preferredSportValue = watch("preferredSport");
   const applyValues = useAtomValue(atomServiceApply);
   const applyProfileImgValue = useAtomValue(atomServiceApplyImage);
 
-  const handleNextStep = async () => {
+  const handleNextStep = () => {
     if (preferredSportValue?.length > 0 && preferredSportValue?.length <= 3) {
       const formData = new FormData();
       const jsonBlob = new Blob([JSON.stringify({ ...applyValues, preferredSport: preferredSportValue })], {
@@ -33,8 +33,8 @@ function Step4() {
         formData.append("image", applyProfileImgValue);
       }
 
-      const success = await mutate("post", formData, "form-data");
-      if (success) {
+      mutate({ data: formData });
+      if (isSuccess) {
         router.push(`/user/apply/complete?name=${applyValues.username}&gender=${applyValues.sexKey}`);
       }
     }

@@ -1,15 +1,15 @@
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
-import { usePost } from "@/apis/hook/query";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { usePost, usePut } from "@/apis/hook/query";
+import { useRouter } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useToast from "@/hook/useToast";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import GradientBg from "@/components/common/GradientBg";
 import Loading from "@/components/common/Loading";
-import { atomTeamCreate } from "@/atom/team";
+import { atomTeamCreate, atomTeamCreateBanner, atomTeamCreateLogo } from "@/atom/team";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
@@ -17,12 +17,23 @@ function TeamCreateFinish() {
   usePageTitle({ transparent: true });
   const { trigger } = useToast();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const teamCreateValue = useAtomValue(atomTeamCreate);
-  const { mutate, isPending, isError, error, isSuccess } = usePost("/api/team/create");
+  const teamLogoValue = useAtomValue(atomTeamCreateLogo);
+  const teamBannerValue = useAtomValue(atomTeamCreateBanner);
+  const { mutate, isError, error, isSuccess } = usePost("/api/team/create", "form-data");
+  const { mutate: bgMutate } = usePut("/api/team/bgimage/", "form-data");
 
   useEffect(() => {
-    mutate({ data: teamCreateValue });
+    const teamData = new FormData();
+    teamData.append("teamInfo", new Blob([JSON.stringify(teamCreateValue)], { type: "application/json" }));
+    if (teamLogoValue) {
+      teamData.append("image", teamLogoValue);
+    }
+    mutate({ data: teamData });
+
+    return () => {
+      bgMutate({ data: { image: teamBannerValue } });
+    };
   }, []);
 
   useEffect(() => {
@@ -32,16 +43,17 @@ function TeamCreateFinish() {
   return (
     <StagePageContainer stepper={false}>
       <GradientBg position="absolute" />
-      {isPending && <Loading />}
-      <Message show={!isSuccess}>
-        <p>팀 생성이 완료되었어요</p>
-        <p className="last">멋진 활동 기대할게요</p>
-      </Message>
-      <FloatButton>
-        <Button mode="MAIN" fullWidth onClick={() => router.push("/")} type="button">
-          홈 화면으로 이동
-        </Button>
-      </FloatButton>
+      <Suspense fallback={<Loading />}>
+        <Message show={!isSuccess}>
+          <p>팀 생성이 완료되었어요</p>
+          <p className="last">멋진 활동 기대할게요</p>
+        </Message>
+        <FloatButton>
+          <Button mode="MAIN" fullWidth onClick={() => router.push("/")} type="button">
+            홈 화면으로 이동
+          </Button>
+        </FloatButton>
+      </Suspense>
     </StagePageContainer>
   );
 }

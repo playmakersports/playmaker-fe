@@ -27,14 +27,14 @@ function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {
         description="팀 이름과 소개글을 작성하세요"
         button={{
           type: "submit",
-          disabled: !watch("teamName") || !watch("message"),
+          disabled: !watch("teamName") || !watch("teamIntro"),
           text: "다음",
           onClick: () => {},
         }}
       >
         <StepFormWrapper>
           <BasicInput type="text" title="팀 이름" {...register("teamName", { required: true })} />
-          <TextArea title="팀 소개" displayLength maxLength={300} {...register("message", { required: true })} />
+          <TextArea title="팀 소개" displayLength maxLength={300} {...register("teamIntro", { required: true })} />
         </StepFormWrapper>
       </StagePageContainer>
     </form>

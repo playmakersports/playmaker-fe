@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { keyframes } from "@emotion/react";
+import { useAtom } from "jotai";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 
@@ -8,20 +9,26 @@ import CameraIcon from "@/assets/icon/global/Camera.svg";
 import { TEAM_COLORS } from "@/constants/teamValue";
 import { hexToRgb } from "@/util/common";
 import { FONTS } from "@/styles/common";
+import { atomTeamCreate, atomTeamCreateLogo } from "@/atom/team";
 
 function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
   const logoImageInputRef = useRef<HTMLInputElement>(null);
-  const [logoImgFile, setLogoImgFile] = useState<string>("");
+  const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);
+  const [teamLogoCreateValue, setTeamLogoCreateValue] = useAtom(atomTeamCreateLogo);
+
+  const [logoPreview, setLogoPreview] = useState<string>("");
+  const [logoImgFile, setLogoImgFile] = useState<File | null>(null);
   const [teamColor, setTeamColor] = useState("");
 
   const previewLogoImg = () => {
     const file = logoImageInputRef.current?.files?.[0];
     const reader = new FileReader();
     if (file) {
+      setLogoImgFile(file);
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (reader.result) {
-          setLogoImgFile(reader.result.toString());
+          setLogoPreview(reader.result.toString());
         }
       };
     }
@@ -35,7 +42,11 @@ function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
       description="팀 로고와 상징색을 선택하세요"
       button={{
         text: "다음",
-        onClick: () => setStep(6),
+        onClick: () => {
+          setTeamCreateValue((prev) => ({ ...prev, teamColor }));
+          setTeamLogoCreateValue(logoImgFile);
+          setStep(6);
+        },
       }}
     >
       <input
@@ -48,8 +59,8 @@ function TeamCreateStep5({ setStep }: { setStep: (prev: number) => void }) {
       />
 
       <LogoRound targetColor={teamColor}>
-        <LogoUpload htmlFor="logoImgUpload" src={logoImgFile}>
-          {!logoImgFile && <CameraIcon />}
+        <LogoUpload htmlFor="logoImgUpload" src={logoPreview}>
+          {!logoPreview && <CameraIcon />}
         </LogoUpload>
       </LogoRound>
       <Colors>

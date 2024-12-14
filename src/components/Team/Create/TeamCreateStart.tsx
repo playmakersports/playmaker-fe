@@ -11,7 +11,6 @@ import GradientBg from "@/components/common/GradientBg";
 
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
 import GloveIcon from "@/assets/icon/global/Globe.svg";
-import { useGet } from "@/apis/hook/query";
 
 function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });

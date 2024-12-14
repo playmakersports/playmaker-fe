@@ -1,23 +1,29 @@
 import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
+import { useAtom } from "jotai";
 import { keyframes } from "@emotion/react";
 
 import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
+import { atomTeamCreateBanner } from "@/atom/team";
 
 function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
   const coverImageInputRef = useRef<HTMLInputElement>(null);
-  const [coverImgFile, setCoverImgFile] = useState<string>("");
+  const [teamBannerCreateValue, setTeamBannerCreateValue] = useAtom(atomTeamCreateBanner);
+
+  const [coverPreview, setCoverPreview] = useState<string>("");
+  const [coverImgFile, setCoverImgFile] = useState<File | null>(null);
 
   const previewCoverImg = () => {
     const file = coverImageInputRef.current?.files?.[0];
     const reader = new FileReader();
     if (file) {
+      setCoverImgFile(file);
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         if (reader.result) {
-          setCoverImgFile(reader.result.toString());
+          setCoverPreview(reader.result.toString());
         }
       };
     }
@@ -31,7 +37,10 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
       description="팀을 대표하는 이미지를 선택하세요"
       button={{
         text: "다음",
-        onClick: () => setStep(7),
+        onClick: () => {
+          setTeamBannerCreateValue(coverImgFile);
+          setStep(7);
+        },
       }}
     >
       <input
@@ -43,8 +52,8 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
         onChange={previewCoverImg}
       />
 
-      <CoverUpload htmlFor="coverImgUpload" src={coverImgFile}>
-        {coverImgFile ? (
+      <CoverUpload htmlFor="coverImgUpload" src={coverPreview}>
+        {coverPreview ? (
           <div className="camera-icon-wrapper changed">
             <CameraIcon />
             이미지 교체

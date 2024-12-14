@@ -11,7 +11,7 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        throwOnError: true,
+        // throwOnError: true,
         refetchOnWindowFocus: false,
         retry: false,
       },

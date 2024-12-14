@@ -6,12 +6,12 @@ import Loading from "../Loading";
 
 function GlobalComponents({ children }: { children: React.ReactNode }) {
   return (
-    <ErrorBoundary>
-      <ConfirmProvider>
-        <Toast />
-        <Suspense fallback={<Loading page />}>{children}</Suspense>
-      </ConfirmProvider>
-    </ErrorBoundary>
+    // <ErrorBoundary>
+    <ConfirmProvider>
+      <Toast />
+      <Suspense fallback={<Loading page />}>{children}</Suspense>
+    </ConfirmProvider>
+    // </ErrorBoundary>
   );
 }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { useAtom } from "jotai";
 
 import { atomTeamCreate } from "@/atom/team";
@@ -10,44 +10,49 @@ import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 
 function TeamCreateStep1({ setStep }: { setStep: (prev: number) => void }) {
-  const { register, watch } = useForm();
   const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);
+  const { register, watch, handleSubmit } = useForm({ defaultValues: { item: teamCreateValue.item ?? "" } });
+
+  const onSubmit = (data: FieldValues) => {
+    setTeamCreateValue((prev) => ({ ...prev, ...data }));
+    setStep(2);
+  };
 
   return (
-    <StagePageContainer
-      stepper={true}
-      headerAlign="center"
-      title="종목 선택"
-      description={`생성할 팀의 종목을 선택하세요\n지금은 농구만 선택 가능해요`}
-      button={{
-        text: "다음",
-        onClick: () => {
-          setStep(2);
-          setTeamCreateValue((prev) => ({ ...prev, teamSports: watch("teamSports") }));
-        },
-        disabled: !watch("teamSports"),
-      }}
-    >
-      <Container>
-        <List>
-          {SUPPORT_SPORTS.map((item) => (
-            <CardInput
-              type="radio"
-              key={item.value}
-              id={item.value}
-              value={item.value}
-              disabled={item.value !== "basketball"}
-              {...register("teamSports")}
-            >
-              <Item aria-disabled={item.value !== "basketball"}>
-                <Image src={item.icon} alt={item.name} width={36} />
-                <div className="name">{item.name}</div>
-              </Item>
-            </CardInput>
-          ))}
-        </List>
-      </Container>
-    </StagePageContainer>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <StagePageContainer
+        stepper={true}
+        headerAlign="center"
+        title="종목 선택"
+        description={`생성할 팀의 종목을 선택하세요\n지금은 농구만 선택 가능해요`}
+        button={{
+          text: "다음",
+          type: "submit",
+          disabled: !watch("item"),
+          onClick: () => {},
+        }}
+      >
+        <Container>
+          <List>
+            {SUPPORT_SPORTS.map((item) => (
+              <CardInput
+                type="radio"
+                key={item.value}
+                id={item.value}
+                value={item.value}
+                disabled={item.value !== "1"}
+                {...register("item")}
+              >
+                <Item aria-disabled={item.value !== "1"}>
+                  <Image src={item.icon} alt={item.name} width={36} />
+                  <div className="name">{item.name}</div>
+                </Item>
+              </CardInput>
+            ))}
+          </List>
+        </Container>
+      </StagePageContainer>
+    </form>
   );
 }
 

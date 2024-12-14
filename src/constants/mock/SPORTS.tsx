@@ -9,7 +9,7 @@ import RunIcon from "@/assets/icon/sports/run.png";
 type SportsInfoType = { value: string; name: string; icon: StaticImageData };
 export const SUPPORT_SPORTS: Array<SportsInfoType> = [
   {
-    value: "basketball",
+    value: "1",
     name: "농구",
     icon: BasketballIcon,
   },

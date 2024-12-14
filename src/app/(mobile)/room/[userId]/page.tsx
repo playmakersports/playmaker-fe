@@ -116,6 +116,9 @@ const Profile = styled.div`
     border-radius: 50%;
     overflow: hidden;
     background-color: #eef8fe;
+    img {
+      object-fit: cover;
+    }
   }
 `;
 const Info = styled.div`

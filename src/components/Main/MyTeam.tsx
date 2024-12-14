@@ -1,10 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import styled from "@emotion/styled";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useGet } from "@/apis/hook/query";
 
-import { MY_TEAM_MOCK } from "@/constants/mock/HOME";
+import { ApiSelectMember } from "@/apis/types/user";
+import Loading from "../common/Loading";
 import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import { BasicWhiteCard } from "../common/Card";
@@ -12,7 +14,8 @@ import PlusIcon from "@/assets/icon/global/Plus.svg";
 
 function MyTeam() {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
+  const { data } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile"); // 임시
 
   return (
     <TeamList as="article" aria-label="나의 팀 목록">
@@ -21,23 +24,25 @@ function MyTeam() {
         ref={(ref) => scrollMaskedHandlerRef(ref, "horizontal")}
         onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
       >
-        {MY_TEAM_MOCK.map((item) => (
-          <TeamItem
-            key={item.teamName}
-            aria-label={item.teamName}
-            role="button"
-            onClick={() => router.push(`/team/${item.teamId}`)}
-          >
-            <TeamImage src={item.logoImg} />
-            <p>{item.teamName}</p>
+        <Suspense fallback={<Loading />}>
+          {data?.team.map((item) => (
+            <TeamItem
+              key={item.teamName}
+              aria-label={item.teamName}
+              role="button"
+              onClick={() => router.push(`/team/${item.teamId}`)}
+            >
+              <TeamImage src={item.logoUrl} />
+              <p>{item.teamName}</p>
+            </TeamItem>
+          ))}
+          <TeamItem aria-label="새로운 팀 찾기">
+            <More>
+              <PlusIcon width={28} height={28} />
+            </More>
+            <p>추가</p>
           </TeamItem>
-        ))}
-        <TeamItem aria-label="새로운 팀 찾기">
-          <More>
-            <PlusIcon width={28} height={28} />
-          </More>
-          <p>추가</p>
-        </TeamItem>
+        </Suspense>
       </ul>
     </TeamList>
   );

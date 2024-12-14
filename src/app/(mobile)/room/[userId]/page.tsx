@@ -10,7 +10,6 @@ import { useGet } from "@/apis/hook/query";
 
 import { FONTS } from "@/styles/common";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
-import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
 import UserSetting from "@/components/Room/UserSetting";
 import { BasicWhiteCard } from "@/components/common/Card";
@@ -28,7 +27,7 @@ function UserPage() {
   const userId = params["userId"];
   const [weeklyDate, setWeeklyDate] = useState("");
 
-  const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmember");
+  const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
 
   usePageTitle({
     subIcons: [

@@ -8,6 +8,9 @@ const withPWA = require("next-pwa")({
 });
 
 const nextConfig = withPWA({
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "wonhee-bucket.s3.ap-northeast-2.amazonaws.com", port: "" }],
+  },
   reactStrictMode: true,
   swcMinify: true,
   compiler: { emotion: true },

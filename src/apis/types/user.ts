@@ -13,6 +13,11 @@ export type ApiSelectMember = {
   preferredSport: string;
   selfIntro: string;
   sexKey: "남성" | "여성";
+  team: Array<{
+    logoUrl: string;
+    teamId: number;
+    teamName: string;
+  }>;
   university: string;
   username: string;
 };

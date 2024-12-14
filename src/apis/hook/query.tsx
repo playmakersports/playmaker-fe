@@ -1,5 +1,5 @@
 import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
-import { typedGet, typedPost } from "..";
+import { typedGet, typedPost, typedPut } from "..";
 import { getCookie } from "cookies-next";
 
 type ContentType = "json" | "form-data";
@@ -44,6 +44,28 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
       }
 
       const response = await typedPost<T>(finalUrl, data, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": CONTENT_TYPE[contentType],
+        },
+      });
+      return response.data;
+    },
+  });
+};
+export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
+  const accessToken = getCookie("access-token");
+  return useMutation({
+    mutationFn: async ({ data, queryParams }: MutationFnAsyncType) => {
+      let finalUrl = url;
+      if (queryParams) {
+        const queryString = Object.entries(queryParams)
+          .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          .join("&");
+        finalUrl += `?${queryString}`;
+      }
+
+      const response = await typedPut<T>(finalUrl, data, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
           "Content-Type": CONTENT_TYPE[contentType],

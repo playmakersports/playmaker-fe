@@ -48,8 +48,8 @@ function Step2({ setStep }: { setStep: (prev: number) => void }) {
         />
         <DateInput title="생년월일" pickType="ONLY_PAST" {...register("birth")} />
         <InputRadioWrapper title="성별">
-          <InputRadio buttonType {...register("sexKey")} fullWidth value="MALE" id="MALE" labelName="남성" />
-          <InputRadio buttonType {...register("sexKey")} fullWidth value="FEMALE" id="FEMALE" labelName="여성" />
+          <InputRadio buttonType {...register("sexKey")} fullWidth value="male" id="MALE" labelName="남성" />
+          <InputRadio buttonType {...register("sexKey")} fullWidth value="female" id="FEMALE" labelName="여성" />
         </InputRadioWrapper>
       </StepFormWrapper>
     </StagePageContainer>

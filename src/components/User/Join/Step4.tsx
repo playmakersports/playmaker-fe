@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
@@ -11,11 +11,12 @@ import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
+import Loading from "@/components/common/Loading";
 
 function Step4() {
   const router = useRouter();
 
-  const { mutate, isError, error, isSuccess } = usePost("/api/login/signup", "form-data");
+  const { mutate, isPending, isSuccess } = usePost("/api/login/signup", "form-data");
   const { register, watch, setValue } = useForm<{ preferredSport: string[] }>();
   const { trigger } = useToast();
   const preferredSportValue = watch("preferredSport");
@@ -34,9 +35,6 @@ function Step4() {
       }
 
       mutate({ data: formData });
-      if (isSuccess) {
-        router.push(`/user/apply/complete?name=${applyValues.username}&gender=${applyValues.sexKey}`);
-      }
     }
   };
 
@@ -49,6 +47,16 @@ function Step4() {
       );
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      router.replace(`/user/apply/complete?name=${applyValues.username}&gender=${applyValues.sexKey}`);
+    }
+  }, [isSuccess]);
+
+  if (isPending) {
+    return <Loading page />;
+  }
 
   return (
     <StagePageContainer

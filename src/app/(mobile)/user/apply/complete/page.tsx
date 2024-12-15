@@ -6,7 +6,7 @@ import { usePageTitle } from "@/hook/usePageTitle";
 
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
-import CharacterWelcome from "../../../../components/User/Join/CharacterWelcome";
+import CharacterWelcome from "../../../../../components/User/Join/CharacterWelcome";
 import GradientBg from "@/components/common/GradientBg";
 
 function JoinComplete() {

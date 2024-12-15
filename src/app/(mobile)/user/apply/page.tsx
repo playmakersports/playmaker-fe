@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
 import useBgWhite from "@/hook/useBgWhite";
 import useModal from "@/hook/useModal";
@@ -17,7 +17,6 @@ import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
 function Intro() {
   useBgWhite();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { ModalComponents, showModal } = useModal();
   const confirm = useConfirm();
   const [selectedTerm, setSelectedTerm] = useState("");

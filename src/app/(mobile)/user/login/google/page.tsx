@@ -1,40 +1,21 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import React from "react";
+import { redirect } from "next/navigation";
 import { setCookie } from "cookies-next";
 
 import { baseBackendURL } from "@/apis";
-import { BaseContainer } from "@/components/common/Container";
 
-function Google() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [apiState, setApiState] = useState("");
-  const GOOGLE_API_CODE = searchParams.get("code");
-  const target = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(`${GOOGLE_API_CODE}`)}`;
+async function Google({ params }: { params: Promise<{ code: string }> }) {
+  const { code } = await params;
+  const googleUrl = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(`${code}`)}`;
+  const data = await fetch(googleUrl);
+  const response = await data.json();
 
-  useEffect(() => {
-    setApiState("LOADING");
-    if (GOOGLE_API_CODE) {
-      axios
-        .get(target)
-        .then((res) => {
-          if (res.status === 200) {
-            setApiState("SUCCESS");
-            setCookie("access-token", res.data.access_token, { secure: true });
-            localStorage.setItem("Refresh", res.data.refresh_token);
-            router.replace("/user/apply?from=google");
-          }
-        })
-        .catch((err) => {
-          setApiState(`ERROR: ${err.code}`);
-        });
-    }
-  }, [GOOGLE_API_CODE]);
+  if (response) {
+    setCookie("access-token", response.access_token, { secure: true });
+    redirect("/user/apply?from=google");
+  }
 
-  return <BaseContainer>{apiState}</BaseContainer>;
+  return <>{data.status}</>;
 }
 
 export default Google;

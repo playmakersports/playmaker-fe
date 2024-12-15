@@ -25,7 +25,7 @@ function KakaoLogin() {
             setApiState("SUCCESS");
             localStorage.setItem("Authorization", res.data.access_token);
             localStorage.setItem("Refresh", res.data.refresh_token);
-            router.push("/user/apply?from=kakao");
+            router.replace("/user/apply?from=kakao");
           }
         })
         .catch((err) => {

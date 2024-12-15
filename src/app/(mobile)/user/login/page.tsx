@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { VERCEL_BASE_URL } from "@/constants/baseUrl";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import { KAKAO_AUTH } from "@/apis/oauth";
+import { KAKAO_AUTH, GOOGLE_AUTH } from "@/apis/oauth";
 import Button from "@/components/common/Button";
 import LoginWrapper from "@/components/User/LoginWrapper";
 
@@ -18,12 +18,14 @@ function Login() {
 
   const handleKakaoLogin = () => {
     const REDIRECT_URI = `${VERCEL_BASE_URL}/user/login/kakao`;
-    const KAKAO_URL = `${KAKAO_AUTH}?client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+    const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
+    const KAKAO_URL = `${KAKAO_AUTH}?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     window.open(KAKAO_URL, "_self");
   };
   const handleGoogleLogin = () => {
     const REDIRECT_URI = `${VERCEL_BASE_URL}/user/login/google`;
-    const GOOGLE_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=email%20openid&response_type=code&redirect_uri=${REDIRECT_URI}&client_id=${process.env.GOOGLE_CLIENT_ID}`;
+    const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const GOOGLE_URL = `${GOOGLE_AUTH}?scope=email%20openid&response_type=code&redirect_uri=${REDIRECT_URI}&client_id=${GOOGLE_CLIENT_ID}`;
     window.open(GOOGLE_URL, "_self");
   };
 

@@ -5,6 +5,7 @@ import { setCookie } from "cookies-next";
 import { baseBackendURL } from "@/apis";
 import { useGet } from "@/apis/hook/query";
 import { AuthResponseType } from "@/types/auth";
+import Loading from "@/components/common/Loading";
 
 function GoogleLogin() {
   const router = useRouter();
@@ -25,7 +26,7 @@ function GoogleLogin() {
     }
   }
 
-  return <></>;
+  return <Loading page />;
 }
 
 export default GoogleLogin;

@@ -123,8 +123,8 @@ const Team = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    border: 1px solid var(--gray100);
-    background-color: var(--sub2);
+    border: 1px solid var(--gray200);
+    background-color: var(--gray100);
   }
 `;
 

@@ -5,14 +5,13 @@ type CreateTeamType = {
   activeArea: number; // 활동지역
   createDt: string; // 팀 창단일
   item: string; // 스포츠 종목 (농구: "1")
-  joinYn: string;
   maxBirthYear: number;
   minBirthYear: number;
   sex: "MALE" | "FEMALE" | "MIXTURE" | null;
   teamColor: string;
   teamIntro: string;
   university: string | null;
-  generationYn: string;
+  gisuYn: "Y" | "N";
 };
 
 const initialTeamCreate: CreateTeamType = {
@@ -20,14 +19,13 @@ const initialTeamCreate: CreateTeamType = {
   activeArea: 0,
   createDt: "",
   item: "",
-  joinYn: "",
   maxBirthYear: 0,
   minBirthYear: 0,
   sex: null,
   teamColor: "",
   teamIntro: "",
   university: null,
-  generationYn: "",
+  gisuYn: "N",
 };
 
 export const atomTeamCreateLogo = atom<File | null>(null);

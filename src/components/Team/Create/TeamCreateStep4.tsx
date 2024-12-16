@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import styled from "@emotion/styled";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
@@ -13,9 +13,9 @@ import { atomTeamCreate } from "@/atom/team";
 
 function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
   const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);
-  const { register, handleSubmit } = useForm({
+  const { register, handleSubmit, watch } = useForm<FieldValues>({
     defaultValues: {
-      generationYn: teamCreateValue.generationYn === "1" ? "on" : "off",
+      gisuYn: teamCreateValue.gisuYn === "Y",
       sex: teamCreateValue.sex,
     },
   });
@@ -23,15 +23,14 @@ function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
     teamCreateValue.minBirthYear,
     teamCreateValue.maxBirthYear,
   ]);
-  console.log(teamCreateValue);
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: FieldValues) => {
     setStep(5);
     setTeamCreateValue({
       ...teamCreateValue,
       minBirthYear: birthYearRange[0],
       maxBirthYear: birthYearRange[1],
       sex: data.sex,
-      generationYn: data.generationYn === "on" ? "1" : "0",
+      gisuYn: data.gisuYn ? "Y" : "N",
     });
   };
 
@@ -61,8 +60,7 @@ function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
             <InputRadio buttonType fullWidth {...register("sex")} value="FEMALE" id="FEMALE" labelName="여성" />
           </InputRadioWrapper>
           <InputLabel>
-            <InputCheckbox id="generationYn" {...register("generationYn")} />{" "}
-            <label htmlFor="generationYn">기수제 모임으로 만들기</label>
+            <InputCheckbox id="gisuYn" {...register("gisuYn")} /> <label htmlFor="gisuYn">기수제 모임으로 생성</label>
           </InputLabel>
         </StepFormWrapper>
       </StagePageContainer>

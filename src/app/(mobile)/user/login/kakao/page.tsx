@@ -1,40 +1,28 @@
-"use client";
+import React from "react";
+import { redirect } from "next/navigation";
+import { setCookie } from "cookies-next";
 
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-
-import { BaseContainer } from "@/components/common/Container";
-import Loading from "@/components/common/Loading";
 import { baseBackendURL } from "@/apis";
 
-function KakaoLogin() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [apiState, setApiState] = useState("");
-  const KAKAO_API_CODE = searchParams.get("code");
-  const target = `${baseBackendURL}/api/login/koauth2?code=${KAKAO_API_CODE}`;
+async function KakaoLogin({ params }: { params: Promise<{ code: string }> }) {
+  const { code } = await params;
+  const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(`${code}`)}`;
+  const data = await fetch(kakaoUrl);
+  const response = await data.json();
 
-  useEffect(() => {
-    setApiState("LOADING");
-    if (KAKAO_API_CODE) {
-      axios
-        .get(target)
-        .then((res) => {
-          if (res.status === 200) {
-            setApiState("SUCCESS");
-            localStorage.setItem("Authorization", res.data.access_token);
-            localStorage.setItem("Refresh", res.data.refresh_token);
-            router.replace("/user/apply?from=kakao");
-          }
-        })
-        .catch((err) => {
-          setApiState(`ERROR: ${err.code}`);
-        });
+  if (response) {
+    setCookie("access-token", response.access_token, { secure: true });
+
+    if (response.newUserYn === "Y") {
+      // 가입되지 않은 회원
+      redirect("/user/apply?from=kakao");
+    } else {
+      // 가입된 회원
+      redirect("/");
     }
-  }, [KAKAO_API_CODE]);
+  }
 
-  return <BaseContainer>{apiState === "LOADING" && <Loading />}</BaseContainer>;
+  return <>{data.status}</>;
 }
 
 export default KakaoLogin;

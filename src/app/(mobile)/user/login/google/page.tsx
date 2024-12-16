@@ -4,7 +4,7 @@ import { setCookie } from "cookies-next";
 
 import { baseBackendURL } from "@/apis";
 
-async function Google({ params }: { params: Promise<{ code: string }> }) {
+async function GoogleLogin({ params }: { params: Promise<{ code: string }> }) {
   const { code } = await params;
   const googleUrl = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(`${code}`)}`;
   const data = await fetch(googleUrl);
@@ -12,10 +12,17 @@ async function Google({ params }: { params: Promise<{ code: string }> }) {
 
   if (response) {
     setCookie("access-token", response.access_token, { secure: true });
-    redirect("/user/apply?from=google");
+
+    if (response.newUserYn === "Y") {
+      // 가입되지 않은 회원
+      redirect("/user/apply?from=google");
+    } else {
+      // 가입된 회원
+      redirect("/");
+    }
   }
 
   return <>{data.status}</>;
 }
 
-export default Google;
+export default GoogleLogin;

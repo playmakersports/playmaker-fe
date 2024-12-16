@@ -1,7 +1,7 @@
 import React, { Suspense, useEffect } from "react";
 import styled from "@emotion/styled";
 import { useAtomValue } from "jotai";
-import { usePost, usePut } from "@/apis/hook/query";
+import { usePost } from "@/apis/hook/query";
 import { useRouter } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useToast from "@/hook/useToast";
@@ -9,7 +9,7 @@ import useToast from "@/hook/useToast";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import GradientBg from "@/components/common/GradientBg";
 import Loading from "@/components/common/Loading";
-import { atomTeamCreate, atomTeamCreateBanner, atomTeamCreateLogo } from "@/atom/team";
+import { atomTeamCreate, atomTeamCreateLogo } from "@/atom/team";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
@@ -19,9 +19,13 @@ function TeamCreateFinish() {
   const router = useRouter();
   const teamCreateValue = useAtomValue(atomTeamCreate);
   const teamLogoValue = useAtomValue(atomTeamCreateLogo);
-  const teamBannerValue = useAtomValue(atomTeamCreateBanner);
-  const { mutate, isError, error, isSuccess } = usePost("/api/team/create", "form-data");
-  const { mutate: bgMutate } = usePut("/api/team/bgimage/", "form-data");
+  // const teamBannerValue = useAtomValue(atomTeamCreateBanner);
+  const { mutate, data, isError, error, isSuccess } = usePost<{ teamId: string }>("/api/team/create", "form-data");
+  // const { mutate: bgMutate } = usePut("/api/team/bgimage/", "form-data");
+
+  const moveTeamPage = () => {
+    router.replace(`/team/${data?.teamId}`);
+  };
 
   useEffect(() => {
     const teamData = new FormData();
@@ -32,7 +36,7 @@ function TeamCreateFinish() {
     mutate({ data: teamData });
 
     return () => {
-      bgMutate({ data: { image: teamBannerValue } });
+      // bgMutate({ data: { image: teamBannerValue } });
     };
   }, []);
 
@@ -43,14 +47,14 @@ function TeamCreateFinish() {
   return (
     <StagePageContainer stepper={false}>
       <GradientBg position="absolute" />
-      <Suspense fallback={<Loading />}>
-        <Message show={!isSuccess}>
+      <Suspense fallback={<Loading page />}>
+        <Message show={isSuccess}>
           <p>팀 생성이 완료되었어요</p>
           <p className="last">멋진 활동 기대할게요</p>
         </Message>
         <FloatButton>
-          <Button mode="MAIN" fullWidth onClick={() => router.push("/")} type="button">
-            홈 화면으로 이동
+          <Button mode="MAIN" fullWidth onClick={moveTeamPage} type="button">
+            팀으로 이동
           </Button>
         </FloatButton>
       </Suspense>
@@ -65,7 +69,7 @@ const Message = styled.div<{ show: boolean }>`
   text-align: center;
   font-size: 2.8rem;
   font-weight: 600;
-  line-height: 4.2rem;
+  line-height: 4.8rem;
   z-index: 1;
   p {
     opacity: ${({ show }) => (show ? 1 : 0)};

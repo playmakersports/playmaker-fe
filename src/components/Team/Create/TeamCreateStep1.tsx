@@ -5,7 +5,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { useAtom } from "jotai";
 
 import { atomTeamCreate } from "@/atom/team";
-import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
+import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 

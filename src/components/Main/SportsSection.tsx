@@ -10,7 +10,7 @@ import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
 import RecruitTeamItem from "./RecruitTeamItem";
 import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
-import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
+import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
 

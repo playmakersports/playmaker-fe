@@ -14,22 +14,22 @@ export const SUPPORT_SPORTS: Array<SportsInfoType> = [
     icon: BasketballIcon,
   },
   {
-    value: "volley",
-    name: "배구",
-    icon: VolleyballIcon,
-  },
-  {
-    value: "football",
+    value: "2",
     name: "축구",
     icon: FootballIcon,
   },
   {
-    value: "badminton",
-    name: "배드민턴",
-    icon: BadmintonIcon,
+    value: "3",
+    name: "배구",
+    icon: VolleyballIcon,
   },
+  // {
+  //   value: "badminton",
+  //   name: "배드민턴",
+  //   icon: BadmintonIcon,
+  // },
   {
-    value: "run",
+    value: "4",
     name: "러닝",
     icon: RunIcon,
   },

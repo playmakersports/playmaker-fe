@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { usePost } from "@/apis/hook/query";
 import useToast from "@/hook/useToast";
 
-import { SUPPORT_SPORTS } from "@/constants/mock/SPORTS";
+import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import CardInput from "@/components/common/CardInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";

@@ -1,16 +1,46 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useTransition } from "react";
 import styled from "@emotion/styled";
+import { useRouter } from "next/navigation";
 
 import { SCROLL_HIDE } from "@/styles/common";
 import Header from "@/components/layouts/Header/Header";
 import StaffPageMover from "@/components/layouts/StaffPageMover";
 import AppCode from "@/components/layouts/AppCode";
+import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 
 function MobileLayout({ children }: { children: React.ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
+  const router = useRouter();
   const [scrollActive, setScrollActive] = useState(0);
+  const [isPending, startTransition] = useTransition();
+
+  useEffect(() => {
+    const cacheScrollPosition: Array<number> = [];
+
+    // 페이지 이동시 최상단
+    const routerPush = router.push;
+    const newPush = (ref: string, options?: NavigateOptions): void => {
+      startTransition(() => routerPush(ref, options));
+      cacheScrollPosition.push(container.current?.scrollTop || 0);
+      if (isPending) {
+        container.current?.scrollTo(0, 0);
+      }
+    };
+    router.push = newPush;
+
+    // 뒤로가기시 스크롤 복구
+    const handleBackPage = () => {
+      const targetScroll = cacheScrollPosition.pop();
+      container.current?.scrollTo(0, targetScroll || 0);
+    };
+    window.addEventListener("popstate", handleBackPage);
+
+    return () => {
+      window.removeEventListener("popstate", handleBackPage);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {

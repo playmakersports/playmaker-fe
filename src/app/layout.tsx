@@ -1,7 +1,14 @@
 import "@/styles/globals.css";
 import { Metadata, Viewport } from "next";
+import localFont from "next/font/local";
 import GlobalProviders from "./components/GlobalProviders";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+
+const pretendard = localFont({
+  src: "./fonts/PretendardVariable.woff2",
+  display: "swap",
+  weight: "45 920",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -39,7 +46,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>
+      <body className={pretendard.className}>
         <SpeedInsights />
         <GlobalProviders>{children}</GlobalProviders>
       </body>

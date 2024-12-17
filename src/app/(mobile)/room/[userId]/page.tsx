@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 import { useParams } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
@@ -22,7 +22,6 @@ import Loading from "@/components/common/Loading";
 import GenderIcon from "@/components/common/GenderIcon";
 
 function UserPage() {
-  useBgWhite();
   const params = useParams();
   const userId = params["userId"];
   const [weeklyDate, setWeeklyDate] = useState("");

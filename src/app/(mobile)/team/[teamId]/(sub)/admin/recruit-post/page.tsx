@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { BaseContainer } from "@/components/common/Container";
@@ -14,7 +14,6 @@ import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
 function RecruitPost() {
-  useBgWhite();
   const [activePost, setActivePost] = useState(false);
   usePageTitle({
     subTitle: "JUMP",

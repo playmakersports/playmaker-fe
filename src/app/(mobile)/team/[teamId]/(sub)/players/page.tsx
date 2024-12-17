@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
-import useBgWhite from "@/hook/useBgWhite";
+
 import useModal from "@/hook/useModal";
 
 import SwipeSelector from "@/components/common/SwipeSelector";
@@ -22,7 +22,6 @@ function PlayerList() {
   const { showModal: showCategoryModal, ModalComponents: CategoryModal } = useModal();
   const [filter, setFilter] = useState("all");
   usePageTitle({ title: "팀원 목록" });
-  useBgWhite();
 
   const PLAYERS_FILTER = [
     { name: "전체", value: "all" },

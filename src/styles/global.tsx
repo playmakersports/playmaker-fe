@@ -1,19 +1,19 @@
 import { Global, css } from "@emotion/react";
 import { useAtomValue } from "jotai";
-import { atomBgWhite } from "@/atom/common";
+import { atomBackgroundBluely } from "@/atom/common";
 
-const baseTheme = (white?: boolean) => css`
+const baseTheme = (bluely?: boolean) => css`
   body {
     color: var(--gray900);
     background: #fff;
   }
   #mobile_Wrapper {
-    background: ${white ? "var(--background-light)" : "var(--background)"};
+    background: ${bluely ? "var(--background)" : "var(--background-light)"};
   }
 `;
 
 const GlobalStyle = () => {
-  const isWhiteBg = useAtomValue(atomBgWhite);
+  const isBgBluely = useAtomValue(atomBackgroundBluely);
   // 다크모드 제거 NOTE: 추후 필요 시 다시 추가 예정
   // const updateThemeMode = () => {
   //   if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
@@ -31,7 +31,7 @@ const GlobalStyle = () => {
   //   };
   // }, []);
 
-  return <Global styles={baseTheme(isWhiteBg)} />;
+  return <Global styles={baseTheme(isBgBluely)} />;
 };
 
 export default GlobalStyle;

@@ -1,7 +1,5 @@
 "use client";
 
-import useBgWhite from "@/hook/useBgWhite";
-
 import FixedNotice from "@/components/Main/FixedNotice";
 import Banner from "@/components/Main/Banner";
 import MyTeam from "@/components/Main/MyTeam";
@@ -12,7 +10,6 @@ import Navigation from "@/components/layouts/Navigation";
 import { HomeBackGradient, HomeContainer } from "./_components/container";
 
 export default function Home() {
-  useBgWhite();
   return (
     <HomeContainer>
       <HomeBackGradient />

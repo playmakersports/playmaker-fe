@@ -1,6 +1,6 @@
 import React, { ReactElement, useEffect } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { useResetAtom } from "jotai/utils";
 
 import { resetAtomServiceApply } from "@/atom/user";
@@ -12,7 +12,6 @@ import Step4 from "./Join/Step4";
 import Stepper from "../common/Stepper";
 
 function JoinStep() {
-  useBgWhite();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = new URLSearchParams(useSearchParams().toString());

@@ -5,7 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import { atomBgWhite } from "@/atom/common";
+import { atomBackgroundBluely } from "@/atom/common";
 import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
 import MainHeader from "./MainHeader";
 
@@ -13,7 +13,7 @@ import HeaderLeftArrow from "@/assets/icon/arrow/LeftArrowThin.svg";
 
 type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {
-  const isWhiteBg = useAtomValue(atomBgWhite);
+  const isBgBluely = useAtomValue(atomBackgroundBluely);
   const router = useRouter();
   const pathname = usePathname();
   const { titleValue, subTitleValue, isTransparent, scrollBgColorValue, subIconsValue, scrolledShadowValue } =
@@ -27,7 +27,7 @@ function Header({ scrollActive }: Props) {
   }
   if (isTransparent) {
     return (
-      <TransparentWrapper bgWhite={isWhiteBg} scrolled={isTitleShow} scrolledShadow={scrolledShadowValue}>
+      <TransparentWrapper isBgBluely={isBgBluely} scrolled={isTitleShow} scrolledShadow={scrolledShadowValue}>
         <HeaderInner>
           <Icon type="button" aria-label="뒤로가기" onClick={() => router.back()}>
             <HeaderLeftArrow />
@@ -54,7 +54,7 @@ function Header({ scrollActive }: Props) {
   }
   return (
     <Wrapper
-      bgWhite={isWhiteBg}
+      isBgBluely={isBgBluely}
       bgColor={scrollBgColorValue && [scrollBgColorValue.beforeBg, scrollBgColorValue.afterBg]}
       scrolled={isScrolled}
       scrolledShadow={scrolledShadowValue}
@@ -80,18 +80,18 @@ function Header({ scrollActive }: Props) {
 }
 
 type StyledScrolled = { scrolled?: boolean; scrolledShadow?: boolean };
-type WrapperStyledType = { bgWhite: boolean; bgColor?: [string, string] | null };
+type WrapperStyledType = { isBgBluely: boolean; bgColor?: [string, string] | null };
 const Icon = styled(HeaderIcon)`
   svg {
     fill: var(--gray700);
   }
 `;
 const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
-  background-color: ${({ scrolled, bgColor, bgWhite }) => {
+  background-color: ${({ scrolled, bgColor, isBgBluely }) => {
     if (bgColor) {
       return scrolled ? bgColor[1] : bgColor[0];
     }
-    return bgWhite ? "var(--background-light)" : "var(--background)";
+    return isBgBluely ? "var(--background)" : "var(--background-light)";
   }};
   box-shadow: ${({ scrolledShadow, scrolled }) =>
     scrolled && scrolledShadow ? "0 4px 10px 2px rgba(0, 0, 0, 0.1)" : "none"};
@@ -99,8 +99,8 @@ const Wrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
 `;
 
 const TransparentWrapper = styled(HeaderWrapper)<StyledScrolled & WrapperStyledType>`
-  background-color: ${({ scrolled, bgWhite }) =>
-    !scrolled ? "transparent" : bgWhite ? "var(--background-light)" : "var(--background)"};
+  background-color: ${({ scrolled, isBgBluely }) =>
+    !scrolled ? "transparent" : isBgBluely ? "var(--background)" : "var(--background-light)"};
   box-shadow: ${({ scrolledShadow, scrolled }) =>
     scrolled && scrolledShadow ? "0 4px 10px 2px rgba(0, 0, 0, 0.1)" : "none"};
   transition: box-shadow 0.25s;

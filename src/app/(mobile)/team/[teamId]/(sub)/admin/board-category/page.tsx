@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 import { FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
@@ -16,7 +16,7 @@ function BoardCategory() {
   const confirm = useConfirm();
   const [category, setCategory] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
-  useBgWhite();
+
   usePageTitle({
     title: "카테고리 관리",
   });

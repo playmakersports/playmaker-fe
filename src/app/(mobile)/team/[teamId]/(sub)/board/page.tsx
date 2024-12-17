@@ -4,7 +4,6 @@ import React, { useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
 
-import useBgWhite from "@/hook/useBgWhite";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
 
@@ -33,7 +32,7 @@ function Board() {
       },
     ],
   });
-  useBgWhite();
+
   const tabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);
   const [, setTab] = useState("ALL");

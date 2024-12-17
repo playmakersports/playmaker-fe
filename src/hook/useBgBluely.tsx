@@ -1,11 +1,11 @@
 "use client";
 
-import { atomBgWhite } from "@/atom/common";
+import { atomBackgroundBluely } from "@/atom/common";
 import { useSetAtom } from "jotai";
 import { useEffect } from "react";
 
-function useBgWhite() {
-  const setAtom = useSetAtom(atomBgWhite);
+function useBgBluely() {
+  const setAtom = useSetAtom(atomBackgroundBluely);
 
   useEffect(() => {
     setAtom(true);
@@ -17,4 +17,4 @@ function useBgWhite() {
   return null;
 }
 
-export default useBgWhite;
+export default useBgBluely;

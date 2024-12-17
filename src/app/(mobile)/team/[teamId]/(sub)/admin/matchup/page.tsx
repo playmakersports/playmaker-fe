@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { BaseContainer } from "@/components/common/Container";
@@ -13,7 +13,6 @@ import { differenceInCalendarDays } from "date-fns";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
 function TeamMatchUp() {
-  useBgWhite();
   const [filter, setFilter] = useState("all");
   usePageTitle({
     subTitle: "JUMP",

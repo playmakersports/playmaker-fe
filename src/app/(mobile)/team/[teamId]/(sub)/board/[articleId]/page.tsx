@@ -3,7 +3,7 @@
 import React, { use, useEffect, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { FONTS } from "@/styles/common";
@@ -17,7 +17,6 @@ import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
 import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
 
 function ArticleId() {
-  useBgWhite();
   usePageTitle({ title: "공지사항", scrolledShadow: false });
   const router = useRouter();
   const searchParams = useSearchParams();

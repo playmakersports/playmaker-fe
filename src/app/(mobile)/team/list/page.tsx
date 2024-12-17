@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 import { useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
-import useBgWhite from "@/hook/useBgWhite";
 
 import MainTab from "@/components/Main/MainTab";
 import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
@@ -19,7 +18,6 @@ import ToggleInput from "@/components/common/ToggleInput";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 
 function TeamList() {
-  useBgWhite();
   usePageTitle({
     title: "팀 목록",
     subIcons: [{ svgIcon: <PlusIcon />, description: "팀 생성", linkTo: "/team/create" }],

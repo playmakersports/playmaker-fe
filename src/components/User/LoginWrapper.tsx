@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
 
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import Button from "@/components/common/Button";
@@ -18,7 +17,6 @@ type Props = {
   logoFill?: string;
 };
 function LoginWrapper({ children, button, logoFill }: Props) {
-  useBgWhite();
   return (
     <>
       {!button && (

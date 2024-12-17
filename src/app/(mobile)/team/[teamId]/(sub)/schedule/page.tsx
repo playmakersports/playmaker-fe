@@ -7,7 +7,7 @@ import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
-import useBgWhite from "@/hook/useBgWhite";
+
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { TEAM_SCHEDULE_MOCK } from "@/constants/mock/TEAM";
@@ -28,7 +28,7 @@ function Schedule() {
   const teamId = params["teamId"];
   const calendarRef = useRef<HTMLDivElement>(null);
   useStickyMoment(calendarRef);
-  useBgWhite();
+
   usePageTitle({
     title: "일정",
     scrolledShadow: false,

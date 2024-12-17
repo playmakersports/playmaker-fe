@@ -11,11 +11,10 @@ import EditorUI from "@/components/Editor";
 import Button from "@/components/common/Button";
 import DropDown from "@/components/common/DropDown";
 import { BasicInput } from "@/components/common/Input";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 function EditorView() {
-  useBgWhite();
   usePageTitle({ title: "글 쓰기" });
   const router = useRouter();
   const params = useParams();

@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { differenceInCalendarDays } from "date-fns";
 import { keyframes } from "@emotion/react";
-import useBgWhite from "@/hook/useBgWhite";
+
 import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
@@ -20,7 +20,6 @@ import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 function AdminIndex() {
   const [countFounded, setCountFounded] = useState(0);
 
-  useBgWhite();
   usePageTitle({
     title: "팀 관리",
   });

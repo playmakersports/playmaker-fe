@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import useModal from "@/hook/useModal";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
@@ -15,7 +15,6 @@ import { InputCheckbox } from "@/components/common/SelectInput";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
 
 function Intro() {
-  useBgWhite();
   const router = useRouter();
   const { ModalComponents, showModal } = useModal();
   const confirm = useConfirm();

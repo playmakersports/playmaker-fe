@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
 
@@ -19,7 +19,6 @@ import BottomArrowIcon from "@/assets/icon/arrow/BottomArrow.svg";
 import { TextArea } from "@/components/common/TextArea";
 
 function RecruitApplicant() {
-  useBgWhite();
   usePageTitle({
     subTitle: "JUMP",
     title: "가입 신청 목록",

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useSearchParams } from "next/navigation";
-import useBgWhite from "@/hook/useBgWhite";
+
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { FONTS } from "@/styles/common";
@@ -19,7 +19,7 @@ import CompetitionFloat from "./_components/Float";
 
 function CompetitionArticle() {
   const MOCK = COMPETITION_DETAIL_MOCK;
-  useBgWhite();
+
   usePageTitle({ title: MOCK.competitionName, transparent: true });
 
   const searchParams = useSearchParams();

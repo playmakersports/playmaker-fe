@@ -5,7 +5,6 @@ import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { FieldValues, useForm } from "react-hook-form";
 import Image from "next/image";
-import useBgWhite from "@/hook/useBgWhite";
 
 import { FONTS } from "@/styles/common";
 import Badge from "@/components/common/Badge";
@@ -19,7 +18,6 @@ import Button from "@/components/common/Button";
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
 function UserSchool() {
-  useBgWhite();
   usePageTitle({ title: "재학증명서 인증" });
   const { register, watch, setValue, handleSubmit } = useForm();
 

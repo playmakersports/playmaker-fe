@@ -3,7 +3,6 @@
 import React, { ReactElement, useEffect } from "react";
 import { useResetAtom } from "jotai/utils";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import useBgWhite from "@/hook/useBgWhite";
 
 import { resetAtomTeamCreate } from "@/atom/team";
 import Stepper from "@/components/common/Stepper";
@@ -17,7 +16,6 @@ import TeamCreateStep6 from "@/components/Team/Create/TeamCreateStep6";
 import TeamCreateFinish from "@/components/Team/Create/TeamCreateFinish";
 
 function TeamCreate() {
-  useBgWhite();
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();

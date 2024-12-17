@@ -24,7 +24,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
     const newPush = (ref: string, options?: NavigateOptions): void => {
       startTransition(() => routerPush(ref, options));
       cacheScrollPosition.push(container.current?.scrollTop || 0);
-      if (isPending) {
+      if (!isPending) {
         container.current?.scrollTo(0, 0);
       }
     };

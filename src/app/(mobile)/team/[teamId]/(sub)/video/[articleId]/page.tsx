@@ -1,6 +1,8 @@
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+"use client";
+
+import React, { useLayoutEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import styled from "@emotion/styled";
 import dynamic from "next/dynamic";
 import useYoutube from "@/hook/useYoutube";
@@ -16,8 +18,9 @@ import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
 import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
 
 function VideoArticle() {
-  const router = useRouter();
   const searchParams = useSearchParams();
+  const articleId = searchParams.get("articleId");
+
   const playerRef = useRef<YouTube>(null);
   const commentRef = useRef<HTMLUListElement>(null);
   const playerDuration = playerRef.current?.internalPlayer.getDuration();
@@ -39,8 +42,6 @@ function VideoArticle() {
   };
   const { playerConnect, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
   usePageTitle({ title: VIDEO_DATA.title, subTitle: secondToMinSec(currentTime) });
-
-  const matchId = searchParams.get("matchId");
 
   const playerSeekTo = (time: string) => {
     const [min, sec] = time.split(":").map((v) => Number(v));

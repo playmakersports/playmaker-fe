@@ -62,9 +62,8 @@ export const DropDownBottomSheet = (props: Props) => {
           </SelectCard>
         )}
       </Container>
-      <ModalComponents
-        // eslint-disable-next-line react/no-children-prop
-        children={(closeModal) => (
+      <ModalComponents draggable>
+        {(closeModal) => (
           <ModalInner>
             {options.map((option) => (
               <label key={option.value}>
@@ -86,7 +85,7 @@ export const DropDownBottomSheet = (props: Props) => {
             ))}
           </ModalInner>
         )}
-      />
+      </ModalComponents>
     </>
   );
 };

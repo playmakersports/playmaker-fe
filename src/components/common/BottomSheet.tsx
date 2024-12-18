@@ -9,6 +9,7 @@ export type BottomSheetProps = {
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   header?: ReactNode;
   expanded?: boolean;
+  draggable?: boolean;
   buttons?: {
     mode: ButtonStyleMode;
     disabled?: boolean;
@@ -20,8 +21,11 @@ export type BottomSheetProps = {
 
 const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
-  const { disabledDimOut = false, setShow, children, header, expanded, buttons } = props;
+  const { disabledDimOut = false, setShow, draggable = false, children, header, expanded, buttons } = props;
   const [showModal, setShowModal] = useState(false);
+  const [touchStartY, setTouchStartY] = useState(0);
+  const [translateY, setTranslateY] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   const closeBottomSheet = () => {
     setShowModal(false);
@@ -38,16 +42,54 @@ function BottomSheet(props: BottomSheetProps) {
     };
   }, []);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!draggable) return;
+    setTouchStartY(e.touches[0].clientY);
+    setIsDragging(true);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!draggable) return;
+    if (!isDragging) return;
+    const deltaY = e.touches[0].clientY - touchStartY;
+    if (deltaY > 0) {
+      setTranslateY(deltaY);
+    }
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (!draggable) return;
+    setIsDragging(false);
+    const touchEndY = e.changedTouches[0].clientY;
+    if (touchEndY > window.innerHeight * 0.9) {
+      closeBottomSheet();
+    } else {
+      setTranslateY(0);
+    }
+  };
+
   return (
     <>
       <Wrapper
+        // 마우스 오른쪽 방지
+        onContextMenu={(e) => e.preventDefault()}
+        style={{
+          userSelect: isDragging && translateY ? "none" : "auto",
+          scale: isDragging && translateY > 0 ? 0.95 : 1,
+          borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         isShow={showModal}
         expanded={!!expanded}
+        draggable={draggable}
+        translateY={translateY}
         role="dialog"
         aria-modal="true"
         aria-labelledby="BottomModalHeader"
       >
-        {expanded && <Bar onClick={closeBottomSheet} />}
+        {(expanded || draggable) && <Bar onClick={closeBottomSheet} />}
         <Contents>
           {header && <Header id="BottomModalHeader">{header}</Header>}
           {typeof children === "function" ? children(closeBottomSheet) : children}
@@ -104,7 +146,12 @@ const Contents = styled.div`
   font-weight: 400;
 `;
 
-const Wrapper = styled.section<{ isShow: boolean; expanded: boolean }>`
+const Wrapper = styled.section<{
+  isShow: boolean;
+  expanded: boolean;
+  translateY: number;
+  draggable: boolean;
+}>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -118,7 +165,11 @@ const Wrapper = styled.section<{ isShow: boolean; expanded: boolean }>`
   z-index: 1000;
   background: var(--background-light);
   border-radius: 24px 24px 0 0;
-  transform: translate3d(0, ${({ isShow }) => (isShow ? 0 : "100%")}, 0);
+
+  transform: ${({ draggable, isShow, translateY }) =>
+    draggable
+      ? `translate3d(0, calc(${isShow ? 0 : "100%"}% + ${translateY}px), 0)`
+      : `  translate3d(0, ${isShow ? 0 : "100%"}, 0)`};
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};
   transform-origin: center center;
   transition: all ${ANIMATION_RUNNING_TIME}ms;

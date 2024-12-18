@@ -3,8 +3,9 @@ import { FONTS } from "@/styles/common";
 import styled from "@emotion/styled";
 import React, { ReactNode, useCallback, useState } from "react";
 
-type ModalProps = {
+export type ModalProps = {
   disabledDimOut?: boolean;
+  draggable?: boolean;
   title?: string;
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
@@ -19,11 +20,12 @@ function useModal() {
 
   const ModalComponents = useCallback(
     (props: ModalProps) => {
-      const { disabledDimOut = false, title, children, buttons } = props;
+      const { disabledDimOut = false, title, children, draggable = false, buttons } = props;
 
       if (showBottom) {
         return (
           <BottomSheet
+            draggable={draggable}
             disabledDimOut={disabledDimOut}
             header={title && <Title>{title}</Title>}
             setShow={setShowBottom}

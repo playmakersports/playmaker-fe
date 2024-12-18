@@ -27,7 +27,7 @@ function PlayerRoleModal({ ModalContainer, playerInfo }: Props) {
 
   return (
     <ModalContainer
-      draggable
+      draggable="all"
       buttons={[
         {
           name: "확인",

@@ -5,7 +5,7 @@ import React, { ReactNode, useCallback, useState } from "react";
 
 export type ModalProps = {
   disabledDimOut?: boolean;
-  draggable?: boolean;
+  draggable?: "bar" | "all" | false;
   title?: string;
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   buttons?: BottomSheetProps["buttons"];

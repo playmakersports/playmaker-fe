@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import React, { ReactNode, useEffect, useState } from "react";
 import Button, { ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
+import { on } from "events";
 
 export type BottomSheetProps = {
   disabledDimOut?: boolean;
@@ -9,7 +10,7 @@ export type BottomSheetProps = {
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   header?: ReactNode;
   expanded?: boolean;
-  draggable?: boolean;
+  draggable?: "bar" | "all" | false;
   buttons?: {
     mode: ButtonStyleMode;
     disabled?: boolean;
@@ -61,11 +62,18 @@ function BottomSheet(props: BottomSheetProps) {
     if (!draggable) return;
     setIsDragging(false);
     const touchEndY = e.changedTouches[0].clientY;
-    if (touchEndY > window.innerHeight * 0.9) {
+    if (touchEndY > window.innerHeight * 0.8) {
       closeBottomSheet();
+      setTranslateY(-window.innerHeight / 2);
     } else {
       setTranslateY(0);
     }
+  };
+
+  const draggableEvent = {
+    onTouchStart: handleTouchStart,
+    onTouchMove: handleTouchMove,
+    onTouchEnd: handleTouchEnd,
   };
 
   return (
@@ -78,19 +86,19 @@ function BottomSheet(props: BottomSheetProps) {
           scale: isDragging && translateY > 0 ? 0.95 : 1,
           borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
         }}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
         isShow={showModal}
         expanded={!!expanded}
-        draggable={draggable}
+        draggable={!!draggable}
         isDragging={isDragging}
         translateY={translateY}
         role="dialog"
         aria-modal="true"
         aria-labelledby="BottomModalHeader"
+        {...(draggable === "all" ? draggableEvent : {})}
       >
-        {(expanded || draggable) && <Bar onClick={closeBottomSheet} />}
+        {(expanded || !!draggable) && (
+          <Bar {...(draggable === "bar" ? draggableEvent : {})} onClick={closeBottomSheet} />
+        )}
         <Contents>
           {header && <Header id="BottomModalHeader">{header}</Header>}
           {typeof children === "function" ? children(closeBottomSheet) : children}
@@ -132,11 +140,19 @@ const Backdrop = styled.div<{ isShow: boolean }>`
 `;
 
 const Bar = styled.div`
-  margin: 0 auto 8px;
-  width: 64px;
-  height: 4px;
-  background-color: #d9d9d9;
-  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  margin: -16px 0 0;
+  padding: 16px 0 12px;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 64px;
+    height: 4px;
+    background-color: var(--gray300);
+    border-radius: 8px;
+  }
 `;
 
 const Header = styled.header``;

@@ -62,7 +62,7 @@ export const DropDownBottomSheet = (props: Props) => {
           </SelectCard>
         )}
       </Container>
-      <ModalComponents draggable>
+      <ModalComponents draggable="all">
         {(closeModal) => (
           <ModalInner>
             {options.map((option) => (

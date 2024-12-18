@@ -18,7 +18,12 @@ import CrownIcon from "@/assets/icon/global/Crown.svg";
 import StartIcon from "@/assets/icon/global/Star.svg";
 import DeleteAllBorderIcon from "@/assets/icon/global/DeleteAllBorder.svg";
 
-type PlayerInfo = { playerId: string; playerName: string; playerImg: string };
+type PlayerInfo = {
+  defaultLevel: number;
+  playerId: string;
+  playerName: string;
+  playerImg: string;
+};
 
 function PlayerList() {
   const { showModal: showRoleModal, ModalComponents: RoleModal } = useModal();
@@ -69,7 +74,12 @@ function PlayerList() {
                     bgColor: "var(--art-purple)",
                     text: "권한 설정",
                     onClick: () =>
-                      onRoleClick({ playerId: player.playerId, playerName: player.name, playerImg: player.profileImg }),
+                      onRoleClick({
+                        defaultLevel: player.level,
+                        playerId: player.playerId,
+                        playerName: player.name,
+                        playerImg: player.profileImg,
+                      }),
                   },
                   {
                     svg: <StartIcon fill="var(--gray0)" />,
@@ -77,6 +87,7 @@ function PlayerList() {
                     text: "카테고리",
                     onClick: () =>
                       onCategoryClick({
+                        defaultLevel: player.level,
                         playerId: player.playerId,
                         playerName: player.name,
                         playerImg: player.profileImg,

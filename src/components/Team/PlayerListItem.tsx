@@ -1,40 +1,51 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-import CrownIcon from "@/assets/icon/global/Crown.svg";
+import CrownIcon from "@/assets/icon/global/CrownFill.svg";
+import FlagIcon from "@/assets/icon/global/FlagFill.svg";
 import { FONTS } from "@/styles/common";
+import GenderIcon from "../common/GenderIcon";
 
 type Props = {
   playerId: string;
   name: string;
-  position: string;
-  // "president" | "vice" | "manager" | "member"
+  level: number;
   profileImg: string;
   tag: string[] | string;
   attendRate: number;
   birthDate: string;
-  generation?: number;
+  gisu?: number;
+  sex: "MALE" | "FEMALE";
 };
 function PlayerListItem(props: Props) {
-  const { playerId, name, position, profileImg, tag, attendRate, birthDate, generation } = props;
-  const POSITION_NAME: Record<string, string> = {
-    president: "회장",
-    vice: "부회장",
-    manager: "매니저",
-    member: "",
+  const { playerId, name, level, profileImg, tag, attendRate, birthDate, sex, gisu } = props;
+  interface Position {
+    name: string;
+    color: string;
+    value: string;
+  }
+  const LEVEL_CODE: Record<string, Position> = {
+    5: { name: "회장", color: "#ff8c00", value: "president" },
+    4: { name: "부회장", color: "#0fd1c1", value: "vice" },
+    3: { name: "운영진", color: "#8984E5", value: "staff" },
+    2: { name: "매니저", color: "#A0BCF8", value: "manager" },
+    1: { name: "팀원", color: "", value: "member" },
   };
+
   return (
     <Container>
       <Image>
-        {(position === "president" || position === "vice") && (
-          <Staff data-position={position}>
+        {level > 1 && (
+          <Staff bgColor={LEVEL_CODE[level].color}>
             <CrownIcon width={16} height={16} />
           </Staff>
         )}
       </Image>
       <Name>
-        <p className="position">{POSITION_NAME[position]}</p>
-        <p className="player-name">{name}</p>
+        {level > 1 && <p className="position">{LEVEL_CODE[level].name}</p>}
+        <p className="player-name">
+          {name} <GenderIcon type={sex} />
+        </p>
         <p className="player-tags">{typeof tag === "string" ? tag : tag.map((i) => <span key={i}>#{i}</span>)}</p>
       </Name>
       <Info>
@@ -42,10 +53,10 @@ function PlayerListItem(props: Props) {
           <span>출석률</span>
           <span>{attendRate * 100}%</span>
         </li>
-        {generation ? (
+        {gisu ? (
           <li>
             <span>기수</span>
-            <span>{generation}기</span>
+            <span>{gisu}기</span>
           </li>
         ) : (
           <li>
@@ -72,26 +83,20 @@ const Image = styled.div`
   border-radius: 50%;
   background-color: var(--gray100);
 `;
-const Staff = styled.div`
+const Staff = styled.div<{ bgColor: string }>`
   position: absolute;
   display: flex;
   justify-content: center;
   align-items: center;
-  right: -2px;
-  bottom: -2px;
-  width: 20px;
-  height: 20px;
+  right: -3px;
+  bottom: -3px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-
-  border: 2px solid var(--background-light);
+  border: 3px solid var(--background-light);
   box-sizing: content-box;
 
-  &[data-position="president"] {
-    background-color: #fe9e2a;
-  }
-  &[data-position="vice"] {
-    background-color: var(--sub1);
-  }
+  background-color: ${({ bgColor }) => bgColor};
 `;
 const Name = styled.div`
   flex: 1;
@@ -103,6 +108,9 @@ const Name = styled.div`
   }
   p.player-name {
     ${FONTS.MD1};
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
     margin-bottom: 4px;
   }
   p.player-tags {

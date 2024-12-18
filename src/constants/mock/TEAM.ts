@@ -11,39 +11,71 @@ export const TEAM_INFO_MOCK = {
   location: "서울",
 };
 
-export const TEAM_PLAYERS_MOCK = [
+export const TEAM_PLAYERS_MOCK: Array<{
+  playerId: string;
+  name: string;
+  level: number;
+  profileImg: string;
+  tag: string[] | string;
+  attendRate: number;
+  birthDate: string;
+  gisu: number;
+  sex: "MALE" | "FEMALE";
+}> = [
   {
     playerId: "21",
     name: "백종원",
-    position: "president",
+    level: 5,
     profileImg: "",
     tag: ["리더"],
     attendRate: 0.85,
     birthDate: "1999-10-20",
-    generation: 1,
-    gender: "m",
+    gisu: 1,
+    sex: "MALE",
   },
   {
     playerId: "34",
     name: "안성재",
-    position: "vice",
+    level: 4,
     profileImg: "",
     tag: ["요리사"],
     attendRate: 0.85,
     birthDate: "1999-01-20",
-    generation: 4,
-    gender: "m",
+    gisu: 4,
+    sex: "MALE",
   },
   {
-    playerId: "65",
+    playerId: "625",
     name: "최현석",
-    position: "manager",
+    level: 3,
+    profileImg: "",
+    tag: ["요리사"],
+    attendRate: 0.65,
+    birthDate: "1988-02-30",
+    gisu: 12,
+    sex: "MALE",
+  },
+  {
+    playerId: "124",
+    name: "오상욱",
+    level: 2,
     profileImg: "",
     tag: ["요리사"],
     attendRate: 0.65,
     birthDate: "1996-08-30",
-    generation: 12,
-    gender: "m",
+    gisu: 12,
+    sex: "MALE",
+  },
+  {
+    playerId: "62",
+    name: "손흥민",
+    level: 1,
+    profileImg: "",
+    tag: ["축구"],
+    attendRate: 0.65,
+    birthDate: "1993-11-20",
+    gisu: 10,
+    sex: "MALE",
   },
 ];
 

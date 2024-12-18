@@ -3,25 +3,32 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
-
 import useModal from "@/hook/useModal";
 
+import { FONTS } from "@/styles/common";
 import SwipeSelector from "@/components/common/SwipeSelector";
 import { BasicInput } from "@/components/common/Input";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import PlayerListItem from "@/components/Team/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
-import { FONTS } from "@/styles/common";
+import PlayerRoleModal from "../_components/PlayerRoleModal";
 
+import DoubleStarIcon from "@/assets/icon/global/DoubleStar.svg";
 import CrownIcon from "@/assets/icon/global/Crown.svg";
 import StartIcon from "@/assets/icon/global/Star.svg";
 import DeleteAllBorderIcon from "@/assets/icon/global/DeleteAllBorder.svg";
+
+type PlayerInfo = { playerId: string; playerName: string; playerImg: string };
 
 function PlayerList() {
   const { showModal: showRoleModal, ModalComponents: RoleModal } = useModal();
   const { showModal: showCategoryModal, ModalComponents: CategoryModal } = useModal();
   const [filter, setFilter] = useState("all");
-  usePageTitle({ title: "팀원 목록" });
+  const [playerInfo, setPlayerInfo] = useState<PlayerInfo>();
+  usePageTitle({
+    title: "팀원 목록",
+    subIcons: [{ svgIcon: <DoubleStarIcon />, linkTo: "", description: "다중 카테고리" }],
+  });
 
   const PLAYERS_FILTER = [
     { name: "전체", value: "all" },
@@ -29,6 +36,16 @@ function PlayerList() {
     { name: "기수", value: "student" },
     { name: "휴학생", value: "rest" },
   ];
+
+  const onRoleClick = (playerInfo: PlayerInfo) => {
+    setPlayerInfo(playerInfo);
+    showRoleModal();
+  };
+  const onCategoryClick = (playerInfo: PlayerInfo) => {
+    setPlayerInfo(playerInfo);
+    showCategoryModal();
+  };
+
   return (
     <>
       <Container>
@@ -41,7 +58,7 @@ function PlayerList() {
         </Top>
         <Players>
           {TEAM_PLAYERS_MOCK.map((player) => {
-            const { position, gender, birthDate, tag, ...rest } = player;
+            const { level, sex, birthDate, tag, ...rest } = player;
             const [birthYear, birthMonth] = birthDate.split("-");
             return (
               <SwipeSelector
@@ -51,13 +68,19 @@ function PlayerList() {
                     svg: <CrownIcon fill="var(--gray0)" />,
                     bgColor: "var(--art-purple)",
                     text: "권한 설정",
-                    onClick: () => showRoleModal(),
+                    onClick: () =>
+                      onRoleClick({ playerId: player.playerId, playerName: player.name, playerImg: player.profileImg }),
                   },
                   {
                     svg: <StartIcon fill="var(--gray0)" />,
                     bgColor: "var(--main)",
                     text: "카테고리",
-                    onClick: () => showCategoryModal(),
+                    onClick: () =>
+                      onCategoryClick({
+                        playerId: player.playerId,
+                        playerName: player.name,
+                        playerImg: player.profileImg,
+                      }),
                   },
                 ]}
                 right={{
@@ -68,7 +91,8 @@ function PlayerList() {
                 }}
               >
                 <PlayerListItem
-                  position={position}
+                  level={level}
+                  sex={sex}
                   birthDate={birthDate}
                   tag={`${birthYear}년 ${+birthMonth}월생`}
                   {...rest}
@@ -78,7 +102,7 @@ function PlayerList() {
           })}
         </Players>
       </Container>
-      <RoleModal title="권한 설정">1</RoleModal>
+      <PlayerRoleModal ModalContainer={RoleModal} playerInfo={playerInfo} />
       <CategoryModal title="카테고리 지정">1</CategoryModal>
     </>
   );

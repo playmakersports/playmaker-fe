@@ -150,6 +150,7 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
         </ImageContainer>
       </Container>
       <ModalComponents
+        draggable
         title="투표 설정"
         buttons={[
           {

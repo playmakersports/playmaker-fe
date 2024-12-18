@@ -84,6 +84,7 @@ function BottomSheet(props: BottomSheetProps) {
         isShow={showModal}
         expanded={!!expanded}
         draggable={draggable}
+        isDragging={isDragging}
         translateY={translateY}
         role="dialog"
         aria-modal="true"
@@ -148,6 +149,7 @@ const Contents = styled.div`
 
 const Wrapper = styled.section<{
   isShow: boolean;
+  isDragging: boolean;
   expanded: boolean;
   translateY: number;
   draggable: boolean;
@@ -167,12 +169,12 @@ const Wrapper = styled.section<{
   border-radius: 24px 24px 0 0;
 
   transform: ${({ draggable, isShow, translateY }) =>
-    draggable
+    draggable && translateY > 0
       ? `translate3d(0, calc(${isShow ? 0 : "100%"}% + ${translateY}px), 0)`
-      : `  translate3d(0, ${isShow ? 0 : "100%"}, 0)`};
+      : `translate3d(0, ${isShow ? 0 : "100%"}, 0)`};
   opacity: ${({ isShow }) => (isShow ? 1 : 0)};
   transform-origin: center center;
-  transition: all ${ANIMATION_RUNNING_TIME}ms;
+  transition: ${({ isDragging }) => (isDragging ? "scale 0.25s" : `all ${ANIMATION_RUNNING_TIME}ms`)};
   box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);
   will-change: transform;
 `;

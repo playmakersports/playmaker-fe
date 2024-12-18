@@ -4,14 +4,16 @@ import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import { BUTTON_ACTIVE, CARD_ACTIVE, FONTS, SCROLL_HIDE } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS, SCROLL_HIDE } from "@/styles/common";
 import GradientBg from "@/components/common/GradientBg";
 import { BaseContainer } from "@/components/common/Container";
 import MatchRoundCard from "@/components/Match/MatchRoundCard";
+import BottomSheet from "@/components/common/BottomSheet";
 
 function MatchPage() {
-  const [showAllScore, setShowAllScore] = useState(false);
   usePageTitle({ scrollBgColor: [30, "transparent", "var(--background-light)"] });
+
+  const [showAllScore, setShowAllScore] = useState(false);
   const TEAM_SCORES = {
     category: "basketball",
     matchStage: "16강",
@@ -89,24 +91,25 @@ function MatchPage() {
           </ScoreTable>
           <MVPTable></MVPTable>
         </SummaryContainer>
-        <RoundBottom isShow={showAllScore}>
-          <button type="button" onClick={() => setShowAllScore((prev) => !prev)}>
-            닫기
-          </button>
-          {TEAM_SCORES.scores.map((score) => (
-            <MatchRoundCard
-              key={score.stage}
-              roundName={score.stage}
-              homeTeamName={TEAM_SCORES.homeName}
-              homeTeamLogo={TEAM_SCORES.homeLogo}
-              homeTeamScore={score.home}
-              awayTeamName={TEAM_SCORES.awayName}
-              awayTeamLogo={TEAM_SCORES.awayLogo}
-              awayTeamScore={score.away}
-            />
-          ))}
-        </RoundBottom>
       </Container>
+      {showAllScore && (
+        <BottomSheet setShow={setShowAllScore} draggable="bar">
+          <ScoreWrapper onClick={(e) => e.stopPropagation()}>
+            {TEAM_SCORES.scores.map((score) => (
+              <MatchRoundCard
+                key={score.stage}
+                roundName={score.stage}
+                homeTeamName={TEAM_SCORES.homeName}
+                homeTeamLogo={TEAM_SCORES.homeLogo}
+                homeTeamScore={score.home}
+                awayTeamName={TEAM_SCORES.awayName}
+                awayTeamLogo={TEAM_SCORES.awayLogo}
+                awayTeamScore={score.away}
+              />
+            ))}
+          </ScoreWrapper>
+        </BottomSheet>
+      )}
     </>
   );
 }
@@ -232,35 +235,14 @@ const ScoreTable = styled(SummaryCard)`
   }
 `;
 const MVPTable = styled(SummaryCard)``;
-const RoundBottom = styled.div<{ isShow: boolean }>`
-  user-select: none;
-  position: absolute;
-  bottom: 0;
-  transform: translate3d(${(props) => (props.isShow ? "0,0,0" : "0,100%,0")});
-  transition: transform 0.25s;
+const ScoreWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin: 0 -16px;
-  padding: 20px 16px calc(var(--env-sab) + 20px);
-  width: 100%;
-  height: calc(100vh - var(--safe-area-top) - 240px);
-  background-color: rgba(var(--gray0-rgb), 0.8);
-  border-top-left-radius: 24px;
-  border-top-right-radius: 24px;
-  box-shadow: 0 -2px 20px 0px rgba(var(--gray300-rgb), 0.2);
-  overflow-y: auto;
-  backdrop-filter: blur(10px);
-  ${SCROLL_HIDE};
 
-  button {
-    margin: 0 auto;
-    padding: 6px 24px;
-    border-radius: 24px;
-    background-color: var(--gray100);
-    font-size: 1.4rem;
-    ${BUTTON_ACTIVE("var(--gray200)", 10)};
-  }
+  height: calc(100vh - var(--safe-area-top) - 320px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 `;
 
 export default MatchPage;

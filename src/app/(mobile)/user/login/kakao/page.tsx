@@ -4,7 +4,7 @@ import { setCookie } from "cookies-next";
 
 import { baseBackendURL } from "@/apis";
 import { useGet } from "@/apis/hook/query";
-import { AuthResponseType } from "@/types/auth";
+import { AuthResponse } from "@/types/auth";
 import Loading from "@/components/common/Loading";
 
 function KakaoLogin() {
@@ -13,7 +13,7 @@ function KakaoLogin() {
   const code = searchParams.get("code");
   const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(`${code}`)}`;
 
-  const { data } = useGet<AuthResponseType>(kakaoUrl);
+  const { data } = useGet<AuthResponse>(kakaoUrl);
 
   if (data) {
     setCookie("access-token", data.access_token, { secure: true });

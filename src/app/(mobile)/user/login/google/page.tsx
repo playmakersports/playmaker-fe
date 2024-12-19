@@ -4,7 +4,7 @@ import { setCookie } from "cookies-next";
 
 import { baseBackendURL } from "@/apis";
 import { useGet } from "@/apis/hook/query";
-import { AuthResponseType } from "@/types/auth";
+import { AuthResponse } from "@/types/auth";
 import Loading from "@/components/common/Loading";
 
 function GoogleLogin() {
@@ -13,7 +13,7 @@ function GoogleLogin() {
   const code = searchParams.get("code");
   const googleUrl = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(`${code}`)}`;
 
-  const { data } = useGet<AuthResponseType>(googleUrl);
+  const { data } = useGet<AuthResponse>(googleUrl);
 
   if (data) {
     setCookie("access-token", data.access_token, { secure: true });

@@ -186,6 +186,7 @@ function AdminList() {
         /> */}
       </Container>
       <ApplyAllowModal
+        draggable="all"
         buttons={[
           {
             mode: "OPTION1",
@@ -205,6 +206,7 @@ function AdminList() {
         </AllowContainer>
       </ApplyAllowModal>
       <PublicTeamModal
+        draggable="all"
         buttons={[
           {
             mode: "OPTION1",

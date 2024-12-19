@@ -2,7 +2,6 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -11,10 +10,8 @@ import FloatButton from "@/components/common/FloatButton";
 
 import Surprised from "@/assets/character/Surprised.svg";
 
-type Props = { status?: number; message?: string; retry: () => void; reset: () => void };
+type Props = { status?: number | string; message?: string; retry: () => void; reset: () => void };
 function ErrorFallback({ status, message, retry, reset }: Props) {
-  const router = useRouter();
-
   return (
     <Container>
       <HideHeader />

@@ -50,9 +50,9 @@ function SwipeSelector(props: Props) {
   return (
     <Container ref={(ref) => setWidth(ref?.clientWidth ?? 0)} moveX={touchX}>
       <div className="inner-wrapper">
-        <Buttons bgColor={left[0].bgColor}>
+        <Buttons $bgColor={left[0].bgColor}>
           {left.map((btn) => (
-            <Button key={btn.bgColor} bgColor={btn.bgColor} onClick={btn.onClick}>
+            <Button key={btn.bgColor} $bgColor={btn.bgColor} onClick={btn.onClick}>
               {btn.svg}
               <span>{btn.text}</span>
             </Button>
@@ -61,8 +61,8 @@ function SwipeSelector(props: Props) {
         <Displayed onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           {children}
         </Displayed>
-        <Buttons bgColor={right.bgColor}>
-          <Button bgColor={right.bgColor} onClick={right.onClick}>
+        <Buttons $bgColor={right.bgColor}>
+          <Button $bgColor={right.bgColor} onClick={right.onClick}>
             {right.svg}
             <span>{right.text}</span>
           </Button>
@@ -99,12 +99,12 @@ const Displayed = styled.div`
   padding: 16px;
   background-color: var(--background-light);
 `;
-const Buttons = styled.div<{ bgColor: string }>`
+const Buttons = styled.div<{ $bgColor: string }>`
   position: relative;
   display: inline-flex;
   justify-content: flex-end;
   width: 50%;
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgColor }) => $bgColor};
   &:last-of-type {
     justify-content: flex-start;
   }
@@ -127,14 +127,14 @@ const Buttons = styled.div<{ bgColor: string }>`
     border-radius: 0 10px 10px 0;
   }
 `;
-const Button = styled.button<{ bgColor: string }>`
+const Button = styled.button<{ $bgColor: string }>`
   display: flex;
   padding: 0 22px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 6px;
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgColor }) => $bgColor};
   color: var(--gray0);
   font-size: 1.4rem;
   font-weight: 500;

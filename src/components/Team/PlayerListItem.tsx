@@ -36,7 +36,7 @@ function PlayerListItem(props: Props) {
     <Container>
       <Image>
         {level > 1 && (
-          <Staff bgColor={LEVEL_CODE[level].color}>
+          <Staff $bgColor={LEVEL_CODE[level].color}>
             <CrownIcon width={16} height={16} />
           </Staff>
         )}
@@ -83,7 +83,7 @@ const Image = styled.div`
   border-radius: 50%;
   background-color: var(--gray100);
 `;
-const Staff = styled.div<{ bgColor: string }>`
+const Staff = styled.div<{ $bgColor: string }>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -96,7 +96,7 @@ const Staff = styled.div<{ bgColor: string }>`
   border: 3px solid var(--background-light);
   box-sizing: content-box;
 
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ $bgColor }) => $bgColor};
 `;
 const Name = styled.div`
   flex: 1;

@@ -1,15 +1,17 @@
 "use client";
-
-import React from "react";
 import LoadingAnimatedSvg from "@/assets/icon/global/LoadingSpinner.svg";
 
-type Props = {
-  page?: boolean;
-};
-function Loading(props: Props) {
-  const { page = false } = props;
+type Props =
+  | {
+      page?: true;
+      text?: string;
+    }
+  | {
+      page?: false;
+    };
 
-  if (page) {
+function Loading(props: Props) {
+  if (props.page) {
     return (
       <div
         style={{
@@ -17,6 +19,8 @@ function Loading(props: Props) {
           top: 0,
           left: 0,
           display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
           alignItems: "center",
           margin: "0 auto",
           width: "100%",
@@ -25,7 +29,17 @@ function Loading(props: Props) {
           zIndex: 50,
         }}
       >
-        <LoadingAnimatedSvg width={60} height={120} />
+        <LoadingAnimatedSvg width={60} height={70} style={{ margin: 0 }} />
+        <p
+          style={{
+            fontSize: "1.5rem",
+            fontWeight: 500,
+            color: "var(--main)",
+            marginTop: "10px",
+          }}
+        >
+          {props.text}
+        </p>
       </div>
     );
   }

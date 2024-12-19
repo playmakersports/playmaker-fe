@@ -4,6 +4,7 @@ export type SelectTeamResponse = {
   createDt: string;
   item: string;
   logoUrl: string;
+  bgUrl: string;
   joinYn: "Y" | "N";
   activeArea: string;
   university: string;

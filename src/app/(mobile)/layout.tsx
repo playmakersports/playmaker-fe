@@ -51,7 +51,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (container.current && (container.current.scrollTop % 5 === 0 || container.current.scrollTop < 5)) {
+      if (container.current && (container.current.scrollTop % 5 === 0 || container.current.scrollTop > 10)) {
         setScrollActive(container.current.scrollTop);
       }
     };

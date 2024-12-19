@@ -1,66 +1,49 @@
-"use client";
+// "use client";
 
 import React from "react";
-import styled from "@emotion/styled";
-import { useParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 
-import { FONTS } from "@/styles/common";
-import FloatButton from "@/components/common/FloatButton";
-import Button from "@/components/common/Button";
 import TeamMainTop from "../_components/TeamMainTop";
 import TeamMainContents from "../_components/TeamMainContents";
-import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
-import SettingsIcon from "@/assets/icon/global/Settings.svg";
+import { baseBackendURL } from "@/apis";
+import { SelectTeamResponse } from "@/types/team";
+import TeamMainCoverTop from "../_components/TeamMainCoverTop";
 
-function TeamHome() {
-  const params = useParams();
-  const teamId = params["teamId"];
+// async function getTeamData(id: string) {
+//   const cookieStore = await cookies();
+//   const accessToken = cookieStore.get("access-token");
+//   const res = await fetch(`${baseBackendURL}/api/team/selectteam/page/${id}`, {
+//     cache: "force-cache",
+//     headers: {
+//       authorization: `Bearer ${accessToken}`,
+//     },
+//   });
+//   const team: SelectTeamResponse = await res.json();
+//   if (!team) notFound();
+//   return team;
+// }
 
-  usePageTitle({
-    title: TEAM_INFO_MOCK.teamName,
-    transparent: true,
-    subIcons: [
-      {
-        svgIcon: <SettingsIcon />,
-        linkTo: `/team/${teamId}/admin`,
-        description: "팀 관리 페이지 이동",
-      },
-    ],
-  });
+// export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+//   const { id } = await params;
+//   const team = await getTeamData(id);
+
+//   return {
+//     title: team.teamName,
+//   };
+// }
+
+async function TeamHome({ params }: { params: Promise<{ teamId: string }> }) {
+  const { teamId } = await params;
+  // const teamData = await getTeamData(teamId);
 
   return (
     <>
-      {/* <FloatButton>
-        <Button type="button" mode="MAIN" fullWidth onClick={() => {}}>
-          가입 신청
-        </Button>
-      </FloatButton> */}
-      <CoverImage src={TEAM_INFO_MOCK.cover} />
-      <Description>{TEAM_INFO_MOCK.introduce}</Description>
-      <TeamMainTop />
+      <TeamMainCoverTop />
+      <TeamMainTop teamId={teamId} />
       <TeamMainContents />
     </>
   );
 }
-
-const CoverImage = styled.section<{ src: string }>`
-  margin-top: calc(-1 * var(--safe-area-top));
-  width: 100%;
-  height: calc(232px + var(--env-sat));
-  background-color: var(--gray600);
-  background-image: url(${({ src }) => src});
-  background-size: cover;
-  background-repeat: no-repeat;
-`;
-const Description = styled.p`
-  ${FONTS.MD2};
-  color: var(--gray800);
-  text-align: center;
-  padding: 12px;
-  border-bottom: 1px solid var(--gray300);
-  text-wrap: pretty;
-  background-color: var(--background-light);
-`;
 
 export default TeamHome;

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import styled from "@emotion/styled";
 import { useRouter, useParams } from "next/navigation";

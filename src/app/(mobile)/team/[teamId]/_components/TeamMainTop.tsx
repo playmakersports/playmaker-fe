@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useState } from "react";
 import styled from "@emotion/styled";
+import { usePageTitle } from "@/hook/usePageTitle";
 
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import Heart from "@/components/common/Heart";
@@ -7,9 +10,23 @@ import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
 import { FONTS } from "@/styles/common";
 
-function TeamMainTop() {
+import SettingsIcon from "@/assets/icon/global/Settings.svg";
+
+function TeamMainTop({ teamId }: { teamId: string }) {
   const [heart, setHeart] = useState(false);
   const PLAYING = true;
+
+  usePageTitle({
+    title: TEAM_INFO_MOCK.teamName,
+    transparent: true,
+    subIcons: [
+      {
+        svgIcon: <SettingsIcon />,
+        linkTo: `/team/${teamId}/admin`,
+        description: "팀 관리 페이지 이동",
+      },
+    ],
+  });
 
   return (
     <LightWrapper>

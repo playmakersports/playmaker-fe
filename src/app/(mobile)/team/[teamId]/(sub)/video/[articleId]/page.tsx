@@ -3,7 +3,7 @@
 import React, { useLayoutEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { useSearchParams } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import dynamic from "next/dynamic";
 import useYoutube from "@/hook/useYoutube";
 import { usePageTitle } from "@/hook/usePageTitle";

@@ -2,7 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { usePageTitle } from "@/hook/usePageTitle";

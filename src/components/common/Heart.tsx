@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
 import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { minSecToSecond } from "@/util/common";
 import { FONTS } from "@/styles/common";

@@ -1,5 +1,5 @@
 import React, { useCallback, useImperativeHandle, useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { getDate, getDaysInMonth, getMonth, getYear } from "date-fns";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
 import useModal from "@/hook/useModal";

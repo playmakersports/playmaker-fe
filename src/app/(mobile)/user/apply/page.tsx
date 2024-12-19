@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import useModal from "@/hook/useModal";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";

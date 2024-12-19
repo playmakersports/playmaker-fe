@@ -1,8 +1,7 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
 import { atomToast } from "@/atom/common";
-import { keyframes } from "@emotion/react";
 import { FONTS } from "@/styles/common";
 
 function Toast() {

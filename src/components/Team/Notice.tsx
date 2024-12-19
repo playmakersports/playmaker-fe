@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter, useParams } from "next/navigation";
 import { intervalToDuration } from "date-fns";
 

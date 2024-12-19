@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { SCROLL_HIDE } from "@/styles/common";

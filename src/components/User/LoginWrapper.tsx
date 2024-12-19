@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import Button from "@/components/common/Button";

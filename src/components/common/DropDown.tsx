@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { InputStyledWrapper } from "./Wrapper";
 
 import ToggleArrowIcon from "@/assets/icon/arrow/toggle/UpToggle.svg";

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { BaseContainer } from "../common/Container";
 import Button from "../common/Button";
 import { StepPageDescription, StepPageTitle } from "../common/global/Text";

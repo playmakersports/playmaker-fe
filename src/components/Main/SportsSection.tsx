@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import MainTab from "./MainTab";

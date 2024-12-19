@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import Badge from "@/components/common/Badge";

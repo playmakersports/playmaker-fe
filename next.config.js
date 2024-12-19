@@ -13,7 +13,7 @@ const nextConfig = withPWA({
   },
   reactStrictMode: true,
   swcMinify: true,
-  compiler: { emotion: true },
+  compiler: { styledComponents: true },
   webpack(config) {
     // Centralize fallback
     config.resolve.fallback = {

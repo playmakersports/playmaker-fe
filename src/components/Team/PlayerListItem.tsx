@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import CrownIcon from "@/assets/icon/global/CrownFill.svg";
 import FlagIcon from "@/assets/icon/global/FlagFill.svg";

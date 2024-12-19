@@ -1,7 +1,7 @@
 "use client";
 
 import { FONTS } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import React from "react";
 
 type Props = { label?: string; toggled: boolean; setToggle: React.Dispatch<React.SetStateAction<boolean>> };

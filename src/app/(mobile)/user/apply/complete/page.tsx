@@ -1,9 +1,8 @@
 "use client";
 
 import React from "react";
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import styled, { keyframes } from "styled-components";
+import { useRouter, useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import Button from "@/components/common/Button";

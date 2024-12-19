@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import ProfileTag from "../ProfileTag";
 import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";

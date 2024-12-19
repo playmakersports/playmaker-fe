@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useAtomValue } from "jotai";
 import { usePost } from "@/apis/hook/query";
 import { useRouter } from "next/navigation";

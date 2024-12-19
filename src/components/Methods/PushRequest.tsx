@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { handleNotifyFCM } from "./NotifyFCM";
 import { getCookie } from "cookies-next";
 import { usePost } from "@/apis/hook/query";

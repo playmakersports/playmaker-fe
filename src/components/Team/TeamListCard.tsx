@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import useModal from "@/hook/useModal";
 
 import { countDayDiff } from "@/util/date";

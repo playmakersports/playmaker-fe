@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
-import { keyframes } from "@emotion/react";
 
 import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";

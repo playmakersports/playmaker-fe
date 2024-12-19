@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled, { keyframes } from "styled-components";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { keyframes } from "@emotion/react";
 
 import HomeIcon from "@/assets/icon/global/Home.svg";
 import SearchListIcon from "@/assets/icon/global/SearchList.svg";

@@ -1,6 +1,6 @@
 import React from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import GroupTitle from "../common/GroupTitle";
 import CompetitionCard from "../Main/CompetitionCard";

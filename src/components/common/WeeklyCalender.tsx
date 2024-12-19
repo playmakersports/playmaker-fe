@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
 import { addDays, format, startOfWeek } from "date-fns";
 

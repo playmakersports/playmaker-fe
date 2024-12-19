@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 type Props = { type?: "line" | "simple"; length: number; now: number; children: React.ReactNode };
 function Stepper({ type = "line", length, now, children }: Props) {

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter, useParams } from "next/navigation";
 
 import GroupTitle from "../common/GroupTitle";
@@ -64,7 +64,7 @@ const List = styled.ul`
   white-space: nowrap;
   ${SCROLL_HIDE}
 `;
-const Item = styled(BasicWhiteCard.withComponent("li"))`
+const Item = styled(BasicWhiteCard).attrs({ as: "li" })`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

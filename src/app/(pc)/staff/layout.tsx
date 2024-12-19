@@ -1,7 +1,5 @@
-"use client";
-
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import Logotype from "@/assets/logo/Logotype.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";

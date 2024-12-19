@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { BasicWhiteCard } from "./Card";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
@@ -20,7 +20,7 @@ const CardInput = React.forwardRef<HTMLInputElement, Props>(({ type, value, chil
 ));
 CardInput.displayName = "CardInput";
 
-const Card = styled(BasicWhiteCard.withComponent("label"))`
+const Card = styled(BasicWhiteCard).attrs({ as: "label" })`
   cursor: pointer;
   ${FONTS.MD1W500};
   width: 100%;

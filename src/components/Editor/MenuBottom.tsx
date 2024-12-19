@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { Editor } from "@tiptap/react";
 import useModal from "@/hook/useModal";
 import { useConfirm } from "../common/global/ConfirmProvider";

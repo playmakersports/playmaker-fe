@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useRef } from "react";
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
+import styled, { keyframes } from "styled-components";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { FONTS } from "@/styles/common";

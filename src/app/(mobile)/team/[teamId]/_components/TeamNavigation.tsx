@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 

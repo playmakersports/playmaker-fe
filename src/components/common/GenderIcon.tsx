@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import FemaleIcon from "@/assets/icon/gender/Female.svg";
 import MaleIcon from "@/assets/icon/gender/Male.svg";

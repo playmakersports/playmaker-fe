@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 
 import { FONTS } from "@/styles/common";

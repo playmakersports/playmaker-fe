@@ -1,6 +1,6 @@
 import React, { useCallback, useRef, useState } from "react";
 import { InputStyledWrapper } from "./Wrapper";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import useModal from "@/hook/useModal";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
 import { getYear } from "date-fns";

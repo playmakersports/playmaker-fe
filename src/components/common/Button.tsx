@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
 export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "WARN";

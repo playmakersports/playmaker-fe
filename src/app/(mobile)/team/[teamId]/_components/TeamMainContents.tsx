@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter, useParams } from "next/navigation";
 
 import { BasicWhiteCard, BasicWhiteCardTitle } from "@/components/common/Card";
@@ -82,7 +82,7 @@ const Cards = styled.section`
   gap: 36px;
 `;
 
-const Card = styled(BasicWhiteCard.withComponent("button"))`
+const Card = styled(BasicWhiteCard).attrs({ as: "button" })`
   position: relative;
   text-align: left;
   ${CARD_ACTIVE};

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import Flicking, { ChangedEvent, WillChangeEvent } from "@egjs/react-flicking";
 
 function Banner() {

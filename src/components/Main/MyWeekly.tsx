@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { addDays, format, startOfWeek } from "date-fns";
 
 import { FONTS } from "@/styles/common";

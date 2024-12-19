@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useImperativeHandle, useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { InputProps } from "./Input";
 import { InputStyledWrapper } from "./Wrapper";
@@ -108,7 +108,7 @@ const IconArea = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ClearIconArea = styled(IconArea.withComponent("button"))<{ isUploaded: boolean }>`
+const ClearIconArea = styled(IconArea).attrs({ as: "button" })<{ isUploaded: boolean }>`
   cursor: pointer;
   opacity: ${({ isUploaded }) => (isUploaded ? 1 : 0)};
   visibility: ${({ isUploaded }) => (isUploaded ? "visible" : "hidden")};
@@ -119,7 +119,7 @@ const ClearIconArea = styled(IconArea.withComponent("button"))<{ isUploaded: boo
     fill: var(--gray500);
   }
 `;
-const InputBox = styled(InputStyledWrapper.withComponent("label"))`
+const InputBox = styled(InputStyledWrapper).attrs({ as: "label" })`
   position: relative;
   cursor: pointer;
   ${FONTS.MD1};

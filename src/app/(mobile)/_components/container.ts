@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { BaseContainer } from "@/components/common/Container";
 
 export const HomeContainer = styled(BaseContainer)`

@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useImperativeHandle, useRef } from "react";
+import styled, { keyframes } from "styled-components";
 import { FONTS } from "@/styles/common";
-import { keyframes } from "@emotion/react";
-import styled from "@emotion/styled";
 
 import { InputStyledWrapper } from "./Wrapper";
 import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
@@ -181,7 +180,7 @@ const StyledInput = styled.input`
     }
   }
 `;
-const ButtonWrapInput = styled(StyledInput.withComponent("button"))`
+const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
   input {
     width: 100%;
     color: var(--black);

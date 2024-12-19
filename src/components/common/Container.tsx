@@ -1,4 +1,4 @@
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 export const BaseContainer = styled.section`
   padding: 12px 16px 20px;

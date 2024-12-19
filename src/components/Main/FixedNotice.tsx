@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
 import ExclamationSolid from "@/assets/icon/global/ExclamationSolid.svg";

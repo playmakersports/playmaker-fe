@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useImperativeHandle, useRef, useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { getMonth, getYear, isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 

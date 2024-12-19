@@ -1,5 +1,5 @@
 import { FONTS } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import React from "react";
 import { WhiteSectionDivider } from "../common/Container";
 

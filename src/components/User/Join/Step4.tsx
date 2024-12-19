@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useAtomValue } from "jotai";
 import { useForm } from "react-hook-form";
 import Image from "next/image";

@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
-import styled from "@emotion/styled";
+import React from "react";
+import styled, { keyframes } from "styled-components";
 import { FONTS } from "@/styles/common";
-import { keyframes } from "@emotion/react";
 
 type Props = {
   isAlert?: boolean;

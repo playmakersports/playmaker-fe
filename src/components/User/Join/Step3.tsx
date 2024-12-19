@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useAtom, useSetAtom } from "jotai";
 
 import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";

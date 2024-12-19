@@ -3,6 +3,7 @@ import { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import GlobalProviders from "./components/GlobalProviders";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import StyledComponentsRegistry from "../../lib/styledRegistry";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -48,7 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body className={pretendard.className}>
         <SpeedInsights />
-        <GlobalProviders>{children}</GlobalProviders>
+        <StyledComponentsRegistry>
+          <GlobalProviders>{children}</GlobalProviders>
+        </StyledComponentsRegistry>
       </body>
     </html>
   );

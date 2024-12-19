@@ -1,6 +1,6 @@
 "use client";
 
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter, usePathname } from "next/navigation";
 import { useAtomValue } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";

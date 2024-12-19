@@ -2,7 +2,7 @@
 
 import React, { useImperativeHandle, useRef, useState } from "react";
 import { FONTS } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { InputStyledWrapper } from "./Wrapper";
 import QuestionIcon from "@/assets/icon/global/Question.svg";

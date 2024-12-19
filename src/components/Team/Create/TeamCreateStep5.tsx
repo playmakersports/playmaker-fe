@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
+import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";

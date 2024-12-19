@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Editor } from "@tiptap/react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { BUTTON_ACTIVE } from "@/styles/common";
 
 import RightToggleArrow from "@/assets/icon/arrow/toggle/RightToggle.svg";

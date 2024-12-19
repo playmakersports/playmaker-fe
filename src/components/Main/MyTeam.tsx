@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 

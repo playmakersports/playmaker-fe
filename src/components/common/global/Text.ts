@@ -1,5 +1,5 @@
 import { FONTS } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 export const StepPageTitle = styled.h3`
   display: block;

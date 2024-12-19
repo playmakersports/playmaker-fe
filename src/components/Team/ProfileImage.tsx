@@ -1,6 +1,5 @@
 import React from "react";
-import styled from "@emotion/styled";
-import { keyframes } from "@emotion/react";
+import styled, { keyframes } from "styled-components";
 
 type Props = { isPlaying?: boolean; imgSrc: string };
 function ProfileImage({ isPlaying = false, imgSrc }: Props) {

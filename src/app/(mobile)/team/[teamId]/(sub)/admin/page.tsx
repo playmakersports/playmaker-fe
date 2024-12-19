@@ -1,12 +1,9 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import styled from "@emotion/styled";
+import styled, { keyframes } from "styled-components";
 import { usePageTitle } from "@/hook/usePageTitle";
 import { differenceInCalendarDays } from "date-fns";
-import { keyframes } from "@emotion/react";
-
-import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";

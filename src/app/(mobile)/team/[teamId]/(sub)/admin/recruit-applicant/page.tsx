@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";

@@ -1,5 +1,5 @@
 "use client";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { usePageTitle } from "@/hook/usePageTitle";

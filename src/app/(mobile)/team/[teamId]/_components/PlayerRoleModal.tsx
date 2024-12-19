@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";

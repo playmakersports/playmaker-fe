@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import useDeviceAgent from "@/hook/useDeviceAgent";
 import useModal from "@/hook/useModal";
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 import { FONTS } from "@/styles/common";

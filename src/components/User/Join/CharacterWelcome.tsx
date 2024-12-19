@@ -1,11 +1,10 @@
 import React from "react";
-import styled from "@emotion/styled";
+import Image from "next/image";
+import styled, { keyframes } from "styled-components";
 
 import { FONTS } from "@/styles/common";
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
-import Image from "next/image";
-import { keyframes } from "@emotion/react";
 
 type Props = { name: string; gender: "male" | "female" };
 function CharacterWelcome({ name, gender }: Props) {

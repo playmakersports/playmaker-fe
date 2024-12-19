@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import { useSearchParams } from "next/navigation";
 
 import { usePageTitle } from "@/hook/usePageTitle";

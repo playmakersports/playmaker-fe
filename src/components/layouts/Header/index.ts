@@ -1,5 +1,5 @@
 import { TEXT_ACTIVE } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 export const HeaderInner = styled.div`
   display: flex;

@@ -2,7 +2,7 @@
 
 import React, { use, useEffect, useState } from "react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 

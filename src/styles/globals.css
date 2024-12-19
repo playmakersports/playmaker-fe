@@ -89,6 +89,11 @@ div.loading-ui {
   --art-cyan-rgb: 7, 217, 204;
   --art-purple: #9490df;
   --art-purple-rgb: 148, 144, 223;
+
+  body {
+    color: var(--gray900);
+    background: #fff;
+  }
 }
 @media (max-width: 540px) {
   :root {

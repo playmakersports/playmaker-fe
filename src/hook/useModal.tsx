@@ -1,6 +1,6 @@
 import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import { FONTS } from "@/styles/common";
-import styled from "@emotion/styled";
+import styled from "styled-components";
 import React, { ReactNode, useCallback, useState } from "react";
 
 export type ModalProps = {

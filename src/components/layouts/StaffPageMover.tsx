@@ -1,9 +1,8 @@
 import React from "react";
-import styled from "@emotion/styled";
+import styled, { keyframes } from "styled-components";
 
 import Link from "next/link";
-import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import { keyframes } from "@emotion/react";
+import { FONTS } from "@/styles/common";
 
 function StaffPageMover() {
   return (

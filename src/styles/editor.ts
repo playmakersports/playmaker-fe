@@ -1,4 +1,4 @@
-import { css } from "@emotion/react";
+import { css } from "styled-components";
 import { FONTS } from "./common";
 
 export const EDITOR_ARTICLE_STYLE = css`

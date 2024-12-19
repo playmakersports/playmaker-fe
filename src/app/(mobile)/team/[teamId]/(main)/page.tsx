@@ -8,8 +8,8 @@ import { usePageTitle } from "@/hook/usePageTitle";
 import { FONTS } from "@/styles/common";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
-import TeamMainTop from "../(sub)/_components/TeamMainTop";
-import TeamMainContents from "../(sub)/_components/TeamMainContents";
+import TeamMainTop from "../_components/TeamMainTop";
+import TeamMainContents from "../_components/TeamMainContents";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 
@@ -31,11 +31,11 @@ function TeamHome() {
 
   return (
     <>
-      <FloatButton>
+      {/* <FloatButton>
         <Button type="button" mode="MAIN" fullWidth onClick={() => {}}>
           가입 신청
         </Button>
-      </FloatButton>
+      </FloatButton> */}
       <CoverImage src={TEAM_INFO_MOCK.cover} />
       <Description>{TEAM_INFO_MOCK.introduce}</Description>
       <TeamMainTop />

@@ -11,7 +11,7 @@ import { BasicInput } from "@/components/common/Input";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import PlayerListItem from "@/components/Team/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
-import PlayerRoleModal from "../_components/PlayerRoleModal";
+import PlayerRoleModal from "../../_components/PlayerRoleModal";
 
 import DoubleStarIcon from "@/assets/icon/global/DoubleStar.svg";
 import CrownIcon from "@/assets/icon/global/Crown.svg";
@@ -31,7 +31,7 @@ function PlayerList() {
   const [filter, setFilter] = useState("all");
   const [playerInfo, setPlayerInfo] = useState<PlayerInfo>();
   usePageTitle({
-    title: "팀원 목록",
+    title: "팀원",
     subIcons: [{ svgIcon: <DoubleStarIcon />, linkTo: "", description: "다중 카테고리" }],
   });
 

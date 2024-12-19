@@ -4,20 +4,22 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
+import { SelectTeamResponse } from "@/types/team";
 import Heart from "@/components/common/Heart";
 import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
 import { FONTS } from "@/styles/common";
 
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
+import { formattedDate } from "@/util/date";
 
-function TeamMainTop({ teamId }: { teamId: string }) {
+function TeamMainTop(props: SelectTeamResponse) {
+  const { teamId, teamName, logoUrl, activeArea, createDt, item, myTeamYn, university } = props;
   const [heart, setHeart] = useState(false);
-  const PLAYING = true;
+  const PLAYING = false;
 
   usePageTitle({
-    title: TEAM_INFO_MOCK.teamName,
+    title: teamName,
     transparent: true,
     subIcons: [
       {
@@ -32,19 +34,27 @@ function TeamMainTop({ teamId }: { teamId: string }) {
     <LightWrapper>
       <Top>
         <TeamInfo>
-          <ProfileImage isPlaying={PLAYING} imgSrc={TEAM_INFO_MOCK.logo} />
+          <ProfileImage isPlaying={PLAYING} imgSrc={logoUrl} />
           <Right>
             <h2>
-              {TEAM_INFO_MOCK.teamName}
+              {teamName}
               <Heart onHeart={setHeart} isHeart={heart} />
             </h2>
-            <p className="team-location">{TEAM_INFO_MOCK.location}</p>
+            <p className="team-location">{activeArea}</p>
             <p className="team-detail-info">
-              창단 {TEAM_INFO_MOCK.foundedAt} | 현 {TEAM_INFO_MOCK.memberCount}명
+              창단{" "}
+              {formattedDate(createDt, {
+                displayYear: "always",
+                displayDateType: ".",
+                displayDayName: "hide",
+              })}{" "}
+              | 현 {0}명
             </p>
             <p className="team-category">
-              <span>{TEAM_INFO_MOCK.sports}</span>
-              <span>{TEAM_INFO_MOCK.univName}</span>
+              <span>{item}</span>
+              {university?.split(" ").map((text) => (
+                <span key={text}>{text}</span>
+              ))}
             </p>
           </Right>
         </TeamInfo>

@@ -62,7 +62,7 @@ function BottomSheet(props: BottomSheetProps) {
     if (!draggable) return;
     setIsDragging(false);
     const touchEndY = e.changedTouches[0].clientY;
-    if (touchEndY > window.innerHeight * 0.8) {
+    if (touchEndY > window.innerHeight * 0.8 && touchEndY - touchStartY > 100) {
       closeBottomSheet();
       setTranslateY(-window.innerHeight / 2);
     } else {

@@ -27,10 +27,10 @@ function ErrorFallback({ status, message, retry, reset }: Props) {
         </span>
       </p>
       <FloatButton gap="10px">
-        <Button type="button" mode="OPTION1" fullWidth onClick={retry}>
+        <Button type="button" mode="OPTION1" $fullWidth onClick={retry}>
           다시 시도
         </Button>
-        <Button type="button" mode="MAIN" fullWidth onClick={reset}>
+        <Button type="button" mode="MAIN" $fullWidth onClick={reset}>
           홈 화면 이동
         </Button>
       </FloatButton>

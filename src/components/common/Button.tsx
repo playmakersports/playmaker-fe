@@ -4,11 +4,11 @@ import { FONTS } from "@/styles/common";
 
 export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "WARN";
 type Props = {
-  borderType?: boolean;
+  $borderType?: boolean;
   mode: ButtonStyleMode;
   children: ReactNode;
-  fullWidth?: boolean;
-  autoHeight?: boolean;
+  $fullWidth?: boolean;
+  $autoHeight?: boolean;
   type?: "button" | "submit" | "reset" | undefined;
   flex?: number;
   disabled?: boolean;
@@ -21,12 +21,12 @@ type Props = {
 
 function Button(props: Props) {
   const {
-    borderType,
+    $borderType,
     split,
     mode,
     children,
-    fullWidth,
-    autoHeight = false,
+    $fullWidth,
+    $autoHeight = false,
     type,
     flex,
     disabled = false,
@@ -62,11 +62,11 @@ function Button(props: Props) {
         type={type ?? "button"}
         onClick={onClick}
         flex={flex}
-        borderType={borderType}
+        $borderType={$borderType}
         mode={BUTTON_STYLE[mode]}
-        fullWidth={fullWidth}
+        $fullWidth={$fullWidth}
         disabled={disabled}
-        autoHeight={autoHeight}
+        $autoHeight={$autoHeight}
       >
         {children}
       </Wrapper>
@@ -74,7 +74,7 @@ function Button(props: Props) {
   }
   if (split) {
     return (
-      <SplitWrapper as="div" mode={BUTTON_STYLE[mode]} flex={flex} fullWidth={fullWidth} autoHeight={autoHeight}>
+      <SplitWrapper as="div" mode={BUTTON_STYLE[mode]} flex={flex} $fullWidth={$fullWidth} $autoHeight={$autoHeight}>
         <SplitButton disabled={disabled} type={type ?? "button"} onClick={onClick}>
           {children}
         </SplitButton>
@@ -88,10 +88,10 @@ function Button(props: Props) {
 
 type ButtonStyled = {
   mode: Record<string, string>;
-  fullWidth?: boolean;
+  $fullWidth?: boolean;
   flex?: number;
-  autoHeight?: boolean;
-  borderType?: boolean;
+  $autoHeight?: boolean;
+  $borderType?: boolean;
 };
 const Wrapper = styled.button<ButtonStyled>`
   display: inline-flex;
@@ -99,12 +99,12 @@ const Wrapper = styled.button<ButtonStyled>`
   justify-content: center;
   padding: 6px 0;
   ${({ flex }) => (flex ? `flex: ${flex}` : "")};
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
-  height: ${({ autoHeight }) => (autoHeight ? "auto" : "48px")};
-  border: ${({ borderType, mode }) => (borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
-  border-radius: ${({ autoHeight }) => (autoHeight ? "6px" : "48px")};
-  background-color: ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
-  color: ${({ borderType, mode }) => (borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
+  height: ${({ $autoHeight }) => ($autoHeight ? "auto" : "48px")};
+  border: ${({ $borderType, mode }) => ($borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
+  border-radius: ${({ $autoHeight }) => ($autoHeight ? "6px" : "48px")};
+  background-color: ${({ $borderType, mode }) => ($borderType ? "transparent" : mode.background)};
+  color: ${({ $borderType, mode }) => ($borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;
@@ -112,7 +112,7 @@ const Wrapper = styled.button<ButtonStyled>`
   will-change: outline;
   ${FONTS.MD1};
   &:focus {
-    box-shadow: 0 0 0 2px ${({ borderType, mode }) => (borderType ? "transparent" : mode.background)};
+    box-shadow: 0 0 0 2px ${({ $borderType, mode }) => ($borderType ? "transparent" : mode.background)};
   }
   &:disabled {
     background-color: var(--gray300);
@@ -125,7 +125,7 @@ const Wrapper = styled.button<ButtonStyled>`
   svg {
     width: 22px;
     height: 22px;
-    fill: ${({ borderType, mode }) => (borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
+    fill: ${({ $borderType, mode }) => ($borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
   }
 `;
 

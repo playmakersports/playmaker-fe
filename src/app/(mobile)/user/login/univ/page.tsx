@@ -90,7 +90,7 @@ function UnivName() {
             })}
           />
         </FormContents>
-        <Button type="submit" mode="MAIN" fullWidth>
+        <Button type="submit" mode="MAIN" $fullWidth>
           저장
         </Button>
       </form>

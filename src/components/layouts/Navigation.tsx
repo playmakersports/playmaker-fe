@@ -46,7 +46,7 @@ function Navigation() {
             >
               <HomeIcon />
             </Button>
-            <SubList show={showSubList}>
+            <SubList $isShow={showSubList}>
               <Button type="button" data-label="팀" onClick={() => movePage("/team/list")}>
                 <TeamHomeIcon />
               </Button>
@@ -253,7 +253,7 @@ const Button = styled.button<{ opacity?: number; showList?: boolean }>`
   }
 `;
 
-const SubList = styled.div<{ show: boolean }>`
+const SubList = styled.div<{ $isShow: boolean }>`
   position: absolute;
   display: flex;
   left: ${BUTTON_WIDTH + BUTTONS_GAP}px;
@@ -262,8 +262,8 @@ const SubList = styled.div<{ show: boolean }>`
   width: ${BUTTON_WIDTH * 3 + BUTTONS_GAP * 2}px;
   gap: ${BUTTONS_GAP}px;
   background-color: transparent;
-  z-index: ${({ show }) => (show ? 1 : 0)};
-  opacity: ${({ show }) => (show ? 1 : 0)};
+  z-index: ${({ $isShow }) => ($isShow ? 1 : 0)};
+  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transition: opacity 0.15s;
   transition-delay: opacity 0.25s;
 

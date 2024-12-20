@@ -61,7 +61,7 @@ function CompetitionViewPC() {
             onClick={() => {
               router.push("/staff/competition/create");
             }}
-            fullWidth
+            $fullWidth
           >
             <span className="button-inner">
               <PlusIcon fill="#fff" />새 대회 만들기

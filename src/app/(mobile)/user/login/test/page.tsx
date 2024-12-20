@@ -34,7 +34,7 @@ function TestLogin() {
             }}
           >
             <code>{JSON.stringify(data)}</code>
-            <Button type="button" mode="MAIN" fullWidth borderType onClick={() => router.replace(`/room/`)}>
+            <Button type="button" mode="MAIN" $fullWidth $borderType onClick={() => router.replace(`/room/`)}>
               로그인 성공 마이페이지 이동
             </Button>
           </p>

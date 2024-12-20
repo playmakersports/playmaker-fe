@@ -36,7 +36,7 @@ function StagePageContainer({ children, headerAlign = "left", stepper = false, t
             mode="MAIN"
             onClick={button.onClick}
             disabled={button.disabled}
-            fullWidth
+            $fullWidth
           >
             {button.text}
           </Button>

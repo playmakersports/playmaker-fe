@@ -9,7 +9,7 @@ import { FONTS } from "@/styles/common";
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> & {
   size?: "LARGE" | "MEDIUM";
 };
-type RadioProps = Props & { fullWidth?: boolean; labelName: string; buttonType?: boolean };
+type RadioProps = Props & { $fullWidth?: boolean; labelName: string; buttonType?: boolean };
 
 export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", ...rest }, ref) => (
   <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
@@ -22,8 +22,8 @@ export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size =
 InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
-  ({ fullWidth = false, size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
-    <RadioWrapper LARGE={size === "LARGE"} fullWidth={fullWidth}>
+  ({ $fullWidth = false, size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
+    <RadioWrapper $isLarge={size === "LARGE"} $fullWidth={$fullWidth}>
       <div style={{ position: "relative", display: buttonType ? "none" : "inline-flex" }}>
         <Radio type="radio" id={id} ref={ref} {...rest} />
         <RadioIcon />
@@ -121,19 +121,19 @@ const ButtonLabel = styled.label`
   text-align: center;
   word-break: keep-all;
 `;
-const RadioWrapper = styled.div<{ fullWidth: boolean; LARGE: boolean }>`
+const RadioWrapper = styled.div<{ $fullWidth: boolean; $isLarge: boolean }>`
   display: flex;
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
   align-items: center;
   gap: 4px;
   & > div,
   & > div > input[type="radio"] + ${RadioIcon} {
-    width: ${({ LARGE }) => (LARGE ? "24px" : "20px")};
-    height: ${({ LARGE }) => (LARGE ? "24px" : "20px")};
+    width: ${({ $isLarge }) => ($isLarge ? "24px" : "20px")};
+    height: ${({ $isLarge }) => ($isLarge ? "24px" : "20px")};
 
     &::after {
-      width: ${({ LARGE }) => (LARGE ? "12px" : "10px")};
-      height: ${({ LARGE }) => (LARGE ? "12px" : "10px")};
+      width: ${({ $isLarge }) => ($isLarge ? "12px" : "10px")};
+      height: ${({ $isLarge }) => ($isLarge ? "12px" : "10px")};
     }
   }
 
@@ -146,6 +146,6 @@ const RadioWrapper = styled.div<{ fullWidth: boolean; LARGE: boolean }>`
   }
 
   & > ${BasicLabel} {
-    line-height: ${({ LARGE }) => (LARGE ? "2.2rem" : "2rem")};
+    line-height: ${({ $isLarge }) => ($isLarge ? "2.2rem" : "2rem")};
   }
 `;

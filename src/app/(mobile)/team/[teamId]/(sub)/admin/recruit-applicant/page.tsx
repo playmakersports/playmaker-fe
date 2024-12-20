@@ -84,10 +84,10 @@ function RecruitApplicant() {
                   </div>
                 </div>
                 <div className="buttons">
-                  <Button type="button" flex={1} mode="WARN" autoHeight onClick={() => showDenyModal()}>
+                  <Button type="button" flex={1} mode="WARN" $autoHeight onClick={() => showDenyModal()}>
                     거절
                   </Button>
-                  <Button type="button" flex={2} mode="MAIN" autoHeight onClick={() => showAcceptModal()}>
+                  <Button type="button" flex={2} mode="MAIN" $autoHeight onClick={() => showAcceptModal()}>
                     수락
                   </Button>
                 </div>

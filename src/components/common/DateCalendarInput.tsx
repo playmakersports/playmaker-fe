@@ -12,7 +12,7 @@ import DoubleRightArrowIcon from "@/assets/icon/arrow/DoubleRightArrow.svg";
 
 type Props = Omit<InputProps, "type" | "value" | "search"> & {
   displayIcon?: boolean;
-  fullWidth?: boolean;
+  $fullWidth?: boolean;
   value?: string;
   defaultValue?: string;
   children?: ReactNode;
@@ -21,7 +21,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   const {
     children,
     displayIcon = false,
-    fullWidth = false,
+    $fullWidth = false,
     defaultValue,
     title,
     errorText,
@@ -106,7 +106,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   }, [showCalendar]);
 
   return (
-    <Container ref={containerRef} fullWidth={fullWidth}>
+    <Container ref={containerRef} $fullWidth={$fullWidth}>
       {displayIcon && (
         <Icon onClick={!props.disabled ? handleCalendarView : () => {}}>
           <CalendarIcon />
@@ -223,9 +223,9 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
 });
 DateCalendarInput.displayName = "DateCalendarInput";
 
-const Container = styled.div<{ fullWidth: boolean }>`
+const Container = styled.div<{ $fullWidth: boolean }>`
   position: relative;
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
 `;
 const Icon = styled.div`
   position: absolute;

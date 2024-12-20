@@ -26,7 +26,7 @@ function JoinComplete() {
         <GradientBg position="fixed" />
       </Contents>
       <ButtonWrapper>
-        <Button type="button" mode="MAIN" onClick={() => router.push("/")} fullWidth>
+        <Button type="button" mode="MAIN" onClick={() => router.push("/")} $fullWidth>
           홈 화면
         </Button>
       </ButtonWrapper>

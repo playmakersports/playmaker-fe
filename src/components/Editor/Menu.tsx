@@ -55,7 +55,7 @@ function EditorMenu({ editor }: Props) {
       >
         제목 <RightToggleArrow />
       </button>
-      <HideMenu show={showStyle}>
+      <HideMenu $isShow={showStyle}>
         <button
           tabIndex={-1}
           onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
@@ -228,14 +228,14 @@ const Container = styled.div`
   }
 `;
 
-const HideMenu = styled.div<{ show: boolean }>`
-  transform: translateX(${({ show }) => (show ? "0" : "-60px")});
+const HideMenu = styled.div<{ $isShow: boolean }>`
+  transform: translateX(${({ $isShow }) => ($isShow ? "0" : "-60px")});
   display: flex;
-  visibility: ${({ show }) => (show ? "visible" : "hidden")};
+  visibility: ${({ $isShow }) => ($isShow ? "visible" : "hidden")};
   margin-right: 6px;
   gap: 4px;
-  width: ${({ show }) => (show ? "100%" : "0%")};
-  opacity: ${({ show }) => (show ? 1 : 0)};
+  width: ${({ $isShow }) => ($isShow ? "100%" : "0%")};
+  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transition: all 0.2s;
   border-right: 1px solid var(--gray300);
   & > button:last-of-type {

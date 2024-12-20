@@ -59,7 +59,7 @@ function ArticleId() {
         writer="관리자"
         viewCount={20}
       />
-      <ScrollFixedTitle show={showFixedTitle}>5월 정기 경기 일정 알려드립니다.</ScrollFixedTitle>
+      <ScrollFixedTitle $isShow={showFixedTitle}>5월 정기 경기 일정 알려드립니다.</ScrollFixedTitle>
       <Contents
         dangerouslySetInnerHTML={{
           __html: MOCK.replace(
@@ -118,10 +118,10 @@ function ArticleId() {
 const Container = styled(BaseContainer)`
   padding: 12px 16px 0;
 `;
-const ScrollFixedTitle = styled.div<{ show: boolean }>`
+const ScrollFixedTitle = styled.div<{ $isShow: boolean }>`
   position: absolute;
-  visibility: ${({ show }) => (show ? "visible" : "hidden")};
-  transform: ${({ show }) => (show ? "translateY(0)" : "translateY(-100%)")};
+  visibility: ${({ $isShow }) => ($isShow ? "visible" : "hidden")};
+  transform: ${({ $isShow }) => ($isShow ? "translateY(0)" : "translateY(-100%)")};
   padding: 8px 24px 12px;
   top: var(--safe-area-top);
   left: 0;

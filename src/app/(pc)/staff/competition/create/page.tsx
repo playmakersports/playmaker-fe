@@ -40,7 +40,7 @@ function CompetitionCreatePC() {
           <InputRadioWrapper title="종목 및 대회명">
             <div style={{ width: "220px" }}>
               <DropDown
-                fullWidth
+                $fullWidth
                 placeholder="종목 선택"
                 getSelectedValue={setSportsType}
                 options={SUPPORT_SPORTS.map((sports) => ({
@@ -63,7 +63,7 @@ function CompetitionCreatePC() {
               <DateCalendarInput
                 tabIndex={3}
                 displayIcon
-                fullWidth
+                $fullWidth
                 placeholder="모집 시작일"
                 {...register("applyStartDate", {
                   valueAsDate: true,
@@ -73,7 +73,7 @@ function CompetitionCreatePC() {
                 tabIndex={4}
                 errorText={errors.applyEndDate ? (errors.applyEndDate.message as string) : ""}
                 displayIcon
-                fullWidth
+                $fullWidth
                 placeholder="모집 종료일"
                 {...register("applyEndDate", {
                   valueAsDate: true,
@@ -92,7 +92,7 @@ function CompetitionCreatePC() {
               <DateCalendarInput
                 tabIndex={5}
                 displayIcon
-                fullWidth
+                $fullWidth
                 placeholder="대회 시작일"
                 {...register("startDate", {
                   valueAsDate: true,
@@ -102,7 +102,7 @@ function CompetitionCreatePC() {
                 tabIndex={6}
                 errorText={errors.endDate ? (errors.endDate.message as string) : ""}
                 displayIcon
-                fullWidth
+                $fullWidth
                 placeholder="대회 종료일"
                 {...register("endDate", {
                   valueAsDate: true,
@@ -133,7 +133,7 @@ function CompetitionCreatePC() {
             <h3>대회 방식</h3>
             <InputRadioWrapper title="참가 팀 수">
               <DropDown
-                fullWidth
+                $fullWidth
                 placeholder="선택"
                 getSelectedValue={setTeamNumber}
                 options={[
@@ -146,14 +146,21 @@ function CompetitionCreatePC() {
             </InputRadioWrapper>
             <h3>참가 조건</h3>
             <InputRadioWrapper title="성별">
-              <InputRadio buttonType fullWidth {...register("gender")} value="mixed" id="mixed" labelName="제한 없음" />
-              <InputRadio buttonType fullWidth {...register("gender")} value="male" id="male" labelName="남성" />
-              <InputRadio buttonType fullWidth {...register("gender")} value="female" id="female" labelName="여성" />
+              <InputRadio
+                buttonType
+                $fullWidth
+                {...register("gender")}
+                value="mixed"
+                id="mixed"
+                labelName="제한 없음"
+              />
+              <InputRadio buttonType $fullWidth {...register("gender")} value="male" id="male" labelName="남성" />
+              <InputRadio buttonType $fullWidth {...register("gender")} value="female" id="female" labelName="여성" />
             </InputRadioWrapper>
             <InputRadioWrapper title="국적">
               <InputRadio
                 buttonType
-                fullWidth
+                $fullWidth
                 {...register("nationality")}
                 value="korean"
                 id="korean"
@@ -161,7 +168,7 @@ function CompetitionCreatePC() {
               />
               <InputRadio
                 buttonType
-                fullWidth
+                $fullWidth
                 {...register("nationality")}
                 value="foreigner"
                 id="foreigner"
@@ -171,7 +178,7 @@ function CompetitionCreatePC() {
             <InputRadioWrapper title="출신">
               <InputRadio
                 buttonType
-                fullWidth
+                $fullWidth
                 {...register("experience")}
                 value="amateur"
                 id="amateur"
@@ -179,7 +186,7 @@ function CompetitionCreatePC() {
               />
               <InputRadio
                 buttonType
-                fullWidth
+                $fullWidth
                 {...register("experience")}
                 value="athlete"
                 id="athlete"
@@ -188,7 +195,7 @@ function CompetitionCreatePC() {
             </InputRadioWrapper>
             <InputRadioWrapper title="연령">
               <DropDown
-                fullWidth
+                $fullWidth
                 placeholder="나이 방식"
                 getSelectedValue={setAgeType}
                 options={[
@@ -207,7 +214,7 @@ function CompetitionCreatePC() {
             <section className="grid-merge form-grid-column">
               <div style={{ width: "132px", marginRight: "-8px" }}>
                 <DropDown
-                  fullWidth
+                  $fullWidth
                   title="계좌번호"
                   placeholder="은행 선택"
                   getSelectedValue={setBankName}
@@ -256,7 +263,7 @@ function CompetitionCreatePC() {
             <InputRadioWrapper title="입금 기한">
               <DateCalendarInput
                 displayIcon
-                fullWidth
+                $fullWidth
                 placeholder="입금 마감일"
                 {...register("payEndDate", {
                   valueAsDate: true,
@@ -268,15 +275,15 @@ function CompetitionCreatePC() {
         </section>
         <Bottom>
           <div className="bottom-left-side">
-            <Button type="button" mode="OPTION2" fullWidth>
+            <Button type="button" mode="OPTION2" $fullWidth>
               임시저장
             </Button>
-            <Button type="button" mode="OPTION2" borderType fullWidth>
+            <Button type="button" mode="OPTION2" $borderType $fullWidth>
               불러오기
             </Button>
           </div>
           <div className="bottom-right-side">
-            <Button type="submit" mode="MAIN" fullWidth>
+            <Button type="submit" mode="MAIN" $fullWidth>
               작성 완료
             </Button>
           </div>

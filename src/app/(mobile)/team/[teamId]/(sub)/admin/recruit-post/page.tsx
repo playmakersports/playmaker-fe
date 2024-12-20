@@ -40,7 +40,7 @@ function RecruitPost() {
         />
       </form>
       <FloatButton>
-        <Button type="submit" mode="MAIN" fullWidth onClick={() => {}}>
+        <Button type="submit" mode="MAIN" $fullWidth onClick={() => {}}>
           저장
         </Button>
       </FloatButton>

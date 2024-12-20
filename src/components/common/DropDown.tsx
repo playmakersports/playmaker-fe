@@ -7,7 +7,7 @@ import { FONTS } from "@/styles/common";
 
 type Props = {
   title?: string;
-  fullWidth?: boolean;
+  $fullWidth?: boolean;
   placeholder?: string;
   defaultValue?: string;
   options: {
@@ -19,7 +19,15 @@ type Props = {
 };
 
 function DropDown(props: Props) {
-  const { title, fullWidth = false, placeholder, defaultValue = "", options, getSelectedValue, medium = false } = props;
+  const {
+    title,
+    $fullWidth = false,
+    placeholder,
+    defaultValue = "",
+    options,
+    getSelectedValue,
+    medium = false,
+  } = props;
   const dropDownRef = useRef<HTMLDivElement>(null);
   const optionsRefs = useRef<HTMLInputElement[]>([]);
   const [showOptions, setShowOptions] = useState(false);
@@ -41,9 +49,9 @@ function DropDown(props: Props) {
   };
 
   return (
-    <Wrapper fullWidth={fullWidth}>
+    <Wrapper $fullWidth={$fullWidth}>
       {title && <p className="input-title">{title}</p>}
-      <Container ref={dropDownRef} isError={false} isOpen={showOptions}>
+      <Container ref={dropDownRef} $isError={false} $isOpen={showOptions}>
         <DisplayValue
           type="button"
           aria-label={`선택 팝업 열기. 현재 선택된 항목 - ${
@@ -51,7 +59,7 @@ function DropDown(props: Props) {
           }`}
           role="menu"
           onClick={() => setShowOptions((prev) => !prev)}
-          isMedium={medium}
+          $isMedium={medium}
           className={showOptions ? "active" : ""}
           onKeyDown={(e) => {
             if (e.key === "Escape") {
@@ -70,11 +78,11 @@ function DropDown(props: Props) {
           ) : (
             <p className="dropdown-placeholder">{placeholder}</p>
           )}
-          <ArrowWrapper toggle={showOptions}>
+          <ArrowWrapper $toggle={showOptions}>
             <ToggleArrowIcon />
           </ArrowWrapper>
         </DisplayValue>
-        <Options show={showOptions} aria-modal="true" role="modal">
+        <Options $isShow={showOptions} aria-modal="true" role="modal">
           {options.length > 0 ? (
             options?.map((option, index) => (
               <Option
@@ -115,8 +123,8 @@ function DropDown(props: Props) {
   );
 }
 
-const Wrapper = styled.div<{ fullWidth: boolean }>`
-  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
+const Wrapper = styled.div<{ $fullWidth: boolean }>`
+  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
   p.input-title {
     font-size: 1.4rem;
     margin-bottom: 4px;
@@ -126,11 +134,11 @@ const Wrapper = styled.div<{ fullWidth: boolean }>`
     line-height: 2.4rem;
   }
 `;
-const DisplayValue = styled.button<{ isMedium: boolean }>`
+const DisplayValue = styled.button<{ $isMedium: boolean }>`
   flex: 1;
   display: flex;
   min-width: 90px;
-  padding: ${({ isMedium }) => (isMedium ? "6px 8px" : "10px 12px")};
+  padding: ${({ $isMedium }) => ($isMedium ? "6px 8px" : "10px 12px")};
   align-items: center;
   text-align: left;
   ${FONTS.MD1W500}
@@ -151,10 +159,10 @@ const DisplayValue = styled.button<{ isMedium: boolean }>`
     font-weight: 500;
   }
 `;
-const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
+const Container = styled(InputStyledWrapper)<{ $isOpen: boolean }>`
   padding: 0;
   position: relative;
-  border: ${({ isOpen }) => (isOpen ? `1px solid var(--main)` : "")};
+  border: ${({ $isOpen }) => ($isOpen ? `1px solid var(--main)` : "")};
   user-select: none;
   background-color: var(--background-light);
   gap: 0;
@@ -169,17 +177,17 @@ const Container = styled(InputStyledWrapper)<{ isOpen: boolean }>`
   }
 `;
 
-const ArrowWrapper = styled.div<{ toggle: boolean }>`
+const ArrowWrapper = styled.div<{ $toggle: boolean }>`
   display: inline-flex;
   align-items: center;
-  transform: rotate(${({ toggle }) => (toggle ? 0 : 180)}deg);
+  transform: rotate(${({ $toggle }) => ($toggle ? 0 : 180)}deg);
   transition: transform 0.25s;
   svg {
     fill: var(--gray400) !important;
   }
 `;
 
-const Options = styled.div<{ show: boolean }>`
+const Options = styled.div<{ $isShow: boolean }>`
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -198,9 +206,9 @@ const Options = styled.div<{ show: boolean }>`
   box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.07);
   overflow-y: auto;
 
-  transform: translateY(${({ show }) => (show ? "0px" : "-12px")});
-  visibility: ${({ show }) => (show ? "visible" : "hidden")};
-  opacity: ${({ show }) => (show ? 1 : 0)};
+  transform: translateY(${({ $isShow }) => ($isShow ? "0px" : "-12px")});
+  visibility: ${({ $isShow }) => ($isShow ? "visible" : "hidden")};
+  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   z-index: 100;
 `;
 const Option = styled.button`

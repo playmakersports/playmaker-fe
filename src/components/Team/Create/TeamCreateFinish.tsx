@@ -63,12 +63,12 @@ function TeamCreateFinish() {
         <GradientBg position="absolute" />
         {isSuccess && (
           <>
-            <Message show={isSuccess}>
+            <Message $isShow={isSuccess}>
               <p>팀 생성이 완료되었어요</p>
               <p className="last">멋진 활동 기대할게요</p>
             </Message>
             <FloatButton>
-              <Button mode="MAIN" fullWidth onClick={moveTeamPage} type="button">
+              <Button mode="MAIN" $fullWidth onClick={moveTeamPage} type="button">
                 팀으로 이동
               </Button>
             </FloatButton>
@@ -79,7 +79,7 @@ function TeamCreateFinish() {
   );
 }
 
-const Message = styled.div<{ show: boolean }>`
+const Message = styled.div<{ $isShow: boolean }>`
   position: absolute;
   top: calc(var(--safe-area-top) + 128px);
   width: calc(100% - 32px);
@@ -89,7 +89,7 @@ const Message = styled.div<{ show: boolean }>`
   line-height: 4.8rem;
   z-index: 1;
   p {
-    opacity: ${({ show }) => (show ? 1 : 0)};
+    opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
     transition: opacity 1.1s;
   }
   p.last {

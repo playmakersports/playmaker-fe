@@ -49,7 +49,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
   return (
     <Container style={{ width: "100%" }}>
       {title && <p className="input-title">{title}</p>}
-      <InputStyledWrapper isMedium={medium} isError={!!props.errorText}>
+      <InputStyledWrapper $isMedium={medium} $isError={!!props.errorText}>
         {search && <SearchIcon className="search-icon" />}
         {onButtonWrapClick ? (
           <>

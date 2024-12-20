@@ -43,12 +43,12 @@ function ProfileTag(props: Props) {
               type="button"
               mode="MAIN"
               onClick={() => router.push(`/room/${showInfo.playerId}`)}
-              autoHeight
+              $autoHeight
               flex={3}
             >
               프로필 이동
             </Button>
-            <Button type="button" mode="OPTION2" onClick={() => console.log("통계")} autoHeight flex={1}>
+            <Button type="button" mode="OPTION2" onClick={() => console.log("통계")} $autoHeight flex={1}>
               통계
             </Button>
           </div>

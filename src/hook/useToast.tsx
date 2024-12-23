@@ -3,7 +3,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 import { useCallback, useEffect, useRef } from "react";
 
 function useToast(time?: number) {
-  const defaultTime = time ?? 2300;
+  const defaultTime = time ?? 1400;
   const setToastAtom = useSetAtom(atomToast);
   const toastAtom = useAtomValue(atomToast);
   const ref = useRef<number | null>(null);

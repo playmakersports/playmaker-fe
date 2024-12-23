@@ -2,7 +2,8 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
 import { atomToast } from "@/atom/common";
-import { FONTS } from "@/styles/common";
+
+import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
 function Toast() {
   const [toastAtom] = useAtom(atomToast);
@@ -14,8 +15,13 @@ function Toast() {
   };
 
   return (
-    <FixedWrapper style={{ display: toastAtom.show ? "block" : "none" }}>
+    <FixedWrapper style={{ display: toastAtom.show ? "flex" : "none" }}>
       <Container role="banner" {...containerProp}>
+        {toastAtom.type !== "ALERT" && (
+          <i>
+            <CheckIcon />
+          </i>
+        )}
         {toastAtom.text}
       </Container>
     </FixedWrapper>
@@ -25,7 +31,7 @@ function Toast() {
 const showToastAnim = keyframes`
   0% {
     opacity: 0;
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
   100% {
     opacity: 1;
@@ -39,32 +45,47 @@ const hideToastAnim = keyframes`
     }
     100% {
       opacity: 0;
-      transform: translateY(-150%);
+      transform: translateY(150%);
     }
 `;
 
 const FixedWrapper = styled.div`
   position: fixed;
-  display: flex;
-  top: 0;
+  bottom: 0;
   width: 100%;
   justify-content: center;
   z-index: 1999;
 `;
 const Container = styled.div<{ $animate: boolean; $show: boolean; type?: "DEFAULT" | "ALERT" }>`
-  ${FONTS.MD1W500};
-  font-weight: 400;
-  display: ${({ $show }) => ($show ? "block" : "none")};
-  width: calc(var(--mobile-max-width) - 16px);
-  background-color: ${({ type }) => (type === "ALERT" ? "var(--point-red)" : "var(--gray800)")};
+  user-select: none;
+  font-size: 1.6rem;
+  font-weight: 600;
+  display: ${({ $show }) => ($show ? "inline-flex" : "none")};
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  background-color: rgba(var(--gray900-rgb), 0.75);
   color: ${({ type }) => (type === "ALERT" ? "#fff" : "var(--gray50)")};
-  padding: 16px 12px;
-  margin: calc(env(safe-area-inset-top) + 10px) 8px 0;
-  margin: calc(constant(safe-area-inset-top) + 10px) 8px 0;
+  padding: 16px 20px;
+  margin: 0 0 calc(env(safe-area-inset-bottom) + 22px);
+  margin: 0 0 calc(constant(safe-area-inset-bottom) + 22px);
   border-radius: 10px;
   animation: 0.25s ${({ $animate }) => ($animate ? showToastAnim : hideToastAnim)} forwards;
   white-space: pre-line;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05), 0 4px 8px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+
+  i {
+    appearance: none;
+    display: inline-flex;
+    padding: 5px;
+    border: 1.5px solid #fff;
+    border-radius: 50%;
+    svg {
+      width: 12px;
+      height: 12px;
+      fill: #fff;
+    }
+  }
 `;
 
 export default Toast;

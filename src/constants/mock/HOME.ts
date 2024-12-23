@@ -6,7 +6,7 @@ export const MY_TEAM_MOCK = [
 
 export const TEAM_LIST_MOCK = [
   {
-    teamId: "1",
+    teamId: "33",
     teamName: "SPABA",
     univName: "서울과기대",
     location: "서울과학기술대학교 체육관",

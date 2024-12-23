@@ -11,7 +11,7 @@ import { BasicInput } from "@/components/common/Input";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import PlayerListItem from "@/components/Team/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
-import PlayerRoleModal from "../../_components/PlayerRoleModal";
+import PlayerRoleModal from "../../../_components/PlayerRoleModal";
 
 import DoubleStarIcon from "@/assets/icon/global/DoubleStar.svg";
 import CrownIcon from "@/assets/icon/global/Crown.svg";

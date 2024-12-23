@@ -4,9 +4,10 @@ import { cookies } from "next/headers";
 
 import { baseBackendURL } from "@/apis";
 import { SelectTeamResponse } from "@/types/team";
-import TeamMainTop from "../_components/TeamMainTop";
-import TeamMainContents from "../_components/TeamMainContents";
-import TeamMainCoverTop from "../_components/TeamMainCoverTop";
+
+import TeamMainCoverTop from "../../_components/TeamMainCoverTop";
+import TeamMainTop from "../../_components/TeamMainTop";
+import TeamMainContents from "../../_components/TeamMainContents";
 
 async function getTeamData(teamId: string) {
   const cookieStore = await cookies();
@@ -16,6 +17,7 @@ async function getTeamData(teamId: string) {
       authorization: `Bearer ${accessToken}`,
     },
   });
+  if (!res.ok) notFound(); // 404
   const team: SelectTeamResponse = await res.json();
   if (!team.teamId) notFound();
   return team;

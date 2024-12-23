@@ -21,6 +21,7 @@ import LocationIcon from "@/assets/icon/global/Location.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
+import ScheduleDetailModal from "../../../_components/ScheduleDetailModal";
 
 function Schedule() {
   const router = useRouter();
@@ -171,17 +172,19 @@ function Schedule() {
           ))}
         </ScheduleList>
       </ScheduleContainer>
-      <ModalComponents
-        title="일정 정보"
-        buttons={[
-          { mode: "OPTION2", name: "편집", onClick: () => {} },
-          { mode: "MAIN", name: "확인", onClick: () => {} },
-        ]}
-      >
-        <p>2024년 5월 10일</p>
-        <p>성균관대학교 경기장</p>
-        <p>연습게임 1</p>
-      </ModalComponents>
+      <ScheduleDetailModal
+        ModalContainer={ModalComponents}
+        scheduleInfo={{
+          articleId: "1",
+          emoji: "🎉",
+          title: "일정 제목",
+          startDate: "2024-12-01",
+          endDate: "2024-12-02",
+          place: "성균관대학교 경기장",
+          description: "올해의 마지막 경기입니다. 많은 관심 부탁드립니다.",
+          writer: "홍길동",
+        }}
+      />
     </Container>
   );
 }

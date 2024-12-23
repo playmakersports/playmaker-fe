@@ -9,7 +9,7 @@ function UserIndex() {
   if (token) {
     redirect("/room/test");
   } else {
-    redirect("/login");
+    redirect("/user/login");
   }
 }
 

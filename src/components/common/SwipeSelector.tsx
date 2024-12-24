@@ -48,7 +48,7 @@ function SwipeSelector(props: Props) {
   };
 
   return (
-    <Container ref={(ref) => setWidth(ref?.clientWidth ?? 0)} moveX={touchX}>
+    <Container ref={(ref) => setWidth(ref?.clientWidth ?? 0)} $moveX={touchX}>
       <div className="inner-wrapper">
         <Buttons $bgColor={left[0].bgColor}>
           {left.map((btn) => (
@@ -72,7 +72,7 @@ function SwipeSelector(props: Props) {
   );
 }
 
-const Container = styled.div<{ moveX: number }>`
+const Container = styled.div<{ $moveX: number }>`
   position: relative;
   left: calc(-50% - 150px / 2);
   ${FONTS.MD1};
@@ -80,7 +80,7 @@ const Container = styled.div<{ moveX: number }>`
     width: calc(200% + 150px);
     display: flex;
     flex-wrap: nowrap;
-    transform: translate3d(${({ moveX }) => moveX}px, 0, 0);
+    transform: translate3d(${({ $moveX }) => $moveX}px, 0, 0);
     transition: transform 0.3s;
     overflow: hidden;
   }

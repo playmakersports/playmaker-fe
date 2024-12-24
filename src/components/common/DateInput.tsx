@@ -199,8 +199,8 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                       (props.pickType === "ONLY_PAST" && !isSameDay(day.date, new Date()) && day.date > new Date()) ||
                       (props.pickType === "ONLY_FUTURE" && !isSameDay(day.date, new Date()) && day.date < new Date())
                     }
-                    thisMonth={!(day.nextMonth || day.previousMonth)}
-                    isHoliday={day.holiday.isHoliday}
+                    $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
+                    $isHoliday={day.holiday.isHoliday}
                     className={
                       isSameDay(day.date, currentDate) && inputRef.current && inputRef.current.value
                         ? "current-date"
@@ -331,15 +331,15 @@ const Days = styled.div`
     transform: translateX(-5%);
   }
 `;
-const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
+const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   position: relative;
   flex: 1;
   margin: 0 2px;
   padding: 16px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ isHoliday }) => (isHoliday ? "var(--point-red)" : "var(--text)")};
-  opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
   font-size: 1.8rem;
   ${BUTTON_ACTIVE()};
 

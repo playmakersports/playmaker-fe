@@ -86,7 +86,7 @@ function BottomSheet(props: BottomSheetProps) {
           scale: isDragging && translateY > 0 ? 0.95 : 1,
           borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
         }}
-        isShow={showModal}
+        $isShow={showModal}
         expanded={!!expanded}
         draggable={!!draggable}
         isDragging={isDragging}
@@ -122,12 +122,12 @@ function BottomSheet(props: BottomSheetProps) {
           </ButtonWrapper>
         )}
       </Wrapper>
-      <Backdrop isShow={showModal} onClick={disabledDimOut ? () => {} : closeBottomSheet} />
+      <Backdrop $isShow={showModal} onClick={disabledDimOut ? () => {} : closeBottomSheet} />
     </>
   );
 }
 
-const Backdrop = styled.div<{ isShow: boolean }>`
+const Backdrop = styled.div<{ $isShow: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -135,7 +135,7 @@ const Backdrop = styled.div<{ isShow: boolean }>`
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
   z-index: 999;
-  opacity: ${({ isShow }) => (isShow ? 1 : 0)};
+  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transition: opacity 0.2s;
 `;
 
@@ -164,7 +164,7 @@ const Contents = styled.div`
 `;
 
 const Wrapper = styled.section<{
-  isShow: boolean;
+  $isShow: boolean;
   isDragging: boolean;
   expanded: boolean;
   translateY: number;
@@ -184,11 +184,11 @@ const Wrapper = styled.section<{
   background: var(--background-light);
   border-radius: 24px 24px 0 0;
 
-  transform: ${({ draggable, isShow, translateY }) =>
+  transform: ${({ draggable, $isShow, translateY }) =>
     draggable && translateY > 0
-      ? `translate3d(0, calc(${isShow ? 0 : "100%"}% + ${translateY}px), 0)`
-      : `translate3d(0, ${isShow ? 0 : "100%"}, 0)`};
-  opacity: ${({ isShow }) => (isShow ? 1 : 0)};
+      ? `translate3d(0, calc(${$isShow ? 0 : "100%"}% + ${translateY}px), 0)`
+      : `translate3d(0, ${$isShow ? 0 : "100%"}, 0)`};
+  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transform-origin: center center;
   transition: ${({ isDragging }) => (isDragging ? "scale 0.25s" : `all ${ANIMATION_RUNNING_TIME}ms`)};
   box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);

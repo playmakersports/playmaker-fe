@@ -16,6 +16,7 @@ import TeamListCard from "@/components/Team/TeamListCard";
 import ToggleInput from "@/components/common/ToggleInput";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";
+import { useGet } from "@/apis/hook/query";
 
 function TeamList() {
   usePageTitle({
@@ -31,6 +32,8 @@ function TeamList() {
   const [sortQuery, setSortQuery] = useState("default");
   const [filterRecruit, setFilterRecruit] = useState(false);
 
+  const { data } = useGet("/api/team/selectteam");
+  console.log(data);
   return (
     <Container>
       <TabWrapper ref={sportsTabRef}>

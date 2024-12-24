@@ -188,8 +188,8 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
                     tabIndex={!(day.nextMonth || day.previousMonth) ? day.displayValue : -1}
                     key={day.date.toString()}
                     type="button"
-                    thisMonth={!(day.nextMonth || day.previousMonth)}
-                    isHoliday={day.holiday.isHoliday}
+                    $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
+                    $isHoliday={day.holiday.isHoliday}
                     className={isSameDay(day.date, currentDate) && inputRef.current!.value ? "current-date" : ""}
                     aria-label={`${day.date.getMonth() + 1}월 ${day.displayValue}일`}
                     onClick={() => {
@@ -313,14 +313,14 @@ const Days = styled.div`
     transform: translateX(-5%);
   }
 `;
-const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
+const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   position: relative;
   flex: 1;
   padding: 8px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ isHoliday }) => (isHoliday ? "var(--point-red)" : "var(--text)")};
-  opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
   border-radius: 5px;
   font-size: 1.6rem;
 

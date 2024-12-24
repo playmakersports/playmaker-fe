@@ -61,7 +61,7 @@ function Navigation() {
               type="button"
               data-label="둘러보기"
               onClick={() => setShowSubList((prev) => !prev)}
-              showList={showSubList}
+              $isShowList={showSubList}
             >
               <SearchListIcon />
             </Button>
@@ -189,7 +189,7 @@ const Inner = styled.div`
   animation-delay: 0.65s;
 `;
 
-const Button = styled.button<{ opacity?: number; showList?: boolean }>`
+const Button = styled.button<{ opacity?: number; $isShowList?: boolean }>`
   flex: 1;
   position: relative;
   display: flex;
@@ -200,25 +200,25 @@ const Button = styled.button<{ opacity?: number; showList?: boolean }>`
   width: ${BUTTON_WIDTH}px;
   opacity: ${({ opacity }) => opacity ?? 1};
   transform: translate3d(
-    ${({ showList }) => (showList ? `-${(BUTTON_WIDTH * 4 + BUTTONS_GAP * 3) / 3 + 20}px` : "0")},
+    ${({ $isShowList }) => ($isShowList ? `-${(BUTTON_WIDTH * 4 + BUTTONS_GAP * 3) / 3 + 20}px` : "0")},
     0,
     0
   );
   /* 
   4개일 때
-  transform: translate3d(${({ showList }) => (showList ? `-${BUTTON_WIDTH + BUTTONS_GAP}px` : "0")}, 0, 0); */
+  transform: translate3d(${({ $isShowList }) => ($isShowList ? `-${BUTTON_WIDTH + BUTTONS_GAP}px` : "0")}, 0, 0); */
   transition: opacity 0.15s, transform 0.15s;
   transition-delay: opacity 0.15s;
 
   &::before {
     content: "";
     position: absolute;
-    visibility: ${({ showList }) => (showList ? "visible" : "hidden")};
+    visibility: ${({ $isShowList }) => ($isShowList ? "visible" : "hidden")};
     right: -3px;
     width: 1px;
-    height: ${({ showList }) => (showList ? BUTTON_WIDTH + 8 : 0)}px;
+    height: ${({ $isShowList }) => ($isShowList ? BUTTON_WIDTH + 8 : 0)}px;
     background-color: var(--gray300);
-    opacity: ${({ showList }) => (showList ? "0.9" : "0")};
+    opacity: ${({ $isShowList }) => ($isShowList ? "0.9" : "0")};
     transition: opacity 0.45s, height 0.55s;
   }
 
@@ -226,7 +226,7 @@ const Button = styled.button<{ opacity?: number; showList?: boolean }>`
     flex-shrink: 0;
     width: 24px;
     height: 24px;
-    fill: ${({ showList }) => (showList ? "var(--sub1)" : "var(--gray500)")};
+    fill: ${({ $isShowList }) => ($isShowList ? "var(--sub1)" : "var(--gray500)")};
     z-index: 1;
     transition: fill 0.4s;
   }
@@ -247,7 +247,7 @@ const Button = styled.button<{ opacity?: number; showList?: boolean }>`
     width: max-content;
     font-size: 1.4rem;
     font-weight: 500;
-    color: ${({ showList }) => (showList ? "var(--sub1)" : "var(--gray500)")};
+    color: ${({ $isShowList }) => ($isShowList ? "var(--sub1)" : "var(--gray500)")};
     z-index: 1;
     transition: color 0.4s;
   }

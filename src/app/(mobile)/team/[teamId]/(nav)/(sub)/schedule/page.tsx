@@ -134,8 +134,8 @@ function Schedule() {
                     <Day
                       key={day.date.toString()}
                       data-active={true}
-                      thisMonth={!(day.nextMonth || day.previousMonth)}
-                      isHoliday={day.holiday.isHoliday}
+                      $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
+                      $isHoliday={day.holiday.isHoliday}
                       className={isSameDay(day.date, currentDate) ? "current-date" : ""}
                       onClick={() => {
                         setCurrentDate(day.date);
@@ -350,14 +350,14 @@ const DirectionR = styled(MonthDirection)`
   }
 `;
 
-const Day = styled.button<{ thisMonth: boolean; isHoliday: boolean }>`
+const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   position: relative;
   flex: 1;
   padding: 12px 0 24px;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ isHoliday }) => (isHoliday ? "var(--point-red)" : "var(--text)")};
-  opacity: ${({ thisMonth }) => (thisMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
   ${BUTTON_ACTIVE("var(--primary-m20)")};
 
   &[aria-invalid] {

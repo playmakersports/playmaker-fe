@@ -2,8 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useSearchParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useParams, useSearchParams } from "next/navigation";
 
 import { COMPETITION_DETAIL_MOCK } from "@/constants/mock/COMPETITION";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
@@ -12,10 +11,9 @@ import CompetitionHeader from "./_components/CompetitionHeader";
 function CompetitionArticle() {
   const MOCK = COMPETITION_DETAIL_MOCK;
 
-  usePageTitle({ title: MOCK.competitionName, transparent: true });
-
+  const params = useParams();
   const searchParams = useSearchParams();
-  const competitionId = searchParams.get("competitionId");
+  const competitionId = params["competitionId"];
 
   return (
     <>

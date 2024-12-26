@@ -1,3 +1,5 @@
+"use client";
+import { useSearchParams } from "next/navigation";
 import React from "react";
 
 type Props = {
@@ -6,12 +8,13 @@ type Props = {
   ready: React.ReactNode;
 };
 function CompetitionLayout({ children, underway, ready }: Props) {
-  const isUnderway = false;
+  const params = useSearchParams();
+  const isReady = params.get("initial") === "ready";
 
   return (
     <>
       {children}
-      {isUnderway ? underway : ready}
+      {isReady ? ready : underway}
     </>
   );
 }

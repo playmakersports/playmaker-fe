@@ -76,6 +76,8 @@ const Title = styled.div`
   }
 `;
 const Contents = styled.div`
+  position: relative;
+
   ul {
     display: flex;
     flex-direction: column;
@@ -120,6 +122,7 @@ const Contents = styled.div`
     height: 0;
     transform: translateY(-20%);
     opacity: 0;
+    z-index: -1;
   }
 `;
 

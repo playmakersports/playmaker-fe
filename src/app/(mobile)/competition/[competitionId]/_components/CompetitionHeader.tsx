@@ -1,13 +1,16 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
+import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
 
+import { formattedDate } from "@/util/date";
 import Badge from "@/components/common/Badge";
 
 import LocationIcon from "@/assets/icon/global/Location.svg";
 import PersonIcon from "@/assets/icon/global/Person24.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import { formattedDate } from "@/util/date";
+import { TEXT_ACTIVE } from "@/styles/common";
 
 type Props = {
   competitionId: string;
@@ -19,8 +22,14 @@ type Props = {
 
 function CompetitionHeader(props: Props) {
   const { competitionId, competitionName, matchLocation, startDate, endDate } = props;
+  const router = useRouter();
   const competitionHeaderRef = useRef<HTMLDivElement>(null);
+  usePageTitle({ title: props.competitionName, transparent: true });
   useStickyMoment(competitionHeaderRef);
+
+  const moveToDetail = () => {
+    router.push(`/competition/${competitionId}?initial=ready`);
+  };
 
   return (
     <Header ref={competitionHeaderRef}>
@@ -59,6 +68,9 @@ function CompetitionHeader(props: Props) {
             <span>{competitionId}팀 참여</span>
           </li>
         </ul>
+        <DetailButton type="button" onClick={moveToDetail}>
+          자세히...
+        </DetailButton>
       </Information>
     </Header>
   );
@@ -82,6 +94,7 @@ const Label = styled.div`
   border-top: 1px solid var(--gray200);
 `;
 const Information = styled.div`
+  position: relative;
   flex: 1;
   display: inline-block;
   padding: 0 0 8px;
@@ -109,6 +122,16 @@ const Information = styled.div`
       }
     }
   }
+`;
+
+const DetailButton = styled.button`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: var(--gray600);
+  font-size: 1.4rem;
+  border-radius: 2px;
+  ${TEXT_ACTIVE("var(--gray100)")};
 `;
 
 export default CompetitionHeader;

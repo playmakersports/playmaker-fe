@@ -1,11 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { BasicWhiteCard } from "../common/Card";
-import GroupTitle from "../common/GroupTitle";
-import MoreButton from "../common/MoreButton";
-import { BUTTON_ACTIVE, CARD_ACTIVE } from "@/styles/common";
+import { CARD_ACTIVE } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 
 type Props = {

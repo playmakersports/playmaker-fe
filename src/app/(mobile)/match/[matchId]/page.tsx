@@ -1,248 +1,73 @@
-"use client";
+import React from "react";
 
-import React, { useState } from "react";
-import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
-
-import { BUTTON_ACTIVE, FONTS, SCROLL_HIDE } from "@/styles/common";
 import GradientBg from "@/components/common/GradientBg";
-import { BaseContainer } from "@/components/common/Container";
-import MatchRoundCard from "@/components/Match/MatchRoundCard";
-import BottomSheet from "@/components/common/BottomSheet";
+import MatchScores from "../_components/MatchScores";
+import MatchTitle from "../_components/MatchTitle";
+import MatchMvp from "../_components/MatchMvp";
 
 function MatchPage() {
-  usePageTitle({ scrollBgColor: [30, "transparent", "var(--background-light)"] });
-
-  const [showAllScore, setShowAllScore] = useState(false);
-  const TEAM_SCORES = {
-    category: "basketball",
-    matchStage: "16강",
-    homeName: "SPABA",
-    homeUniv: "서울과학기술대",
-    homeLogo: "",
-    homeScore: 59,
-    homeColor: "7, 217, 204",
-    awayName: "바스켓",
-    awayUniv: "홍익대",
-    awayLogo: "",
-    awayScore: 83,
-    awayColor: "255, 152, 0",
-    scores: [
-      { stage: "1Q", home: 18, away: 25 },
-      { stage: "2Q", home: 28, away: 31 },
-      { stage: "3Q", home: 42, away: 20 },
-      { stage: "4Q", home: 18, away: 10 },
-      { stage: "5Q", home: 8, away: 9 },
-    ],
-    mvp: "",
-  };
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
 
   return (
     <>
       <GradientBg position="fixed" opacity={0.35} colorRgb={winnerColor} />
-      <Container>
-        <Versus>
-          <Team backColor={TEAM_SCORES.homeColor}>
-            <div className="team-inner">
-              <div className="score">{TEAM_SCORES.homeScore}</div>
-              <div className="team-logo"></div>
-              <div className="team-name">{TEAM_SCORES.homeName}</div>
-              <div className="team-univ">{TEAM_SCORES.homeUniv}</div>
-            </div>
-          </Team>
-          <div className="center">
-            <p>{TEAM_SCORES.matchStage}</p>
-            <p className="versus">vs</p>
-          </div>
-          <Team backColor={TEAM_SCORES.awayColor}>
-            <div className="team-inner">
-              <div className="score">{TEAM_SCORES.awayScore}</div>
-              <div className="team-logo"></div>
-              <div className="team-name">{TEAM_SCORES.awayName}</div>
-              <div className="team-univ">{TEAM_SCORES.awayUniv}</div>
-            </div>
-          </Team>
-        </Versus>
-        <SummaryContainer>
-          <ScoreTable onClick={() => setShowAllScore((prev) => !prev)}>
-            <div className="table-row table-header">
-              <div className="team-logo"></div>
-              {TEAM_SCORES.scores.map((score) => (
-                <p key={score.stage}>{score.stage}</p>
-              ))}
-            </div>
-            <div className="table-row">
-              <div className="team-logo">
-                <img src={TEAM_SCORES.homeLogo} alt={TEAM_SCORES.homeName} />
-              </div>
-              {TEAM_SCORES.scores.map((score) => (
-                <p key={`home-${score.stage}`}>{score.home}</p>
-              ))}
-            </div>
-            <div className="table-row">
-              <div className="team-logo">
-                <img src={TEAM_SCORES.awayLogo} alt={TEAM_SCORES.awayName} />
-              </div>
-              {TEAM_SCORES.scores.map((score) => (
-                <p key={`away-${score.stage}`}>{score.away}</p>
-              ))}
-            </div>
-          </ScoreTable>
-          <MVPTable></MVPTable>
-        </SummaryContainer>
-      </Container>
-      {showAllScore && (
-        <BottomSheet setShow={setShowAllScore} draggable="bar">
-          <ScoreWrapper onClick={(e) => e.stopPropagation()}>
-            {TEAM_SCORES.scores.map((score) => (
-              <MatchRoundCard
-                key={score.stage}
-                roundName={score.stage}
-                homeTeamName={TEAM_SCORES.homeName}
-                homeTeamLogo={TEAM_SCORES.homeLogo}
-                homeTeamScore={score.home}
-                awayTeamName={TEAM_SCORES.awayName}
-                awayTeamLogo={TEAM_SCORES.awayLogo}
-                awayTeamScore={score.away}
-              />
-            ))}
-          </ScoreWrapper>
-        </BottomSheet>
-      )}
+      <MatchTitle competitionName={TEAM_SCORES.competitionName} />
+      <MatchScores
+        homeInfo={{
+          name: TEAM_SCORES.homeName,
+          univ: TEAM_SCORES.homeUniv,
+          logo: TEAM_SCORES.homeLogo,
+          score: TEAM_SCORES.homeScore,
+          color: TEAM_SCORES.homeColor,
+        }}
+        awayInfo={{
+          name: TEAM_SCORES.awayName,
+          univ: TEAM_SCORES.awayUniv,
+          logo: TEAM_SCORES.awayLogo,
+          score: TEAM_SCORES.awayScore,
+          color: TEAM_SCORES.awayColor,
+        }}
+        stage={TEAM_SCORES.matchStage}
+        scores={TEAM_SCORES.scores}
+      />
+      <MatchMvp
+        name="김선형"
+        profileImg="https://imgnews.pstatic.net/image/413/2020/12/18/0000110505_001_20201218032641259.jpg?type=w647"
+        teamName={TEAM_SCORES.homeName}
+        photo="https://thumb.zumst.com/530x0/https://static.news.zumst.com/images/2/2023/03/30/0d96b666658043f7994f61ce280fb06e.jpg"
+        stats={[
+          { title: "득점", value: "20" },
+          { title: "어시스트", value: "5" },
+          { title: "리바운드", value: "10" },
+          { title: "스틸", value: "3" },
+        ]}
+      />
     </>
   );
 }
 
-const Container = styled(BaseContainer)`
-  position: relative;
-  height: calc(100vh - var(--safe-area-top) - 1px);
-  padding: 12px 16px 0;
-  overflow: hidden;
-`;
-const Versus = styled.div`
-  display: flex;
-  padding: 0 32px;
-  justify-content: space-between;
-  gap: 10%;
-  align-items: center;
-
-  div.center {
-    user-select: none;
-    font-size: 1.4rem;
-    color: var(--gray600);
-    text-align: center;
-    p.versus {
-      ${FONTS.MD1W500};
-      color: var(--main);
-    }
-  }
-`;
-const Team = styled.div<{ backColor: string }>`
-  flex: 1;
-  position: relative;
-
-  div.team-inner {
-    position: relative;
-    text-align: center;
-    z-index: 1;
-  }
-
-  div.score {
-    margin-bottom: 20px;
-    font-size: 3.5rem;
-    font-weight: 600;
-  }
-  div.team-logo {
-    margin: 0 auto 16px;
-    width: 80px;
-    height: 80px;
-    background-color: var(--gray0);
-    border-radius: 50%;
-  }
-  div.team-name {
-    ${FONTS.MD1};
-    color: var(--gray900);
-  }
-  div.team-univ {
-    ${FONTS.MD2};
-    color: var(--gray600);
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 150px;
-    height: 180px;
-    background-color: ${({ backColor }) => `rgb(${backColor})`};
-    z-index: 0;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    opacity: 0.2;
-    filter: blur(24px);
-  }
-`;
-const SummaryContainer = styled.div`
-  margin-top: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-`;
-const SummaryCard = styled.div`
-  padding: 10px 20px;
-  border-radius: 10px;
-  background-color: var(--gray0);
-  ${BUTTON_ACTIVE("var(--gray0)", 10)};
-`;
-const ScoreTable = styled(SummaryCard)`
-  ${FONTS.MD1W500};
-  font-weight: 400;
-
-  div.table-row {
-    display: flex;
-    padding: 2px 0;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-    border-bottom: 1px solid var(--gray200);
-
-    p {
-      flex: 1;
-      padding: 10px;
-    }
-    &:last-of-type {
-      border-bottom: none;
-    }
-  }
-  div.table-header {
-    color: var(--gray700);
-  }
-
-  div.team-logo {
-    width: 56px;
-    flex: none;
-    flex-shrink: 0;
-    & > img {
-      display: block;
-      margin: 0 auto;
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background-color: var(--gray100);
-    }
-  }
-`;
-const MVPTable = styled(SummaryCard)``;
-const ScoreWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  height: calc(100vh - var(--safe-area-top) - 320px);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-`;
+const TEAM_SCORES = {
+  competitionName: "2024 한국스포츠연맹배 전국아마추어농구대회 대학부 서울경인지역예선",
+  category: "basketball",
+  matchStage: "16강",
+  homeName: "SPABA",
+  homeUniv: "서울과학기술대",
+  homeLogo: "",
+  homeScore: 59,
+  homeColor: "7, 217, 204",
+  awayName: "바스켓",
+  awayUniv: "홍익대",
+  awayLogo: "",
+  awayScore: 83,
+  awayColor: "255, 152, 0",
+  scores: [
+    { stage: "1Q", home: 18, away: 25 },
+    { stage: "2Q", home: 28, away: 31 },
+    { stage: "3Q", home: 42, away: 20 },
+    { stage: "4Q", home: 18, away: 10 },
+    { stage: "5Q", home: 8, away: 9 },
+  ],
+  mvp: "",
+};
 
 export default MatchPage;

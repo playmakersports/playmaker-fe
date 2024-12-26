@@ -1,3 +1,4 @@
+"use client";
 import styled from "styled-components";
 import React from "react";
 
@@ -9,7 +10,7 @@ type Props = {
 };
 function GradientBg({ colorRgb, height = "100vh", position, opacity = 1 }: Props) {
   return (
-    <Background style={{ position, opacity, height }} colorRgb={colorRgb ?? "148, 144, 223"}>
+    <Background style={{ position, opacity, height }} $colorRgb={colorRgb ?? "148, 144, 223"}>
       <svg
         className="blue-large"
         width="368"
@@ -69,7 +70,7 @@ function GradientBg({ colorRgb, height = "100vh", position, opacity = 1 }: Props
   );
 }
 
-const Background = styled.div<{ colorRgb: string }>`
+const Background = styled.div<{ $colorRgb: string }>`
   width: 100%;
   max-width: var(--mobile-max-width);
   top: 0;
@@ -78,8 +79,8 @@ const Background = styled.div<{ colorRgb: string }>`
   z-index: 0;
   background: linear-gradient(
     to bottom,
-    rgb(${({ colorRgb }) => colorRgb}, 0.2) 0%,
-    rgb(${({ colorRgb }) => colorRgb}, 0.4) 100%
+    rgb(${({ $colorRgb }) => $colorRgb}, 0.2) 0%,
+    rgb(${({ $colorRgb }) => $colorRgb}, 0.4) 100%
   );
   transition: opacity 0.6s;
   overflow: hidden;

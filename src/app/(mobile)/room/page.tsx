@@ -7,7 +7,7 @@ function UserIndex() {
   const token = getCookie("access-token");
 
   if (token) {
-    redirect("/room/test");
+    redirect("/my");
   } else {
     redirect("/user/login");
   }

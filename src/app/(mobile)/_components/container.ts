@@ -1,3 +1,5 @@
+"use client";
+
 import styled from "styled-components";
 import { BaseContainer } from "@/components/common/Container";
 

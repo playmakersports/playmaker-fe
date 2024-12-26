@@ -6,7 +6,6 @@ import { useParams, usePathname, useRouter } from "next/navigation";
 
 import { SCROLL_HIDE } from "@/styles/common";
 import Header from "@/components/layouts/Header/Header";
-import StaffPageMover from "@/components/layouts/StaffPageMover";
 import AppCode from "@/components/layouts/AppCode";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Loading from "@/components/common/Loading";
@@ -71,7 +70,6 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </Container>
-      <StaffPageMover />
       <AppCode />
     </>
   );

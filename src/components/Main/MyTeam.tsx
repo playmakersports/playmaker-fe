@@ -51,7 +51,7 @@ function MyTeam() {
               <More>
                 <PlusIcon width={20} height={20} />
               </More>
-              <p>운동을 함께할 나만의 팀을 찾아보세요</p>
+              <p>운동을 함께할 팀을 찾아보세요</p>
             </NoTeamList>
           )}
         </Suspense>

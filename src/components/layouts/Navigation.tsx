@@ -1,106 +1,62 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled, { keyframes } from "styled-components";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import HomeIcon from "@/assets/icon/global/Home.svg";
-import SearchListIcon from "@/assets/icon/global/SearchList.svg";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import CrownIcon from "@/assets/icon/global/CrownSolid.svg";
-import TeamHomeIcon from "@/assets/icon/global/TeamHome.svg";
-import TreeChartIcon from "@/assets/icon/global/TreeChart.svg";
+// import SearchListIcon from "@/assets/icon/global/SearchList.svg";
+import FlagIcon from "@/assets/icon/global/Flag.svg";
+import PersonIcon from "@/assets/icon/global/Person24.svg";
 import PhysicsIcon from "@/assets/icon/global/Physics.svg";
 
-const INNER_LR_PADDING = 36;
-const BUTTON_WIDTH = 36;
-const BUTTONS_GAP = 32;
+const INNER_LR_PADDING = 20;
+const BUTTON_WIDTH = 64;
+const BUTTONS_GAP = 4;
 
 function Navigation() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const asPath = usePathname();
-  const [showSubList, setShowSubList] = useState(false);
+  const pathname = usePathname();
 
-  const movePage = (target: string) => {
-    router.push(target);
+  const movePage = (path: string) => {
+    router.push(path);
   };
 
-  useEffect(() => {
-    return () => {
-      setShowSubList(false);
-    };
-  }, []);
-  const MAIN_NAV = ["/", "/team/list", "/calendar", "/match"];
-
-  if (MAIN_NAV.includes(asPath)) {
-    return (
-      <Container>
-        <NavWrap>
-          <Inner>
-            <Button
-              type="button"
-              data-label="홈"
-              className={asPath === "/" ? "active" : ""}
-              opacity={showSubList ? 0 : 1}
-            >
-              <HomeIcon />
-            </Button>
-            <SubList $isShow={showSubList}>
-              <Button type="button" data-label="팀" onClick={() => movePage("/team/list")}>
-                <TeamHomeIcon />
-              </Button>
-              <Button type="button" data-label="대회">
-                <TreeChartIcon />
-              </Button>
-              <Button type="button" data-label="교류전">
-                <PhysicsIcon />
-              </Button>
-            </SubList>
-            <Button
-              type="button"
-              data-label="둘러보기"
-              onClick={() => setShowSubList((prev) => !prev)}
-              $isShowList={showSubList}
-            >
-              <SearchListIcon />
-            </Button>
-            <Button
-              type="button"
-              data-label="캘린더"
-              className={asPath === "/user" ? "active" : ""}
-              opacity={showSubList ? 0 : 1}
-            >
-              <CalendarIcon />
-            </Button>
-            {/* <Button
-              type="button"
-              data-label="커뮤니티"
-              className={asPath === "/" ? "active" : ""}
-              opacity={showSubList ? 0 : 1}
-            >
-              <CrownIcon />
-            </Button> */}
-          </Inner>
-        </NavWrap>
-      </Container>
-    );
-  }
   return (
     <Container>
       <NavWrap>
         <Inner>
-          <Button type="button" data-label="홈" className={asPath === "/" ? "active" : ""}>
+          <Button
+            type="button"
+            data-label="홈"
+            onClick={() => movePage("/")}
+            className={pathname === "/" ? "active" : ""}
+          >
             <HomeIcon />
           </Button>
-          <Button type="button" data-label="살펴보기" className={asPath === "/team/list" ? "active" : ""}>
-            <SearchListIcon />
+          <Button
+            type="button"
+            data-label="매치"
+            onClick={() => movePage("/matches")}
+            className={pathname === "/matches" ? "active" : ""}
+          >
+            <FlagIcon />
           </Button>
-          <Button type="button" data-label="캘린더" className={asPath === "/" ? "active" : ""}>
-            <CalendarIcon />
+          <Button
+            type="button"
+            data-label="피드"
+            onClick={() => movePage("/feed")}
+            className={pathname === "/feed" ? "active" : ""}
+          >
+            <PhysicsIcon />
           </Button>
-          <Button type="button" data-label="경기" className={asPath === "/" ? "active" : ""}>
-            <CrownIcon />
+          <Button
+            type="button"
+            data-label="마이"
+            onClick={() => movePage("/my")}
+            className={pathname === "/my" ? "active" : ""}
+          >
+            <PersonIcon />
           </Button>
         </Inner>
       </NavWrap>
@@ -112,31 +68,26 @@ const showNavAnimate = keyframes`
     0% {
         opacity: 0.3;
         width: 68px;
-        transform: scale(0.2) translate3d(0, 40%, 0);
+        transform: scale(0.2);
     }
-    18% {
+    25% {
         opacity: 1;
         width: 68px;
-        transform: scale(1.2) translate3d(0, 0, 0);
+        transform: scale(1.25);
     }
-    26% {
+    35% {
         opacity: 1;
         width: 68px;
-        transform: scale(0.95);
+        transform: scale(1.1);
     }
-    36% {
+    57% {
         opacity: 1;
-        width: 68px;
         transform: scale(1);
-    }
-    60% {
-        opacity: 1;
-        transform: scale(1.03);
     }
     74% {
         opacity: 1;
         width: ${INNER_LR_PADDING * 2 + BUTTON_WIDTH * 4 + BUTTONS_GAP * 3}px;
-        transform: scale(0.98);
+        transform: scale(1);
     }
     100% {
         opacity: 1;
@@ -169,14 +120,16 @@ const NavWrap = styled.div`
   height: 68px;
   padding: 0 ${INNER_LR_PADDING}px;
   border-radius: 48px;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(7px);
   pointer-events: auto;
   transition: all 0.2s ease-in-out;
   opacity: 0;
   animation: ${showNavAnimate} 1.4s forwards;
+  animation-delay: 0.35s;
   box-shadow: 0 6px 20px 0 rgba(208, 214, 226, 0.5);
   overflow: hidden;
+  will-change: width, transform;
 `;
 const Inner = styled.div`
   position: relative;
@@ -186,10 +139,10 @@ const Inner = styled.div`
   gap: ${BUTTONS_GAP}px;
   opacity: 0;
   animation: ${showInnerMenu} 0.5s forwards;
-  animation-delay: 0.65s;
+  animation-delay: 0.85s;
 `;
 
-const Button = styled.button<{ opacity?: number; $isShowList?: boolean }>`
+const Button = styled.button<{ opacity?: number }>`
   flex: 1;
   position: relative;
   display: flex;
@@ -199,34 +152,13 @@ const Button = styled.button<{ opacity?: number; $isShowList?: boolean }>`
   gap: 6px;
   width: ${BUTTON_WIDTH}px;
   opacity: ${({ opacity }) => opacity ?? 1};
-  transform: translate3d(
-    ${({ $isShowList }) => ($isShowList ? `-${(BUTTON_WIDTH * 4 + BUTTONS_GAP * 3) / 3 + 20}px` : "0")},
-    0,
-    0
-  );
-  /* 
-  4개일 때
-  transform: translate3d(${({ $isShowList }) => ($isShowList ? `-${BUTTON_WIDTH + BUTTONS_GAP}px` : "0")}, 0, 0); */
-  transition: opacity 0.15s, transform 0.15s;
-  transition-delay: opacity 0.15s;
-
-  &::before {
-    content: "";
-    position: absolute;
-    visibility: ${({ $isShowList }) => ($isShowList ? "visible" : "hidden")};
-    right: -3px;
-    width: 1px;
-    height: ${({ $isShowList }) => ($isShowList ? BUTTON_WIDTH + 8 : 0)}px;
-    background-color: var(--gray300);
-    opacity: ${({ $isShowList }) => ($isShowList ? "0.9" : "0")};
-    transition: opacity 0.45s, height 0.55s;
-  }
+  transition: opacity 0.2s;
 
   svg {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
-    fill: ${({ $isShowList }) => ($isShowList ? "var(--sub1)" : "var(--gray500)")};
+    fill: var(--gray400);
     z-index: 1;
     transition: fill 0.4s;
   }
@@ -237,8 +169,8 @@ const Button = styled.button<{ opacity?: number; $isShowList?: boolean }>`
       transition: fill 0.25s;
     }
     &::after {
-      transition: color 0.25s;
       color: var(--main);
+      transition: color 0.25s;
     }
   }
 
@@ -247,30 +179,9 @@ const Button = styled.button<{ opacity?: number; $isShowList?: boolean }>`
     width: max-content;
     font-size: 1.4rem;
     font-weight: 500;
-    color: ${({ $isShowList }) => ($isShowList ? "var(--sub1)" : "var(--gray500)")};
+    color: var(--gray500);
     z-index: 1;
     transition: color 0.4s;
-  }
-`;
-
-const SubList = styled.div<{ $isShow: boolean }>`
-  position: absolute;
-  display: flex;
-  left: ${BUTTON_WIDTH + BUTTONS_GAP}px;
-  justify-content: space-between;
-  align-items: center;
-  width: ${BUTTON_WIDTH * 3 + BUTTONS_GAP * 2}px;
-  gap: ${BUTTONS_GAP}px;
-  background-color: transparent;
-  z-index: ${({ $isShow }) => ($isShow ? 1 : 0)};
-  opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
-  transition: opacity 0.15s;
-  transition-delay: opacity 0.25s;
-
-  ${Button} > svg {
-    margin-top: -2px;
-    width: 26px;
-    height: 26px;
   }
 `;
 

@@ -19,9 +19,6 @@ function MainHeader() {
           <HeaderIconWrapper onClick={() => router.push("/notification")} aria-label="내 알림 전체보기">
             <NoticeBellIcon />
           </HeaderIconWrapper>
-          <HeaderIconWrapper onClick={() => router.push("/user/login")} aria-label="로그인 페이지 이동">
-            <PersonIcon />
-          </HeaderIconWrapper>
         </Menu>
       </Inner>
     </Wrapper>
@@ -39,6 +36,8 @@ const Wrapper = styled(HeaderWrapper)`
 `;
 const HeaderIconWrapper = styled(HeaderIcon)`
   svg {
+    width: 24px;
+    height: 24px;
     fill: var(--gray800);
   }
 `;

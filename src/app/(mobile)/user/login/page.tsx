@@ -33,7 +33,7 @@ function Login() {
     router.push("/user/apply");
   };
   const handleMyPage = () => {
-    router.push("/room/1");
+    router.push("/my");
   };
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");

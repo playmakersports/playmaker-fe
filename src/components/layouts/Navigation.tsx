@@ -54,7 +54,7 @@ function Navigation() {
             type="button"
             data-label="마이"
             onClick={() => movePage("/my")}
-            className={pathname === "/my" ? "active" : ""}
+            className={["/my", "/my/team", "/my/feed"].includes(pathname) ? "active" : ""}
           >
             <PersonIcon />
           </Button>

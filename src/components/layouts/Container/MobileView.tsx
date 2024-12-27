@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { SCROLL_HIDE } from "@/styles/common";
 import Header from "../Header/Header";
 import AppCode from "../AppCode";
-import StaffPageMover from "../StaffPageMover";
 
 function MobileView({ children }: { children: React.ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
@@ -31,7 +30,6 @@ function MobileView({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </Container>
-      <StaffPageMover />
       <AppCode />
     </>
   );

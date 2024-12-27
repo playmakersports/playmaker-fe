@@ -38,7 +38,7 @@ function WeeklyCalender(props: Props) {
 
   return (
     <Container>
-      <Week isGroup={grouping}>
+      <Week $grouping={grouping}>
         {getDatesOfCurrentWeek().map((value, i) => (
           <DaySelector
             type="button"
@@ -51,7 +51,7 @@ function WeeklyCalender(props: Props) {
           </DaySelector>
         ))}
       </Week>
-      <List clickable={clickable} onClick={clickable ? moveSchedule : () => {}}>
+      <List $clickable={clickable} onClick={clickable ? moveSchedule : () => {}}>
         {!grouping && (
           <p className="active-date">
             <LogoSymbolType width={18} height={18} />
@@ -66,8 +66,8 @@ function WeeklyCalender(props: Props) {
                   <span>{item.scheduleTitle}</span>
                 </li>
               ))
-            : schedulesList.map((schedule) => (
-                <GroupingByTeam key={schedule.teamName}>
+            : schedulesList.map((schedule, index) => (
+                <GroupingByTeam key={`${index}-${schedule.teamName}`}>
                   <div className="group-team">
                     <div className="team-list-head">
                       <LogoSymbolType width={18} height={18} />
@@ -91,13 +91,13 @@ function WeeklyCalender(props: Props) {
 }
 
 const Container = styled(BasicWhiteCard)``;
-const Week = styled.div<{ isGroup: boolean }>`
+const Week = styled.div<{ $grouping: boolean }>`
   display: flex;
   padding-bottom: 10px;
   margin: 0 0 12px;
   user-select: none;
   gap: 4px;
-  border-bottom: ${({ isGroup }) => (isGroup ? "none" : "1px solid var(--gray200)")};
+  border-bottom: ${({ $grouping }) => ($grouping ? "none" : "1px solid var(--gray200)")};
 `;
 
 const DaySelector = styled.button`
@@ -160,10 +160,10 @@ const DaySelector = styled.button`
   }
 `;
 
-const List = styled.div<{ clickable: boolean }>`
+const List = styled.div<{ $clickable: boolean }>`
   margin: -8px -12px -8px;
   padding: 8px 12px 8px;
-  ${({ clickable }) => (clickable ? BUTTON_ACTIVE("var(--gray100)") : "")}
+  ${({ $clickable }) => ($clickable ? BUTTON_ACTIVE("var(--gray100)") : "")}
   p.active-date {
     margin-bottom: 10px;
     display: flex;

@@ -8,6 +8,7 @@ import { FONTS } from "@/styles/common";
 import { ApiSelectMember } from "@/apis/types/user";
 import Loading from "@/components/common/Loading";
 
+import FlagIcon from "@/assets/icon/global/Flag.svg";
 import PencilIcon from "@/assets/icon/global/Pencil.svg";
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 
@@ -16,6 +17,11 @@ function MyProfile() {
 
   usePageTitle({
     subIcons: [
+      {
+        svgIcon: <FlagIcon />,
+        linkTo: `/user/login`,
+        description: "임시 로그인",
+      },
       {
         svgIcon: <SettingsIcon />,
         linkTo: `/my/settings`,
@@ -26,21 +32,23 @@ function MyProfile() {
 
   if (isLoading) return <Loading />;
   return (
-    <Profile>
-      <ProfileImg $src={data?.imageUrl ?? ""}>
-        <div>
-          <PencilIcon />
-        </div>
-      </ProfileImg>
-      <Info>
-        <p className="player-name">{data?.username}</p>
-        <p className="introduce">{data?.selfIntro}</p>
-        <p className="tag-list">
-          <span className="tag">{data?.birth.slice(0, 4)}년생</span>
-          <span className="tag">{data?.university}</span>
-        </p>
-      </Info>
-    </Profile>
+    <>
+      <Profile>
+        <ProfileImg $src={data?.imageUrl ?? ""}>
+          <div>
+            <PencilIcon />
+          </div>
+        </ProfileImg>
+        <Info>
+          <p className="player-name">{data?.username}</p>
+          <p className="tag-list">
+            <span className="tag">{data?.birth.slice(0, 4)}년생</span>
+            <span className="tag">{data?.university}</span>
+          </p>
+        </Info>
+      </Profile>
+      <Introduce>{data?.selfIntro}</Introduce>
+    </>
   );
 }
 
@@ -48,9 +56,19 @@ const Profile = styled.div`
   user-select: none;
   display: flex;
   padding: 0 24px;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 20px;
+`;
+const Introduce = styled.p`
+  ${FONTS.MD2};
+  font-weight: 400;
+  margin: -4px 24px 0;
+  padding: 12px 16px;
+  color: var(--gray700);
+  white-space: pre-line;
+  border: 1px solid var(--gray200);
+  border-radius: 8px;
 `;
 const ProfileImg = styled.div<{ $src: string }>`
   position: relative;

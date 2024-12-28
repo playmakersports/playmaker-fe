@@ -1,14 +1,16 @@
 "use client";
-
 import { useState } from "react";
+import styled from "styled-components";
+
 import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
+import { WhiteSectionGrayDivider } from "@/components/common/Container";
 
 function MyTabHome() {
   const [weeklyDate, setWeeklyDate] = useState("");
 
   return (
-    <>
+    <Container>
       <WeeklyCalender
         clickable={false}
         grouping={true}
@@ -31,6 +33,7 @@ function MyTabHome() {
           },
         ]}
       />
+      <WhiteSectionGrayDivider />
       <RoomAwarded
         awardsList={[
           { awardedYear: 2024, competitionName: "경기1", awardedRank: 1 },
@@ -38,8 +41,14 @@ function MyTabHome() {
           { awardedYear: 2023, competitionName: "경기3", awardedRank: 2 },
         ]}
       />
-    </>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+`;
 
 export default MyTabHome;

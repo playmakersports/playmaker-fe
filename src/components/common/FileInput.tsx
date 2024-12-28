@@ -62,7 +62,7 @@ export const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>((pro
         )}
         <ClearIconArea
           type="button"
-          isUploaded={!!fileInfo.name}
+          $isUploaded={!!fileInfo.name}
           role="button"
           onClick={(event) => handleClearInputValue(event)}
           aria-label="입력값 초기화"
@@ -108,10 +108,10 @@ const IconArea = styled.div`
   justify-content: center;
   align-items: center;
 `;
-const ClearIconArea = styled(IconArea).attrs({ as: "button" })<{ isUploaded: boolean }>`
+const ClearIconArea = styled(IconArea).attrs({ as: "button" })<{ $isUploaded: boolean }>`
   cursor: pointer;
-  opacity: ${({ isUploaded }) => (isUploaded ? 1 : 0)};
-  visibility: ${({ isUploaded }) => (isUploaded ? "visible" : "hidden")};
+  opacity: ${({ $isUploaded }) => ($isUploaded ? 1 : 0)};
+  visibility: ${({ $isUploaded }) => ($isUploaded ? "visible" : "hidden")};
   transition: opacity 0.15s, visibility 0.1s;
   transition-delay: 0.1s;
   background-color: var(--background-light);

@@ -87,10 +87,10 @@ function BottomSheet(props: BottomSheetProps) {
           borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
         }}
         $isShow={showModal}
-        expanded={!!expanded}
-        draggable={!!draggable}
-        isDragging={isDragging}
-        translateY={translateY}
+        $expanded={!!expanded}
+        $draggable={!!draggable}
+        $isDragging={isDragging}
+        $translateY={translateY}
         role="dialog"
         aria-modal="true"
         aria-labelledby="BottomModalHeader"
@@ -165,10 +165,10 @@ const Contents = styled.div`
 
 const Wrapper = styled.section<{
   $isShow: boolean;
-  isDragging: boolean;
-  expanded: boolean;
-  translateY: number;
-  draggable: boolean;
+  $isDragging: boolean;
+  $expanded: boolean;
+  $translateY: number;
+  $draggable: boolean;
 }>`
   position: absolute;
   display: flex;
@@ -179,18 +179,18 @@ const Wrapper = styled.section<{
   width: 100%;
   left: 0;
   bottom: 0;
-  min-height: ${({ expanded }) => (expanded ? "90vh" : "auto")};
+  min-height: ${({ $expanded }) => ($expanded ? "90vh" : "auto")};
   z-index: 1000;
   background: var(--background-light);
   border-radius: 24px 24px 0 0;
 
-  transform: ${({ draggable, $isShow, translateY }) =>
-    draggable && translateY > 0
-      ? `translate3d(0, calc(${$isShow ? 0 : "100%"}% + ${translateY}px), 0)`
+  transform: ${({ $draggable, $isShow, $translateY }) =>
+    $draggable && $translateY > 0
+      ? `translate3d(0, calc(${$isShow ? 0 : "100%"}% + ${$translateY}px), 0)`
       : `translate3d(0, ${$isShow ? 0 : "100%"}, 0)`};
   opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transform-origin: center center;
-  transition: ${({ isDragging }) => (isDragging ? "scale 0.25s" : `all ${ANIMATION_RUNNING_TIME}ms`)};
+  transition: ${({ $isDragging }) => ($isDragging ? "scale 0.25s" : `all ${ANIMATION_RUNNING_TIME}ms`)};
   box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);
   will-change: transform;
 `;

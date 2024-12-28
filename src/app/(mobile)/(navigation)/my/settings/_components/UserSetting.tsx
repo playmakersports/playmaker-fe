@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import { WhiteSectionDivider } from "../common/Container";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import { WhiteSectionGrayDivider } from "@/components/common/Container";
 
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
@@ -13,16 +13,15 @@ import HeadphoneIcon from "@/assets/icon/global/Headphone.svg";
 import InformationIcon from "@/assets/icon/global/Information.svg";
 import BuildingsIcon from "@/assets/icon/global/Buildings.svg";
 
-function GroupList({
-  list,
-}: {
+type GroupListProps = {
   list: {
     icon: React.ReactNode;
     title: string;
     onClick: () => void;
     subText?: string | React.ReactNode;
   }[];
-}) {
+};
+function GroupList({ list }: GroupListProps) {
   return (
     <Group>
       {list.map((item, idx) => (
@@ -48,38 +47,29 @@ function GroupList({
 }
 function UserSetting() {
   const router = useRouter();
-  const params = useParams();
-  const userId = params["userId"];
 
   return (
     <Container>
-      <GroupTitle>계정 관리</GroupTitle>
+      <GroupTitle>정보 관리</GroupTitle>
       <GroupList
         list={[
           {
             icon: <GraduationIcon />,
             title: "재학증명서 인증",
-            onClick: () => router.push(`/room/${userId}/school`),
+            onClick: () => router.push(`/my/settings/school`),
             subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
           },
           { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
-          { icon: <PersonIcon />, title: "계정 관리", onClick: () => {} },
+          { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
         ]}
       />
-
-      {/* <WhiteSectionDivider />
-      <GroupTitle>프리미엄</GroupTitle>
-      <Group>
-        <li>개인 프리미엄</li>
-        <li>팀 프리미엄</li>
-      </Group> */}
-      <WhiteSectionDivider />
+      <WhiteSectionGrayDivider />
       <GroupTitle>정보 및 지원</GroupTitle>
       <GroupList
         list={[
           {
             icon: <HeadphoneIcon />,
-            title: "서비스 이용 문의",
+            title: "서비스 문의",
             onClick: () => {},
           },
           { icon: <InformationIcon />, title: "약관 및 개인정보처리방침", onClick: () => {} },
@@ -110,7 +100,7 @@ const Group = styled.ul`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    ${BUTTON_ACTIVE("rgba(var(--sub2-rgb),0.3)")}
+    ${BUTTON_ACTIVE("var(--gray50)")}
   }
   span.title-wrapper {
     display: inline-flex;

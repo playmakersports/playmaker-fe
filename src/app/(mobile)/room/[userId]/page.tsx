@@ -11,7 +11,7 @@ import { useGet } from "@/apis/hook/query";
 import { FONTS } from "@/styles/common";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import RoomAwarded from "@/components/Room/Awarded";
-import UserSetting from "@/components/Room/UserSetting";
+import UserSetting from "@/app/(mobile)/(navigation)/my/settings/_components/UserSetting";
 import { BasicWhiteCard } from "@/components/common/Card";
 import { ApiSelectMember } from "@/apis/types/user";
 

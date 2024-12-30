@@ -24,6 +24,8 @@ const Nav = styled.nav`
     transform: translateY(2px);
   }
   ul.tab-inner > li {
+    user-select: none;
+    cursor: pointer;
     ${FONTS.MD3};
     flex: 1;
     padding: 10px 0;

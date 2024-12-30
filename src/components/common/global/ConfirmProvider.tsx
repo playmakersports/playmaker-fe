@@ -9,12 +9,20 @@ const ConfirmContext = createContext<ConfirmContextType | null>(null);
 
 function ConfirmProvider({ children }: { children: React.ReactNode }) {
   const confirmLogic = useConfirmLogic();
-  const { isVisible, message, buttonText, handleConfirm, alert } = confirmLogic;
+  const { isVisible, message, buttonText, handleConfirm, alert, alertButton } = confirmLogic;
 
   return (
     <ConfirmContext.Provider value={confirmLogic}>
       {children}
-      {isVisible && <Confirm message={message} isAlert={alert} buttonText={buttonText} handleConfirm={handleConfirm} />}
+      {isVisible && (
+        <Confirm
+          message={message}
+          isAlert={alert}
+          alertButton={alertButton}
+          buttonText={buttonText}
+          handleConfirm={handleConfirm}
+        />
+      )}
     </ConfirmContext.Provider>
   );
 }
@@ -24,13 +32,21 @@ const useConfirmLogic = () => {
   const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
   const [buttonText, setButtonText] = useState({ yes: "확인", no: "취소" });
+  const [alertButton, setAlertButton] = useState<{ text: string; mode: "MAIN" | "SUB" }>({ text: "닫기", mode: "SUB" });
 
   const [resolveReject, setResolveReject] = useState<(value: boolean) => void>(() => {});
 
-  const showAlert = (message: string) => {
+  const showAlert = (
+    message: string,
+    button?: {
+      text: string;
+      mode: "MAIN" | "SUB";
+    }
+  ) => {
     setMessage(message);
     setAlert(true);
     setIsVisible(true);
+    button ? setAlertButton(button) : setAlertButton({ text: "닫기", mode: "SUB" });
     return new Promise<boolean>((resolve) => {
       setResolveReject(() => resolve);
     });
@@ -56,7 +72,7 @@ const useConfirmLogic = () => {
     resolveReject(result);
   };
 
-  return { isVisible, message, buttonText, showConfirm, handleConfirm, alert, showAlert };
+  return { isVisible, message, buttonText, alertButton, showConfirm, handleConfirm, alert, showAlert };
 };
 
 export const useConfirm = () => useContext(ConfirmContext);

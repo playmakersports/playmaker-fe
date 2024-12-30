@@ -6,19 +6,30 @@ type Props = {
   isAlert?: boolean;
   message: string;
   buttonText: { yes: string; no: string };
+  alertButton: { text: string; mode: "MAIN" | "SUB" };
   handleConfirm: (props: boolean) => void;
 };
 
 function Confirm(props: Props) {
-  const { isAlert = false, message, buttonText, handleConfirm } = props;
+  const { isAlert = false, message, buttonText, alertButton, handleConfirm } = props;
 
   return (
     <Backdrop>
       <Container role="dialog" aria-modal="true">
         <Message>{message}</Message>
         <Buttons>
-          <ModalButton onClick={() => handleConfirm(false)}>{isAlert ? "닫기" : buttonText.no}</ModalButton>
-          {!isAlert && <ConfirmButton onClick={() => handleConfirm(true)}>{buttonText.yes}</ConfirmButton>}
+          {isAlert ? (
+            alertButton.mode === "MAIN" ? (
+              <ConfirmButton onClick={() => handleConfirm(false)}>{alertButton.text}</ConfirmButton>
+            ) : (
+              <ModalButton onClick={() => handleConfirm(false)}>{alertButton.text}</ModalButton>
+            )
+          ) : (
+            <>
+              <ModalButton onClick={() => handleConfirm(false)}>{buttonText.no}</ModalButton>
+              <ConfirmButton onClick={() => handleConfirm(true)}>{buttonText.yes}</ConfirmButton>
+            </>
+          )}
         </Buttons>
       </Container>
     </Backdrop>

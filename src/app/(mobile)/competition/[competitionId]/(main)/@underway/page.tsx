@@ -5,8 +5,8 @@ import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
 import { COMPETITION_DETAIL_MOCK } from "@/constants/mock/COMPETITION";
-import CompetitionFloat from "../_components/Float";
-import ScheduleWeek from "../_components/ScheduleWeek";
+import CompetitionFloat from "../../_components/Float";
+import ScheduleWeek from "../../_components/ScheduleWeek";
 import MatchCard from "@/components/Team/MatchCard";
 import { BasicInput } from "@/components/common/Input";
 import { BaseContainer } from "@/components/common/Container";

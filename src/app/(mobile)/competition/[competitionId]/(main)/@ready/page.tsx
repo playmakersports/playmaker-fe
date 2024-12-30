@@ -2,15 +2,21 @@
 import React from "react";
 import styled from "styled-components";
 import useToast from "@/hook/useToast";
+import { useParams, useRouter } from "next/navigation";
 
 import { BUTTON_ACTIVE } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
-import InformationGroup from "../_components/InformationGroup";
+import InformationGroup from "../../_components/InformationGroup";
+import FloatButton from "@/components/common/FloatButton";
+import Button from "@/components/common/Button";
 
 import CopyIcon from "@/assets/icon/global/Copy.svg";
 
 function CompetitionReady() {
   const { trigger } = useToast();
+  const params = useParams();
+  const router = useRouter();
+  const competitionId = params["competitionId"];
   const copyAccountNum = (target?: string) => {
     if (target) {
       navigator.clipboard.writeText(target).then(() => {
@@ -19,8 +25,17 @@ function CompetitionReady() {
     }
   };
 
+  const moveCompetitionApply = () => {
+    router.push(`/competition/${competitionId}/apply`);
+  };
+
   return (
     <Container>
+      <FloatButton>
+        <Button type="button" mode="MAIN" onClick={moveCompetitionApply} $fullWidth>
+          참가 신청
+        </Button>
+      </FloatButton>
       <Groups>
         <InformationGroup
           title="개요"

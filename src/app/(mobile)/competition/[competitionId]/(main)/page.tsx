@@ -6,7 +6,7 @@ import { useParams, useSearchParams } from "next/navigation";
 
 import { COMPETITION_DETAIL_MOCK } from "@/constants/mock/COMPETITION";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
-import CompetitionHeader from "./_components/CompetitionHeader";
+import CompetitionHeader from "../_components/CompetitionHeader";
 
 function CompetitionArticle() {
   const MOCK = COMPETITION_DETAIL_MOCK;

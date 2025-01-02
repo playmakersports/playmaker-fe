@@ -9,7 +9,7 @@ import TeamListDetail from "@/components/Main/TeamListDetail";
 
 import LocationIcon from "@/assets/icon/global/Location.svg";
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
-import Heart from "../common/Heart";
+import Heart from "../common/TeamHeart";
 
 const RECRUIT_STATUS: Record<string, string> = {
   PENDING: "모집중",
@@ -58,7 +58,7 @@ function TeamListCard(props: Props) {
               )}
             </div>
           </div>
-          <Heart isHeart={heart} onHeart={setHeart} />
+          <Heart teamId={teamId} isHeart={heart} onHeart={setHeart} />
         </CardHeader>
         <div className="recruit-detail">
           <TeamLabels>

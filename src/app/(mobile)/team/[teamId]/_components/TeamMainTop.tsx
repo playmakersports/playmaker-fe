@@ -1,17 +1,16 @@
 "use client";
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { SelectTeamResponse } from "@/types/team";
-import Heart from "@/components/common/Heart";
+import { formattedDate } from "@/util/date";
+import Heart from "@/components/common/TeamHeart";
 import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
 import { FONTS } from "@/styles/common";
 
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
-import { formattedDate } from "@/util/date";
 
 function TeamMainTop(props: SelectTeamResponse) {
   const { teamId, teamName, logoUrl, activeArea, createDt, item, myTeamYn, university } = props;
@@ -38,7 +37,7 @@ function TeamMainTop(props: SelectTeamResponse) {
           <Right>
             <h2>
               {teamName}
-              <Heart onHeart={setHeart} isHeart={heart} />
+              <Heart teamId={teamId} onHeart={setHeart} isHeart={heart} />
             </h2>
             <p className="team-location">{activeArea}</p>
             <p className="team-detail-info">

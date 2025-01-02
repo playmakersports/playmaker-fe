@@ -3,9 +3,10 @@ import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
 import { usePageTitle } from "@/hook/usePageTitle";
 
-import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { FONTS } from "@/styles/common";
 import { atomTeamCreate } from "@/atom/team";
+import Button from "@/components/common/Button";
+import FloatButton from "@/components/common/FloatButton";
 import GradientBg from "@/components/common/GradientBg";
 
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
@@ -31,21 +32,13 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
   }, [teamType]);
 
   return (
-    <StagePageContainer
-      stepper={false}
-      button={
-        !!teamType
-          ? {
-              text: "다음",
-              onClick: () => {
-                setStep(1);
-                setTeamCreateValue((prev) => ({ ...prev, university: UNIVERSITY }));
-              },
-            }
-          : undefined
-      }
-    >
+    <>
       <Container>
+        <GradientBg position="absolute" zIndex={hideStartCont ? 0 : 10} opacity={hideStartCont ? 0 : 1} />
+        <CircleBg>
+          <div />
+          <div />
+        </CircleBg>
         <UnivNameTag className={teamType === "univ" ? "show" : "hide"}>{UNIVERSITY}</UnivNameTag>
         <List next={hideStartCont}>
           <Item className={teamType === "univ" ? "selected" : ""} type="button" onClick={() => setTeamType("univ")}>
@@ -71,6 +64,21 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
             </p>
           </Item>
         </List>
+        {!!teamType && (
+          <FloatButton>
+            <Button
+              type="button"
+              mode="MAIN"
+              $fullWidth
+              onClick={() => {
+                setStep(1);
+                setTeamCreateValue((prev) => ({ ...prev, university: UNIVERSITY }));
+              }}
+            >
+              다음
+            </Button>
+          </FloatButton>
+        )}
       </Container>
       <Start next={hideStartCont}>
         <h3>
@@ -78,9 +86,8 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
           <br />
           시작해볼까요?
         </h3>
-        <GradientBg position="absolute" height={hideStartCont ? "0" : "100vh"} opacity={hideStartCont ? 0 : 1} />
       </Start>
-    </StagePageContainer>
+    </>
   );
 }
 
@@ -95,6 +102,14 @@ const fadeIn = keyframes`
     letter-spacing: 1.5px;
     font-size: 3rem;
   }
+`;
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  margin-top: calc(var(--safe-area-top) * -1);
+  height: calc(100vh - 1px);
 `;
 
 const UnivNameTag = styled.div`
@@ -143,18 +158,17 @@ const UnivNameTag = styled.div`
   }
 `;
 const Start = styled.div<{ next: boolean }>`
-  position: fixed;
+  position: absolute;
   display: flex;
   justify-content: center;
   padding: 60px 0 0;
   top: 0;
   left: 0;
   width: 100%;
-  height: ${({ next }) => (next ? "50%" : "100%")};
-  background-color: ${({ next }) => (next ? "transparent" : "#fff")};
+  height: ${({ next }) => (next ? "20vh" : "50vh")};
   z-index: 11;
-  transition: top 1s, background-color 1s;
-  will-change: top;
+  transition: height 1s;
+  will-change: height;
 
   h3 {
     margin-block-start: 0.3rem;
@@ -170,42 +184,14 @@ const Start = styled.div<{ next: boolean }>`
     user-select: none;
   }
 `;
-const Container = styled.div`
-  display: flex;
-  margin: calc(var(--safe-area-top) * -1) -16px 0;
-  padding: 0 16px;
-  height: calc(100% - var(--env-sab) + 80px);
-  flex-direction: column;
-  justify-content: space-between;
-  overflow: hidden;
-`;
+
 const List = styled.div<{ next: boolean }>`
   display: flex;
-  padding: calc(150px + var(--safe-area-top)) 10px 48px;
-  gap: 12px;
   opacity: ${({ next }) => (next ? 1 : 0)};
-  visibility: ${({ next }) => (next ? "visible" : "hidden")};
-  z-index: 12;
-  transition: all 1s;
-
-  &::before,
-  &::after {
-    position: absolute;
-    content: "";
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    display: block;
-    background-color: rgba(48, 109, 239, 0.5);
-    z-index: -10;
-    top: 35%;
-    left: -5%;
-    filter: blur(80px);
-  }
-  &::after {
-    top: 14%;
-    left: 55%;
-  }
+  padding: calc(var(--safe-area-top) + 140px) 16px;
+  gap: 12px;
+  transition: opacity 0.5s;
+  transition-delay: 0.3s;
 `;
 const Item = styled.button`
   flex: 1;
@@ -224,6 +210,7 @@ const Item = styled.button`
   }
   &:active {
     transform: translate3d(0, 2px, 0);
+    box-shadow: 0 0 4px 0 rgba(195, 220, 243, 0.5);
   }
 
   div.title-wrapper {
@@ -254,6 +241,34 @@ const Item = styled.button`
     strong {
       font-weight: 500;
       color: var(--gray1000);
+    }
+  }
+`;
+const CircleBg = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 70vh;
+  overflow: hidden;
+
+  div {
+    position: absolute;
+    content: "";
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    display: block;
+    background-color: rgba(48, 109, 239, 0.5);
+    z-index: -10;
+    filter: blur(70px);
+    opacity: 0.9;
+
+    &:first-of-type {
+      top: calc(60px + 35%);
+      left: -5%;
+    }
+    &:last-of-type {
+      top: calc(60px + 10%);
+      right: -5%;
     }
   }
 `;

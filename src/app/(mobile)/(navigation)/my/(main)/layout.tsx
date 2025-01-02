@@ -26,7 +26,7 @@ function MyTabLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <header style={{ display: "flex", marginBottom: "20px", flexDirection: "column", gap: "24px" }}>
+      <header style={{ display: "flex", margin: "10px 0 20px", flexDirection: "column", gap: "24px" }}>
         <MyProfile />
       </header>
       <TabWrapper ref={tabRef}>

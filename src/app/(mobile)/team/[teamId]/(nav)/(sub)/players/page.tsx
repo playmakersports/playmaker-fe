@@ -121,6 +121,7 @@ function PlayerList() {
 
 const Container = styled.div`
   padding: 8px 16px;
+  overflow-x: hidden;
 `;
 const Top = styled.div`
   display: flex;
@@ -140,6 +141,7 @@ const Filter = styled.div`
   }
 `;
 const Players = styled.div`
+  overflow-x: hidden;
   margin: 0 -16px;
 `;
 

@@ -18,7 +18,7 @@ type Props = {
 };
 function LoginWrapper({ children, button, logoFill }: Props) {
   return (
-    <>
+    <Container>
       {!button && (
         <Background viewBox="0 0 414 694" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
@@ -57,40 +57,39 @@ function LoginWrapper({ children, button, logoFill }: Props) {
           </defs>
         </Background>
       )}
-
-      <Container>
-        <LogoArea>
-          <LogoSymbolType className="logo-icon" fill={logoFill ?? "var(--main)"} />
-          <LogoTextType className="logo-text" fill={logoFill ?? "var(--main)"} />
-        </LogoArea>
-        <Bottom>
-          <Wrapper>{children}</Wrapper>
-          {button && (
-            <ButtonWrapper>
-              <WhiteSectionDivider style={{ marginBottom: "12px" }} />
-              <Button type={button.type ?? "button"} mode="MAIN" onClick={button.onClick} $fullWidth>
-                {button.text}
-              </Button>
-            </ButtonWrapper>
-          )}
-        </Bottom>
-      </Container>
-    </>
+      <LogoArea>
+        <LogoSymbolType className="logo-icon" fill={logoFill ?? "var(--main)"} />
+        <LogoTextType className="logo-text" fill={logoFill ?? "var(--main)"} />
+      </LogoArea>
+      <Bottom>
+        <Wrapper>{children}</Wrapper>
+        {button && (
+          <ButtonWrapper>
+            <WhiteSectionDivider style={{ marginBottom: "12px" }} />
+            <Button type={button.type ?? "button"} mode="MAIN" onClick={button.onClick} $fullWidth>
+              {button.text}
+            </Button>
+          </ButtonWrapper>
+        )}
+      </Bottom>
+    </Container>
   );
 }
 
 const Container = styled(BaseContainer)`
+  position: relative;
   display: flex;
   height: calc(100vh - var(--safe-area-top) - 2px);
   padding-bottom: 0;
   flex-direction: column;
   justify-content: space-between;
   gap: 16px;
+  overflow: hidden;
 `;
 const Background = styled.svg`
   display: block;
   position: absolute;
-  left: calc(-16px - 50px);
+  left: -48px;
   top: 20%;
   width: 600px;
   height: 800px;

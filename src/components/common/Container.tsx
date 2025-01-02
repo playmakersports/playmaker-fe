@@ -6,16 +6,14 @@ export const BaseContainer = styled.section`
 
 export const WhiteSectionDivider = styled.div`
   display: block;
-  margin: 0 -16px;
-  width: calc(100% + 32px);
+  width: var(--mobile-max-width);
   height: 12px;
   background-color: var(--background);
   box-shadow: inset 0 4px 4px 0 rgba(195, 220, 243, 0.5);
 `;
 export const WhiteSectionGrayDivider = styled.div`
   display: block;
-  margin: 0 -16px;
-  width: calc(100% + 32px);
+  width: var(--mobile-max-width);
   height: 12px;
   background-color: var(--gray100);
 `;

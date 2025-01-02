@@ -13,7 +13,7 @@ export const HeaderInner = styled.div`
 `;
 
 export const HeaderWrapper = styled.header`
-  position: absolute;
+  position: fixed;
   display: flex;
   justify-content: space-between;
   align-items: center;

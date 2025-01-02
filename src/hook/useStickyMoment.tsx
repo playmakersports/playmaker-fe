@@ -1,8 +1,7 @@
 import { RefObject, useEffect } from "react";
 
-function useStickyMoment(ref: RefObject<any>, className?: string) {
+function useStickyMoment(ref: RefObject<any>, top?: number, className?: string) {
   useEffect(() => {
-    const mainContainerEl = document.getElementById("main_Container") as HTMLDivElement;
     const headerHeight = +getComputedStyle(document.documentElement)
       .getPropertyValue("--header-height")
       .replace("px", "");
@@ -10,6 +9,7 @@ function useStickyMoment(ref: RefObject<any>, className?: string) {
 
     const handleScroll = () => {
       if (ref.current) {
+        ref.current.style.top = `calc(var(--header-height) + ${top ?? 0}px)`;
         ref.current!.classList.toggle(
           className ?? "stuck",
           ref.current?.getBoundingClientRect().top - 12 < headerHeight + safeAreaTop
@@ -17,12 +17,10 @@ function useStickyMoment(ref: RefObject<any>, className?: string) {
       }
     };
 
-    if (mainContainerEl) {
-      mainContainerEl.addEventListener("scroll", handleScroll);
-      return () => {
-        mainContainerEl.removeEventListener("scroll", handleScroll);
-      };
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, [ref, className]);
 
   return null;

@@ -26,7 +26,7 @@ function Loading(props: Props) {
           width: "100%",
           height: "100%",
           background: "rgba(var(--background-rgb), 0.6)",
-          zIndex: 50,
+          zIndex: 100,
         }}
       >
         <LoadingAnimatedSvg width={60} height={70} style={{ margin: 0 }} />

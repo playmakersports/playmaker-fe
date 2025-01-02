@@ -6,7 +6,7 @@ import TeamNavigation from "../_components/TeamNavigation";
 function TeamLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      {children}
+      <div style={{ paddingBottom: "64px" }}>{children}</div>
       <TeamNavigation />
     </>
   );

@@ -1,9 +1,6 @@
 "use client";
-
-import React, { use, useEffect, useState } from "react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { FONTS } from "@/styles/common";
@@ -18,9 +15,6 @@ import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
 
 function ArticleId() {
   usePageTitle({ title: "공지사항", scrolledShadow: false });
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const articleId = searchParams.get("articleId");
   const [like, setLike] = useState(false);
   const [showFixedTitle, setShowFixedTitle] = useState(false);
 
@@ -29,24 +23,18 @@ function ArticleId() {
   };
 
   useEffect(() => {
-    const mainContainer = document.getElementById("main_Container");
-
     const handleScroll = () => {
-      if (mainContainer && mainContainer.scrollTop > 100) {
+      if (window.scrollY > 100) {
         setShowFixedTitle(true);
       } else {
         setShowFixedTitle(false);
       }
     };
 
-    if (mainContainer) {
-      mainContainer.addEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
 
     return () => {
-      if (mainContainer) {
-        mainContainer.removeEventListener("scroll", handleScroll);
-      }
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -119,18 +107,19 @@ const Container = styled(BaseContainer)`
   padding: 12px 16px 0;
 `;
 const ScrollFixedTitle = styled.div<{ $isShow: boolean }>`
-  position: absolute;
+  position: fixed;
   visibility: ${({ $isShow }) => ($isShow ? "visible" : "hidden")};
-  transform: ${({ $isShow }) => ($isShow ? "translateY(0)" : "translateY(-100%)")};
+  transform: ${({ $isShow }) => ($isShow ? "translate(-50%,0)" : "translate(-50%,-100%)")};
+  margin: 0 auto;
   padding: 8px 24px 12px;
   top: var(--safe-area-top);
-  left: 0;
+  left: 50%;
   width: var(--mobile-max-width);
   background-color: var(--background-light);
   font-size: 1.6rem;
   font-weight: 600;
   z-index: 5;
-  box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 10px 2px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.2s;
   white-space: nowrap;
@@ -228,13 +217,14 @@ const CommentList = styled.ul`
 
 const CommentInput = styled.div`
   position: sticky;
-  margin: 0 -20px;
-  padding: 12px 12px calc(var(--env-sab) / 1.5 + 16px);
+  margin: 0 -20px -64px;
+  padding: 12px 12px calc(var(--env-sab) / 1.5 + 16px + 52px);
   bottom: 0;
   display: flex;
   gap: 10px;
   background-color: var(--gray0);
   border-top: 1px solid var(--gray300);
+  overflow-x: hidden;
 
   & > input {
     flex: 1;

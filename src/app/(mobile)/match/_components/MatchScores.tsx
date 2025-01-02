@@ -213,10 +213,11 @@ const ScoreTable = styled(MatchSummaryCard)`
 
 const ScoreWrapper = styled.div`
   display: flex;
+  margin-bottom: -20px;
+  padding-bottom: 20px;
   flex-direction: column;
   gap: 10px;
-
-  height: calc(100vh - var(--safe-area-top) - 320px);
+  max-height: calc(100vh - var(--safe-area-top) - 320px);
   overflow-y: auto;
   overscroll-behavior: contain;
 `;

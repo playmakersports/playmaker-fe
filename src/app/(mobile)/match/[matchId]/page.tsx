@@ -10,7 +10,7 @@ function MatchPage() {
 
   return (
     <>
-      <GradientBg position="fixed" opacity={0.35} colorRgb={winnerColor} />
+      <GradientBg position="absolute" opacity={0.35} colorRgb={winnerColor} />
       <MatchTitle competitionName={TEAM_SCORES.competitionName} />
       <MatchScores
         homeInfo={{

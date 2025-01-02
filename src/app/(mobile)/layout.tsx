@@ -64,7 +64,7 @@ const Container = styled.div`
   position: relative;
   margin: 0 auto;
   width: auto;
-  min-height: 100%;
+  min-height: 100vh;
   max-width: var(--mobile-max-width);
   box-shadow: rgba(0, 0, 0, 0.125) 0px 8px 36px;
 

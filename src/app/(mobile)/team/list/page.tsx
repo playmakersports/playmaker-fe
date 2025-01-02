@@ -22,6 +22,7 @@ function TeamList() {
   usePageTitle({
     title: "팀 목록",
     subIcons: [{ svgIcon: <PlusIcon />, description: "팀 생성", linkTo: "/team/create" }],
+    scrolledShadow: false,
   });
   const sportsTabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(sportsTabRef);

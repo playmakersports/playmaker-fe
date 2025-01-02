@@ -79,6 +79,7 @@ function TeamListCard(props: Props) {
         </div>
       </Card>
       <ModalComponents
+        draggable="all"
         buttons={[
           { mode: "OPTION2", name: "팀 페이지 이동", onClick: () => console.log("") },
           { mode: "MAIN", name: "가입 신청", onClick: () => console.log("") },

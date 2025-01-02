@@ -36,8 +36,10 @@ function BottomSheet(props: BottomSheetProps) {
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
+    document.body.style.touchAction = "none";
     setShowModal(true);
     return () => {
+      document.body.style.touchAction = "auto";
       document.body.style.overflow = "auto";
     };
   }, []);

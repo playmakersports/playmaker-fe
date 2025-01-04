@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
@@ -8,9 +7,13 @@ import { useParams, usePathname } from "next/navigation";
 function TeamNavigation() {
   const params = useParams();
   const path = usePathname();
+  const hideNav = path.split("/").length > 4;
   const currentPath = path.split("/")[3];
   const teamId = params["teamId"] as string;
 
+  if (hideNav) {
+    return null;
+  }
   return (
     <Container>
       <Menu>

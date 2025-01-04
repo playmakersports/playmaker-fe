@@ -61,7 +61,7 @@ function TeamMainContents() {
           <ScheduleSection />
         </Card>
       </Cards>
-      <WhiteSectionDivider />
+      <WhiteSectionDivider $child />
       <PlayerListWrapper>
         <GroupTitle link={`/team/${teamId}/players`}>팀원</GroupTitle>
         <HomeTeamList />

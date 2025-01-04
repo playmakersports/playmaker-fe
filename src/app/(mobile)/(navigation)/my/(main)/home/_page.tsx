@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import WeeklyCalender from "@/components/common/WeeklyCalender";
 import RoomAwarded from "@/components/Room/Awarded";
-import { WhiteSectionGrayDivider } from "@/components/common/Container";
+import { WhiteSectionDivider } from "@/components/common/Container";
 
 function MyTabHome() {
   const [weeklyDate, setWeeklyDate] = useState("");
@@ -33,7 +33,7 @@ function MyTabHome() {
           },
         ]}
       />
-      <WhiteSectionGrayDivider />
+      <WhiteSectionDivider $child />
       <RoomAwarded
         awardsList={[
           { awardedYear: 2024, competitionName: "경기1", awardedRank: 1 },

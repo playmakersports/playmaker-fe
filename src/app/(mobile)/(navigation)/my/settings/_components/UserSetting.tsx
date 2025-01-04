@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import { WhiteSectionGrayDivider } from "@/components/common/Container";
+import { WhiteSectionDivider } from "@/components/common/Container";
 
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 import GraduationIcon from "@/assets/icon/global/Graduation.svg";
@@ -63,7 +63,7 @@ function UserSetting() {
           { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
         ]}
       />
-      <WhiteSectionGrayDivider />
+      <WhiteSectionDivider />
       <GroupTitle>정보 및 지원</GroupTitle>
       <GroupList
         list={[

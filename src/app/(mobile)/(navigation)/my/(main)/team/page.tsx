@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 
-import { WhiteSectionGrayDivider } from "@/components/common/Container";
+import { WhiteSectionDivider } from "@/components/common/Container";
 
 function MyTabTeam() {
   return (
@@ -19,7 +19,7 @@ function MyTabTeam() {
           },
         ]}
       />
-      <WhiteSectionGrayDivider />
+      <WhiteSectionDivider $child />
       <TeamGroup
         title="소속 모임"
         teams={[
@@ -31,7 +31,7 @@ function MyTabTeam() {
           },
         ]}
       />
-      <WhiteSectionGrayDivider />
+      <WhiteSectionDivider $child />
       <TeamGroup
         title="신청 대기 모임"
         teams={[
@@ -55,7 +55,7 @@ function MyTabTeam() {
           },
         ]}
       />
-      <WhiteSectionGrayDivider />
+      <WhiteSectionDivider $child />
       <TeamGroup
         title="신청 내역"
         teams={[

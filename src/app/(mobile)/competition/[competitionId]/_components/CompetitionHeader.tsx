@@ -1,16 +1,17 @@
+"use client";
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { formattedDate } from "@/util/date";
 import Badge from "@/components/common/Badge";
 
+import RightArrow from "@/assets/icon/arrow/RightArrowSmall.svg";
 import LocationIcon from "@/assets/icon/global/Location.svg";
 import PersonIcon from "@/assets/icon/global/Person24.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import { TEXT_ACTIVE } from "@/styles/common";
 
 type Props = {
   competitionId: string;
@@ -23,6 +24,8 @@ type Props = {
 function CompetitionHeader(props: Props) {
   const { competitionId, competitionName, matchLocation, startDate, endDate } = props;
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isReadyPage = searchParams.get("initial");
   const competitionHeaderRef = useRef<HTMLDivElement>(null);
   usePageTitle({ title: props.competitionName, transparent: true });
   useStickyMoment(competitionHeaderRef);
@@ -68,9 +71,14 @@ function CompetitionHeader(props: Props) {
             <span>{competitionId}팀 참여</span>
           </li>
         </ul>
-        <DetailButton type="button" onClick={moveToDetail}>
-          자세히...
-        </DetailButton>
+        {isReadyPage === "ready" ? (
+          <></>
+        ) : (
+          <DetailButton type="button" onClick={moveToDetail}>
+            대회 정보 자세히
+            <RightArrow />
+          </DetailButton>
+        )}
       </Information>
     </Header>
   );
@@ -78,7 +86,6 @@ function CompetitionHeader(props: Props) {
 
 const Header = styled.div`
   display: flex;
-  padding: 0 0 16px;
   gap: 24px;
   top: 0;
   transition: all 0.25s;
@@ -88,16 +95,16 @@ const Label = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin: 0 -16px 10px;
+  margin: 0 -20px 10px;
   padding: 12px 16px;
-  width: calc(100% + 32px);
+  width: var(--mobile-max-width);
   border-top: 1px solid var(--gray200);
 `;
 const Information = styled.div`
   position: relative;
   flex: 1;
   display: inline-block;
-  padding: 0 0 8px;
+  padding: 0 4px 8px;
 
   h2.competition-name {
     padding: 6px 0 14px;
@@ -109,13 +116,14 @@ const Information = styled.div`
     display: flex;
     padding: 0 2px;
     flex-direction: column;
-    gap: 14px;
+    gap: 5px;
 
     li {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       font-size: 1.4rem;
+      line-height: 2.4rem;
       color: var(--gray700);
       svg {
         fill: var(--gray800);
@@ -125,13 +133,20 @@ const Information = styled.div`
 `;
 
 const DetailButton = styled.button`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  color: var(--gray600);
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 15px;
+  padding: 10px 0;
+  color: var(--gray800);
   font-size: 1.4rem;
-  border-radius: 2px;
-  ${TEXT_ACTIVE("var(--gray100)")};
+  font-weight: 500;
+
+  svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--gray500);
+  }
 `;
 
 export default CompetitionHeader;

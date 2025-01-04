@@ -80,7 +80,7 @@ const Participants = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0px 14px 4px;
+  padding: 12px 4px 14px;
   font-weight: 500;
   color: var(--gray800);
 

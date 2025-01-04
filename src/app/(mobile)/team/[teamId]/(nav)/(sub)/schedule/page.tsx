@@ -7,7 +7,6 @@ import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
-
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { TEAM_SCHEDULE_MOCK } from "@/constants/mock/TEAM";
@@ -15,13 +14,13 @@ import Loading from "@/components/common/Loading";
 import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
+import ScheduleDetailModal from "../../../_components/ScheduleDetailModal";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 import LocationIcon from "@/assets/icon/global/Location.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-import ScheduleDetailModal from "../../../_components/ScheduleDetailModal";
 
 function Schedule() {
   const router = useRouter();
@@ -192,6 +191,7 @@ function Schedule() {
 const CalendarContainer = styled.article`
   margin: 0 -16px 14px;
   padding: 0 0 20px;
+
   &:has(.stuck) {
     padding-bottom: 32px;
   }
@@ -239,6 +239,10 @@ const NowDate = styled.div`
   }
 `;
 const Days = styled.div`
+  position: relative;
+  width: var(--mobile-max-width);
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -354,6 +358,7 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   position: relative;
   flex: 1;
   padding: 12px 0 24px;
+  font-size: 1.6rem;
   text-align: center;
   border: 1px solid transparent;
   color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};

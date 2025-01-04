@@ -165,7 +165,7 @@ const Team = styled.div<{ $backColor: string }>`
   }
 `;
 const SummaryContainer = styled.div`
-  margin-top: 28px;
+  margin-top: 40px;
   display: flex;
   flex-direction: column;
   gap: 20px;

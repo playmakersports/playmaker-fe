@@ -12,7 +12,6 @@ function MatchTitle({ competitionName }: { competitionName: string }) {
 
   useEffect(() => {
     if (innerRef.current) {
-      console.log(innerRef.current.offsetWidth, window.innerWidth, innerRef.current.offsetWidth - window.innerWidth);
       setSwipeWidth(innerRef.current.offsetWidth - window.innerWidth);
     }
   }, []);
@@ -28,11 +27,11 @@ function MatchTitle({ competitionName }: { competitionName: string }) {
 
 const Wrapper = styled.div<{ $swipeWidth: number }>`
   position: relative;
-  margin: -4px auto 10px;
-  padding: 12px 0;
+  margin: -4px auto 30px;
+  padding: 8px 0;
   width: 100%;
   text-align: center;
-  border-radius: 50px;
+  border-radius: 8px;
   background-color: rgba(var(--gray0-rgb), 0.5);
   overflow: hidden;
 

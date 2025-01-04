@@ -4,13 +4,14 @@ import GradientBg from "@/components/common/GradientBg";
 import MatchScores from "../_components/MatchScores";
 import MatchTitle from "../_components/MatchTitle";
 import MatchMvp from "../_components/MatchMvp";
+import PlayersList from "../_components/PlayersList";
 
 function MatchPage() {
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
 
   return (
     <>
-      <GradientBg position="absolute" opacity={0.35} colorRgb={winnerColor} />
+      <GradientBg position="absolute" opacity={0.15} colorRgb={winnerColor} />
       <MatchTitle competitionName={TEAM_SCORES.competitionName} />
       <MatchScores
         homeInfo={{
@@ -42,6 +43,7 @@ function MatchPage() {
           { title: "스틸", value: "3" },
         ]}
       />
+      <PlayersList />
     </>
   );
 }

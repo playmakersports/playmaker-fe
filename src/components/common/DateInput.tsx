@@ -5,10 +5,10 @@ import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 
 import { BasicInput, InputProps } from "./Input";
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
+import { BUTTON_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 import { DateKeypadInput } from "./PlainInput";
-import DoubleLeftArrowIcon from "@/assets/icon/arrow/DoubleLeftArrow.svg";
-import DoubleRightArrowIcon from "@/assets/icon/arrow/DoubleRightArrow.svg";
+import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
 import useToast from "@/hook/useToast";
 
 type Props = Omit<InputProps, "type" | "value"> & {
@@ -101,8 +101,8 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       >
         <Container>
           <NowDate>
-            <MonthMoverButton onClick={() => handleMonthMove("PREV")}>
-              <DoubleLeftArrowIcon />
+            <MonthMoverButton type="button" onClick={() => handleMonthMove("PREV")}>
+              <LeftArrowIcon />
             </MonthMoverButton>
             <div className="date-input-wrapper">
               <DateKeypadInput
@@ -162,6 +162,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
               />
             </div>
             <MonthMoverButton
+              type="button"
               disabled={props.pickType === "ONLY_PAST" && subMonths(currentDate, -1) > new Date()}
               onClick={() => {
                 if (props.pickType === "ONLY_PAST" && subMonths(currentDate, -1) > new Date()) {
@@ -170,7 +171,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                 handleMonthMove("NEXT");
               }}
             >
-              <DoubleRightArrowIcon />
+              <RightArrowIcon />
             </MonthMoverButton>
             {props.pickType != "ONLY_FUTURE" && (
               <SetTodayBtn
@@ -292,9 +293,18 @@ const NowDate = styled.div`
 `;
 const MonthMoverButton = styled.button`
   display: flex;
+  width: 24px;
+  height: 24px;
+  justify-content: center;
   align-items: center;
+  border-radius: 2px;
   svg {
-    fill: var(--gray500);
+    width: 18px;
+    height: 18px;
+    fill: var(--gray800);
+  }
+  &:not(:disabled) {
+    ${TEXT_ACTIVE("var(--gray100)", { activeRange: 5 })}
   }
   &:disabled {
     cursor: not-allowed;

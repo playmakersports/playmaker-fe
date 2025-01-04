@@ -160,7 +160,6 @@ const StyledInput = styled.input`
   width: 100%;
   padding: 10px 0;
   ${FONTS.MD1};
-  font-size: 1.6rem;
   font-weight: 400;
   transition: all 0.2s;
   color: var(--black);

@@ -192,6 +192,7 @@ const Select = styled(InputStyledWrapper)`
 
   div.selected-value {
     ${FONTS.MD1W500}
+    font-weight: 400;
   }
   div.placeholder {
     ${FONTS.MD1W500}

@@ -11,7 +11,7 @@ type Props = {
 };
 function GradientBg({ colorRgb, height = "100vh", position, opacity = 1, zIndex = 0 }: Props) {
   return (
-    <Background style={{ position, opacity, height, zIndex }} $colorRgb={colorRgb ?? "148, 144, 223"}>
+    <Background style={{ position, opacity, minHeight: height, zIndex }} $colorRgb={colorRgb ?? "148, 144, 223"}>
       <svg
         className="blue-large"
         width="368"
@@ -74,6 +74,7 @@ function GradientBg({ colorRgb, height = "100vh", position, opacity = 1, zIndex 
 const Background = styled.div<{ $colorRgb: string }>`
   width: 100%;
   max-width: var(--mobile-max-width);
+  height: 100%;
   top: 0;
   left: 50%;
   transform: translateX(-50%);

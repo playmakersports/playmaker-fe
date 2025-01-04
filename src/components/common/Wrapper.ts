@@ -32,4 +32,9 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   &:has(input:focus) {
     border: 1px solid var(--main);
   }
+
+  & input {
+    ${FONTS.MD1};
+    font-weight: 400;
+  }
 `;

@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { InputStyledWrapper } from "./Wrapper";
 import QuestionIcon from "@/assets/icon/global/Question.svg";
 
-export type Props = Partial<React.TextareaHTMLAttributes<HTMLTextAreaElement>> & {
+type Props = Partial<React.TextareaHTMLAttributes<HTMLTextAreaElement>> & {
   title?: string;
   displayLength?: boolean;
   information?: { text: string; onClick: () => void };

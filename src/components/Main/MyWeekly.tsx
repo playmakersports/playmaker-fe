@@ -108,6 +108,7 @@ const Week = styled.div`
       height: 32px;
       border-radius: 100%;
       transition: all 0.2s cubic-bezier(0.05, 0, 0, 1);
+      font-size: 1.6rem;
     }
 
     button.active-date > p {

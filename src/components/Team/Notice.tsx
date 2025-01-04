@@ -79,8 +79,7 @@ function Notice({ list }: Props) {
 const PADDING = 24;
 
 const Container = styled.div`
-  margin: 0 -16px;
-  padding: 10px 16px;
+  padding: 10px 0;
   background-color: rgba(247, 250, 252, 0.5);
 `;
 const Display = styled.div`

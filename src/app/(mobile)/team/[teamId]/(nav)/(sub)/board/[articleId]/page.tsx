@@ -218,7 +218,7 @@ const CommentList = styled.ul`
 const CommentInput = styled.div`
   position: sticky;
   margin: 0 -20px -64px;
-  padding: 12px 12px calc(var(--env-sab) / 1.5 + 16px + 52px);
+  padding: 12px 12px calc(var(--env-sab) + 12px);
   bottom: 0;
   display: flex;
   gap: 10px;

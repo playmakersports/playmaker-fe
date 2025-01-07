@@ -7,9 +7,9 @@ import { FONTS } from "@/styles/common";
 function MyTabNav({ children }: { children: React.ReactNode }) {
   return (
     <Nav>
-      <ul className="tab-inner" role="tablist">
+      <div className="tab-inner" role="tablist">
         {children}
-      </ul>
+      </div>
     </Nav>
   );
 }
@@ -18,12 +18,12 @@ const Nav = styled.nav`
   box-shadow: 0 3px 4px 0 rgba(50, 50, 71, 0.08);
   padding: 0 20px;
 
-  ul.tab-inner {
+  div.tab-inner {
     display: flex;
     gap: 10px;
     transform: translateY(2px);
   }
-  ul.tab-inner > li {
+  div.tab-inner > a {
     user-select: none;
     cursor: pointer;
     ${FONTS.MD3};

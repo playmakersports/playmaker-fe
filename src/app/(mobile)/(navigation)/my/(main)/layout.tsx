@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { Suspense, useRef } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
@@ -8,6 +8,7 @@ import useStickyMoment from "@/hook/useStickyMoment";
 
 import MyTabNav from "../_components/MyTabNav";
 import MyProfile from "../_components/MyProfile";
+import MyTabLoading from "./loading";
 
 function MyTabLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -32,18 +33,15 @@ function MyTabLayout({ children }: { children: React.ReactNode }) {
       <TabWrapper ref={tabRef}>
         <MyTabNav>
           {links.map((link) => (
-            <li
-              role="tab"
-              key={link.href}
-              onClick={() => router.push(link.href)}
-              className={pathname === link.href ? "active" : ""}
-            >
+            <Link key={link.href} href={link.href} className={pathname === link.href ? "active" : ""}>
               {link.label}
-            </li>
+            </Link>
           ))}
         </MyTabNav>
       </TabWrapper>
-      <section style={{ padding: "24px 16px calc(var(--env-sab) + 100px)" }}>{children}</section>
+      <section style={{ padding: "24px 16px calc(var(--env-sab) + 100px)" }}>
+        <Suspense fallback={<MyTabLoading />}>{children}</Suspense>
+      </section>
     </>
   );
 }

@@ -13,7 +13,7 @@ import { FONTS } from "@/styles/common";
 import SettingsIcon from "@/assets/icon/global/Settings.svg";
 
 function TeamMainTop(props: SelectTeamResponse) {
-  const { teamId, teamName, logoUrl, activeArea, createDt, item, myTeamYn, university } = props;
+  const { teamId, teamName, logoUrl, activeArea, createDt, item, countMember, masterNm, myTeamYn, university } = props;
   const [heart, setHeart] = useState(false);
   const PLAYING = false;
 
@@ -47,7 +47,7 @@ function TeamMainTop(props: SelectTeamResponse) {
                 displayDateType: ".",
                 displayDayName: "hide",
               })}{" "}
-              | 현 {0}명
+              | 현 {countMember}명 | {masterNm} 회장
             </p>
             <p className="team-category">
               <span>{item}</span>

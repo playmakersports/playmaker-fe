@@ -1,4 +1,7 @@
+"use client";
 import React from "react";
+import { usePageTitle } from "@/hook/usePageTitle";
+import { useParams } from "next/navigation";
 
 import GradientBg from "@/components/common/GradientBg";
 import MatchScores from "../_components/MatchScores";
@@ -6,8 +9,16 @@ import MatchTitle from "../_components/MatchTitle";
 import MatchMvp from "../_components/MatchMvp";
 import PlayersList from "../_components/PlayersList";
 
+import AppAddIcon from "@/assets/icon/global/AppAdd.svg";
+
 function MatchPage() {
+  const params = useParams();
+  const matchId = params["matchId"];
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
+  usePageTitle({
+    title: "",
+    subIcons: [{ svgIcon: <AppAddIcon />, linkTo: `/match/${matchId}/score`, description: "점수 입력" }],
+  });
 
   return (
     <>

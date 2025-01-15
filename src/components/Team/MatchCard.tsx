@@ -62,7 +62,7 @@ function MatchCard(props: Props) {
           {status !== "FINISHED" && <p className="match-date">{STATUS_NAME[status]}</p>}
           {matchDate && (
             <p className="match-date">
-              {formattedDate(`${matchDate}${matchTime}`, {
+              {formattedDate(`${matchDate}T${matchTime}`, {
                 displayDateType: ".",
                 displayTime: "24h",
                 displayYear: "not-this-year",

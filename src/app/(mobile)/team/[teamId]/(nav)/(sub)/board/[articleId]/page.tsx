@@ -95,8 +95,17 @@ function ArticleId() {
           ))}
         </CommentList>
         <CommentInput>
-          <input type="text" />
-          <button type="button">등록</button>
+          <div className="comment-shadow">
+            <div className="comment-inner">
+              <input type="text" placeholder="댓글을 입력해주세요" />
+              <div className="comment-handler">
+                <div className="comment-buttons">{/* <button type="button">언급</button> */}</div>
+                <button type="button" id="CommentUploadBtn">
+                  게시
+                </button>
+              </div>
+            </div>
+          </div>
         </CommentInput>
       </Comments>
     </Container>
@@ -218,36 +227,49 @@ const CommentList = styled.ul`
 const CommentInput = styled.div`
   position: sticky;
   margin: 0 -20px -64px;
-  padding: 12px 12px calc(var(--env-sab) + 12px);
+  padding-top: 20px;
   bottom: 0;
   display: flex;
   gap: 10px;
-  background-color: var(--gray0);
-  border-top: 1px solid var(--gray300);
-  overflow-x: hidden;
+  overflow: hidden;
 
-  & > input {
-    flex: 1;
-    padding: 0 12px;
-    ${FONTS.MD1W500};
-    font-weight: 400;
+  div.comment-shadow {
+    width: 100%;
+    border-radius: 12px 12px 0 0;
+    padding: 24px 16px calc(var(--env-sab) + 16px);
     background-color: var(--gray0);
-    border: 1px solid var(--gray300);
-    border-radius: 6px;
-    &:focus {
-      border-color: var(--main);
-    }
+    box-shadow: 0 -2px 10px 6px rgba(0, 0, 0, 0.05);
   }
-  & > button {
-    width: 64px;
-    padding: 10px 0;
-    background-color: var(--gray200);
-    color: var(--gray900);
-    border-radius: 6px;
+  div.comment-inner {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: var(--gray100);
+    gap: 8px;
+  }
+  div.comment-handler {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  input {
+    ${FONTS.MD1W500};
+    margin-top: -8px;
+    padding: 8px 0;
+    font-weight: 400;
+  }
+  button#CommentUploadBtn {
     ${FONTS.MD2};
-    font-size: 1.5rem;
+    padding: 6px 20px;
+    background-color: var(--gray500);
+    color: var(--gray0);
+    border-radius: 20px;
+    font-size: 1.4rem;
     &:active {
-      background-color: var(--gray300);
+      background-color: var(--gray400);
     }
   }
 `;

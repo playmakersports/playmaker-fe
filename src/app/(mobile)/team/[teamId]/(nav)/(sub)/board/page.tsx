@@ -1,19 +1,20 @@
 "use client";
-
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useRouter, usePathname, useSearchParams, useParams } from "next/navigation";
-
+import { useRouter, useSearchParams, useParams } from "next/navigation";
+import { useGet } from "@/apis/hook/query";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
 
+import { FONTS } from "@/styles/common";
 import MainTab from "@/components/Main/MainTab";
 import { BaseContainer } from "@/components/common/Container";
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import { BasicWhiteCard } from "@/components/common/Card";
+import { BasicInput } from "@/components/common/Input";
+import { GetTeamBoardListResponse } from "@/types/team";
+import ListArticle from "./_components/ListArticle";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";
-import { BasicInput } from "@/components/common/Input";
+import Loading from "@/components/common/Loading";
 
 function Board() {
   const router = useRouter();
@@ -36,7 +37,14 @@ function Board() {
   const tabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);
   const [, setTab] = useState("ALL");
-  const currentPage = searchParams.get("page");
+  const currentPage = searchParams.get("page") || "1";
+
+  const { data, isLoading } = useGet<GetTeamBoardListResponse>(`/api/board/team/${teamId}`, { page: currentPage });
+  const updatePaging = (page: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page);
+    window.history.pushState(null, "", `?${params.toString()}`);
+  };
 
   return (
     <>
@@ -47,18 +55,18 @@ function Board() {
         <MainTab
           items={[
             { value: "ALL", name: "전체" },
-            { value: "notice", name: "공지" },
-            { value: "free", name: "자유" },
-            { value: "introduce", name: "가입인사" },
+            { value: "1", name: "공지사항" },
+            { value: "2", name: "자유" },
+            { value: "3", name: "가입인사" },
+            { value: "4", name: "경기" },
           ]}
           nowValue={setTab}
         />
       </TabWrapper>
       <FixedArticles>
-        {MOCK.slice(0, 3).map((article, index) => (
+        {MOCK.slice(0, 3).map((article) => (
           <FixedArticle key={article} onClick={() => router.push(`/team/${teamId}/board/${article}`)}>
             <div className="article-inner">
-              <label color={index === 0 ? "red" : "blue"}>필독</label>
               <div style={{ flex: 1 }}>
                 <p className="article-head">글 공지입니다.</p>
                 <p className="article-sub">홍길동 | 2024.5.10</p>
@@ -73,26 +81,18 @@ function Board() {
       </FixedArticles>
       <Container>
         <Articles>
-          {MOCK.map((article) => (
-            <Article key={article} onClick={() => router.push(`/team/${teamId}/board/${article}`)}>
-              <div className="article-inner">
-                <div>
-                  <p className="article-head">글 공지입니다.</p>
-                  <p className="article-sub">공지사항 · 홍길동 · 2024.7.20</p>
-                </div>
-                <div className="article-info">
-                  <p className="article-head">{article}</p>
-                  <p className="article-sub">조회 60</p>
-                </div>
-              </div>
-            </Article>
-          ))}
+          {isLoading ? (
+            <Loading />
+          ) : (
+            data?.board?.map((article) => <ListArticle key={article.articleId} {...article} />)
+          )}
         </Articles>
+
         <Page>
           {PAGE_MOCK.map((pageNum) => (
-            <div key={pageNum} onClick={() => router.push(`/team/${teamId}/board?page=${pageNum}`)}>
+            <button type="button" key={pageNum} onClick={() => updatePaging(String(pageNum))}>
               {pageNum}
-            </div>
+            </button>
           ))}
         </Page>
       </Container>
@@ -113,7 +113,7 @@ const Page = styled.div`
   justify-content: center;
   gap: 12px;
 
-  div {
+  button {
     ${FONTS.MD1};
     padding: 8px 12px;
     background-color: var(--background-light);
@@ -163,12 +163,6 @@ const FixedArticle = styled.div`
     border-radius: 4px;
     font-size: 1.4rem;
   }
-  label[color="red"] {
-    background-color: var(--point);
-  }
-  label[color="blue"] {
-    background-color: var(--main);
-  }
 
   .article-head {
     ${FONTS.MD1};
@@ -182,58 +176,8 @@ const FixedArticle = styled.div`
 `;
 const Articles = styled.div`
   display: flex;
-  padding: 0 4px;
   flex-direction: column;
-  gap: 16px;
-`;
-const Article = styled(BasicWhiteCard)`
-  text-align: left;
-
-  .article-head {
-    margin-bottom: 8px;
-    ${FONTS.MD1};
-  }
-  .article-sub {
-    font-weight: 400;
-    font-size: 1.4rem;
-    color: var(--gray700);
-  }
-  .article-info {
-    text-align: right;
-    .article-head {
-      font-weight: 600;
-    }
-  }
-  .article-inner {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &:first-of-type {
-    border-top: 1px solid transparent;
-  }
-
-  ${BUTTON_ACTIVE("var(--background-light)")}
-`;
-
-const WriteButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 0;
-  border-radius: 10px;
-  border: 1px dashed var(--gray500);
-  color: var(--gray800);
-  gap: 8px;
-  ${FONTS.MD1};
-  font-weight: 400;
-
-  svg {
-    width: 36px;
-    height: 36px;
-  }
-  ${BUTTON_ACTIVE("transparent")}
+  gap: 12px;
 `;
 
 export default Board;

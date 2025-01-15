@@ -29,22 +29,28 @@ export type PostTeamBoardRequest = {
   image: File | null;
 };
 
-export type GetTeamBoardListResponse = {
-  // boardId: number;
-  // memberId: string;
-  // teamId: string;
-  // category: number;
-  // title: string;
-  // content: string;
-  // createDt: string;
-  // updateDt: string;
+type GetTeamBoardListItems = {
+  articleId: number;
+  title: string;
+  member: {
+    memberId: number;
+    username: string;
+    image: string;
+  };
+  category: {
+    teamId: number;
+    categoryNum: number;
+    categoryName: string;
+    isDelete: "Y" | "N";
+  };
+  createAt: string;
   // viewCnt: number;
   // commentCnt: number;
   // likeCnt: number;
-  // image: string | null;
-  // member: {
-  //   memberId: string;
-  //   nickname: string;
-  //   profileImg: string;
-  // };
+};
+export type GetTeamBoardListResponse = {
+  board: Array<GetTeamBoardListItems>;
+  totalPages: number;
+  currentPage: number;
+  pageSize: number;
 };

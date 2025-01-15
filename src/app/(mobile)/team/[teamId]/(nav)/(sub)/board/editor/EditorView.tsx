@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
+import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { usePost } from "@/apis/hook/query";
 
 import { BaseContainer } from "@/components/common/Container";
 import { useEditorHandler } from "@/hook/useEditorHandler";
@@ -11,11 +13,12 @@ import EditorUI from "@/components/Editor";
 import Button from "@/components/common/Button";
 import DropDown from "@/components/common/DropDown";
 import { BasicInput } from "@/components/common/Input";
-
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import Spinner from "@/components/common/Spinner";
 
 function EditorView() {
-  usePageTitle({ title: "글 쓰기" });
+  const { mutate, data, isError, error, isPending } = usePost("/api/board/create", "form-data");
+  usePageTitle({ title: "글쓰기" });
+  const confirm = useConfirm();
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
@@ -23,8 +26,8 @@ function EditorView() {
   const type = searchParams.get("type");
   const via = searchParams.get("via");
 
-  const confirm = useConfirm();
   const [category, setCategory] = useState("");
+  const [title, setTitle] = useState("");
   const { editor, poll, images } = useEditorHandler();
   if (!editor) return null;
 
@@ -37,8 +40,30 @@ function EditorView() {
       }
     }
   };
-  const onSubmit = () => {
-    console.log(editor.getHTML(), images.getter());
+
+  const onSubmit = async () => {
+    const formData = new FormData();
+    const jsonBlob = new Blob(
+      [
+        JSON.stringify({
+          categoryNum: category,
+          content: editor.getHTML(),
+          teamId,
+          title,
+        }),
+      ],
+      {
+        type: "application/json",
+      }
+    );
+    formData.append("boardInfo", jsonBlob);
+
+    mutate({
+      data: formData,
+    });
+    if (isError) {
+      await confirm?.showAlert(`글 올리기에 문제가 생겼어요\n잠시 후 다시 시도해주세요\n${error.message}`);
+    }
   };
 
   return (
@@ -54,14 +79,14 @@ function EditorView() {
           { name: "가입인사", value: "intro" },
         ]}
       />
-      <BasicInput type="text" placeholder="제목" />
+      <BasicInput type="text" placeholder="제목" onChange={(e) => setTitle(e.target.value)} value={title} />
       <EditorUI editor={editor} poll={poll} images={images} />
       <Buttons>
         <Button type="button" flex={1} mode="OPTION2" onClick={onClear}>
           초기화
         </Button>
         <Button type="button" flex={2} mode="MAIN" onClick={onSubmit}>
-          올리기
+          <span className="spinner-wrapper">올리기 {isPending && <Spinner color="white" />}</span>
         </Button>
       </Buttons>
     </Container>
@@ -69,15 +94,20 @@ function EditorView() {
 }
 
 const Container = styled(BaseContainer)`
+  padding-bottom: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
 `;
 const Buttons = styled.div`
   display: flex;
-  padding-bottom: var(--env-sab);
   gap: 8px;
   justify-content: space-between;
+  span.spinner-wrapper {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
 `;
 
 export default EditorView;

@@ -9,7 +9,7 @@ type Props = {
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const type = (await searchParams).type;
   const EDITOR_TYPE = {
-    new: "글 쓰기",
+    new: "글쓰기",
     edit: "글 수정",
   };
   return {

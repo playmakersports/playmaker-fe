@@ -1,4 +1,4 @@
-import { getDate, getDay, getMonth, getYear, toDate } from "date-fns";
+import { differenceInCalendarDays, differenceInMinutes, getDate, getDay, getMonth, getYear } from "date-fns";
 
 type FormattedDateType = {
   displayYear: "always" | "not-this-year";
@@ -41,47 +41,46 @@ export const formattedDate = (target: string, type: FormattedDateType) => {
     formattedDate = `${year}${type.displayDateType === "kr" ? "년 " : type.displayDateType}${formattedDate}`;
   }
 
-  let formattedTime;
-  if (type.displayTime === "hide" || !type.displayTime) {
-    formattedTime = "";
-  } else if (type.displayTime === "24h") {
-    formattedTime = time;
-  } else {
-    if (time) {
-      const timeTypeLanguage = type.displayTime === "12h-kr" ? "kr" : "en";
-      const [hour, minute] = time.split(":").slice(0, 2);
-      const AM_PM_NAME = { kr: ["오전", "오후"], en: ["AM", "PM"] };
-      formattedTime = `${+hour > 11 ? AM_PM_NAME[timeTypeLanguage][1] : AM_PM_NAME[timeTypeLanguage][0]} ${
-        +hour > 12 ? +hour - 12 : hour
-      }:${padStartNumber(minute)}`;
+  const formatTime = (time: string, displayTime?: "24h" | "12h-kr" | "12h-en" | "hide") => {
+    if (displayTime === "hide" || !displayTime) {
+      return "";
+    } else if (displayTime === "24h") {
+      return time;
+    } else {
+      if (time) {
+        const timeTypeLanguage = displayTime === "12h-kr" ? "kr" : "en";
+        const [hour, minute] = time.split(":").slice(0, 2);
+        const AM_PM_NAME = { kr: ["오전", "오후"], en: ["AM", "PM"] };
+        return `${+hour > 11 ? AM_PM_NAME[timeTypeLanguage][1] : AM_PM_NAME[timeTypeLanguage][0]} ${
+          +hour > 12 ? +hour - 12 : hour
+        }:${padStartNumber(minute)}`;
+      }
     }
-  }
+    return "";
+  };
+
+  let formattedTime = formatTime(time, type.displayTime);
 
   if (!type.displaySimpleKR) {
     return `${formattedDate} ${formattedDayName} ${type.displayTime !== "hide" ? formattedTime : ""}`.trim();
   } else {
-    const now = new Date();
-    const targetDateTime = new Date(target);
-    const diffInMinutes = Math.floor((now.getTime() - targetDateTime.getTime()) / (1000 * 60));
+    const diffInMinutes = differenceInMinutes(new Date(), new Date(target));
 
     if (diffInMinutes < 1) {
       return "방금";
     } else if (diffInMinutes < 60) {
-      const minutesAgo = Math.floor(diffInMinutes / 10) * 10;
-      return `${minutesAgo}분 전`;
+      return `${diffInMinutes}분 전`;
     } else if (diffInMinutes < 360) {
       const hoursAgo = Math.floor(diffInMinutes / 60);
       return `${hoursAgo}시간 전`;
     } else {
-      const diffInDays = Math.floor(diffInMinutes / (60 * 24));
-      const hours = padStartNumber(targetDateTime.getHours());
-      const minutes = padStartNumber(targetDateTime.getMinutes());
+      const diffInDays = differenceInCalendarDays(new Date(), new Date(target));
       if (diffInDays === 0) {
-        return `오늘 오후 ${hours}:${minutes}`;
+        return `오늘 ${formattedTime}`;
       } else if (diffInDays === 1) {
-        return `어제 오후 ${hours}:${minutes}`;
+        return `어제 ${formattedTime}`;
       } else if (diffInDays < 4) {
-        return `${diffInDays}일 전 오후 ${hours}:${minutes}`;
+        return `${diffInDays}일 전 ${formattedTime}`;
       } else {
         return `${formattedDate} ${formattedDayName} ${type.displayTime !== "hide" ? formattedTime : ""}`.trim();
       }

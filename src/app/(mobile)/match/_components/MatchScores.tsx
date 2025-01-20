@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { MatchSummaryCard } from "./container";
 import BottomSheet from "@/components/common/BottomSheet";
 import MatchRoundCard from "@/components/Match/MatchRoundCard";
+import ScoreVersus from "./ScoreVersus";
 
 type TeamMatchInfo = {
   name: string;
@@ -29,28 +30,7 @@ function MatchScores(props: Props) {
   return (
     <>
       <section style={{ position: "relative", zIndex: 0 }}>
-        <Versus>
-          <Team $backColor={awayInfo.color}>
-            <div className="team-inner">
-              <div className="score">{awayInfo.score}</div>
-              <div className="team-logo"></div>
-              <div className="team-name">{awayInfo.name}</div>
-              <div className="team-univ">{awayInfo.univ}</div>
-            </div>
-          </Team>
-          <div className="center">
-            <p>{stage}</p>
-            <p className="versus">vs</p>
-          </div>
-          <Team $backColor={homeInfo.color}>
-            <div className="team-inner">
-              <div className="score">{homeInfo.score}</div>
-              <div className="team-logo"></div>
-              <div className="team-name">{homeInfo.name}</div>
-              <div className="team-univ">{homeInfo.univ}</div>
-            </div>
-          </Team>
-        </Versus>
+        <ScoreVersus homeInfo={homeInfo} awayInfo={awayInfo} stage={stage} />
         <SummaryContainer>
           <ScoreTable onClick={() => setShowAllScore((prev) => !prev)}>
             <div className="table-row table-header">
@@ -100,70 +80,6 @@ function MatchScores(props: Props) {
   );
 }
 
-const Versus = styled.div`
-  display: flex;
-  padding: 0 32px;
-  justify-content: space-between;
-  gap: 10%;
-  align-items: center;
-
-  div.center {
-    user-select: none;
-    font-size: 1.4rem;
-    color: var(--gray600);
-    text-align: center;
-    p.versus {
-      ${FONTS.MD1W500};
-      color: var(--main);
-    }
-  }
-`;
-const Team = styled.div<{ $backColor: string }>`
-  flex: 1;
-  position: relative;
-
-  div.team-inner {
-    position: relative;
-    text-align: center;
-    z-index: 1;
-  }
-
-  div.score {
-    margin-bottom: 20px;
-    font-size: 3.5rem;
-    font-weight: 600;
-  }
-  div.team-logo {
-    margin: 0 auto 16px;
-    width: 80px;
-    height: 80px;
-    background-color: var(--gray0);
-    border-radius: 50%;
-  }
-  div.team-name {
-    ${FONTS.MD1};
-    color: var(--gray900);
-  }
-  div.team-univ {
-    ${FONTS.MD2};
-    color: var(--gray600);
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 10px;
-    left: 50%;
-    width: 150px;
-    height: 180px;
-    background-color: ${({ $backColor }) => `rgb(${$backColor})`};
-    z-index: 0;
-    transform: translateX(-50%);
-    border-radius: 50%;
-    opacity: 0.2;
-    filter: blur(24px);
-  }
-`;
 const SummaryContainer = styled.div`
   margin-top: 40px;
   display: flex;

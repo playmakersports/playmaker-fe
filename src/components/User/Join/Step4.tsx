@@ -40,7 +40,7 @@ function Step4() {
 
   const checkSelectedLength = (event: any, target: string) => {
     if (preferredSportValue.length === 3 && event.target.checked) {
-      trigger("최대 3개까지 선택 가능합니다.", "ALERT");
+      trigger("최대 3개까지 선택 가능합니다.");
       setValue(
         "preferredSport",
         preferredSportValue?.filter((v) => v !== target)

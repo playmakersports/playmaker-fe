@@ -10,7 +10,7 @@ function useToast(time?: number) {
   const showRef = useRef<number | null>(null);
 
   const trigger = useCallback(
-    (text: string, type?: "DEFAULT" | "ALERT") => {
+    (text: string, type?: "DEFAULT" | "ALERT" | "CONFIRM") => {
       setToastAtom({ animate: true, show: true, text, type: type ?? "DEFAULT" });
       if (ref.current) clearTimeout(ref.current);
       if (showRef.current) clearTimeout(showRef.current);

@@ -118,7 +118,7 @@ const Colors = styled.ul`
   display: grid;
   margin-top: 32px;
   padding: 20px 4px;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   gap: 28px 8px;
 
   li {
@@ -136,15 +136,13 @@ const ColorButton = styled.button<{ targetColor: string }>`
   box-sizing: content-box;
 
   &.selected {
-    width: 36px;
-    height: 36px;
-    outline: 2px solid ${({ targetColor }) => targetColor};
-    border: 2px solid var(--background-light);
+    outline: 4px solid #fff;
+    box-shadow: 0 0 0 7px ${({ targetColor }) => targetColor};
     &::before {
       content: "✓";
       color: #fff;
-      font-weight: 600;
-      font-size: 2rem;
+      font-weight: 500;
+      font-size: 2.2rem;
       opacity: 0.9;
     }
   }

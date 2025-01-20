@@ -3,8 +3,6 @@ export const TEAM_COLORS = {
   red2: "#e81e63",
   red3: "#f44336",
   red4: "#ff5722",
-  red5: "#ff9800",
-  red6: "#ffe412",
   green1: "#cddc39",
   green2: "#4caf50",
   green3: "#009688",
@@ -15,6 +13,5 @@ export const TEAM_COLORS = {
   purple2: "#673ab7",
   purple3: "#954276",
   purple4: "#cdafca",
-  purple5: "#e8c0bd",
   black0: "#000",
 };

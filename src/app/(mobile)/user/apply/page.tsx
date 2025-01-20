@@ -13,6 +13,7 @@ import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
 import { InputCheckbox } from "@/components/common/SelectInput";
 
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
+import { SERVICE_TERMS } from "@/constants/TERMS";
 
 function Intro() {
   const router = useRouter();
@@ -39,7 +40,7 @@ function Intro() {
           text: "확인",
           onClick: async () => {
             if (checkedList.required1 && checkedList.required2) {
-              await router.push(`/user/apply/process?eventAgree=${checkedList.event1 ? "T" : "F"}`);
+              router.push(`/user/apply/process?eventAgree=${checkedList.event1 ? "T" : "F"}`);
             } else {
               await confirm?.showAlert("필수 약관에 모두 동의해야 합니다");
             }
@@ -92,6 +93,7 @@ function Intro() {
         </Agreement>
       </LoginWrapper>
       <ModalComponents
+        draggable="bar"
         title={TERMS_LIST.find((v) => v.termId === selectedTerm)?.termName}
         buttons={[
           {
@@ -113,9 +115,7 @@ function Intro() {
         ]}
       >
         <TermContents>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum saepe perferendis nam reprehenderit!
-          Necessitatibus culpa quaerat iure vitae qui odit, nihil dolorem velit sapiente perferendis rem alias est
-          consequuntur praesentium.
+          <div dangerouslySetInnerHTML={{ __html: SERVICE_TERMS }} />
         </TermContents>
       </ModalComponents>
     </>
@@ -172,6 +172,29 @@ const TermView = styled.button`
     fill: var(--gray500);
   }
 `;
-const TermContents = styled.div``;
+const TermContents = styled.div`
+  user-select: none;
+  padding: 0 12px 0 4px;
+  overflow-y: auto;
+  height: 60vh;
+  color: var(--gray800);
+  font-size: 1.3rem;
+
+  h3 {
+    font-size: 1.4rem;
+    padding: 8px 0 4px;
+  }
+  ol {
+    & > li {
+      &::before {
+        content: "•";
+        margin-right: 4px;
+      }
+    }
+    & > ol {
+      padding-left: 8px;
+    }
+  }
+`;
 
 export default Intro;

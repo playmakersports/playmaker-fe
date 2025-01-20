@@ -55,12 +55,12 @@ function PushRequest() {
       <div className="push-notice">
         <p>
           <NotificationIcon />
-          우리 지역•학교의 스포츠 소식을 받아보세요
+          알림 테스트
         </p>
         {isGranted ? (
           <button onClick={sendFCMNotification}>테스트 Push</button>
         ) : (
-          <button onClick={handleClickToPushActive}>Push 요청</button>
+          <button onClick={handleClickToPushActive}>권한 요청</button>
         )}
       </div>
     </Container>

@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
 
-function MyTabNav({ children }: { children: React.ReactNode }) {
+function TabList({ children }: { children: React.ReactNode }) {
   return (
     <Nav>
       <div className="tab-inner" role="tablist">
@@ -41,4 +41,4 @@ const Nav = styled.nav`
   }
 `;
 
-export default MyTabNav;
+export default TabList;

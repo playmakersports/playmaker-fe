@@ -6,9 +6,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
 
-import MyTabNav from "../_components/MyTabNav";
 import MyProfile from "../_components/MyProfile";
 import MyTabLoading from "./loading";
+import TabList from "@/components/common/TabList";
 
 function MyTabLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -31,13 +31,13 @@ function MyTabLayout({ children }: { children: React.ReactNode }) {
         <MyProfile />
       </header>
       <TabWrapper ref={tabRef}>
-        <MyTabNav>
+        <TabList>
           {links.map((link) => (
             <Link key={link.href} href={link.href} className={pathname === link.href ? "active" : ""}>
               {link.label}
             </Link>
           ))}
-        </MyTabNav>
+        </TabList>
       </TabWrapper>
       <section style={{ padding: "24px 16px calc(var(--env-sab) + 100px)" }}>
         <Suspense fallback={<MyTabLoading />}>{children}</Suspense>

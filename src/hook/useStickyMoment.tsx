@@ -12,7 +12,7 @@ function useStickyMoment(ref: RefObject<any>, top?: number, className?: string) 
         ref.current.style.top = `calc(var(--safe-area-top) + ${top ?? 0}px)`;
         ref.current!.classList.toggle(
           className ?? "stuck",
-          ref.current?.getBoundingClientRect().top - 12 < headerHeight + safeAreaTop
+          ref.current?.getBoundingClientRect().top - 12 < headerHeight + safeAreaTop + (top ?? 0)
         );
       }
     };

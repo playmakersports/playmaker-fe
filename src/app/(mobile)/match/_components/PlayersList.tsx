@@ -24,14 +24,20 @@ function PlayersList() {
             <span className="left">
               <img src={MOCK_PROFILE_IMG} alt={player.name} />
               <span className="name">
-                <span className="back-number">{player.backNumber}</span>
+                {player.startingYn === "Y" ? <span className="starting">선발</span> : ""}
                 {player.name}
               </span>
             </span>
-            <span className="right">
-              {player.startingYn === "Y" ? <span className="starting">선발</span> : ""}
-              {player.position}
-            </span>
+            <ul className="right-info">
+              <li>
+                <p className="title">번호</p>
+                <p className="contents">{player.backNumber}</p>
+              </li>
+              <li>
+                <p className="title">포지션</p>
+                <p className="contents">{player.position}</p>
+              </li>
+            </ul>
           </li>
         ))}
       </List>
@@ -40,6 +46,7 @@ function PlayersList() {
 }
 
 const Wrapper = styled.section`
+  position: relative;
   margin-top: 20px;
   padding: 0 4px;
 `;
@@ -49,7 +56,7 @@ const List = styled.ul`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 12px 10px;
+    padding: 10px 4px;
     font-size: 1.6rem;
     font-weight: 500;
 
@@ -58,39 +65,43 @@ const List = styled.ul`
       align-items: center;
       gap: 20px;
 
-      span.back-number {
-        display: inline-block;
-        padding: 3px 0px;
-        margin-right: 4px;
-        min-width: 26px;
-
-        color: var(--gray800);
-        border: 2px solid var(--gray800);
+      span.starting {
+        display: block;
+        margin-bottom: 6px;
+        font-size: 1.3rem;
         font-weight: 700;
-        /* color: var(--gray0); */
-        /* background-color: var(--gray600); */
-
-        border-radius: 4px;
-        text-align: center;
-        font-size: 1.4rem;
-        letter-spacing: -0.3px;
+        color: var(--gray500);
       }
       span.name {
         font-weight: 500;
+        font-size: 1.6rem;
+        font-weight: 700;
       }
     }
 
-    span.right {
-      color: var(--gray700);
-      span.starting {
-        padding-right: 6px;
-        margin-right: 6px;
-        border-right: 2px solid var(--gray300);
+    ul.right-info {
+      display: flex;
+      gap: 10px;
+
+      li {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        p.title {
+          font-size: 1.2rem;
+          font-weight: 500;
+          color: var(--gray600);
+        }
+        p.contents {
+          font-size: 1.4rem;
+          font-weight: 700;
+          color: var(--gray900);
+        }
       }
     }
     img {
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       border-radius: 50%;
       object-fit: cover;
     }

@@ -2,7 +2,8 @@
 import React from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { useParams, useRouter } from "next/navigation";
+import useToast from "@/hook/useToast";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -12,18 +13,23 @@ import FloatButton from "@/components/common/FloatButton";
 import { InputCheckbox } from "@/components/common/SelectInput";
 
 function ApplyTeamSelect() {
+  const { trigger } = useToast();
+  const router = useRouter();
+  const params = useParams();
+  const competitionId = params["competitionId"];
   const { register, watch, handleSubmit } = useForm();
+
   const isReCheckTeam = watch("ReCheckTeam") && !!watch("teamId");
-  const confirm = useConfirm();
   const TEAMS_MOCK = [
     { teamName: "SPABA1", teamId: 123, teamLogo: "" },
     { teamName: "SPABA2", teamId: 233, teamLogo: "" },
     { teamName: "SPABA3", teamId: 533, teamLogo: "" },
   ];
 
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = (data: FieldValues) => {
     console.log(data);
-    await confirm?.showAlert("대회 참가 신청이 완료됐어요", { text: "확인", mode: "MAIN" });
+    trigger("대회 참가 신청이 완료됐어요", "CONFIRM");
+    router.replace(`/competition/${competitionId}`);
   };
 
   return (

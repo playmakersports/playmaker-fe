@@ -41,7 +41,9 @@ function ScoreInput(props: Props) {
         </Indicator>
         <Input>
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
+            inputMode="numeric"
             placeholder="--"
             disabled={disabled}
             value={leftScore}
@@ -58,7 +60,9 @@ function ScoreInput(props: Props) {
         <p className="versus">:</p>
         <Input>
           <input
-            type="text"
+            type="number"
+            pattern="[0-9]*"
+            inputMode="numeric"
             placeholder="--"
             disabled={disabled}
             value={rightScore}

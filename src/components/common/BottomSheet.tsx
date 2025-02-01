@@ -99,9 +99,7 @@ function BottomSheet(props: BottomSheetProps) {
         aria-labelledby="BottomModalHeader"
         {...(draggable === "all" ? draggableEvent : {})}
       >
-        {(expanded || !!draggable) && (
-          <Bar {...(draggable === "bar" ? draggableEvent : {})} onClick={closeBottomSheet} />
-        )}
+        {(expanded || !!draggable) && <Bar {...(draggable === "bar" ? draggableEvent : {})} />}
         <Contents>
           {header && <Header id="BottomModalHeader">{header}</Header>}
           {typeof children === "function" ? children(closeBottomSheet) : children}

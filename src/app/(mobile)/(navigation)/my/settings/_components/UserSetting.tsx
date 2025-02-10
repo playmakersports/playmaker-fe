@@ -53,17 +53,18 @@ function UserSetting() {
       <GroupTitle>정보 관리</GroupTitle>
       <GroupList
         list={[
+          { icon: <PersonIcon />, title: "개인정보 수정", onClick: () => router.push(`/my/settings/info`) },
+          { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
+          { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
           {
             icon: <GraduationIcon />,
-            title: "재학증명서 인증",
+            title: "학교 인증",
             onClick: () => router.push(`/my/settings/school`),
             subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
           },
-          { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
-          { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
         ]}
       />
-      <WhiteSectionDivider />
+      <WhiteSectionDivider $child />
       <GroupTitle>정보 및 지원</GroupTitle>
       <GroupList
         list={[

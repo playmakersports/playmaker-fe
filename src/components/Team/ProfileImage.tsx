@@ -6,8 +6,8 @@ function ProfileImage({ isPlaying = false, imgSrc }: Props) {
   return (
     <Container>
       {isPlaying && <Playing />}
-      <RoundWrapper playing={isPlaying}>
-        <ProfileImg src={imgSrc} playing={isPlaying} alt="팀 프로필 이미지" />
+      <RoundWrapper $playing={isPlaying}>
+        <ProfileImg src={imgSrc} $playing={isPlaying} alt="팀 프로필 이미지" />
       </RoundWrapper>
     </Container>
   );
@@ -23,7 +23,7 @@ const Container = styled.div`
   width: 80px;
   height: 80px;
 `;
-const RoundWrapper = styled.div<{ playing: boolean }>`
+const RoundWrapper = styled.div<{ $playing: boolean }>`
   position: relative;
   display: flex;
   justify-content: center;
@@ -36,7 +36,7 @@ const RoundWrapper = styled.div<{ playing: boolean }>`
   &::before {
     content: "";
     position: absolute;
-    display: ${({ playing }) => (playing ? "block" : "none")};
+    display: ${({ $playing }) => ($playing ? "block" : "none")};
     top: 0;
     left: 0;
     width: 100%;
@@ -46,10 +46,10 @@ const RoundWrapper = styled.div<{ playing: boolean }>`
     animation: ${rotateCircle} 2s linear infinite;
   }
 `;
-const ProfileImg = styled.img<{ playing: boolean }>`
-  margin: ${({ playing }) => (playing ? "3px" : "0")};
+const ProfileImg = styled.img<{ $playing: boolean }>`
+  margin: ${({ $playing }) => ($playing ? "3px" : "0")};
   border: 7px solid var(--background-light);
-  border: ${({ playing }) => (playing ? "" : "1px solid var(--gray300)")};
+  border: ${({ $playing }) => ($playing ? "" : "1px solid var(--gray300)")};
   width: calc(100% - 7px);
   height: calc(100% - 7px);
   z-index: 1;

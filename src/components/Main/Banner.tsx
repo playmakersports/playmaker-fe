@@ -8,9 +8,27 @@ function Banner() {
   const flickRef = useRef<Flicking>(null);
   const [activePanel, setActivePanel] = useState(0);
   const BANNER_MOCK = [
-    { background: "skyblue", title: "", description: "", buttonName: "", linkTo: "" },
-    { background: "lime", title: "", description: "", buttonName: "", linkTo: "" },
-    { background: "yellow", title: "", description: "", buttonName: "", linkTo: "" },
+    {
+      background: "https://basketkorea.com/news/data/20230701/p1065582677150200_187_thum.jpg",
+      title: `2025 국민대배\n전국 대학생 농구대회`,
+      description: "2025.02.19 - 02.28",
+      buttonName: "",
+      linkTo: "",
+    },
+    {
+      background: "https://cdn.news.unn.net/news/photo/202010/236095_122053_4627.jpg",
+      title: "KSUF U-리그 대학배구",
+      description: "2025.03.20 - 2025.03.31",
+      buttonName: "",
+      linkTo: "",
+    },
+    {
+      background: "https://basketkorea.com/news/data/20230701/p1065582677150200_187_thum.jpg",
+      title: `2025 국민대배\n전국 대학생 농구대회`,
+      description: "2025.02.19 - 02.28",
+      buttonName: "",
+      linkTo: "",
+    },
   ];
 
   const onPanelChanged = (e: ChangedEvent | WillChangeEvent) => {
@@ -27,7 +45,14 @@ function Banner() {
         onChanged={onPanelChanged}
       >
         {BANNER_MOCK.map((banner, index) => (
-          <Panel key={index} style={{ backgroundColor: banner.background }}></Panel>
+          <Panel key={index}>
+            <div className="inner-container" style={{ backgroundImage: `url(${banner.background})` }}>
+              <p>
+                <span className="title">{banner.title}</span>
+                <span className="description">{banner.description}</span>
+              </p>
+            </div>
+          </Panel>
         ))}
       </Flicking>
       <Bullet>
@@ -63,6 +88,7 @@ const Container = styled.div`
 `;
 
 const Panel = styled.div`
+  position: relative;
   flex-shrink: 0;
   position: relative;
   width: 100%;
@@ -70,6 +96,47 @@ const Panel = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  div.inner-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0 18px;
+    align-items: center;
+    justify-content: flex-end;
+    white-space: pre-wrap;
+    text-align: right;
+    background-size: 100%;
+    background-position: center;
+
+    span {
+      position: relative;
+      color: #fff;
+      z-index: 1;
+    }
+    span.title {
+      display: block;
+      font-size: 2.6rem;
+      font-weight: 700;
+      line-height: 3.4rem;
+      text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+    }
+    span.description {
+      display: inline-block;
+      margin-top: 8px;
+      font-size: 1.4rem;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 70%;
+      height: 100%;
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+    }
+  }
 `;
 
 const Bullet = styled.div`

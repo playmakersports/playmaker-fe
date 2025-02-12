@@ -30,12 +30,12 @@ function VideoInfo(props: Props) {
     const x = rect.left + window.scrollX;
     const y = rect.top + window.scrollY + currentTarget.clientHeight;
 
-    setSelectedProfile({
-      show: true,
-      playerId,
-      x,
-      y,
-    });
+    // setSelectedProfile({
+    //   show: true,
+    //   playerId,
+    //   x,
+    //   y,
+    // });
   };
 
   return (

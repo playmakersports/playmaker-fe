@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useLayoutEffect, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { useSearchParams } from "next/navigation";
@@ -7,146 +6,141 @@ import styled from "styled-components";
 import dynamic from "next/dynamic";
 import useYoutube from "@/hook/useYoutube";
 import { usePageTitle } from "@/hook/usePageTitle";
+import { useThrottle } from "@/hook/useThrottle";
 
-import { secondToMinSec } from "@/util/common";
-import { FONTS, SCROLL_HIDE, TEXT_ACTIVE } from "@/styles/common";
 import { VIDEO_COMMENTS, VIDEO_DATA } from "@/constants/mock/VIDEO";
 import { BaseContainer } from "@/components/common/Container";
 import VideoInfo from "@/components/Team/Video/VideoInfo";
 import VideoCommentItem from "@/components/Team/Video/VideoCommentItem";
-
-import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
+import VideoCommentInput from "../_components/CommentInput";
+import PlayerController from "../_components/PlayerController";
 
 function VideoArticle() {
+  // 게시글 ID
   const searchParams = useSearchParams();
   const articleId = searchParams.get("articleId");
+  usePageTitle({ title: VIDEO_DATA.title });
 
-  const playerRef = useRef<YouTube>(null);
-  const commentRef = useRef<HTMLUListElement>(null);
-  const playerDuration = playerRef.current?.internalPlayer.getDuration();
+  const youtubeRef = useRef<YouTube>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const [currentActiveComment, setCurrentActiveComment] = useState("");
-  const [targetVideoTime, setTargetVideoTime] = useState("");
-  const [clientWidth, setClientWidth] = useState({ ready: false, width: 600 });
-  // const [playbackRate, setPlaybackRate] = useState(1);
-
-  useLayoutEffect(() => {
-    if (commentRef.current) {
-      setClientWidth({ ready: true, width: commentRef.current.clientWidth });
-    }
-  }, [commentRef.current]);
+  const [showMiniPlayer, setShowMiniPlayer] = useState(false);
+  const [clientWidth, setClientWidth] = useState({ ready: false, width: 500 });
 
   const VIDEO_SIZE = {
-    width: clientWidth.width,
-    height: Math.floor(clientWidth.width * (9 / 16)),
+    width: showMiniPlayer ? clientWidth.width / 2 : clientWidth.width,
+    height: showMiniPlayer ? Math.floor(clientWidth.width * (9 / 16)) / 2 : Math.floor(clientWidth.width * (9 / 16)),
   };
-  const { playerConnect, currentTime, playerState, opts } = useYoutube(VIDEO_SIZE);
-  usePageTitle({ title: VIDEO_DATA.title, subTitle: secondToMinSec(currentTime) });
+  const { playerConnect, currentTime, duration, handlePlayPause, playerState, playbackRate, handlePlaybackRate, opts } =
+    useYoutube(youtubeRef, {
+      ...VIDEO_SIZE,
+      controller: false,
+    });
 
   const playerSeekTo = (time: string) => {
     const [min, sec] = time.split(":").map((v) => Number(v));
     const target = min * 60 + sec;
-    playerRef.current?.internalPlayer.seekTo(target);
-  };
-  const playerPausePlay = () => {
-    if (playerState === 1) {
-      playerRef.current?.internalPlayer.pauseVideo();
-    } else {
-      playerRef.current?.internalPlayer.playVideo();
-    }
+    youtubeRef.current?.internalPlayer.seekTo(target);
   };
 
+  const handleScroll = useThrottle(() => {
+    if (window.scrollY > VIDEO_SIZE.height * 1.1) {
+      setShowMiniPlayer(true);
+    } else {
+      setShowMiniPlayer(false);
+    }
+  }, 50);
+
+  useLayoutEffect(() => {
+    if (containerRef.current) {
+      // SSR에서 Client Width값 가져오기
+      setClientWidth({ ready: true, width: containerRef.current.clientWidth });
+    }
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [containerRef.current]);
+
   return (
-    <Container videoHeight={VIDEO_SIZE.height}>
-      <Video>
+    <Container ref={containerRef}>
+      <Player className={showMiniPlayer ? "mini" : ""} height={VIDEO_SIZE.height}>
         {clientWidth.ready && (
-          <YouTube
-            ref={playerRef}
-            id="player_YouTube"
-            videoId={VIDEO_DATA.youtubeId}
-            opts={opts}
-            // onPlaybackRateChange={(event) => setPlaybackRate(event.target.getPlaybackRate())}
-            {...playerConnect}
-          />
+          <PlayerInner className={showMiniPlayer ? "mini" : ""}>
+            <YouTube ref={youtubeRef} videoId={VIDEO_DATA.youtubeId} opts={opts} {...playerConnect} />
+          </PlayerInner>
         )}
-      </Video>
-      <PlayerTop>
-        <VideoInfo
-          subTitle={VIDEO_DATA.subTitle}
-          title={VIDEO_DATA.title}
-          description={VIDEO_DATA.description}
-          createdAt={VIDEO_DATA.createdAt}
-          players={VIDEO_DATA.players}
-        />
-      </PlayerTop>
-      <Comments ref={commentRef}>
-        {VIDEO_COMMENTS.map((value, index) => (
-          <VideoCommentItem
-            key={value.time}
-            onClickSeekTo={() => playerSeekTo(value.time)}
-            activeComment={currentActiveComment}
-            setActiveComment={setCurrentActiveComment}
-            playerCurrentTime={currentTime}
-            playerDuration={playerDuration}
-            nextCommentTime={VIDEO_COMMENTS[index + 1]?.time}
-            commentValue={value}
+      </Player>
+      <Contents>
+        <PlayerTop>
+          <VideoInfo
+            subTitle={VIDEO_DATA.subTitle}
+            title={VIDEO_DATA.title}
+            description={VIDEO_DATA.description}
+            createdAt={VIDEO_DATA.createdAt}
+            players={VIDEO_DATA.players}
           />
-        ))}
-      </Comments>
-      <Bottom>
-        {/* <Button
-            type="button"
-            mode="SUB1"
-            onClick={playerPausePlay}
-            disabled={playerState === 3}
-            split={{
-              text: `${playbackRate === 1 ? 0.5 : 1}x`,
-              onClick: () => {
-                if (playbackRate === 1) {
-                  playerRef.current?.internalPlayer.setPlaybackRate(0.5).then(() => {
-                    setPlaybackRate(0.5);
-                  });
-                } else {
-                  playerRef.current?.internalPlayer.setPlaybackRate(1).then(() => {
-                    setPlaybackRate(1);
-                  });
-                }
-              },
-            }}
-          >
-            {playerState === 1 ? "일시정지" : playerState === 3 ? "버퍼링" : "재생"}
-          </Button> */}
-        <CommentBox>
-          <button
-            type="button"
-            aria-label="현재 재생시간 설정"
-            className="target-time"
-            onClick={() => setTargetVideoTime(secondToMinSec(currentTime))}
-          >
-            {targetVideoTime === "" ? "SET" : targetVideoTime}
-          </button>
-          <input type="text" className="target-comment" placeholder="댓글 입력..." />
-          <button type="button" className="comment-submit" aria-label="댓글 등록">
-            <PaperPlaneIcon width={20} height={20} />
-          </button>
-        </CommentBox>
-      </Bottom>
+        </PlayerTop>
+        <Comments>
+          {VIDEO_COMMENTS.map((value, index) => (
+            <VideoCommentItem
+              key={value.time}
+              onClickSeekTo={() => playerSeekTo(value.time)}
+              activeComment={currentActiveComment}
+              setActiveComment={setCurrentActiveComment}
+              playerCurrentTime={currentTime}
+              playerDuration={duration}
+              nextCommentTime={VIDEO_COMMENTS[index + 1]?.time}
+              commentValue={value}
+            />
+          ))}
+        </Comments>
+        <Bottom>
+          <PlayerController
+            duration={duration}
+            currentTime={currentTime}
+            playerState={playerState}
+            playbackRate={playbackRate}
+            handlePlaybackRate={handlePlaybackRate}
+            handlePlayPause={handlePlayPause}
+          />
+          <VideoCommentInput articleId={articleId} currentTime={currentTime} />
+        </Bottom>
+      </Contents>
     </Container>
   );
 }
 
-const Container = styled(BaseContainer)<{ videoHeight: number }>`
-  padding: 0 16px 20px;
-  margin-top: ${({ videoHeight }) => videoHeight}px;
-  margin-bottom: calc(56px + env(safe-area-inset-bottom) * 1.2);
+const Container = styled(BaseContainer)`
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px 40px;
 `;
-const Video = styled.section`
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: var(--safe-area-top) 0 0;
-  z-index: 2;
+const Player = styled.section<{ height: number }>`
+  margin: 0 -16px;
+  width: calc(var(--mobile-max-width));
+  height: ${({ height }) => height}px;
   overflow: hidden;
+  z-index: 10;
+  &.mini {
+    height: ${({ height }) => height * 2}px;
+  }
+`;
+const PlayerInner = styled.div`
+  &.mini {
+    position: fixed;
+    margin: 20px 16px 0;
+    right: 50%;
+    border-radius: 12px;
+    overflow: hidden;
+    transform: translateX(calc(50% + var(--mobile-max-width) / 4));
+  }
+`;
+
+const Contents = styled.section`
+  flex: 1;
 `;
 
 const PlayerTop = styled.div`
@@ -163,63 +157,23 @@ const PlayerTop = styled.div`
 `;
 
 const Comments = styled.ul`
-  padding: 8px 16px;
+  padding: 12px 16px;
   margin-left: -16px;
   margin-right: -16px;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  ${SCROLL_HIDE};
 `;
 
 const Bottom = styled.div`
-  position: absolute;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   bottom: 0;
-  width: 100%;
+  width: var(--mobile-max-width);
   margin: 0 -16px;
-  padding: 0 0 calc(20px + env(safe-area-inset-bottom) / 2);
-  background: var(--gray300);
+  padding: 8px 14px calc(20px + env(safe-area-inset-bottom) / 2);
+  border-top: 1px solid var(--gray100);
+  background: var(--gray0);
   z-index: 10;
-`;
-
-const CommentBox = styled.div`
-  display: flex;
-  ${FONTS.MD1};
-  margin: 0 16px;
-  padding: 12px 0 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-
-  .target-time {
-    width: 52px;
-    font-size: 1.4rem;
-    font-weight: 800;
-    letter-spacing: -0.03rem;
-    color: rgba(var(--gray-h1));
-    text-align: center;
-    border-radius: 8px;
-    ${TEXT_ACTIVE("var(--gray500)")}
-  }
-  .target-comment {
-    width: calc(100% - 28px);
-    font-size: 1.6rem;
-    color: rgba(var(--gray--h2));
-    border-radius: 2px;
-    ${TEXT_ACTIVE("var(--background-light)", { focus: true })};
-  }
-  .comment-submit {
-    padding: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0.8;
-    border-radius: 100%;
-    ${TEXT_ACTIVE("var(--gray500)")}
-    svg {
-      fill: var(--gray900);
-    }
-  }
 `;
 
 export default dynamic(() => Promise.resolve(VideoArticle), { ssr: false });

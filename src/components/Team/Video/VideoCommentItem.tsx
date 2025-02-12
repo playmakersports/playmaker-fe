@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { minSecToSecond } from "@/util/common";
 import { FONTS } from "@/styles/common";
 import { BasicWhiteCard } from "@/components/common/Card";
+import { formattedDate } from "@/util/date";
 
 type Props = {
   commentValue: any;
@@ -42,7 +43,12 @@ function VideoCommentItem(props: Props) {
             setActiveComment(commentValue.time);
           }
         }}
-        data-info={`${commentValue.author} • ${commentValue.writtenAt}`}
+        data-info={`${commentValue.author} • ${formattedDate(commentValue.writtenAt, {
+          displayDateType: ".",
+          displayDayName: "hide",
+          displayYear: "not-this-year",
+          displayTime: "24h",
+        })}`}
       >
         <span className="contents">{commentValue.contents}</span>
       </Contents>

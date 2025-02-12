@@ -31,7 +31,7 @@ function ProfileTag(props: Props) {
   }, [showInfo]);
 
   return (
-    <Container ref={containerRef} showInfo={showInfo}>
+    <Container ref={containerRef} $showInfo={showInfo}>
       <div className="arrow" />
       <Wrapper>
         <div className="profile-image"></div>
@@ -62,13 +62,13 @@ const ShowProfile = keyframes`
 from { transform: scale(0.5); opacity: 0.5; };
 to { transform: scale(1); opacity: 1; };
 `;
-const Container = styled.div<{ showInfo: Props["showInfo"] }>`
+const Container = styled.div<{ $showInfo: Props["showInfo"] }>`
   position: fixed;
-  display: ${({ showInfo }) => (showInfo.show ? "block" : "none")};
+  display: ${({ $showInfo }) => ($showInfo.show ? "block" : "none")};
   bottom: -100%;
   margin-top: 8px;
   left: 16px;
-  top: ${({ showInfo }) => showInfo.y}px;
+  top: ${({ $showInfo }) => $showInfo.y}px;
   width: calc(100vw - 32px);
   height: max-content;
   border-radius: 12px;
@@ -76,11 +76,11 @@ const Container = styled.div<{ showInfo: Props["showInfo"] }>`
   border: 1px solid var(--neutral-n40);
   z-index: 10;
   animation: ${ShowProfile} 0.25s;
-  transform-origin: ${({ showInfo }) => showInfo.x}px top;
+  transform-origin: ${({ $showInfo }) => $showInfo.x}px top;
 
   .arrow {
     position: absolute;
-    left: ${({ showInfo }) => showInfo.x}px;
+    left: ${({ $showInfo }) => $showInfo.x}px;
     width: 16px;
     height: 16px;
     background-color: var(--background-light);

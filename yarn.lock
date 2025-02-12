@@ -2447,6 +2447,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@number-flow/react@npm:^0.5.5":
+  version: 0.5.5
+  resolution: "@number-flow/react@npm:0.5.5"
+  dependencies:
+    esm-env: "npm:^1.1.4"
+    number-flow: "npm:0.5.3"
+  peerDependencies:
+    react: ^18 || ^19
+    react-dom: ^18 || ^19
+  checksum: 10c0/9fc6c46bef1a75e15fd3752fd58edab05bc76e971ce4a34c6eeb2aefffa58b18f6f590f822ceb9b1e66cc9922d844d112d286148b0ceb5435af9d22eed228aea
+  languageName: node
+  linkType: hard
+
 "@opentelemetry/api@npm:^1.3.0":
   version: 1.9.0
   resolution: "@opentelemetry/api@npm:1.9.0"
@@ -5133,6 +5146,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"esm-env@npm:^1.1.4":
+  version: 1.2.2
+  resolution: "esm-env@npm:1.2.2"
+  checksum: 10c0/3d25c973f2fd69c25ffff29c964399cea573fe10795ecc1d26f6f957ce0483d3254e1cceddb34bf3296a0d7b0f1d53a28992f064ba509dfe6366751e752c4166
+  languageName: node
+  linkType: hard
+
 "espree@npm:^9.6.0, espree@npm:^9.6.1":
   version: 9.6.1
   resolution: "espree@npm:9.6.1"
@@ -7377,6 +7397,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"number-flow@npm:0.5.3, number-flow@npm:^0.5.3":
+  version: 0.5.3
+  resolution: "number-flow@npm:0.5.3"
+  dependencies:
+    esm-env: "npm:^1.1.4"
+  checksum: 10c0/1c52b64a5dc12198998ef3671fa73c0e61ebc06ab9ff5574c67b2f712d3e839a9dc98e0b919c12be56c0585dd3625a1439b8708cfa8a32cee9d6ab23e732723c
+  languageName: node
+  linkType: hard
+
 "object-assign@npm:^4.0.1, object-assign@npm:^4.1.1":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
@@ -7691,6 +7720,7 @@ __metadata:
   dependencies:
     "@egjs/react-flicking": "npm:^4.11.3"
     "@firebase/database-compat": "npm:^2.0.1"
+    "@number-flow/react": "npm:^0.5.5"
     "@svgr/webpack": "npm:^8.1.0"
     "@tanstack/react-query": "npm:^5.59.16"
     "@tiptap/extension-highlight": "npm:^2.4.0"
@@ -7716,6 +7746,7 @@ __metadata:
     jotai: "npm:^2.8.0"
     next: "npm:^15.0.3"
     next-pwa: "npm:^5.6.0"
+    number-flow: "npm:^0.5.3"
     react: "npm:^18"
     react-dom: "npm:^18"
     react-error-boundary: "npm:^4.1.2"

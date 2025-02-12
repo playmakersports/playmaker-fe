@@ -3,10 +3,12 @@ import { YouTubeEvent, YouTubeProps } from "react-youtube";
 
 type Props = { width?: number; height?: number; controller?: boolean };
 
-function useYoutube(props: Props) {
-  const { width, height, controller = true } = props;
+function useYoutube(youtubeRef: any, props?: Props) {
+  const { width, height, controller = true } = props || {};
   const [currentTime, setCurrentTime] = useState<number>(0);
+  const [duration, setDuration] = useState(0);
   const [playerState, setPlayerState] = useState(-1);
+  const [playbackRate, setPlaybackRate] = useState(1);
 
   const [updateTimeInterval, setUpdateTimeInterval] = useState<any>();
   const playerSize = { width, height };
@@ -26,6 +28,12 @@ function useYoutube(props: Props) {
       }
     : defaultOpts;
 
+  function onPlayerReady(event: YouTubeEvent) {
+    setPlayerState(event.data);
+    youtubeRef.current?.internalPlayer.getDuration().then((duration: number) => {
+      setDuration(duration);
+    });
+  }
   function handlePlayer(event: YouTubeEvent) {
     setPlayerState(event.data);
     if (event.data !== 1) {
@@ -37,14 +45,40 @@ function useYoutube(props: Props) {
       setUpdateTimeInterval(interval);
     }
   }
-
-  const playerConnect = {
-    onReady: handlePlayer,
-    onPlay: handlePlayer,
-    onStateChange: handlePlayer,
+  function onPlaybackRateChange(event: YouTubeEvent) {
+    setPlaybackRate(event.target.getPlaybackRate());
+  }
+  const handlePlaybackRate = (targetRate: number) => {
+    youtubeRef.current?.internalPlayer.setPlaybackRate(targetRate).then(() => {
+      setPlaybackRate(targetRate);
+    });
   };
 
-  return { playerConnect, currentTime, playerState, opts };
+  const handlePlayPause = () => {
+    if (playerState === 1) {
+      youtubeRef.current?.internalPlayer.pauseVideo();
+    } else {
+      youtubeRef.current?.internalPlayer.playVideo();
+    }
+  };
+
+  const playerConnect = {
+    onReady: onPlayerReady,
+    onPlay: handlePlayer,
+    onStateChange: handlePlayer,
+    onPlaybackRateChange: onPlaybackRateChange,
+  };
+
+  return {
+    playerConnect,
+    currentTime,
+    duration,
+    playerState,
+    handlePlayPause,
+    playbackRate,
+    handlePlaybackRate,
+    opts,
+  };
 }
 
 export default useYoutube;

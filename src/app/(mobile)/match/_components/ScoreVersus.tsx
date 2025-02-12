@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
+import NumberFlow from "@number-flow/react";
 import { FONTS } from "@/styles/common";
 
 type TeamMatchInfo = {
@@ -13,11 +14,19 @@ type TeamMatchInfo = {
 
 function ScoreVersus(props: { small?: boolean; homeInfo: TeamMatchInfo; awayInfo: TeamMatchInfo; stage: string }) {
   const { small = false, homeInfo, awayInfo, stage } = props;
+
+  const [scores, setScores] = useState([0, 0]);
+  useEffect(() => {
+    setScores([awayInfo.score, homeInfo.score]);
+  }, [awayInfo, homeInfo]);
+
   return (
     <Versus className={small ? "small" : ""}>
       <Team $backColor={awayInfo.color}>
         <div className="team-inner">
-          <div className="score">{awayInfo.score}</div>
+          <div className="score">
+            <NumberFlow value={scores[0]} />
+          </div>
           <div className="team-logo"></div>
           <div className="team-name">{awayInfo.name}</div>
           <div className="team-univ">{awayInfo.univ}</div>
@@ -29,7 +38,9 @@ function ScoreVersus(props: { small?: boolean; homeInfo: TeamMatchInfo; awayInfo
       </div>
       <Team $backColor={homeInfo.color}>
         <div className="team-inner">
-          <div className="score">{homeInfo.score}</div>
+          <div className="score">
+            <NumberFlow value={scores[1]} />
+          </div>
           <div className="team-logo"></div>
           <div className="team-name">{homeInfo.name}</div>
           <div className="team-univ">{homeInfo.univ}</div>

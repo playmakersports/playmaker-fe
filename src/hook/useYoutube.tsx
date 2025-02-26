@@ -62,6 +62,10 @@ function useYoutube(youtubeRef: any, props?: Props) {
     }
   };
 
+  const handleSeekTo = (seconds: number) => {
+    youtubeRef.current?.internalPlayer.seekTo(seconds);
+  };
+
   const playerConnect = {
     onReady: onPlayerReady,
     onPlay: handlePlayer,
@@ -77,6 +81,7 @@ function useYoutube(youtubeRef: any, props?: Props) {
     handlePlayPause,
     playbackRate,
     handlePlaybackRate,
+    handleSeekTo,
     opts,
   };
 }

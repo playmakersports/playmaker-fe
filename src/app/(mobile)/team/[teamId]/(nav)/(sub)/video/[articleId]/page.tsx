@@ -32,17 +32,20 @@ function VideoArticle() {
     width: showMiniPlayer ? clientWidth.width / 2 : clientWidth.width,
     height: showMiniPlayer ? Math.floor(clientWidth.width * (9 / 16)) / 2 : Math.floor(clientWidth.width * (9 / 16)),
   };
-  const { playerConnect, currentTime, duration, handlePlayPause, playerState, playbackRate, handlePlaybackRate, opts } =
-    useYoutube(youtubeRef, {
-      ...VIDEO_SIZE,
-      controller: false,
-    });
-
-  const playerSeekTo = (time: string) => {
-    const [min, sec] = time.split(":").map((v) => Number(v));
-    const target = min * 60 + sec;
-    youtubeRef.current?.internalPlayer.seekTo(target);
-  };
+  const {
+    playerConnect,
+    currentTime,
+    duration,
+    handleSeekTo,
+    handlePlayPause,
+    playerState,
+    playbackRate,
+    handlePlaybackRate,
+    opts,
+  } = useYoutube(youtubeRef, {
+    ...VIDEO_SIZE,
+    controller: false,
+  });
 
   const handleScroll = useThrottle(() => {
     if (window.scrollY > VIDEO_SIZE.height * 1.1) {
@@ -87,7 +90,7 @@ function VideoArticle() {
           {VIDEO_COMMENTS.map((value, index) => (
             <VideoCommentItem
               key={value.time}
-              onClickSeekTo={() => playerSeekTo(value.time)}
+              handleSeekTo={handleSeekTo}
               activeComment={currentActiveComment}
               setActiveComment={setCurrentActiveComment}
               playerCurrentTime={currentTime}

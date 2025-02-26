@@ -10,7 +10,7 @@ type Props = {
   commentValue: any;
   activeComment: string;
   setActiveComment: (prev: string) => void;
-  onClickSeekTo: () => void;
+  handleSeekTo: (seconds: number) => void;
   playerDuration: number;
   nextCommentTime: string;
   playerCurrentTime: number;
@@ -21,7 +21,7 @@ function VideoCommentItem(props: Props) {
     commentValue,
     activeComment,
     setActiveComment,
-    onClickSeekTo,
+    handleSeekTo,
     playerDuration,
     playerCurrentTime,
     nextCommentTime,
@@ -30,9 +30,13 @@ function VideoCommentItem(props: Props) {
   const nextTime = nextCommentTime ? minSecToSecond(nextCommentTime) : playerDuration;
   const isActiveComment = thisTime <= playerCurrentTime && nextTime > playerCurrentTime;
 
+  const onClickTimeFlag = (time: string) => {
+    handleSeekTo(minSecToSecond(time));
+  };
+
   return (
     <Container>
-      <Time onClick={onClickSeekTo}>
+      <Time onClick={() => onClickTimeFlag(commentValue.time)}>
         <div className={isActiveComment ? "now-active" : ""}>{commentValue.time}</div>
       </Time>
       <Contents

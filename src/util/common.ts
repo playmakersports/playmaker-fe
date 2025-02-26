@@ -40,6 +40,6 @@ export function secondToMinSec(target: number) {
  * mm:ss를 초 단위로 변환
  */
 export function minSecToSecond(target: string): number {
-  const [min, sec] = target.split(":").map((v) => Number(v));
-  return min * 60 + sec;
+  const [mm, ss] = target.split(":");
+  return Number(mm) * 60 + Number(ss);
 }

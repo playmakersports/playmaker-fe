@@ -51,6 +51,7 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
       });
       return response.data;
     },
+    mutationKey: [url],
   });
 };
 export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
@@ -73,5 +74,6 @@ export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
       });
       return response.data;
     },
+    mutationKey: [url],
   });
 };

@@ -13,7 +13,6 @@ import TeamCreateStep3 from "@/components/Team/Create/TeamCreateStep3";
 import TeamCreateStep4 from "@/components/Team/Create/TeamCreateStep4";
 import TeamCreateStep5 from "@/components/Team/Create/TeamCreateStep5";
 import TeamCreateStep6 from "@/components/Team/Create/TeamCreateStep6";
-import TeamCreateFinish from "@/components/Team/Create/TeamCreateFinish";
 
 function TeamCreate() {
   const router = useRouter();
@@ -45,8 +44,7 @@ function TeamCreate() {
     3: <TeamCreateStep3 setStep={handleStepper} />,
     4: <TeamCreateStep4 setStep={handleStepper} />,
     5: <TeamCreateStep5 setStep={handleStepper} />,
-    6: <TeamCreateStep6 setStep={handleStepper} />,
-    7: <TeamCreateFinish />,
+    6: <TeamCreateStep6 />,
   };
 
   if (!queryStepValue) return null;

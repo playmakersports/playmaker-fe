@@ -19,7 +19,7 @@ type Props = {
 };
 function StagePageContainer({ children, headerAlign = "left", stepper = false, title, description, button }: Props) {
   return (
-    <Container stepper={stepper}>
+    <Container $stepper={stepper}>
       <article>
         {title && (
           <Header align={headerAlign}>
@@ -46,11 +46,11 @@ function StagePageContainer({ children, headerAlign = "left", stepper = false, t
   );
 }
 
-const Container = styled(BaseContainer)<{ stepper: boolean }>`
+const Container = styled(BaseContainer)<{ $stepper: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: ${({ stepper }) => `calc(100vh - var(--safe-area-top) - 1px - ${stepper ? "24px" : "0px"})`};
+  height: ${({ $stepper }) => `calc(100vh - var(--safe-area-top) - 1px - ${$stepper ? "24px" : "0px"})`};
 
   article {
     flex: 1;

@@ -40,7 +40,7 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
           <div />
         </CircleBg>
         <UnivNameTag className={teamType === "univ" ? "show" : "hide"}>{UNIVERSITY}</UnivNameTag>
-        <List next={hideStartCont}>
+        <List $showNextPage={hideStartCont}>
           <Item className={teamType === "univ" ? "selected" : ""} type="button" onClick={() => setTeamType("univ")}>
             <div className="title-wrapper">
               <GraduationIcon />
@@ -80,7 +80,7 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
           </FloatButton>
         )}
       </Container>
-      <Start next={hideStartCont}>
+      <Start $showNextPage={hideStartCont}>
         <h3>
           팀 생성을
           <br />
@@ -157,7 +157,7 @@ const UnivNameTag = styled.div`
     box-shadow: 2px 2px 2px 0 rgba(195, 220, 243, 0.25);
   }
 `;
-const Start = styled.div<{ next: boolean }>`
+const Start = styled.div<{ $showNextPage: boolean }>`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -165,7 +165,7 @@ const Start = styled.div<{ next: boolean }>`
   top: 0;
   left: 0;
   width: 100%;
-  height: ${({ next }) => (next ? "20vh" : "50vh")};
+  height: ${({ $showNextPage }) => ($showNextPage ? "20vh" : "50vh")};
   z-index: 11;
   transition: height 1s;
   will-change: height;
@@ -176,8 +176,8 @@ const Start = styled.div<{ next: boolean }>`
     text-align: center;
     font-weight: 600;
     line-height: 4.8rem;
-    transform: scale(${({ next }) => (next ? 0.75 : 1)})
-      translate3d(0, ${({ next }) => (next ? "calc(var(--env-sat) / 1.6 + 40px)" : "30vh")}, 0);
+    transform: scale(${({ $showNextPage }) => ($showNextPage ? 0.75 : 1)})
+      translate3d(0, ${({ $showNextPage }) => ($showNextPage ? "calc(var(--env-sat) / 1.6 + 40px)" : "30vh")}, 0);
     transform-origin: top center;
     animation: ${fadeIn} 1.1s ease-in-out forwards;
     transition: all 1s;
@@ -185,9 +185,9 @@ const Start = styled.div<{ next: boolean }>`
   }
 `;
 
-const List = styled.div<{ next: boolean }>`
+const List = styled.div<{ $showNextPage: boolean }>`
   display: flex;
-  opacity: ${({ next }) => (next ? 1 : 0)};
+  opacity: ${({ $showNextPage }) => ($showNextPage ? 1 : 0)};
   padding: calc(var(--safe-area-top) + 140px) 16px;
   gap: 12px;
   transition: opacity 0.5s;

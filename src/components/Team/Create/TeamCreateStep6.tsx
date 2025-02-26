@@ -1,15 +1,25 @@
+"use client";
 import React, { useRef, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { useAtom } from "jotai";
+import { useAtomValue } from "jotai";
+import { useRouter } from "next/navigation";
+import { usePost } from "@/apis/hook/query";
+import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
+import { atomTeamCreate, atomTeamCreateLogo } from "@/atom/team";
 import CameraIcon from "@/assets/icon/global/Camera.svg";
-import { atomTeamCreateBanner } from "@/atom/team";
 
-function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
+function TeamCreateStep6() {
+  const router = useRouter();
+  const confirm = useConfirm();
   const coverImageInputRef = useRef<HTMLInputElement>(null);
-  const [teamBannerCreateValue, setTeamBannerCreateValue] = useAtom(atomTeamCreateBanner);
+
+  const teamCreateValue = useAtomValue(atomTeamCreate);
+  const teamLogoValue = useAtomValue(atomTeamCreateLogo);
+
+  const { mutateAsync, data, error } = usePost<{ teamId: string }>("/api/team/create", "form-data");
 
   const [coverPreview, setCoverPreview] = useState<string>("");
   const [coverImgFile, setCoverImgFile] = useState<File | null>(null);
@@ -28,6 +38,30 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
     }
   };
 
+  const onSubmitForm = async () => {
+    router.push("/team/create/pending");
+    try {
+      await mutateAsync({
+        data: {
+          ...teamCreateValue,
+          image: teamLogoValue,
+          banner: coverImgFile,
+        },
+      });
+      router.replace(`/team/create/success?teamId=${data?.teamId}`);
+    } catch {
+      const errorConfirm = await confirm?.showConfirm(`팀 생성에 실패했어요\n${error?.message}`, {
+        yes: "홈 화면 이동",
+        no: "닫기",
+      });
+      if (errorConfirm) {
+        router.replace("/");
+      } else {
+        router.back();
+      }
+    }
+  };
+
   return (
     <StagePageContainer
       stepper={true}
@@ -36,10 +70,7 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
       description="팀을 대표하는 이미지를 선택하세요"
       button={{
         text: "다음",
-        onClick: () => {
-          setTeamBannerCreateValue(coverImgFile);
-          setStep(7);
-        },
+        onClick: onSubmitForm,
       }}
     >
       <input
@@ -51,7 +82,7 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
         onChange={previewCoverImg}
       />
 
-      <CoverUpload htmlFor="coverImgUpload" src={coverPreview}>
+      <CoverUpload htmlFor="coverImgUpload" $src={coverPreview}>
         {coverPreview ? (
           <div className="camera-icon-wrapper changed">
             <CameraIcon />
@@ -69,13 +100,13 @@ function TeamCreateStep6({ setStep }: { setStep: (prev: number) => void }) {
   );
 }
 
-const CoverUpload = styled.label<{ src: string }>`
+const CoverUpload = styled.label<{ $src: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 28px 0 0;
   height: 230px;
-  background: ${({ src }) => `url(${src})`};
+  background: ${({ $src }) => `url(${$src})`};
   border: 1px solid var(--gray100);
   background-color: var(--gray50);
   background-size: 100%;

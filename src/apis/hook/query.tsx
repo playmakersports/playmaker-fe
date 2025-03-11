@@ -1,6 +1,6 @@
+import { useAuth } from "@/session/useAuth";
 import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
 import { typedGet, typedPost, typedPut } from "..";
-import { getCookie } from "cookies-next";
 
 type ContentType = "json" | "form-data";
 const CONTENT_TYPE: Record<ContentType, string> = {
@@ -11,7 +11,8 @@ const CONTENT_TYPE: Record<ContentType, string> = {
 type QueryConfig<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 
 export const useGet = <T,>(url: string, params?: Record<string, string>, config?: QueryConfig<T>) => {
-  const accessToken = getCookie("access-token");
+  const { accessToken } = useAuth();
+
   return useQuery<T>({
     queryKey: [url, ...(params ? Object.values(params) : [])] as QueryKey,
     queryFn: async () => {
@@ -32,7 +33,8 @@ interface MutationFnAsyncType {
   queryParams?: Record<string, string>;
 }
 export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
-  const accessToken = getCookie("access-token");
+  const { accessToken } = useAuth();
+
   return useMutation({
     mutationFn: async ({ data, queryParams }: MutationFnAsyncType) => {
       let finalUrl = url;
@@ -55,7 +57,7 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
   });
 };
 export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
-  const accessToken = getCookie("access-token");
+  const { accessToken } = useAuth();
   return useMutation({
     mutationFn: async ({ data, queryParams }: MutationFnAsyncType) => {
       let finalUrl = url;

@@ -23,7 +23,7 @@ function Header({ scrollActive }: Props) {
   const isTitleShow = isTransparent ? isScrolled : true;
 
   if (pathname === "/") {
-    return <MainHeader />;
+    return <MainHeader scrollPositionY={scrollActive} />;
   }
   if (isTransparent) {
     return (

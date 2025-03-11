@@ -64,12 +64,12 @@ function Banner() {
   );
 }
 
+const BANNER_HEIGHT = 250;
 const Container = styled.div`
   position: relative;
   margin: 0 auto;
   width: 100%;
-  height: 210px;
-  border-radius: var(--radius-10);
+  height: calc(${BANNER_HEIGHT}px + var(--safe-area-top));
   overflow: hidden;
   box-shadow: var(--shadow-alpha20);
 
@@ -92,7 +92,7 @@ const Panel = styled.div`
   flex-shrink: 0;
   position: relative;
   width: 100%;
-  height: 210px;
+  height: calc(${BANNER_HEIGHT}px + var(--safe-area-top));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,8 +101,8 @@ const Panel = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 0 18px;
-    align-items: center;
+    padding: 0 18px calc((${BANNER_HEIGHT}px + var(--safe-area-top)) / 4.1 - 10px);
+    align-items: flex-end;
     justify-content: flex-end;
     white-space: pre-wrap;
     text-align: right;
@@ -145,7 +145,7 @@ const Bullet = styled.div`
   justify-content: center;
   align-items: center;
   gap: 6px;
-  bottom: 0;
+  bottom: 32px;
   margin: 0 auto 10px;
   width: 100%;
 

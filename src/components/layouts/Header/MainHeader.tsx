@@ -8,16 +8,18 @@ import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
 import NoticeBellActiveIcon from "@/assets/icon/global/NoticeBellActive.svg";
 import PersonIcon from "@/assets/icon/global/Person.svg";
 
-function MainHeader() {
+type Props = { scrollPositionY: number };
+function MainHeader({ scrollPositionY }: Props) {
   const router = useRouter();
+  const isScrolled = scrollPositionY > 160;
 
   return (
-    <Wrapper>
+    <Wrapper $isScrolled={isScrolled}>
       <Inner>
-        <Logotype className="logo" width={120} height={36} />
+        <Logotype width={140} height={32} fill={isScrolled ? "var(--gray800)" : "var(--gray100)"} />
         <Menu>
           <HeaderIconWrapper onClick={() => router.push("/notification")} aria-label="내 알림 전체보기">
-            <NoticeBellIcon />
+            <NoticeBellIcon fill={isScrolled ? "var(--gray800)" : "var(--gray100)"} />
           </HeaderIconWrapper>
         </Menu>
       </Inner>
@@ -25,10 +27,10 @@ function MainHeader() {
   );
 }
 
-const Wrapper = styled(HeaderWrapper)`
+const Wrapper = styled(HeaderWrapper)<{ $isScrolled: boolean }>`
   position: fixed;
-  background-color: var(--background-light);
-  border-radius: 0 0 10px 10px;
+  background-color: ${({ $isScrolled }) => ($isScrolled ? "var(--background-light)" : "rgba(0,0,0,0.25)")};
+  backdrop-filter: ${({ $isScrolled }) => ($isScrolled ? "none" : "blur(6px)")};
 
   @media (max-width: 540px) {
     max-width: 100%;
@@ -38,7 +40,6 @@ const HeaderIconWrapper = styled(HeaderIcon)`
   svg {
     width: 24px;
     height: 24px;
-    fill: var(--gray800);
   }
 `;
 const Inner = styled(HeaderInner)`

@@ -3,14 +3,17 @@
 import styled from "styled-components";
 import { BaseContainer } from "@/components/common/Container";
 
-export const HomeContainer = styled(BaseContainer)`
+export const HomeContainer = styled.div`
+  margin-top: calc(-1 * var(--safe-area-top));
+`;
+export const HomeInnerWrapper = styled(BaseContainer)`
   position: relative;
-  margin-top: calc(-1 * var(--header-height));
-  padding: calc(16px + var(--header-height)) 16px 0;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  background-color: var(--background);
+  background-color: var(--background-light);
+  margin-top: -20px;
+  border-radius: 20px 20px 0 0;
 `;
 
 export const HomeBackGradient = styled.div`

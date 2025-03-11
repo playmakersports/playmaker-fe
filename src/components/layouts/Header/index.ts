@@ -27,10 +27,6 @@ export const HeaderWrapper = styled.header`
   height: var(--header-height);
   z-index: 999;
   transition: background-color 0.3s, backdrop-filter 0.3s;
-  .logo {
-    width: 148px;
-    fill: var(--gray900);
-  }
 `;
 
 export const HeaderIcon = styled.button`

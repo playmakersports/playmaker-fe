@@ -9,7 +9,6 @@ import Loading from "../common/Loading";
 import { ApiSelectMember } from "@/apis/types/user";
 import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
-import { BasicWhiteCard } from "../common/Card";
 import PlusIcon from "@/assets/icon/global/Plus.svg";
 
 function MyTeam() {
@@ -30,7 +29,7 @@ function MyTeam() {
             <>
               {myTeamList?.map((item) => (
                 <TeamItem
-                  key={item.teamName}
+                  key={item.teamId}
                   aria-label={item.teamName}
                   role="button"
                   onClick={() => router.push(`/team/${item.teamId}`)}
@@ -60,20 +59,20 @@ function MyTeam() {
   );
 }
 
-const TeamList = styled(BasicWhiteCard)`
+const TeamList = styled.div`
   padding: 0;
   ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")}
 
   .team-list {
     display: flex;
-    justify-content: space-around;
     gap: 12px;
-    padding: 12px 16px;
+    padding: 12px 1px;
     overflow-x: auto;
     overflow-y: hidden;
   }
 `;
 const TeamItem = styled.li`
+  user-select: none;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -92,15 +91,14 @@ const TeamItem = styled.li`
 const TeamImage = styled.div<{ src: string }>`
   display: block;
   margin: 0 8px;
-  width: 50px;
-  height: 50px;
-  background-color: #fff;
+  width: 55px;
+  height: 55px;
+  background-color: var(--gray200);
   background-image: url(${({ src }) => src});
   background-size: 50px;
   background-repeat: no-repeat;
   background-position: center;
-  border: 1px solid var(--gray300);
-  border-radius: 100%;
+  border-radius: 10px;
 `;
 
 const More = styled.div`

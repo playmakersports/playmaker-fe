@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
+import { useAuth } from "@/session/useAuth";
 
 import { baseBackendURL } from "@/apis";
-import { getCookie } from "cookies-next";
+import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
 function EventNotification() {
+  const { accessToken } = useAuth();
   const HEARTBEAT_TIMEOUT = 360000;
-  const accessToken = getCookie("access-token");
 
   useEffect(() => {
     const EventSource = EventSourcePolyfill || NativeEventSource;

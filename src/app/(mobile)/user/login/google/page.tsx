@@ -2,9 +2,12 @@ import { redirect } from "next/navigation";
 import { baseBackendURL } from "@/apis";
 import { AuthResponse } from "@/types/auth";
 import { setServerCookie } from "@/session/server-cookie";
+import Loading from "@/components/common/Loading";
 
-export default async function GoogleLogin({ searchParams }: { searchParams: { code?: string } }) {
-  const code = searchParams.code;
+type SearchParams = Promise<{ code: string | undefined }>;
+export default async function GoogleLogin(props: { searchParams: SearchParams }) {
+  const code = (await props.searchParams).code;
+
   if (!code) {
     return <p>Authorization code is missing.</p>;
   }
@@ -32,4 +35,6 @@ export default async function GoogleLogin({ searchParams }: { searchParams: { co
   } catch (error) {
     return <p>Authentication failed. Please try again.</p>;
   }
+
+  return <Loading page />;
 }

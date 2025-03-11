@@ -2,13 +2,12 @@ import { redirect } from "next/navigation";
 import { baseBackendURL } from "@/apis";
 import { AuthResponse } from "@/types/auth";
 import { setServerCookie } from "@/session/server-cookie";
-import Loading from "@/components/common/Loading";
 
 type SearchParams = Promise<{ code: string | undefined }>;
 export default async function GoogleLogin(props: { searchParams: SearchParams }) {
   const code = (await props.searchParams).code;
-
   if (!code) {
+    // params에 코드가 없을 경우
     return <p>Authorization code is missing.</p>;
   }
 
@@ -21,8 +20,6 @@ export default async function GoogleLogin(props: { searchParams: SearchParams })
     }
 
     const data: AuthResponse = await response.json();
-
-    // ✅ 서버에서 쿠키 설정
     setServerCookie(data.access_token);
 
     if (data.newUserYn === "Y") {
@@ -35,6 +32,4 @@ export default async function GoogleLogin(props: { searchParams: SearchParams })
   } catch (error) {
     return <p>Authentication failed. Please try again.</p>;
   }
-
-  return <Loading page />;
 }

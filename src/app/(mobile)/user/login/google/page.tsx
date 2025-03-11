@@ -1,7 +1,8 @@
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { baseBackendURL } from "@/apis";
 import { AuthResponse } from "@/types/auth";
 import { setServerCookie } from "@/session/server-cookie";
+import ErrorFallback from "@/components/common/global/ErrorFallback";
 
 type SearchParams = Promise<{ code: string | undefined }>;
 export default async function GoogleLogin(props: { searchParams: SearchParams }) {
@@ -30,6 +31,7 @@ export default async function GoogleLogin(props: { searchParams: SearchParams })
       redirect("/");
     }
   } catch (error) {
-    return <p>Authentication failed. Please try again.</p>;
+    console.log(error);
+    return <ErrorFallback />;
   }
 }

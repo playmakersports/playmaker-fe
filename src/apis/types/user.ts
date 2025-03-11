@@ -8,11 +8,11 @@ export type ApiSelectMember = {
   birth: string;
   contact: string;
   imageUrl: string;
-  memberType: "대학생" | "일반";
+  memberType: "대학생" | "일반" | (string & NonNullable<unknown>);
   nickname: string;
   preferredSport: string;
   selfIntro: string;
-  sexKey: "남성" | "여성";
+  sexKey: "남성" | "여성" | (string & NonNullable<unknown>);
   team: Array<{
     logoUrl: string;
     teamId: number;

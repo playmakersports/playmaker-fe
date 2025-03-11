@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import styled from "styled-components";
 
@@ -9,9 +8,20 @@ import { BaseContainer } from "@/components/common/Container";
 import FloatButton from "@/components/common/FloatButton";
 
 import Surprised from "@/assets/character/Surprised.svg";
+import { useRouter } from "next/navigation";
 
-type Props = { status?: number | string; message?: string; retry: () => void; reset: () => void };
-function ErrorFallback({ status, message, retry, reset }: Props) {
+type Props = { status?: number | string; message?: string; retry?: () => void; reset?: () => void };
+function ErrorFallback(props: Props) {
+  const router = useRouter();
+  const { status, message, retry, reset } = props;
+
+  const onGoBack = () => {
+    router.back();
+  };
+  const onGoHome = () => {
+    router.replace("/");
+  };
+
   return (
     <Container>
       <HideHeader />
@@ -27,10 +37,10 @@ function ErrorFallback({ status, message, retry, reset }: Props) {
         </span>
       </p>
       <FloatButton gap="10px">
-        <Button type="button" mode="OPTION1" $fullWidth onClick={retry}>
+        <Button type="button" mode="OPTION1" $fullWidth onClick={retry ?? onGoBack}>
           다시 시도
         </Button>
-        <Button type="button" mode="MAIN" $fullWidth onClick={reset}>
+        <Button type="button" mode="MAIN" $fullWidth onClick={reset ?? onGoHome}>
           홈 화면 이동
         </Button>
       </FloatButton>

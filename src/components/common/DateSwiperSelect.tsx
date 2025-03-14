@@ -1,4 +1,4 @@
-import React, { useCallback, useImperativeHandle, useRef, useState } from "react";
+import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { getDate, getDaysInMonth, getMonth, getYear } from "date-fns";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
@@ -23,6 +23,16 @@ export const DateSwiperSelect = (props: Props) => {
   const yearFlickRef = useRef<Flicking>(null);
   const monthFlickRef = useRef<Flicking>(null);
   const dayFlickRef = useRef<Flicking>(null);
+
+  useEffect(() => {
+    if (defaultValue) {
+      const [year, month, day] = defaultValue.split("-").map(Number);
+      setYearValue(year);
+      setMonthValue(month);
+      setDayValue(day);
+    }
+  }, [defaultValue]);
+
   const getNumberFromTo = useCallback((start: number, end: number) => {
     if (start > end) {
       return Array.from({ length: start - end + 1 }, (_, index) => start - index);
@@ -40,7 +50,7 @@ export const DateSwiperSelect = (props: Props) => {
     1,
     pickType === "ONLY_PAST" && +yearValue === getYear(new Date()) && +monthValue === getMonth(new Date()) + 1
       ? getDate(new Date())
-      : getDaysInMonth(`${yearValue}/${monthValue}/01`)
+      : getDaysInMonth(new Date(yearValue, monthValue - 1))
   );
 
   const onYearChanged = (e: ChangedEvent | WillChangeEvent) => {
@@ -61,7 +71,7 @@ export const DateSwiperSelect = (props: Props) => {
     });
   };
   const moveToMonth = (index: number) => {
-    setMonthValue(+`${YEARS[index]}`);
+    setMonthValue(+`${MONTHS[index]}`);
     monthFlickRef.current!.moveTo(index).catch((err) => {
       if (err instanceof FlickingError) return;
       throw err;

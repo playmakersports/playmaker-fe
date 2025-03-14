@@ -39,7 +39,7 @@ function useCalendar(defaultDate?: Date) {
     const targetDate = addDays(`${currentDate.getFullYear()}/${currentDate.getMonth() + 1}/01`, index);
     return {
       date: targetDate,
-      displayValue: index + 1,
+      displayValue: targetDate.getDate(),
       previousMonth: false,
       nextMonth: false,
       holiday: {

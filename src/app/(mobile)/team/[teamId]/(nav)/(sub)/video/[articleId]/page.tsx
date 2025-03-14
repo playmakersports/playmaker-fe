@@ -175,7 +175,7 @@ const Bottom = styled.div`
   margin: 0 -16px;
   padding: 8px 14px calc(20px + env(safe-area-inset-bottom) / 2);
   border-top: 1px solid var(--gray100);
-  background: var(--gray0);
+  background: var(--white);
   z-index: 10;
 `;
 

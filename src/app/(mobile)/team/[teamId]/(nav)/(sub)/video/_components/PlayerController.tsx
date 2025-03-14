@@ -102,7 +102,7 @@ const Container = styled.div`
   }
   button.play-pause-btn {
     width: 82px;
-    color: var(--gray0);
+    color: var(--white);
     background-color: var(--main);
 
     &:disabled {
@@ -110,7 +110,7 @@ const Container = styled.div`
       background-color: var(--gray200);
     }
     &.playing {
-      background-color: var(--point);
+      background-color: var(--warning500);
     }
   }
 

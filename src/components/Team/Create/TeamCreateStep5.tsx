@@ -172,7 +172,7 @@ const DisplayAboveBottom = styled.div`
   padding: 8px 20px;
   width: max-content;
   ${FONTS.MD1W500};
-  color: var(--art-purple);
+  color: var(--purple300);
   border-radius: 10px;
   background-color: #fff;
   letter-spacing: 0.2px;

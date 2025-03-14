@@ -74,7 +74,7 @@ const ProfileImg = styled.div<{ $src: string }>`
   position: relative;
   width: 85px;
   height: 85px;
-  background-color: var(--sub2);
+  background-color: var(--primary200);
   background-image: url(${(props) => props.$src});
   background-size: 101% auto;
   background-repeat: no-repeat;

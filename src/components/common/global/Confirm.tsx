@@ -94,7 +94,7 @@ const ModalButton = styled.button`
 const ConfirmButton = styled(ModalButton)`
   border: 1px solid transparent;
   background-color: var(--main);
-  color: var(--gray0);
+  color: var(--white);
 
   &:active {
     background-color: var(--primary-m200);

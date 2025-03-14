@@ -90,7 +90,7 @@ const Container = styled.div`
       padding: 3px 10px;
       border-radius: 6px;
       background-color: var(--main);
-      color: var(--gray0);
+      color: var(--white);
       ${FONTS.MD2}
       font-weight:400;
 

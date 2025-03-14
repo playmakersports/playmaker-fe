@@ -60,7 +60,7 @@ function ListArticle(props: Props) {
 
 const Wrapper = styled.div`
   padding: 12px 20px;
-  background-color: var(--gray0);
+  background-color: var(--white);
   border-radius: 10px;
 
   a {

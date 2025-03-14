@@ -21,7 +21,7 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   }
 
   background-color: var(--background-light);
-  border: 1px solid ${({ $isError }) => ($isError ? "var(--point)" : "var(--gray300)")};
+  border: 1px solid ${({ $isError }) => ($isError ? "var(--warning500)" : "var(--gray300)")};
   border-radius: 6px;
 
   &:disabled,

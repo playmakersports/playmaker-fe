@@ -80,7 +80,7 @@ const Week = styled.div`
     &:first-of-type {
       // 일요일
       button > p {
-        color: var(--point);
+        color: var(--warning500);
       }
     }
     span.date-name {
@@ -113,7 +113,7 @@ const Week = styled.div`
 
     button.active-date > p {
       color: #fff;
-      background-color: var(--art-purple);
+      background-color: var(--purple300);
       font-weight: 700;
       transition: background-color 0.2s;
     }

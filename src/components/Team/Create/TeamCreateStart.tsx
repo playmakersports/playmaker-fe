@@ -198,7 +198,7 @@ const Item = styled.button`
   position: relative;
   padding: 30px 8px;
   background-color: rgba(255, 255, 255, 0.6);
-  border: 1px solid var(--gray0);
+  border: 1px solid var(--white);
   border-radius: 20px;
   box-shadow: 0 2px 4px 0 rgba(195, 220, 243, 0.5);
   transition: transform 0.2s;
@@ -222,7 +222,7 @@ const Item = styled.button`
     svg {
       width: 30px;
       height: 30px;
-      fill: var(--sub1);
+      fill: var(--primary300);
     }
   }
   strong.card-title {

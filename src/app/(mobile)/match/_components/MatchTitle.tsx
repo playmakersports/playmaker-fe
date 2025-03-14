@@ -32,7 +32,7 @@ const Wrapper = styled.div<{ $swipeWidth: number }>`
   width: 100%;
   text-align: center;
   border-radius: 8px;
-  background-color: rgba(var(--gray0-rgb), 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   overflow: hidden;
 
   &:before {

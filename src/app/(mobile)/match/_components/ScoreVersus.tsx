@@ -109,7 +109,7 @@ const Team = styled.div<{ $backColor: string }>`
     margin: 0 auto 16px;
     width: 80px;
     height: 80px;
-    background-color: var(--gray0);
+    background-color: var(--white);
     border-radius: 50%;
   }
   div.team-name {

@@ -84,7 +84,7 @@ const Inner = styled.div`
   padding: 16px 16px calc(var(--env-sab) + 16px);
   display: flex;
   justify-content: space-between;
-  background-color: var(--gray0);
+  background-color: var(--white);
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -7px 20px 0 #efefef;
 `;

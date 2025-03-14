@@ -186,16 +186,16 @@ const TeamLabels = styled.ul`
       color: #ef8e8d;
     }
     &.MIXED {
-      background-color: rgba(var(--art-purple-rgb), 0.1);
-      color: var(--art-purple);
+      background-color: var(--purple50);
+      color: var(--purple500);
     }
     &.CLUB {
-      background-color: rgba(var(--point-rgb), 0.1);
-      color: var(--point);
+      background-color: var(--warning100);
+      color: var(--warning500);
     }
     &.UNIV {
-      background-color: rgba(var(--art-cyan-rgb), 0.1);
-      color: #05aca2;
+      background-color: var(--success50);
+      color: var(--success500);
     }
   }
 `;

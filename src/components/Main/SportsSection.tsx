@@ -100,7 +100,7 @@ const SportsTitle = styled.h3`
       display: inline-block;
       width: 8px;
       height: 8px;
-      background: var(--sub1);
+      background: var(--primary300);
       border-radius: 50%;
       filter: blur(2px);
     }

@@ -136,8 +136,8 @@ const MatchInfo = styled.div`
     border-radius: 10px;
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--art-purple);
-    background-color: rgba(var(--art-purple-rgb), 0.15);
+    color: var(--purple300);
+    background-color: var(--purple50);
   }
   div.match-score {
     display: flex;
@@ -175,8 +175,8 @@ const MVPLabel = styled.div<{ leftWin: boolean }>`
   border-radius: ${({ leftWin }) => (leftWin ? "0 10px 10px 0" : "10px 0 0 10px")};
   font-size: 1.2rem;
   font-weight: 500;
-  color: var(--main);
-  background-color: var(--sub2);
+  color: var(--primary600);
+  background-color: var(--primary100);
 
   /* &::before {
     content: "";
@@ -186,7 +186,7 @@ const MVPLabel = styled.div<{ leftWin: boolean }>`
     width: ${Math.sqrt(2) * 10}px;
     height: ${Math.sqrt(2) * 10}px;
     left: 0;
-    background-color: var(--sub2);
+    background-color: var(--primary200);
     transform-origin: top;
     transform: rotate(45deg) translateY(calc(-50% + 5px)) translateX(-5px);
   } */
@@ -197,7 +197,7 @@ const MVPLabel = styled.div<{ leftWin: boolean }>`
     display: block;
     width: ${Math.sqrt(2) * 10}px;
     height: ${Math.sqrt(2) * 10}px;
-    background-color: var(--sub2);
+    background-color: var(--primary200);
     transform-origin: top;
     transform: rotate(45deg) translateY(calc(-50% ${({ leftWin }) => (leftWin ? "+" : "-")} 5px))
       translateX(${({ leftWin }) => (leftWin ? "-5" : "5")}px);

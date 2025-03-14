@@ -81,7 +81,7 @@ const Item = styled(BasicWhiteCard).attrs({ as: "li" })`
     padding: 1px 4px;
     width: max-content;
     border-radius: 5px;
-    border: 1px solid var(--sub1);
+    border: 1px solid var(--primary300);
     color: var(--main);
   }
   p.article-title {

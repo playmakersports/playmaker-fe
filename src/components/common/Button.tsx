@@ -48,7 +48,7 @@ function Button(props: Props) {
     },
     SUB1: {
       background: "var(--primary-m100)",
-      color: "var(--gray0)",
+      color: "var(--white)",
     },
     WARN: {
       background: "var(--point-red)",

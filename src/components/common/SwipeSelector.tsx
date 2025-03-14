@@ -98,7 +98,7 @@ const Button = styled.button<{ $bgColor: string }>`
   align-items: center;
   gap: 6px;
   background-color: ${({ $bgColor }) => $bgColor};
-  color: var(--gray0);
+  color: var(--white);
   font-size: 1.4rem;
   font-weight: 500;
   word-break: keep-all;

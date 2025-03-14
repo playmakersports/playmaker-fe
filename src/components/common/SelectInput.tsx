@@ -62,7 +62,7 @@ const Check = styled.input`
     outline: 3px solid var(--gray400);
   }
   &:focus + i {
-    outline: 3px solid var(--sub1);
+    outline: 3px solid var(--primary300);
   }
   &:checked + i {
     border: 1px solid transparent;
@@ -91,7 +91,7 @@ const Radio = styled.input`
     outline: 3px solid var(--gray600);
   }
   &:focus:checked + ${RadioIcon} {
-    outline: 3px solid var(--sub1);
+    outline: 3px solid var(--primary300);
   }
   &:checked + ${RadioIcon} {
     display: flex;

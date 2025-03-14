@@ -152,7 +152,7 @@ const Acceptable = styled.div`
   margin-top: 6px;
   padding: 0 8px;
   font-size: 1.3rem;
-  color: var(--point);
+  color: var(--warning500);
   gap: 6px;
 
   span.acceptable-title {
@@ -164,14 +164,14 @@ const Acceptable = styled.div`
     margin-right: -2px;
     font-size: 1.2rem;
     padding: 2px 4px;
-    background-color: rgba(var(--point-rgb), 0.08);
-    color: var(--point);
+    background-color: var(--warning50);
+    color: var(--warning500);
     border-radius: 2px;
     font-weight: 500;
   }
   svg {
     width: 16px;
     height: 16px;
-    fill: var(--point);
+    fill: var(--warning500);
   }
 `;

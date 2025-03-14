@@ -58,10 +58,10 @@ const Container = styled.ul<{ length: number }>`
       height: 12px;
       background-color: var(--main);
       border: 1px solid var(--background);
-      outline: 1px solid var(--sub1);
+      outline: 1px solid var(--primary300);
     }
     &.past-step > i {
-      background-color: var(--sub1);
+      background-color: var(--primary300);
     }
     &::before {
       content: "";
@@ -75,7 +75,7 @@ const Container = styled.ul<{ length: number }>`
     }
     &.active-step::before,
     &.past-step::before {
-      border-color: var(--sub1);
+      border-color: var(--primary300);
     }
 
     &:first-of-type::before {
@@ -100,7 +100,7 @@ const SimpleContainer = styled.div`
   }
   i.active {
     width: 20px;
-    background-color: var(--sub1);
+    background-color: var(--primary300);
     border-radius: 5px;
   }
 `;

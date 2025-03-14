@@ -113,7 +113,7 @@ const DaySelector = styled.button`
 
   &:first-of-type span.date-number {
     // 일요일
-    color: var(--point);
+    color: var(--warning500);
   }
 
   span.date-name {
@@ -137,10 +137,10 @@ const DaySelector = styled.button`
 
   &.active-day {
     span {
-      color: var(--art-purple);
+      color: var(--purple300);
     }
     span.date-number {
-      background: var(--art-purple);
+      background: var(--purple300);
       color: #fff;
       font-weight: 500;
     }
@@ -148,7 +148,7 @@ const DaySelector = styled.button`
 
   &:active {
     transform: scale(0.95);
-    background-color: var(--art-purple);
+    background-color: var(--purple300);
     opacity: 0.6;
     span {
       color: #fff;
@@ -207,7 +207,7 @@ const Schedules = styled.ul`
       content: "";
       width: 5px;
       height: 5px;
-      background-color: var(--sub1);
+      background-color: var(--primary300);
       border-radius: 100%;
     }
   }

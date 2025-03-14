@@ -127,10 +127,10 @@ const CoverUpload = styled.label<{ $src: string }>`
       backdrop-filter: blur(3px);
       background-color: rgba(0, 0, 0, 0.08);
       border-radius: 50%;
-      color: var(--gray0);
+      color: var(--white);
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
       svg {
-        fill: var(--gray0);
+        fill: var(--white);
       }
     }
   }
@@ -159,7 +159,7 @@ const DisplayAboveBottom = styled.div`
   padding: 8px 20px;
   width: max-content;
   ${FONTS.MD1W500};
-  color: var(--art-purple);
+  color: var(--purple300);
   border-radius: 10px;
   background-color: #fff;
   letter-spacing: 0.2px;

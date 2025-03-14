@@ -98,7 +98,7 @@ const Participants = styled.div`
       margin-left: -5px;
       width: 24px;
       height: 24px;
-      background-color: rgba(var(--sub1-rgb), 0.45);
+      background-color: var(--primary100);
       border-radius: 50%;
     }
   }

@@ -113,9 +113,9 @@ const ProfileImg = styled.div<StyledImageProps>`
     bottom: -2px;
     background-color: var(--main);
     border-radius: 50%;
-    border: 2px solid var(--gray0);
+    border: 2px solid var(--white);
     box-sizing: content-box;
-    color: var(--gray0);
+    color: var(--white);
     font-weight: 600;
     font-size: 1rem;
     line-height: 1rem;

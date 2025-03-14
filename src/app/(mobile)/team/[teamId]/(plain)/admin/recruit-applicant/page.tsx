@@ -171,7 +171,7 @@ const Name = styled.div`
     font-size: 1.3rem;
     line-height: 1.6rem;
     font-weight: 500;
-    color: var(--point);
+    color: var(--warning500);
   }
   p.player-name {
     ${FONTS.MD1};

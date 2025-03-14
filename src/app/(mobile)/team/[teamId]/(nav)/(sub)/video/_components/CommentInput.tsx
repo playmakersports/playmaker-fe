@@ -49,7 +49,7 @@ const Container = styled.div`
     text-align: center;
     border-radius: 8px;
 
-    color: var(--gray0);
+    color: var(--white);
     background-color: var(--gray500);
     &.valid-time {
       font-weight: 700;
@@ -63,7 +63,7 @@ const Container = styled.div`
     padding: 6px 8px;
     font-size: 1.4rem;
     border-radius: 8px;
-    border: 1px solid var(--sub1);
+    border: 1px solid var(--primary300);
     ${TEXT_ACTIVE("var(--background-light)", { focus: true })};
 
     &:disabled {

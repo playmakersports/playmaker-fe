@@ -251,7 +251,7 @@ const Error = styled.div`
   padding: 20px 0;
   width: 100%;
   text-align: center;
-  color: var(--point);
+  color: var(--warning500);
 `;
 
 export default DropDown;

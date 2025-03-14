@@ -49,7 +49,7 @@ const TabButton = styled.button`
   border-radius: 6px;
 
   &.active {
-    color: var(--gray0);
+    color: var(--white);
     background: var(--gray900);
   }
 `;

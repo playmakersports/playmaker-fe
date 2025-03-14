@@ -237,7 +237,7 @@ const CommentInput = styled.div`
     width: 100%;
     border-radius: 12px 12px 0 0;
     padding: 24px 16px calc(var(--env-sab) + 16px);
-    background-color: var(--gray0);
+    background-color: var(--white);
     box-shadow: 0 -2px 10px 6px rgba(0, 0, 0, 0.05);
   }
   div.comment-inner {
@@ -265,7 +265,7 @@ const CommentInput = styled.div`
     ${FONTS.MD2};
     padding: 6px 20px;
     background-color: var(--gray500);
-    color: var(--gray0);
+    color: var(--white);
     border-radius: 20px;
     font-size: 1.4rem;
     &:active {

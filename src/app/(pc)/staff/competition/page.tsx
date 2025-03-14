@@ -153,13 +153,13 @@ const Status = styled.span`
   line-height: 1.2rem;
   padding: 4px;
   border-radius: 4px;
-  background-color: var(--sub2);
-  color: var(--main);
+  background-color: var(--primary50);
+  color: var(--primary600);
   word-break: keep-all;
   &.BEFORE {
-    font-weight: 700;
-    background-color: rgba(var(--point-red-rgb), 0.09);
-    color: var(--point-red);
+    font-weight: 600;
+    background-color: var(--red100);
+    color: var(--red500);
   }
   &.CLOSED {
     background-color: var(--gray200);

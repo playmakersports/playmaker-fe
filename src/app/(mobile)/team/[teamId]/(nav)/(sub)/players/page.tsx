@@ -70,8 +70,8 @@ function PlayerList() {
                 key={player.playerId}
                 left={[
                   {
-                    svg: <CrownIcon fill="var(--gray0)" />,
-                    bgColor: "var(--art-purple)",
+                    svg: <CrownIcon fill="var(--white)" />,
+                    bgColor: "var(--purple300)",
                     text: "권한 설정",
                     onClick: () =>
                       onRoleClick({
@@ -82,7 +82,7 @@ function PlayerList() {
                       }),
                   },
                   {
-                    svg: <StartIcon fill="var(--gray0)" />,
+                    svg: <StartIcon fill="var(--white)" />,
                     bgColor: "var(--main)",
                     text: "카테고리",
                     onClick: () =>
@@ -95,7 +95,7 @@ function PlayerList() {
                   },
                 ]}
                 right={{
-                  svg: <DeleteAllBorderIcon fill="var(--gray0)" />,
+                  svg: <DeleteAllBorderIcon fill="var(--white)" />,
                   bgColor: "#07235F",
                   text: "퇴출",
                   onClick: () => {},

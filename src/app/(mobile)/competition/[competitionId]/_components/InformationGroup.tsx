@@ -106,7 +106,7 @@ const Contents = styled.div`
         width: 5px;
         height: 5px;
         margin-top: calc((2.4rem - 5px) / 2);
-        background-color: var(--sub1);
+        background-color: var(--primary300);
         border-radius: 50%;
       }
     }

@@ -143,7 +143,7 @@ const IconArea = styled.div`
 `;
 const ErrorIconArea = styled(IconArea)`
   svg {
-    fill: var(--point);
+    fill: var(--warning500);
   }
 `;
 const ClearIconArea = styled(IconArea)`
@@ -208,7 +208,7 @@ const ErrorText = styled.p`
   border-radius: 8px;
   letter-spacing: -0.1px;
   color: #fff;
-  background-color: var(--point);
+  background-color: var(--warning500);
   animation: ${ErrorAnimate} 0.25s cubic-bezier(0.05, 0, 0, 1);
   transform-origin: calc(100% - 12px) 120%;
   user-select: none;
@@ -221,7 +221,7 @@ const ErrorText = styled.p`
     right: 12px;
     bottom: -14px;
     content: "";
-    background-color: var(--point);
+    background-color: var(--warning500);
     width: 18px;
     height: 18px;
     clip-path: path(

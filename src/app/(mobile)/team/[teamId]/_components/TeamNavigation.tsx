@@ -50,7 +50,7 @@ const Menu = styled.ul`
   width: calc(var(--mobile-max-width) - 16px * 2);
   margin: 0 12px;
   padding: 6px 16px;
-  background-color: var(--gray0);
+  background-color: var(--white);
   border-radius: 100px;
   box-shadow: 0px 6px 20px 0 rgba(208, 214, 226, 0.7);
 

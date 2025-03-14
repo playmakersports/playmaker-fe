@@ -107,7 +107,7 @@ const Item = styled(CommonItem)`
 
   &.selected {
     border-bottom: ${({ type }) => (type === "line" ? "1px solid var(--main)" : "transparent")};
-    color: ${({ type }) => (type === "line" ? "var(--main)" : "var(--gray0)")};
+    color: ${({ type }) => (type === "line" ? "var(--main)" : "var(--white)")};
     font-weight: ${({ type }) => (type === "line" ? 600 : 700)};
   }
 `;

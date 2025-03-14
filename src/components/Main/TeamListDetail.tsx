@@ -65,7 +65,7 @@ const TeamHead = styled.div`
       border-radius: 7px;
     }
     span.sports {
-      background-color: var(--sub2);
+      background-color: var(--primary200);
       color: var(--main);
     }
     span.univ {
@@ -79,7 +79,7 @@ const TeamLogo = styled.div`
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  background-color: var(--sub1);
+  background-color: var(--primary300);
 `;
 const TeamDetail = styled.div`
   padding: 12px 16px;

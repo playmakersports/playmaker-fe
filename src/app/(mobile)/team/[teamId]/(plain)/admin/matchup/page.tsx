@@ -164,10 +164,10 @@ const TeamLogo = styled.div<{ src: string; isRequest: boolean }>`
     top: -1px;
     right: -1px;
     border-radius: 50%;
-    background-color: ${({ isRequest }) => (isRequest ? "var(--art-purple)" : "var(--sub1)")};
+    background-color: ${({ isRequest }) => (isRequest ? "var(--purple300)" : "var(--primary300)")};
   }
   svg {
-    fill: var(--gray0);
+    fill: var(--white);
     width: 10px;
     height: 10px;
     transform: ${({ isRequest }) => (isRequest ? "none" : "rotate(180deg)")};

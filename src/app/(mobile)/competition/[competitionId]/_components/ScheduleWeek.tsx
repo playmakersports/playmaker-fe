@@ -175,7 +175,7 @@ const WeeklyButton = styled.button`
   padding: 8px 6px 8px 8px;
   align-items: center;
   justify-content: center;
-  background-color: var(--gray0);
+  background-color: var(--white);
   opacity: 0.95;
   z-index: 2;
 

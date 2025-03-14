@@ -47,8 +47,7 @@ div.loading-ui {
   --gray200: #e2e8f0;
   --gray100: #f1f5f9;
   --gray50: #f8fafc;
-  --gray0: #fff;
-  --gray0-rgb: 255, 255, 255;
+  --white: #fff;
 
   --primary900: #0e633c;
   --primary800: #177843;
@@ -158,5 +157,5 @@ body {
   --gray200: #2c2c32;
   --gray100: #212121;
   --gray50: #121212;
-  --gray0: #000;
+  --white: #000;
 }

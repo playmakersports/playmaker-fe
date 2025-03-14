@@ -180,13 +180,13 @@ const CardInfo = styled.div`
       color: var(--gray700);
     }
     li[data-kind="category"] {
-      background-color: rgba(160, 188, 248, 0.5);
+      background-color: var(--primary100);
       color: var(--main);
       font-weight: 600;
     }
     li[data-kind="practice"] {
-      background-color: rgba(148, 144, 223, 0.2);
-      color: var(--art-purple);
+      background-color: var(--purple50);
+      color: var(--purple300);
       font-weight: 600;
     }
   }
@@ -209,7 +209,7 @@ const Bullet = styled.div`
     transition: width 0.2s, background-color 0.2s;
     &.active-bullet {
       width: 24px;
-      background-color: var(--art-purple);
+      background-color: var(--primary400);
     }
   }
 `;

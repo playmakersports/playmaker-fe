@@ -5,7 +5,7 @@ import { atomToast } from "@/atom/common";
 
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 
-type ToastType = "DEFAULT" | "ALERT" | "CONFIRM";
+type ToastType = "DEFAULT" | "ALERT" | "CONFIRM" | "default" | "primary" | "success" | "info" | "warning" | "error";
 function Toast() {
   const [toastAtom] = useAtom(atomToast);
   const containerProp = {
@@ -65,8 +65,8 @@ const Container = styled.div<{ $animate: boolean; $show: boolean; type?: ToastTy
   align-items: center;
   gap: 24px;
   width: max-content;
-  background-color: ${({ type }) => (type === "CONFIRM" ? "var(--gray0)" : "rgba(var(--gray900-rgb), 0.8)")};
-  color: ${({ type }) => (type === "CONFIRM" ? "var(--gray900)" : "var(--gray0)")};
+  background-color: ${({ type }) => (type === "CONFIRM" ? "var(--white)" : "var(--gray700)")};
+  color: ${({ type }) => (type === "CONFIRM" ? "var(--gray900)" : "var(--white)")};
   box-shadow: ${({ type }) => (type === "CONFIRM" ? "0 2px 4px rgba(141, 141, 141, 0.15)" : "none")};
   border: 1px solid ${({ type }) => (type === "CONFIRM" ? "#ededed" : "transparent")};
 
@@ -82,7 +82,7 @@ const Container = styled.div<{ $animate: boolean; $show: boolean; type?: ToastTy
     appearance: none;
     display: inline-flex;
     padding: 5px;
-    background-color: var(--sub1);
+    background-color: var(--primary300);
     /* border: 1.5px solid #fff; */
     border-radius: 50%;
     svg {

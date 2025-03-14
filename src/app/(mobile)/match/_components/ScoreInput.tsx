@@ -100,14 +100,14 @@ const Wrapper = styled.div`
   }
 `;
 const Inputs = styled.div`
-  border: 1px solid var(--sub1);
+  border: 1px solid var(--primary300);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   width: 100%;
   border-radius: 10px;
-  background-color: var(--gray0);
+  background-color: var(--white);
   gap: 12px;
 
   p.versus {

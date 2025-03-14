@@ -12,9 +12,9 @@ const TYPE_COLOR: Record<string, ColorType> = {
   main: { bg: "rgba(var(--sub2-rgb), 0.7)", text: "var(--main)" },
   subMain: { bg: "rgba(var(--sub2-rgb), 0.35)", text: "var(--primary-m100)" },
   subRed: { bg: "rgba(239, 142, 141, 0.1)", text: "#ef8e8d" },
-  purple: { bg: "rgba(var(--art-purple-rgb), 0.1)", text: "var(--art-purple)" },
+  purple: { bg: "rgba(var(--art-purple-rgb), 0.1)", text: "var(--purple300)" },
   green: { bg: "rgba(var(--art-cyan-rgb), 0.1)", text: "#05aca2" },
-  yellow: { bg: "rgba(var(--point-rgb), 0.1)", text: "var(--point)" },
+  yellow: { bg: "rgba(var(--point-rgb), 0.1)", text: "var(--warning500)" },
 };
 
 function Badge(props: Props) {

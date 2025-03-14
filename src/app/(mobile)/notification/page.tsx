@@ -242,7 +242,7 @@ const Logo = styled.img`
   width: 52px;
   height: 52px;
   border-radius: 10px;
-  background-color: var(--sub2);
+  background-color: var(--primary200);
   opacity: 1;
   transition: all 0.2s;
 `;

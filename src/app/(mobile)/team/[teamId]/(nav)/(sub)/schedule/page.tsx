@@ -21,6 +21,7 @@ import LocationIcon from "@/assets/icon/global/Location.svg";
 import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
+import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 
 function Schedule() {
   const router = useRouter();
@@ -89,27 +90,42 @@ function Schedule() {
       <CalendarContainer>
         <Header>
           <NowDate>
+            <MonthArrow onClick={() => handleMonthMove("PREV")}>
+              <LeftArrowIcon />
+            </MonthArrow>
             <DateSwiperSelect
               defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
               getCurrentValue={({ y, m, d }) => {
                 setCurrentDate(new Date(y, m - 1, d));
               }}
-              // eslint-disable-next-line react/no-children-prop
-              children={(showModal) => (
-                <button type="button" onClick={showModal} className="date-control-button">
-                  {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
-                </button>
+            >
+              {(showModal) => (
+                <NumberFlowGroup>
+                  <button type="button" onClick={showModal} className="date-control-button">
+                    <NumberFlow
+                      className={
+                        currentDate.getFullYear() === new Date().getFullYear() ? "hide year-number" : "year-number"
+                      }
+                      value={currentDate.getFullYear() === new Date().getFullYear() ? 0 : currentDate.getFullYear()}
+                      suffix={currentDate.getFullYear() === new Date().getFullYear() ? undefined : "년"}
+                      format={{
+                        useGrouping: false,
+                        trailingZeroDisplay: "stripIfInteger",
+                      }}
+                      style={{
+                        marginRight: "6px",
+                      }}
+                    />
+                    <NumberFlow value={currentDate.getMonth() + 1} suffix="월" />
+                  </button>
+                </NumberFlowGroup>
               )}
-            />
-          </NowDate>
-          <MonthMover>
-            <MonthArrow onClick={() => handleMonthMove("PREV")}>
-              <LeftArrowIcon />
-            </MonthArrow>
+            </DateSwiperSelect>
             <MonthArrow onClick={() => handleMonthMove("NEXT")}>
               <RightArrowIcon />
             </MonthArrow>
-          </MonthMover>
+          </NowDate>
+          <MonthMover></MonthMover>
         </Header>
         <Days
           className={swipeDirection}
@@ -220,7 +236,7 @@ const Container = styled(BaseContainer)`
 
 const Header = styled.div`
   display: flex;
-  padding: 0 28px;
+  padding: 0 16px;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
@@ -228,14 +244,26 @@ const Header = styled.div`
 const NowDate = styled.div`
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
   line-height: 2.8rem;
   button.date-control-button {
-    margin: -8px;
-    padding: 6px 12px;
-    font-size: 2.2rem;
-    font-weight: 600;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin: 0 -2px;
+    padding: 4px 8px;
+    font-size: 2rem;
+    font-weight: 500;
     ${BUTTON_ACTIVE("var(--gray50)")};
+
+    & > .year-number {
+      z-index: -1;
+      transition: opacity 0.7s;
+    }
+    & > .hide {
+      margin-left: calc(-6px - 12px);
+      opacity: 0;
+    }
   }
 `;
 const Days = styled.div`
@@ -311,7 +339,7 @@ const MonthMover = styled.div`
   gap: 4px;
 `;
 const MonthArrow = styled.button`
-  padding: 10px;
+  padding: 8px 6px;
   ${BUTTON_ACTIVE("var(--gray50)")};
   svg {
     width: 16px;

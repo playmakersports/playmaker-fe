@@ -1,10 +1,7 @@
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { atom, useAtom } from "jotai";
-
-const accessTokenAtom = atom<string | null>(null);
 
 export const useAuth = () => {
-  const [accessToken, setToken] = useAtom(accessTokenAtom);
+  const accessToken = getCookie("access-token") ?? null;
 
   const setAuthToken = (newToken: string) => {
     setCookie("access-token", newToken, {
@@ -13,7 +10,6 @@ export const useAuth = () => {
       secure: true,
       sameSite: "lax",
     });
-    setToken(newToken);
   };
 
   const clearAuthToken = () => {
@@ -21,7 +17,7 @@ export const useAuth = () => {
       path: "/",
       expires: new Date(0),
     });
-    setToken(null);
+    setCookie("access-token", null);
   };
 
   return {

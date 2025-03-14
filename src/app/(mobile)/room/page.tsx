@@ -1,10 +1,9 @@
 "use client";
-
-import { getCookie } from "cookies-next";
+import { useAuth } from "@/session/useAuth";
 import { redirect } from "next/navigation";
 
 function UserIndex() {
-  const token = getCookie("access-token");
+  const token = useAuth().accessToken;
 
   if (token) {
     redirect("/my");

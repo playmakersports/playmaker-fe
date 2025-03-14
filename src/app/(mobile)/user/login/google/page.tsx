@@ -1,4 +1,4 @@
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { baseBackendURL } from "@/apis";
 import { AuthResponse } from "@/types/auth";
 import { setServerCookie } from "@/session/server-cookie";

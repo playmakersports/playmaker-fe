@@ -1,3 +1,9 @@
+type FontsWeight = "semibold" | "medium" | "regular";
+const FONTS_WEIGHT: Record<FontsWeight, number> = {
+  semibold: 600,
+  medium: 500,
+  regular: 400,
+};
 export const FONTS = {
   HEAD1: `font-weight: 700; font-size: 2rem; line-height: 2.2rem;`,
   HEAD2: `font-weight: 600; font-size: 1.6rem; line-height: 2.2rem;`,
@@ -5,6 +11,18 @@ export const FONTS = {
   MD1W500: `font-weight: 500; font-size: 1.6rem; line-height: 2.4rem;`,
   MD2: `font-weight: 500; font-size: 1.4rem; line-height: 2.2rem;`,
   MD3: `font-weight: 400; font-size: 1.3rem; line-height: 1.8rem;`,
+
+  head1: (weight: FontsWeight) => `font-size: 6.4rem; line-height: 8rem; font-weight: ${FONTS_WEIGHT[weight]}`,
+  head2: (weight: FontsWeight) => `font-size: 5.6em; line-height: 7.2rem; font-weight: ${FONTS_WEIGHT[weight]}`,
+  head3: (weight: FontsWeight) => `font-size: 4.8em; line-height: 6.4em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  head4: (weight: FontsWeight) => `font-size: 4em; line-height: 5.6em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  head5: (weight: FontsWeight) => `font-size: 3.2em; line-height: 4em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  head6: (weight: FontsWeight) => `font-size: 2.4em; line-height: 3.2em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  body1: (weight: FontsWeight) => `font-size: 2em; line-height: 3em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  body2: (weight: FontsWeight) => `font-size: 1.8em; line-height: 2.8em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  body3: (weight: FontsWeight) => `font-size: 1.6em; line-height: 2.4em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  body4: (weight: FontsWeight) => `font-size: 1.4em; line-height: 2em; font-weight: ${FONTS_WEIGHT[weight]}`,
+  caption1: (weight: FontsWeight) => `font-size: 1.2em; line-height: 1.8em; font-weight: ${FONTS_WEIGHT[weight]}`,
 };
 
 export const SCROLL_HIDE = `

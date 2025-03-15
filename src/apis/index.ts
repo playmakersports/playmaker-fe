@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 
-export const baseBackendURL = "https://port-0-playmaker-be-e9btb72blgj562lo.sel3.cloudtype.app";
+export const baseBackendURL = "https://port-0-playermaker17-m6usflhbd2e8f971.sel4.cloudtype.app";
 
 const axiosClient = axios.create({
   baseURL: baseBackendURL,

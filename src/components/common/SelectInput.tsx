@@ -6,19 +6,40 @@ import styled from "styled-components";
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 import { FONTS } from "@/styles/common";
 
-type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> & {
+type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size" | "title "> & {
   size?: "LARGE" | "MEDIUM";
+  color?: "default" | "error";
+  text?: {
+    title: string;
+    description?: string;
+  };
 };
 type RadioProps = Props & { $fullWidth?: boolean; labelName: string; buttonType?: boolean };
 
-export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(({ size = "LARGE", ...rest }, ref) => (
-  <div style={{ position: "relative", display: "inline-block", width: "24px", height: "24px" }}>
-    <Check type="checkbox" ref={ref} {...rest} />
-    <i>
-      <CheckIcon />
-    </i>
-  </div>
-));
+export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(
+  ({ size = "LARGE", color = "default", text, ...rest }, ref) => {
+    const SIZE = size === "LARGE" ? "24px" : "20px";
+
+    return (
+      <TextContainer>
+        <div style={{ position: "relative", display: "inline-block", width: SIZE, height: SIZE }}>
+          <Check type="checkbox" ref={ref} $color={color === "error"} size={size} {...rest} />
+          <i style={{ width: SIZE, height: SIZE }}>
+            <CheckIcon width={size === "LARGE" ? "14px" : "12px"} height={size === "LARGE" ? "14px" : "12px"} />
+          </i>
+        </div>
+        {text && (
+          <div className="text-container" data-size={size}>
+            <label className="title" htmlFor={rest.id}>
+              {text.title}
+            </label>
+            {text.description && <p className="description">{text.description}</p>}
+          </div>
+        )}
+      </TextContainer>
+    );
+  }
+);
 InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
@@ -38,38 +59,73 @@ export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
 );
 InputRadio.displayName = "InputRadio";
 
-const Check = styled.input`
+const TextContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  label.title {
+    cursor: pointer;
+    user-select: none;
+    padding-right: 6px;
+    color: var(--gray700);
+  }
+  p.description {
+    margin-top: 4px;
+    color: var(--gray400);
+  }
+  div.text-container[data-size="LARGE"] {
+    label.title {
+      ${FONTS.body3("medium")};
+    }
+    p.description {
+      ${FONTS.body4("regular")};
+    }
+  }
+  div.text-container[data-size="MEDIUM"] {
+    label.title {
+      ${FONTS.body4("medium")};
+    }
+    p.description {
+      ${FONTS.caption1("regular")};
+    }
+  }
+`;
+const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
   position: absolute;
   width: 100%;
   height: 100%;
   opacity: 0;
+
   & + i {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    svg {
-      width: 14px;
-      height: 14px;
-      fill: var(--gray200);
-    }
-    border: 2px solid var(--gray300);
+    border-radius: ${({ size }) => (size === "LARGE" ? "8px" : "6px")};
+    border: 1px solid ${({ $color }) => ($color ? "var(--red200)" : "var(--gray200)")};
     background-color: transparent;
   }
   &:focus:not(:checked) + i {
-    outline: 3px solid var(--gray400);
+    outline: 2px solid ${({ $color }) => ($color ? "var(--red300)" : "var(--gray300)")};
   }
   &:focus + i {
-    outline: 3px solid var(--primary300);
+    outline: 2px solid ${({ $color }) => ($color ? "var(--red300)" : "var(--primary300)")};
   }
   &:checked + i {
     border: 1px solid transparent;
-    background-color: var(--main);
+    background-color: ${({ $color }) => ($color ? "var(--red500)" : "var(--primary500)")};
     svg {
-      fill: #fff;
+      fill: var(--white);
     }
+  }
+
+  &:checked:disabled + i {
+    border: 1px solid transparent;
+    background-color: #d9d9d9;
+  }
+  &:disabled + i {
+    background-color: var(--gray50);
+    border: 1px solid var(--gray200);
   }
 `;
 

@@ -85,12 +85,13 @@ function BottomSheet(props: BottomSheetProps) {
         onContextMenu={(e) => e.preventDefault()}
         style={{
           userSelect: isDragging && translateY ? "none" : "auto",
-          scale: isDragging && translateY > 0 ? 0.95 : 1,
-          borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
-          transition: !isDragging ? `all ${ANIMATION_RUNNING_TIME}ms` : "scale 0.25s",
+          // scale: isDragging && translateY > 0 ? 0.95 : 1,
+          // borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
+          transition: !isDragging ? `all ${ANIMATION_RUNNING_TIME}ms` : "none",
+          // transition: !isDragging ? `all ${ANIMATION_RUNNING_TIME}ms` : "scale 0.25s",
           transform:
             draggable && translateY > 0
-              ? `translate3d(-50%, calc(${showModal ? 0 : "100%"}% + ${translateY}px), 0)`
+              ? `translate3d(-50%, calc(${showModal ? 0 : "100%"}% + ${Math.ceil(translateY)}px), 0)`
               : `translate3d(-50%, ${showModal ? 0 : "100%"}, 0)`,
         }}
         $isShow={showModal}
@@ -147,24 +148,26 @@ const Bar = styled.div`
   display: flex;
   justify-content: center;
   margin: -16px 0 0;
-  padding: 16px 0 12px;
+  padding: 12px 0 20px;
 
   &::before {
     content: "";
     display: block;
-    width: 64px;
-    height: 4px;
-    background-color: var(--gray300);
-    border-radius: 8px;
+    width: 40px;
+    height: 6px;
+    background-color: var(--gray200);
+    border-radius: 999px;
   }
 `;
 
-const Header = styled.header``;
+const Header = styled.header`
+  color: var(--gray700);
+  ${FONTS.body3("semibold")};
+`;
 const Contents = styled.div`
-  margin: 12px 0 20px;
-  padding: 0 4px;
-  ${FONTS.MD2};
-  font-weight: 400;
+  margin: 0 0 20px;
+  color: var(--gray400);
+  ${FONTS.caption1("regular")};
 `;
 
 const Wrapper = styled.section<{
@@ -184,7 +187,7 @@ const Wrapper = styled.section<{
   max-height: 90vh;
   z-index: 1000;
   background: var(--background-light);
-  border-radius: 24px 24px 0 0;
+  border-radius: 16px 16px 0 0;
   opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transform-origin: center left;
   box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);

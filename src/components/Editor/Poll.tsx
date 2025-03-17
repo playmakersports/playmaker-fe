@@ -43,7 +43,7 @@ function Poll() {
     if (fields.length > 2) {
       remove(index);
     } else {
-      trigger("투표 선택지는 2개 이상이어야 합니다.");
+      trigger("투표 선택지는 2개 이상이어야 합니다.", { type: "error" });
     }
   };
 

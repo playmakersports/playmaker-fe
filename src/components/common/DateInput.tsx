@@ -120,10 +120,10 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     const newDate = new Date(newYear, monthValue - 1, 1);
                     if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
                       setTargetDate();
-                      trigger("미래로 날짜를 설정할 수 없어요.");
+                      trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
                     } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
                       setTargetDate();
-                      trigger("과거로 날짜를 설정할 수 없어요.");
+                      trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
                     } else {
                       setTargetDate(`${newYear}/${monthValue}/01`);
                     }
@@ -148,10 +148,10 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     const newDate = new Date(yearValue, newMonth - 1, currentDate.getDate());
                     if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
                       setTargetDate();
-                      trigger("미래로 날짜를 설정할 수 없어요.");
+                      trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
                     } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
                       setTargetDate();
-                      trigger("과거로 날짜를 설정할 수 없어요.");
+                      trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
                     } else {
                       setTargetDate(`${yearValue}/${newMonth}/${currentDate.getDate()}`);
                     }

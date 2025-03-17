@@ -125,7 +125,7 @@ function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
                 getYearRange([birthYearMin, birthYearMax]);
                 close();
               } else {
-                trigger("잘못된 범위 선택입니다");
+                trigger("잘못된 범위 선택입니다", { type: "error" });
               }
             },
           },

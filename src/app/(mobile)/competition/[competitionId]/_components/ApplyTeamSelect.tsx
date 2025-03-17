@@ -28,7 +28,7 @@ function ApplyTeamSelect() {
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    trigger("대회 참가 신청이 완료됐어요", "CONFIRM");
+    trigger("참가 신청이 완료됐어요", { type: "success" });
     router.replace(`/competition/${competitionId}`);
   };
 

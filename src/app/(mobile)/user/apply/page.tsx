@@ -97,7 +97,8 @@ function Intro() {
         title={TERMS_LIST.find((v) => v.termId === selectedTerm)?.termName}
         buttons={[
           {
-            mode: "OPTION2",
+            mode: "primary",
+            fillType: "light",
             name: "닫기",
             onClick: (close) => {
               close();
@@ -105,7 +106,7 @@ function Intro() {
           },
           {
             flex: 2,
-            mode: "MAIN",
+            mode: "primary",
             name: "위 약관에 동의",
             onClick: (close) => {
               setCheckedList((prev) => ({ ...prev, [selectedTerm]: true }));
@@ -134,6 +135,7 @@ const AllCheck = styled.div`
   gap: 10px;
 
   label {
+    user-select: none;
     width: 100%;
     ${FONTS.MD1W500}
   }
@@ -156,6 +158,7 @@ const TermList = styled.ul`
       color: var(--gray700);
     }
     label {
+      user-select: none;
       width: 100%;
     }
   }

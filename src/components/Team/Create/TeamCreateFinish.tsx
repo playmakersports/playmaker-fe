@@ -24,7 +24,7 @@ function TeamCreateFinish({ teamId }: { teamId: string }) {
         <p className="last">멋진 활동 기대할게요</p>
       </Message>
       <FloatButton>
-        <Button mode="MAIN" $fullWidth onClick={moveTeamPage} type="button">
+        <Button mode="primary" fullWidth onClick={moveTeamPage} type="button">
           팀으로 이동
         </Button>
       </FloatButton>

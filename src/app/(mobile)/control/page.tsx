@@ -86,7 +86,7 @@ function CodeControl() {
               <BasicInput type="text" title="대학명" value={searchKey.name} onChange={onChangeUnivName} />
             </div>
           </div>
-          <Button type="button" mode="OPTION2" onClick={handleSearch} $autoHeight>
+          <Button type="button" mode="gray" onClick={handleSearch}>
             조회
           </Button>
         </SearchBox>
@@ -113,7 +113,7 @@ function CodeControl() {
       </Contents>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <ModalComponents buttons={[{ mode: "MAIN", name: "저장", onClick: () => {} }]}>
+        <ModalComponents buttons={[{ mode: "primary", name: "저장", onClick: () => {} }]}>
           <BasicInput
             type="text"
             title="약칭 입력"

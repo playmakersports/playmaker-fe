@@ -82,10 +82,10 @@ function EditorView() {
       <BasicInput type="text" placeholder="제목" onChange={(e) => setTitle(e.target.value)} value={title} />
       <EditorUI editor={editor} poll={poll} images={images} />
       <Buttons>
-        <Button type="button" flex={1} mode="OPTION2" onClick={onClear}>
+        <Button type="button" size="large" flex={1} mode="primary" fillType="light" onClick={onClear}>
           초기화
         </Button>
-        <Button type="button" flex={2} mode="MAIN" onClick={onSubmit}>
+        <Button type="button" size="large" flex={2} mode="primary" onClick={onSubmit}>
           <span className="spinner-wrapper">올리기 {isPending && <Spinner color="white" />}</span>
         </Button>
       </Buttons>

@@ -84,7 +84,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
         disabledDimOut
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             name: "다음",
             onClick: (close) => {
               close();
@@ -117,7 +117,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
         disabledDimOut
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             disabled: sido !== Math.floor(sigungu / 1000),
             name: "선택",
             onClick: (close) => {

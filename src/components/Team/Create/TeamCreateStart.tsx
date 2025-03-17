@@ -68,8 +68,8 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
           <FloatButton>
             <Button
               type="button"
-              mode="MAIN"
-              $fullWidth
+              mode="primary"
+              fullWidth
               onClick={() => {
                 setStep(1);
                 setTeamCreateValue((prev) => ({ ...prev, university: UNIVERSITY }));

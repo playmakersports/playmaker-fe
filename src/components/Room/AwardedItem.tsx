@@ -88,10 +88,10 @@ function AwardedItem(props: Props) {
                   <input type="text" className="award-rank" placeholder="예) 동상" {...register("competitionRank")} />
                 </div>
                 <div className="button-group">
-                  <Button type="button" mode="OPTION1" $fullWidth onClick={() => onClickCloseModal(close)}>
+                  <Button type="button" mode="gray" fullWidth onClick={() => onClickCloseModal(close)}>
                     취소
                   </Button>
-                  <Button type="submit" mode="MAIN" $fullWidth>
+                  <Button type="submit" mode="primary" fullWidth>
                     확인
                   </Button>
                 </div>

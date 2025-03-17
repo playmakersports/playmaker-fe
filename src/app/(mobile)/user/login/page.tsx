@@ -51,13 +51,13 @@ function Login() {
         <GoogleBtn type="button" onClick={handleGoogleLogin}>
           <GoogleLogo /> Google로 시작하기
         </GoogleBtn>
-        <Button type="button" mode="OPTION2" $borderType onClick={handleIntroPage}>
+        <Button type="button" mode="gray" fillType="outline" onClick={handleIntroPage}>
           Intro
         </Button>
-        <Button type="button" mode="OPTION2" $borderType onClick={handleMyPage}>
+        <Button type="button" mode="gray" fillType="outline" onClick={handleMyPage}>
           My Page
         </Button>
-        <Button type="button" mode="MAIN" onClick={handleTestLogin}>
+        <Button type="button" mode="primary" onClick={handleTestLogin}>
           테스트 로그인
         </Button>
         <StaffLogin>

@@ -26,7 +26,7 @@ function Page404() {
         (ERROR 404)
       </p>
       <FloatButton>
-        <Button type="button" mode="MAIN" $fullWidth onClick={() => router.push("/")}>
+        <Button type="button" mode="primary" fullWidth onClick={() => router.push("/")}>
           홈 화면 이동
         </Button>
       </FloatButton>

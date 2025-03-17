@@ -2,175 +2,246 @@ import React, { ReactNode } from "react";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
-export type ButtonStyleMode = "MAIN" | "OPTION1" | "OPTION2" | "SUB1" | "WARN";
+export type ButtonStyleMode = "primary" | "gray" | "success" | "info" | "warning" | "red";
+export type ButtonFillType = "default" | "light" | "outline";
+type ButtonStyledObject = { background: string; color: string; border: string };
+type ButtonSizeType = "small" | "medium" | "large";
+
 type Props = {
-  $borderType?: boolean;
-  mode: ButtonStyleMode;
-  children: ReactNode;
-  $fullWidth?: boolean;
-  $autoHeight?: boolean;
+  fillType?: ButtonFillType;
+  mode?: ButtonStyleMode;
+  children?: ReactNode;
+  fullWidth?: boolean;
   type?: "button" | "submit" | "reset" | undefined;
   flex?: number;
   disabled?: boolean;
   onClick?: () => void;
-  split?: {
-    text: string;
-    onClick: () => void;
-  };
+  icon?: ReactNode;
+  size?: ButtonSizeType;
 };
 
 function Button(props: Props) {
   const {
-    $borderType,
-    split,
-    mode,
+    fillType = "default",
+    mode = "primary",
     children,
-    $fullWidth,
-    $autoHeight = false,
+    fullWidth,
     type,
     flex,
     disabled = false,
     onClick,
+    icon,
+    size = "medium",
   } = props;
-  const BUTTON_STYLE = {
-    MAIN: {
-      background: "var(--main)",
-      color: "#fff",
-    },
-    OPTION1: {
-      background: "var(--gray600)",
-      color: "var(--gray50)",
-    },
-    OPTION2: {
-      background: "var(--gray300)",
-      color: "var(--gray800)",
-      borderTypeColor: "var(--gray500)",
-    },
-    SUB1: {
-      background: "var(--primary-m100)",
-      color: "var(--white)",
-    },
-    WARN: {
-      background: "var(--point-red)",
-      color: "#fff",
-    },
-  };
 
-  if (!split) {
-    return (
-      <Wrapper
-        type={type ?? "button"}
-        onClick={onClick}
-        flex={flex}
-        $borderType={$borderType}
-        mode={BUTTON_STYLE[mode]}
-        $fullWidth={$fullWidth}
-        disabled={disabled}
-        $autoHeight={$autoHeight}
-      >
+  const isOnlyIcon = !children && icon;
+
+  return (
+    <Wrapper
+      type={type ?? "button"}
+      onClick={onClick}
+      flex={flex}
+      mode={BUTTON_STYLE[mode][fillType]}
+      $fullWidth={fullWidth}
+      disabled={disabled}
+      $fontStyle={BUTTON_SIZE_STYLED[size].font}
+      style={{
+        padding: isOnlyIcon ? BUTTON_SIZE_STYLED[size].onlyIconPadding : BUTTON_SIZE_STYLED[size].padding,
+        height: BUTTON_SIZE_STYLED[size].height,
+      }}
+    >
+      <span>
+        {icon && (
+          <i
+            style={{
+              padding: "2px",
+              width: BUTTON_SIZE_STYLED[size].iconSize,
+              height: BUTTON_SIZE_STYLED[size].iconSize,
+            }}
+          >
+            {icon}
+          </i>
+        )}
         {children}
-      </Wrapper>
-    );
-  }
-  if (split) {
-    return (
-      <SplitWrapper as="div" mode={BUTTON_STYLE[mode]} flex={flex} $fullWidth={$fullWidth} $autoHeight={$autoHeight}>
-        <SplitButton disabled={disabled} type={type ?? "button"} onClick={onClick}>
-          {children}
-        </SplitButton>
-        <SplitButton type={type ?? "button"} onClick={split.onClick}>
-          {split.text}
-        </SplitButton>
-      </SplitWrapper>
-    );
-  }
+      </span>
+    </Wrapper>
+  );
 }
 
 type ButtonStyled = {
-  mode: Record<string, string>;
+  mode: ButtonStyledObject;
   $fullWidth?: boolean;
   flex?: number;
   $autoHeight?: boolean;
   $borderType?: boolean;
+  $fontStyle: string;
 };
 const Wrapper = styled.button<ButtonStyled>`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 0;
   ${({ flex }) => (flex ? `flex: ${flex}` : "")};
   width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
-  height: ${({ $autoHeight }) => ($autoHeight ? "auto" : "48px")};
-  border: ${({ $borderType, mode }) => ($borderType ? `1px solid ${mode.background}` : "0 solid transparent")};
-  border-radius: ${({ $autoHeight }) => ($autoHeight ? "6px" : "48px")};
-  background-color: ${({ $borderType, mode }) => ($borderType ? "transparent" : mode.background)};
-  color: ${({ $borderType, mode }) => ($borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
+  border: ${({ mode }) => `1px solid ${mode.border}`};
+  border-radius: 10px;
+  background-color: ${({ mode }) => mode.background};
+  color: ${({ mode }) => mode.color};
   white-space: nowrap;
   user-select: none;
   -webkit-font-smoothing: antialiased;
   transition: all 0.2s;
   will-change: outline;
-  ${FONTS.MD1};
-  &:focus {
-    box-shadow: 0 0 0 2px ${({ $borderType, mode }) => ($borderType ? "transparent" : mode.background)};
-  }
+  ${({ $fontStyle }) => $fontStyle};
+
   &:disabled {
-    background-color: var(--gray300);
-    color: var(--gray500);
+    background-color: var(--gray100);
+    color: var(--gray300);
     cursor: not-allowed;
   }
-  &:active {
-    filter: brightness(1.05);
+  &:active > span {
+    transform: scale(0.95);
+    transition: all 0.25s;
   }
-  svg {
-    width: 22px;
-    height: 22px;
-    fill: ${({ $borderType, mode }) => ($borderType ? mode.borderTypeColor ?? mode.background : mode.color)};
+
+  & > span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    svg {
+      width: 100%;
+      height: auto;
+      fill: ${({ mode }) => mode.color};
+    }
   }
 `;
 
-const SplitWrapper = styled(Wrapper)`
-  padding: 0;
-  background: none;
-  gap: 2px;
-  overflow: hidden;
-  button {
-    background-color: ${({ mode }) => mode.background};
-  }
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    opacity: 1;
-    cursor: default;
-  }
-  &:active {
-    filter: none;
-    transform: none;
-  }
-`;
-const SplitButton = styled.button`
-  padding: 6px 0;
-  height: 100%;
-  ${FONTS.MD1};
-  &:focus {
-    outline: none;
-  }
-  &:disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-  }
-  &:active {
-    filter: brightness(1.05);
-    transform: none;
-  }
+const BUTTON_SIZE_STYLED = {
+  small: {
+    font: FONTS.body4("medium"),
+    padding: "10px 16px",
+    height: "40px",
+    iconSize: "20px",
+    onlyIconPadding: "10px",
+  },
+  medium: {
+    font: FONTS.body3("medium"),
+    padding: "10px 18px",
+    height: "44px",
+    iconSize: "24px",
+    onlyIconPadding: "10px",
+  },
+  large: {
+    font: FONTS.body2("medium"),
+    padding: "10px 20px",
+    height: "48px",
+    iconSize: "24px",
+    onlyIconPadding: "12px",
+  },
+};
 
-  &:first-of-type {
-    flex: 2;
-  }
-  &:last-of-type {
-    flex: 1;
-  }
-`;
+const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledObject>> = {
+  primary: {
+    default: {
+      background: "var(--primary500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--primary50)",
+      color: "var(--primary600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--primary600)",
+      border: "var(--primary200)",
+    },
+  },
+  gray: {
+    default: {
+      background: "var(--gray500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--gray100)",
+      color: "var(--gray600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--gray600)",
+      border: "var(--gray200)",
+    },
+  },
+  success: {
+    default: {
+      background: "var(--success500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--success50)",
+      color: "var(--success600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--success600)",
+      border: "var(--success200)",
+    },
+  },
+  info: {
+    default: {
+      background: "var(--info500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--info50)",
+      color: "var(--info600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--info600)",
+      border: "var(--info200)",
+    },
+  },
+  warning: {
+    default: {
+      background: "var(--warning500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--warning50)",
+      color: "var(--warning600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--warning600)",
+      border: "var(--warning200)",
+    },
+  },
+  red: {
+    default: {
+      background: "var(--red500)",
+      color: "var(--white)",
+      border: "transparent",
+    },
+    light: {
+      background: "var(--red50)",
+      color: "var(--red600)",
+      border: "transparent",
+    },
+    outline: {
+      background: "transparent",
+      color: "var(--red600)",
+      border: "var(--red200)",
+    },
+  },
+};
 
 export default Button;

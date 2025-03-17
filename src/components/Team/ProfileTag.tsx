@@ -39,16 +39,10 @@ function ProfileTag(props: Props) {
           <p className="profile-name">손수철</p>
           <p>1995.07.05</p>
           <div className="button-wrapper">
-            <Button
-              type="button"
-              mode="MAIN"
-              onClick={() => router.push(`/room/${showInfo.playerId}`)}
-              $autoHeight
-              flex={3}
-            >
+            <Button type="button" mode="primary" onClick={() => router.push(`/room/${showInfo.playerId}`)} flex={3}>
               프로필 이동
             </Button>
-            <Button type="button" mode="OPTION2" onClick={() => console.log("통계")} $autoHeight flex={1}>
+            <Button type="button" mode="gray" onClick={() => console.log("통계")} flex={1}>
               통계
             </Button>
           </div>

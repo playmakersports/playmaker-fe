@@ -1,6 +1,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { FONTS } from "@/styles/common";
+import Button from "../Button";
 
 type Props = {
   isAlert?: boolean;
@@ -20,14 +21,36 @@ function Confirm(props: Props) {
         <Buttons>
           {isAlert ? (
             alertButton.mode === "MAIN" ? (
-              <ConfirmButton onClick={() => handleConfirm(false)}>{alertButton.text}</ConfirmButton>
+              <Button type="button" size="large" mode="primary" fullWidth onClick={() => handleConfirm(false)}>
+                {alertButton.text}
+              </Button>
             ) : (
-              <ModalButton onClick={() => handleConfirm(false)}>{alertButton.text}</ModalButton>
+              <Button
+                type="button"
+                mode="gray"
+                fillType="light"
+                size="large"
+                fullWidth
+                onClick={() => handleConfirm(false)}
+              >
+                {alertButton.text}
+              </Button>
             )
           ) : (
             <>
-              <ModalButton onClick={() => handleConfirm(false)}>{buttonText.no}</ModalButton>
-              <ConfirmButton onClick={() => handleConfirm(true)}>{buttonText.yes}</ConfirmButton>
+              <Button
+                type="button"
+                mode="gray"
+                size="large"
+                fillType="light"
+                flex={1}
+                onClick={() => handleConfirm(false)}
+              >
+                {buttonText.no}
+              </Button>
+              <Button type="button" size="large" flex={2} mode="primary" onClick={() => handleConfirm(true)}>
+                {buttonText.yes}
+              </Button>
             </>
           )}
         </Buttons>
@@ -59,7 +82,7 @@ const Container = styled.section`
   max-width: 420px;
   min-width: 320px;
   height: max-content;
-  background: var(--gray50);
+  background: var(--white);
   border-radius: 12px;
   overflow: hidden;
   animation: ${ShowContainer} 0.3s var(--animate-pop);
@@ -75,30 +98,8 @@ const Message = styled.p`
 `;
 const Buttons = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 8px;
   padding: 0 16px 16px;
-`;
-const ModalButton = styled.button`
-  flex: 1;
-  ${FONTS.MD1W500};
-  padding: 14px 0;
-  border: 1px solid var(--gray100);
-  background-color: var(--gray200);
-  border-radius: 10px;
-  color: var(--gray800);
-
-  &:active {
-    background-color: var(--gray300);
-  }
-`;
-const ConfirmButton = styled(ModalButton)`
-  border: 1px solid transparent;
-  background-color: var(--main);
-  color: var(--white);
-
-  &:active {
-    background-color: var(--primary-m200);
-  }
 `;
 
 export default Confirm;

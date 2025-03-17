@@ -92,7 +92,7 @@ export const DateSwiperSelect = (props: Props) => {
       <ModalComponents
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             name: "선택",
             onClick: (close) => {
               getCurrentValue({ y: yearValue, m: monthValue, d: dayValue });

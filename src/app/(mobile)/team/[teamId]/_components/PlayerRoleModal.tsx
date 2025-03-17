@@ -31,7 +31,7 @@ function PlayerRoleModal({ ModalContainer, playerInfo }: Props) {
       buttons={[
         {
           name: "확인",
-          mode: "MAIN",
+          mode: "primary",
           disabled: unChangedLevel,
           onClick: () => {},
         },

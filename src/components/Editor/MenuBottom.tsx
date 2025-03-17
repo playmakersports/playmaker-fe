@@ -154,13 +154,14 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
         title="투표 설정"
         buttons={[
           {
-            mode: "OPTION2",
+            mode: "primary",
+            fillType: "light",
             name: "취소",
             onClick: (close) => {
               close();
             },
           },
-          { mode: "MAIN", name: "완료", onClick: () => {} },
+          { mode: "primary", name: "완료", onClick: () => {} },
         ]}
       >
         <Poll />

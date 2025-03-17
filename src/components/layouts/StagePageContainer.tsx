@@ -33,10 +33,11 @@ function StagePageContainer({ children, headerAlign = "left", stepper = false, t
         <ButtonWrapper>
           <Button
             type={button.type ?? "button"}
-            mode="MAIN"
+            mode="primary"
+            size="large"
             onClick={button.onClick}
             disabled={button.disabled}
-            $fullWidth
+            fullWidth
           >
             {button.text}
           </Button>

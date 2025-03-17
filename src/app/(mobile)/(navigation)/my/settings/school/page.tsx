@@ -78,7 +78,7 @@ function UserSchool() {
           })}
         />
         <FloatButton>
-          <Button type="submit" mode="MAIN" $fullWidth>
+          <Button type="submit" mode="primary" fullWidth>
             저장
           </Button>
         </FloatButton>

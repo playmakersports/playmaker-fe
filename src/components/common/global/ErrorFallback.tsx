@@ -37,10 +37,10 @@ function ErrorFallback(props: Props) {
         </span>
       </p>
       <FloatButton gap="10px">
-        <Button type="button" mode="OPTION1" $fullWidth onClick={retry ?? onGoBack}>
+        <Button type="button" mode="primary" fillType="light" size="large" fullWidth onClick={retry ?? onGoBack}>
           다시 시도
         </Button>
-        <Button type="button" mode="MAIN" $fullWidth onClick={reset ?? onGoHome}>
+        <Button type="button" mode="primary" size="large" fullWidth onClick={reset ?? onGoHome}>
           홈 화면 이동
         </Button>
       </FloatButton>

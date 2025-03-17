@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import React, { ReactNode, useEffect, useState } from "react";
-import Button, { ButtonStyleMode } from "./Button";
+import Button, { ButtonFillType, ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
 
 export type BottomSheetProps = {
@@ -12,6 +12,7 @@ export type BottomSheetProps = {
   draggable?: "bar" | "all" | false;
   buttons?: {
     mode: ButtonStyleMode;
+    fillType?: ButtonFillType;
     disabled?: boolean;
     onClick: (close: () => void) => void;
     name: string;
@@ -110,7 +111,9 @@ function BottomSheet(props: BottomSheetProps) {
               <Button
                 key={button.name}
                 type="button"
+                size="large"
                 mode={button.mode}
+                fillType={button.fillType}
                 disabled={button.disabled}
                 onClick={() => {
                   button.onClick(closeBottomSheet);

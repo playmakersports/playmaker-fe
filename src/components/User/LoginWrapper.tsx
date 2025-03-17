@@ -66,7 +66,7 @@ function LoginWrapper({ children, button, logoFill }: Props) {
         {button && (
           <ButtonWrapper>
             <WhiteSectionDivider style={{ marginBottom: "12px" }} />
-            <Button type={button.type ?? "button"} mode="MAIN" onClick={button.onClick} $fullWidth>
+            <Button type={button.type ?? "button"} mode="primary" onClick={button.onClick} fullWidth>
               {button.text}
             </Button>
           </ButtonWrapper>

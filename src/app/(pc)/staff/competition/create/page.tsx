@@ -275,15 +275,15 @@ function CompetitionCreatePC() {
         </section>
         <Bottom>
           <div className="bottom-left-side">
-            <Button type="button" mode="OPTION2" $fullWidth>
+            <Button type="button" mode="gray" fullWidth>
               임시저장
             </Button>
-            <Button type="button" mode="OPTION2" $borderType $fullWidth>
+            <Button type="button" mode="gray" fillType="outline" fullWidth>
               불러오기
             </Button>
           </div>
           <div className="bottom-right-side">
-            <Button type="submit" mode="MAIN" $fullWidth>
+            <Button type="submit" mode="primary" fullWidth>
               작성 완료
             </Button>
           </div>

@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { usePost } from "@/apis/hook/query";
-import useToast from "@/hook/useToast";
+import { useToast } from "@/hook/useToast";
 
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import CardInput from "@/components/common/CardInput";

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
-import useToast from "@/hook/useToast";
+import { useToast } from "@/hook/useToast";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import CopyIcon from "@/assets/icon/global/Copy.svg";
@@ -37,9 +37,9 @@ function ScheduleDetailModal({ ModalContainer, scheduleInfo }: Props) {
     <ModalContainer
       draggable="all"
       buttons={[
-        { mode: "OPTION2", name: "게시글 보기", onClick: () => {} },
+        { mode: "primary", fillType: "light", name: "게시글 보기", onClick: () => {} },
         {
-          mode: "MAIN",
+          mode: "primary",
           name: "확인",
           onClick: (close) => {
             close();

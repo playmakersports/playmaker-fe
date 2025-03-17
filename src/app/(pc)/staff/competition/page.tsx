@@ -57,11 +57,11 @@ function CompetitionViewPC() {
         <AsideBottom>
           <Button
             type="button"
-            mode="MAIN"
+            mode="primary"
             onClick={() => {
               router.push("/staff/competition/create");
             }}
-            $fullWidth
+            fullWidth
           >
             <span className="button-inner">
               <PlusIcon fill="#fff" />새 대회 만들기

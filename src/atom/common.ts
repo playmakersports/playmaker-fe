@@ -22,15 +22,3 @@ export const atomIcons = atom<
 
 // 배경색 조정
 export const atomBackgroundBluely = atom<boolean>(false);
-
-// 토스트 메시지
-export const atomToast = atom<{
-  animate: boolean;
-  show: boolean;
-  text: string;
-  type?: "DEFAULT" | "ALERT" | "CONFIRM";
-}>({
-  animate: false,
-  show: false,
-  text: "",
-});

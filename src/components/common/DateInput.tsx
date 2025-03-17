@@ -3,13 +3,13 @@ import styled from "styled-components";
 import { format, getMonth, getYear, isSameDay, subMonths, addMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
+import { useToast } from "@/hook/useToast";
 
 import { BasicInput, InputProps } from "./Input";
 import { BUTTON_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 import { DateKeypadInput } from "./PlainInput";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-import useToast from "@/hook/useToast";
 
 type Props = Omit<InputProps, "type" | "value"> & {
   displayIcon?: boolean;
@@ -78,7 +78,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       <ModalComponents
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             disabled: !(value || defaultValue || (inputRef.current && inputRef.current.value)),
             name:
               value || defaultValue || (inputRef.current && inputRef.current.value)

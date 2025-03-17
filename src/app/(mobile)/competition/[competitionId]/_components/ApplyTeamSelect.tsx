@@ -3,7 +3,7 @@ import React from "react";
 import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 import { useParams, useRouter } from "next/navigation";
-import useToast from "@/hook/useToast";
+import { useToast } from "@/hook/useToast";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -50,7 +50,7 @@ function ApplyTeamSelect() {
         </TeamList>
 
         <FloatButton>
-          <Button type="submit" mode="MAIN" disabled={!isReCheckTeam} $fullWidth>
+          <Button type="submit" mode="primary" disabled={!isReCheckTeam} fullWidth>
             신청
           </Button>
         </FloatButton>

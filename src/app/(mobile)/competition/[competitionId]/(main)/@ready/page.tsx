@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import useToast from "@/hook/useToast";
+import { useToast } from "@/hook/useToast";
 import { useParams, useRouter } from "next/navigation";
 
 import { BUTTON_ACTIVE } from "@/styles/common";
@@ -32,7 +32,7 @@ function CompetitionReady() {
   return (
     <Container>
       <FloatButton>
-        <Button type="button" mode="MAIN" onClick={moveCompetitionApply} $fullWidth>
+        <Button type="button" mode="primary" onClick={moveCompetitionApply} fullWidth>
           참가 신청
         </Button>
       </FloatButton>

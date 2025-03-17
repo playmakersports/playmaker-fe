@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { usePost } from "@/apis/hook/query";
-import useToast from "@/hook/useToast";
+import { useToast } from "@/hook/useToast";
 
 import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
 import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";

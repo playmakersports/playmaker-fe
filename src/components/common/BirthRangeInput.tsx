@@ -1,11 +1,11 @@
 import React, { useCallback, useRef, useState } from "react";
-import { InputStyledWrapper } from "./Wrapper";
+import { getYear } from "date-fns";
 import styled from "styled-components";
+import { useToast } from "@/hook/useToast";
 import useModal from "@/hook/useModal";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
-import { getYear } from "date-fns";
-import useToast from "@/hook/useToast";
 
+import { InputStyledWrapper } from "./Wrapper";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
 
@@ -86,7 +86,7 @@ function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
       <MinComponents
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             name: "다음",
             onClick: (close) => {
               close();
@@ -118,7 +118,7 @@ function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
       <MaxComponents
         buttons={[
           {
-            mode: "MAIN",
+            mode: "primary",
             name: "선택",
             onClick: (close) => {
               if (birthYearMin <= birthYearMax) {

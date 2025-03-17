@@ -33,9 +33,9 @@ function AdminIndex() {
           <TeamInfo>
             <h2>{TEAM_INFO_MOCK.teamName}</h2>
             <TeamInfoLabel>
-              <Badge type="yellow">Premium</Badge>
-              <Badge type="main">
-                {TEAM_INFO_MOCK.univName} <CheckIcon />
+              <Badge type="warning">Premium</Badge>
+              <Badge type="primary" icon={<CheckIcon />}>
+                {TEAM_INFO_MOCK.univName}
               </Badge>
             </TeamInfoLabel>
             <div className="team-description">

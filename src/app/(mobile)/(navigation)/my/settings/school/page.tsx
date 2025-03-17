@@ -34,7 +34,7 @@ function UserSchool() {
         </div>
         <div>
           <Badge type="gray">미인증</Badge>
-          {/* <Badge type="main">
+          {/* <Badge type="primary">
             인증 <CheckIcon />
           </Badge> */}
         </div>

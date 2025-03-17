@@ -39,10 +39,10 @@ function CompetitionHeader(props: Props) {
       <Information>
         <h2 className="competition-name">{competitionName}</h2>
         <Label>
-          <Badge type="main">모집중</Badge>
-          <Badge type="yellow">8강</Badge>
-          <Badge type="subMain">남자부</Badge>
-          <Badge type="subMain">단체전</Badge>
+          <Badge type="primary">모집중</Badge>
+          <Badge type="warning">8강</Badge>
+          <Badge type="info">남자부</Badge>
+          <Badge type="gray">단체전</Badge>
           <Badge type="gray">대학부</Badge>
         </Label>
         <ul className="competition-detail">

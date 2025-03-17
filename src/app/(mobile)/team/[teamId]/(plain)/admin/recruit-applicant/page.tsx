@@ -1,12 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
 
-import { countDayDiff, formattedDate } from "@/util/date";
+import { formattedDate } from "@/util/date";
 import { BaseContainer } from "@/components/common/Container";
 import Button from "@/components/common/Button";
 import Badge from "@/components/common/Badge";
@@ -42,7 +42,7 @@ function RecruitApplicant() {
                   <p className="player-name">{player.name}</p>
                   <p className="player-tags">
                     <Badge type="gray">{player.birth.split("-")[0]}년생</Badge>
-                    <Badge type="main">
+                    <Badge type="primary">
                       {player.univ}
                       {player.certificated && <CheckIcon />}
                     </Badge>
@@ -84,10 +84,10 @@ function RecruitApplicant() {
                   </div>
                 </div>
                 <div className="buttons">
-                  <Button type="button" flex={1} mode="WARN" onClick={() => showDenyModal()}>
+                  <Button type="button" flex={1} mode="red" onClick={() => showDenyModal()}>
                     거절
                   </Button>
-                  <Button type="button" flex={2} mode="primary" onClick={() => showAcceptModal()}>
+                  <Button type="button" flex={3} mode="primary" onClick={() => showAcceptModal()}>
                     수락
                   </Button>
                 </div>
@@ -274,7 +274,7 @@ const List = styled.ul`
     transform: rotate(180deg);
   }
   input:checked + ${PlayerInner} + ${PlayerDetail} {
-    height: 192px;
+    height: 200px;
     opacity: 1;
   }
 `;

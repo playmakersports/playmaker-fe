@@ -189,7 +189,8 @@ function AdminList() {
         draggable="all"
         buttons={[
           {
-            mode: "OPTION1",
+            mode: "gray",
+            fillType: "light",
             name: "닫기",
             onClick: (close) => {
               close();
@@ -209,7 +210,8 @@ function AdminList() {
         draggable="all"
         buttons={[
           {
-            mode: "OPTION1",
+            mode: "gray",
+            fillType: "light",
             name: "닫기",
             onClick: (close) => {
               close();

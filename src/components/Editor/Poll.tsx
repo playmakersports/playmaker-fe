@@ -4,13 +4,14 @@ import { format } from "date-fns";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 
-import SmallX from "@/assets/icon/editor/SmallX.svg";
-import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
+import TimeInput from "../common/TimeInput";
+import Button from "../common/Button";
+import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicInput } from "../common/Input";
 import { InputCheckbox } from "../common/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
-import TimeInput from "../common/TimeInput";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
+import SmallX from "@/assets/icon/editor/SmallX.svg";
 
 export type ArticlePollType = {
   pollDue: boolean;
@@ -69,24 +70,31 @@ function Poll() {
       </Options>
 
       <div className="add-option-wrapper">
-        <button type="button" onClick={() => append({ value: "" }, { shouldFocus: false })}>
+        <Button
+          type="button"
+          mode="gray"
+          size="small"
+          fillType="light"
+          fullWidth
+          onClick={() => append({ value: "" }, { shouldFocus: false })}
+        >
           선택지 추가
-        </button>
+        </Button>
       </div>
 
       <PollSetting>
         <SetItem>
-          <InputCheckbox id="pollDue" {...register("pollDue")} /> <label htmlFor="pollDue">종료</label>
+          <InputCheckbox id="pollDue" text={{ title: "종료" }} size="MEDIUM" {...register("pollDue")} />
           <DueInputs>
             <DateCalendarInput disabled={!watch("pollDue")} name="endDate" />
             <TimeInput disabled={!watch("pollDue")} name="endTime" />
           </DueInputs>
         </SetItem>
         <SetItem>
-          <InputCheckbox id="multiple" {...register("multiple")} /> <label htmlFor="multiple">복수선택</label>
+          <InputCheckbox id="multiple" text={{ title: "복수선택" }} size="MEDIUM" {...register("multiple")} />
         </SetItem>
         <SetItem>
-          <InputCheckbox id="anonymous" {...register("anonymous")} /> <label htmlFor="anonymous">익명투표</label>
+          <InputCheckbox id="anonymous" text={{ title: "익명투표" }} size="MEDIUM" {...register("anonymous")} />
         </SetItem>
       </PollSetting>
     </Container>
@@ -99,17 +107,6 @@ const Container = styled.div`
 
   div.add-option-wrapper {
     margin: 0 auto;
-    button {
-      ${FONTS.MD2};
-      padding: 12px 0;
-      width: 100%;
-      background-color: var(--gray100);
-      color: var(--gray600);
-      border-radius: 10px;
-      &:active {
-        background-color: var(--gray200);
-      }
-    }
   }
 `;
 const Options = styled.div`

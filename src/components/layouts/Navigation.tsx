@@ -69,6 +69,7 @@ function Navigation() {
 const Container = styled.nav`
   position: fixed;
   width: var(--mobile-max-width);
+  height: var(--navigation-height);
   bottom: -2px;
   left: 50%;
   transform: translateX(-50%);
@@ -81,7 +82,7 @@ const Container = styled.nav`
 
 const Inner = styled.div`
   width: 100%;
-  padding: 16px 16px calc(var(--env-sab) + 16px);
+  padding: 16px 16px calc(var(--safe-bottom) + 16px);
   display: flex;
   justify-content: space-between;
   background-color: var(--white);

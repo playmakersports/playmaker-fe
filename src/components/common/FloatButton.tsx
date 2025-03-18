@@ -17,7 +17,7 @@ const Container = styled.div<{ gap: string }>`
   width: 100%;
   max-width: var(--mobile-max-width);
   bottom: 0;
-  padding: 0 16px calc(16px + var(--env-sab));
+  padding: 0 16px calc(16px + var(--safe-bottom));
   justify-content: center;
   left: 50%;
   transform: translateX(-50%);

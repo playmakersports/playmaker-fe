@@ -42,25 +42,28 @@ const ToastContainer = (props: ToastProps & { id: string | number; message: stri
   };
 
   return (
-    <Container type={type} $filled={!outline}>
-      <span className="toast-icon">{TOAST_STYLED[type].icon}</span>
-      <span className="toast-message">{message}</span>
-      {action && (
-        <button type="button" className="toast-action" onClick={action.onClick}>
-          {action.name}
-        </button>
-      )}
-      {closeButton && (
-        <button type="button" className="toast-icon" onClick={onClickCloseToast}>
-          <CloseIcon />
-        </button>
-      )}
-    </Container>
+    <div style={{ minWidth: "var(--width)", display: "flex", justifyContent: "center" }}>
+      <Container type={type} $filled={!outline}>
+        <span className="toast-icon">{TOAST_STYLED[type].icon}</span>
+        <span className="toast-message">{message}</span>
+        {action && (
+          <button type="button" className="toast-action" onClick={action.onClick}>
+            {action.name}
+          </button>
+        )}
+        {closeButton && (
+          <button type="button" className="toast-icon" onClick={onClickCloseToast}>
+            <CloseIcon />
+          </button>
+        )}
+      </Container>
+    </div>
   );
 };
 
 const Container = styled.div<{ type: ToastProps["type"]; $filled?: boolean }>`
   display: flex;
+  width: 100%;
   gap: 8px;
   padding: 12px 14px;
   border-radius: 10px;
@@ -68,6 +71,7 @@ const Container = styled.div<{ type: ToastProps["type"]; $filled?: boolean }>`
     TOAST_STYLED[type ?? "default"].backgroundColor[$filled ? "filled" : "outlined"]};
   border: 1px solid ${({ type, $filled }) => TOAST_STYLED[type ?? "default"].border[$filled ? "filled" : "outlined"]};
   color: ${({ type, $filled }) => TOAST_STYLED[type ?? "default"].color[$filled ? "filled" : "outlined"]};
+  box-shadow: var(--shadow-lg);
 
   .toast-icon {
     user-select: none;
@@ -80,10 +84,11 @@ const Container = styled.div<{ type: ToastProps["type"]; $filled?: boolean }>`
     }
   }
   span.toast-message {
-    width: max-content;
     user-select: none;
     padding-right: 6px;
     flex: 1;
+    word-break: keep-all;
+    overflow-wrap: break-word;
     ${FONTS.body4("regular")}
   }
   button.toast-action {

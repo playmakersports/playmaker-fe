@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { Toaster as SoonerToaster } from "sonner";
+import { Toaster as SoonerToaster, toast } from "sonner";
 import { Provider } from "jotai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import ConfirmProvider from "@/components/common/global/ConfirmProvider";
@@ -20,10 +20,19 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
 
   return (
     <Provider>
-      <SoonerToaster position="bottom-right" swipeDirections={["left", "right"]} />
+      <SoonerToaster
+        position="bottom-center"
+        duration={1970}
+        mobileOffset={{
+          top: 16,
+          right: 16,
+          left: 16,
+          bottom: "calc(var(--safe-bottom) + 20px)",
+        }}
+      />
       <QueryClientProvider client={queryClient}>
         <ConfirmProvider>
-          <Suspense fallback={<Loading page />}> {children}</Suspense>
+          <Suspense fallback={<Loading page />}>{children}</Suspense>
         </ConfirmProvider>
       </QueryClientProvider>
     </Provider>

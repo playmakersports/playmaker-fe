@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
-
 import useModal from "@/hook/useModal";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
@@ -67,16 +66,15 @@ function Intro() {
           <TermList>
             {TERMS_LIST.map((term) => (
               <li key={term.termId}>
-                <div>
-                  <InputCheckbox
-                    id={term.termId}
-                    checked={checkedList[term.termId]}
-                    onChange={(event) => setCheckedList((prev) => ({ ...prev, [term.termId]: event.target.checked }))}
-                  />
-                  <label htmlFor={term.termId}>
-                    [{term.required ? "필수" : "선택"}] {term.termName}
-                  </label>
-                </div>
+                <InputCheckbox
+                  size="MEDIUM"
+                  id={term.termId}
+                  checked={checkedList[term.termId]}
+                  onChange={(event) => setCheckedList((prev) => ({ ...prev, [term.termId]: event.target.checked }))}
+                  text={{
+                    title: `[${term.required ? "필수" : "선택"}] ${term.termName}`,
+                  }}
+                />
                 <TermView
                   type="button"
                   aria-label="해당 약관 내용을 자세히"
@@ -149,17 +147,9 @@ const TermList = styled.ul`
     gap: 20px;
 
     div {
-      width: 100%;
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: 10px;
-      ${FONTS.MD2};
-      font-weight: 400;
-      color: var(--gray700);
-    }
-    label {
-      user-select: none;
-      width: 100%;
     }
   }
 `;

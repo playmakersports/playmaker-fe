@@ -10,9 +10,6 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   gap: 10px;
   align-items: center;
   border-radius: 8px;
-  ${FONTS.MD1};
-  font-size: 1.8rem;
-  font-weight: 500;
 
   & svg {
     width: 18px;
@@ -26,7 +23,7 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
 
   &:disabled,
   &:has(input:disabled) {
-    background-color: var(--gray200);
+    background-color: var(--gray100);
   }
   &:focus,
   &:has(input:focus) {
@@ -34,7 +31,7 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   }
 
   & input {
-    ${FONTS.MD1};
-    font-weight: 400;
+    color: var(--gray900);
+    ${FONTS.body3("regular")};
   }
 `;

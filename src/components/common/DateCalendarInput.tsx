@@ -253,6 +253,7 @@ const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPosit
   border-radius: 10px;
   box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.07);
   z-index: 50;
+  color: var(--gray700);
 
   @media (max-width: 420px) {
     top: ${({ position }) => (position.isAbove ? 0 : position.top)}px;

@@ -162,7 +162,7 @@ const StyledInput = styled.input`
   ${FONTS.MD1};
   font-weight: 400;
   transition: all 0.2s;
-  color: var(--black);
+  color: var(--gray900);
 
   &::placeholder {
     color: var(--gray500);
@@ -173,7 +173,7 @@ const StyledInput = styled.input`
     opacity: 1;
   }
   &:disabled {
-    color: var(--gray600);
+    color: var(--gray500);
     & + ${ClearIconArea} {
       display: none;
     }
@@ -182,13 +182,13 @@ const StyledInput = styled.input`
 const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
   input {
     width: 100%;
-    color: var(--black);
+    color: var(--gray900);
 
     &::placeholder {
       color: var(--gray500);
     }
     &:disabled {
-      color: var(--gray600);
+      color: var(--gray400);
     }
   }
 

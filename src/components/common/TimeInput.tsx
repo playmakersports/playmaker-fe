@@ -108,15 +108,15 @@ TimeInput.displayName = "TimeInput";
 
 const Container = styled.div`
   position: relative;
-  ${FONTS.MD1W500};
   display: flex;
   padding: 10px 10px 10px 12px;
   align-items: center;
   justify-content: center;
   gap: 1px;
   border: 1px solid var(--gray300);
+  color: var(--gray900);
   border-radius: 8px;
-  font-size: 1.8rem;
+  ${FONTS.body3("regular")};
 
   svg {
     margin-right: 4px;
@@ -126,10 +126,12 @@ const Container = styled.div`
   }
 
   ${DateKeypadInput} {
-    width: 29px;
-    padding-right: 5px;
+    width: 24px;
+    padding-right: 2px;
+    border-radius: 0;
+
     &:focus {
-      padding-right: 5px;
+      padding-right: 2px;
       border: none;
     }
   }
@@ -138,18 +140,17 @@ const Container = styled.div`
     margin-right: 2px;
     border-radius: 2px;
     &:hover {
-      background-color: var(--gray300);
-      outline: 3px solid var(--gray300);
+      background-color: var(--gray100);
+      outline: 3px solid var(--gray100);
     }
     &:disabled {
-      color: var(--gray600);
+      color: var(--gray400);
     }
   }
   &:has(input:disabled) {
     appearance: none;
-    color: var(--gray600);
-    border: 1px solid transparent;
-    background-color: var(--gray200);
+    color: var(--gray400);
+    background-color: var(--gray100);
   }
   &:has(input:focus) {
     border: 1px solid var(--main);

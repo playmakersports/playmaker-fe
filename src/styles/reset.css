@@ -22,9 +22,13 @@ body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* Internet Explorer 10+ */
 }
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
+*::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+*::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* gray300 */
+  border-radius: 999px;
 }
 
 ol,

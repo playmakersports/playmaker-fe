@@ -5,7 +5,6 @@ import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 
 import { FONTS } from "@/styles/common";
-import DropDown from "@/components/common/DropDown";
 import { BasicInput } from "@/components/common/Input";
 import DateCalendarInput from "@/components/common/DateCalendarInput";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
@@ -13,6 +12,7 @@ import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import Button from "@/components/common/Button";
 import { InputRadio } from "@/components/common/SelectInput";
 import { TextArea } from "@/components/common/TextArea";
+import DropdownInput from "@/components/common/input/DropdownInput";
 
 function CompetitionCreatePC() {
   const [sportsType, setSportsType] = useState("");
@@ -39,10 +39,10 @@ function CompetitionCreatePC() {
         <section className="form-flex2">
           <InputRadioWrapper title="종목 및 대회명">
             <div style={{ width: "220px" }}>
-              <DropDown
-                $fullWidth
+              <DropdownInput
                 placeholder="종목 선택"
-                getSelectedValue={setSportsType}
+                value={sportsType}
+                onChange={setSportsType}
                 options={SUPPORT_SPORTS.map((sports) => ({
                   name: sports.name,
                   value: sports.value,
@@ -132,10 +132,10 @@ function CompetitionCreatePC() {
 
             <h3>대회 방식</h3>
             <InputRadioWrapper title="참가 팀 수">
-              <DropDown
-                $fullWidth
+              <DropdownInput
                 placeholder="선택"
-                getSelectedValue={setTeamNumber}
+                value={teamNumber}
+                onChange={setTeamNumber}
                 options={[
                   { name: "12명", value: "12" },
                   { name: "20명", value: "20" },
@@ -194,10 +194,10 @@ function CompetitionCreatePC() {
               />
             </InputRadioWrapper>
             <InputRadioWrapper title="연령">
-              <DropDown
-                $fullWidth
+              <DropdownInput
+                value={ageType}
+                onChange={setAgeType}
                 placeholder="나이 방식"
-                getSelectedValue={setAgeType}
                 options={[
                   { name: "만나이", value: "global" },
                   { name: "한국식 나이", value: "korean-age" },
@@ -213,11 +213,11 @@ function CompetitionCreatePC() {
             <h3>참가비</h3>
             <section className="grid-merge form-grid-column">
               <div style={{ width: "132px", marginRight: "-8px" }}>
-                <DropDown
-                  $fullWidth
+                <DropdownInput
                   title="계좌번호"
                   placeholder="은행 선택"
-                  getSelectedValue={setBankName}
+                  value={bankName}
+                  onChange={setBankName}
                   options={[
                     { name: "신한은행", value: "shinhan" },
                     { name: "KB국민은행", value: "kookmin" },
@@ -374,7 +374,7 @@ const Bottom = styled.footer`
   gap: 60px;
   background-color: var(--background-light);
   border-top: 1px solid var(--gray200);
-  z-index: 51;
+  z-index: 40;
 
   div.bottom-left-side {
     flex: 0.25;

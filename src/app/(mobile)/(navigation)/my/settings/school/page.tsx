@@ -11,7 +11,7 @@ import Badge from "@/components/common/Badge";
 import { BaseContainer } from "@/components/common/Container";
 import { BasicInput } from "@/components/common/Input";
 import { FileInput } from "@/components/common/FileInput";
-import DropDown from "@/components/common/DropDown";
+import DropdownInput from "@/components/common/input/DropdownInput";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
@@ -53,10 +53,11 @@ function UserSchool() {
             />
           </div>
           <div style={{ flex: 1 }}>
-            <DropDown
+            <DropdownInput
               placeholder="선택"
               title="학년"
-              getSelectedValue={(value) => setValue("grade", value)}
+              value={watch("grade")}
+              onChange={(value) => setValue("grade", value)}
               options={[
                 { value: "1", name: "1학년" },
                 { value: "2", name: "2학년" },

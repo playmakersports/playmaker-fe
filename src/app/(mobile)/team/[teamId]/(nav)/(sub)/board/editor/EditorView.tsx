@@ -11,7 +11,7 @@ import { BaseContainer } from "@/components/common/Container";
 import { useEditorHandler } from "@/hook/useEditorHandler";
 import EditorUI from "@/components/Editor";
 import Button from "@/components/common/Button";
-import DropDown from "@/components/common/DropDown";
+import DropdownInput from "@/components/common/input/DropdownInput";
 import { BasicInput } from "@/components/common/Input";
 import Spinner from "@/components/common/Spinner";
 
@@ -68,10 +68,10 @@ function EditorView() {
 
   return (
     <Container>
-      <DropDown
-        getSelectedValue={setCategory}
+      <DropdownInput
+        value={category}
+        onChange={setCategory}
         placeholder="카테고리 선택"
-        defaultValue={category}
         options={[
           { name: "공지사항", value: "notice" },
           { name: "사진", value: "photo" },

@@ -36,7 +36,7 @@ function Schedule() {
     subIcons: [
       {
         svgIcon: <PlusIcon />,
-        linkTo: `/team/${teamId}/board/editor?type=new&via=schedule`,
+        linkTo: `/team/${teamId}/schedule/editor`,
         description: "일정 생성",
       },
     ],
@@ -389,9 +389,9 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   font-size: 1.6rem;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red500)" : "var(--gray900)")};
   opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
-  ${BUTTON_ACTIVE("var(--primary-m20)")};
+  ${BUTTON_ACTIVE("var(--primary100)")};
 
   &[aria-invalid] {
     visibility: hidden;
@@ -409,8 +409,9 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
     border-radius: 100%;
   }
   &.current-date {
-    background-color: var(--primary-m20);
-    transform: scale(1.03);
+    background-color: var(--primary500);
+    color: var(--white);
+    transform: scale(1.05);
   }
 `;
 

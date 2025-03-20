@@ -14,12 +14,18 @@ type Props = {
   type?: BadgeColor;
   size?: BadgeSize;
   fillType?: ChipFillType;
+  disabled?: boolean;
   closeAction?: () => void;
 };
 function Chip(props: Props) {
-  const { children, type = "primary", size = "medium", fillType = "filled", closeAction } = props;
+  const { children, type = "primary", size = "medium", fillType = "filled", disabled = false, closeAction } = props;
   return (
-    <Container data-close={!!closeAction} $colors={CHIP_COLORS[type][fillType]} $size={CHIP_SIZE[size]}>
+    <Container
+      data-close={!!closeAction}
+      data-disabled={disabled}
+      $colors={CHIP_COLORS[type][fillType]}
+      $size={CHIP_SIZE[size]}
+    >
       {children}
       {closeAction && <CloseIcon onClick={closeAction} />}
     </Container>
@@ -40,6 +46,14 @@ const Container = styled.span<{ $colors: ColorType; $size: SizeType }>`
 
   &[data-close="true"] {
     padding-right: ${({ $size }) => $size.paddingLR - 2}px;
+  }
+  &[data-disabled="true"] {
+    background-color: var(--gray50);
+    border-color: var(--gray200);
+    color: var(--gray300);
+    & > svg {
+      fill: var(--gray300);
+    }
   }
 
   & > svg {

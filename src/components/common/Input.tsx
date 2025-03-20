@@ -165,7 +165,7 @@ const StyledInput = styled.input`
   color: var(--gray900);
 
   &::placeholder {
-    color: var(--gray500);
+    color: var(--gray400);
   }
 
   &:not(:placeholder-shown):focus + ${ClearIconArea} {
@@ -185,7 +185,7 @@ const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
     color: var(--gray900);
 
     &::placeholder {
-      color: var(--gray500);
+      color: var(--gray400);
     }
     &:disabled {
       color: var(--gray400);

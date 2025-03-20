@@ -41,6 +41,7 @@ function Button(props: Props) {
       type={type ?? "button"}
       onClick={onClick}
       flex={flex}
+      data-fill-type={fillType}
       mode={BUTTON_STYLE[mode][fillType]}
       $fullWidth={fullWidth}
       disabled={disabled}
@@ -94,9 +95,22 @@ const Wrapper = styled.button<ButtonStyled>`
   ${({ $fontStyle }) => $fontStyle};
 
   &:disabled {
-    background-color: var(--gray100);
-    color: var(--gray300);
     cursor: not-allowed;
+    &[data-fill-type="default"] {
+      background-color: var(--gray300);
+      color: var(--gray50);
+      border-color: transparent;
+    }
+    &[data-fill-type="light"] {
+      background-color: var(--gray100);
+      color: var(--gray300);
+      border-color: transparent;
+    }
+    &[data-fill-type="outline"] {
+      background-color: var(--white);
+      color: var(--gray300);
+      border-color: var(--gray200);
+    }
   }
   &:active > span {
     transform: scale(0.95);

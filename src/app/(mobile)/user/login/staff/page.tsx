@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import LoginWrapper from "@/components/User/LoginWrapper";
 
 function Staff() {

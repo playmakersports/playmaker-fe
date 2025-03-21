@@ -12,7 +12,7 @@ import { useEditorHandler } from "@/hook/useEditorHandler";
 import EditorUI from "@/components/Editor";
 import Button from "@/components/common/Button";
 import DropdownInput from "@/components/common/input/DropdownInput";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import Spinner from "@/components/common/Spinner";
 
 function EditorView() {

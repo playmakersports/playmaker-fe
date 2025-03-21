@@ -7,7 +7,7 @@ import { useToast } from "@/hook/useToast";
 import TimeInput from "../common/TimeInput";
 import Button from "../common/Button";
 import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
-import { BasicInput } from "../common/Input";
+import { BasicInput } from "../common/input/BaseInput";
 import { InputCheckbox } from "../common/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";

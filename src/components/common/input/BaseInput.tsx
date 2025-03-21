@@ -4,9 +4,9 @@ import React, { useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
-import { InputWrapperStyledProps } from "./input/type";
-import { InputStyledWrapper } from "./Wrapper";
-import InputWrapper from "./input/InputWrapper";
+import { InputWrapperStyledProps } from "./type";
+import { InputStyledWrapper } from "../Wrapper";
+import InputWrapper from "./InputWrapper";
 
 import CloseIcon from "@/assets/icon/common/Close.svg";
 import SearchIcon from "@/assets/icon/common/Search.svg";

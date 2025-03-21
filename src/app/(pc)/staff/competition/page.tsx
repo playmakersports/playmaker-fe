@@ -7,7 +7,7 @@ import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { countDayDiff, formattedDate } from "@/util/date";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import Button from "@/components/common/Button";
 
 import PlusIcon from "@/assets/icon/global/Plus.svg";

@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { FieldValues, useForm } from "react-hook-form";
 
 import { FONTS } from "@/styles/common";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import DateCalendarInput from "@/components/common/DateCalendarInput";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";

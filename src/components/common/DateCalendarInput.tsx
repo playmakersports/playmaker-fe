@@ -4,8 +4,8 @@ import { getMonth, getYear, isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 
 import { FONTS } from "@/styles/common";
-import { DateKeypadInput } from "./PlainInput";
-import { BasicInput, InputProps } from "./Input";
+import { DateKeypadInput } from "./input/PlainInput";
+import { BasicInput, InputProps } from "./input/BaseInput";
 import DoubleLeftArrowIcon from "@/assets/icon/arrow/DoubleLeftArrow.svg";
 import DoubleRightArrowIcon from "@/assets/icon/arrow/DoubleRightArrow.svg";
 

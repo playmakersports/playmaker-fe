@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAtom, useSetAtom } from "jotai";
 
 import { atomServiceApply } from "@/atom/user";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";

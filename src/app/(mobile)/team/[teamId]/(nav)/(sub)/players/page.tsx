@@ -7,7 +7,7 @@ import useModal from "@/hook/useModal";
 
 import { FONTS } from "@/styles/common";
 import SwipeSelector from "@/components/common/SwipeSelector";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import PlayerListItem from "@/components/Team/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";

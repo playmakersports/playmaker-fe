@@ -9,7 +9,7 @@ import useStickyMoment from "@/hook/useStickyMoment";
 import { FONTS } from "@/styles/common";
 import MainTab from "@/components/Main/MainTab";
 import { BaseContainer } from "@/components/common/Container";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { GetTeamBoardListResponse } from "@/types/team";
 import ListArticle from "./_components/ListArticle";
 

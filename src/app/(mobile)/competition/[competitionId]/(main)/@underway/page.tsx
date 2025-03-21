@@ -8,7 +8,7 @@ import { COMPETITION_DETAIL_MOCK } from "@/constants/mock/COMPETITION";
 import CompetitionFloat from "../../_components/Float";
 import ScheduleWeek from "../../_components/ScheduleWeek";
 import MatchCard from "@/components/Team/MatchCard";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { BaseContainer } from "@/components/common/Container";
 
 import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";

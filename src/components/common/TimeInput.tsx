@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
-import { DateKeypadInput } from "./PlainInput";
+import { DateKeypadInput } from "./input/PlainInput";
 import ClockIcon from "@/assets/icon/global/Clock.svg";
 import { getHours, getMinutes } from "date-fns";
 

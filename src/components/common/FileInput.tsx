@@ -3,7 +3,7 @@
 import React, { useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
 
-import { InputProps } from "./Input";
+import { InputProps } from "./input/BaseInput";
 import { InputStyledWrapper } from "./Wrapper";
 import { FONTS } from "@/styles/common";
 import InputWrapper from "./input/InputWrapper";

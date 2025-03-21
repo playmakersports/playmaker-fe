@@ -8,7 +8,7 @@ import useModal from "@/hook/useModal";
 
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import Loading from "@/components/common/Loading";
 
 type UnivData = {

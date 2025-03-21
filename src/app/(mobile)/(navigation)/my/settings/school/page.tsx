@@ -9,7 +9,7 @@ import Image from "next/image";
 import { FONTS } from "@/styles/common";
 import Badge from "@/components/common/Badge";
 import { BaseContainer } from "@/components/common/Container";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { FileInput } from "@/components/common/FileInput";
 import DropdownInput from "@/components/common/input/DropdownInput";
 import FloatButton from "@/components/common/FloatButton";

@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 
 import { atomServiceApply } from "@/atom/user";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { SCROLL_HIDE } from "@/styles/common";
 import Loading from "@/components/common/Loading";
 

@@ -11,7 +11,7 @@ import { BaseContainer } from "@/components/common/Container";
 import Button from "@/components/common/Button";
 import Badge from "@/components/common/Badge";
 import { FONTS } from "@/styles/common";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_APPLY_LIST } from "@/constants/mock/TEAM_APPLY";
 
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";

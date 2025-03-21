@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import { atomTeamCreate } from "@/atom/team";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { TextArea } from "@/components/common/TextArea";
 
 function TeamCreateStep2({ setStep }: { setStep: (prev: number) => void }) {

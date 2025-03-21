@@ -10,7 +10,7 @@ import MainTab from "@/components/Main/MainTab";
 import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
 import { BaseContainer } from "@/components/common/Container";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
-import { BasicInput } from "@/components/common/Input";
+import { BasicInput } from "@/components/common/input/BaseInput";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import TeamListCard from "@/components/Team/TeamListCard";
 import ToggleInput from "@/components/common/ToggleInput";

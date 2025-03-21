@@ -8,7 +8,7 @@ import CheckCircleIcon from "@/assets/icon/circle/CheckCircle.svg";
 import QuestionCircleIcon from "@/assets/icon/circle/QuestionCircle.svg";
 import WarningCircleIcon from "@/assets/icon/circle/WarningCircle.svg";
 import AlertCircleIcon from "@/assets/icon/circle/AlertCircle.svg";
-import CloseIcon from "@/assets/icon/global/Close.svg";
+import CloseIcon from "@/assets/icon/common/Close.svg";
 
 type ToastProps = {
   type?: "default" | "primary" | "success" | "info" | "warning" | "error";

@@ -6,13 +6,11 @@ import useCalendar from "@/hook/useCalendar";
 import { FONTS } from "@/styles/common";
 import { DateKeypadInput } from "./PlainInput";
 import { BasicInput, InputProps } from "./Input";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import DoubleLeftArrowIcon from "@/assets/icon/arrow/DoubleLeftArrow.svg";
 import DoubleRightArrowIcon from "@/assets/icon/arrow/DoubleRightArrow.svg";
 
 type Props = Omit<InputProps, "type" | "value" | "search"> & {
   displayIcon?: boolean;
-  $fullWidth?: boolean;
   value?: string;
   defaultValue?: string;
   children?: ReactNode;
@@ -20,13 +18,12 @@ type Props = Omit<InputProps, "type" | "value" | "search"> & {
 const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const {
     children,
+    error,
     displayIcon = false,
-    $fullWidth = false,
+    description,
     defaultValue,
     title,
-    errorText,
     delButton = false,
-    medium = false,
     value,
     ...rest
   } = props;
@@ -106,15 +103,11 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   }, [showCalendar]);
 
   return (
-    <Container ref={containerRef} $fullWidth={$fullWidth}>
-      {displayIcon && (
-        <Icon onClick={!props.disabled ? handleCalendarView : () => {}}>
-          <CalendarIcon />
-        </Icon>
-      )}
+    <Container ref={containerRef}>
       <BasicInput
-        style={displayIcon ? { paddingLeft: "26px" } : undefined}
-        errorText={errorText}
+        error={error}
+        iconType="calendar"
+        description={description}
         ref={inputRef}
         type="text"
         title={title}
@@ -223,24 +216,10 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
 });
 DateCalendarInput.displayName = "DateCalendarInput";
 
-const Container = styled.div<{ $fullWidth: boolean }>`
+const Container = styled.div`
   position: relative;
-  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
 `;
-const Icon = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  left: 12px;
-  z-index: 1;
-  width: 20px;
-  height: 100%;
-  svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--gray600);
-  }
-`;
+
 type ContainerPositionType = { top: number; left: number; isAbove: boolean };
 const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPositionType }>`
   position: absolute;
@@ -248,10 +227,10 @@ const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPosit
   /* top: ${({ position }) => (position.isAbove ? "auto" : `${position.top}px`)}; */
   transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 340px;
-  padding: 20px 12px;
+  padding: 20px;
   background-color: var(--background-light);
-  border-radius: 10px;
-  box-shadow: 0 0 16px 6px rgba(0, 0, 0, 0.07);
+  border-radius: 20px;
+  box-shadow: var(--shadow-lg);
   z-index: 50;
   color: var(--gray700);
 
@@ -264,14 +243,15 @@ const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPosit
   }
 `;
 const NowDate = styled.div`
-  ${FONTS.HEAD1};
+  ${FONTS.body3("medium")};
   display: flex;
-  margin: 0 0 24px;
+  margin: 0 0 20px;
   align-items: center;
   justify-content: center;
   gap: 24px;
 
   .date-input-wrapper {
+    ${FONTS.body2("semibold")};
     display: flex;
     user-select: none;
   }
@@ -283,9 +263,9 @@ const NowDate = styled.div`
     }
   }
   ${DateKeypadInput} {
-    max-width: 56px;
+    ${FONTS.body2("semibold")};
+    max-width: 52px;
     margin: 0 2px;
-    ${FONTS.HEAD1};
   }
 `;
 const Week = styled.div`
@@ -294,9 +274,8 @@ const Week = styled.div`
 const DayName = styled.div`
   flex: 1;
   text-align: center;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--gray600);
+  color: var(--gray500);
+  ${FONTS.caption1("regular")};
 `;
 const Days = styled.div`
   position: relative;
@@ -320,8 +299,8 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   padding: 8px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
-  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray600)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
   border-radius: 5px;
   font-size: 1.6rem;
 
@@ -329,10 +308,10 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
     visibility: hidden;
   }
   &:hover {
-    background-color: var(--gray100);
+    background-color: var(--gray50);
   }
-  &:focus {
-    background-color: var(--gray200);
+  &:active {
+    background-color: var(--gray100);
   }
   &.current-date {
     background-color: var(--main);

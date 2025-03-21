@@ -14,7 +14,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size" |
     description?: string;
   };
 };
-type RadioProps = Props & { $fullWidth?: boolean; labelName: string; buttonType?: boolean };
+type RadioProps = Props & { buttonType?: boolean };
 
 export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(
   ({ size = "LARGE", color = "default", text, ...rest }, ref) => {
@@ -43,19 +43,26 @@ export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(
 InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
-  ({ $fullWidth = false, size = "LARGE", labelName, buttonType = false, id, ...rest }, ref) => (
-    <RadioWrapper $isLarge={size === "LARGE"} $fullWidth={$fullWidth}>
-      <div style={{ position: "relative", display: buttonType ? "none" : "inline-flex" }}>
-        <Radio type="radio" id={id} ref={ref} {...rest} />
-        <RadioIcon />
-      </div>
-      {buttonType ? (
-        <ButtonLabel htmlFor={id}>{labelName}</ButtonLabel>
-      ) : (
-        <BasicLabel htmlFor={id}>{labelName}</BasicLabel>
-      )}
-    </RadioWrapper>
-  )
+  ({ id, size = "LARGE", color = "default", text, buttonType = false, ...rest }, ref) => {
+    const SIZE = size === "LARGE" ? "24px" : "20px";
+
+    return (
+      <TextContainer>
+        <div style={{ position: "relative", display: "inline-block", width: SIZE, height: SIZE }}>
+          <Radio type="radio" data-error={color === "error"} id={id} ref={ref} {...rest} />
+          <RadioIcon />
+        </div>
+        {text && (
+          <div className="text-container" data-size={size}>
+            <label className="title" htmlFor={id}>
+              {text.title}
+            </label>
+            {text.description && <p className="description">{text.description}</p>}
+          </div>
+        )}
+      </TextContainer>
+    );
+  }
 );
 InputRadio.displayName = "InputRadio";
 
@@ -136,72 +143,51 @@ const Radio = styled.input`
   height: 100%;
   opacity: 0;
 
+  &[data-error="true"] {
+    & + ${RadioIcon} {
+      border: 1px solid var(--red200);
+    }
+    &:checked + ${RadioIcon} {
+      background-color: var(--red500);
+    }
+    &:focus:checked + ${RadioIcon} {
+      outline: 3px solid var(--red100);
+    }
+  }
+
   & + ${RadioIcon} {
-    width: 24px;
-    height: 24px;
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
-    border: 1px solid var(--gray500);
+    border: 1px solid var(--gray200);
     background-color: transparent;
   }
   &:focus:not(:checked) + ${RadioIcon} {
-    outline: 3px solid var(--gray600);
+    outline: 3px solid var(--gray100);
   }
   &:focus:checked + ${RadioIcon} {
-    outline: 3px solid var(--primary300);
+    outline: 3px solid var(--primary100);
+  }
+
+  &:checked:disabled + ${RadioIcon} {
+    background-color: var(--gray200);
+  }
+  &:disabled + ${RadioIcon} {
+    background-color: var(--gray50);
   }
   &:checked + ${RadioIcon} {
     display: flex;
     align-items: center;
     justify-content: center;
-    fill: #fff;
-    border: 1px solid var(--main);
+    background-color: var(--primary500);
+    border: 1px solid transparent;
+
     &::after {
       content: "";
-      background-color: var(--main);
+      width: 8px;
+      height: 8px;
+      background-color: var(--white);
       border-radius: 50%;
     }
-  }
-`;
-const BasicLabel = styled.label`
-  ${FONTS.MD1W500};
-  font-weight: 400;
-`;
-const ButtonLabel = styled.label`
-  cursor: pointer;
-  width: 100%;
-  padding: 8px 4px;
-  ${FONTS.MD1W500};
-  border-radius: 10px;
-  color: var(--gray500);
-  background-color: var(--gray100);
-  text-align: center;
-  word-break: keep-all;
-`;
-const RadioWrapper = styled.div<{ $fullWidth: boolean; $isLarge: boolean }>`
-  display: flex;
-  width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
-  align-items: center;
-  gap: 4px;
-  & > div,
-  & > div > input[type="radio"] + ${RadioIcon} {
-    width: ${({ $isLarge }) => ($isLarge ? "24px" : "20px")};
-    height: ${({ $isLarge }) => ($isLarge ? "24px" : "20px")};
-
-    &::after {
-      width: ${({ $isLarge }) => ($isLarge ? "12px" : "10px")};
-      height: ${({ $isLarge }) => ($isLarge ? "12px" : "10px")};
-    }
-  }
-
-  &:has(${Radio}:checked) {
-    ${ButtonLabel} {
-      color: #fff;
-      background-color: var(--main);
-      font-weight: 600;
-    }
-  }
-
-  & > ${BasicLabel} {
-    line-height: ${({ $isLarge }) => ($isLarge ? "2.2rem" : "2rem")};
   }
 `;

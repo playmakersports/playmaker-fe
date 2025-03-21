@@ -19,6 +19,11 @@ type Props = {
 };
 function Chip(props: Props) {
   const { children, type = "primary", size = "medium", fillType = "filled", disabled = false, closeAction } = props;
+  const onClickClose = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    closeAction && closeAction();
+  };
+
   return (
     <Container
       data-close={!!closeAction}
@@ -27,13 +32,14 @@ function Chip(props: Props) {
       $size={CHIP_SIZE[size]}
     >
       {children}
-      {closeAction && <CloseIcon onClick={closeAction} />}
+      {closeAction && <CloseIcon onClick={onClickClose} />}
     </Container>
   );
 }
 
 const Container = styled.span<{ $colors: ColorType; $size: SizeType }>`
   display: inline-flex;
+  min-width: max-content;
   align-items: center;
   justify-content: center;
   text-align: center;

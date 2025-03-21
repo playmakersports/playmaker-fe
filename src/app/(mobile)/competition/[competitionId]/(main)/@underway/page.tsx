@@ -33,7 +33,7 @@ function CompetitionUnderway() {
       </Participants>
       <ScheduleWeek startDate={MOCK.startDate} endDate={MOCK.endDate} schedule={MOCK.schedule} />
       <Search>
-        <BasicInput type="text" placeholder="어떤 팀을 찾고 있나요" search />
+        <BasicInput type="text" placeholder="어떤 팀을 찾고 있나요" iconType="search" />
       </Search>
       <RoundTab role="tablist">
         {[24, 16, 8, 4, 2].map((round, index) => (

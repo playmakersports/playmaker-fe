@@ -49,7 +49,7 @@ function Board() {
   return (
     <>
       <Search>
-        <BasicInput type="text" search />
+        <BasicInput type="text" iconType="search" />
       </Search>
       <TabWrapper ref={tabRef}>
         <MainTab

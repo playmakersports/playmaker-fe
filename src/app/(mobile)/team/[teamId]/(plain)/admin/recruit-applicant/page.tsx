@@ -30,7 +30,7 @@ function RecruitApplicant() {
     <>
       <Container>
         <div className="search-wrapper">
-          <BasicInput type="text" search placeholder="이름으로 검색할 수 있어요" />
+          <BasicInput type="text" iconType="search" placeholder="이름으로 검색할 수 있어요" />
         </div>
         <List>
           {TEAM_APPLY_LIST.map((player) => (
@@ -109,12 +109,7 @@ function RecruitApplicant() {
         ]}
       >
         <TextArea title="환영 메시지" maxLength={50} displayLength />
-        <BasicInput
-          type="number"
-          title="기수"
-          information={{ text: "기수제로 운영되는 팀은 필수로 입력해야 해요." }}
-          required
-        />
+        <BasicInput type="number" title="기수" information="기수제로 운영되는 팀은 필수로 입력해야 해요." required />
       </AcceptModal>
       <DenyModal
         title="가입 거절"

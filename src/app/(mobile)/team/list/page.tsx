@@ -50,7 +50,7 @@ function TeamList() {
       <Contents>
         <BasicInput
           type="text"
-          search={true}
+          iconType="search"
           placeholder="팀 이름으로 찾기.."
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
@@ -103,7 +103,7 @@ const TabWrapper = styled.div`
   transition: padding 0.2s;
 
   &.stuck {
-    border-bottom: 1px solid rgb(var(--gray-h6));
+    border-bottom: 1px solid var(--gray600);
     background-color: var(--background-light);
   }
 `;

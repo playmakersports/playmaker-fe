@@ -35,7 +35,7 @@ function TeamCreateStep3({ setStep }: { setStep: (prev: number) => void }) {
           <DateInput
             title="창단일"
             pickType="ONLY_PAST"
-            information={{ text: "팀 창단이 완료되면 창단일 변경이 어려워요.", onClick: () => {} }}
+            information="팀 창단이 완료되면 창단일 변경이 어려워요."
             {...register("createDt", { required: true })}
           />
           <LocationInput title="활동 지역" defaultValue={teamCreateValue.activeArea} setLocationKey={setLocationKey} />

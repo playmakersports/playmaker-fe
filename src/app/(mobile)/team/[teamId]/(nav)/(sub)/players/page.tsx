@@ -55,7 +55,7 @@ function PlayerList() {
     <>
       <Container>
         <Top>
-          <BasicInput type="text" search placeholder="이름으로 찾기" />
+          <BasicInput type="text" iconType="search" placeholder="이름으로 찾기" />
           <Filter>
             <DropDownBottomSheet getCurrentValue={setFilter} defaultValue={filter} options={PLAYERS_FILTER} />
             <p>총 {TEAM_PLAYERS_MOCK.length}명</p>

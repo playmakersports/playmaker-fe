@@ -117,7 +117,7 @@ function CodeControl() {
           <BasicInput
             type="text"
             title="약칭 입력"
-            information={{ text: "약칭은 최대 8자까지 입력 가능합니다.", onClick: () => {} }}
+            information="약칭은 최대 8자까지 입력 가능합니다."
             {...register("alias", {
               setValueAs: (value) => value.trim(),
               maxLength: 8,

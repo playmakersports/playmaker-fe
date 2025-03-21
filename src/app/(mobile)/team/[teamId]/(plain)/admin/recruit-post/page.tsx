@@ -36,7 +36,7 @@ function RecruitPost() {
           pickType="ONLY_FUTURE"
           title="모집 마감일"
           displayIcon
-          information={{ text: "오늘을 기준으로 최장 14일까지 선택할 수 있어요." }}
+          information="오늘을 기준으로 최장 14일까지 선택할 수 있어요."
         />
       </form>
       <FloatButton>

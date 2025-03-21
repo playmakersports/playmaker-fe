@@ -7,7 +7,7 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   width: 100%;
   height: 40px;
   padding: ${({ $isMedium }) => ($isMedium ? "6px 8px" : "0 12px")};
-  gap: 10px;
+  gap: 8px;
   align-items: center;
   border-radius: 8px;
   text-align: left;
@@ -28,7 +28,7 @@ export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: b
   }
   &:focus,
   &:has(input:focus) {
-    border: 1px solid var(--gray400);
+    border: 1px solid var(--gray300);
   }
 
   & input {

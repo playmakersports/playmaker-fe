@@ -25,6 +25,7 @@ function InputWrapper({ children, ...props }: InputWrapperStyledProps & { childr
 }
 
 const Wrapper = styled.div`
+  max-width: var(--mobile-max-width);
   div.input-header {
     display: flex;
     margin-bottom: 8px;

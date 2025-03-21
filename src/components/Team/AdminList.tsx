@@ -224,7 +224,7 @@ function AdminList() {
             <p>팀 공개 여부</p>
             <ToggleInput toggled={publicTeam} setToggle={setPublicTeam} />
           </div>
-          <p className="description">
+          <div className="description">
             비공개 팀이 되면 다른 사용자는 우리 팀을 볼 수 없으며, 아래의 제한이 생겨요.
             <ul className="information">
               <li>초대 링크로만 새 팀원을 영입할 수 있어요.</li>
@@ -232,7 +232,7 @@ function AdminList() {
               <li>단, 우리 팀에서 교류전을 제안하면 상대 팀은 우리 팀을 볼 수 있어요.</li>
               <li>팀 순위에서 제외돼요.</li>
             </ul>
-          </p>
+          </div>
         </PublicHandlerContainer>
       </PublicTeamModal>
     </>
@@ -332,7 +332,6 @@ const AllowContainer = styled.div`
 `;
 
 const PublicHandlerContainer = styled.div`
-  ${FONTS.MD1};
   padding: 0 8px;
   display: flex;
   flex-direction: column;
@@ -344,12 +343,13 @@ const PublicHandlerContainer = styled.div`
     justify-content: space-between;
     p {
       flex: 1;
+      ${FONTS.body3("semibold")};
+      color: var(--gray700);
     }
   }
-  p.description {
-    ${FONTS.MD2};
-    font-weight: 400;
-    color: var(--gray700);
+  div.description {
+    ${FONTS.body4("regular")};
+    color: var(--gray500);
     word-break: keep-all;
     ul.information {
       display: flex;
@@ -357,7 +357,6 @@ const PublicHandlerContainer = styled.div`
       gap: 3px;
       margin: 10px 0 0 10px;
       padding: 0 0 0 6px;
-      color: var(--gray600);
       list-style-type: disc;
     }
   }

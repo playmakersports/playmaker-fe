@@ -41,8 +41,8 @@ function useModal() {
   );
 
   const Title = styled.h3`
-    margin-bottom: 22px;
-    ${FONTS.HEAD1}
+    margin-bottom: 4px;
+    ${FONTS.body3("semibold")}
   `;
 
   return { ModalComponents, showModal };

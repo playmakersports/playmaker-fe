@@ -10,7 +10,7 @@ import Chip from "../Chip";
 
 import BottomToggleArrowIcon from "@/assets/icon/arrow/toggle/BottomToggle.svg";
 import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
-import CloseIcon from "@/assets/icon/global/Close.svg";
+import CloseIcon from "@/assets/icon/common/Close.svg";
 
 type OptionsType = { name: string; value: string };
 type Props = {
@@ -27,7 +27,7 @@ function DropdownMulti(props: Props) {
   const {
     title,
     required = false,
-    infoAction,
+    information,
     value,
     onChange,
     options,
@@ -109,8 +109,13 @@ function DropdownMulti(props: Props) {
     }
   };
 
+  const onClickOpenOptions = () => {
+    if (disabled) return;
+    setShowOptions((prev) => !prev);
+  };
+
   return (
-    <InputWrapper title={title} required={required} infoAction={infoAction}>
+    <InputWrapper title={title} required={required} information={information}>
       <div ref={dropdownRef}>
         <ValueContainer
           type="button"
@@ -118,7 +123,7 @@ function DropdownMulti(props: Props) {
           data-error={error}
           aria-disabled={disabled}
           data-state={value.length === 0 ? "placeholder" : ""}
-          onClick={() => setShowOptions((prev) => !prev)}
+          onClick={onClickOpenOptions}
           onKeyUp={onKeyupOptionsOpen}
         >
           <span className="current-value">
@@ -206,6 +211,7 @@ const ValueContainer = styled(InputStyledWrapper).attrs({ as: "button" })`
   }
   div.dropdown-icons {
     display: flex;
+    align-items: center;
     gap: 8px;
     flex-shrink: 0;
   }
@@ -255,6 +261,8 @@ const DropdownIcon = styled.span`
   width: 20px;
   height: 20px;
   & > svg {
+    width: 100%;
+    height: auto;
     fill: var(--gray700);
   }
 `;

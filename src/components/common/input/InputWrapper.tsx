@@ -4,15 +4,16 @@ import { InputWrapperStyledProps } from "./type";
 import { FONTS } from "@/styles/common";
 
 function InputWrapper({ children, ...props }: InputWrapperStyledProps & { children: React.ReactNode }) {
-  const { title, infoAction, required } = props;
+  const { title, information, required } = props;
+  const onClickOpenToolTip = () => {};
 
   return (
     <Wrapper>
       {title && (
         <div className="input-header">
           <span className="title">{title}</span>
-          {infoAction && (
-            <button type="button" className="question-icon" onClick={infoAction}>
+          {information && (
+            <button type="button" className="question-icon" onClick={onClickOpenToolTip}>
               <InfoIcon fill="var(--gray400)" />
             </button>
           )}

@@ -25,7 +25,7 @@ function DropdownInput(props: Props) {
   const {
     title,
     required = false,
-    infoAction,
+    information,
     value,
     onChange,
     options,
@@ -98,8 +98,13 @@ function DropdownInput(props: Props) {
     }
   };
 
+  const onClickOpenOptions = () => {
+    if (disabled) return;
+    setShowOptions((prev) => !prev);
+  };
+
   return (
-    <InputWrapper title={title} required={required} infoAction={infoAction}>
+    <InputWrapper title={title} required={required} information={information}>
       <ValueContainer
         type="button"
         aria-label={`,${title ?? ""} ${placeholder} 옵션 열기. 현재 선택된 항목 - ${
@@ -110,13 +115,15 @@ function DropdownInput(props: Props) {
         data-error={error}
         aria-disabled={disabled}
         data-state={value === "" ? "placeholder" : ""}
-        onClick={() => setShowOptions((prev) => !prev)}
+        onClick={onClickOpenOptions}
         onKeyUp={onKeyupOptionsOpen}
       >
         <span className="current-value">
           {value === "" ? placeholder : options.find((v) => v.value === value)?.name}
         </span>
-        <BottomToggleArrowIcon />
+        <DropdownIcon>
+          <BottomToggleArrowIcon />
+        </DropdownIcon>
       </ValueContainer>
       {description && <Description data-error={error}>{description}</Description>}
 
@@ -201,6 +208,20 @@ const OptionsTitle = styled.div`
   border-bottom: 1px solid var(--gray200);
   text-align: left;
   ${FONTS.body4("semibold")}
+`;
+
+const DropdownIcon = styled.span`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  & > svg {
+    width: 100%;
+    height: auto;
+    fill: var(--gray700);
+  }
 `;
 
 export default DropdownInput;

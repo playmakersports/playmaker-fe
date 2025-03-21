@@ -2,7 +2,7 @@ import React from "react";
 import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
-import CloseIcon from "@/assets/icon/global/Close.svg";
+import CloseIcon from "@/assets/icon/common/Close.svg";
 
 type ChipFillType = "filled" | "light" | "outline";
 type BadgeSize = "small" | "medium" | "large";

@@ -1,38 +1,45 @@
 "use client";
 
-import React, { useImperativeHandle, useRef } from "react";
-import styled, { keyframes } from "styled-components";
+import React, { useImperativeHandle, useRef, useState } from "react";
+import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
+import { InputWrapperStyledProps } from "./input/type";
 import { InputStyledWrapper } from "./Wrapper";
-import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
-import SearchIcon from "@/assets/icon/global/Search.svg";
-import QuestionIcon from "@/assets/icon/global/Question.svg";
-import ExclamationIcon from "@/assets/icon/global/Exclamation.svg";
+import InputWrapper from "./input/InputWrapper";
 
-export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">> & {
+import CloseIcon from "@/assets/icon/common/Close.svg";
+import SearchIcon from "@/assets/icon/common/Search.svg";
+import MailIcon from "@/assets/icon/common/Mail.svg";
+import EyeOpenedIcon from "@/assets/icon/common/EyeOpened.svg";
+import EyeClosedIcon from "@/assets/icon/common/EyeClosed.svg";
+
+type InputIconType = "search" | "email";
+export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "required">> & {
   type: "text" | "number" | "password" | "email" | "tel" | "file";
-  title?: string;
-  search?: boolean;
-  errorText?: string;
+  iconType?: InputIconType;
+  error?: boolean;
   delButton?: boolean;
-  medium?: boolean;
   onButtonWrapClick?: () => void;
-  information?: { text: string; onClick?: () => void };
-};
+  description?: string;
+  suffix?: string;
+} & InputWrapperStyledProps;
 
 export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const {
     type,
     title,
-    search,
-    errorText,
+    iconType,
+    error = false,
     delButton = false,
-    medium = false,
     onButtonWrapClick,
+    required,
     information,
+    description,
+    suffix,
     ...rest
   } = props;
+  const [showPassword, setShowPassword] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
@@ -46,144 +53,141 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
     }
   };
 
+  const onClickShowPassword = () => {
+    setShowPassword((prev) => !prev);
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
+  const ICON_TYPE = {
+    search: <SearchIcon />,
+    email: <MailIcon />,
+  };
+  const isShowSideIconDivider = delButton && (suffix || type === "password");
+
   return (
-    <Container style={{ width: "100%" }}>
-      {title && <p className="input-title">{title}</p>}
-      <InputStyledWrapper $isMedium={medium} $isError={!!props.errorText}>
-        {search && <SearchIcon className="search-icon" />}
+    <InputWrapper information={information} title={title} required={required}>
+      <ValueContainer $isError={error}>
+        {iconType && <IconArea>{ICON_TYPE[iconType]}</IconArea>}
         {onButtonWrapClick ? (
-          <>
-            <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
-              <input
-                ref={inputRef}
-                type={type}
-                readOnly={true}
-                placeholder={props.placeholder ?? " "}
-                aria-disabled="true"
-                tabIndex={-1}
-                {...rest}
-              />
-            </ButtonWrapInput>
-          </>
+          <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
+            <input
+              ref={inputRef}
+              type={type}
+              readOnly={true}
+              placeholder={props.placeholder ?? " "}
+              aria-disabled="true"
+              tabIndex={-1}
+              {...rest}
+            />
+          </ButtonWrapInput>
         ) : (
           <StyledInput
             ref={inputRef}
-            type={type}
+            type={type === "password" && showPassword ? "text" : type}
             placeholder={props.placeholder ?? " "}
             pattern={type === "number" || type === "tel" ? "[0-9]*" : undefined}
             inputMode={type === "number" || type === "tel" ? "numeric" : undefined}
             {...rest}
           />
         )}
-        {errorText && (
-          <ErrorIconArea aria-label="다시 입력해주세요" role="alert">
-            <ErrorText>{props.errorText}</ErrorText>
-            <ExclamationIcon />
-          </ErrorIconArea>
-        )}
-        {delButton && (
-          <ClearIconArea role="button" onClick={handleClearInputValue} aria-label="입력값 초기화">
-            <DeleteAllIcon />
-          </ClearIconArea>
-        )}
-      </InputStyledWrapper>
-      {information && (
-        <span className="input-information" onClick={information.onClick}>
-          <QuestionIcon />
-          {information.text}
-        </span>
-      )}
-    </Container>
+        <div className="dropdown-icons">
+          {delButton && (
+            <>
+              <ClearIcon role="button" onClick={handleClearInputValue} aria-label="입력값 초기화">
+                <CloseIcon />
+              </ClearIcon>
+              {isShowSideIconDivider && (
+                <div className="divider" style={{ height: "16px", backgroundColor: "var(--gray200)" }} />
+              )}
+            </>
+          )}
+          {suffix && <span className="input-suffix">{suffix}</span>}
+          {type === "password" && (
+            <IconArea role="button" onClick={onClickShowPassword}>
+              {showPassword ? <EyeOpenedIcon /> : <EyeClosedIcon />}
+            </IconArea>
+          )}
+        </div>
+      </ValueContainer>
+      {description && <Description data-error={error}>{description}</Description>}
+    </InputWrapper>
   );
 });
 BasicInput.displayName = "BasicInput";
 
-const ErrorAnimate = keyframes`
-    from {transform: scale(0.5); opacity: 0.5};
-    to {transform: scale(1); opacity: 1};
-`;
+const ValueContainer = styled(InputStyledWrapper)`
+  justify-content: space-between;
+  color: var(--gray700);
 
-const Container = styled.div`
-  .input-title {
-    font-size: 1.4rem;
-    margin-bottom: 4px;
-    padding: 0 10px;
-    font-weight: 500;
-    color: var(--gray700);
-    line-height: 2.4rem;
-  }
-
-  .input-information {
-    display: inline-flex;
+  div.dropdown-icons {
+    display: flex;
     align-items: center;
-    margin-top: 10px;
-    padding: 0 8px;
-    font-size: 1.3rem;
-    color: var(--gray600);
-    gap: 4px;
-    svg {
-      width: 16px;
-      height: 16px;
-      fill: var(--gray500);
-    }
+    gap: 8px;
+    flex-shrink: 0;
   }
-
-  svg.search-icon {
-    fill: var(--gray800);
+  span.input-suffix {
+    color: var(--gray400); /* placeholder일 때, */
+    ${FONTS.body4("regular")}
   }
 `;
 const IconArea = styled.div`
-  position: absolute;
-  display: inline-flex;
-  right: 8px;
-  width: 24px;
-  height: 24px;
+  display: flex;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
   justify-content: center;
   align-items: center;
-`;
-const ErrorIconArea = styled(IconArea)`
-  svg {
-    fill: var(--warning500);
+  & > svg {
+    width: 100%;
+    height: auto;
+    fill: var(--gray700);
+  }
+  &[role="button"] {
+    cursor: pointer;
   }
 `;
-const ClearIconArea = styled(IconArea)`
-  cursor: pointer;
+const ClearIcon = styled(IconArea)`
+  width: 1px;
   opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.15s, visibility 0.1s;
-  transition-delay: 0.1s;
-  svg {
-    fill: var(--gray500);
+  transition: all 0.15s;
+  transition-delay: 0.2s;
+  & + div.divider {
+    width: 0;
+    transition: width 0.1s;
+    transition-delay: 0.15s;
   }
 `;
 const StyledInput = styled.input`
   width: 100%;
-  padding: 10px 0;
-  ${FONTS.MD1};
-  font-weight: 400;
-  transition: all 0.2s;
-  color: var(--gray900);
+  height: 100%;
+  color: var(--gray700);
+  ${FONTS.body4("regular")};
 
   &::placeholder {
     color: var(--gray400);
   }
 
-  &:not(:placeholder-shown):focus + ${ClearIconArea} {
-    visibility: visible;
+  &:not(:placeholder-shown) + div.dropdown-icons > span.input-suffix {
+    /* 값이 있을 때, suffix 색상 */
+    color: var(--gray700);
+  }
+  &:not(:placeholder-shown):focus + div.dropdown-icons > ${ClearIcon} {
+    width: 20px;
     opacity: 1;
+    & + div.divider {
+      width: 1px;
+    }
   }
   &:disabled {
-    color: var(--gray500);
-    & + ${ClearIconArea} {
+    & + div.dropdown-icons > ${ClearIcon} {
       display: none;
     }
   }
 `;
 const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
   input {
-    width: 100%;
-    color: var(--gray900);
-
     &::placeholder {
       color: var(--gray400);
     }
@@ -192,40 +196,17 @@ const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
     }
   }
 
-  & + ${ClearIconArea} {
+  & + ${IconArea} {
     display: none !important;
   }
 `;
 
-const ErrorText = styled.p`
-  ${FONTS.MD1W500};
-  position: absolute;
-  width: max-content;
-  min-width: 40px;
-  padding: 4px 12px;
-  top: calc(-100% - 20px);
-  right: -9px; // container padding 8px + border 1px
-  border-radius: 8px;
-  letter-spacing: -0.1px;
-  color: #fff;
-  background-color: var(--warning500);
-  animation: ${ErrorAnimate} 0.25s cubic-bezier(0.05, 0, 0, 1);
-  transform-origin: calc(100% - 12px) 120%;
-  user-select: none;
-  -webkit-user-select: none;
-  z-index: 1;
+const Description = styled.p`
+  margin-top: 8px;
+  ${FONTS.caption1("regular")};
+  color: var(--gray400);
 
-  &::before {
-    // 화살표
-    position: absolute;
-    right: 12px;
-    bottom: -14px;
-    content: "";
-    background-color: var(--warning500);
-    width: 18px;
-    height: 18px;
-    clip-path: path(
-      "M8.73205 11C7.96225 12.3333 6.03775 12.3333 5.26795 11L0.937822 3.5C0.168022 2.16666 1.13027 0.499999 2.66988 0.499999L11.3301 0.5C12.8697 0.5 13.832 2.16667 13.0622 3.5L8.73205 11Z"
-    );
+  &[data-error="true"] {
+    color: var(--red500);
   }
 `;

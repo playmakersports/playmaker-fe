@@ -1,38 +1,31 @@
-import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
-export const InputStyledWrapper = styled.div<{ $isMedium?: boolean; $isError?: boolean }>`
+export const InputStyledWrapper = styled.div<{ $isError?: boolean }>`
   position: relative;
   display: flex;
   width: 100%;
   height: 40px;
-  padding: ${({ $isMedium }) => ($isMedium ? "6px 8px" : "0 12px")};
+  padding: 0 12px;
   gap: 8px;
   align-items: center;
   border-radius: 8px;
   text-align: left;
-
-  & svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--gray900);
-  }
-
   background-color: var(--background-light);
-  border: 1px solid ${({ $isError }) => ($isError ? "var(--warning500)" : "var(--gray200)")};
+  border: 1px solid ${({ $isError }) => ($isError ? "var(--red500)" : "var(--gray200)")};
   border-radius: 6px;
 
   &:disabled,
   &:has(input:disabled) {
-    background-color: var(--gray100);
+    background-color: var(--gray50);
+    & input {
+      color: var(--gray300);
+    }
+    & svg {
+      fill: var(--gray300);
+    }
   }
   &:focus,
   &:has(input:focus) {
     border: 1px solid var(--gray300);
-  }
-
-  & input {
-    color: var(--gray900);
-    ${FONTS.body3("regular")};
   }
 `;

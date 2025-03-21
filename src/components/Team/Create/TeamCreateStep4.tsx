@@ -55,9 +55,9 @@ function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
             </InputLabel>
           </RangeWrapper>
           <InputRadioWrapper title="팀 성별">
-            <InputRadio buttonType $fullWidth {...register("sex")} value="MIXTURE" id="MIXTURE" labelName="혼성" />
-            <InputRadio buttonType $fullWidth {...register("sex")} value="MALE" id="MALE" labelName="남성" />
-            <InputRadio buttonType $fullWidth {...register("sex")} value="FEMALE" id="FEMALE" labelName="여성" />
+            <InputRadio buttonType {...register("sex")} value="MIXTURE" id="MIXTURE" text={{ title: "혼성" }} />
+            <InputRadio buttonType {...register("sex")} value="MALE" id="MALE" text={{ title: "남성" }} />
+            <InputRadio buttonType {...register("sex")} value="FEMALE" id="FEMALE" text={{ title: "여성" }} />
           </InputRadioWrapper>
           <InputLabel>
             <InputCheckbox id="gisuYn" {...register("gisuYn")} /> <label htmlFor="gisuYn">기수제 모임으로 생성</label>

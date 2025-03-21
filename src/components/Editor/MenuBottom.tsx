@@ -103,8 +103,8 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
               <ImagePosition>
                 <ImageIcon width={20} height={20} /> <span aria-disabled>위치</span>
                 <div className="position-options" aria-label="이미지 삽입 위치 선택">
-                  <InputRadio size="MEDIUM" name="position" id="TOP" labelName="상단" />
-                  <InputRadio size="MEDIUM" name="position" id="BOTTOM" labelName="하단" />
+                  <InputRadio size="MEDIUM" name="position" id="TOP" text={{ title: "상단" }} />
+                  <InputRadio size="MEDIUM" name="position" id="BOTTOM" text={{ title: "하단" }} />
                 </div>
               </ImagePosition>
             )}

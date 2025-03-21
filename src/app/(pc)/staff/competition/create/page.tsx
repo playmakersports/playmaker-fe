@@ -63,7 +63,6 @@ function CompetitionCreatePC() {
               <DateCalendarInput
                 tabIndex={3}
                 displayIcon
-                $fullWidth
                 placeholder="모집 시작일"
                 {...register("applyStartDate", {
                   valueAsDate: true,
@@ -71,9 +70,9 @@ function CompetitionCreatePC() {
               />
               <DateCalendarInput
                 tabIndex={4}
-                errorText={errors.applyEndDate ? (errors.applyEndDate.message as string) : ""}
+                error={!!errors.applyEndDate}
+                description={errors.applyEndDate ? (errors.applyEndDate.message as string) : ""}
                 displayIcon
-                $fullWidth
                 placeholder="모집 종료일"
                 {...register("applyEndDate", {
                   valueAsDate: true,
@@ -92,7 +91,6 @@ function CompetitionCreatePC() {
               <DateCalendarInput
                 tabIndex={5}
                 displayIcon
-                $fullWidth
                 placeholder="대회 시작일"
                 {...register("startDate", {
                   valueAsDate: true,
@@ -100,9 +98,9 @@ function CompetitionCreatePC() {
               />
               <DateCalendarInput
                 tabIndex={6}
-                errorText={errors.endDate ? (errors.endDate.message as string) : ""}
+                error={!!errors.endDate}
+                description={errors.endDate ? (errors.endDate.message as string) : ""}
                 displayIcon
-                $fullWidth
                 placeholder="대회 종료일"
                 {...register("endDate", {
                   valueAsDate: true,
@@ -122,10 +120,8 @@ function CompetitionCreatePC() {
               type="text"
               title="주최"
               disabled
+              information="로그인된 계정의 소속 팀으로 자동입력됩니다."
               {...register("host")}
-              information={{
-                text: "로그인된 계정의 소속 팀으로 자동입력됩니다.",
-              }}
             />
             <BasicInput type="text" title="주관" {...register("organizer")} />
             <BasicInput type="text" title="협찬" {...register("sponsor")} />
@@ -146,51 +142,40 @@ function CompetitionCreatePC() {
             </InputRadioWrapper>
             <h3>참가 조건</h3>
             <InputRadioWrapper title="성별">
-              <InputRadio
-                buttonType
-                $fullWidth
-                {...register("gender")}
-                value="mixed"
-                id="mixed"
-                labelName="제한 없음"
-              />
-              <InputRadio buttonType $fullWidth {...register("gender")} value="male" id="male" labelName="남성" />
-              <InputRadio buttonType $fullWidth {...register("gender")} value="female" id="female" labelName="여성" />
+              <InputRadio buttonType {...register("gender")} value="mixed" id="mixed" text={{ title: "제한 없음" }} />
+              <InputRadio buttonType {...register("gender")} value="male" id="male" text={{ title: "남성" }} />
+              <InputRadio buttonType {...register("gender")} value="female" id="female" text={{ title: "여성" }} />
             </InputRadioWrapper>
             <InputRadioWrapper title="국적">
               <InputRadio
                 buttonType
-                $fullWidth
                 {...register("nationality")}
                 value="korean"
                 id="korean"
-                labelName="대한민국 국적만"
+                text={{ title: "대한민국 국적만" }}
               />
               <InputRadio
                 buttonType
-                $fullWidth
                 {...register("nationality")}
                 value="foreigner"
                 id="foreigner"
-                labelName="외국인 허용"
+                text={{ title: "외국인 허용" }}
               />
             </InputRadioWrapper>
             <InputRadioWrapper title="출신">
               <InputRadio
                 buttonType
-                $fullWidth
                 {...register("experience")}
                 value="amateur"
                 id="amateur"
-                labelName="아마추어만"
+                text={{ title: "아마추어만" }}
               />
               <InputRadio
                 buttonType
-                $fullWidth
                 {...register("experience")}
                 value="athlete"
                 id="athlete"
-                labelName="고교 이후 선출 허용"
+                text={{ title: "고교 이후 선출 허용" }}
               />
             </InputRadioWrapper>
             <InputRadioWrapper title="연령">
@@ -249,6 +234,7 @@ function CompetitionCreatePC() {
 
             <BasicInput
               delButton={false}
+              suffix="원"
               type="text"
               style={{ textAlign: "right" }}
               title="금액"
@@ -262,8 +248,6 @@ function CompetitionCreatePC() {
             />
             <InputRadioWrapper title="입금 기한">
               <DateCalendarInput
-                displayIcon
-                $fullWidth
                 placeholder="입금 마감일"
                 {...register("payEndDate", {
                   valueAsDate: true,

@@ -11,10 +11,11 @@ import InputWrapper from "./input/InputWrapper";
 import CloseIcon from "@/assets/icon/common/Close.svg";
 import SearchIcon from "@/assets/icon/common/Search.svg";
 import MailIcon from "@/assets/icon/common/Mail.svg";
+import CalendarIcon from "@/assets/icon/global/Calendar.svg";
 import EyeOpenedIcon from "@/assets/icon/common/EyeOpened.svg";
 import EyeClosedIcon from "@/assets/icon/common/EyeClosed.svg";
 
-type InputIconType = "search" | "email";
+type InputIconType = "search" | "email" | "calendar";
 export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "required">> & {
   type: "text" | "number" | "password" | "email" | "tel" | "file";
   iconType?: InputIconType;
@@ -63,6 +64,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
   const ICON_TYPE = {
     search: <SearchIcon />,
     email: <MailIcon />,
+    calendar: <CalendarIcon />,
   };
   const isShowSideIconDivider = delButton && (suffix || type === "password");
 
@@ -188,6 +190,8 @@ const StyledInput = styled.input`
 `;
 const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
   input {
+    ${FONTS.body4("regular")};
+    color: var(--gray700);
     &::placeholder {
       color: var(--gray400);
     }

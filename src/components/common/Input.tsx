@@ -189,6 +189,9 @@ const StyledInput = styled.input`
   }
 `;
 const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
   input {
     ${FONTS.body4("regular")};
     color: var(--gray700);

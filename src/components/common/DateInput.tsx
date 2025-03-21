@@ -19,7 +19,7 @@ type Props = Omit<InputProps, "type" | "value"> & {
 };
 
 const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { displayIcon = false, defaultValue, title, errorText, value, ...rest } = props;
+  const { displayIcon = false, defaultValue, title, error, description, value, ...rest } = props;
 
   const { ModalComponents, showModal } = useModal();
   const { trigger } = useToast();
@@ -73,8 +73,16 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <>
-      <BasicInput ref={inputRef} type="text" title={title} onButtonWrapClick={() => showModal()} {...rest} />
-
+      <BasicInput
+        ref={inputRef}
+        iconType="calendar"
+        type="text"
+        title={title}
+        error={error}
+        description={description}
+        onButtonWrapClick={() => showModal()}
+        {...rest}
+      />
       <ModalComponents
         buttons={[
           {
@@ -245,6 +253,7 @@ DateInput.displayName = "DateInput";
 
 const Container = styled.div`
   position: relative;
+  color: var(--gray700);
 `;
 
 const SetTodayBtn = styled.button`
@@ -348,8 +357,8 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   padding: 16px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--point-red)" : "var(--text)")};
-  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray600)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
   font-size: 1.8rem;
   ${BUTTON_ACTIVE()};
 
@@ -357,13 +366,13 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
     visibility: hidden;
   }
   &:hover {
-    background-color: var(--gray100);
+    background-color: var(--gray50);
   }
   &:focus {
-    background-color: var(--gray300);
+    background-color: var(--gray200);
   }
   &:active {
-    background-color: var(--gray200);
+    background-color: var(--gray100);
   }
   &:disabled {
     cursor: not-allowed;

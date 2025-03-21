@@ -32,7 +32,8 @@ const Wrapper = styled.div`
     margin-bottom: 8px;
     align-items: center;
     gap: 4px;
-    ${FONTS.body4("medium")}
+    ${FONTS.body4("medium")};
+
     span.title {
       color: var(--gray700);
     }

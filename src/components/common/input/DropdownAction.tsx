@@ -6,7 +6,7 @@ import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 
 import DotMenuIcon from "@/assets/icon/common/filled/DotMenu.svg";
-import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
+import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
 type OptionsType = { name: string; action: () => void; divided?: boolean };
 type Props = {
@@ -87,7 +87,7 @@ function DropdownAction(props: Props) {
       ) : (
         <ValueContainer ref={dropdownRef} onClick={onClickShowOptions}>
           <span className="current-value">{title}</span>
-          <BottomToggleArrowIcon />
+          <DownArrow />
         </ValueContainer>
       )}
 

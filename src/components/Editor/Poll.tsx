@@ -8,7 +8,7 @@ import TimeInput from "../common/TimeInput";
 import Button from "../common/Button";
 import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicInput } from "../common/input/BaseInput";
-import { InputCheckbox } from "../common/SelectInput";
+import { InputCheckbox } from "../common/input/SelectInput";
 import DateCalendarInput from "../common/DateCalendarInput";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import SmallX from "@/assets/icon/editor/SmallX.svg";

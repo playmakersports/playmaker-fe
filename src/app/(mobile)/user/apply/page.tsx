@@ -9,7 +9,7 @@ import { useConfirm } from "@/components/common/global/ConfirmProvider";
 import { FONTS } from "@/styles/common";
 import LoginWrapper from "@/components/User/LoginWrapper";
 import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
-import { InputCheckbox } from "@/components/common/SelectInput";
+import { InputCheckbox } from "@/components/common/input/SelectInput";
 
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 import { SERVICE_TERMS } from "@/constants/TERMS";

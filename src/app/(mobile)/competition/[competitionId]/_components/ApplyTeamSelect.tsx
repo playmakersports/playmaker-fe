@@ -10,7 +10,7 @@ import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
 import CardInput from "@/components/common/CardInput";
 import FloatButton from "@/components/common/FloatButton";
-import { InputCheckbox } from "@/components/common/SelectInput";
+import { InputCheckbox } from "@/components/common/input/SelectInput";
 
 function ApplyTeamSelect() {
   const { trigger } = useToast();

@@ -10,7 +10,7 @@ import DateCalendarInput from "@/components/common/DateCalendarInput";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import Button from "@/components/common/Button";
-import { InputRadio } from "@/components/common/SelectInput";
+import { InputRadio } from "@/components/common/input/SelectInput";
 import { TextArea } from "@/components/common/TextArea";
 import DropdownInput from "@/components/common/input/DropdownInput";
 

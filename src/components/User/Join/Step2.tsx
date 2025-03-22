@@ -8,7 +8,7 @@ import { BasicInput } from "@/components/common/input/BaseInput";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import DateInput from "@/components/common/DateInput";
-import { InputRadio } from "@/components/common/SelectInput";
+import { InputRadio } from "@/components/common/input/SelectInput";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
 
 function Step2({ setStep }: { setStep: (prev: number) => void }) {

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
+import { FONTS } from "@/styles/common";
+import { useAtom } from "jotai";
 
+import { atomTeamCreate } from "@/atom/team";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
 import InputRadioWrapper from "@/components/common/InputRadioWrapper";
-import { InputCheckbox, InputRadio } from "@/components/common/SelectInput";
+import { InputCheckbox, InputRadio } from "@/components/common/input/SelectInput";
 import BirthRangeInput from "@/components/common/BirthRangeInput";
-import { FONTS } from "@/styles/common";
-import { useAtom } from "jotai";
-import { atomTeamCreate } from "@/atom/team";
 
 function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
   const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);

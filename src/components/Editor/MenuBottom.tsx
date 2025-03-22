@@ -8,7 +8,7 @@ import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHan
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import Poll, { ArticlePollType } from "./Poll";
-import { InputRadio } from "../common/SelectInput";
+import { InputRadio } from "../common/input/SelectInput";
 import Loading from "../common/Loading";
 
 import ImageIcon from "@/assets/icon/editor/Image.svg";

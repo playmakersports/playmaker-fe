@@ -6,7 +6,7 @@ import { usePageTitle } from "@/hook/usePageTitle";
 import { atomServiceApply } from "@/atom/user";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { InputCheckbox } from "@/components/common/SelectInput";
+import { InputCheckbox } from "@/components/common/input/SelectInput";
 import { BasicWhiteCard } from "@/components/common/Card";
 
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";

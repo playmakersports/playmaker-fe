@@ -7,7 +7,7 @@ import useModal from "@/hook/useModal";
 import { FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
 import { BasicInput } from "@/components/common/input/BaseInput";
-import { InputCheckbox } from "@/components/common/SelectInput";
+import { InputCheckbox } from "@/components/common/input/SelectInput";
 import DateRangeModal from "./_components/DateRangeModal";
 
 function ScheduleEditor() {

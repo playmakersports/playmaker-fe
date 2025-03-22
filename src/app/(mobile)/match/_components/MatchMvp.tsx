@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { MatchSummaryCard } from "./container";
 import { FONTS } from "@/styles/common";
-import MenuDotsIcon from "@/assets/icon/common/filled/MenuDots.svg";
+import MenuDotsIcon from "@/assets/icon/common/MenuDots.svg";
 
 type Props = {
   name: string;

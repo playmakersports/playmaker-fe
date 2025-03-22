@@ -7,8 +7,8 @@ import InputWrapper from "./InputWrapper";
 import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 
-import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
-import CheckIcon from "@/assets/icon/common/filled/CheckIcon.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
+import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
 type OptionsType = { name: string; value: string };
 type Props = {
@@ -122,7 +122,7 @@ function DropdownInput(props: Props) {
           {value === "" ? placeholder : options.find((v) => v.value === value)?.name}
         </span>
         <DropdownIcon>
-          <BottomToggleArrowIcon />
+          <DownArrow />
         </DropdownIcon>
       </ValueContainer>
       {description && <Description data-error={error}>{description}</Description>}
@@ -135,6 +135,7 @@ function DropdownInput(props: Props) {
               key={option.value}
               aria-label={option.name}
               role="option"
+              aria-selected={option.value === value}
               type="button"
               onClick={() => {
                 onChange(option.value);

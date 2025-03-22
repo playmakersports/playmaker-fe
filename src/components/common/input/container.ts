@@ -42,6 +42,12 @@ export const DropdownAsset = {
       font-variant-numeric: tabular-nums;
       ${FONTS.body4("regular")};
 
+      & svg {
+        width: 24px;
+        height: 24px;
+        fill: transparent;
+      }
+
       &:hover {
         background-color: var(--gray50);
       }
@@ -70,7 +76,8 @@ export const DropdownAsset = {
         }
       }
 
-      &[data-active="true"] {
+      &[data-active="true"],
+      &[aria-selected="true"] {
         background-color: var(--gray50);
         span.icon {
           display: inline-flex;
@@ -80,7 +87,6 @@ export const DropdownAsset = {
           height: 24px;
         }
         & svg {
-          width: 14px;
           fill: var(--primary500);
         }
       }
@@ -130,8 +136,16 @@ export const DropdownAsset = {
         height: 20px;
         border-radius: 6px;
         border: 1px solid var(--gray200);
+
+        & svg {
+          width: 100%;
+          height: 100%;
+          fill: transparent;
+        }
       }
-      &[data-active="true"] {
+
+      &[data-active="true"],
+      &[aria-selected="true"] {
         background-color: var(--primary50);
         &:focus {
           background-color: var(--primary100);
@@ -139,10 +153,9 @@ export const DropdownAsset = {
         span.icon {
           background-color: var(--primary500);
           border-color: transparent;
-        }
-        & svg {
-          width: 14px;
-          fill: var(--white);
+          & svg {
+            fill: var(--white);
+          }
         }
       }
     }

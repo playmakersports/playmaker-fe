@@ -8,8 +8,8 @@ import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 import Chip from "../Chip";
 
-import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
-import CheckIcon from "@/assets/icon/common/filled/CheckIcon.svg";
+import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 import CloseIcon from "@/assets/icon/common/Close20.svg";
 
 type OptionsType = { name: string; value: string };
@@ -157,7 +157,7 @@ function DropdownMulti(props: Props) {
               </>
             )}
             <DropdownIcon>
-              <BottomToggleArrowIcon />
+              <DownArrow />
             </DropdownIcon>
           </div>
         </ValueContainer>
@@ -171,6 +171,7 @@ function DropdownMulti(props: Props) {
                 key={option.value}
                 aria-label={option.name}
                 role="option"
+                aria-selected={value.includes(option.value)}
                 type="button"
                 onClick={() => onClickOptionItem(option)}
                 data-active={value.includes(option.value)}
@@ -182,7 +183,7 @@ function DropdownMulti(props: Props) {
                 onKeyUp={(e) => onKeyupOptionSelect(e, index)}
               >
                 <span className="icon">
-                  <CheckIcon />
+                  <CheckIcon fill="white" />
                 </span>
                 <span className="option-name">{option.name}</span>
               </button>

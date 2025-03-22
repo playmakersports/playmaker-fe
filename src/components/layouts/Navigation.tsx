@@ -1,14 +1,23 @@
 "use client";
 
 import React from "react";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { useRouter, usePathname } from "next/navigation";
 
-import HomeIcon from "@/assets/icon/common/filled/Home.svg";
-// import SearchListIcon from "@/assets/icon/common/filled/SearchList.svg";
-// import FlagIcon from "@/assets/icon/common/filled/Flag.svg";
-import PersonIcon from "@/assets/icon/common/filled/Person.svg";
-// import PhysicsIcon from "@/assets/icon/common/filled/Physics.svg";
+import { FONTS } from "@/styles/common";
+
+// Filled
+import HomeIconFilled from "@/assets/icon/common/filled/Home.svg";
+import PeopleIconFilled from "@/assets/icon/common/filled/People.svg";
+import NotificationIconFilled from "@/assets/icon/common/filled/Notification.svg";
+import MailIconFilled from "@/assets/icon/common/filled/Mail.svg";
+import PersonIconFilled from "@/assets/icon/common/filled/Person.svg";
+// Outlined
+import HomeIconOutlined from "@/assets/icon/common/outlined/Home.svg";
+import PeopleIconOutlined from "@/assets/icon/common/outlined/People.svg";
+import NotificationIconOutlined from "@/assets/icon/common/outlined/Notification.svg";
+import MailIconOutlined from "@/assets/icon/common/outlined/Mail.svg";
+import PersonIconOutlined from "@/assets/icon/common/outlined/Person.svg";
 
 function Navigation() {
   const router = useRouter();
@@ -20,57 +29,72 @@ function Navigation() {
 
   return (
     <Container>
-      <Inner>
-        <Button
-          type="button"
-          data-label="홈"
-          onClick={() => movePage("/")}
-          className={pathname === "/" ? "active" : ""}
-        >
-          <HomeIcon />
+      <Inner
+        style={{
+          boxShadow: "0 0 15px 0 rgba(51, 65, 85, 0.05)",
+          backgroundColor: "var(--background-light)",
+        }}
+      >
+        <Button type="button" data-label="홈" onClick={() => movePage("/")} data-active={pathname === "/"}>
+          <HomeIconOutlined className="outlined-icon" />
+          <HomeIconFilled className="filled-icon" />
         </Button>
         <Button
           type="button"
           data-label="팀"
           onClick={() => movePage("/matches")}
-          className={pathname === "/matches" ? "active" : ""}
+          data-active={pathname === "/matches"}
         >
-          {/* <FlagIcon /> */}
+          <PeopleIconOutlined className="outlined-icon" />
+          <PeopleIconFilled className="filled-icon" />
         </Button>
         <Button
           type="button"
-          data-label="매치"
+          data-label="알림"
           onClick={() => movePage("/matches")}
-          className={pathname === "/matches" ? "active" : ""}
+          data-active={pathname === "/matches"}
         >
-          {/* <FlagIcon /> */}
+          <NotificationIconOutlined className="outlined-icon" />
+          <NotificationIconFilled className="filled-icon" />
         </Button>
-        <Button
-          type="button"
-          data-label="피드"
-          onClick={() => movePage("/feed")}
-          className={pathname === "/feed" ? "active" : ""}
-        >
-          {/* <PhysicsIcon /> */}
+        <Button type="button" data-label="피드" onClick={() => movePage("/feed")} data-active={pathname === "/feed"}>
+          <MailIconOutlined className="outlined-icon" />
+          <MailIconFilled className="filled-icon" />
         </Button>
         <Button
           type="button"
           data-label="마이"
           onClick={() => movePage("/my")}
-          className={["/my", "/my/team", "/my/feed"].includes(pathname) ? "active" : ""}
+          data-active={["/my", "/my/team", "/my/feed"].includes(pathname)}
         >
-          <PersonIcon />
+          <PersonIconOutlined className="outlined-icon" />
+          <PersonIconFilled className="filled-icon" />
         </Button>
       </Inner>
     </Container>
   );
 }
 
+const bounce = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
+
 const Container = styled.nav`
   position: fixed;
   width: var(--mobile-max-width);
-  height: var(--navigation-height);
-  bottom: -2px;
+  min-height: var(--navigation-height);
+  bottom: -1px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -82,53 +106,54 @@ const Container = styled.nav`
 
 const Inner = styled.div`
   width: 100%;
-  padding: 16px 16px calc(var(--safe-bottom) + 16px);
+  height: 100%;
+  padding: 12px 16px calc(var(--safe-bottom) + 12px);
   display: flex;
   justify-content: space-between;
-  background-color: var(--white);
-  border-radius: 20px 20px 0 0;
-  box-shadow: 0 -7px 20px 0 #efefef;
 `;
 
-const Button = styled.button<{ opacity?: number }>`
+const Button = styled.button`
   flex: 1;
-  position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  gap: 6px;
-  opacity: ${({ opacity }) => opacity ?? 1};
-  transition: opacity 0.2s;
 
   svg {
     flex-shrink: 0;
     width: 24px;
     height: 24px;
-    fill: var(--gray400);
+    fill: var(--gray300);
     z-index: 1;
-    transition: fill 0.4s;
   }
 
-  &.active {
-    svg {
-      fill: var(--main);
-      transition: fill 0.25s;
+  &[data-active="false"] {
+    svg.filled-icon {
+      display: none;
     }
+  }
+
+  &[data-active="true"] {
+    svg.outlined-icon {
+      display: none;
+    }
+    svg {
+      fill: var(--primary500);
+      animation: ${bounce} 0.4s ease;
+    }
+
     &::after {
-      color: var(--main);
-      transition: color 0.25s;
+      ${FONTS.caption1("semibold")};
+      color: var(--primary500);
     }
   }
 
   &::after {
     content: attr(data-label);
     width: max-content;
-    font-size: 1.4rem;
-    font-weight: 500;
-    color: var(--gray500);
+    margin-top: 2px;
     z-index: 1;
-    transition: color 0.4s;
+    color: var(--gray400);
+    ${FONTS.caption1("regular")};
   }
 `;
 

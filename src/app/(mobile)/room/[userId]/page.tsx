@@ -19,7 +19,6 @@ import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
 import Loading from "@/components/common/Loading";
-import GenderIcon from "@/components/common/GenderIcon";
 
 function UserPage() {
   const params = useParams();
@@ -44,9 +43,7 @@ function UserPage() {
     <Container>
       <Profile>
         <Info>
-          <p className="player-name">
-            {data?.username} <GenderIcon type={data?.sexKey === "남성" ? "MALE" : "FEMALE"} />
-          </p>
+          <p className="player-name">{data?.username}</p>
           <p className="introduce">{data?.selfIntro}</p>
           <p className="tag-list">
             <span className="tag">{data?.birth.slice(0, 4)}년생</span>

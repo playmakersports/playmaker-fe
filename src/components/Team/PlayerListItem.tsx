@@ -4,7 +4,7 @@ import styled from "styled-components";
 import CrownIcon from "@/assets/icon/common/filled/Key.svg";
 // import FlagIcon from "@/assets/icon/common/filled/FlagFill.svg";
 import { FONTS } from "@/styles/common";
-import GenderIcon from "../common/GenderIcon";
+import Chip from "../common/Chip";
 
 type Props = {
   playerId: string;
@@ -44,7 +44,7 @@ function PlayerListItem(props: Props) {
       <Name>
         {level > 1 && <p className="position">{LEVEL_CODE[level].name}</p>}
         <p className="player-name">
-          {name} <GenderIcon type={sex} />
+          {name} <Chip size="small">{sex === "MALE" ? "남성" : "여성"}</Chip>
         </p>
         <p className="player-tags">{typeof tag === "string" ? tag : tag.map((i) => <span key={i}>#{i}</span>)}</p>
       </Name>

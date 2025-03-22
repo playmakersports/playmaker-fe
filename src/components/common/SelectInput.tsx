@@ -2,9 +2,8 @@
 
 import React from "react";
 import styled from "styled-components";
-
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 import { FONTS } from "@/styles/common";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size" | "title "> & {
   size?: "LARGE" | "MEDIUM";
@@ -25,7 +24,7 @@ export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(
         <div style={{ position: "relative", display: "inline-block", width: SIZE, height: SIZE }}>
           <Check type="checkbox" ref={ref} $color={color === "error"} size={size} {...rest} />
           <i style={{ width: SIZE, height: SIZE }}>
-            <CheckIcon width={size === "LARGE" ? "14px" : "12px"} height={size === "LARGE" ? "14px" : "12px"} />
+            <CheckIcon />
           </i>
         </div>
         {text && (
@@ -111,6 +110,11 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     border-radius: ${({ size }) => (size === "LARGE" ? "8px" : "6px")};
     border: 1px solid ${({ $color }) => ($color ? "var(--red200)" : "var(--gray200)")};
     background-color: transparent;
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: transparent;
+    }
   }
   &:focus:not(:checked) + i {
     outline: 2px solid ${({ $color }) => ($color ? "var(--red300)" : "var(--gray300)")};
@@ -128,7 +132,10 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
 
   &:checked:disabled + i {
     border: 1px solid transparent;
-    background-color: #d9d9d9;
+    background-color: var(--gray200);
+    svg {
+      fill: var(--gray100);
+    }
   }
   &:disabled + i {
     background-color: var(--gray50);

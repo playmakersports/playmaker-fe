@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { WhiteSectionDivider } from "@/components/common/Container";
 
-import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-import GraduationIcon from "@/assets/icon/global/Graduation.svg";
-import LockIcon from "@/assets/icon/global/Lock.svg";
-import PersonIcon from "@/assets/icon/global/Person24.svg";
-import HeadphoneIcon from "@/assets/icon/global/Headphone.svg";
-import InformationIcon from "@/assets/icon/global/Information.svg";
-import BuildingsIcon from "@/assets/icon/global/Buildings.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
+// import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
+import LockIcon from "@/assets/icon/common/filled/Lock.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+// import HeadphoneIcon from "@/assets/icon/common/filled/Headphone.svg";
+// import InformationIcon from "@/assets/icon/common/filled/Information.svg";
+// import BuildingsIcon from "@/assets/icon/common/filled/Buildings.svg";
 
 type GroupListProps = {
   list: {
@@ -33,11 +33,11 @@ function GroupList({ list }: GroupListProps) {
           {item.subText ? (
             <span className="status-wrapper">
               {item.subText}
-              <RightArrowThinIcon />
+              <RightArrowIcon />
             </span>
           ) : (
             <span className="status-wrapper">
-              <RightArrowThinIcon />
+              <RightArrowIcon />
             </span>
           )}
         </li>
@@ -57,7 +57,8 @@ function UserSetting() {
           { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
           { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
           {
-            icon: <GraduationIcon />,
+            // icon: <GraduationIcon />,
+            icon: <LockIcon />,
             title: "학교 인증",
             onClick: () => router.push(`/my/settings/school`),
             subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
@@ -69,12 +70,23 @@ function UserSetting() {
       <GroupList
         list={[
           {
-            icon: <HeadphoneIcon />,
+            // icon: <HeadphoneIcon />,
+            icon: <LockIcon />,
             title: "서비스 문의",
             onClick: () => {},
           },
-          { icon: <InformationIcon />, title: "약관 및 개인정보처리방침", onClick: () => {} },
-          { icon: <BuildingsIcon />, title: "서비스 제공자 정보", onClick: () => {} },
+          {
+            // icon: <InformationIcon />,
+            icon: <LockIcon />,
+            title: "약관 및 개인정보처리방침",
+            onClick: () => {},
+          },
+          {
+            // icon: <BuildingsIcon />,
+            icon: <LockIcon />,
+            title: "서비스 제공자 정보",
+            onClick: () => {},
+          },
         ]}
       />
     </Container>

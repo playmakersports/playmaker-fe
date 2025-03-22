@@ -10,7 +10,7 @@ import InformationGroup from "../../_components/InformationGroup";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
-import CopyIcon from "@/assets/icon/global/Copy.svg";
+import CopyIcon from "@/assets/icon/common/filled/Copy.svg";
 
 function CompetitionReady() {
   const { trigger } = useToast();

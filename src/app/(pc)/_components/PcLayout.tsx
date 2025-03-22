@@ -6,7 +6,7 @@ import styled from "styled-components";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import Logotype from "@/assets/logo/Logotype.svg";
-import PersonIcon from "@/assets/icon/global/Person.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 function PcLayout({ children }: { children: React.ReactNode }) {
   return (

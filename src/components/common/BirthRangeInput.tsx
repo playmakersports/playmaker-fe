@@ -7,7 +7,7 @@ import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/re
 
 import { InputStyledWrapper } from "./Wrapper";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
+import ArrowBottomIcon from "@/assets/icon/arrow/DownArrow.svg";
 
 type Props = {
   getYearRange: (target: [number, number]) => void;

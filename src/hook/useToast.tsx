@@ -3,12 +3,12 @@ import { toast } from "sonner";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
-import InfoCircleIcon from "@/assets/icon/circle/InfoCircle.svg";
-import CheckCircleIcon from "@/assets/icon/circle/CheckCircle.svg";
-import QuestionCircleIcon from "@/assets/icon/circle/QuestionCircle.svg";
-import WarningCircleIcon from "@/assets/icon/circle/WarningCircle.svg";
-import AlertCircleIcon from "@/assets/icon/circle/AlertCircle.svg";
-import CloseIcon from "@/assets/icon/common/Close.svg";
+import InfoCircleIcon from "@/assets/icon/circle/InfoFilled.svg";
+import CheckCircleIcon from "@/assets/icon/circle/CheckFilled.svg";
+import QuestionCircleIcon from "@/assets/icon/circle/QuestionFilled.svg";
+import WarningCircleIcon from "@/assets/icon/circle/WarningFilled.svg";
+import AlertCircleIcon from "@/assets/icon/circle/AlertFilled.svg";
+import CloseIcon from "@/assets/icon/common/Close20.svg";
 
 type ToastProps = {
   type?: "default" | "primary" | "success" | "info" | "warning" | "error";

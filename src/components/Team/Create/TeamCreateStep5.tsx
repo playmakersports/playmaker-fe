@@ -4,7 +4,7 @@ import { useAtom } from "jotai";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 
-import CameraIcon from "@/assets/icon/global/Camera.svg";
+import CameraIcon from "@/assets/icon/common/filled/Image.svg";
 import { TEAM_COLORS } from "@/constants/teamValue";
 import { hexToRgb } from "@/util/common";
 import { FONTS } from "@/styles/common";

@@ -14,8 +14,8 @@ import { FONTS } from "@/styles/common";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_APPLY_LIST } from "@/constants/mock/TEAM_APPLY";
 
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
-import BottomArrowIcon from "@/assets/icon/arrow/BottomArrow.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
+import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
 import { TextArea } from "@/components/common/TextArea";
 
 function RecruitApplicant() {
@@ -49,7 +49,7 @@ function RecruitApplicant() {
                   </p>
                 </Name>
                 <i>
-                  <BottomArrowIcon />
+                  <DownArrowIcon />
                 </i>
               </PlayerInner>
               <PlayerDetail>

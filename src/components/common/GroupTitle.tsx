@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import RightArrowSmallIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
+import RightArrowSmallIcon from "@/assets/icon/arrow/RightArrow.svg";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 type Props = {

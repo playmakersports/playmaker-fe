@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import RightArrowThinIcon from "@/assets/icon/arrow/RightArrowThin.svg";
+import RightArrowThinIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 type Props = {
   text: string;

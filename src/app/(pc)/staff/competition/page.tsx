@@ -10,7 +10,7 @@ import { countDayDiff, formattedDate } from "@/util/date";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import Button from "@/components/common/Button";
 
-import PlusIcon from "@/assets/icon/global/Plus.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function CompetitionViewPC() {
   const router = useRouter();

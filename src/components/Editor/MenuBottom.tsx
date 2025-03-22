@@ -3,19 +3,20 @@ import styled from "styled-components";
 import { Editor } from "@tiptap/react";
 import useModal from "@/hook/useModal";
 import { useConfirm } from "../common/global/ConfirmProvider";
-
+import Image from "next/image";
 import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
+
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import Poll, { ArticlePollType } from "./Poll";
+import { InputRadio } from "../common/SelectInput";
+import Loading from "../common/Loading";
+
 import ImageIcon from "@/assets/icon/editor/Image.svg";
 import PollIcon from "@/assets/icon/editor/Poll.svg";
 import Undo from "@/assets/icon/editor/Undo.svg";
 import Redo from "@/assets/icon/editor/Redo.svg";
-import Plus from "@/assets/icon/global/Plus.svg";
-import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
-import { InputRadio } from "../common/SelectInput";
-import Loading from "../common/Loading";
-import Image from "next/image";
+import Plus from "@/assets/icon/common/Plus.svg";
+import DeleteAllIcon from "@/assets/icon/common/filled/Delete.svg";
 
 type Props = {
   editor: Editor | null;

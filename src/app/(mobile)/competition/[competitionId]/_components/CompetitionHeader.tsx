@@ -8,10 +8,10 @@ import useStickyMoment from "@/hook/useStickyMoment";
 import { formattedDate } from "@/util/date";
 import Badge from "@/components/common/Badge";
 
-import RightArrow from "@/assets/icon/arrow/RightArrowSmall.svg";
-import LocationIcon from "@/assets/icon/global/Location.svg";
-import PersonIcon from "@/assets/icon/global/Person24.svg";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
+// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
 
 type Props = {
   competitionId: string;
@@ -47,11 +47,11 @@ function CompetitionHeader(props: Props) {
         </Label>
         <ul className="competition-detail">
           <li>
-            <LocationIcon />
+            {/* <LocationIcon /> */}
             <span>{matchLocation}</span>
           </li>
           <li>
-            <CalendarIcon />
+            {/* <CalendarIcon /> */}
             <span>
               {formattedDate(startDate, {
                 displayDateType: "kr",

@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { useSearchParams } from "next/navigation";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useStickyMoment from "@/hook/useStickyMoment";
+import { useGet } from "@/apis/hook/query";
 
 import MainTab from "@/components/Main/MainTab";
 import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
@@ -15,8 +16,7 @@ import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import TeamListCard from "@/components/Team/TeamListCard";
 import ToggleInput from "@/components/common/ToggleInput";
 
-import PlusIcon from "@/assets/icon/global/Plus.svg";
-import { useGet } from "@/apis/hook/query";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function TeamList() {
   usePageTitle({

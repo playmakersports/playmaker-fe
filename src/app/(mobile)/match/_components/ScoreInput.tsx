@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import ArrowBottom from "@/assets/icon/arrow/BottomArrow.svg";
+import ArrowBottom from "@/assets/icon/arrow/DownArrow.svg";
 
 type Props = {
   stage: string;

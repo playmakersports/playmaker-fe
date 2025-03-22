@@ -6,7 +6,7 @@ import { usePost } from "@/apis/hook/query";
 import { FONTS } from "@/styles/common";
 import { useConfirm } from "../common/global/ConfirmProvider";
 
-import NotificationIcon from "@/assets/icon/global/NoticeBell.svg";
+import NotificationIcon from "@/assets/icon/common/filled/Notification.svg";
 
 interface FcmNotification {
   notification: {

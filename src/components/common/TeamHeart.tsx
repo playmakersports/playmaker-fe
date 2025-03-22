@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { usePost } from "@/apis/hook/query";
 import { useToast } from "@/hook/useToast";
 
-import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
-import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
-import Spinner from "@/assets/icon/global/Spinner.svg";
+import HeartStrokeIcon from "@/assets/icon/common/outlined/Heart.svg";
+import HeartFillIcon from "@/assets/icon/common/filled/Heart.svg";
+import Spinner from "@/assets/icon/common/Spinner.svg";
 
 type Props = {
   teamId: string | number;

@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import BottomArrow from "@/assets/icon/arrow/BottomArrowThin.svg";
+import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
 type Props =
   | {
@@ -28,7 +28,7 @@ function InformationGroup(props: Props) {
       {hidable ? (
         <Title as="button" type="button" onClick={() => hidable && setShowGroup(!showGroup)}>
           {title}
-          <BottomArrow className={showGroup ? "show" : "hide"} />
+          <DownArrow className={showGroup ? "show" : "hide"} />
         </Title>
       ) : (
         <Title>{title}</Title>

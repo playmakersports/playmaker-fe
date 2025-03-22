@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { secondToMinSec } from "@/util/common";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import PaperPlaneIcon from "@/assets/icon/global/PaperPlane.svg";
+import PaperPlaneIcon from "@/assets/icon/common/filled/Send.svg";
 
 function VideoCommentInput({ articleId, currentTime }: any) {
   const [commentTime, setCommentTime] = useState("");

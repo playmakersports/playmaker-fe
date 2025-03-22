@@ -4,7 +4,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
-import ExclamationSolid from "@/assets/icon/global/ExclamationSolid.svg";
+import ExclamationSolid from "@/assets/icon/circle/WarningFilled.svg";
 
 function FixedNotice() {
   return (

@@ -12,7 +12,7 @@ import ProfileImage from "@/components/Team/ProfileImage";
 import AdminList from "@/components/Team/AdminList";
 import Badge from "@/components/common/Badge";
 
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 function AdminIndex() {
   const [countFounded, setCountFounded] = useState(0);

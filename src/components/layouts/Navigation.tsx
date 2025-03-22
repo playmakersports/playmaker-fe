@@ -4,11 +4,11 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter, usePathname } from "next/navigation";
 
-import HomeIcon from "@/assets/icon/global/Home.svg";
-// import SearchListIcon from "@/assets/icon/global/SearchList.svg";
-import FlagIcon from "@/assets/icon/global/Flag.svg";
-import PersonIcon from "@/assets/icon/global/Person24.svg";
-import PhysicsIcon from "@/assets/icon/global/Physics.svg";
+import HomeIcon from "@/assets/icon/common/filled/Home.svg";
+// import SearchListIcon from "@/assets/icon/common/filled/SearchList.svg";
+// import FlagIcon from "@/assets/icon/common/filled/Flag.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+// import PhysicsIcon from "@/assets/icon/common/filled/Physics.svg";
 
 function Navigation() {
   const router = useRouter();
@@ -35,7 +35,7 @@ function Navigation() {
           onClick={() => movePage("/matches")}
           className={pathname === "/matches" ? "active" : ""}
         >
-          <FlagIcon />
+          {/* <FlagIcon /> */}
         </Button>
         <Button
           type="button"
@@ -43,7 +43,7 @@ function Navigation() {
           onClick={() => movePage("/matches")}
           className={pathname === "/matches" ? "active" : ""}
         >
-          <FlagIcon />
+          {/* <FlagIcon /> */}
         </Button>
         <Button
           type="button"
@@ -51,7 +51,7 @@ function Navigation() {
           onClick={() => movePage("/feed")}
           className={pathname === "/feed" ? "active" : ""}
         >
-          <PhysicsIcon />
+          {/* <PhysicsIcon /> */}
         </Button>
         <Button
           type="button"

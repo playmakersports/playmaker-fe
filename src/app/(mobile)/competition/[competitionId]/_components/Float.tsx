@@ -2,7 +2,7 @@ import React from "react";
 
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
-import ShareIcon from "@/assets/icon/global/Share.svg";
+import ShareIcon from "@/assets/icon/common/filled/Share.svg";
 
 function CompetitionFloat() {
   return (

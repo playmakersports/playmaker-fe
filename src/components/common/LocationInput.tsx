@@ -6,7 +6,7 @@ import { useGet } from "@/apis/hook/query";
 import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrowThin.svg";
+import ArrowBottomIcon from "@/assets/icon/arrow/DownArrow.svg";
 import { ApiCodeArea } from "@/apis/types/code";
 
 type Props = { title?: string; defaultValue?: number; setLocationKey: (key: number) => void };

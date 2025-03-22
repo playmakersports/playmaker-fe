@@ -1,5 +1,5 @@
 "use client";
-import LoadingAnimatedSvg from "@/assets/icon/global/LoadingSpinner.svg";
+import LoadingAnimatedSvg from "@/assets/icon/common/Loading.svg";
 
 type Props =
   | {

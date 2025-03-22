@@ -13,10 +13,10 @@ import PlayerListItem from "@/components/Team/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PlayerRoleModal from "../../../_components/PlayerRoleModal";
 
-import DoubleStarIcon from "@/assets/icon/global/DoubleStar.svg";
-import CrownIcon from "@/assets/icon/global/Crown.svg";
-import StartIcon from "@/assets/icon/global/Star.svg";
-import DeleteAllBorderIcon from "@/assets/icon/global/DeleteAllBorder.svg";
+import DoubleStarIcon from "@/assets/icon/common/outlined/Star.svg";
+import CrownIcon from "@/assets/icon/common/filled/Key.svg";
+import StartIcon from "@/assets/icon/common/filled/Star.svg";
+import DeleteAllBorderIcon from "@/assets/icon/common/filled/Delete.svg";
 
 type PlayerInfo = {
   defaultLevel: number;

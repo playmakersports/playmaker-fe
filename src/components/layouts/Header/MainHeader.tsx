@@ -4,9 +4,9 @@ import { useRouter } from "next/navigation";
 
 import { HeaderIcon, HeaderInner, HeaderWrapper } from ".";
 import Logotype from "@/assets/logo/Logotype.svg";
-import NoticeBellIcon from "@/assets/icon/global/NoticeBell.svg";
-import NoticeBellActiveIcon from "@/assets/icon/global/NoticeBellActive.svg";
-import PersonIcon from "@/assets/icon/global/Person.svg";
+import NoticeBellIcon from "@/assets/icon/common/filled/Notification.svg";
+import NoticeBellActiveIcon from "@/assets/icon/common/filled/NotificationUnread.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 type Props = { scrollPositionY: number };
 function MainHeader({ scrollPositionY }: Props) {

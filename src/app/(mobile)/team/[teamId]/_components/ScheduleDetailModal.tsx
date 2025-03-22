@@ -4,10 +4,10 @@ import { ModalProps } from "@/hook/useModal";
 import { useToast } from "@/hook/useToast";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import CopyIcon from "@/assets/icon/global/Copy.svg";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import LocationIcon from "@/assets/icon/global/Location.svg";
-import PersonIcon from "@/assets/icon/global/Person24.svg";
+import CopyIcon from "@/assets/icon/common/filled/Copy.svg";
+// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
+// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 type Props = {
   ModalContainer: (props: ModalProps) => React.JSX.Element | undefined;
@@ -56,7 +56,7 @@ function ScheduleDetailModal({ ModalContainer, scheduleInfo }: Props) {
         <div className="list-wrapper">
           <div className="list">
             <span className="option-title">
-              <CalendarIcon />
+              {/* <CalendarIcon /> */}
               일시
             </span>
             <span className="option-contents">
@@ -65,7 +65,7 @@ function ScheduleDetailModal({ ModalContainer, scheduleInfo }: Props) {
           </div>
           <div className="list">
             <span className="option-title">
-              <LocationIcon />
+              {/* <LocationIcon /> */}
               장소
             </span>
             <button type="button" className="option-contents" onClick={() => copySchedulePlace(scheduleInfo?.place)}>

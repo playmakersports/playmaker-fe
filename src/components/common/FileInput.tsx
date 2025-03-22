@@ -8,7 +8,7 @@ import { InputStyledWrapper } from "./Wrapper";
 import { FONTS } from "@/styles/common";
 import InputWrapper from "./input/InputWrapper";
 
-import CloseIcon from "@/assets/icon/common/Close.svg";
+import CloseIcon from "@/assets/icon/common/Close20.svg";
 
 type FileInputProps = Omit<InputProps, "type" | "onButtonWrapClick" | "delButton"> & {
   maxSizeMB?: number;

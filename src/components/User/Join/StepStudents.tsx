@@ -8,9 +8,9 @@ import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { SCROLL_HIDE } from "@/styles/common";
 import Loading from "@/components/common/Loading";
-
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
 import { ApiCodeUniversity } from "@/apis/types/user";
+
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 function StepStudents({ setStep }: { setStep: (prev: number) => void }) {
   const [applyValues, setApplyValues] = useAtom(atomServiceApply);

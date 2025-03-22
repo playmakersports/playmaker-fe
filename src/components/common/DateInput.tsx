@@ -8,8 +8,8 @@ import { useToast } from "@/hook/useToast";
 import { BasicInput, InputProps } from "./input/BaseInput";
 import { BUTTON_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 import { DateKeypadInput } from "./input/PlainInput";
-import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
-import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
+import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 type Props = Omit<InputProps, "type" | "value"> & {
   displayIcon?: boolean;

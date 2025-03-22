@@ -10,8 +10,8 @@ import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 import { COMMENTS_MOCK } from "@/constants/mock/COMMENTS";
 
 import ReplyIcon from "@/assets/icon/editor/Reply.svg";
-import HeartStrokeIcon from "@/assets/icon/global/HeartStroke.svg";
-import HeartFillIcon from "@/assets/icon/global/HeartFill.svg";
+import HeartStrokeIcon from "@/assets/icon/common/outlined/Heart.svg";
+import HeartFillIcon from "@/assets/icon/common/filled/Heart.svg";
 
 function ArticleId() {
   usePageTitle({ title: "공지사항", scrolledShadow: false });

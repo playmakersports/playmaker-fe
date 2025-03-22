@@ -8,6 +8,7 @@ import useCalendar from "@/hook/useCalendar";
 import { usePageTitle } from "@/hook/usePageTitle";
 import useModal from "@/hook/useModal";
 import useStickyMoment from "@/hook/useStickyMoment";
+import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 
 import { TEAM_SCHEDULE_MOCK } from "@/constants/mock/TEAM";
 import Loading from "@/components/common/Loading";
@@ -16,12 +17,11 @@ import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
 import ScheduleDetailModal from "../../../_components/ScheduleDetailModal";
 
-import PlusIcon from "@/assets/icon/global/Plus.svg";
-import LocationIcon from "@/assets/icon/global/Location.svg";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import LeftArrowIcon from "@/assets/icon/arrow/LeftArrowThin.svg";
-import RightArrowIcon from "@/assets/icon/arrow/RightArrowThin.svg";
-import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
+// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
+// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
+import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 function Schedule() {
   const router = useRouter();
@@ -175,11 +175,11 @@ function Schedule() {
               <p className="schedule-description">{item.description}</p>
               <div className="schedule-info">
                 <p>
-                  <LocationIcon />
+                  {/* <LocationIcon /> */}
                   {item.place}
                 </p>
                 <p>
-                  <CalendarIcon />
+                  {/* <CalendarIcon /> */}
                   {item.startTime} - {item.endTime}
                 </p>
               </div>

@@ -9,7 +9,7 @@ import MatchTitle from "../_components/MatchTitle";
 import MatchMvp from "../_components/MatchMvp";
 import PlayersList from "../_components/PlayersList";
 
-import AppAddIcon from "@/assets/icon/global/AppAdd.svg";
+import MenuDotsIcon from "@/assets/icon/common/MenuDots.svg";
 
 function MatchPage() {
   const params = useParams();
@@ -17,7 +17,7 @@ function MatchPage() {
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
   usePageTitle({
     title: "",
-    subIcons: [{ svgIcon: <AppAddIcon />, linkTo: `/match/${matchId}/score`, description: "점수 입력" }],
+    subIcons: [{ svgIcon: <MenuDotsIcon />, linkTo: `/match/${matchId}/score`, description: "점수 입력" }],
   });
 
   return (

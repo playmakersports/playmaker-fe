@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { MatchSummaryCard } from "./container";
 import { FONTS } from "@/styles/common";
-import MoreVerticalIcon from "@/assets/icon/global/MoreVertical.svg";
+import MenuDotsIcon from "@/assets/icon/common/filled/MenuDots.svg";
 
 type Props = {
   name: string;
@@ -32,7 +32,7 @@ function MatchMvp(props: Props) {
             <span className="team-name">{teamName}</span>
           </p>
         </div>
-        <MoreVerticalIcon />
+        <MenuDotsIcon />
       </Header>
       <Contents
         style={{ opacity: expanded ? 1 : 0 }}

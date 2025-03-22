@@ -9,7 +9,7 @@ import { atomBackgroundBluely } from "@/atom/common";
 import { HeaderInner, HeaderWrapper, HeaderIcon } from ".";
 import MainHeader from "./MainHeader";
 
-import HeaderLeftArrow from "@/assets/icon/arrow/LeftArrowThin.svg";
+import HeaderLeftArrow from "@/assets/icon/arrow/LeftArrow.svg";
 
 type Props = { scrollActive: number };
 function Header({ scrollActive }: Props) {

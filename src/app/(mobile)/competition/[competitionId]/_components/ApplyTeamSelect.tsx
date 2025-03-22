@@ -55,10 +55,7 @@ function ApplyTeamSelect() {
           </Button>
         </FloatButton>
       </form>
-      <div className="re-check-wrapper">
-        <InputCheckbox id="ReCheckTeam" {...register("ReCheckTeam")} />
-        <label htmlFor="ReCheckTeam">위 선택한 팀으로 출전을 신청하겠습니다</label>
-      </div>
+      <InputCheckbox id="ReCheckTeam" text={{ title: "위 선택한 팀으로 신청합니다" }} {...register("ReCheckTeam")} />
     </Container>
   );
 }
@@ -77,16 +74,6 @@ const Container = styled(BaseContainer)`
   }
   p.info-title {
     ${FONTS.MD1};
-  }
-  div.re-check-wrapper {
-    ${FONTS.MD1W500};
-    display: flex;
-    padding: 10px 12px 0;
-    align-items: center;
-    gap: 8px;
-    & > div:has(input:checked) + label {
-      color: var(--main);
-    }
   }
 `;
 const TeamList = styled.ul`

@@ -2,10 +2,11 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
+import { getHours, getMinutes } from "date-fns";
+
 import { FONTS } from "@/styles/common";
 import { DateKeypadInput } from "./input/PlainInput";
-import ClockIcon from "@/assets/icon/global/Clock.svg";
-import { getHours, getMinutes } from "date-fns";
+import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
 
 type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> & {
   size?: "LARGE" | "MEDIUM";

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 type Props = {
   ModalContainer: (props: ModalProps) => React.JSX.Element | undefined;

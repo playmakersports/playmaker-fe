@@ -6,10 +6,10 @@ import { countDayDiff } from "@/util/date";
 import { BasicWhiteCard } from "../common/Card";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import TeamListDetail from "@/components/Main/TeamListDetail";
-
-import LocationIcon from "@/assets/icon/global/Location.svg";
-import GraduationIcon from "@/assets/icon/global/Graduation.svg";
 import Heart from "../common/TeamHeart";
+
+// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
+// import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
 
 const RECRUIT_STATUS: Record<string, string> = {
   PENDING: "모집중",
@@ -47,12 +47,12 @@ function TeamListCard(props: Props) {
               <h3>{teamName}</h3>
               {university ? (
                 <div className="team-based">
-                  <GraduationIcon />
+                  {/* <GraduationIcon /> */}
                   <span>{university}</span>
                 </div>
               ) : (
                 <div className="team-based">
-                  <LocationIcon />
+                  {/* <LocationIcon /> */}
                   <span>{location}</span>
                 </div>
               )}

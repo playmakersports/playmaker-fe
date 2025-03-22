@@ -9,8 +9,8 @@ import Button from "@/components/common/Button";
 import FloatButton from "@/components/common/FloatButton";
 import GradientBg from "@/components/common/GradientBg";
 
-import GraduationIcon from "@/assets/icon/global/Graduation.svg";
-import GloveIcon from "@/assets/icon/global/Globe.svg";
+// import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
+import GloveIcon from "@/assets/icon/common/Global.svg";
 
 function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
   usePageTitle({ transparent: true });
@@ -43,7 +43,7 @@ function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
         <List $showNextPage={hideStartCont}>
           <Item className={teamType === "univ" ? "selected" : ""} type="button" onClick={() => setTeamType("univ")}>
             <div className="title-wrapper">
-              <GraduationIcon />
+              {/* <GraduationIcon /> */}
               <strong className="card-title">대학 팀</strong>
             </div>
             <p className="description">

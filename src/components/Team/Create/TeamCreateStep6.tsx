@@ -9,7 +9,7 @@ import { useConfirm } from "@/components/common/global/ConfirmProvider";
 import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { atomTeamCreate, atomTeamCreateLogo } from "@/atom/team";
-import CameraIcon from "@/assets/icon/global/Camera.svg";
+import CameraIcon from "@/assets/icon/common/filled/Image.svg";
 
 function TeamCreateStep6() {
   const router = useRouter();

@@ -15,7 +15,7 @@ import DropDown from "@/components/common/OldDropDown";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 function UserSchool() {
   usePageTitle({ title: "재학증명서 인증" });

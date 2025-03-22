@@ -6,10 +6,10 @@ import { useAtom, useSetAtom } from "jotai";
 import { atomServiceApply, atomServiceApplyImage } from "@/atom/user";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import { StepFormWrapper } from "@/components/common/global/Text";
-
-import PersonIcon from "@/assets/icon/global/Person.svg";
-import CameraIcon from "@/assets/icon/global/Camera.svg";
 import { TextArea } from "@/components/common/TextArea";
+
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+import CameraIcon from "@/assets/icon/common/filled/Image.svg";
 
 function Step3({ setStep }: { setStep: (prev: number) => void }) {
   const imgInputRef = useRef<HTMLInputElement>(null);

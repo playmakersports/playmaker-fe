@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { InputStyledWrapper } from "./Wrapper";
 
-import ToggleArrowIcon from "@/assets/icon/arrow/toggle/UpToggle.svg";
+import ToggleArrowIcon from "@/assets/icon/arrow/UpArrowToggle.svg";
 import { FONTS } from "@/styles/common";
 
 type Props = {

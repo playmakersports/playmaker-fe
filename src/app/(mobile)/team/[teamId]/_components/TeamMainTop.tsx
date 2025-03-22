@@ -10,7 +10,7 @@ import Notice from "@/components/Team/Notice";
 import ProfileImage from "@/components/Team/ProfileImage";
 import { FONTS } from "@/styles/common";
 
-import SettingsIcon from "@/assets/icon/global/Settings.svg";
+import SettingsIcon from "@/assets/icon/common/filled/People.svg";
 
 function TeamMainTop(props: SelectTeamResponse) {
   const { teamId, teamName, logoUrl, activeArea, createDt, item, countMember, masterNm, myTeamYn, university } = props;

@@ -5,7 +5,7 @@ import { eachDayOfInterval, isSameDay, isToday } from "date-fns";
 import { DAY_NAME_KOREAN } from "@/util/date";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
-import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 type Props = {
   startDate: string;

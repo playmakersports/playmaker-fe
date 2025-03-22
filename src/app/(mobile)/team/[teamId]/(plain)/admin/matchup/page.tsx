@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { BaseContainer } from "@/components/common/Container";
-import DirectionIncomeSvg from "@/assets/icon/arrow/DirectionIncome.svg";
+import DirectionIncomeSvg from "@/assets/icon/arrow/LeftArrow.svg";
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import { differenceInCalendarDays } from "date-fns";

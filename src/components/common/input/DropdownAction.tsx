@@ -5,8 +5,8 @@ import { FONTS } from "@/styles/common";
 import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 
-import DotMenuIcon from "@/assets/icon/global/DotMenu.svg";
-import BottomToggleArrowIcon from "@/assets/icon/arrow/toggle/BottomToggle.svg";
+import DotMenuIcon from "@/assets/icon/common/filled/DotMenu.svg";
+import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
 
 type OptionsType = { name: string; action: () => void; divided?: boolean };
 type Props = {

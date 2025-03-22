@@ -2,15 +2,15 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-
 import { usePageTitle } from "@/hook/usePageTitle";
+import { useConfirm } from "@/components/common/global/ConfirmProvider";
+
 import { FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
 
-import LockIcon from "@/assets/icon/global/Lock.svg";
-import DeleteAllIcon from "@/assets/icon/global/DeleteAll.svg";
-import PencilIcon from "@/assets/icon/global/Pencil.svg";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import LockIcon from "@/assets/icon/common/filled/Lock.svg";
+import DeleteAllIcon from "@/assets/icon/common/filled/Delete.svg";
+import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
 
 function BoardCategory() {
   const confirm = useConfirm();

@@ -13,7 +13,7 @@ import { BasicInput } from "@/components/common/input/BaseInput";
 import { GetTeamBoardListResponse } from "@/types/team";
 import ListArticle from "./_components/ListArticle";
 
-import PlusIcon from "@/assets/icon/global/Plus.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 import Loading from "@/components/common/Loading";
 
 function Board() {

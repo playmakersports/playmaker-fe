@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useConfirm } from "../common/global/ConfirmProvider";
 
-import MoreVerticalIcon from "@/assets/icon/global/MoreVertical.svg";
+import MoreVerticalIcon from "@/assets/icon/common/MenuDots.svg";
 import useModal from "@/hook/useModal";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import Button from "../common/Button";

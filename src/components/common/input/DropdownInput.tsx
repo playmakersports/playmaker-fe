@@ -7,8 +7,8 @@ import InputWrapper from "./InputWrapper";
 import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 
-import BottomToggleArrowIcon from "@/assets/icon/arrow/toggle/BottomToggle.svg";
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
+import CheckIcon from "@/assets/icon/common/filled/CheckIcon.svg";
 
 type OptionsType = { name: string; value: string };
 type Props = {

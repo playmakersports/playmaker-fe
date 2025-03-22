@@ -7,8 +7,8 @@ import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import { BaseContainer } from "@/components/common/Container";
 
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import LocationIcon from "@/assets/icon/global/Location.svg";
+// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
+// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
 
 type Props = {
   title: string;
@@ -26,11 +26,11 @@ function ApplyInfo(props: Props) {
         <h2>{title}</h2>
         <ul className="info-list">
           <li>
-            <LocationIcon />
+            {/* <LocationIcon /> */}
             {place}
           </li>
           <li>
-            <CalendarIcon />
+            {/* <CalendarIcon /> */}
             {formattedDate(startDate, {
               displayDateType: ".",
               displayYear: "always",

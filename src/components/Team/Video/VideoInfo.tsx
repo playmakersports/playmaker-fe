@@ -5,8 +5,8 @@ import ProfileTag from "../ProfileTag";
 import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 
-import BookmarkIcon from "@/assets/icon/global/Bookmark.svg";
-import ShareIcon from "@/assets/icon/global/Share.svg";
+import BookmarkIcon from "@/assets/icon/common/outlined/Star.svg";
+import ShareIcon from "@/assets/icon/common/outlined/Share.svg";
 
 type Props = {
   subTitle: string;

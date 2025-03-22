@@ -15,7 +15,7 @@ import UserSetting from "@/app/(mobile)/(navigation)/my/settings/_components/Use
 import { BasicWhiteCard } from "@/components/common/Card";
 import { ApiSelectMember } from "@/apis/types/user";
 
-import PencilIcon from "@/assets/icon/global/Pencil.svg";
+import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
 import Loading from "@/components/common/Loading";

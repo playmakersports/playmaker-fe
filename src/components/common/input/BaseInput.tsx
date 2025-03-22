@@ -8,12 +8,12 @@ import { InputWrapperStyledProps } from "./type";
 import { InputStyledWrapper } from "../Wrapper";
 import InputWrapper from "./InputWrapper";
 
-import CloseIcon from "@/assets/icon/common/Close.svg";
+import CloseIcon from "@/assets/icon/common/Close20.svg";
 import SearchIcon from "@/assets/icon/common/Search.svg";
-import MailIcon from "@/assets/icon/common/Mail.svg";
-import CalendarIcon from "@/assets/icon/global/Calendar.svg";
-import EyeOpenedIcon from "@/assets/icon/common/EyeOpened.svg";
-import EyeClosedIcon from "@/assets/icon/common/EyeClosed.svg";
+import MailIcon from "@/assets/icon/common/filled/Mail.svg";
+// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
+import EyeOpenedIcon from "@/assets/icon/common/outlined/EyeOpened.svg";
+import EyeClosedIcon from "@/assets/icon/common/outlined/EyeClosed.svg";
 
 type InputIconType = "search" | "email" | "calendar";
 export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "required">> & {
@@ -64,7 +64,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
   const ICON_TYPE = {
     search: <SearchIcon />,
     email: <MailIcon />,
-    calendar: <CalendarIcon />,
+    calendar: <SearchIcon />,
   };
   const isShowSideIconDivider = delButton && (suffix || type === "password");
 

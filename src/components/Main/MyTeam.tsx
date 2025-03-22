@@ -9,7 +9,7 @@ import Loading from "../common/Loading";
 import { ApiSelectMember } from "@/apis/types/user";
 import { SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
-import PlusIcon from "@/assets/icon/global/Plus.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function MyTeam() {
   const router = useRouter();

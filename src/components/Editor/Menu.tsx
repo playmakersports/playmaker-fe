@@ -3,7 +3,7 @@ import { Editor } from "@tiptap/react";
 import styled from "styled-components";
 import { BUTTON_ACTIVE } from "@/styles/common";
 
-import RightToggleArrow from "@/assets/icon/arrow/toggle/RightToggle.svg";
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 import BoldText from "@/assets/icon/editor/BoldText.svg";
 import ItalicText from "@/assets/icon/editor/ItalicText.svg";
 import UnderlineText from "@/assets/icon/editor/UnderlineText.svg";
@@ -53,7 +53,7 @@ function EditorMenu({ editor }: Props) {
         className={`toggle-button ${showStyle && "active"}`}
         onClick={() => setShowStyle((prev) => !prev)}
       >
-        제목 <RightToggleArrow />
+        제목 <RightArrow />
       </button>
       <HideMenu $isShow={showStyle}>
         <button

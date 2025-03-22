@@ -8,9 +8,9 @@ import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 import Chip from "../Chip";
 
-import BottomToggleArrowIcon from "@/assets/icon/arrow/toggle/BottomToggle.svg";
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
-import CloseIcon from "@/assets/icon/common/Close.svg";
+import BottomToggleArrowIcon from "@/assets/icon/arrow/DownArrowToggle.svg";
+import CheckIcon from "@/assets/icon/common/filled/CheckIcon.svg";
+import CloseIcon from "@/assets/icon/common/Close20.svg";
 
 type OptionsType = { name: string; value: string };
 type Props = {

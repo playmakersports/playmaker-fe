@@ -8,9 +8,9 @@ import { FONTS } from "@/styles/common";
 import { ApiSelectMember } from "@/apis/types/user";
 import Loading from "@/components/common/Loading";
 
-import FlagIcon from "@/assets/icon/global/Flag.svg";
-import PencilIcon from "@/assets/icon/global/Pencil.svg";
-import SettingsIcon from "@/assets/icon/global/Settings.svg";
+import FlagIcon from "@/assets/icon/common/filled/Star.svg";
+import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
+import SettingsIcon from "@/assets/icon/common/filled/Person.svg";
 
 function MyProfile() {
   const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");

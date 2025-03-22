@@ -4,7 +4,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
 import { useConfirm } from "../common/global/ConfirmProvider";
 
-import PlusIcon from "@/assets/icon/global/Plus.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 import AwardedItem from "./AwardedItem";
 
 type Props = {

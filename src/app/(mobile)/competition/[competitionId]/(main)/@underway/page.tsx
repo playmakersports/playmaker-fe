@@ -11,7 +11,7 @@ import MatchCard from "@/components/Team/MatchCard";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { BaseContainer } from "@/components/common/Container";
 
-import RightArrowIcon from "@/assets/icon/arrow/RightArrowSmall.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 function CompetitionUnderway() {
   const MOCK = COMPETITION_DETAIL_MOCK;

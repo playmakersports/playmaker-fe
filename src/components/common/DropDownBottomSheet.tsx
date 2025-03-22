@@ -5,8 +5,8 @@ import useModal from "@/hook/useModal";
 import { InputStyledWrapper } from "./Wrapper";
 import { BUTTON_ACTIVE, CARD_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
 
-import ArrowBottomIcon from "@/assets/icon/arrow/BottomArrow.svg";
-import CheckIcon from "@/assets/icon/global/CheckIcon.svg";
+import ArrowBottomIcon from "@/assets/icon/arrow/DownArrow.svg";
+import CheckIcon from "@/assets/icon/common/Check.svg";
 
 type Props = {
   mode?: "card" | "default";

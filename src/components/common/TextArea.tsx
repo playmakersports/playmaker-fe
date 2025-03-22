@@ -5,7 +5,7 @@ import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
 import { InputStyledWrapper } from "./Wrapper";
-import QuestionIcon from "@/assets/icon/global/Question.svg";
+import QuestionIcon from "@/assets/icon/circle/QuestionOutlined.svg";
 
 type Props = Partial<React.TextareaHTMLAttributes<HTMLTextAreaElement>> & {
   title?: string;

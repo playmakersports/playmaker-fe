@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
-import CommentsIcon from "@/assets/icon/global/Comments.svg";
+import CommentsIcon from "@/assets/icon/common/filled/Chat.svg";
 
 type Props = {
   articleId: number;

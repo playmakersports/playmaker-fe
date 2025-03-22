@@ -25,7 +25,7 @@ function CompetitionViewPC() {
     <Container>
       <Aside>
         <Filter>
-          <BasicInput type="text" placeholder="대회명으로 찾기" search />
+          <BasicInput type="text" placeholder="대회명으로 찾기" iconType="search" />
         </Filter>
         <List>
           <ul

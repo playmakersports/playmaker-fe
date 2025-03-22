@@ -2,7 +2,8 @@
 
 import React from "react";
 import styled, { keyframes } from "styled-components";
-import { useRouter, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 import { FONTS } from "@/styles/common";
 
@@ -20,12 +21,7 @@ import MailIconOutlined from "@/assets/icon/common/outlined/Mail.svg";
 import PersonIconOutlined from "@/assets/icon/common/outlined/Person.svg";
 
 function Navigation() {
-  const router = useRouter();
   const pathname = usePathname();
-
-  const movePage = (path: string) => {
-    router.push(path);
-  };
 
   return (
     <Container>
@@ -35,41 +31,36 @@ function Navigation() {
           backgroundColor: "var(--background-light)",
         }}
       >
-        <Button type="button" data-label="홈" onClick={() => movePage("/")} data-active={pathname === "/"}>
-          <HomeIconOutlined className="outlined-icon" />
-          <HomeIconFilled className="filled-icon" />
-        </Button>
-        <Button
-          type="button"
-          data-label="팀"
-          onClick={() => movePage("/matches")}
-          data-active={pathname === "/matches"}
-        >
-          <PeopleIconOutlined className="outlined-icon" />
-          <PeopleIconFilled className="filled-icon" />
-        </Button>
-        <Button
-          type="button"
-          data-label="알림"
-          onClick={() => movePage("/matches")}
-          data-active={pathname === "/matches"}
-        >
-          <NotificationIconOutlined className="outlined-icon" />
-          <NotificationIconFilled className="filled-icon" />
-        </Button>
-        <Button type="button" data-label="피드" onClick={() => movePage("/feed")} data-active={pathname === "/feed"}>
-          <MailIconOutlined className="outlined-icon" />
-          <MailIconFilled className="filled-icon" />
-        </Button>
-        <Button
-          type="button"
-          data-label="마이"
-          onClick={() => movePage("/my")}
-          data-active={["/my", "/my/team", "/my/feed"].includes(pathname)}
-        >
-          <PersonIconOutlined className="outlined-icon" />
-          <PersonIconFilled className="filled-icon" />
-        </Button>
+        <Link href="/" legacyBehavior prefetch>
+          <Button data-label="홈" data-active={pathname === "/"}>
+            <HomeIconOutlined className="outlined-icon" />
+            <HomeIconFilled className="filled-icon" />
+          </Button>
+        </Link>
+        <Link href="/matches" legacyBehavior prefetch>
+          <Button data-label="팀" data-active={pathname === "/matches"}>
+            <PeopleIconOutlined className="outlined-icon" />
+            <PeopleIconFilled className="filled-icon" />
+          </Button>
+        </Link>
+        <Link href="/matches" legacyBehavior prefetch>
+          <Button data-label="알림" data-active={pathname === "/matches"}>
+            <NotificationIconOutlined className="outlined-icon" />
+            <NotificationIconFilled className="filled-icon" />
+          </Button>
+        </Link>
+        <Link href="/feed" legacyBehavior prefetch>
+          <Button data-label="피드" data-active={pathname === "/feed"}>
+            <MailIconOutlined className="outlined-icon" />
+            <MailIconFilled className="filled-icon" />
+          </Button>
+        </Link>
+        <Link href="/my" legacyBehavior prefetch>
+          <Button data-label="마이" data-active={["/my", "/my/team", "/my/feed"].includes(pathname)}>
+            <PersonIconOutlined className="outlined-icon" />
+            <PersonIconFilled className="filled-icon" />
+          </Button>
+        </Link>
       </Inner>
     </Container>
   );
@@ -80,7 +71,7 @@ const bounce = keyframes`
     transform: scale(1);
   }
   30% {
-    transform: scale(1.2);
+    transform: scale(1.15);
   }
   60% {
     transform: scale(0.95);
@@ -112,7 +103,7 @@ const Inner = styled.div`
   justify-content: space-between;
 `;
 
-const Button = styled.button`
+const Button = styled.a`
   flex: 1;
   display: flex;
   flex-direction: column;

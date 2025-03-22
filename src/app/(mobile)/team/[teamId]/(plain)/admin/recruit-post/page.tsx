@@ -6,12 +6,12 @@ import styled from "styled-components";
 import { usePageTitle } from "@/hook/usePageTitle";
 
 import { BaseContainer } from "@/components/common/Container";
-import ToggleInput from "@/components/common/ToggleInput";
 import { FONTS } from "@/styles/common";
 import { TextArea } from "@/components/common/TextArea";
 import DateInput from "@/components/common/DateInput";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
+import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function RecruitPost() {
   const [activePost, setActivePost] = useState(false);
@@ -25,7 +25,7 @@ function RecruitPost() {
       <div className="post-header">
         <div>
           <span>공고 올리기 활성화</span>
-          <ToggleInput toggled={activePost} setToggle={setActivePost} />
+          <ToggleSwitch checked={activePost} onChange={(e) => setActivePost(e.target.checked)} />
         </div>
         <p>활성화하면 전체 팀 목록에서 우리 팀이 우선 노출돼요.</p>
       </div>

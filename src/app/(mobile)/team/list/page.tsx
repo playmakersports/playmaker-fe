@@ -14,9 +14,9 @@ import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import TeamListCard from "@/components/Team/TeamListCard";
-import ToggleInput from "@/components/common/ToggleInput";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
+import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function TeamList() {
   usePageTitle({
@@ -68,7 +68,11 @@ function TeamList() {
             { value: "date", name: "마감 임박순" },
           ]}
         />
-        <ToggleInput toggled={filterRecruit} setToggle={setFilterRecruit} label="모집중인 팀만" />
+        <ToggleSwitch
+          checked={filterRecruit}
+          onChange={(e) => setFilterRecruit(e.target.checked)}
+          text={{ title: "모집중인 팀만" }}
+        />
       </Filter>
 
       <Cards>

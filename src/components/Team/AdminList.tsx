@@ -5,7 +5,7 @@ import useDeviceAgent from "@/hook/useDeviceAgent";
 import useModal from "@/hook/useModal";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import ToggleInput from "../common/ToggleInput";
+import { ToggleSwitch } from "../common/input/ToggleSwitch";
 
 type GroupProps = {
   title: string;
@@ -21,6 +21,7 @@ type GroupProps = {
 function AdminListGroup({ title, pages }: GroupProps) {
   const router = useRouter();
   const { isMobile } = useDeviceAgent();
+
   const handleClick = (target?: string | (() => void)) => {
     if (typeof target === "string") {
       router.push(target);
@@ -201,7 +202,7 @@ function AdminList() {
         <AllowContainer>
           <div className="handler-wrapper">
             <p>팀 가입 허용</p>
-            <ToggleInput toggled={applyAllow} setToggle={setApplyAllow} />
+            <ToggleSwitch checked={applyAllow} onChange={(e) => setApplyAllow(e.target.checked)} />
           </div>
           <p className="description">비허용하면 다른 사용자가 팀에 가입할 수 없어요</p>
         </AllowContainer>
@@ -222,7 +223,7 @@ function AdminList() {
         <PublicHandlerContainer>
           <div className="handler-wrapper">
             <p>팀 공개 여부</p>
-            <ToggleInput toggled={publicTeam} setToggle={setPublicTeam} />
+            <ToggleSwitch checked={publicTeam} onChange={(e) => setPublicTeam(e.target.checked)} />
           </div>
           <div className="description">
             비공개 팀이 되면 다른 사용자는 우리 팀을 볼 수 없으며, 아래의 제한이 생겨요.

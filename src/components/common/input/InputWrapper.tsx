@@ -2,26 +2,36 @@ import React from "react";
 import styled from "styled-components";
 import { InputWrapperStyledProps } from "./type";
 import { FONTS } from "@/styles/common";
+import useTooltip, { TooltipProps } from "../Tooltip";
 
 function InputWrapper({ children, ...props }: InputWrapperStyledProps & { children: React.ReactNode }) {
   const { title, information, required } = props;
-  const onClickOpenToolTip = () => {};
+  const informationContents: TooltipProps =
+    typeof information === "string"
+      ? { color: "white", contents: [{ title: "", description: information }] }
+      : information ?? { color: "white", contents: [{ title: "", description: "" }] };
+  const { onClickOpenTooltip, Tooltip } = useTooltip(informationContents);
 
   return (
-    <Wrapper>
-      {title && (
-        <div className="input-header">
-          <span className="title">{title}</span>
-          {information && (
-            <button type="button" className="question-icon" onClick={onClickOpenToolTip}>
-              <InfoIcon fill="var(--gray400)" />
-            </button>
-          )}
-          {required && <span style={{ color: "var(--red500)" }}>*</span>}
-        </div>
-      )}
-      <div style={{ position: "relative" }}>{children}</div>
-    </Wrapper>
+    <>
+      <Wrapper>
+        {title && (
+          <div className="input-header">
+            <span className="title">{title}</span>
+            {information && (
+              <div style={{ position: "relative", display: "inline-flex" }}>
+                <Tooltip />
+                <button type="button" className="question-icon" onClick={onClickOpenTooltip}>
+                  <InfoIcon fill="var(--gray400)" />
+                </button>
+              </div>
+            )}
+            {required && <span style={{ color: "var(--red500)" }}>*</span>}
+          </div>
+        )}
+        <div style={{ position: "relative" }}>{children}</div>
+      </Wrapper>
+    </>
   );
 }
 
@@ -38,6 +48,7 @@ const Wrapper = styled.div`
       color: var(--gray700);
     }
     button.question-icon {
+      cursor: help;
       width: 20px;
       height: 20px;
     }

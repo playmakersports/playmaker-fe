@@ -31,7 +31,17 @@ type Props = Omit<InputProps, "type" | "value" | "iconType" | "suffix"> & {
   pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
 };
 const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { children, error, description, defaultValue, title, delButton = false, value, ...rest } = props;
+  const {
+    children,
+    error,
+    description,
+    defaultValue,
+    title,
+    delButton = false,
+    value,
+    pickType = "EVERYDAY",
+    ...rest
+  } = props;
 
   const { trigger } = useToast();
   const containerRef = useRef<HTMLDivElement>(null);
@@ -83,13 +93,10 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
 
     if (
       (direction === "NEXT" &&
-        props.pickType === "ONLY_PAST" &&
+        pickType === "ONLY_PAST" &&
         isSameMonth(targetDate, new Date()) &&
         isFuture(targetDate)) ||
-      (direction === "PREV" &&
-        props.pickType === "ONLY_FUTURE" &&
-        isSameMonth(targetDate, new Date()) &&
-        isPast(targetDate))
+      (direction === "PREV" && pickType === "ONLY_FUTURE" && isSameMonth(targetDate, new Date()) && isPast(targetDate))
     ) {
       setCurrentDate(new Date());
     } else {
@@ -135,6 +142,13 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
     }
   };
 
+  const setCurrentDateValue = (date?: Date) => {
+    const targetDate = date ?? new Date();
+    setCurrentDate(targetDate);
+    setYearValue(targetDate.getFullYear());
+    setMonthValue(targetDate.getMonth() + 1);
+  };
+
   useEffect(() => {
     const outSideClick = (e: any) => {
       if (showCalendar && containerRef.current && !containerRef.current.contains(e.target)) {
@@ -174,74 +188,82 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
         >
           <NowDate>
             <CurrentDateInputs>
-              <DateKeypadInput
-                type="number"
-                aria-label="연도 입력"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                value={yearValue}
-                maxLength={4}
-                onFocus={(e) => e.target.select()}
-                onChange={(e) => setYearValue(+e.target.value.slice(0, 4))}
-                onBlur={(e) => {
-                  const newYear = Number(e.target.value);
-                  if (e.target.value !== "" && newYear > 1900 && newYear < 2999) {
-                    const newDate = new Date(newYear, monthValue - 1, 1);
-                    if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
-                      setTargetDate();
-                      trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
-                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
-                      setTargetDate();
-                      trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
+              <div className="year">
+                <DateKeypadInput
+                  type="number"
+                  aria-label="연도 입력"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={yearValue}
+                  maxLength={4}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => setYearValue(+e.target.value.slice(0, 4))}
+                  onBlur={(e) => {
+                    const newYear = Number(e.target.value);
+                    if (e.target.value !== "" && newYear > 1900 && newYear < 2999) {
+                      const newDate = new Date(newYear, monthValue, currentDate.getDate());
+                      if (pickType === "ONLY_PAST" && isFuture(newDate)) {
+                        setCurrentDateValue();
+                        trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
+                      } else if (pickType === "ONLY_FUTURE" && isPast(newDate) && !isToday(newDate)) {
+                        setCurrentDateValue();
+                        trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
+                      } else {
+                        setCurrentDateValue(new Date(newYear, monthValue - 1, currentDate.getDate()));
+                      }
                     } else {
-                      setTargetDate(`${newYear}/${monthValue}/01`);
+                      setCurrentDateValue();
                     }
-                  } else {
-                    setTargetDate();
-                  }
-                }}
-              />
-              년{" "}
-              <DateKeypadInput
-                type="number"
-                aria-label="월 입력"
-                pattern="[0-9]*"
-                inputMode="numeric"
-                style={{ paddingRight: "1px", width: "20px", textAlign: "right" }}
-                value={monthValue}
-                onFocus={(e) => e.target.select()}
-                onChange={(e) => setMonthValue(+e.target.value)}
-                onBlur={(e) => {
-                  const newMonth = Number(e.target.value);
-                  if (e.target.value !== "" && newMonth > 0 && newMonth < 13) {
-                    const newDate = new Date(yearValue, newMonth - 1, currentDate.getDate());
-                    if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
-                      setTargetDate();
-                      trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
-                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date() && !isToday(newDate)) {
-                      setTargetDate();
-                      trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
+                  }}
+                />
+                년
+              </div>
+              <div className="month">
+                <DateKeypadInput
+                  type="number"
+                  aria-label="월 입력"
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  style={{
+                    paddingRight: "1px",
+                    width: monthValue < 10 ? "12px" : "20px",
+                    textAlign: monthValue < 10 ? "right" : "left",
+                  }}
+                  value={monthValue}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(e) => setMonthValue(+e.target.value)}
+                  onBlur={(e) => {
+                    const newMonth = Number(e.target.value);
+                    if (e.target.value !== "" && newMonth > 0 && newMonth < 13) {
+                      const newDate = new Date(yearValue, newMonth, currentDate.getDate());
+                      if (pickType === "ONLY_PAST" && isFuture(newDate)) {
+                        setCurrentDateValue();
+                        trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
+                      } else if (pickType === "ONLY_FUTURE" && isPast(newDate) && !isToday(newDate)) {
+                        setCurrentDateValue();
+                        trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
+                      } else {
+                        setCurrentDateValue(new Date(yearValue, newMonth - 1, currentDate.getDate()));
+                      }
                     } else {
-                      setTargetDate(`${yearValue}/${newMonth}/${currentDate.getDate()}`);
+                      setCurrentDateValue();
                     }
-                  } else {
-                    setTargetDate();
-                  }
-                }}
-              />
-              월
+                  }}
+                />
+                월
+              </div>
             </CurrentDateInputs>
             <MonthSwitch>
               <button
                 type="button"
-                disabled={props.pickType === "ONLY_FUTURE" && isSameMonth(currentDate, new Date())}
+                disabled={pickType === "ONLY_FUTURE" && isSameMonth(currentDate, new Date())}
                 onClick={() => handleMonthMove("PREV")}
               >
                 <LeftArrowIcon />
               </button>
               <button
                 type="button"
-                disabled={props.pickType === "ONLY_PAST" && isSameMonth(currentDate, new Date())}
+                disabled={pickType === "ONLY_PAST" && isSameMonth(currentDate, new Date())}
                 onClick={() => handleMonthMove("NEXT")}
               >
                 <RightArrowIcon />
@@ -348,6 +370,8 @@ const NowDate = styled.div`
   justify-content: space-between;
 `;
 const CurrentDateInputs = styled.div`
+  display: flex;
+  gap: 8px;
   padding: 0 4px 0 10px;
   color: var(--gray900);
   ${FONTS.body2("semibold")};
@@ -355,7 +379,7 @@ const CurrentDateInputs = styled.div`
   ${DateKeypadInput} {
     padding: 0;
     text-align: left;
-    max-width: 48px;
+    max-width: 46px;
     border-radius: 0;
     color: var(--gray900);
     ${FONTS.body2("semibold")};

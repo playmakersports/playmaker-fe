@@ -179,7 +179,7 @@ const Wrapper = styled.section<{
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 16px 16px calc(28px + env(safe-area-inset-bottom) / 2);
+  padding: 20px 20px calc(28px + env(safe-area-inset-bottom) / 2);
   width: var(--mobile-max-width);
   left: 50%;
   bottom: 0;
@@ -190,7 +190,7 @@ const Wrapper = styled.section<{
   border-radius: 16px 16px 0 0;
   opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transform-origin: center left;
-  box-shadow: 0px 0px 12px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-md);
   will-change: transform;
 `;
 

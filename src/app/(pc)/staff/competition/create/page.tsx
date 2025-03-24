@@ -62,7 +62,6 @@ function CompetitionCreatePC() {
             <InputRadioWrapper title="모집 기간">
               <DateCalendarInput
                 tabIndex={3}
-                displayIcon
                 placeholder="모집 시작일"
                 {...register("applyStartDate", {
                   valueAsDate: true,
@@ -72,7 +71,6 @@ function CompetitionCreatePC() {
                 tabIndex={4}
                 error={!!errors.applyEndDate}
                 description={errors.applyEndDate ? (errors.applyEndDate.message as string) : ""}
-                displayIcon
                 placeholder="모집 종료일"
                 {...register("applyEndDate", {
                   valueAsDate: true,
@@ -90,7 +88,6 @@ function CompetitionCreatePC() {
             <InputRadioWrapper title="대회 기간">
               <DateCalendarInput
                 tabIndex={5}
-                displayIcon
                 placeholder="대회 시작일"
                 {...register("startDate", {
                   valueAsDate: true,
@@ -100,7 +97,6 @@ function CompetitionCreatePC() {
                 tabIndex={6}
                 error={!!errors.endDate}
                 description={errors.endDate ? (errors.endDate.message as string) : ""}
-                displayIcon
                 placeholder="대회 종료일"
                 {...register("endDate", {
                   valueAsDate: true,
@@ -126,7 +122,7 @@ function CompetitionCreatePC() {
             <BasicInput type="text" title="주관" {...register("organizer")} />
             <BasicInput type="text" title="협찬" {...register("sponsor")} />
 
-            <h3>대회 방식</h3>
+            <h3 className="group-title">대회 방식</h3>
             <InputRadioWrapper title="참가 팀 수">
               <DropdownInput
                 placeholder="선택"
@@ -140,7 +136,7 @@ function CompetitionCreatePC() {
               />
               <BasicInput type="number" disabled={teamNumber !== "-1"} />
             </InputRadioWrapper>
-            <h3>참가 조건</h3>
+            <h3 className="group-title">참가 조건</h3>
             <InputRadioWrapper title="성별">
               <InputRadio buttonType {...register("gender")} value="mixed" id="mixed" text={{ title: "제한 없음" }} />
               <InputRadio buttonType {...register("gender")} value="male" id="male" text={{ title: "남성" }} />
@@ -195,7 +191,7 @@ function CompetitionCreatePC() {
               <TextArea title="기타 참가 조건" />
             </article>
 
-            <h3>참가비</h3>
+            <h3 className="group-title">참가비</h3>
             <section className="grid-merge form-grid-column">
               <div style={{ width: "132px", marginRight: "-8px" }}>
                 <DropdownInput
@@ -289,7 +285,7 @@ const Container = styled.section`
     margin-bottom: 20px;
     font-size: 2.4rem;
   }
-  h3 {
+  h3.group-title {
     grid-column: 1 / 3;
     ${FONTS.HEAD2};
     margin: 24px 0 0;

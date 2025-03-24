@@ -16,7 +16,6 @@ export const DateKeypadInput = styled.input`
   &:focus {
     padding: 0px;
     box-sizing: border-box;
-    border-radius: 6px;
-    border: 1px solid var(--gray300);
+    border-radius: 4px;
   }
 `;

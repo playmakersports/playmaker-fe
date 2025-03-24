@@ -1,25 +1,35 @@
 import React, { useImperativeHandle, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
-import { format, getMonth, getYear, isSameDay, subMonths, addMonths } from "date-fns";
+import {
+  format,
+  getMonth,
+  getYear,
+  isSameDay,
+  subMonths,
+  addMonths,
+  isSameMonth,
+  isFuture,
+  isPast,
+  isToday,
+} from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import useModal from "@/hook/useModal";
 import { useToast } from "@/hook/useToast";
 
 import { BasicInput, InputProps } from "./input/BaseInput";
-import { BUTTON_ACTIVE, FONTS, TEXT_ACTIVE } from "@/styles/common";
+import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import { DateKeypadInput } from "./input/PlainInput";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
-type Props = Omit<InputProps, "type" | "value"> & {
-  displayIcon?: boolean;
+type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType"> & {
   value?: string;
   defaultValue?: string;
   pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
 };
 
 const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { displayIcon = false, defaultValue, title, error, description, value, ...rest } = props;
+  const { defaultValue, title, error, description, value, ...rest } = props;
 
   const { ModalComponents, showModal } = useModal();
   const { trigger } = useToast();
@@ -66,7 +76,21 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   const handleMonthMove = (direction: "PREV" | "NEXT") => {
     const targetDate = direction === "PREV" ? subMonths(currentDate, 1) : addMonths(currentDate, 1);
-    setCurrentDate(targetDate);
+
+    if (
+      (direction === "NEXT" &&
+        props.pickType === "ONLY_PAST" &&
+        isSameMonth(targetDate, new Date()) &&
+        isFuture(targetDate)) ||
+      (direction === "PREV" &&
+        props.pickType === "ONLY_FUTURE" &&
+        isSameMonth(targetDate, new Date()) &&
+        isPast(targetDate))
+    ) {
+      setCurrentDate(new Date());
+    } else {
+      setCurrentDate(targetDate);
+    }
     setYearValue(targetDate.getFullYear());
     setMonthValue(targetDate.getMonth() + 1);
   };
@@ -75,7 +99,6 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
     <>
       <BasicInput
         ref={inputRef}
-        iconType="calendar"
         type="text"
         title={title}
         error={error}
@@ -84,6 +107,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
         {...rest}
       />
       <ModalComponents
+        draggable="all"
         buttons={[
           {
             mode: "primary",
@@ -109,19 +133,16 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       >
         <Container>
           <NowDate>
-            <MonthMoverButton type="button" onClick={() => handleMonthMove("PREV")}>
-              <LeftArrowIcon />
-            </MonthMoverButton>
-            <div className="date-input-wrapper">
+            <CurrentDateInputs>
               <DateKeypadInput
                 type="number"
                 aria-label="연도 입력"
                 pattern="[0-9]*"
                 inputMode="numeric"
-                style={{ width: "64px" }}
                 value={yearValue}
+                maxLength={4}
                 onFocus={(e) => e.target.select()}
-                onChange={(e) => setYearValue(+e.target.value)}
+                onChange={(e) => setYearValue(+e.target.value.slice(0, 4))}
                 onBlur={(e) => {
                   const newYear = Number(e.target.value);
                   if (e.target.value !== "" && newYear > 1900 && newYear < 2999) {
@@ -140,13 +161,13 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                   }
                 }}
               />
-              .
+              년{" "}
               <DateKeypadInput
                 type="number"
                 aria-label="월 입력"
                 pattern="[0-9]*"
                 inputMode="numeric"
-                style={{ width: "32px" }}
+                style={{ paddingRight: "1px", width: "20px", textAlign: "right" }}
                 value={monthValue}
                 onFocus={(e) => e.target.select()}
                 onChange={(e) => setMonthValue(+e.target.value)}
@@ -157,7 +178,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     if (props.pickType === "ONLY_PAST" && newDate > new Date()) {
                       setTargetDate();
                       trigger("미래로 날짜를 설정할 수 없어요.", { type: "error" });
-                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date()) {
+                    } else if (props.pickType === "ONLY_FUTURE" && newDate < new Date() && !isToday(newDate)) {
                       setTargetDate();
                       trigger("과거로 날짜를 설정할 수 없어요.", { type: "error" });
                     } else {
@@ -168,31 +189,27 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                   }
                 }}
               />
-            </div>
-            <MonthMoverButton
-              type="button"
-              disabled={props.pickType === "ONLY_PAST" && subMonths(currentDate, -1) > new Date()}
-              onClick={() => {
-                if (props.pickType === "ONLY_PAST" && subMonths(currentDate, -1) > new Date()) {
-                  return;
-                }
-                handleMonthMove("NEXT");
-              }}
-            >
-              <RightArrowIcon />
-            </MonthMoverButton>
-            {props.pickType != "ONLY_FUTURE" && (
-              <SetTodayBtn
+              월
+            </CurrentDateInputs>
+            <MonthSwitch>
+              <button
                 type="button"
-                className={isSameDay(new Date(), currentDate) ? "" : "current-date-show"}
-                onClick={() => setTargetDate(format(new Date(), "yyyy/MM/dd"))}
+                disabled={props.pickType === "ONLY_FUTURE" && isSameMonth(currentDate, new Date())}
+                onClick={() => handleMonthMove("PREV")}
               >
-                오늘로 이동
-              </SetTodayBtn>
-            )}
+                <LeftArrowIcon />
+              </button>
+              <button
+                type="button"
+                disabled={props.pickType === "ONLY_PAST" && isSameMonth(currentDate, new Date())}
+                onClick={() => handleMonthMove("NEXT")}
+              >
+                <RightArrowIcon />
+              </button>
+            </MonthSwitch>
           </NowDate>
 
-          <Days>
+          <Calendar>
             <Week>
               {dayList.map((value) => (
                 <DayName key={value}>{value}</DayName>
@@ -205,8 +222,8 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                     key={day.date.toString()}
                     type="button"
                     disabled={
-                      (props.pickType === "ONLY_PAST" && !isSameDay(day.date, new Date()) && day.date > new Date()) ||
-                      (props.pickType === "ONLY_FUTURE" && !isSameDay(day.date, new Date()) && day.date < new Date())
+                      (props.pickType === "ONLY_PAST" && isFuture(day.date)) ||
+                      (props.pickType === "ONLY_FUTURE" && isPast(day.date) && !isToday(day.date))
                     }
                     $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
                     $isHoliday={day.holiday.isHoliday}
@@ -243,7 +260,7 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                 ))}
               </Week>
             ))}
-          </Days>
+          </Calendar>
         </Container>
       </ModalComponents>
     </>
@@ -256,111 +273,78 @@ const Container = styled.div`
   color: var(--gray700);
 `;
 
-const SetTodayBtn = styled.button`
-  position: absolute;
-  display: flex;
-  padding: 8px 12px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 5px;
-  background-color: var(--background-light);
-  box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.1);
-  font-size: 1.6rem;
-  transform: translateY(-12px);
-  transition: transform 0.3s, opacity 0.2s;
-  opacity: 0;
-  z-index: -1;
-  &.current-date-show {
-    transform: translateY(-42px);
-    opacity: 1;
-    z-index: 1;
-  }
-  &:hover {
-    background-color: var(--gray100);
-  }
-`;
 const NowDate = styled.div`
-  position: relative;
-  user-select: none;
-  ${FONTS.HEAD1};
   display: flex;
-  margin: 4px 0 24px;
-  align-items: center;
-  justify-content: center;
-  gap: 24px;
+  margin-bottom: 8px;
+  justify-content: space-between;
+`;
+const CurrentDateInputs = styled.div`
+  padding: 0 4px 0 10px;
+  ${FONTS.body2("semibold")};
 
-  .date-input-wrapper {
-    display: flex;
-    align-items: center;
-  }
   ${DateKeypadInput} {
-    max-width: 60px;
-    margin: 0 2px;
-    ${FONTS.HEAD1};
-    font-size: 2.2rem;
+    padding: 0;
+    text-align: left;
+    max-width: 48px;
+    border-radius: 0;
+    ${FONTS.body2("semibold")};
   }
 `;
-const MonthMoverButton = styled.button`
+const MonthSwitch = styled.div`
   display: flex;
-  width: 24px;
-  height: 24px;
-  justify-content: center;
-  align-items: center;
-  border-radius: 2px;
-  svg {
-    width: 18px;
-    height: 18px;
-    fill: var(--gray800);
-  }
-  &:not(:disabled) {
-    ${TEXT_ACTIVE("var(--gray100)", { activeRange: 5 })}
-  }
-  &:disabled {
-    cursor: not-allowed;
+  gap: 12px;
+  button {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+
     svg {
-      fill: var(--gray300);
+      width: 100%;
+      height: 100%;
+    }
+    &:not(:disabled) {
+      ${TEXT_ACTIVE("var(--gray100)", { activeRange: 2 })}
+    }
+    &:disabled {
+      cursor: not-allowed;
+      svg {
+        fill: var(--gray300);
+      }
     }
   }
 `;
-const Week = styled.div`
+
+const Calendar = styled.div`
   display: flex;
+  margin-bottom: 20px; // Bottom Sheet default 20px + Calendar 20px = 40px
+  flex-direction: column;
+`;
+const Week = styled.div`
+  --cal-gap: 4px;
+  display: flex;
+  justify-content: space-between;
+  height: calc((min(100vw, var(--mobile-max-width)) - 32px - (var(--cal-gap) * 7)) / 7);
+  gap: var(--cal-gap);
+  ${FONTS.body2("medium")};
 `;
 const DayName = styled.div`
-  user-select: none;
   flex: 1;
-  text-align: center;
-  font-size: 1.4rem;
+  user-select: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: var(--gray400);
-`;
-const Days = styled.div`
-  display: flex;
-  min-height: 384px;
-  margin: 0 2px;
-  flex-direction: column;
-  gap: 4px;
-  ${FONTS.MD1W500};
-  font-size: 1.8rem;
-  transform: translateX(0);
-  transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
-
-  &.L {
-    transform: translateX(5%);
-  }
-  &.R {
-    transform: translateX(-5%);
-  }
+  ${FONTS.body4("medium")};
 `;
 const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   position: relative;
   flex: 1;
-  margin: 0 2px;
-  padding: 16px 0;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray600)")};
+  color: ${({ $isCurrentMonth }) => ($isCurrentMonth ? "var(--gray700)" : "var(--gray300)")};
+  /* color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray600)")}; */
   opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
-  font-size: 1.8rem;
-  ${BUTTON_ACTIVE()};
+  border-radius: 12px;
 
   &[aria-invalid] {
     visibility: hidden;
@@ -387,8 +371,8 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   &.current-date {
     background-color: var(--main);
     transform: scale(1.03);
-    font-weight: 600;
     color: #fff;
+    font-weight: 600; // semibold
   }
 `;
 

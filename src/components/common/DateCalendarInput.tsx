@@ -68,26 +68,6 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
     }
   }, [value, setCurrentDate]);
 
-  const setTargetDate = (target?: string) => {
-    if (target) {
-      const [year, month, day] = target.split("/");
-      setCurrentDate(new Date(`${year}/${month}/${day}`));
-      setYearValue(+year);
-      setMonthValue(+month);
-      const newValue = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      if (inputRef.current) {
-        inputRef.current.value = newValue;
-        if (rest.onChange) {
-          rest.onChange({ target: { value: newValue } } as React.ChangeEvent<HTMLInputElement>);
-        }
-      }
-    } else {
-      setCurrentDate(new Date());
-      setYearValue(new Date().getFullYear());
-      setMonthValue(new Date().getMonth() + 1);
-    }
-  };
-
   const handleMonthMove = (direction: "PREV" | "NEXT") => {
     const targetDate = direction === "PREV" ? subMonths(currentDate, 1) : addMonths(currentDate, 1);
 
@@ -116,7 +96,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
         isAbove: isAbove,
       });
     }
-    setShowCalendar((prev) => !prev);
+    setShowCalendar(true);
   };
 
   const onClickUpdateDateValue = () => {

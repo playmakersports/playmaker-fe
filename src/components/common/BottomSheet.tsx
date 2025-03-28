@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import React, { ReactNode, useEffect, useState } from "react";
 import Button, { ButtonFillType, ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
@@ -85,10 +85,7 @@ function BottomSheet(props: BottomSheetProps) {
         onContextMenu={(e) => e.preventDefault()}
         style={{
           userSelect: isDragging && translateY ? "none" : "auto",
-          // scale: isDragging && translateY > 0 ? 0.95 : 1,
-          // borderRadius: isDragging && translateY ? "24px" : "24px 24px 0 0",
           transition: !isDragging ? `all ${ANIMATION_RUNNING_TIME}ms` : "none",
-          // transition: !isDragging ? `all ${ANIMATION_RUNNING_TIME}ms` : "scale 0.25s",
           transform:
             draggable && translateY > 0
               ? `translate3d(-50%, calc(${showModal ? 0 : "100%"}% + ${Math.ceil(translateY)}px), 0)`
@@ -104,7 +101,7 @@ function BottomSheet(props: BottomSheetProps) {
         {(expanded || !!draggable) && <Bar {...(draggable === "bar" ? draggableEvent : {})} />}
         <Contents>
           {header && <Header id="BottomModalHeader">{header}</Header>}
-          {typeof children === "function" ? children(closeBottomSheet) : children}
+          <div>{typeof children === "function" ? children(closeBottomSheet) : children}</div>
         </Contents>
         {buttons && (
           <ButtonWrapper>
@@ -132,6 +129,12 @@ function BottomSheet(props: BottomSheetProps) {
   );
 }
 
+const fadeIn = keyframes`
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 const Backdrop = styled.div<{ $isShow: boolean }>`
   position: fixed;
   top: 0;
@@ -163,11 +166,22 @@ const Bar = styled.div`
 const Header = styled.header`
   color: var(--gray700);
   ${FONTS.body3("semibold")};
+  opacity: 0.4;
+  transform: translateY(16px);
+  animation: ${fadeIn} 0.2s ease-in-out forwards;
+  animation-delay: 0.14s;
 `;
 const Contents = styled.div`
   margin: 0 0 20px;
   color: var(--gray400);
   ${FONTS.caption1("regular")};
+
+  & > div {
+    opacity: 0.5;
+    transform: translateY(max(5%, 16px));
+    animation: ${fadeIn} 0.2s ease-in-out forwards;
+    animation-delay: 0.15s;
+  }
 `;
 
 const Wrapper = styled.section<{

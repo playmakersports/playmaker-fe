@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 
-import TimeInput from "../common/TimeInput";
+import TimeInput from "../common/input/TimeInput";
 import Button from "../common/Button";
 import { SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { BasicInput } from "../common/input/BaseInput";

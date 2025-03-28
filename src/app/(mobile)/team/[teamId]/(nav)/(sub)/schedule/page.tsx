@@ -127,42 +127,39 @@ function Schedule() {
           </NowDate>
           <MonthMover></MonthMover>
         </Header>
-        <Days
-          className={swipeDirection}
-          onTouchStart={handleTouchStart}
-          onTouchMove={handleTouchMove}
-          onTouchEnd={handleTouchEnd}
-        >
+        <Days onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           <DirectionL className={swipeDirection}>이전달</DirectionL>
           <DirectionR className={swipeDirection}>다음달</DirectionR>
-          <Week>
-            {dayList.map((value) => (
-              <DayName key={value}>{value}</DayName>
-            ))}
-          </Week>
-          <Weeks ref={calendarRef}>
-            {weekCalendarList.map((week, weekNum) => {
-              const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
-              return (
-                <Week key={weekNum} className={isActiveWeek ? "active-week" : ""}>
-                  {week.map((day) => (
-                    <Day
-                      key={day.date.toString()}
-                      data-active={true}
-                      $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
-                      $isHoliday={day.holiday.isHoliday}
-                      className={isSameDay(day.date, currentDate) ? "current-date" : ""}
-                      onClick={() => {
-                        setCurrentDate(day.date);
-                      }}
-                    >
-                      {day.displayValue}
-                    </Day>
-                  ))}
-                </Week>
-              );
-            })}
-          </Weeks>
+          <WeekGroup className={swipeDirection}>
+            <Week>
+              {dayList.map((value) => (
+                <DayName key={value}>{value}</DayName>
+              ))}
+            </Week>
+            <Weeks ref={calendarRef}>
+              {weekCalendarList.map((week, weekNum) => {
+                const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
+                return (
+                  <Week key={weekNum} className={isActiveWeek ? "active-week" : ""}>
+                    {week.map((day) => (
+                      <Day
+                        key={day.date.toString()}
+                        data-active={true}
+                        $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
+                        $isHoliday={day.holiday.isHoliday}
+                        className={isSameDay(day.date, currentDate) ? "current-date" : ""}
+                        onClick={() => {
+                          setCurrentDate(day.date);
+                        }}
+                      >
+                        {day.displayValue}
+                      </Day>
+                    ))}
+                  </Week>
+                );
+              })}
+            </Weeks>
+          </WeekGroup>
         </Days>
       </CalendarContainer>
       <ScheduleContainer>
@@ -193,8 +190,8 @@ function Schedule() {
           articleId: "1",
           emoji: "🎉",
           title: "일정 제목",
-          startDate: "2024-12-01",
-          endDate: "2024-12-02",
+          startDate: "2025-03-28T20:30",
+          endDate: "2025-03-31T20:50",
           place: "성균관대학교 경기장",
           description: "올해의 마지막 경기입니다. 많은 관심 부탁드립니다.",
           writer: "홍길동",
@@ -205,7 +202,7 @@ function Schedule() {
 }
 
 const CalendarContainer = styled.article`
-  margin: 0 -16px 14px;
+  margin: 0 0 14px;
   padding: 0 0 20px;
 
   &:has(.stuck) {
@@ -214,7 +211,7 @@ const CalendarContainer = styled.article`
 `;
 const ScheduleContainer = styled.div`
   flex: 1;
-  margin: 0 -16px -24px;
+  margin: 0 0 -24px;
   height: max-content;
   padding: 20px 16px calc(var(--env-sab) + 32px);
   background-color: var(--background);
@@ -223,6 +220,7 @@ const ScheduleContainer = styled.div`
 `;
 const Container = styled(BaseContainer)`
   display: flex;
+  padding: 12px 0 20px;
   padding-bottom: 32px;
   height: calc(100vh - var(--safe-area-top) - 1px);
   flex-direction: column;
@@ -270,12 +268,9 @@ const Days = styled.div`
   position: relative;
   width: var(--mobile-max-width);
   overflow-x: hidden;
-
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  ${FONTS.MD1W500};
-  font-size: 1.6rem;
+  overflow-y: hidden;
+`;
+const WeekGroup = styled.div`
   transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
 
   &.L {
@@ -339,38 +334,37 @@ const MonthMover = styled.div`
   gap: 4px;
 `;
 const MonthArrow = styled.button`
-  padding: 8px 6px;
+  padding: 6px;
   ${BUTTON_ACTIVE("var(--gray50)")};
   svg {
-    width: 16px;
-    height: 16px;
+    width: 20px;
+    height: 20px;
     fill: var(--gray500);
   }
 `;
 
 const MonthDirection = styled.div`
   position: absolute;
-  top: calc(50% - 32px);
+  top: 100px;
   text-align: center;
   line-height: 7.2rem;
   width: 72px;
   height: 72px;
-  background-color: var(--main);
+  background-color: var(--primary400);
   border-radius: 100%;
   font-size: 1.6rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #fff;
   opacity: 0;
-  transform: scale(0.1);
   transition: transform 0.3s var(--animation-cubic), opacity 0.3s var(--animation-cubic);
-  z-index: 2;
+  z-index: 5;
 `;
 const DirectionL = styled(MonthDirection)`
   left: 0;
   transform: translate3d(-100%, 0, 0);
   &.L {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(25%, 0, 0) scale(1.2);
   }
 `;
 const DirectionR = styled(MonthDirection)`
@@ -378,19 +372,19 @@ const DirectionR = styled(MonthDirection)`
   transform: translate3d(100%, 0, 0);
   &.R {
     opacity: 1;
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(-25%, 0, 0) scale(1.2);
   }
 `;
 
 const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
+  ${FONTS.body4("regular")};
   position: relative;
   flex: 1;
   padding: 12px 0 24px;
-  font-size: 1.6rem;
   text-align: center;
   border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red500)" : "var(--gray900)")};
-  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.35)};
+  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray700)")};
+  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
   ${BUTTON_ACTIVE("var(--primary100)")};
 
   &[aria-invalid] {
@@ -405,10 +399,11 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
     margin: 8px auto 0;
     width: 4px;
     height: 4px;
-    background-color: var(--sub0);
+    background-color: var(--purple200);
     border-radius: 100%;
   }
   &.current-date {
+    ${FONTS.body4("semibold")};
     background-color: var(--primary500);
     color: var(--white);
     transform: scale(1.05);
@@ -429,21 +424,20 @@ const ScheduleList = styled.ul`
   }
 
   p.schedule-emoji {
-    font-size: 1.6rem;
+    ${FONTS.body3("semibold")};
   }
   p.schedule-title {
     margin-bottom: 6px;
-    ${FONTS.MD1}
+    ${FONTS.body3("semibold")};
   }
   p.schedule-description {
-    ${FONTS.MD2};
-    font-weight: 400;
+    ${FONTS.body4("regular")};
     color: var(--gray800);
   }
   div.schedule-info {
     margin-top: 12px;
-    ${FONTS.MD2};
-    font-weight: 400;
+    ${FONTS.body4("regular")};
+
     p {
       display: flex;
       padding: 2px 0;

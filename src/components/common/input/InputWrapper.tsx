@@ -48,6 +48,7 @@ const Wrapper = styled.div`
       color: var(--gray700);
     }
     button.question-icon {
+      position: relative;
       cursor: help;
       width: 20px;
       height: 20px;

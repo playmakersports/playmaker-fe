@@ -5,24 +5,22 @@ import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
 import { InputStyledWrapper } from "./Wrapper";
-import QuestionIcon from "@/assets/icon/circle/QuestionOutlined.svg";
+import InputWrapper from "./input/InputWrapper";
+import { InputProps } from "./input/BaseInput";
 
 type Props = Partial<React.TextareaHTMLAttributes<HTMLTextAreaElement>> & {
-  title?: string;
   displayLength?: boolean;
-  information?: { text: string; onClick: () => void };
-};
+} & Omit<InputProps, "suffix" | "onButtonWrapClick" | "type" | "iconType" | "delButton">;
 
 export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>((props, ref) => {
-  const { title, displayLength, information, onChange, ...rest } = props;
+  const { title, required, error, displayLength, description, information, onChange, ...rest } = props;
   const [length, setLength] = useState(0);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   useImperativeHandle(ref, () => textareaRef.current as HTMLTextAreaElement);
 
   return (
-    <Container style={{ width: "100%" }}>
-      {title && <p className="input-title">{title}</p>}
-      <TextAreaWrapper>
+    <InputWrapper title={title} required={required} information={information}>
+      <TextAreaWrapper $isError={error}>
         {displayLength && (
           <Length>
             {length}
@@ -39,67 +37,34 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>((props, ref
           {...rest}
         />
       </TextAreaWrapper>
-      {information && (
-        <span className="input-information" onClick={information.onClick}>
-          <QuestionIcon />
-          {information.text}
-        </span>
-      )}
-    </Container>
+      {description && <Description data-error={error}>{description}</Description>}
+    </InputWrapper>
   );
 });
 TextArea.displayName = "TextArea";
 
-const Container = styled.div`
-  .input-title {
-    font-size: 1.4rem;
-    margin-bottom: 4px;
-    padding: 0 10px;
-    font-weight: 500;
-    color: var(--gray700);
-    line-height: 2.4rem;
-  }
-
-  .input-information {
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    margin-top: 10px;
-    padding: 0 8px;
-    font-size: 1.2rem;
-    color: var(--gray700);
-    gap: 4px;
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
-`;
-
 const TextAreaWrapper = styled(InputStyledWrapper)`
   height: auto;
   &:has(textarea:disabled) {
-    background-color: var(--gray200);
+    background-color: var(--gray50);
+    border-color: var(--gray200);
   }
 `;
 const StyledTextArea = styled.textarea`
   width: 100%;
   padding: 10px 0;
-  resize: none;
-  ${FONTS.MD1};
-  font-size: 1.6rem;
-  font-weight: 400;
-  transition: all 0.2s;
-  color: var(--black);
+
+  ${FONTS.body4("regular")};
+  color: var(--gray700);
 
   ${TextAreaWrapper}:has(&:focus) {
-    border-color: var(--main);
+    border-color: var(--gray300);
   }
   &::placeholder {
-    color: var(--gray500);
+    color: var(--gray400);
   }
   &:disabled {
-    color: var(--gray600);
+    color: var(--gray300);
   }
 `;
 
@@ -114,4 +79,14 @@ const Length = styled.div`
   backdrop-filter: blur(8px);
   background-color: rgba(256, 256, 256, 0.7);
   border-radius: 20px;
+`;
+
+const Description = styled.p`
+  margin-top: 8px;
+  ${FONTS.caption1("regular")};
+  color: var(--gray400);
+
+  &[data-error="true"] {
+    color: var(--red500);
+  }
 `;

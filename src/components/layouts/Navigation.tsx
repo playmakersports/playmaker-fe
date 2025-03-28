@@ -108,6 +108,12 @@ const Button = styled.a`
   display: flex;
   flex-direction: column;
   align-items: center;
+  &:active {
+    & svg {
+      transform: scale(0.9);
+      transition: transform 0.1s ease;
+    }
+  }
 
   svg {
     flex-shrink: 0;

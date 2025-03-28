@@ -78,9 +78,7 @@ export const DropDownBottomSheet = (props: Props) => {
                     closeModal();
                   }}
                 />
-                <i>
-                  <CheckIcon />
-                </i>
+                <CheckIcon />
               </label>
             ))}
           </ModalInner>
@@ -171,40 +169,33 @@ const SelectCard = styled(InputStyledWrapper)`
 `;
 
 const ModalInner = styled.div`
-  ${FONTS.MD1W500};
   display: flex;
+  margin: 0 -6px;
   flex-direction: column;
-  font-size: 1.6rem;
+  gap: 4px;
 
   label {
     user-select: none;
     display: flex;
     justify-content: space-between;
-    padding: 16px 12px;
+    padding: 10px;
     color: var(--gray700);
-
-    ${BUTTON_ACTIVE("var(--gray100)")}
+    ${FONTS.body3("regular")};
+    ${BUTTON_ACTIVE("var(--gray100)")};
+    svg {
+      fill: transparent;
+    }
   }
   i,
   input[type="radio"] {
     display: none;
   }
   label:has(input:checked) {
-    color: var(--gray900);
-
-    i {
-      display: flex;
-      padding: 2px;
-      align-items: center;
-      justify-content: center;
+    background-color: var(--gray50);
+    svg {
       width: 24px;
       height: 24px;
-      background-color: var(--main);
-      border-radius: 50%;
-      svg {
-        width: 14px;
-        height: 14px;
-      }
+      fill: var(--primary500);
     }
   }
 `;

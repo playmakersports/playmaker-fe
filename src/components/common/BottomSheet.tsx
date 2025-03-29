@@ -166,10 +166,10 @@ const Bar = styled.div`
 const Header = styled.header`
   color: var(--gray700);
   ${FONTS.body3("semibold")};
-  opacity: 0.4;
-  transform: translateY(16px);
+  opacity: 0.5;
+  transform: translateY(20px);
   animation: ${fadeIn} 0.2s ease-in-out forwards;
-  animation-delay: 0.14s;
+  animation-delay: 0.165s;
 `;
 const Contents = styled.div`
   margin: 0 0 20px;

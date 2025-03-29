@@ -14,9 +14,9 @@ import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import TeamListCard from "@/components/Team/TeamListCard";
+import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
-import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function TeamList() {
   useHeader({
@@ -94,7 +94,7 @@ function TeamList() {
 }
 
 const Container = styled(BaseContainer)`
-  padding-bottom: calc(88px + var(--env-sab) + 12px);
+  padding: 0 16px calc(88px + var(--env-sab) + 12px);
 `;
 
 const TabWrapper = styled.div`

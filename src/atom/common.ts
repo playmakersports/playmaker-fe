@@ -8,8 +8,8 @@ export type HeaderSubIconType = {
   onClick: (() => void) | string;
   description: string;
 };
-export type HeaderTransparentType = { inactive: number } | "always" | "never";
+export type HeaderTransparentType = { inactive: number } | boolean;
 export const atomPageTitle = atom<string>("");
 export const atomHeaderIcons = atom<Array<HeaderSubIconType>>([]);
 export const atomHeaderActions = atom<Array<ActionOptionsType>>([]);
-export const atomHeaderTransparent = atom<HeaderTransparentType>("never");
+export const atomHeaderTransparent = atom<HeaderTransparentType>(false);

@@ -15,7 +15,7 @@ type HookProps = {
   title?: string;
   subIcons?: Array<HeaderSubIconType>;
   subActions?: Array<ActionOptionsType>;
-  transparent?: { inactive: number } | "always" | "never";
+  transparent?: { inactive: number } | boolean;
 };
 
 export const useHeader = (props: HookProps = {}) => {
@@ -35,7 +35,7 @@ export const useHeader = (props: HookProps = {}) => {
       setTitle("");
       setIcons([]);
       setActions([]);
-      setBgTransparent("never");
+      setBgTransparent(false);
     };
   }, [title]);
 };

@@ -4,7 +4,7 @@ import MyTeam from "@/components/Main/MyTeam";
 import MyWeekly from "@/components/Main/MyWeekly";
 import SportsSection from "@/components/Main/SportsSection";
 import MyTeamSchedule from "@/components/Main/MyTeamSchedule";
-import { HomeInnerWrapper, HomeContainer } from "../_components/container";
+import { HomeInnerWrapper, HomeContainer } from "./_components/container";
 
 export default function Home() {
   return (

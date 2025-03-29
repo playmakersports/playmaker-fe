@@ -2,7 +2,7 @@
 import React from "react";
 import { useHeader } from "@/hook/useHeader";
 
-import UserSetting from "@/app/(mobile)/(navigation)/my/settings/_components/UserSetting";
+import UserSetting from "@/app/(mobile)/my/settings/_components/UserSetting";
 import { BaseContainer } from "@/components/common/Container";
 
 function MySettings() {

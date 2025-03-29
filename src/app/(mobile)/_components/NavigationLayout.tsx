@@ -1,18 +1,18 @@
 "use client";
-
 import React from "react";
 import Navigation from "@/components/layouts/Navigation";
 import { usePathname } from "next/navigation";
 
 function NavigationLayout({ children }: { children: React.ReactNode }) {
   const path = usePathname();
-  const allowNav = ["/", "/my", "/my/feed", "/my/team", "/feed", "/matches"];
+  const SHOW_NAV_PAGE = ["/", "/team", "/my", "/matches"];
 
-  if (!allowNav.includes(path)) return <>{children}</>;
   return (
     <>
-      {children}
-      <Navigation />
+      <main id="main_Container" style={{ paddingTop: " calc(env(safe-area-inset-top) + var(--header-height))" }}>
+        {children}
+      </main>
+      <Navigation hide={!SHOW_NAV_PAGE.includes(path)} />
     </>
   );
 }

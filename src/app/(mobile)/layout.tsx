@@ -7,6 +7,7 @@ import Header from "@/components/layouts/Header/Header";
 import AppCode from "@/components/layouts/AppCode";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Loading from "@/components/common/Loading";
+import NavigationLayout from "./_components/NavigationLayout";
 
 function MobileLayout({ children }: { children: React.ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
@@ -52,7 +53,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
       <div id="root" style={{ position: "relative", zIndex: 0, width: "100%", height: "100%" }}>
         <Container id="mobile_Wrapper">
           <Header scrollY={scrollY} />
-          <main id="main_Container">{children}</main>
+          <NavigationLayout>{children}</NavigationLayout>
         </Container>
         <AppCode />
       </div>
@@ -71,9 +72,6 @@ const Container = styled.div`
   @media (max-width: 540px) {
     box-shadow: none;
     max-width: 100%;
-  }
-  #main_Container {
-    padding-top: calc(env(safe-area-inset-top) + var(--header-height));
   }
 `;
 

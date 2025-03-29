@@ -20,49 +20,63 @@ import NotificationIconOutlined from "@/assets/icon/common/outlined/Notification
 import MailIconOutlined from "@/assets/icon/common/outlined/Mail.svg";
 import PersonIconOutlined from "@/assets/icon/common/outlined/Person.svg";
 
-function Navigation() {
+function Navigation({ hide = false }: { hide?: boolean }) {
   const pathname = usePathname();
 
   return (
-    <Container>
-      <Inner
-        style={{
-          boxShadow: "0 0 15px 0 rgba(51, 65, 85, 0.05)",
-          backgroundColor: "var(--background-light)",
-        }}
-      >
-        <Link href="/" legacyBehavior prefetch>
-          <Button data-label="홈" data-active={pathname === "/"}>
-            <HomeIconOutlined className="outlined-icon" />
-            <HomeIconFilled className="filled-icon" />
-          </Button>
-        </Link>
-        <Link href="/matches" legacyBehavior prefetch>
-          <Button data-label="팀" data-active={pathname === "/matches"}>
-            <PeopleIconOutlined className="outlined-icon" />
-            <PeopleIconFilled className="filled-icon" />
-          </Button>
-        </Link>
-        <Link href="/matches" legacyBehavior prefetch>
-          <Button data-label="알림" data-active={pathname === "/matches"}>
-            <NotificationIconOutlined className="outlined-icon" />
-            <NotificationIconFilled className="filled-icon" />
-          </Button>
-        </Link>
-        <Link href="/feed" legacyBehavior prefetch>
-          <Button data-label="피드" data-active={pathname === "/feed"}>
-            <MailIconOutlined className="outlined-icon" />
-            <MailIconFilled className="filled-icon" />
-          </Button>
-        </Link>
-        <Link href="/my" legacyBehavior prefetch>
-          <Button data-label="마이" data-active={["/my", "/my/team", "/my/feed"].includes(pathname)}>
-            <PersonIconOutlined className="outlined-icon" />
-            <PersonIconFilled className="filled-icon" />
-          </Button>
-        </Link>
-      </Inner>
-    </Container>
+    <nav
+      style={{
+        position: "fixed",
+        bottom: "-1px",
+        left: 0,
+        right: 0,
+        width: "100%",
+        minHeight: " var(--navigation-height)",
+        zIndex: 500,
+        transition: "transform 0.3s ease",
+        transform: hide ? "translateY(100%)" : "translateY(0)",
+      }}
+    >
+      <Container>
+        <Inner
+          style={{
+            boxShadow: "0 0 15px 0 rgba(51, 65, 85, 0.05)",
+            backgroundColor: "var(--background-light)",
+          }}
+        >
+          <Link href="/" legacyBehavior prefetch>
+            <Button data-label="홈" data-active={pathname === "/"}>
+              <HomeIconOutlined className="outlined-icon" />
+              <HomeIconFilled className="filled-icon" />
+            </Button>
+          </Link>
+          <Link href="/team" legacyBehavior prefetch>
+            <Button data-label="팀" data-active={pathname === "/team"}>
+              <PeopleIconOutlined className="outlined-icon" />
+              <PeopleIconFilled className="filled-icon" />
+            </Button>
+          </Link>
+          <Link href="/matches" legacyBehavior prefetch>
+            <Button data-label="알림" data-active={pathname === "/matches"}>
+              <NotificationIconOutlined className="outlined-icon" />
+              <NotificationIconFilled className="filled-icon" />
+            </Button>
+          </Link>
+          <Link href="/feed" legacyBehavior prefetch>
+            <Button data-label="피드" data-active={pathname === "/feed"}>
+              <MailIconOutlined className="outlined-icon" />
+              <MailIconFilled className="filled-icon" />
+            </Button>
+          </Link>
+          <Link href="/my" legacyBehavior prefetch>
+            <Button data-label="마이" data-active={["/my", "/my/team", "/my/feed"].includes(pathname)}>
+              <PersonIconOutlined className="outlined-icon" />
+              <PersonIconFilled className="filled-icon" />
+            </Button>
+          </Link>
+        </Inner>
+      </Container>
+    </nav>
   );
 }
 
@@ -81,14 +95,9 @@ const bounce = keyframes`
   }
 `;
 
-const Container = styled.nav`
-  position: fixed;
-  width: var(--mobile-max-width);
-  min-height: var(--navigation-height);
-  bottom: -1px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
+const Container = styled.main`
+  margin: 0 auto;
+  max-width: var(--mobile-max-width);
 
   @media (max-width: 540px) {
     width: 100%;
@@ -98,7 +107,7 @@ const Container = styled.nav`
 const Inner = styled.div`
   width: 100%;
   height: 100%;
-  padding: 12px 16px calc(var(--safe-bottom) + 12px);
+  padding: 10px 16px calc(var(--safe-bottom) + 10px);
   display: flex;
   justify-content: space-between;
 `;

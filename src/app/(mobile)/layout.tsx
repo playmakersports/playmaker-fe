@@ -15,7 +15,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const params = useParams();
 
-  const [scrollActive, setScrollActive] = useState(0);
+  const [scrollY, setScrollY] = useState(0);
 
   useLayoutEffect(() => {
     const cacheScrollPosition: Array<number> = [];
@@ -37,7 +37,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollActive(window.scrollY || 0);
+      setScrollY(window.scrollY || 0);
     };
     window.addEventListener("scroll", handleScroll);
 
@@ -51,7 +51,7 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
       {routeLoading && <Loading page />}
       <div id="root" style={{ position: "relative", zIndex: 0, width: "100%", height: "100%" }}>
         <Container id="mobile_Wrapper">
-          <Header scrollActive={scrollActive} />
+          <Header scrollY={scrollY} />
           <main id="main_Container">{children}</main>
         </Container>
         <AppCode />

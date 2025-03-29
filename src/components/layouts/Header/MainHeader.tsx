@@ -8,10 +8,10 @@ import NoticeBellIcon from "@/assets/icon/common/filled/Notification.svg";
 import NoticeBellActiveIcon from "@/assets/icon/common/filled/NotificationUnread.svg";
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
-type Props = { scrollPositionY: number };
-function MainHeader({ scrollPositionY }: Props) {
+type Props = { scrollY: number };
+function MainHeader({ scrollY }: Props) {
   const router = useRouter();
-  const isScrolled = scrollPositionY > 160;
+  const isScrolled = scrollY > 160;
 
   return (
     <Wrapper $isScrolled={isScrolled}>

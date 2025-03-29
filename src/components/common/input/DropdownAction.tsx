@@ -5,13 +5,13 @@ import { FONTS } from "@/styles/common";
 import { InputStyledWrapper } from "../Wrapper";
 import { DropdownAsset } from "./container";
 
-import DotMenuIcon from "@/assets/icon/common/filled/DotMenu.svg";
+import DotMenuIcon from "@/assets/icon/common/MenuDots.svg";
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
-type OptionsType = { name: string; action: () => void; divided?: boolean };
+export type ActionOptionsType = { name: string; action: () => void; divided?: boolean };
 type Props = {
   title?: string;
-  options: Array<OptionsType>;
+  options: Array<ActionOptionsType>;
   children?: React.ReactNode;
   icon?: boolean;
 };
@@ -94,9 +94,9 @@ function DropdownAction(props: Props) {
       <DropdownAsset.Box $isShow={showOptions} style={{ [position]: 0 }}>
         <DropdownAsset.List style={{ overflow: "inherit" }}>
           {options.map((option, index) => (
-            <li key={index} onClick={option.action} data-divided={option.divided}>
+            <button type="button" key={index} onClick={option.action} data-divided={option.divided}>
               <span className="option-name">{option.name}</span>
-            </li>
+            </button>
           ))}
         </DropdownAsset.List>
       </DropdownAsset.Box>

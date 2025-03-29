@@ -10,7 +10,8 @@ export const DropdownAsset = {
     gap: 4px;
     width: 100%;
     min-width: 160px;
-    top: 40px;
+    /* top: 40px; */
+    top: 100%;
     margin: 8px 0;
     border-radius: 10px;
     background-color: var(--white);

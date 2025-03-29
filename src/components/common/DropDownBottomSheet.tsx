@@ -175,7 +175,7 @@ const ModalInner = styled.div`
   gap: 4px;
 
   label {
-    user-select: none;
+    user-select: none !important;
     display: flex;
     justify-content: space-between;
     padding: 10px;

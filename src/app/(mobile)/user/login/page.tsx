@@ -35,6 +35,9 @@ function Login() {
   const handleMyPage = () => {
     router.push("/my");
   };
+  const onClickTeamPage = () => {
+    router.push("/team/33/board");
+  };
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");
   };
@@ -51,13 +54,16 @@ function Login() {
         <GoogleBtn type="button" onClick={handleGoogleLogin}>
           <GoogleLogo /> Google로 시작하기
         </GoogleBtn>
-        <Button type="button" mode="gray" fillType="outline" onClick={handleIntroPage}>
-          Intro
+        <Button type="button" mode="gray" onClick={handleIntroPage}>
+          회원가입
         </Button>
-        <Button type="button" mode="gray" fillType="outline" onClick={handleMyPage}>
+        <Button type="button" mode="red" fillType="light" onClick={onClickTeamPage}>
+          팀 게시판
+        </Button>
+        <Button type="button" mode="gray" fillType="light" onClick={handleMyPage}>
           My Page
         </Button>
-        <Button type="button" mode="primary" onClick={handleTestLogin}>
+        <Button type="button" mode="success" fillType="light" onClick={handleTestLogin}>
           테스트 로그인
         </Button>
         <StaffLogin>

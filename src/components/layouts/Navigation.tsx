@@ -32,8 +32,9 @@ function Navigation({ hide = false }: { hide?: boolean }) {
         right: 0,
         width: "100%",
         minHeight: " var(--navigation-height)",
-        zIndex: 500,
-        transition: "transform 0.3s ease",
+        zIndex: 900,
+        transition: "transform 0.35s ease, opacity 0.3s ease",
+        opacity: hide ? "0" : "1",
         transform: hide ? "translateY(100%)" : "translateY(0)",
       }}
     >

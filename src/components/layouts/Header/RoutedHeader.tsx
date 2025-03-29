@@ -35,8 +35,16 @@ function RoutedHeader({ scrollY }: Props) {
   };
 
   return (
-    <header style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1000 }}>
-      <Container style={{ height: "var(--header-height)" }} data-never={!canTransparent} data-scrolled={isScrolled}>
+    <header
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100%",
+        zIndex: 900,
+      }}
+    >
+      <Container data-never={!canTransparent} data-scrolled={isScrolled}>
         {customArea ? (
           <div style={{ flex: 1 }}>{customArea}</div>
         ) : (
@@ -104,13 +112,17 @@ const Container = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;
+  height: 100%;
   max-width: var(--mobile-max-width);
+  min-height: var(--safe-area-top);
   border-bottom: 1px solid transparent;
   align-items: center;
   gap: 10px;
   top: 0;
   left: 0;
-  padding: 0 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: env(safe-area-inset-top);
 
   &[data-never="true"] {
     background-color: var(--background-light);

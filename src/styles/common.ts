@@ -24,6 +24,19 @@ export const FONTS = {
   body4: (weight: FontsWeight) => `font-size: 1.4rem; line-height: 2rem; font-weight: ${FONTS_WEIGHT[weight]}`,
   caption1: (weight: FontsWeight) => `font-size: 1.2rem; line-height: 1.8rem; font-weight: ${FONTS_WEIGHT[weight]}`,
 };
+export const getFontsJSON = (target: string) => {
+  return target
+    .split(";")
+    .map((value) => value.split(":"))
+    .reduce((acc, [key, value]) => {
+      const CAMEL_KEY: Record<string, string> = {
+        "font-size": "fontSize",
+        "line-height": "lineHeight",
+        "font-weight": "fontWeight",
+      };
+      return { ...acc, [CAMEL_KEY[key.trim()]]: value.trim() };
+    }, {});
+};
 
 export const SCROLL_HIDE = `
     scrollbar-width: none;

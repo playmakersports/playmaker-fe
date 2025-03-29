@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import useStickyMoment from "@/hook/useStickyMoment";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
@@ -14,7 +14,7 @@ import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PushRequest from "@/components/Methods/PushRequest";
 
 function Notification() {
-  usePageTitle({ title: "알림", scrolledShadow: false });
+  useHeader({ title: "알림" });
   const tabRef = useRef<HTMLDivElement>(null);
   const teamListRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);

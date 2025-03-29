@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { FieldValues, useForm } from "react-hook-form";
 import Image from "next/image";
 
@@ -18,7 +18,7 @@ import Button from "@/components/common/Button";
 import CheckIcon from "@/assets/icon/common/Check.svg";
 
 function UserSchool() {
-  usePageTitle({ title: "재학증명서 인증" });
+  useHeader({ title: "재학증명서 인증" });
   const { register, watch, setValue, handleSubmit } = useForm();
 
   const onSubmit = (data: FieldValues) => {

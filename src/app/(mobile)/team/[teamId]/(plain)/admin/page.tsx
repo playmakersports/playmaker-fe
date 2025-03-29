@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { differenceInCalendarDays } from "date-fns";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
@@ -17,7 +17,7 @@ import CheckIcon from "@/assets/icon/common/Check.svg";
 function AdminIndex() {
   const [countFounded, setCountFounded] = useState(0);
 
-  usePageTitle({
+  useHeader({
     title: "팀 관리",
   });
   const foundedDate = "2023-10-20";

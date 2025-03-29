@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { SelectTeamResponse } from "@/types/team";
 import { formattedDate } from "@/util/date";
@@ -17,13 +17,13 @@ function TeamMainTop(props: SelectTeamResponse) {
   const [heart, setHeart] = useState(false);
   const PLAYING = false;
 
-  usePageTitle({
+  useHeader({
     title: teamName,
     transparent: true,
     subIcons: [
       {
         svgIcon: <SettingsIcon />,
-        linkTo: `/team/${teamId}/admin`,
+        onClick: `/team/${teamId}/admin`,
         description: "팀 관리 페이지 이동",
       },
     ],

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import StagePageContainer from "@/components/layouts/StagePageContainer";
 import GradientBg from "@/components/common/GradientBg";
@@ -9,7 +9,7 @@ import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
 function TeamCreateFinish({ teamId }: { teamId: string }) {
-  usePageTitle({ transparent: true });
+  useHeader({ transparent: true });
   const router = useRouter();
 
   const moveTeamPage = () => {

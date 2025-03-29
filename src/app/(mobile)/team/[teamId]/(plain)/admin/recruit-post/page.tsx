@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { BaseContainer } from "@/components/common/Container";
 import { FONTS } from "@/styles/common";
@@ -15,8 +15,7 @@ import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function RecruitPost() {
   const [activePost, setActivePost] = useState(false);
-  usePageTitle({
-    subTitle: "JUMP",
+  useHeader({
     title: "모집 공고 올리기",
   });
 

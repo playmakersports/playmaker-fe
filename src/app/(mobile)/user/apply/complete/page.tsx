@@ -3,7 +3,7 @@
 import React from "react";
 import styled, { keyframes } from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
@@ -15,7 +15,7 @@ function JoinComplete() {
   const searchParams = useSearchParams();
   const queryName = searchParams.get("name") as string;
   const queryGender = searchParams.get("gender") as "male" | "female";
-  usePageTitle({ transparent: true });
+  useHeader({ transparent: true });
 
   return (
     <Container>

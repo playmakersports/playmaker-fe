@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import ArticleHead from "@/components/Article/Head";
@@ -14,7 +14,7 @@ import HeartStrokeIcon from "@/assets/icon/common/outlined/Heart.svg";
 import HeartFillIcon from "@/assets/icon/common/filled/Heart.svg";
 
 function ArticleId() {
-  usePageTitle({ title: "공지사항", scrolledShadow: false });
+  useHeader({ title: "공지사항" });
   const [like, setLike] = useState(false);
   const [showFixedTitle, setShowFixedTitle] = useState(false);
 

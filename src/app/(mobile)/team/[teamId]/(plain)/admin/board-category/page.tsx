@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 
 import { FONTS } from "@/styles/common";
@@ -17,7 +17,7 @@ function BoardCategory() {
   const [category, setCategory] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
-  usePageTitle({
+  useHeader({
     title: "카테고리 관리",
   });
 

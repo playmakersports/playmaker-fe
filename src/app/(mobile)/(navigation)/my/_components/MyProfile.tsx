@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useGet } from "@/apis/hook/query";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import { ApiSelectMember } from "@/apis/types/user";
@@ -15,16 +15,16 @@ import SettingsIcon from "@/assets/icon/common/filled/Person.svg";
 function MyProfile() {
   const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
 
-  usePageTitle({
+  useHeader({
     subIcons: [
       {
         svgIcon: <FlagIcon />,
-        linkTo: `/user/login`,
+        onClick: `/user/login`,
         description: "임시 로그인",
       },
       {
         svgIcon: <SettingsIcon />,
-        linkTo: `/my/settings`,
+        onClick: `/my/settings`,
         description: "내 설정",
       },
     ],

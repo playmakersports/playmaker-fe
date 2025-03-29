@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled, { keyframes } from "styled-components";
 import { useAtom } from "jotai";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import { atomTeamCreate } from "@/atom/team";
@@ -13,7 +13,7 @@ import GradientBg from "@/components/common/GradientBg";
 import GloveIcon from "@/assets/icon/common/Global.svg";
 
 function TeamCreateStart({ setStep }: { setStep: (prev: number) => void }) {
-  usePageTitle({ transparent: true });
+  useHeader({ transparent: true });
   const UNIVERSITY = "인하대학교";
   const [teamCreateValue, setTeamCreateValue] = useAtom(atomTeamCreate);
   const [teamType, setTeamType] = useState<"univ" | "basic" | null>(null);

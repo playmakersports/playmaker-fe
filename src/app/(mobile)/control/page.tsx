@@ -2,7 +2,7 @@
 import styled from "styled-components";
 import React, { ChangeEvent, useState } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useGet, usePost } from "@/apis/hook/query";
 import useModal from "@/hook/useModal";
 
@@ -19,7 +19,7 @@ type UnivData = {
 
 type SelectedUnivState = { code: number; alias: string | null };
 function CodeControl() {
-  usePageTitle({ title: "코드 관리" });
+  useHeader({ title: "코드 관리" });
   const { ModalComponents, showModal } = useModal();
   const [selectedUniv, setSelectedUniv] = useState<SelectedUnivState | undefined>();
 

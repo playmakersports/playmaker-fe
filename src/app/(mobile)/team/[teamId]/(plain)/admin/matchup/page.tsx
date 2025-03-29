@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { BaseContainer } from "@/components/common/Container";
 import DirectionIncomeSvg from "@/assets/icon/arrow/LeftArrow.svg";
@@ -14,8 +14,7 @@ import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
 function TeamMatchUp() {
   const [filter, setFilter] = useState("all");
-  usePageTitle({
-    subTitle: "JUMP",
+  useHeader({
     title: "교류전 제안 현황",
   });
 

@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useSearchParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 import { useGet } from "@/apis/hook/query";
 
@@ -19,10 +19,9 @@ import PlusIcon from "@/assets/icon/common/Plus.svg";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function TeamList() {
-  usePageTitle({
+  useHeader({
     title: "팀 목록",
-    subIcons: [{ svgIcon: <PlusIcon />, description: "팀 생성", linkTo: "/team/create" }],
-    scrolledShadow: false,
+    subIcons: [{ svgIcon: <PlusIcon />, description: "팀 생성", onClick: "/team/create" }],
   });
   const sportsTabRef = useRef<HTMLDivElement>(null);
   useStickyMoment(sportsTabRef);
@@ -34,7 +33,7 @@ function TeamList() {
   const [filterRecruit, setFilterRecruit] = useState(false);
 
   const { data } = useGet("/api/team/selectteam");
-  console.log(data);
+
   return (
     <Container>
       <TabWrapper ref={sportsTabRef}>
@@ -107,7 +106,6 @@ const TabWrapper = styled.div`
   transition: padding 0.2s;
 
   &.stuck {
-    border-bottom: 1px solid var(--gray600);
     background-color: var(--background-light);
   }
 `;

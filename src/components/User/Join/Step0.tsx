@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useAtom } from "jotai";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { atomServiceApply } from "@/atom/user";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
@@ -12,7 +12,7 @@ import { BasicWhiteCard } from "@/components/common/Card";
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
 
 function Step0({ setStep }: { setStep: (prev: number) => void }) {
-  usePageTitle({ transparent: true });
+  useHeader({ transparent: true });
   const [applyValues, setApplyValues] = useAtom(atomServiceApply);
   const [checked, setChecked] = useState(
     applyValues.memberType !== "" ? (applyValues.memberType === "일반" ? 2 : 1) : 0

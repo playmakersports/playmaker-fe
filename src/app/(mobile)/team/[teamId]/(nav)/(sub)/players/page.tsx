@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useModal from "@/hook/useModal";
 
 import { FONTS } from "@/styles/common";
@@ -30,9 +30,9 @@ function PlayerList() {
   const { showModal: showCategoryModal, ModalComponents: CategoryModal } = useModal();
   const [filter, setFilter] = useState("all");
   const [playerInfo, setPlayerInfo] = useState<PlayerInfo>();
-  usePageTitle({
+  useHeader({
     title: "팀원",
-    subIcons: [{ svgIcon: <DoubleStarIcon />, linkTo: "", description: "다중 카테고리" }],
+    subIcons: [{ svgIcon: <DoubleStarIcon />, onClick: "", description: "다중 카테고리" }],
   });
 
   const PLAYERS_FILTER = [

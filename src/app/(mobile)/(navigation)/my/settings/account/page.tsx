@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 function MyAccount() {
-  usePageTitle({ title: "계정 관리" });
+  useHeader({ title: "계정 관리" });
 
   return <div>MyAccount</div>;
 }

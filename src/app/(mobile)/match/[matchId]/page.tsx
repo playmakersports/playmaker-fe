@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useParams } from "next/navigation";
 
 import GradientBg from "@/components/common/GradientBg";
@@ -15,9 +15,9 @@ function MatchPage() {
   const params = useParams();
   const matchId = params["matchId"];
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
-  usePageTitle({
+  useHeader({
     title: "",
-    subIcons: [{ svgIcon: <MenuDotsIcon />, linkTo: `/match/${matchId}/score`, description: "점수 입력" }],
+    subIcons: [{ svgIcon: <MenuDotsIcon />, onClick: `/match/${matchId}/score`, description: "점수 입력" }],
   });
 
   return (

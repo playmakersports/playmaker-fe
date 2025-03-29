@@ -3,7 +3,7 @@ import React, { Suspense, useRef } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import MyProfile from "../_components/MyProfile";
@@ -13,9 +13,7 @@ import TabList from "@/components/common/TabList";
 function MyTabLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const tabRef = useRef<HTMLDivElement>(null);
-  usePageTitle({
-    scrolledShadow: false,
-  });
+
   useStickyMoment(tabRef);
   const pathname = usePathname();
 

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useParams } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 
@@ -27,11 +27,11 @@ function UserPage() {
 
   const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
 
-  usePageTitle({
+  useHeader({
     subIcons: [
       {
         svgIcon: <PencilIcon />,
-        linkTo: `/room/${userId}/edit`,
+        onClick: `/room/${userId}/edit`,
         description: "내 정보 수정",
       },
     ],

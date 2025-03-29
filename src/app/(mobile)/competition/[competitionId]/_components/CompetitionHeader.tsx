@@ -2,7 +2,7 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { useRouter, useSearchParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { formattedDate } from "@/util/date";
@@ -27,7 +27,7 @@ function CompetitionHeader(props: Props) {
   const searchParams = useSearchParams();
   const isReadyPage = searchParams.get("initial");
   const competitionHeaderRef = useRef<HTMLDivElement>(null);
-  usePageTitle({ title: props.competitionName, transparent: true });
+  useHeader({ title: props.competitionName, transparent: true });
   useStickyMoment(competitionHeaderRef);
 
   const moveToDetail = () => {

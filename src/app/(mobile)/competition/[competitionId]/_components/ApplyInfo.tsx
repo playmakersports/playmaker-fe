@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
@@ -17,7 +17,7 @@ type Props = {
   endDate: string;
 };
 function ApplyInfo(props: Props) {
-  usePageTitle({ title: "대회 신청" });
+  useHeader({ title: "대회 신청" });
   const { title, place, startDate, endDate } = props;
 
   return (

@@ -1,10 +1,10 @@
 "use client";
 
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import React from "react";
 
 function Statistics() {
-  usePageTitle({ title: "팀 통계" });
+  useHeader({ title: "팀 통계" });
   return <div>Statistics</div>;
 }
 

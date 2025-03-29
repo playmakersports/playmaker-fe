@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import styled from "styled-components";
 import dynamic from "next/dynamic";
 import useYoutube from "@/hook/useYoutube";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useThrottle } from "@/hook/useThrottle";
 
 import { VIDEO_COMMENTS, VIDEO_DATA } from "@/constants/mock/VIDEO";
@@ -19,7 +19,7 @@ function VideoArticle() {
   // 게시글 ID
   const searchParams = useSearchParams();
   const articleId = searchParams.get("articleId");
-  usePageTitle({ title: VIDEO_DATA.title });
+  useHeader({ title: VIDEO_DATA.title });
 
   const youtubeRef = useRef<YouTube>(null);
   const containerRef = useRef<HTMLDivElement>(null);

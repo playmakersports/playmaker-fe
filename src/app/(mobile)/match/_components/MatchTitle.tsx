@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
 function MatchTitle({ competitionName }: { competitionName: string }) {
-  usePageTitle({ scrollBgColor: [100, "transparent", "var(--background-light)"] });
+  useHeader({ scrollBgColor: [100, "transparent", "var(--background-light)"] });
   const innerRef = useRef<HTMLParagraphElement>(null);
   const [swipeWidth, setSwipeWidth] = useState(0);
 

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import { useConfirm } from "@/components/common/global/ConfirmProvider";
 import { usePost } from "@/apis/hook/query";
 
@@ -17,7 +17,7 @@ import Spinner from "@/components/common/Spinner";
 
 function EditorView() {
   const { mutate, data, isError, error, isPending } = usePost("/api/board/create", "form-data");
-  usePageTitle({ title: "글쓰기" });
+  useHeader({ title: "글쓰기" });
   const confirm = useConfirm();
   const router = useRouter();
   const params = useParams();

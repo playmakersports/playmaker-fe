@@ -5,7 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import styled from "styled-components";
 import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useModal from "@/hook/useModal";
 import useStickyMoment from "@/hook/useStickyMoment";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
@@ -30,13 +30,12 @@ function Schedule() {
   const calendarRef = useRef<HTMLDivElement>(null);
   useStickyMoment(calendarRef);
 
-  usePageTitle({
+  useHeader({
     title: "일정",
-    scrolledShadow: false,
     subIcons: [
       {
         svgIcon: <PlusIcon />,
-        linkTo: `/team/${teamId}/schedule/editor`,
+        onClick: `/team/${teamId}/schedule/editor`,
         description: "일정 생성",
       },
     ],

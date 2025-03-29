@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 
 function MatchesList() {
-  usePageTitle({ title: "경기" });
+  useHeader({ title: "경기" });
 
   return <div>MatchesList</div>;
 }

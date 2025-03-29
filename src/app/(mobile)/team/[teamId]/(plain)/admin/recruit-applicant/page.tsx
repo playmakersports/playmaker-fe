@@ -3,7 +3,7 @@
 import React from "react";
 import styled from "styled-components";
 
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useModal from "@/hook/useModal";
 
 import { formattedDate } from "@/util/date";
@@ -19,8 +19,7 @@ import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
 import { TextArea } from "@/components/common/TextArea";
 
 function RecruitApplicant() {
-  usePageTitle({
-    subTitle: "JUMP",
+  useHeader({
     title: "가입 신청 목록",
   });
   const { showModal: showAcceptModal, ModalComponents: AcceptModal } = useModal();

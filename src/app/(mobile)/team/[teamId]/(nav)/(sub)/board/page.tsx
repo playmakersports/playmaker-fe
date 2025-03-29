@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
-import { usePageTitle } from "@/hook/usePageTitle";
+import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { FONTS } from "@/styles/common";
@@ -22,13 +22,12 @@ function Board() {
   const teamId = params["teamId"];
   const searchParams = useSearchParams();
 
-  usePageTitle({
+  useHeader({
     title: "게시판",
-    scrolledShadow: false,
     subIcons: [
       {
         svgIcon: <PlusIcon />,
-        linkTo: `/team/${teamId}/board/editor?type=new`,
+        onClick: `/team/${teamId}/board/editor?type=new`,
         description: "새 게시글",
       },
     ],

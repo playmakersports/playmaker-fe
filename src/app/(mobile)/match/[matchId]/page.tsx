@@ -17,6 +17,7 @@ function MatchPage() {
   const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
   useHeader({
     title: "",
+    transparent: true,
     subIcons: [{ svgIcon: <MenuDotsIcon />, onClick: `/match/${matchId}/score`, description: "점수 입력" }],
   });
 

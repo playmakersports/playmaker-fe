@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 
 function MatchTitle({ competitionName }: { competitionName: string }) {
-  useHeader({ scrollBgColor: [100, "transparent", "var(--background-light)"] });
+  useHeader({ transparent: { inactive: 100 } });
   const innerRef = useRef<HTMLParagraphElement>(null);
   const [swipeWidth, setSwipeWidth] = useState(0);
 

@@ -6,7 +6,13 @@ import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 
 import { FONTS, getFontsJSON } from "@/styles/common";
-import { atomHeaderActions, atomHeaderIcons, atomHeaderTransparent, atomPageTitle } from "@/atom/common";
+import {
+  atomHeaderActions,
+  atomHeaderCustomArea,
+  atomHeaderIcons,
+  atomHeaderTransparent,
+  atomPageTitle,
+} from "@/atom/common";
 import DropdownAction from "@/components/common/input/DropdownAction";
 
 import LeftArrow from "@/assets/icon/arrow/LeftArrow.svg";
@@ -16,6 +22,7 @@ function RoutedHeader({ scrollY }: Props) {
   const router = useRouter();
 
   const title = useAtomValue(atomPageTitle);
+  const customArea = useAtomValue(atomHeaderCustomArea);
   const icons = useAtomValue(atomHeaderIcons);
   const actions = useAtomValue(atomHeaderActions);
   const bgTransparent = useAtomValue(atomHeaderTransparent);
@@ -30,16 +37,22 @@ function RoutedHeader({ scrollY }: Props) {
   return (
     <header style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 1000 }}>
       <Container style={{ height: "var(--header-height)" }} data-never={!canTransparent} data-scrolled={isScrolled}>
-        <button type="button" onClick={onClickBack} id="backButton" style={{ width: "24px", height: "24px" }}>
-          <LeftArrow width="100%" height="100%" />
-        </button>
-        <Title
-          data-never={!canTransparent}
-          data-fadein={canTransparent && isScrolled}
-          style={{ ...getFontsJSON(FONTS.body3("semibold")), flex: 1 }}
-        >
-          {title}
-        </Title>
+        {customArea ? (
+          <div style={{ flex: 1 }}>{customArea}</div>
+        ) : (
+          <>
+            <button type="button" onClick={onClickBack} id="backButton" style={{ width: "24px", height: "24px" }}>
+              <LeftArrow width="100%" height="100%" />
+            </button>
+            <Title
+              data-never={!canTransparent}
+              data-fadein={canTransparent && isScrolled}
+              style={{ ...getFontsJSON(FONTS.body3("semibold")), flex: 1 }}
+            >
+              {title}
+            </Title>
+          </>
+        )}
         <Subs>
           {icons.map((icon, index) => (
             <SubIcons key={index} where={icon.onClick}>

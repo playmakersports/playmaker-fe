@@ -1,6 +1,6 @@
-import { ActionOptionsType } from "@/components/common/input/DropdownAction";
+import React, { ReactNode } from "react";
 import { atom } from "jotai";
-import { ReactNode } from "react";
+import { ActionOptionsType } from "@/components/common/input/DropdownAction";
 
 // 페이지 타이틀
 export type HeaderSubIconType = {
@@ -10,6 +10,7 @@ export type HeaderSubIconType = {
 };
 export type HeaderTransparentType = { inactive: number } | boolean;
 export const atomPageTitle = atom<string>("");
+export const atomHeaderCustomArea = atom<React.ReactNode | null>(null);
 export const atomHeaderIcons = atom<Array<HeaderSubIconType>>([]);
 export const atomHeaderActions = atom<Array<ActionOptionsType>>([]);
 export const atomHeaderTransparent = atom<HeaderTransparentType>(false);

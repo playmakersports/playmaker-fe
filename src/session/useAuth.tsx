@@ -6,7 +6,7 @@ export const useAuth = () => {
   const setAuthToken = (newToken: string) =>
     setCookie("access-token", newToken, {
       path: "/",
-      httpOnly: true,
+      // httpOnly: true,
       secure: true,
       sameSite: "lax",
     });

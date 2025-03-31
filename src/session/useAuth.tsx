@@ -14,9 +14,7 @@ export const useAuth = () => {
   const clearAuthToken = () =>
     deleteCookie("access-token", {
       path: "/",
-      expires: new Date(0),
     });
-  setCookie("access-token", null);
 
   return {
     accessToken,

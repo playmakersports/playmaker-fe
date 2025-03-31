@@ -3,8 +3,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/session/useAuth";
 
 import { baseBackendURL } from "@/apis";
-import { useGet } from "@/apis/hook/query";
-import { AuthResponse } from "@/types/auth";
 import Loading from "@/components/common/Loading";
 
 function KakaoLogin() {
@@ -12,22 +10,30 @@ function KakaoLogin() {
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
   const code = searchParams.get("code") as string;
-  const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(code)}`;
+  const googleUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(code)}`;
 
-  const { data } = useGet<AuthResponse>(kakaoUrl);
-  console.log("logged-kakao:", data);
+  const handleLogin = async () => {
+    const response = await fetch(googleUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
-  if (data) {
-    setToken(data.access_token);
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+    const data = await response.json();
+
+    await setToken(data.access_token);
     if (data.newUserYn === "Y") {
-      // 가입되지 않은 회원
       router.replace("/user/apply?from=kakao");
     } else {
-      // 가입된 회원
       router.replace("/");
     }
-  }
+  };
 
+  handleLogin();
   return <Loading page />;
 }
 

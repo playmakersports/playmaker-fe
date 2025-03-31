@@ -1,37 +1,34 @@
-import { redirect } from "next/navigation";
+"use client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@/session/useAuth";
+
 import { baseBackendURL } from "@/apis";
+import { useGet } from "@/apis/hook/query";
 import { AuthResponse } from "@/types/auth";
-import { setServerCookie } from "@/session/server-cookie";
-import ErrorFallback from "@/components/common/global/ErrorFallback";
+import Loading from "@/components/common/Loading";
 
-type SearchParams = Promise<{ code: string | undefined }>;
-export default async function GoogleLogin(props: { searchParams: SearchParams }) {
-  const code = (await props.searchParams).code;
-  if (!code) {
-    // params에 코드가 없을 경우
-    return <p>Authorization code is missing.</p>;
-  }
-
+function GoogleLogin() {
+  const router = useRouter();
+  const { setToken } = useAuth();
+  const searchParams = useSearchParams();
+  const code = searchParams.get("code") as string;
   const googleUrl = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(code)}`;
 
-  try {
-    const response = await fetch(googleUrl, { cache: "no-store" });
-    if (!response.ok) {
-      throw new Error("Failed to authenticate");
-    }
+  const { data } = useGet<AuthResponse>(googleUrl);
+  console.log("logged-google:", data);
 
-    const data: AuthResponse = await response.json();
-    setServerCookie(data.access_token);
-
+  if (data) {
+    setToken(data.access_token);
     if (data.newUserYn === "Y") {
-      // 가입되지 않은 회원 -> 회원가입 페이지로 리디렉트
-      redirect("/user/apply?from=google");
+      // 가입되지 않은 회원
+      router.replace("/user/apply?from=google");
     } else {
-      // 가입된 회원 -> 메인 페이지로 리디렉트
-      redirect("/");
+      // 가입된 회원
+      router.replace("/");
     }
-  } catch (error) {
-    console.log(error);
-    return <ErrorFallback />;
   }
+
+  return <Loading page />;
 }
+
+export default GoogleLogin;

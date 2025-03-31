@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { setCookie } from "cookies-next";
+import { useAuth } from "@/session/useAuth";
 
 import { baseBackendURL } from "@/apis";
 import { useGet } from "@/apis/hook/query";
@@ -9,17 +9,19 @@ import Loading from "@/components/common/Loading";
 
 function KakaoLogin() {
   const router = useRouter();
+  const { setToken } = useAuth();
   const searchParams = useSearchParams();
-  const code = searchParams.get("code");
-  const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(`${code}`)}`;
+  const code = searchParams.get("code") as string;
+  const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(code)}`;
 
   const { data } = useGet<AuthResponse>(kakaoUrl);
+  console.log("logged-kakao:", data);
 
   if (data) {
-    setCookie("access-token", data.access_token, { secure: true });
+    setToken(data.access_token);
     if (data.newUserYn === "Y") {
       // 가입되지 않은 회원
-      router.replace("/user/apply?from=google");
+      router.replace("/user/apply?from=kakao");
     } else {
       // 가입된 회원
       router.replace("/");

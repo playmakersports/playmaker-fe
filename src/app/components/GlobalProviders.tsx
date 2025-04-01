@@ -4,7 +4,7 @@ import React, { Suspense } from "react";
 import { Toaster as SoonerToaster, toast } from "sonner";
 import { Provider } from "jotai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ConfirmProvider from "@/components/common/global/ConfirmProvider";
+import PopupProvider from "@/components/common/global/PopupProvider";
 import Loading from "@/components/common/Loading";
 
 function GlobalProviders({ children }: { children: React.ReactNode }) {
@@ -31,9 +31,9 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
         }}
       />
       <QueryClientProvider client={queryClient}>
-        <ConfirmProvider>
+        <PopupProvider>
           <Suspense fallback={<Loading page />}>{children}</Suspense>
-        </ConfirmProvider>
+        </PopupProvider>
       </QueryClientProvider>
     </Provider>
   );

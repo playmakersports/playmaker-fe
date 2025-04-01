@@ -1,16 +1,16 @@
+"use client";
 import React from "react";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { getCookie, hasCookie } from "cookies-next/server";
-
+import { useRouter } from "next/navigation";
+import { getCookie, hasCookie } from "cookies-next";
 import MyTabHome from "./home/_page";
 
-async function MyTabMain() {
-  const token = await getCookie("access-token", { cookies });
-  const hasToken = await hasCookie("access-token", { cookies });
+function MyTabMain() {
+  const router = useRouter();
+  const token = getCookie("access-token");
+  const hasToken = hasCookie("access-token");
 
   if (!hasToken && !token) {
-    redirect("/user/login");
+    router.replace("/user/login");
   }
   return <MyTabHome />;
 }

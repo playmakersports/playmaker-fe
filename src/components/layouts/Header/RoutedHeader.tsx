@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { FONTS, getFontsJSON } from "@/styles/common";
 import {
   atomHeaderActions,
+  atomHeaderOnClickBack,
   atomHeaderCustomArea,
   atomHeaderIcons,
   atomHeaderTransparent,
@@ -22,6 +23,7 @@ function RoutedHeader({ scrollY }: Props) {
   const router = useRouter();
 
   const title = useAtomValue(atomPageTitle);
+  const onClickBackCustom = useAtomValue(atomHeaderOnClickBack);
   const customArea = useAtomValue(atomHeaderCustomArea);
   const icons = useAtomValue(atomHeaderIcons);
   const actions = useAtomValue(atomHeaderActions);
@@ -31,6 +33,10 @@ function RoutedHeader({ scrollY }: Props) {
   const isScrolled = scrollY > (typeof bgTransparent !== "boolean" ? bgTransparent.inactive : DEFAULT_SCROLLED_Y);
 
   const onClickBack = () => {
+    if (onClickBackCustom) {
+      onClickBackCustom();
+      return;
+    }
     router.back();
   };
 

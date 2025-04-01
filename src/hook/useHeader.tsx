@@ -1,11 +1,12 @@
 "use client";
 import { useSetAtom } from "jotai";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 import {
   atomHeaderActions,
   atomHeaderCustomArea,
   atomHeaderIcons,
+  atomHeaderOnClickBack,
   atomHeaderTransparent,
   atomPageTitle,
   HeaderSubIconType,
@@ -13,6 +14,7 @@ import {
 import { ActionOptionsType } from "@/components/common/input/DropdownAction";
 
 type HeaderOptions = {
+  onClickBack?: () => void | null;
   subIcons?: Array<HeaderSubIconType>;
   subActions?: Array<ActionOptionsType>;
   transparent?: { inactive: number } | boolean;
@@ -26,14 +28,15 @@ type HookProps =
     } & HeaderOptions);
 
 export const useHeader = (props: HookProps = {}) => {
-  const { subIcons, subActions, transparent } = props;
+  const { onClickBack, subIcons, subActions, transparent } = props;
   const setTitle = useSetAtom(atomPageTitle);
+  const setOnClickBack = useSetAtom(atomHeaderOnClickBack);
   const setCustom = useSetAtom(atomHeaderCustomArea);
   const setIcons = useSetAtom(atomHeaderIcons);
   const setActions = useSetAtom(atomHeaderActions);
   const setBgTransparent = useSetAtom(atomHeaderTransparent);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if ("title" in props && props.title) {
       setTitle(props.title);
     }
@@ -41,6 +44,7 @@ export const useHeader = (props: HookProps = {}) => {
       setCustom(props.customArea);
     }
     subIcons && setIcons(subIcons);
+    onClickBack && setOnClickBack(() => onClickBack);
     subActions && setActions(subActions);
     transparent && setBgTransparent(transparent);
 
@@ -48,6 +52,7 @@ export const useHeader = (props: HookProps = {}) => {
       setTitle("");
       setCustom(null);
       setIcons([]);
+      setOnClickBack(null);
       setActions([]);
       setBgTransparent(false);
     };

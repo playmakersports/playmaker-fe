@@ -43,7 +43,7 @@ function UserPage() {
     <Container>
       <Profile>
         <Info>
-          <p className="player-name">{data?.username}</p>
+          <p className="player-name">{data?.userName}</p>
           <p className="introduce">{data?.selfIntro}</p>
           <p className="tag-list">
             <span className="tag">{data?.birth.slice(0, 4)}년생</span>

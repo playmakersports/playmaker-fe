@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { FONTS } from "@/styles/common";
 
-type Props = {
-  type?: "fill" | "line";
-  padding?: number;
+type TabType = "filled" | "light" | "line";
+type CommonTabProps = {
+  color?: "gray" | "primary";
+  size?: "small" | "medium" | "large";
   items: {
     value: string;
     name: string;
@@ -11,11 +13,20 @@ type Props = {
   nowValue: (value: string) => void;
   initialValue?: string;
 };
+type Props =
+  | ({
+      type: "line";
+      padding?: number;
+    } & CommonTabProps)
+  | ({
+      type: "filled" | "light";
+    } & CommonTabProps);
 
-function MainTab({ type = "fill", padding = 0, items, nowValue, initialValue }: Props) {
+function MainTab(props: Props) {
+  const { color = "gray", type, size = "medium", items, nowValue, initialValue } = props;
   const containerRef = useRef<HTMLUListElement>(null);
   const [selected, setSelected] = useState(items[0].value);
-  const [offset, setOffset] = useState(padding ?? 0);
+  const [offset, setOffset] = useState(0);
 
   const handleClickItem = (value: string, event: React.MouseEvent<HTMLLIElement>) => {
     setSelected(value);
@@ -23,105 +34,185 @@ function MainTab({ type = "fill", padding = 0, items, nowValue, initialValue }: 
     nowValue(value);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (initialValue && containerRef.current) {
       const target = containerRef.current.getElementsByClassName("selected")[0];
       const scrollLeft = containerRef.current.scrollLeft;
       setSelected(initialValue);
-      setOffset(target.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x + scrollLeft);
+      setOffset(target?.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x + scrollLeft);
       nowValue(initialValue);
-      target.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+      target?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
     }
   }, [initialValue, offset, containerRef, nowValue]);
 
+  const ACTIVE_TAB_COLOR = {
+    gray: { color: "var(--gray700)", background: "var(--gray50)" },
+    primary: { color: "var(--primary500)", background: "var(--primary50)" },
+  };
+  const TAB_STYLED: Record<TabType, any> = {
+    line: {
+      color: (colors: { color: string; background: string }) => {
+        return {
+          background: "transparent",
+          color: colors.color,
+          borderBottom: `2px solid ${colors.color}`,
+        };
+      },
+      size: {
+        large: { borderRadius: "0", padding: "10px 16px" },
+        medium: { borderRadius: "0", padding: "10px 14px" },
+        small: { borderRadius: "0", padding: "8px 12px" },
+      },
+    },
+    light: {
+      color: (colors: { color: string; background: string }) => {
+        return {
+          background: colors.background,
+          color: colors.color,
+        };
+      },
+      size: {
+        large: { borderRadius: "8px", padding: "10px 16px" },
+        medium: { borderRadius: "8px", padding: "10px 14px" },
+        small: { borderRadius: "8px", padding: "8px 12px" },
+      },
+    },
+    filled: {
+      color: (colors: { color: string; background: string }) => {
+        const isGray = colors.color.slice(0, 10) === "var(--gray";
+        return {
+          backgroundColor: isGray ? "var(--white)" : colors.color,
+          color: isGray ? colors.color : "var(--white)",
+        };
+      },
+      size: {
+        large: { borderRadius: "8px", padding: "6px 16px" },
+        medium: { borderRadius: "8px", padding: "6px 14px" },
+        small: { borderRadius: "8px", padding: "5px 12px" },
+      },
+    },
+  };
+
   return (
-    <LineBottom type={type}>
-      <Container ref={containerRef} role="tablist" padding={padding} type={type}>
+    <LineBottom
+      data-size={size}
+      style={{
+        borderBottom: type === "line" ? `1px solid var(--gray200)` : "none",
+        padding: type === "line" ? `0 ${props.padding}px` : type === "filled" ? "4px" : "0",
+        backgroundColor: type === "filled" ? "var(--gray50)" : "transparent",
+        borderRadius: type === "filled" ? "8px" : "0",
+      }}
+    >
+      <Container ref={containerRef} role="tablist">
         <SelectedBackground
-          type={type}
-          offset={offset}
+          style={{
+            transform: `translate3d(${offset}px, 0, 0)`,
+            boxShadow: type === "filled" && color === "gray" ? "var(--shadow-xs)" : "none",
+            ...TAB_STYLED[type].size[size],
+            ...TAB_STYLED[type].color(ACTIVE_TAB_COLOR[color]),
+          }}
+          data-size={size}
+          data-type={type}
           data-value={items.find((item) => item.value === selected)?.name}
         />
         {items.map((item) => (
-          <Item
+          <CommonItem
             key={item.value}
-            type={type}
             role="tab"
-            className={selected === item.value ? "selected" : ""}
+            style={{
+              ...TAB_STYLED[type].size[size],
+              color: selected === item.value ? TAB_STYLED[type].color(ACTIVE_TAB_COLOR[color]).color : "var(--gray500)",
+            }}
+            data-size={size}
+            data-active={selected === item.value}
             onClick={(event) => {
               handleClickItem(item.value, event);
               event.currentTarget.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
             }}
           >
             {item.name}
-          </Item>
+          </CommonItem>
         ))}
       </Container>
     </LineBottom>
   );
 }
 
-const LineBottom = styled.div<{ type: Props["type"] }>`
-  width: ${({ type }) => (type === "line" ? "calc(100% + 32px)" : "100%")};
-  margin: 0 -16px;
-  padding: 1px 16px 0;
-  border-bottom: ${({ type }) => (type === "line" ? "1px solid var(--gray200)" : "none")};
+const LineBottom = styled.div`
+  &[data-size="large"] {
+    height: 44px;
+  }
+  &[data-size="medium"] {
+    height: 40px;
+  }
+  &[data-size="small"] {
+    height: 36px;
+  }
 `;
-const Container = styled.ul<{ padding: number; type: Props["type"] }>`
+const Container = styled.ul`
   position: relative;
-  padding: ${({ type, padding }) => `0 ${type === "line" ? "20px 1" : padding}px`};
   display: flex;
-  width: ${({ type }) => (type === "line" ? "calc(100% + 32px)" : "100%")};
-  overflow-x: scroll;
-  overflow-y: hidden;
   white-space: nowrap;
-  margin: ${({ type }) => (type === "line" ? "0 -16px -1px" : "")};
   &::-webkit-scrollbar {
     display: none;
   }
 `;
-const CommonItem = styled.li<{ type: Props["type"] }>`
+const CommonItem = styled.li`
   cursor: pointer;
   z-index: 1;
-  flex: ${({ type }) => (type === "line" ? "1" : "none")};
-  margin: ${({ type }) => (type === "line" ? "0 0 -1px" : "8px 0")};
-  padding: ${({ type }) => (type === "line" ? "10px 20px" : "0 20px")};
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.4rem;
   text-align: center;
   transition: all 0.3s;
   user-select: none;
-  border-bottom: 1px solid transparent;
-  &:last-of-type {
-    border-right: none;
-  }
-`;
-const Item = styled(CommonItem)`
-  color: var(--gray1);
-  font-weight: 400;
-  color: var(--gray600);
-  transition: border-bottom 0.3s, font-weight 0.3s, color 0.2s;
-  transition-delay: ${({ type }) => (type === "line" ? "0.05s" : "")};
 
-  &.selected {
-    border-bottom: ${({ type }) => (type === "line" ? "1px solid var(--main)" : "transparent")};
-    color: ${({ type }) => (type === "line" ? "var(--main)" : "var(--white)")};
-    font-weight: ${({ type }) => (type === "line" ? 600 : 700)};
+  &[data-size="small"] {
+    ${FONTS.body4("regular")};
+    &[data-active="true"] {
+      ${FONTS.body4("medium")};
+    }
   }
+  &[data-size="medium"] {
+    ${FONTS.body4("regular")};
+    &[data-active="true"] {
+      ${FONTS.body4("medium")};
+    }
+  }
+  &[data-size="large"] {
+    ${FONTS.body3("regular")};
+    &[data-active="true"] {
+      ${FONTS.body3("medium")};
+    }
+  }
+  transition: color 0.2s;
 `;
 
-const SelectedBackground = styled(CommonItem)<{ offset: number }>`
+const SelectedBackground = styled(CommonItem)`
   position: absolute;
   margin: 0;
   left: 0;
-  transform: translate3d(${({ offset }) => offset}px, 0, 0);
-  padding: ${({ type }) => (type === "line" ? "10px" : "8px")} 20px;
-  background-color: ${({ type }) => (type === "line" ? "transparent" : "var(--main)")};
-  border-bottom: ${({ type }) => (type === "line" ? "1px solid var(--main)" : "none")};
-  border-radius: ${({ type }) => (type === "line" ? "0" : "16px")};
+  transition: all 0.3s;
   will-change: transform;
+
+  &[data-size="large"] {
+    height: 44px;
+    &[data-type="filled"] {
+      height: 36px;
+    }
+  }
+  &[data-size="medium"] {
+    height: 40px;
+    &[data-type="filled"] {
+      height: 32px;
+    }
+  }
+  &[data-size="small"] {
+    height: 36px;
+    &[data-type="filled"] {
+      height: 28px;
+    }
+  }
 
   &::after {
     content: attr(data-value);

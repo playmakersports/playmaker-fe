@@ -8,7 +8,7 @@ export const useAuth = () => {
       path: "/",
       // httpOnly: true,
       secure: true,
-      sameSite: "lax",
+      sameSite: "none",
     });
 
   const clearAuthToken = () =>

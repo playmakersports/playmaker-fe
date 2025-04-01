@@ -6,7 +6,6 @@ import { useHeader } from "@/hook/useHeader";
 import { atomServiceApply } from "@/atom/user";
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
-import { InputCheckbox } from "@/components/common/input/SelectInput";
 import { BasicWhiteCard } from "@/components/common/Card";
 
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
@@ -40,24 +39,12 @@ function Step0({ setStep }: { setStep: (prev: number) => void }) {
         </Title>
         <Buttons>
           <Card role="button" className={checked === 2 ? "checked" : ""} tabIndex={1} onClick={() => setChecked(2)}>
-            <InputCheckbox
-              size="LARGE"
-              checked={checked === 2}
-              defaultChecked={applyValues.memberType === "일반"}
-              onChange={() => {}}
-            />
             <div className="contents">
               <strong>일반</strong>
               <p>내 주변이나 생활 지역에서 스포츠 팀을 찾고 참여</p>
             </div>
           </Card>
           <Card role="button" className={checked === 1 ? "checked" : ""} tabIndex={2} onClick={() => setChecked(1)}>
-            <InputCheckbox
-              size="LARGE"
-              checked={checked === 1}
-              defaultChecked={applyValues.memberType === "대학"}
-              onChange={() => {}}
-            />
             <div className="contents">
               <strong>대학</strong>
               <p>대학 동아리나 리그 소속으로 스포츠 팀에 참여</p>
@@ -72,7 +59,7 @@ const BackPoint = styled.div`
   position: absolute;
   left: 0;
   top: 0;
-  width: min(600px, 100vw);
+  width: var(--mobile-max-width);
   height: 100vw;
   background: linear-gradient(155deg, var(--main) 0%, rgba(var(--main-rgb), 0) 50%);
   opacity: 0.25;
@@ -80,7 +67,7 @@ const BackPoint = styled.div`
 `;
 
 const Title = styled.h3`
-  ${FONTS.HEAD2};
+  ${FONTS.head3("semibold")};
   text-align: center;
   font-size: 2rem;
   line-height: 3rem;
@@ -98,33 +85,33 @@ const Buttons = styled.div`
   gap: 24px;
 `;
 const Card = styled(BasicWhiteCard)`
+  cursor: pointer;
   display: flex;
-  padding: 24px 16px;
+  padding: 24px;
   align-items: center;
   gap: 16px;
+  outline: 1px solid var(--gray200);
+  border: 2px solid transparent;
   ${CARD_ACTIVE};
 
   strong {
+    ${FONTS.body2("semibold")};
     display: block;
     margin-bottom: 6px;
-    ${FONTS.MD1};
-    font-size: 1.8rem;
     flex-shrink: 0;
     word-break: keep-all;
     color: var(--gray900);
   }
 
   p {
-    ${FONTS.MD2};
-    font-weight: 400;
+    ${FONTS.body4("regular")};
     color: var(--gray600);
   }
 
   &.checked {
-    border: 1px solid var(--main);
+    outline: transparent;
+    border-color: var(--main);
   }
 `;
-
-const Bottom = styled.div``;
 
 export default Step0;

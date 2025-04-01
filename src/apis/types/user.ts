@@ -19,5 +19,5 @@ export type ApiSelectMember = {
     teamName: string;
   }>;
   university: string;
-  username: string;
+  userName: string;
 };

@@ -6,10 +6,10 @@ import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import { ApiSelectMember } from "@/apis/types/user";
-import Loading from "@/components/common/Loading";
+import Chip from "@/components/common/Chip";
 
 import FlagIcon from "@/assets/icon/common/filled/Star.svg";
-import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
+import PencilIcon from "@/assets/icon/common/outlined/Pencil.svg";
 import SettingsIcon from "@/assets/icon/common/filled/Person.svg";
 
 function MyProfile() {
@@ -30,21 +30,33 @@ function MyProfile() {
     ],
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading)
+    return (
+      <div style={{ display: "flex", padding: "0 24px", alignItems: "center" }}>
+        <div className="skeleton-loading-ui" style={{ width: "100px", height: "100px", borderRadius: "50%" }} />
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px", margin: "4px 0px 0px 20px" }}>
+          <div className="skeleton-loading-ui" style={{ width: "132px", height: "32px", borderRadius: "5px" }} />
+          <div className="skeleton-loading-ui" style={{ width: "180px", height: "24px", borderRadius: "5px" }} />
+        </div>
+      </div>
+    );
+
   return (
     <>
       <Profile>
-        <ProfileImg $src={data?.imageUrl ?? ""}>
+        <ProfileImg style={{ backgroundImage: `url(${data?.imageUrl})` }}>
           <div>
             <PencilIcon />
           </div>
         </ProfileImg>
         <Info>
-          <p className="player-name">{data?.username}</p>
-          <p className="tag-list">
-            <span className="tag">{data?.birth.slice(0, 4)}년생</span>
-            <span className="tag">{data?.university}</span>
-          </p>
+          <div className="player-name">{data?.userName}</div>
+          <div className="tag-list">
+            <Chip type="gray">{data?.birth.slice(0, 4)}년생</Chip>
+            <Chip type="gray" fillType="light">
+              {data?.university}
+            </Chip>
+          </div>
         </Info>
       </Profile>
       <Introduce>{data?.selfIntro}</Introduce>
@@ -61,22 +73,21 @@ const Profile = styled.div`
   gap: 20px;
 `;
 const Introduce = styled.p`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   font-weight: 400;
   margin: -4px 24px 0;
   padding: 12px 16px;
-  color: var(--gray700);
+  color: var(--gray600);
   white-space: pre-line;
   border: 1px solid var(--gray200);
   border-radius: 8px;
 `;
-const ProfileImg = styled.div<{ $src: string }>`
+const ProfileImg = styled.div`
   position: relative;
-  width: 85px;
-  height: 85px;
-  background-color: var(--primary200);
-  background-image: url(${(props) => props.$src});
-  background-size: 101% auto;
+  width: 100px;
+  height: 100px;
+  background-color: var(--gray200);
+  background-size: auto 100%;
   background-repeat: no-repeat;
   background-position: center;
   object-fit: cover;
@@ -87,17 +98,17 @@ const ProfileImg = styled.div<{ $src: string }>`
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 26px;
-    height: 26px;
-    right: -4px;
+    width: 36px;
+    height: 36px;
+    right: -8px;
     bottom: -4px;
-    background-color: var(--main);
+    background-color: var(--primary500);
     border-radius: 50%;
     border: 4px solid var(--background-light);
     box-sizing: content-box;
     svg {
-      width: 14px;
-      height: 14px;
+      width: 24px;
+      height: 24px;
       fill: #fff;
     }
   }
@@ -108,21 +119,11 @@ const Info = styled.div`
   padding-top: 8px;
   flex-direction: column;
   gap: 10px;
-  p.player-name {
-    font-weight: 700;
-    font-size: 2.4rem;
-    strong {
-      color: var(--main);
-    }
+  div.player-name {
+    color: var(--gray700);
+    ${FONTS.body1("semibold")}
   }
-  p.introduce {
-    ${FONTS.MD2}
-    font-weight: 400;
-    color: var(--gray800);
-    white-space: pre-line;
-  }
-
-  p.tag-list {
+  div.tag-list {
     display: inline-flex;
     gap: 6px;
     span.tag {

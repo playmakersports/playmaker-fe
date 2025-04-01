@@ -30,8 +30,10 @@ function Popup(props: Props) {
               <AlertIcon />
             </div>
           )}
-          {title && <h3 className="modal-title">{title}</h3>}
-          <p className="modal-message">{message}</p>
+          <div className="modal-contents">
+            {title && <h3 className="modal-title">{title}</h3>}
+            {message && <p className="modal-message">{message}</p>}
+          </div>
 
           {type === "info" && (
             <ModalClose>
@@ -118,8 +120,12 @@ const Contents = styled.div`
       fill: var(--primary600);
     }
   }
+  div.modal-contents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
   h3.modal-title {
-    margin-bottom: 8px;
     ${FONTS.body2("semibold")};
   }
   p.modal-message {

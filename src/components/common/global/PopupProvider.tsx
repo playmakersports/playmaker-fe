@@ -52,12 +52,11 @@ const usePopupLogic = () => {
     setTitle(options?.title ?? "");
     setMessage(message);
     setIsVisible(true);
-    options?.buttonText &&
-      setButtonText({
-        yes: "",
-        no: options.buttonText ?? "확인",
-        sub: "",
-      });
+    setButtonText({
+      yes: "",
+      no: options?.buttonText ?? "확인",
+      sub: "",
+    });
     return new Promise<boolean>((resolve) => {
       setResolveReject(() => resolve);
     });

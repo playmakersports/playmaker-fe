@@ -43,7 +43,7 @@ function Intro() {
             if (checkedList.required1 && checkedList.required2) {
               router.push(`/user/apply/process?eventAgree=${checkedList.event1 ? "T" : "F"}`);
             } else {
-              await popup?.alert("필수 약관에 모두 동의해야 합니다");
+              await popup?.alert("", { title: "필수 약관에 모두 동의해야 합니다" });
             }
           },
         }}

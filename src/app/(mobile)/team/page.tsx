@@ -38,6 +38,7 @@ function TeamList() {
     <Container>
       <TabWrapper ref={sportsTabRef}>
         <MainTab
+          padding={16}
           type="line"
           initialValue={activeTab}
           nowValue={(value) => {
@@ -100,7 +101,7 @@ const Container = styled(BaseContainer)`
 const TabWrapper = styled.div`
   position: sticky;
   margin: 0 -16px;
-  padding: 4px 16px 0;
+  padding: 4px 0 0;
   top: 0;
   z-index: 1;
   transition: padding 0.2s;

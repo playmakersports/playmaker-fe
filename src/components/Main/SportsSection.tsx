@@ -26,7 +26,9 @@ function SportsSection() {
       </SportsTitle>
       <TabWrapper ref={tabRef}>
         <MainTab
-          padding={20}
+          color="primary"
+          type="light"
+          size="medium"
           nowValue={(value) => {
             setActiveTab(value);
           }}
@@ -70,9 +72,6 @@ const Wrapper = styled.div`
 `;
 const TabWrapper = styled.div`
   position: sticky;
-  top: -1px;
-  width: calc(100% + 32px);
-  margin: -8px -16px 8px;
   padding: 8px 0;
   background-color: var(--background-light);
   z-index: 1;
@@ -80,7 +79,8 @@ const TabWrapper = styled.div`
 
   &.stuck {
     margin: 0 -16px;
-    box-shadow: 0 1px 5px 0 rgba(107, 119, 172, 0.2);
+    padding: 2px 16px 8px;
+    box-shadow: var(--shadow-xs);
   }
 `;
 const SportsTitle = styled.h3`

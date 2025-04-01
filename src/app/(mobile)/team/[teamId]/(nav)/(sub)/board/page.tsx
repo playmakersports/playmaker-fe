@@ -52,6 +52,9 @@ function Board() {
       </Search>
       <TabWrapper ref={tabRef}>
         <MainTab
+          padding={16}
+          type="line"
+          color="primary"
           items={[
             { value: "ALL", name: "전체" },
             { value: "1", name: "공지사항" },
@@ -132,15 +135,13 @@ const Container = styled(BaseContainer)`
 `;
 const TabWrapper = styled.div`
   position: sticky;
-  margin-top: 12px;
-  padding: 4px 16px 0;
   top: 0;
   z-index: 1;
   transition: padding 0.2s;
 
   &.stuck {
-    padding: 6px 16px 8px;
-    box-shadow: 0 4px 10px 2px rgba(0, 0, 0, 0.1);
+    padding: 6px 0 0;
+    box-shadow: var(--shadow-xs);
     background-color: var(--background-light);
   }
 `;
@@ -177,6 +178,7 @@ const Articles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+  padding-bottom: 720px;
 `;
 
 export default Board;

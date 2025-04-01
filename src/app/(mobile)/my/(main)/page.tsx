@@ -8,6 +8,8 @@ import MyTabHome from "./home/_page";
 async function MyTabMain() {
   const token = await getCookie("access-token", { cookies });
   const hasToken = await hasCookie("access-token", { cookies });
+  console.log("token:", token);
+  console.log("has-token:", hasToken);
 
   if (!hasToken && !token) {
     redirect("/user/login");

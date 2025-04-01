@@ -9,11 +9,10 @@ async function MyTabMain() {
   const token = await getCookie("access-token", { cookies });
   const hasToken = await hasCookie("access-token", { cookies });
 
-  if (hasToken && !!token) {
-    return <MyTabHome />;
-  } else {
+  if (!hasToken && !token) {
     redirect("/user/login");
   }
+  return <MyTabHome />;
 }
 
 export default MyTabMain;

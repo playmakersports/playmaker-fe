@@ -2,7 +2,7 @@ import React from "react";
 import useModal from "@/hook/useModal";
 import { FieldValues, useForm } from "react-hook-form";
 import styled from "styled-components";
-import { useConfirm } from "../common/global/ConfirmProvider";
+import { usePopup } from "../common/global/PopupProvider";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 import AwardedItem from "./AwardedItem";
@@ -18,10 +18,10 @@ type Props = {
 function RoomAwarded({ awardsList }: Props) {
   const { register, handleSubmit, reset, setFocus } = useForm();
   const { ModalComponents, showModal: showFormModal } = useModal();
-  const confirm = useConfirm();
+  const popup = usePopup();
 
   const onSubmit = async (data: FieldValues) => {
-    await confirm?.showAlert("새로운 수상 경력이 추가됐어요");
+    await popup?.alert("새로운 수상 경력이 추가됐어요");
     reset();
   };
 

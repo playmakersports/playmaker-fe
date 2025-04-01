@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { usePopup } from "@/components/common/global/PopupProvider";
 import { usePost } from "@/apis/hook/query";
 
 import { BaseContainer } from "@/components/common/Container";
@@ -18,7 +18,7 @@ import Spinner from "@/components/common/Spinner";
 function EditorView() {
   const { mutate, data, isError, error, isPending } = usePost("/api/board/create", "form-data");
   useHeader({ title: "글쓰기" });
-  const confirm = useConfirm();
+  const popup = usePopup();
   const router = useRouter();
   const params = useParams();
   const searchParams = useSearchParams();
@@ -33,7 +33,7 @@ function EditorView() {
 
   const onClear = async () => {
     if (!editor.isEmpty) {
-      const isConfirm = await confirm?.showConfirm("입력된 내용은 복구할 수 없습니다.\n초기화하시겠습니까?");
+      const isConfirm = await popup?.confirm("입력된 내용은 복구할 수 없습니다.\n초기화하시겠습니까?");
       if (isConfirm) {
         editor.commands.clearContent();
         editor.commands.focus();
@@ -62,7 +62,7 @@ function EditorView() {
       data: formData,
     });
     if (isError) {
-      await confirm?.showAlert(`글 올리기에 문제가 생겼어요\n잠시 후 다시 시도해주세요\n${error.message}`);
+      await popup?.alert(`글 올리기에 문제가 생겼어요\n잠시 후 다시 시도해주세요\n${error.message}`);
     }
   };
 

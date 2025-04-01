@@ -4,7 +4,7 @@ import { handleNotifyFCM } from "./NotifyFCM";
 import { getCookie } from "cookies-next";
 import { usePost } from "@/apis/hook/query";
 import { FONTS } from "@/styles/common";
-import { useConfirm } from "../common/global/ConfirmProvider";
+import { usePopup } from "../common/global/PopupProvider";
 
 import NotificationIcon from "@/assets/icon/common/filled/Notification.svg";
 
@@ -17,14 +17,14 @@ interface FcmNotification {
   token: string;
 }
 function PushRequest() {
-  const confirm = useConfirm();
+  const popup = usePopup();
   const [isGranted, setIsGranted] = useState(false);
   const { mutate, isSuccess } = usePost<FcmNotification>("/api/v1/fcm/send");
 
   const handleClickToPushActive = async () => {
     await Notification.requestPermission().then((permission) => {
       if (permission !== "granted") {
-        confirm?.showAlert(`Push 알림이 가능한 디바이스가 아니거나\n허용할 수 없는 상태입니다.`);
+        popup?.alert(`Push 알림이 가능한 디바이스가 아니거나\n허용할 수 없는 상태입니다.`);
       }
     });
   };
@@ -39,7 +39,7 @@ function PushRequest() {
 
     mutate({ data });
     if (isSuccess) {
-      await confirm?.showAlert("푸시 알림을 요청했습니다.");
+      await popup?.alert("푸시 알림을 요청했습니다.");
     }
   };
 

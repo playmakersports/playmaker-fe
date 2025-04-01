@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useHeader } from "@/hook/useHeader";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
@@ -13,7 +13,7 @@ import DeleteAllIcon from "@/assets/icon/common/filled/Delete.svg";
 import PencilIcon from "@/assets/icon/common/filled/Pencil.svg";
 
 function BoardCategory() {
-  const confirm = useConfirm();
+  const popup = usePopup();
   const [category, setCategory] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
 
@@ -22,11 +22,10 @@ function BoardCategory() {
   });
 
   const handleDeleteItem = async (item: string) => {
-    const isDelete = await confirm?.showConfirm(
+    const isDelete = await popup?.confirm(
       `카테고리를 삭제할까요?\n기존 글은 자유글로 이동되어 남아있지만\n이 동작을 되돌릴 수 없어요.`,
       {
-        yes: "그래도 삭제할게요",
-        no: "취소",
+        buttonText: { yes: "그래도 삭제할게요", no: "취소" },
       }
     );
     if (isDelete) {

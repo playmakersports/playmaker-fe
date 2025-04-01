@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import useModal from "@/hook/useModal";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { usePopup } from "@/components/common/global/PopupProvider";
+import { useHeader } from "@/hook/useHeader";
 
 import { FONTS } from "@/styles/common";
 import LoginWrapper from "@/components/User/LoginWrapper";
@@ -15,9 +16,10 @@ import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 import { SERVICE_TERMS } from "@/constants/TERMS";
 
 function Intro() {
+  useHeader({ title: "회원가입" });
   const router = useRouter();
   const { ModalComponents, showModal } = useModal();
-  const confirm = useConfirm();
+  const popup = usePopup();
   const [selectedTerm, setSelectedTerm] = useState("");
 
   const [allChecked, setAllChecked] = useState(false);
@@ -41,7 +43,7 @@ function Intro() {
             if (checkedList.required1 && checkedList.required2) {
               router.push(`/user/apply/process?eventAgree=${checkedList.event1 ? "T" : "F"}`);
             } else {
-              await confirm?.showAlert("필수 약관에 모두 동의해야 합니다");
+              await popup?.alert("필수 약관에 모두 동의해야 합니다");
             }
           },
         }}

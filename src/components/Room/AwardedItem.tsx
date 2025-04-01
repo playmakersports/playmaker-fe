@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
-import { useConfirm } from "../common/global/ConfirmProvider";
+import { usePopup } from "../common/global/PopupProvider";
 
 import MoreVerticalIcon from "@/assets/icon/common/MenuDots.svg";
 import useModal from "@/hook/useModal";
@@ -24,7 +24,7 @@ const RANK_DISPLAY: Record<string, { name: string; color: string }> = {
 function AwardedItem(props: Props) {
   const { year, competitionName, awardedRank } = props;
   const [showEditForm, setShowEditForm] = useState(false);
-  const confirm = useConfirm();
+  const popup = usePopup();
   const { register, handleSubmit } = useForm({
     defaultValues: {
       year,
@@ -35,7 +35,9 @@ function AwardedItem(props: Props) {
   const { ModalComponents, showModal } = useModal();
 
   const onClickDelete = async () => {
-    const isConfirm = await confirm?.showConfirm("선택된 경력을 삭제할까요?", { yes: "네, 삭제할게요", no: "취소" });
+    const isConfirm = await popup?.confirm("선택된 경력을 삭제할까요?", {
+      buttonText: { yes: "네, 삭제할게요", no: "취소" },
+    });
     if (isConfirm) {
       console.log("삭제됨");
     }

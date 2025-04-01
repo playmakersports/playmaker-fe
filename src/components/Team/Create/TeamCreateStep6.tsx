@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 import { usePost } from "@/apis/hook/query";
-import { useConfirm } from "@/components/common/global/ConfirmProvider";
+import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { FONTS } from "@/styles/common";
 import StagePageContainer from "@/components/layouts/StagePageContainer";
@@ -13,7 +13,7 @@ import CameraIcon from "@/assets/icon/common/filled/Image.svg";
 
 function TeamCreateStep6() {
   const router = useRouter();
-  const confirm = useConfirm();
+  const popup = usePopup();
   const coverImageInputRef = useRef<HTMLInputElement>(null);
 
   const teamCreateValue = useAtomValue(atomTeamCreate);
@@ -50,9 +50,8 @@ function TeamCreateStep6() {
       });
       router.replace(`/team/create/success?teamId=${data?.teamId}`);
     } catch {
-      const errorConfirm = await confirm?.showConfirm(`팀 생성에 실패했어요\n${error?.message}`, {
-        yes: "홈 화면 이동",
-        no: "닫기",
+      const errorConfirm = await popup?.confirm(`팀 생성에 실패했어요\n${error?.message}`, {
+        buttonText: { yes: "홈 화면 이동", no: "닫기" },
       });
       if (errorConfirm) {
         router.replace("/");

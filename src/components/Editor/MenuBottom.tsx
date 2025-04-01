@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Editor } from "@tiptap/react";
 import useModal from "@/hook/useModal";
-import { useConfirm } from "../common/global/ConfirmProvider";
+import { usePopup } from "../common/global/PopupProvider";
 import Image from "next/image";
 import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
 
@@ -27,7 +27,7 @@ type Props = {
 function EditorMenuBottom({ editor, poll, images }: Props) {
   const [isLoadingAddImage, setIsLoadingAddImage] = useState(false);
   const { ModalComponents, showModal } = useModal();
-  const confirm = useConfirm();
+  const popup = usePopup();
   const imgInputRef = useRef<HTMLInputElement>(null);
   const { getter, setter } = images;
 
@@ -70,7 +70,7 @@ function EditorMenuBottom({ editor, poll, images }: Props) {
   };
 
   const removeImageItem = async (index: number) => {
-    const isRemove = await confirm?.showConfirm(`이미지(#${index + 1})를 제거할까요?`);
+    const isRemove = await popup?.confirm(`이미지(#${index + 1})를 제거할까요?`);
     if (isRemove) {
       setter((prev) => ({
         ...prev,

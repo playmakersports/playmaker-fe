@@ -8,9 +8,9 @@
     background-position: -200% 0;
   }
 }
-div.loading-ui {
+div.skeleton-loading-ui {
   background-color: var(--gray200);
-  background: linear-gradient(100deg, var(--gray200) 25%, var(--gray300) 50%, var(--gray200) 75%);
+  background: linear-gradient(100deg, var(--gray100) 0%, var(--gray300) 50%, var(--gray200) 95%);
   background-size: 200% 100%;
   -webkit-animation: loading-frames 1.5s infinite;
   -moz-animation: loading-frames 1.5s infinite;

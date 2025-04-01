@@ -3,15 +3,17 @@ import React, { Suspense, useRef } from "react";
 import Link from "next/link";
 import styled from "styled-components";
 import { usePathname, useRouter } from "next/navigation";
-import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
+import { useAuth } from "@/session/useAuth";
 
 import MyProfile from "../_components/MyProfile";
 import MyTabLoading from "./loading";
 import TabList from "@/components/common/TabList";
+import { FONTS, getFontsJSON } from "@/styles/common";
 
 function MyTabLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const { clearToken } = useAuth();
   const tabRef = useRef<HTMLDivElement>(null);
 
   useStickyMoment(tabRef);
@@ -22,6 +24,11 @@ function MyTabLayout({ children }: { children: React.ReactNode }) {
     { href: "/my/team", label: "모임" },
     { href: "/my/feed", label: "피드" },
   ];
+
+  const handleLogout = () => {
+    clearToken();
+    router.push("/user/login");
+  };
 
   return (
     <>
@@ -39,6 +46,15 @@ function MyTabLayout({ children }: { children: React.ReactNode }) {
       </TabWrapper>
       <section style={{ padding: "24px 16px calc(var(--env-sab) + 100px)" }}>
         <Suspense fallback={<MyTabLoading />}>{children}</Suspense>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
+          <button
+            type="button"
+            style={{ ...getFontsJSON(FONTS.body4("regular")), color: "var(--gray400)" }}
+            onClick={handleLogout}
+          >
+            로그아웃
+          </button>
+        </div>
       </section>
     </>
   );

@@ -145,7 +145,7 @@ const BUTTON_SIZE_STYLED = {
     onlyIconPadding: "10px",
   },
   large: {
-    font: FONTS.body2("medium"),
+    font: FONTS.body3("medium"),
     padding: "10px 20px",
     height: "48px",
     iconSize: "24px",

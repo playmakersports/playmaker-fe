@@ -41,6 +41,7 @@
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.51.3",
     "react-youtube": "^10.1.0",
+    "sass": "^1.86.3",
     "sonner": "^2.0.1",
     "styled-components": "^6.1.13"
   },

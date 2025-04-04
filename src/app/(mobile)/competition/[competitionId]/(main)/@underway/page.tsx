@@ -1,8 +1,8 @@
 "use client";
-
 import React, { useState } from "react";
 import styled from "styled-components";
 import { FONTS } from "@/styles/common";
+import MainTab from "@/components/Main/MainTab";
 
 import { COMPETITION_DETAIL_MOCK } from "@/constants/mock/COMPETITION";
 import CompetitionFloat from "../../_components/Float";
@@ -15,7 +15,7 @@ import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
 function CompetitionUnderway() {
   const MOCK = COMPETITION_DETAIL_MOCK;
-  const [matchRound, setMatchRound] = useState(24);
+  const [matchRound, setMatchRound] = useState("24");
 
   return (
     <Container>
@@ -32,21 +32,24 @@ function CompetitionUnderway() {
         </div>
       </Participants>
       <ScheduleWeek startDate={MOCK.startDate} endDate={MOCK.endDate} schedule={MOCK.schedule} />
-      <Search>
-        <BasicInput type="text" placeholder="어떤 팀을 찾고 있나요" iconType="search" />
-      </Search>
-      <RoundTab role="tablist">
-        {[24, 16, 8, 4, 2].map((round, index) => (
-          <li
-            key={index}
-            role="tab"
-            onClick={() => setMatchRound(round)}
-            className={matchRound === round ? "active" : ""}
-          >
-            {round === 2 ? "결승" : `${round}강`}
-          </li>
-        ))}
-      </RoundTab>
+      <BasicInput type="text" placeholder="어떤 팀을 찾고 있나요" iconType="search" />
+      <div style={{ margin: "0 -16px", width: "calc(100% + 32px)" }}>
+        <MainTab
+          padding={16}
+          type="line"
+          color="primary"
+          sameWidth
+          nowValue={setMatchRound}
+          items={[
+            { name: "24강", value: "24" },
+            { name: "16강", value: "16" },
+            { name: "8강", value: "8" },
+            { name: "4강", value: "4" },
+            { name: "결승", value: "1" },
+          ]}
+        />
+      </div>
+
       <Matches>
         {MOCK.matches.map((match) => (
           <MatchCard
@@ -109,35 +112,6 @@ const Matches = styled.div`
   margin-top: 12px;
   flex-direction: column;
   gap: 16px;
-`;
-
-const Search = styled.div`
-  margin: 0 -16px;
-  padding: 12px 16px;
-  background-color: var(--background);
-`;
-
-const RoundTab = styled.ul`
-  display: flex;
-  margin: 0px -16px 24px;
-  padding: 12px 16px 0;
-  border-bottom: 1px solid var(--gray50);
-
-  li {
-    cursor: pointer;
-    ${FONTS.MD1W500};
-    padding: 2px 0 4px;
-    font-weight: 400;
-    flex: 1;
-    text-align: center;
-    color: var(--gray500);
-
-    &.active {
-      font-weight: 600;
-      color: var(--main);
-      border-bottom: 2px solid var(--main);
-    }
-  }
 `;
 
 export default CompetitionUnderway;

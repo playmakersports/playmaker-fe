@@ -12,6 +12,7 @@ type CommonTabProps = {
   }[];
   nowValue: (value: string) => void;
   initialValue?: string;
+  sameWidth?: boolean;
 };
 type Props =
   | ({
@@ -23,27 +24,31 @@ type Props =
     } & CommonTabProps);
 
 function MainTab(props: Props) {
-  const { color = "gray", type, size = "medium", items, nowValue, initialValue } = props;
+  const { color = "gray", type, size = "medium", items, nowValue, initialValue, sameWidth = false } = props;
   const containerRef = useRef<HTMLUListElement>(null);
-  const [selected, setSelected] = useState(items[0].value);
+  const [selected, setSelected] = useState(initialValue ?? items[0].value);
+  const [selectedWidth, setSelectedWidth] = useState(0);
   const [offset, setOffset] = useState(0);
+
+  const [isReady, setIsReady] = useState(false);
 
   const handleClickItem = (value: string, event: React.MouseEvent<HTMLLIElement>) => {
     setSelected(value);
     setOffset(event.currentTarget.offsetLeft);
     nowValue(value);
+    setSelectedWidth(event.currentTarget.clientWidth);
+    event.currentTarget.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
   };
-
   useLayoutEffect(() => {
-    if (initialValue && containerRef.current) {
-      const target = containerRef.current.getElementsByClassName("selected")[0];
-      const scrollLeft = containerRef.current.scrollLeft;
-      setSelected(initialValue);
-      setOffset(target?.getBoundingClientRect().x - containerRef.current.getBoundingClientRect().x + scrollLeft);
-      nowValue(initialValue);
-      target?.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
+    setIsReady(true);
+    if (containerRef.current) {
+      const selectedItem = containerRef.current.querySelector(`[data-active="true"]`);
+      if (selectedItem) {
+        setOffset(selectedItem.getBoundingClientRect().left - containerRef.current.getBoundingClientRect().left);
+        setSelectedWidth(selectedItem.clientWidth);
+      }
     }
-  }, [initialValue, offset, containerRef, nowValue]);
+  }, [items, selected]);
 
   const ACTIVE_TAB_COLOR = {
     gray: { color: "var(--gray700)", background: "var(--gray50)" },
@@ -106,14 +111,18 @@ function MainTab(props: Props) {
       <Container ref={containerRef} role="tablist">
         <SelectedBackground
           style={{
+            opacity: isReady ? 1 : 0,
+            width: `${selectedWidth}px`,
             transform: `translate3d(${offset}px, 0, 0)`,
             boxShadow: type === "filled" && color === "gray" ? "var(--shadow-xs)" : "none",
+            flex: sameWidth ? 1 : "",
             ...TAB_STYLED[type].size[size],
             ...TAB_STYLED[type].color(ACTIVE_TAB_COLOR[color]),
           }}
+          aria-disabled="true"
+          aria-hidden="true"
           data-size={size}
           data-type={type}
-          data-value={items.find((item) => item.value === selected)?.name}
         />
         {items.map((item) => (
           <CommonItem
@@ -122,12 +131,12 @@ function MainTab(props: Props) {
             style={{
               ...TAB_STYLED[type].size[size],
               color: selected === item.value ? TAB_STYLED[type].color(ACTIVE_TAB_COLOR[color]).color : "var(--gray500)",
+              flex: sameWidth ? 1 : "",
             }}
             data-size={size}
             data-active={selected === item.value}
             onClick={(event) => {
               handleClickItem(item.value, event);
-              event.currentTarget.scrollIntoView({ block: "nearest", inline: "center", behavior: "smooth" });
             }}
           >
             {item.name}
@@ -188,7 +197,7 @@ const CommonItem = styled.li`
   transition: color 0.2s;
 `;
 
-const SelectedBackground = styled(CommonItem)`
+const SelectedBackground = styled(CommonItem).attrs({ as: "div" })`
   position: absolute;
   margin: 0;
   left: 0;
@@ -212,11 +221,6 @@ const SelectedBackground = styled(CommonItem)`
     &[data-type="filled"] {
       height: 28px;
     }
-  }
-
-  &::after {
-    content: attr(data-value);
-    visibility: hidden;
   }
 `;
 

@@ -6,6 +6,8 @@ const withPWA = require("next-pwa")({
   runtimeCaching,
   disable: process.env.NODE_ENV !== "production", // Enable PWA only in production
 });
+const { createVanillaExtractPlugin } = require("@vanilla-extract/next-plugin");
+const withVanillaExtract = createVanillaExtractPlugin();
 
 const nextConfig = withPWA({
   images: {
@@ -32,4 +34,4 @@ const nextConfig = withPWA({
   },
 });
 
-module.exports = nextConfig;
+module.exports = withVanillaExtract(nextConfig);

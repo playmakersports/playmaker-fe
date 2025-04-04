@@ -12,5 +12,5 @@ export const BasicWhiteCard = styled.div`
 
 export const BasicWhiteCardTitle = styled.h3`
   margin: 0 0 16px;
-  ${FONTS.HEAD2};
+  ${FONTS.body1("semibold")};
 `;

@@ -84,8 +84,7 @@ const Container = styled.div`
     color: var(--gray600);
   }
   .video-title {
-    ${FONTS.body1("semibold")};
-    font-size: 1.8rem;
+    ${FONTS.body2("semibold")};
   }
   .video-description {
     margin: 12px 0 8px;

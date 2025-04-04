@@ -79,12 +79,11 @@ const TextAnimate = styled.p<{ index: number; left: boolean; length: number }>`
     animation-delay: ${({ index }) => index * 0.82}s;
   }
   span {
+    ${FONTS.body4("semibold")};
     display: inline-block;
-    padding: 10px;
-    border-radius: 20px;
+    padding: 8px 16px;
+    border-radius: 24px;
     background-color: rgba(256, 256, 256, 0.4);
-    font-size: 1.6rem;
-    font-weight: 400;
     letter-spacing: 0.25px;
   }
 `;
@@ -94,7 +93,7 @@ const Character = styled.div`
 `;
 const HeadText = styled.p`
   opacity: 0;
-  ${FONTS.HEAD2};
+  ${FONTS.body1("semibold")};
   text-align: center;
   font-size: 2.4rem;
   line-height: 3.8rem;

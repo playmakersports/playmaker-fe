@@ -52,10 +52,10 @@ const TeamHead = styled.div`
   gap: 8px;
 
   h3 {
-    ${FONTS.body3("semibold")}
+    ${FONTS.body3("semibold")};
   }
   div.team-info {
-    ${FONTS.body4("regular")}
+    ${FONTS.body4("regular")};
     display: inline-flex;
     align-items: center;
     gap: 4px;

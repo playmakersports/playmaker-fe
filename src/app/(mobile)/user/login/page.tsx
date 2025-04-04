@@ -84,10 +84,10 @@ const LoginOptions = styled.div`
 `;
 
 const LoginBtn = styled.button`
+  ${FONTS.body3("regular")};
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  ${FONTS.body3("regular")}
   padding: 12px 0;
   border-radius: 48px;
   border: 1px solid var(--gray200);

@@ -34,10 +34,9 @@ const Container = styled.aside`
     background-color: #fff;
   }
   strong {
-    ${FONTS.HEAD2};
+    ${FONTS.body3("semibold")};
     display: block;
     margin-top: 10px;
-    line-height: 2.2rem;
     span {
       color: var(--main);
     }

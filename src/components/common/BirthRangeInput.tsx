@@ -199,12 +199,10 @@ const Select = styled(InputStyledWrapper)`
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.15);
 
   div.selected-value {
-    ${FONTS.body3("regular")}
-    font-weight: 400;
+    ${FONTS.body3("regular")};
   }
   div.placeholder {
-    ${FONTS.body3("regular")}
-    font-weight: 400;
+    ${FONTS.body3("regular")};
     color: var(--gray500);
   }
   i.arrow-icon {

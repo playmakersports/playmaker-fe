@@ -179,12 +179,12 @@ const TeamInfo = styled.div`
   gap: 4px;
 
   div.team-title {
-    ${FONTS.body3("semibold")}
+    ${FONTS.body3("semibold")};
     display: inline-flex;
     align-items: center;
     gap: 4px;
     span.team-tag {
-      ${FONTS.body4("regular")}
+      ${FONTS.body4("regular")};
       display: inline-block;
       padding: 0 4px;
       color: var(--gray600);

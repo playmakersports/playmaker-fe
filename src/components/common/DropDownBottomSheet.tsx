@@ -116,7 +116,7 @@ const Container = styled.div`
 const Select = styled.div`
   cursor: pointer;
   ${TEXT_ACTIVE("var(--gray100)", { activeRange: 3 })}
-  ${FONTS.body4("regular")}
+  ${FONTS.body4("regular")};
   font-weight: 400;
   user-select: none;
   display: flex;
@@ -151,7 +151,7 @@ const SelectCard = styled(InputStyledWrapper)`
     ${FONTS.body3("regular")}
   }
   div.dropdown-placeholder {
-    ${FONTS.body3("regular")}
+    ${FONTS.body3("regular")};
     font-weight: 400;
     color: var(--gray500);
   }

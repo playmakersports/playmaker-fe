@@ -77,7 +77,7 @@ const Header = styled.div`
   border-bottom: 1px solid var(--gray200);
 
   h3 {
-    ${FONTS.HEAD2};
+    ${FONTS.body3("semibold")};
     font-size: 1.8rem;
   }
 

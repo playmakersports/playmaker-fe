@@ -86,7 +86,7 @@ const TeamInfo = styled.div`
     ${FONTS.body4("regular")};
   }
   .team-name {
-    ${FONTS.HEAD2};
+    ${FONTS.body3("semibold")};
   }
 `;
 

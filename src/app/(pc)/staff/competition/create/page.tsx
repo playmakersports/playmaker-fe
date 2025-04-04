@@ -280,14 +280,14 @@ const Container = styled.section`
   }
 
   h2 {
-    ${FONTS.HEAD2}
+    ${FONTS.body1("semibold")};
     padding: 0 2px;
     margin-bottom: 20px;
     font-size: 2.4rem;
   }
   h3.group-title {
     grid-column: 1 / 3;
-    ${FONTS.HEAD2};
+    ${FONTS.body1("semibold")};
     margin: 24px 0 0;
     font-size: 2rem;
   }

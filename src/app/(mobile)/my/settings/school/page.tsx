@@ -111,7 +111,7 @@ const School = styled.div`
     overflow: hidden;
   }
   span.university-name {
-    ${FONTS.body1("semibold")}
+    ${FONTS.body1("semibold")};
     font-weight: 600;
   }
 `;

@@ -64,38 +64,6 @@ const Contents = styled.article`
   justify-content: center;
   padding-bottom: 80px;
 `;
-const Background = styled.div`
-  position: absolute;
-  width: 100%;
-  top: 0;
-
-  svg {
-    position: absolute;
-  }
-  .blue-large {
-    margin-top: 23%;
-    left: -5%;
-  }
-  .green {
-    left: 50%;
-    margin-top: 20%;
-    transform: translateX(-50%);
-  }
-  .blue-small {
-    position: absolute;
-    width: min(55vw, 600px);
-    max-width: 300px;
-    height: 55vw;
-    max-height: 300px;
-    background-color: #92c5ff;
-    margin-top: 35%;
-    right: -5%;
-    border-radius: 50%;
-    box-shadow: 0 0 40px 32px #92c5ff;
-    filter: blur(20px);
-    opacity: 0.3;
-  }
-`;
 
 const Title = styled.div`
   z-index: 1;

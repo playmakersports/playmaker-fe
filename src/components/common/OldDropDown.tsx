@@ -212,7 +212,7 @@ const Options = styled.div<{ $isShow: boolean }>`
   z-index: 100;
 `;
 const Option = styled.button`
-  ${FONTS.body3("regular")}
+  ${FONTS.body3("regular")};
   font-weight: 400;
   cursor: pointer;
   padding: 8px 10px;
@@ -247,7 +247,7 @@ const Option = styled.button`
 `;
 
 const Error = styled.div`
-  ${FONTS.body3("regular")}
+  ${FONTS.body3("regular")};
   padding: 20px 0;
   width: 100%;
   text-align: center;

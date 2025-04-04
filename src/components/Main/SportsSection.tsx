@@ -44,7 +44,7 @@ function SportsSection() {
             ))}
           </ListWrapperColumn>
           <LineBottom />
-          <MoreButton text="더 많은 팀 보기" href={`/team/list?sports=${activeTab}`} />
+          <MoreButton text="더 많은 팀 보기" href={`/team?sports=${activeTab}`} />
         </Container>
 
         <GroupTitle link="">대회 일정</GroupTitle>
@@ -68,7 +68,6 @@ const Wrapper = styled.div`
   background-color: var(--background-light);
   margin: 0 -16px;
   padding: 16px 16px var(--safe-bottom-navigation);
-  border-radius: 30px 30px 0 0;
 `;
 const TabWrapper = styled.div`
   position: sticky;
@@ -79,7 +78,7 @@ const TabWrapper = styled.div`
 
   &.stuck {
     margin: 0 -16px;
-    padding: 2px 16px 8px;
+    padding: 10px 16px 8px;
     box-shadow: var(--shadow-xs);
   }
 `;

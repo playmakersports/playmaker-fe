@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Editor } from "@tiptap/react";
 import styled from "styled-components";
 import { BUTTON_ACTIVE } from "@/styles/common";
+import useStickyMoment from "@/hook/useStickyMoment";
 
 import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 import BoldText from "@/assets/icon/editor/BoldText.svg";
@@ -21,25 +22,7 @@ type Props = {
 function EditorMenu({ editor }: Props) {
   const [showStyle, setShowStyle] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const mainContainerEl = document.getElementById("main_Container") as HTMLDivElement;
-    const headerHeight = +getComputedStyle(document.documentElement)
-      .getPropertyValue("--header-height")
-      .replace("px", "");
-    const safeAreaTop = +getComputedStyle(document.documentElement).getPropertyValue("--env-sat").replace("px", "");
-
-    const handleScroll = () => {
-      containerRef.current!.classList.toggle(
-        "stuck",
-        containerRef.current?.getBoundingClientRect().top === headerHeight + safeAreaTop
-      );
-    };
-    mainContainerEl!.addEventListener("scroll", handleScroll);
-    return () => {
-      mainContainerEl!.removeEventListener("scroll", handleScroll);
-    };
-  }, [containerRef]);
+  useStickyMoment(containerRef);
 
   if (!editor) {
     return null;
@@ -154,18 +137,19 @@ function EditorMenu({ editor }: Props) {
 const Container = styled.div`
   display: flex;
   position: sticky;
-  top: 0;
-  padding: 6px 12px;
+  top: var(--safe-area-top);
+  margin: 0 -16px;
+  padding: 6px 16px;
   overflow-x: auto;
   overflow-y: hidden;
   white-space: nowrap;
   transition: all 0.2s;
 
   &.stuck {
-    margin: 0 -16px;
-    padding: 6px 13px;
+    padding: 12px 16px 8px;
     background-color: var(--background-light);
-    border-bottom: 1px solid var(--gray300);
+    border-bottom: 1px solid var(--gray200);
+    box-shadow: var(--shadow-xs);
     z-index: 10;
   }
   button {

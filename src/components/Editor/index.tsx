@@ -1,10 +1,10 @@
+import "@/styles/editor.css";
 import React from "react";
 import styled from "styled-components";
 import { EditorContent, Editor } from "@tiptap/react";
 
 import EditorMenu from "./Menu";
 import EditorMenuBottom from "./MenuBottom";
-import { EDITOR_ARTICLE_STYLE } from "@/styles/editor";
 import { ArticlePollType } from "./Poll";
 import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
 
@@ -17,14 +17,11 @@ type Props = {
 function EditorUI({ editor, poll, images }: Props) {
   return (
     <EditorContainer>
-      <div id="editorWrapper">
-        {editor && <EditorMenu editor={editor} />}
-        <div id="editor" className={editor?.isFocused ? "focused" : ""}>
-          {editor && <EditorContent editor={editor} />}
-        </div>
+      {editor && <EditorMenu editor={editor} />}
+      <div id="tiptap_Editor" data-focus={editor?.isFocused}>
+        {editor && <EditorContent editor={editor} />}
       </div>
       <EditorMenuBottom editor={editor} poll={poll} images={images} />
-      <div id="make-scrollable" />
     </EditorContainer>
   );
 }
@@ -35,24 +32,15 @@ const EditorContainer = styled.div`
   width: 100%;
   overscroll-behavior: contain;
 
-  #editorWrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--gray300);
-    border-radius: 8px;
-  }
-
-  #editor {
+  #tiptap_Editor {
     flex: 1;
     width: 100%;
     padding: 10px 12px;
-    border: 1px solid transparent;
-    border-top: 1px solid var(--gray300);
-    border-radius: 0 0 8px 8px;
+    border-radius: 8px;
+    border: 1px solid var(--gray200);
 
-    &.focused {
-      border: 1px solid var(--main);
+    &[data-focus="true"] {
+      border-color: var(--gray300);
     }
     div:focus-visible {
       outline: none;
@@ -60,15 +48,7 @@ const EditorContainer = styled.div`
     .tiptap {
       min-height: 360px;
       overflow-y: auto;
-      ${EDITOR_ARTICLE_STYLE}
     }
-  }
-
-  #make-scrollable {
-    position: absolute;
-    left: 0;
-    width: 1px;
-    height: calc(100% + 1px); // height를 100%보다 1px높게 잡아 실제로 scroll이 되도록 만듭니다.
   }
 `;
 

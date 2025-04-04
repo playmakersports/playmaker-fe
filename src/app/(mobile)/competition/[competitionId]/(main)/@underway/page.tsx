@@ -79,7 +79,7 @@ const Container = styled(BaseContainer)`
   padding-bottom: calc(var(--env-sab) + 100px);
 `;
 const Participants = styled.div`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   display: flex;
   justify-content: space-between;
   align-items: center;

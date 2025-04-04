@@ -192,11 +192,11 @@ const TeamList = styled.div`
     gap: 4px;
     color: var(--gray900);
     transition: all 0.25s;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
   }
 `;
 const Title = styled.h3`
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
 `;
 const NotiList = styled.div``;
 const Group = styled.div`
@@ -207,7 +207,7 @@ const List = styled.ul`
     display: flex;
     padding: 12px 0;
     gap: 10px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
   }
   strong.team-name {
     display: block;

@@ -55,14 +55,14 @@ const Container = styled.div`
   border-radius: 10px;
 
   h2 {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
   }
   ul.info-list {
     display: flex;
     flex-direction: column;
     gap: 5px;
     margin-top: 16px;
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     color: var(--gray600);
 
     li {

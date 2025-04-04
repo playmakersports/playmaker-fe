@@ -74,7 +74,7 @@ const Container = styled.div`
     padding: 8px 12px;
     align-items: center;
     justify-content: space-between;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
 
     p {
       display: inline-flex;
@@ -91,7 +91,7 @@ const Container = styled.div`
       border-radius: 6px;
       background-color: var(--main);
       color: var(--white);
-      ${FONTS.MD2}
+      ${FONTS.body4("regular")}
       font-weight:400;
 
       &:active {

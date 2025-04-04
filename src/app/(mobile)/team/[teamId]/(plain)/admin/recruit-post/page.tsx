@@ -56,7 +56,7 @@ const Container = styled(BaseContainer)`
     padding: 8px 8px 16px;
 
     div {
-      ${FONTS.MD1W500};
+      ${FONTS.body3("regular")};
       margin-bottom: 8px;
       font-weight: 400;
       display: flex;
@@ -64,7 +64,7 @@ const Container = styled(BaseContainer)`
       align-items: center;
     }
     p {
-      ${FONTS.MD2};
+      ${FONTS.body4("regular")};
       font-weight: 400;
       color: var(--gray700);
     }

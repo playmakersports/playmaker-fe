@@ -80,17 +80,17 @@ const Container = styled.div`
 
   .video-match {
     margin-bottom: 2px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray600);
   }
   .video-title {
-    ${FONTS.HEAD1};
+    ${FONTS.body1("semibold")};
     font-size: 1.8rem;
   }
   .video-description {
     margin: 12px 0 8px;
     color: var(--gray800);
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
   }
   .video-setting {
     margin: 16px 0 6px;
@@ -100,7 +100,7 @@ const Container = styled.div`
     align-items: center;
     border-bottom: 1px solid var(--gray300);
     color: var(--gray700);
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
 
     .video-share {
       display: flex;

@@ -137,7 +137,7 @@ const AllCheck = styled.div`
   label {
     user-select: none;
     width: 100%;
-    ${FONTS.MD1W500}
+    ${FONTS.body3("regular")}
   }
 `;
 const TermList = styled.ul`

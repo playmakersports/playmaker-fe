@@ -69,7 +69,7 @@ function TeamCreateStep4({ setStep }: { setStep: (prev: number) => void }) {
 }
 
 const InputLabel = styled.div`
-  ${FONTS.MD2}
+  ${FONTS.body4("regular")}
   padding: 0 2px;
   display: inline-flex;
   align-items: center;

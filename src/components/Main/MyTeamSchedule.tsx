@@ -126,7 +126,7 @@ const CardImg = styled.div<{ img: string }>`
   background-size: 100%;
 
   div.team-name {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     position: absolute;
     margin: 5px 10px;
     padding: 5px 10px;
@@ -136,7 +136,7 @@ const CardImg = styled.div<{ img: string }>`
     backdrop-filter: blur(4px);
   }
   div.match-d-day {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     position: absolute;
     margin: 3px 10px 0;
     padding: 5px 0;
@@ -149,7 +149,7 @@ const CardImg = styled.div<{ img: string }>`
 const CardInfo = styled.div`
   padding: 0 8px;
   h4 {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     margin-bottom: 6px;
     color: var(--gray900);
   }
@@ -158,7 +158,7 @@ const CardInfo = styled.div`
       display: flex;
       gap: 10px;
       color: var(--gray800);
-      ${FONTS.MD2}
+      ${FONTS.body4("regular")}
       dd {
         flex: 1;
         font-weight: 400;

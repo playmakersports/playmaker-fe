@@ -62,7 +62,7 @@ const Wrapper = styled(MatchSummaryCard)<{ $expanded: boolean; $contentsHeight: 
   overflow: hidden;
 `;
 const Header = styled.div`
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
   user-select: none;
   padding: 16px;
   display: flex;
@@ -78,7 +78,7 @@ const Header = styled.div`
       display: flex;
       flex-direction: column;
       span.team-name {
-        ${FONTS.MD2};
+        ${FONTS.body4("regular")};
         font-weight: 400;
         color: var(--gray600);
       }
@@ -144,7 +144,7 @@ const StatList = styled.ul`
   flex-direction: column;
   gap: 12px;
   li {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     display: flex;
     padding: 4px 0;
     justify-content: space-between;

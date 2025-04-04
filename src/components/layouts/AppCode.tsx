@@ -43,7 +43,7 @@ const Container = styled.aside`
     }
   }
   p {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     margin-top: 6px;
     color: var(--gray600);
   }

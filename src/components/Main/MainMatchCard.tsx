@@ -144,7 +144,7 @@ const MatchBox = styled.div`
       border: 1px solid var(--neutral-n20);
     }
     .team-name {
-      ${FONTS.MD1};
+      ${FONTS.body3("semibold")};
       color: #fff;
       font-size: 1.4rem;
       text-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
@@ -152,7 +152,7 @@ const MatchBox = styled.div`
   }
 `;
 const Opened = styled.p`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   display: flex;
   gap: 8px;
   align-items: center;
@@ -171,7 +171,7 @@ const Opened = styled.p`
 `;
 
 const DetailList = styled.ul`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   margin: 10px 0 0;
   display: flex;
   flex-direction: column;

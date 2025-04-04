@@ -67,7 +67,7 @@ const MediumCardContainer = styled(BasicWhiteCard)`
 
   .match-poster {
     position: relative;
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     width: 112px;
     height: 128px;
     background-size: cover;
@@ -90,7 +90,7 @@ const MediumCardContainer = styled(BasicWhiteCard)`
 `;
 
 const DetailList = styled.ul`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   margin: 10px 0 0;
   display: flex;
   flex-direction: column;
@@ -114,7 +114,7 @@ const MediumContents = styled.div`
   padding: 12px 18px;
 
   h5 {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     color: var(--gray900);
   }
   li.attend-number {

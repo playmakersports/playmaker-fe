@@ -101,7 +101,7 @@ function BoardCategory() {
 const Container = styled(BaseContainer)`
   div.description {
     padding: 0 4px 8px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     font-weight: 400;
     color: var(--gray800);
     strong {
@@ -120,7 +120,7 @@ const List = styled.ul`
     display: inline-flex;
     justify-content: space-between;
     user-select: none;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     padding: 18px 16px;
     background-color: var(--gray100);
     border-radius: 10px;

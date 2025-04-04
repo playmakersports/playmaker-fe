@@ -299,7 +299,7 @@ const Container = styled.section`
       label {
         position: sticky;
         top: 20px;
-        ${FONTS.MD2};
+        ${FONTS.body4("regular")};
         display: flex;
         flex-direction: column;
         justify-content: center;

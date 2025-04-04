@@ -87,7 +87,7 @@ const LoginBtn = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  ${FONTS.MD1W500}
+  ${FONTS.body3("regular")}
   padding: 12px 0;
   border-radius: 48px;
   border: 1px solid var(--gray200);
@@ -107,7 +107,7 @@ const StaffLogin = styled.p`
   text-align: center;
   button {
     padding: 0 16px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray500);
     letter-spacing: -0.15px;
     border-radius: 4px;

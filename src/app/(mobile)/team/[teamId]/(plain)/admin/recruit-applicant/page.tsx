@@ -168,7 +168,7 @@ const Name = styled.div`
     color: var(--warning500);
   }
   p.player-name {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     margin-bottom: 4px;
   }
   p.player-tags {
@@ -194,7 +194,7 @@ const PlayerDetail = styled.div`
   transition: opacity 0.25s, height 0.2s;
 
   p.introduce {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     margin: 12px 0 8px;
     font-size: 1.3rem;
     font-weight: 400;
@@ -214,12 +214,12 @@ const PlayerDetail = styled.div`
     gap: 6px;
     margin: 0 4px;
     strong {
-      ${FONTS.MD3};
+      ${FONTS.body4("regular")};
       font-weight: 600;
       color: var(--gray600);
     }
     p {
-      ${FONTS.MD2};
+      ${FONTS.body4("regular")};
       font-weight: 400;
       color: var(--gray900);
     }

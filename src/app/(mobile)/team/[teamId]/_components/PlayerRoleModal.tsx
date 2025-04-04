@@ -96,7 +96,7 @@ const Header = styled.div`
 `;
 
 const Inner = styled.div`
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   margin-top: 16px;
   display: flex;
   flex-direction: column;

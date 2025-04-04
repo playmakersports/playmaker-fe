@@ -184,7 +184,7 @@ const List = styled.div<{ $clickable: boolean }>`
 const Schedules = styled.ul`
   display: flex;
   flex-direction: column;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
 
   .team-group-schedules {
     display: inline-flex;

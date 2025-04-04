@@ -57,7 +57,7 @@ const Wrapper = styled.div<{ $swipeWidth: number }>`
   }
 
   p.inner {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     padding: 0 20px;
     white-space: nowrap;
     display: inline-block;

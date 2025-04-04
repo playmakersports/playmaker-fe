@@ -73,7 +73,7 @@ const Container = styled(BaseContainer)`
     padding: 0 12px;
   }
   p.info-title {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
   }
 `;
 const TeamList = styled.ul`
@@ -99,7 +99,7 @@ const TeamList = styled.ul`
     border-radius: 50%;
   }
   span.team-name {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     font-size: 1.8rem;
   }
 `;

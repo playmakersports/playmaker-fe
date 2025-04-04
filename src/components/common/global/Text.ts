@@ -11,7 +11,7 @@ export const StepPageTitle = styled.h3`
 `;
 export const StepPageDescription = styled.p`
   margin: 0 10px;
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   font-weight: 400;
   color: var(--gray700);
   white-space: pre-line;

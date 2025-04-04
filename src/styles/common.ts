@@ -5,13 +5,6 @@ const FONTS_WEIGHT: Record<FontsWeight, number> = {
   regular: 400,
 };
 export const FONTS = {
-  HEAD1: `font-weight: 700; font-size: 2rem; line-height: 2.2rem;`,
-  HEAD2: `font-weight: 600; font-size: 1.6rem; line-height: 2.2rem;`,
-  MD1: `font-weight: 600; font-size: 1.6rem; line-height: 2.4rem;`,
-  MD1W500: `font-weight: 500; font-size: 1.6rem; line-height: 2.4rem;`,
-  MD2: `font-weight: 500; font-size: 1.4rem; line-height: 2.2rem;`,
-  MD3: `font-weight: 400; font-size: 1.3rem; line-height: 1.8rem;`,
-
   head1: (weight: FontsWeight) => `font-size: 6.4rem; line-height: 8rem; font-weight: ${FONTS_WEIGHT[weight]}`,
   head2: (weight: FontsWeight) => `font-size: 5.6rem; line-height: 7.2rem; font-weight: ${FONTS_WEIGHT[weight]}`,
   head3: (weight: FontsWeight) => `font-size: 4.8rem; line-height: 6.4rem; font-weight: ${FONTS_WEIGHT[weight]}`,

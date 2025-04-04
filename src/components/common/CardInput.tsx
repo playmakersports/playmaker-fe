@@ -22,7 +22,7 @@ CardInput.displayName = "CardInput";
 
 const Card = styled(BasicWhiteCard).attrs({ as: "label" })`
   cursor: pointer;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   width: 100%;
   font-weight: 400;
   ${CARD_ACTIVE}

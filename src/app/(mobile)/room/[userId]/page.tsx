@@ -131,7 +131,7 @@ const Info = styled.div`
     }
   }
   p.introduce {
-    ${FONTS.MD2}
+    ${FONTS.body4("regular")}
     font-weight: 400;
     color: var(--gray800);
     white-space: pre-line;
@@ -160,7 +160,7 @@ const MyPageButtons = styled(BasicWhiteCard)`
   & > button {
     user-select: none;
     position: relative;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     flex: 1;
     padding: 12px 0;
     font-weight: 400;

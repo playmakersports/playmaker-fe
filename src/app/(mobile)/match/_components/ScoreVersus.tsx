@@ -85,7 +85,7 @@ const Versus = styled.div`
     color: var(--gray600);
     text-align: center;
     p.versus {
-      ${FONTS.MD1W500};
+      ${FONTS.body3("regular")};
       color: var(--gray500);
     }
   }
@@ -113,11 +113,11 @@ const Team = styled.div<{ $backColor: string }>`
     border-radius: 50%;
   }
   div.team-name {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     color: var(--gray900);
   }
   div.team-univ {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray600);
   }
 

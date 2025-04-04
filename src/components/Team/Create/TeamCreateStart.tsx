@@ -120,7 +120,7 @@ const UnivNameTag = styled.div`
   bottom: calc(var(--env-sab) + 60px);
   padding: 8px 20px;
   width: max-content;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   color: var(--main);
   border-radius: 10px;
   border: 1px solid #e7eefd;
@@ -227,13 +227,13 @@ const Item = styled.button`
   }
   strong.card-title {
     display: block;
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     font-size: 1.8rem;
     flex-shrink: 0;
     word-break: keep-all;
   }
   p.description {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     font-weight: 400;
     color: var(--gray700);
     text-align: center;

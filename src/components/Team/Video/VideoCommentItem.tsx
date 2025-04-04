@@ -87,7 +87,7 @@ const Container = styled.li`
 `;
 
 const Time = styled.div`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   margin: 8px 0;
   height: 100%;
   z-index: 1;
@@ -121,7 +121,7 @@ const Contents = styled(BasicWhiteCard)`
   padding: 12px 16px;
   border-radius: 12px;
   transition: all 0.2s;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   line-height: 2.4rem;
 
   &::after {
@@ -129,7 +129,7 @@ const Contents = styled(BasicWhiteCard)`
     display: block;
     opacity: 0.6;
     margin-top: 6px;
-    ${FONTS.MD3}
+    ${FONTS.body4("regular")}
   }
 `;
 

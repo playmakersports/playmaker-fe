@@ -60,7 +60,7 @@ const PageText = styled.div`
     display: inline;
     user-select: none;
     padding: 6px 16px;
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     color: #e2a600;
     border-radius: 20px;
     border: 3px solid #ecad00;
@@ -68,7 +68,7 @@ const PageText = styled.div`
 
   p {
     margin-top: 40px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray600);
     line-height: 2.4rem;
   }

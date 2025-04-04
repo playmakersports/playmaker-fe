@@ -31,7 +31,7 @@ const CoverImage = styled.section<{ src: string }>`
   background-repeat: no-repeat;
 `;
 const Description = styled.p`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   color: var(--gray800);
   text-align: center;
   padding: 12px;

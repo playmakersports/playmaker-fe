@@ -33,7 +33,7 @@ const Container = styled.div`
   }
 
   p.notice-text {
-    ${FONTS.MD1W500}
+    ${FONTS.body3("regular")}
     font-weight: 400;
     font-size: 1.4rem;
   }

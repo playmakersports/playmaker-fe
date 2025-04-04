@@ -211,7 +211,7 @@ const PickList = styled.ul`
     padding: 8px 12px;
     display: block;
     text-align: center;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     color: var(--gray600);
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.5px;

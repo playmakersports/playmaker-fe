@@ -231,7 +231,7 @@ const OptionGroup = styled.div`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     padding: 0 4px;
     border-radius: 8px;
     color: var(--gray800);
@@ -283,7 +283,7 @@ const LoadingWrapper = styled.div`
 const ImagePosition = styled.div`
   display: inline-flex;
   align-items: center;
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   padding: 0 4px;
   gap: 4px;
   div.position-options {

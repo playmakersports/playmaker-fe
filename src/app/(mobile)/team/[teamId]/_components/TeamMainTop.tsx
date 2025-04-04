@@ -89,7 +89,7 @@ const Right = styled.div`
   flex-direction: column;
   gap: 8px;
   h2 {
-    ${FONTS.HEAD1};
+    ${FONTS.body1("semibold")};
     display: flex;
     justify-content: space-between;
     align-items: center;

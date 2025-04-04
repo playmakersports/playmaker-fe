@@ -139,7 +139,7 @@ const Menu = styled.div`
   display: flex;
   flex-direction: column;
   button {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     font-size: 1.6rem;
     display: flex;
     justify-content: space-between;

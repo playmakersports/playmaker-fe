@@ -250,12 +250,12 @@ const Group = styled.div`
   margin: 12px 0;
 `;
 const Title = styled.h5`
-  ${FONTS.HEAD1};
+  ${FONTS.body1("semibold")};
   margin: 0 0 12px;
 `;
 const List = styled.ul`
   margin: 0 -16px;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   li {
     user-select: none;
     cursor: pointer;
@@ -311,7 +311,7 @@ const SubTextWrapper = styled.div`
 `;
 
 const AllowContainer = styled.div`
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
   padding: 0 8px;
   display: flex;
   flex-direction: column;
@@ -326,7 +326,7 @@ const AllowContainer = styled.div`
     }
   }
   p.description {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     font-weight: 400;
     color: var(--gray700);
   }

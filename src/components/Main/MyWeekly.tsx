@@ -75,7 +75,7 @@ const Week = styled.div`
   div {
     flex: 1;
     text-align: center;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
 
     &:first-of-type {
       // 일요일
@@ -122,7 +122,7 @@ const Week = styled.div`
 
 const Schedules = styled.div`
   padding: 0 16px 16px;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
 
   .team-group {
     padding-bottom: 12px;

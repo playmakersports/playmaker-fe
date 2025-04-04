@@ -75,12 +75,12 @@ const Wrapper = styled.div`
   }
 
   p.title {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     margin-bottom: 5px;
     color: var(--gray800);
   }
   p.article-sub {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     color: var(--gray600);
     strong {
       margin-right: 5px;
@@ -92,7 +92,7 @@ const Wrapper = styled.div`
 `;
 
 const CountInfo = styled.div`
-  ${FONTS.MD3};
+  ${FONTS.body4("regular")};
   display: flex;
   color: var(--gray600);
   gap: 8px;

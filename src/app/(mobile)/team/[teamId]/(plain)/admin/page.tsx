@@ -90,10 +90,10 @@ const TeamInfo = styled.div`
   align-items: center;
   gap: 10px;
   h2 {
-    ${FONTS.HEAD1};
+    ${FONTS.body1("semibold")};
   }
   div.team-description {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     color: var(--gray700);
     height: 1.8rem;
     overflow: hidden;
@@ -132,7 +132,7 @@ const TeamInfoSettings = styled.div`
   & > button {
     user-select: none;
     position: relative;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     flex: 1;
     padding: 12px 0;
     font-weight: 400;

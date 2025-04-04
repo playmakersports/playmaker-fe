@@ -48,7 +48,7 @@ const Container = styled.div`
     width: max-content;
     margin: 0 auto;
     padding: 2px 40px;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray800);
     background-color: var(--gray100);
     border-radius: 16px;
@@ -60,7 +60,7 @@ const Container = styled.div`
   }
 `;
 const TeamScoreItem = styled.div`
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
   display: flex;
   padding: 20px 0;
   align-items: center;

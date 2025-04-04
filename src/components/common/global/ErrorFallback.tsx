@@ -73,13 +73,13 @@ const Container = styled(BaseContainer)`
   }
 
   p.title {
-    ${FONTS.HEAD1};
+    ${FONTS.body1("semibold")};
     margin-bottom: 4px;
     font-size: 2.6rem;
     color: var(--main);
   }
   p.description {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     line-height: 2.6rem;
     color: var(--gray700);
     text-align: center;

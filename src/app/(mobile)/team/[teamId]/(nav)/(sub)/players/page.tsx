@@ -135,7 +135,7 @@ const Filter = styled.div`
   justify-content: space-between;
   align-items: center;
   p {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     color: var(--gray500);
     font-weight: 400;
   }

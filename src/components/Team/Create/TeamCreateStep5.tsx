@@ -171,7 +171,7 @@ const DisplayAboveBottom = styled.div`
   bottom: calc(var(--env-sab) + 60px);
   padding: 8px 20px;
   width: max-content;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   color: var(--purple300);
   border-radius: 10px;
   background-color: #fff;

@@ -88,7 +88,7 @@ const SummaryContainer = styled.div`
 `;
 
 const ScoreTable = styled(MatchSummaryCard)`
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
 
   div.table-row {
     display: flex;

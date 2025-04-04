@@ -119,7 +119,7 @@ const Item = styled.li`
   padding: 16px 10px;
   border-bottom: 1px solid var(--gray200);
   p.competition-header {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     display: flex;
     align-items: center;
     gap: 4px;
@@ -130,7 +130,7 @@ const Item = styled.li`
     }
   }
   p.competition-date {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     font-weight: 400;
     color: var(--gray600);
   }
@@ -142,13 +142,13 @@ const Item = styled.li`
   }
 `;
 const Detail = styled.article`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   flex: 1;
   padding-top: 20px;
   font-weight: 400;
 `;
 const Status = styled.span`
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   font-size: 1.3rem;
   line-height: 1.2rem;
   padding: 4px;

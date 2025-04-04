@@ -92,7 +92,7 @@ function TeamListCard(props: Props) {
 }
 
 const Card = styled(BasicWhiteCard)`
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   font-weight: 400;
   text-align: left;
   border: 1px solid var(--gray200);
@@ -119,7 +119,7 @@ const CardHeader = styled.div`
     }
   }
   h3 {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     display: inline-flex;
     align-items: center;
     font-size: 1.6rem;
@@ -158,7 +158,7 @@ const TeamLabels = styled.ul`
   gap: 4px;
 
   .recruit-status {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     font-size: 1.3rem;
     font-weight: 500;
     display: inline-flex;

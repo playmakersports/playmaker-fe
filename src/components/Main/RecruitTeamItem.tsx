@@ -76,14 +76,14 @@ const TeamInfo = styled.div`
   }
   .univ-name {
     opacity: 0.8;
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     color: var(--gray700);
     &::before {
       content: "• ";
     }
   }
   .location-time {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
   }
   .team-name {
     ${FONTS.HEAD2};

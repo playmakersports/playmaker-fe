@@ -74,7 +74,7 @@ const Length = styled.div`
   margin: 4px 8px;
   right: 0;
   bottom: 0;
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   color: var(--gray400);
   backdrop-filter: blur(8px);
   background-color: rgba(256, 256, 256, 0.7);

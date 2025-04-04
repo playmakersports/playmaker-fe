@@ -113,7 +113,7 @@ const CoverUpload = styled.label<{ $src: string }>`
   border-radius: 20px;
 
   div.camera-icon-wrapper {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     display: flex;
     width: 88px;
     height: 88px;
@@ -157,7 +157,7 @@ const DisplayAboveBottom = styled.div`
   bottom: calc(var(--env-sab) + 60px);
   padding: 8px 20px;
   width: max-content;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   color: var(--purple300);
   border-radius: 10px;
   background-color: #fff;

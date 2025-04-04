@@ -42,13 +42,13 @@ const CommentInput = styled.div`
   }
 
   input {
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     margin-top: -8px;
     padding: 8px 0;
     font-weight: 400;
   }
   button#CommentUploadBtn {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     padding: 6px 20px;
     background-color: var(--gray500);
     color: var(--white);

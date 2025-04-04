@@ -31,7 +31,7 @@ const Container = styled.button`
   width: 100%;
   color: var(--gray600);
   border-radius: 10px;
-  ${FONTS.MD2};
+  ${FONTS.body4("regular")};
   font-weight: 400;
   svg {
     fill: var(--gray600);

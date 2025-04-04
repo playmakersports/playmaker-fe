@@ -75,7 +75,7 @@ const Item = styled(BasicWhiteCard).attrs({ as: "li" })`
   ${CARD_ACTIVE}
 
   p.article-category {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     display: inline-block;
     margin-bottom: 6px;
     padding: 1px 4px;
@@ -86,7 +86,7 @@ const Item = styled(BasicWhiteCard).attrs({ as: "li" })`
   }
   p.article-title {
     flex: 1;
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     margin-bottom: 20px;
     font-weight: 500;
     line-height: 2.2rem;
@@ -98,7 +98,7 @@ const Item = styled(BasicWhiteCard).attrs({ as: "li" })`
     text-overflow: ellipsis;
   }
   p.article-author {
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     font-weight: 400;
     color: var(--gray700);
     span.author-separator {

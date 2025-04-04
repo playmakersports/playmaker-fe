@@ -52,10 +52,10 @@ const TeamHead = styled.div`
   gap: 8px;
 
   h3 {
-    ${FONTS.MD1}
+    ${FONTS.body3("semibold")}
   }
   div.team-info {
-    ${FONTS.MD2}
+    ${FONTS.body4("regular")}
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -84,7 +84,7 @@ const TeamLogo = styled.div`
 const TeamDetail = styled.div`
   padding: 12px 16px;
   ul.team-recruit-list {
-    ${FONTS.MD2};
+    ${FONTS.body4("regular")};
     margin: 0 0 12px;
     padding: 0 16px;
     li {

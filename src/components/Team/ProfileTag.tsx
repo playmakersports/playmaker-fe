@@ -100,7 +100,7 @@ const Wrapper = styled.div`
   .profile-info {
     padding: 1px 0;
     width: 100%;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     p.profile-name {
       font-weight: 600;
       font-size: 1.8rem;

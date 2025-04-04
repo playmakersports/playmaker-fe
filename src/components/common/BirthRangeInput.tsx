@@ -199,11 +199,11 @@ const Select = styled(InputStyledWrapper)`
   box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.15);
 
   div.selected-value {
-    ${FONTS.MD1W500}
+    ${FONTS.body3("regular")}
     font-weight: 400;
   }
   div.placeholder {
-    ${FONTS.MD1W500}
+    ${FONTS.body3("regular")}
     font-weight: 400;
     color: var(--gray500);
   }
@@ -266,7 +266,7 @@ const YearPanel = styled.div`
   padding: 8px 12px;
   display: block;
   text-align: center;
-  ${FONTS.MD1W500};
+  ${FONTS.body3("regular")};
   color: var(--gray600);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.5px;

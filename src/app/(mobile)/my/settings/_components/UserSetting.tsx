@@ -101,14 +101,14 @@ const Container = styled.div`
 const GroupTitle = styled.div`
   margin-top: 10px;
   padding: 16px 0;
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
   font-size: 2rem;
 `;
 const Group = styled.ul`
   margin: 0 -16px 16px;
   li {
     padding: 16px 18px;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     font-weight: 400;
     display: flex;
     align-items: center;
@@ -126,7 +126,7 @@ const Group = styled.ul`
     }
   }
   span.status-wrapper {
-    ${FONTS.MD1W500}
+    ${FONTS.body3("regular")}
     display: inline-flex;
     align-items: center;
     font-size: 1.4rem;

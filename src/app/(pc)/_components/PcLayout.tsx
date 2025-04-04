@@ -73,7 +73,7 @@ const Menu = styled.ul`
     padding: 1px 8px;
     color: var(--gray800);
     border-radius: 4px;
-    ${FONTS.MD1W500};
+    ${FONTS.body3("regular")};
     ${TEXT_ACTIVE("var(--gray100)", { hover: true })};
   }
 `;

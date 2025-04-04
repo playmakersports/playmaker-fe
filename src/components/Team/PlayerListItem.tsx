@@ -107,7 +107,7 @@ const Name = styled.div`
     color: var(--main);
   }
   p.player-name {
-    ${FONTS.MD1};
+    ${FONTS.body3("semibold")};
     display: inline-flex;
     align-items: center;
     gap: 4px;

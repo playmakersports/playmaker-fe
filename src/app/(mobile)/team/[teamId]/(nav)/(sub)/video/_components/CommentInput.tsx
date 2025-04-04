@@ -33,7 +33,7 @@ function VideoCommentInput({ articleId, currentTime }: any) {
 
 const Container = styled.div`
   display: flex;
-  ${FONTS.MD1};
+  ${FONTS.body3("semibold")};
   display: flex;
   justify-content: space-between;
   align-items: center;

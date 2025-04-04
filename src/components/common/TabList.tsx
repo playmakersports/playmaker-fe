@@ -26,7 +26,7 @@ const Nav = styled.nav`
   div.tab-inner > a {
     user-select: none;
     cursor: pointer;
-    ${FONTS.MD3};
+    ${FONTS.body4("regular")};
     flex: 1;
     padding: 10px 0;
     font-size: 1.4rem;

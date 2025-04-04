@@ -1,10 +1,11 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useRouter, useSearchParams, useParams } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
+import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { FONTS } from "@/styles/common";
 import MainTab from "@/components/Main/MainTab";
@@ -15,11 +16,13 @@ import ListArticle from "./_components/ListArticle";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 import Loading from "@/components/common/Loading";
+import Button from "@/components/common/Button";
 
 function Board() {
   const router = useRouter();
   const params = useParams();
   const teamId = params["teamId"];
+  const popup = usePopup();
   const searchParams = useSearchParams();
 
   useHeader({
@@ -37,19 +40,46 @@ function Board() {
   useStickyMoment(tabRef);
   const [, setTab] = useState("ALL");
   const currentPage = searchParams.get("page") || "1";
+  const currentKeyword = searchParams.get("keyword") || "";
 
-  const { data, isLoading } = useGet<GetTeamBoardListResponse>(`/api/board/team/${teamId}`, { page: currentPage });
+  const { data, isLoading, isError, refetch } = useGet<GetTeamBoardListResponse>(`/api/board/team/${teamId}`, {
+    page: currentPage,
+    keyword: currentKeyword,
+  });
+
   const updatePaging = (page: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page);
     window.history.pushState(null, "", `?${params.toString()}`);
   };
+  const updateKeyword = (keyword: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("keyword", keyword);
+    window.history.pushState(null, "", `?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    const showErrorPopup = async () => {
+      const isConfirm = await popup?.confirm("서버 문제 혹은 네트워크가 연결되지 않은 상태일 수 있습니다.", {
+        title: "게시글을 불러오지 못했습니다.",
+        showIcon: true,
+        buttonText: {
+          yes: "닫기",
+          no: "재시도",
+        },
+      });
+
+      if (!isConfirm) {
+        refetch();
+      }
+    };
+    if (isError) {
+      showErrorPopup();
+    }
+  }, [isError]);
 
   return (
     <>
-      <Search>
-        <BasicInput type="text" iconType="search" />
-      </Search>
       <TabWrapper ref={tabRef}>
         <MainTab
           padding={16}
@@ -92,11 +122,29 @@ function Board() {
 
         <Page>
           {PAGE_MOCK.map((pageNum) => (
-            <button type="button" key={pageNum} onClick={() => updatePaging(String(pageNum))}>
+            <button
+              type="button"
+              data-active={currentPage === String(pageNum)}
+              key={pageNum}
+              onClick={() => updatePaging(String(pageNum))}
+            >
               {pageNum}
             </button>
           ))}
         </Page>
+        <Search
+          onSubmit={(e) => {
+            e.preventDefault();
+            updateKeyword(e.currentTarget.keyword.value);
+          }}
+        >
+          <div style={{ flex: 1 }}>
+            <BasicInput type="text" iconType="search" id="keyword" />
+          </div>
+          <Button type="submit" size="small" mode="gray" fillType="light">
+            검색
+          </Button>
+        </Search>
       </Container>
     </>
   );
@@ -105,33 +153,9 @@ function Board() {
 const MOCK = [1, 10, 12, 14, 16, 8, 9, 28, 4, 2];
 const PAGE_MOCK = [1, 2, 3, 4, 5];
 
-const Search = styled.div`
-  display: flex;
-  padding: 12px 16px 0px;
-`;
-const Page = styled.div`
-  display: flex;
-  margin-top: 32px;
-  justify-content: center;
-  gap: 12px;
-
-  button {
-    ${FONTS.MD1};
-    padding: 8px 12px;
-    background-color: var(--background-light);
-    border-radius: 8px;
-    user-select: none;
-
-    &:active {
-      color: #fff;
-      background-color: var(--main);
-    }
-  }
-`;
 const Container = styled(BaseContainer)`
-  padding-top: 20px;
+  padding-top: 0;
   padding-bottom: calc(16px + var(--env-sab));
-  background-color: var(--background);
 `;
 const TabWrapper = styled.div`
   position: sticky;
@@ -147,38 +171,61 @@ const TabWrapper = styled.div`
 `;
 const FixedArticles = styled.div``;
 const FixedArticle = styled.div`
-  border-bottom: 1px solid var(--gray300);
-  .article-inner {
+  border-bottom: 1px solid var(--gray200);
+  color: var(--gray700);
+
+  div.article-inner {
+    cursor: pointer;
     display: flex;
-    padding: 12px 20px;
+    padding: 10px 16px;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
-    ${FONTS.MD1W500}
+    gap: 20px;
   }
-
-  label {
-    color: #fff;
-    padding: 0 6px;
-    border-radius: 4px;
-    font-size: 1.4rem;
+  p.article-head {
+    margin-bottom: 4px;
+    ${FONTS.body4("semibold")};
   }
-
-  .article-head {
-    ${FONTS.MD1};
-    font-weight: 600;
-  }
-  .article-sub {
-    font-weight: 400;
-    font-size: 1.4rem;
-    color: var(--gray700);
+  p.article-sub {
+    color: var(--gray500);
+    ${FONTS.caption1("regular")};
   }
 `;
 const Articles = styled.div`
   display: flex;
+  min-height: 120px;
+  margin: 0 0 16px;
   flex-direction: column;
+`;
+
+const Search = styled.form`
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 0 15%;
+`;
+const Page = styled.div`
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
   gap: 12px;
-  padding-bottom: 720px;
+
+  button {
+    ${FONTS.body3("regular")};
+    padding: 8px 16px;
+    background-color: var(--primary50);
+    border-radius: 6px;
+    user-select: none;
+
+    &:active {
+      background-color: var(--primary100);
+    }
+    &[data-active="true"] {
+      color: #fff;
+      background-color: var(--primary500);
+      ${FONTS.body4("semibold")};
+    }
+  }
 `;
 
 export default Board;

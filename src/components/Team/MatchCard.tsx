@@ -80,7 +80,7 @@ function MatchCard(props: Props) {
             </div>
           )}
           {status === "FINISHED" && mvpId && (
-            <MVPLabel leftWin={matchTeamScore > matchCounterpartScore}>MVP {mvpId}</MVPLabel>
+            <MVPLabel $leftWin={matchTeamScore > matchCounterpartScore}>MVP {mvpId}</MVPLabel>
           )}
         </MatchInfo>
         <Team>
@@ -168,11 +168,11 @@ const MatchInfo = styled.div`
   }
 `;
 
-const MVPLabel = styled.div<{ leftWin: boolean }>`
+const MVPLabel = styled.div<{ $leftWin: boolean }>`
   position: relative;
   display: flex;
-  padding: ${({ leftWin }) => (leftWin ? "4px 8px 4px 10px" : "4px 10px 4px 8px")};
-  border-radius: ${({ leftWin }) => (leftWin ? "0 10px 10px 0" : "10px 0 0 10px")};
+  padding: ${({ $leftWin }) => ($leftWin ? "4px 8px 4px 10px" : "4px 10px 4px 8px")};
+  border-radius: ${({ $leftWin }) => ($leftWin ? "0 10px 10px 0" : "10px 0 0 10px")};
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--primary600);
@@ -197,11 +197,11 @@ const MVPLabel = styled.div<{ leftWin: boolean }>`
     display: block;
     width: ${Math.sqrt(2) * 10}px;
     height: ${Math.sqrt(2) * 10}px;
-    background-color: var(--primary200);
+    background-color: var(--primary100);
     transform-origin: top;
-    transform: rotate(45deg) translateY(calc(-50% ${({ leftWin }) => (leftWin ? "+" : "-")} 5px))
-      translateX(${({ leftWin }) => (leftWin ? "-5" : "5")}px);
-    ${({ leftWin }) => (leftWin ? "left: 0" : "right: 0")};
+    transform: rotate(45deg) translateY(calc(-50% ${({ $leftWin }) => ($leftWin ? "+" : "-")} 5px))
+      translateX(${({ $leftWin }) => ($leftWin ? "-5" : "5")}px);
+    ${({ $leftWin }) => ($leftWin ? "left: 0" : "right: 0")};
   }
 `;
 

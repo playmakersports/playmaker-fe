@@ -2,7 +2,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { navigationIcon } from "./style/navigation.module.scss";
+import styles from "./style/navigation.module.scss";
 import {
   activeIcon,
   navigationButton,
@@ -45,7 +45,11 @@ function Navigation({ hide = false }: { hide?: boolean }) {
       <div className={navigationContainer}>
         <div className={navigationInner}>
           <Link href="/" legacyBehavior prefetch>
-            <a className={`${navigationButton} ${navigationIcon}`} data-label="홈" data-active={pathname === "/"}>
+            <a
+              className={`${navigationButton} ${styles.navigationIcon}`}
+              data-label="홈"
+              data-active={pathname === "/"}
+            >
               {pathname === "/" ? (
                 <HomeIconFilled className={`filled ${navigationSvg} ${activeIcon}`} />
               ) : (
@@ -54,7 +58,11 @@ function Navigation({ hide = false }: { hide?: boolean }) {
             </a>
           </Link>
           <Link href="/team" legacyBehavior prefetch>
-            <a className={`${navigationButton} ${navigationIcon}`} data-label="팀" data-active={pathname === "/team"}>
+            <a
+              className={`${navigationButton} ${styles.navigationIcon}`}
+              data-label="팀"
+              data-active={pathname === "/team"}
+            >
               {pathname === "/team" ? (
                 <PeopleIconFilled className={`filled ${navigationSvg} ${activeIcon}`} />
               ) : (
@@ -64,7 +72,7 @@ function Navigation({ hide = false }: { hide?: boolean }) {
           </Link>
           <Link href="/matches" legacyBehavior prefetch>
             <a
-              className={`${navigationButton} ${navigationIcon}`}
+              className={`${navigationButton} ${styles.navigationIcon}`}
               data-label="알림"
               data-active={pathname === "/matches"}
             >
@@ -76,7 +84,11 @@ function Navigation({ hide = false }: { hide?: boolean }) {
             </a>
           </Link>
           <Link href="/feed" legacyBehavior prefetch>
-            <a className={`${navigationButton} ${navigationIcon}`} data-label="피드" data-active={pathname === "/feed"}>
+            <a
+              className={`${navigationButton} ${styles.navigationIcon}`}
+              data-label="피드"
+              data-active={pathname === "/feed"}
+            >
               {pathname === "/feed" ? (
                 <MailIconFilled className={`filled ${navigationSvg} ${activeIcon}`} />
               ) : (
@@ -86,7 +98,7 @@ function Navigation({ hide = false }: { hide?: boolean }) {
           </Link>
           <Link href="/my" legacyBehavior prefetch>
             <a
-              className={`${navigationButton} ${navigationIcon}`}
+              className={`${navigationButton} ${styles.navigationIcon}`}
               data-label="마이"
               data-active={pathname === "/my" || pathname.startsWith("/my/")}
             >

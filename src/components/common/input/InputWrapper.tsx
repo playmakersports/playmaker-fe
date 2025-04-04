@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { InputWrapperStyledProps } from "./type";
 import { FONTS } from "@/styles/common";
 import useTooltip, { TooltipProps } from "../Tooltip";
+import { baseInputHeader, baseInputQuestionIcon, baseInputWrapper } from "./container.css";
 
 function InputWrapper({ children, ...props }: InputWrapperStyledProps & { children: React.ReactNode }) {
   const { title, information, required } = props;
@@ -14,14 +15,14 @@ function InputWrapper({ children, ...props }: InputWrapperStyledProps & { childr
 
   return (
     <>
-      <Wrapper>
+      <div className={baseInputWrapper}>
         {title && (
-          <div className="input-header">
+          <div className={baseInputHeader}>
             <span className="title">{title}</span>
             {information && (
               <div style={{ position: "relative", display: "inline-flex" }}>
                 <Tooltip />
-                <button type="button" className="question-icon" onClick={onClickOpenTooltip}>
+                <button type="button" className={baseInputQuestionIcon} onClick={onClickOpenTooltip}>
                   <InfoIcon fill="var(--gray400)" />
                 </button>
               </div>
@@ -30,31 +31,10 @@ function InputWrapper({ children, ...props }: InputWrapperStyledProps & { childr
           </div>
         )}
         <div style={{ position: "relative" }}>{children}</div>
-      </Wrapper>
+      </div>
     </>
   );
 }
-
-const Wrapper = styled.div`
-  max-width: var(--mobile-max-width);
-  div.input-header {
-    display: flex;
-    margin-bottom: 8px;
-    align-items: center;
-    gap: 4px;
-    ${FONTS.body4("medium")};
-
-    span.title {
-      color: var(--gray700);
-    }
-    button.question-icon {
-      position: relative;
-      cursor: help;
-      width: 20px;
-      height: 20px;
-    }
-  }
-`;
 
 const InfoIcon = ({ fill }: { fill: string }) => {
   return (

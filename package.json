@@ -27,6 +27,7 @@
     "@vanilla-extract/next-plugin": "^2.4.10",
     "@vercel/speed-insights": "^1.1.0",
     "axios": "^1.6.8",
+    "clsx": "^2.1.1",
     "cookies-next": "^5.0.2",
     "date-fns": "^3.6.0",
     "event-source-polyfill": "^1.0.31",
@@ -41,7 +42,6 @@
     "react-error-boundary": "^4.1.2",
     "react-hook-form": "^7.51.3",
     "react-youtube": "^10.1.0",
-    "sass": "^1.86.3",
     "sonner": "^2.0.1",
     "styled-components": "^6.1.13"
   },

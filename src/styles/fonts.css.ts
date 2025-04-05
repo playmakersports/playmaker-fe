@@ -24,11 +24,11 @@ const fontSizes = {
 
 type FontSizeKey = keyof typeof fontSizes;
 
-export const font = {} as Record<FontSizeKey, Record<FontWeightKey, string>>;
+export const fonts = {} as Record<FontSizeKey, Record<FontWeightKey, string>>;
 
 (Object.entries(fontSizes) as [FontSizeKey, { fontSize: string; lineHeight: string }][]).forEach(
   ([sizeKey, { fontSize, lineHeight }]) => {
-    font[sizeKey] = styleVariants(fontWeight, (weight) => ({
+    fonts[sizeKey] = styleVariants(fontWeight, (weight) => ({
       fontSize,
       lineHeight,
       fontWeight: weight,

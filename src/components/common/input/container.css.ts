@@ -1,4 +1,4 @@
-import { font } from "@/styles/font.css";
+import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
 export const baseInputWrapper = style({
@@ -6,7 +6,7 @@ export const baseInputWrapper = style({
 });
 
 export const baseInputHeader = style([
-  font.body4.medium,
+  fonts.body4.medium,
   {
     display: "flex",
     marginBottom: "8px",

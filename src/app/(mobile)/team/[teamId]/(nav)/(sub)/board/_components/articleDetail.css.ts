@@ -1,4 +1,4 @@
-import { font } from "@/styles/font.css";
+import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
 export const articleDetailHeader = {
@@ -11,9 +11,9 @@ export const articleDetailHeader = {
     color: "var(--gray700)",
     borderBottom: "1px solid var(--gray200)",
   }),
-  title: style([font.body3.semibold]),
+  title: style([fonts.body3.semibold]),
   info: style([
-    font.body4.regular,
+    fonts.body4.regular,
     {
       display: "flex",
       justifyContent: "space-between",

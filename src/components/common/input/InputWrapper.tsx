@@ -1,7 +1,5 @@
 import React from "react";
-import styled from "styled-components";
 import { InputWrapperStyledProps } from "./type";
-import { FONTS } from "@/styles/common";
 import useTooltip, { TooltipProps } from "../Tooltip";
 import { baseInputHeader, baseInputQuestionIcon, baseInputWrapper } from "./container.css";
 

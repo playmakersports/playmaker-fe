@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
+import { timeInputModalContainer } from "./container.css";
 
 type Props =
   | {
@@ -43,7 +43,8 @@ function TimeInputModal(props: Props) {
   } else {
     const { position } = props;
     return (
-      <ModalContainer
+      <div
+        className={timeInputModalContainer}
         style={{
           left: position.x === "left" ? 0 : "auto",
           right: position.x === "right" ? 0 : "auto",
@@ -52,23 +53,9 @@ function TimeInputModal(props: Props) {
         }}
       >
         {children}
-      </ModalContainer>
+      </div>
     );
   }
 }
-
-const ModalContainer = styled.div`
-  position: absolute;
-  left: 0;
-  margin: 8px -4px;
-  width: 320px;
-  min-width: 320px;
-  padding: 16px;
-  background-color: var(--background-light);
-  border-radius: 10px;
-  box-shadow: var(--shadow-lg);
-  z-index: 50;
-  color: var(--gray700);
-`;
 
 export default TimeInputModal;

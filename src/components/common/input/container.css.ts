@@ -22,3 +22,17 @@ export const baseInputQuestionIcon = style({
   width: "20px",
   height: "20px",
 });
+
+export const timeInputModalContainer = style({
+  position: "absolute",
+  left: 0,
+  margin: "8px -4px",
+  width: "320px",
+  minWidth: "320px",
+  padding: "16px",
+  backgroundColor: "var(--background-light)",
+  borderRadius: "10px",
+  boxShadow: "var(--shadow-lg)",
+  zIndex: 50,
+  color: "var(--gray700)",
+});

@@ -1,5 +1,5 @@
 import { FONTS, getFontsJSON } from "@/styles/common";
-import { keyframes, style } from "@vanilla-extract/css";
+import { globalStyle, keyframes, style } from "@vanilla-extract/css";
 
 const bounce = keyframes({
   "0%": { transform: "scale(1)" },
@@ -42,8 +42,17 @@ export const navigationButton = style({
       color: "var(--gray400)",
       ...getFontsJSON(FONTS.caption1("regular")),
     },
+    '&[data-active="true"]::after': {
+      color: "var(--primary500)",
+      ...getFontsJSON(FONTS.caption1("semibold")),
+    },
   },
 });
+globalStyle(`${navigationButton}:active > svg`, {
+  transform: "scale(0.9)",
+  transition: "transform 0.1s ease",
+});
+
 export const navigationSvg = style({
   flexShrink: 0,
   width: "24px",

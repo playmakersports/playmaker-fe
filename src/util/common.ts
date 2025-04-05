@@ -1,7 +1,7 @@
 /**
  * 마지막 글자의 받침이 있다면 true, 없다면 false
  */
-export function isEndWithConsonant(korStr: string) {
+export function isEndBatchim(korStr: string) {
   const finalChrCode = korStr.charCodeAt(korStr.length - 1);
   // 0 = 받침 없음, 그 외 = 받침 있음
   const finalConsonantCode = (finalChrCode - 44032) % 28;

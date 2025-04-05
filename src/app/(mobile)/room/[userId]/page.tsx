@@ -10,7 +10,6 @@ import { useGet } from "@/apis/hook/query";
 
 import { FONTS } from "@/styles/common";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
-import RoomAwarded from "@/components/Room/Awarded";
 import UserSetting from "@/app/(mobile)/my/settings/_components/UserSetting";
 import { BasicWhiteCard } from "@/components/common/Card";
 import { ApiSelectMember } from "@/apis/types/user";
@@ -86,13 +85,6 @@ function UserPage() {
             },
           ]}
         /> */}
-        <RoomAwarded
-          awardsList={[
-            { awardedYear: 2024, competitionName: "경기1", awardedRank: 1 },
-            { awardedYear: 2023, competitionName: "경기2", awardedRank: 3 },
-            { awardedYear: 2023, competitionName: "경기3", awardedRank: 2 },
-          ]}
-        />
       </TopWrapper>
       <WhiteSectionDivider />
       <UserSetting />

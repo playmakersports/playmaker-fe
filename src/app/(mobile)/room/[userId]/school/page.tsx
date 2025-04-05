@@ -7,11 +7,11 @@ import { FieldValues, useForm } from "react-hook-form";
 import Image from "next/image";
 
 import { FONTS } from "@/styles/common";
+import DropdownInput from "@/components/common/input/DropdownInput";
 import Badge from "@/components/common/Badge";
 import { BaseContainer } from "@/components/common/Container";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { FileInput } from "@/components/common/FileInput";
-import DropDown from "@/components/common/OldDropDown";
 import FloatButton from "@/components/common/FloatButton";
 import Button from "@/components/common/Button";
 
@@ -53,10 +53,12 @@ function UserSchool() {
             />
           </div>
           <div style={{ flex: 1 }}>
-            <DropDown
-              placeholder="선택"
+            <DropdownInput
               title="학년"
-              getSelectedValue={(value) => setValue("grade", value)}
+              required
+              placeholder="선택"
+              value={watch("grade")}
+              onChange={(value) => setValue("grade", value)}
               options={[
                 { value: "1", name: "1학년" },
                 { value: "2", name: "2학년" },

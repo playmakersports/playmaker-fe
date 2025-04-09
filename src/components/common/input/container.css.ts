@@ -1,5 +1,5 @@
 import { fonts } from "@/styles/fonts.css";
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const baseInputWrapper = style({
   maxWidth: "var(--mobile-max-width)",
@@ -35,4 +35,38 @@ export const timeInputModalContainer = style({
   boxShadow: "var(--shadow-lg)",
   zIndex: 50,
   color: "var(--gray700)",
+});
+
+export const numberFlowContainer = style({
+  position: "relative",
+  display: "grid",
+  width: "inherit",
+  alignItems: "center",
+  justifyItems: "center",
+  textAlign: "center",
+  gridTemplateAreas: "'overlap'",
+  boxSizing: "border-box",
+});
+export const numberFlowInternalInput = style({
+  width: "inherit",
+  fontVariantNumeric: "inherit",
+  appearance: "textfield",
+  backgroundColor: "transparent",
+  fontFamily: "inherit",
+  fontWeight: "inherit",
+  textAlign: "center",
+  color: "transparent",
+  caretColor: "var(--gray700)",
+
+  "::-webkit-inner-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+  "::-webkit-outer-spin-button": {
+    WebkitAppearance: "none",
+    margin: 0,
+  },
+});
+globalStyle(`${numberFlowContainer} > *`, {
+  gridArea: "overlap",
 });

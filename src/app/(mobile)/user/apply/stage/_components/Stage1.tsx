@@ -37,7 +37,6 @@ function Stage1() {
       <div
         className={stageFormWrapper}
         style={{
-          height: "100%",
           justifyContent: "space-between",
         }}
       >
@@ -109,6 +108,7 @@ function Stage1() {
 
 const Agreement = styled.div`
   display: flex;
+  margin-bottom: 28px;
   flex-direction: column;
   gap: 20px;
 `;

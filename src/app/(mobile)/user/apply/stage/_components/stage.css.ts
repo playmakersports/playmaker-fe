@@ -1,4 +1,3 @@
-import { baseContainer } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
@@ -24,7 +23,10 @@ export const stageWrapper = {
   ]),
   contents: style({
     flex: 1,
-    marginBottom: "28px",
+    display: "flex",
+    padding: "0 20px",
+    flexDirection: "column",
+    height: "100%",
   }),
   buttons: style({
     display: "flex",
@@ -33,12 +35,9 @@ export const stageWrapper = {
   }),
 };
 
-export const stageFormWrapper = style([
-  baseContainer,
-  {
-    display: "flex",
-    paddingTop: 0,
-    flexDirection: "column",
-    gap: "10px",
-  },
-]);
+export const stageFormWrapper = style({
+  flex: 1,
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+});

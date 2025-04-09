@@ -18,7 +18,7 @@ function StageWrapper(props: Props) {
   return (
     <div className={stageWrapper.container}>
       <section className={stageWrapper.contents}>
-        <div style={{ marginTop: "24px", padding: "0 16px 16px" }}>
+        <div style={{ margin: "24px 0 16px" }}>
           <Badge type="primary" fillType="light" size="large">
             {current} / {length}
           </Badge>

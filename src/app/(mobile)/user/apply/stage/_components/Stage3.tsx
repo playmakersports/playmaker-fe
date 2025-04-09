@@ -109,7 +109,7 @@ const Location = styled.div`
   flex-direction: column;
   gap: 20px;
   height: 100%;
-  margin: 0 -16px;
+  margin: 0 -20px 20px;
   border-bottom: 1px solid var(--gray200);
   div.location-selected {
     display: inline-flex;

@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { BaseContainer, WhiteSectionDivider } from "@/components/common/Container";
 import Button from "@/components/common/Button";
 
-import LogoSymbolType from "@/assets/logo/LogoSymbol.svg";
+import LogoSymbolType from "@/assets/logo/LogoSymbolGreen.svg";
 import LogoTextType from "@/assets/logo/LogoTextType.svg";
 
 type Props = {
@@ -40,8 +40,8 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               y2="269.69"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#306DEF" />
-              <stop offset="1" stopColor="#306DEF" stopOpacity="0" />
+              <stop stopColor={logoFill ?? "#2BCE8A"} />
+              <stop offset="1" stopColor={logoFill ?? "#2BCE8A"} stopOpacity="0" />
             </linearGradient>
             <linearGradient
               id="paint1_linear_2198_3712"
@@ -51,15 +51,15 @@ function LoginWrapper({ children, button, logoFill }: Props) {
               y2="372.539"
               gradientUnits="userSpaceOnUse"
             >
-              <stop stopColor="#306DEF" />
-              <stop offset="1" stopColor="#306DEF" stopOpacity="0" />
+              <stop stopColor={logoFill ?? "#2BCE8A"} />
+              <stop offset="1" stopColor={logoFill ?? "#2BCE8A"} stopOpacity="0" />
             </linearGradient>
           </defs>
         </Background>
       )}
       <LogoArea>
-        <LogoSymbolType className="logo-icon" fill={logoFill ?? "var(--main)"} />
-        <LogoTextType className="logo-text" fill={logoFill ?? "var(--main)"} />
+        <LogoSymbolType className="logo-icon" width={132} height={72} />
+        <LogoTextType className="logo-text" width={150} height={16} fill={logoFill ?? "var(--main)"} />
       </LogoArea>
       <Bottom>
         <Wrapper>{children}</Wrapper>
@@ -90,7 +90,7 @@ const Background = styled.svg`
   display: block;
   position: absolute;
   left: -48px;
-  top: 20%;
+  top: 15%;
   width: 600px;
   height: 800px;
   z-index: 0;
@@ -100,15 +100,7 @@ const LogoArea = styled.div`
   margin: 60px 0;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  svg.logo-icon {
-    width: 84px;
-    height: 84px;
-  }
-  svg.logo-text {
-    width: 148px;
-    height: 22px;
-  }
+  gap: 18px;
 `;
 const Bottom = styled.section`
   z-index: 1;

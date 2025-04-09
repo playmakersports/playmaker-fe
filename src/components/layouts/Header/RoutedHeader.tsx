@@ -126,8 +126,8 @@ const Container = styled.div`
   gap: 10px;
   top: 0;
   left: 0;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 16px;
+  padding-right: 16px;
   padding-top: env(safe-area-inset-top);
 
   &[data-never="true"] {

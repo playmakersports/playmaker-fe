@@ -6,7 +6,8 @@ export const stageWrapper = {
   container: style({
     display: "flex",
     flexDirection: "column",
-    height: "calc(100vh - var(--header-height) - 1px)",
+    justifyContent: "space-between",
+    height: "calc(100vh - var(--safe-area-top) - 1px)",
   }),
   title: style([
     fonts.body1.semibold,

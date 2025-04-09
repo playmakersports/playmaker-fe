@@ -32,6 +32,9 @@ function Login() {
   const handleIntroPage = () => {
     router.push("/user/apply");
   };
+  const handleApplyStage = () => {
+    router.push("/user/apply/stage");
+  };
   const handleMyPage = () => {
     router.push("/my");
   };
@@ -40,9 +43,6 @@ function Login() {
   };
   const handleStaffLoginPage = () => {
     router.push("/user/login/staff");
-  };
-  const handleTestLogin = () => {
-    router.push("/user/login/test");
   };
 
   return (
@@ -54,17 +54,17 @@ function Login() {
         <GoogleBtn type="button" onClick={handleGoogleLogin}>
           <GoogleLogo /> Google로 시작하기
         </GoogleBtn>
-        <Button type="button" mode="gray" onClick={handleIntroPage}>
-          회원가입
-        </Button>
-        <Button type="button" mode="red" fillType="light" onClick={onClickTeamPage}>
+        <Button type="button" mode="red" fillType="light" size="large" onClick={onClickTeamPage}>
           팀 게시판
         </Button>
-        <Button type="button" mode="gray" fillType="light" onClick={handleMyPage}>
+        <Button type="button" mode="gray" fillType="light" size="large" onClick={handleMyPage}>
           My Page
         </Button>
-        <Button type="button" mode="success" fillType="light" onClick={handleTestLogin}>
-          테스트 로그인
+        <Button type="button" mode="primary" size="large" fillType="light" onClick={handleIntroPage}>
+          회원가입 (구버전)
+        </Button>
+        <Button type="button" mode="primary" size="large" onClick={handleApplyStage}>
+          회원가입
         </Button>
         <StaffLogin>
           <button type="button" onClick={handleStaffLoginPage}>
@@ -86,10 +86,10 @@ const LoginOptions = styled.div`
 const LoginBtn = styled.button`
   ${FONTS.body3("regular")};
   display: inline-flex;
+  min-height: 48px;
   align-items: center;
   justify-content: center;
-  padding: 12px 0;
-  border-radius: 48px;
+  border-radius: 10px;
   border: 1px solid var(--gray200);
   gap: 10px;
   transition: transform 0.2s;

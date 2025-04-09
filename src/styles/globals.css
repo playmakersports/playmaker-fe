@@ -55,27 +55,27 @@ div.skeleton-loading-ui {
   --gray50: #f8fafc;
   --white: #fff;
 
-  --primary900: #0e633c;
-  --primary800: #177843;
-  --primary700: #24954d;
-  --primary600: #35b256;
-  --primary500: #49cf60;
-  --primary400: #74e27c;
-  --primary300: #94f093;
-  --primary200: #c0fab9;
-  --primary100: #e2fcdb;
-  --primary50: #f0fdec;
+  --success900: #0e633c;
+  --success800: #177843;
+  --success700: #24954d;
+  --success600: #35b256;
+  --success500: #49cf60;
+  --success400: #74e27c;
+  --success300: #94f093;
+  --success200: #c0fab9;
+  --success100: #e2fcdb;
+  --success50: #f0fdec;
 
-  --success900: #086261;
-  --success800: #0d776a;
-  --success700: #159478;
-  --success600: #1fb182;
-  --success500: #2bce8a;
-  --success400: #5be19c;
-  --success300: #7ef0a9;
-  --success200: #aafac1;
-  --success100: #d4fcdb;
-  --success50: #e7fdeb;
+  --primary900: #086261;
+  --primary800: #0d776a;
+  --primary700: #159478;
+  --primary600: #1fb182;
+  --primary500: #2bce8a;
+  --primary400: #5be19c;
+  --primary300: #7ef0a9;
+  --primary200: #aafac1;
+  --primary100: #d4fcdb;
+  --primary50: #e7fdeb;
 
   --info900: #09237a;
   --info800: #0f3393;

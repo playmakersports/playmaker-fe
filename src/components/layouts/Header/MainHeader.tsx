@@ -16,10 +16,7 @@ import {
 import LogoSymbol from "@/assets/logo/LogoSymbol.svg";
 import LogoSymbolGreen from "@/assets/logo/LogoSymbolGreen.svg";
 import LogoTextType from "@/assets/logo/LogoTextType.svg";
-
-import NoticeBellIcon from "@/assets/icon/common/filled/Notification.svg";
-import NoticeBellActiveIcon from "@/assets/icon/common/filled/NotificationUnread.svg";
-import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+import SearchIcon from "@/assets/icon/common/Search.svg";
 
 type Props = { scrollY: number };
 function MainHeader({ scrollY }: Props) {
@@ -40,7 +37,7 @@ function MainHeader({ scrollY }: Props) {
             onClick={() => router.push("/notification")}
             aria-label="내 알림 전체보기"
           >
-            <NoticeBellIcon className={headerButtonIcon} fill={isScrolled ? "var(--gray700)" : "var(--gray100)"} />
+            <SearchIcon className={headerButtonIcon} fill={isScrolled ? "var(--gray700)" : "var(--gray100)"} />
           </button>
         </div>
       </div>

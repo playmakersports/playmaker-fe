@@ -16,7 +16,7 @@ import {
 } from "@/atom/common";
 import DropdownAction from "@/components/common/input/DropdownAction";
 
-import LeftArrow from "@/assets/icon/arrow/LeftArrow.svg";
+import LeftDirectionArrow from "@/assets/icon/arrow/LeftDirection.svg";
 
 type Props = { scrollY: number };
 function RoutedHeader({ scrollY }: Props) {
@@ -56,12 +56,12 @@ function RoutedHeader({ scrollY }: Props) {
         ) : (
           <>
             <button type="button" onClick={onClickBack} id="backButton" style={{ width: "24px", height: "24px" }}>
-              <LeftArrow width="100%" height="100%" />
+              <LeftDirectionArrow width="100%" height="100%" />
             </button>
             <Title
               data-never={!canTransparent}
               data-fadein={canTransparent && isScrolled}
-              style={{ ...getFontsJSON(FONTS.body3("semibold")), flex: 1 }}
+              style={{ ...getFontsJSON(FONTS.body2("semibold")), flex: 1 }}
             >
               {title}
             </Title>
@@ -126,14 +126,17 @@ const Container = styled.div`
   gap: 10px;
   top: 0;
   left: 0;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-top: env(safe-area-inset-top);
 
   &[data-never="true"] {
     background-color: var(--background-light);
     &[data-scrolled="true"] {
       border-color: var(--gray200);
+    }
+    svg {
+      fill: var(--gray700);
     }
   }
   &[data-never="false"] {
@@ -157,14 +160,18 @@ const Container = styled.div`
 const Subs = styled.ul`
   display: flex;
   gap: 10px;
-  li {
+  li > button,
+  li > a {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
     width: 24px;
     height: 24px;
-    & a > svg {
-      width: 100%;
-      height: 100%;
-      fill: var(--gray700);
-    }
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: var(--gray700);
   }
 `;
 

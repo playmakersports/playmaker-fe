@@ -1,12 +1,14 @@
-import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
-import { FONTS } from "@/styles/common";
-import styled from "styled-components";
 import React, { ReactNode, useCallback, useState } from "react";
+import styled from "styled-components";
+
+import { fonts } from "@/styles/fonts.css";
+import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 
 export type ModalProps = {
   disabledDimOut?: boolean;
   draggable?: "bar" | "all" | false;
   title?: string;
+  description?: string;
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
 };
@@ -20,14 +22,25 @@ function useModal() {
 
   const ModalComponents = useCallback(
     (props: ModalProps) => {
-      const { disabledDimOut = false, title, children, draggable = false, buttons } = props;
+      const { disabledDimOut = false, title, description, children, draggable = false, buttons } = props;
 
       if (showBottom) {
         return (
           <BottomSheet
             draggable={draggable}
             disabledDimOut={disabledDimOut}
-            header={title && <Title>{title}</Title>}
+            header={
+              title && (
+                <HeaderContainer>
+                  {title && <h4 className={fonts.body2.semibold}>{title}</h4>}
+                  {description && (
+                    <span className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>
+                      {description}
+                    </span>
+                  )}
+                </HeaderContainer>
+              )
+            }
             setShow={setShowBottom}
             buttons={buttons}
             expanded={false}
@@ -40,9 +53,10 @@ function useModal() {
     [showBottom]
   );
 
-  const Title = styled.h3`
-    margin-bottom: 4px;
-    ${FONTS.body3("semibold")}
+  const HeaderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   `;
 
   return { ModalComponents, showModal };

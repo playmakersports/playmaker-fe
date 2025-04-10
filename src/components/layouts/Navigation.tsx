@@ -14,14 +14,14 @@ import {
 // Filled
 import HomeIconFilled from "@/assets/icon/common/filled/Home.svg";
 import PeopleIconFilled from "@/assets/icon/common/filled/People.svg";
+import TrophyFilled from "@/assets/icon/sports/filled/Trophy.svg";
 import NotificationIconFilled from "@/assets/icon/common/filled/Notification.svg";
-import MailIconFilled from "@/assets/icon/common/filled/Mail.svg";
 import PersonIconFilled from "@/assets/icon/common/filled/Person.svg";
 // Outlined
 import HomeIconOutlined from "@/assets/icon/common/outlined/Home.svg";
 import PeopleIconOutlined from "@/assets/icon/common/outlined/People.svg";
+import TrophyOutlined from "@/assets/icon/sports/outlined/Trophy.svg";
 import NotificationIconOutlined from "@/assets/icon/common/outlined/Notification.svg";
-import MailIconOutlined from "@/assets/icon/common/outlined/Mail.svg";
 import PersonIconOutlined from "@/assets/icon/common/outlined/Person.svg";
 
 function Navigation({ hide = false }: { hide?: boolean }) {
@@ -62,21 +62,21 @@ function Navigation({ hide = false }: { hide?: boolean }) {
               )}
             </a>
           </Link>
-          <Link href="/matches" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="알림" data-active={pathname === "/matches"}>
-              {pathname === "/matches" ? (
-                <NotificationIconFilled className={clsx(navigationSvg, activeIcon)} />
+          <Link href="/feed" legacyBehavior prefetch>
+            <a className={navigationButton} data-label="대회" data-active={pathname === "/feed"}>
+              {pathname === "/feed" ? (
+                <TrophyFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
-                <NotificationIconOutlined className={navigationSvg} />
+                <TrophyOutlined className={navigationSvg} />
               )}
             </a>
           </Link>
-          <Link href="/feed" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="피드" data-active={pathname === "/feed"}>
-              {pathname === "/feed" ? (
-                <MailIconFilled className={clsx(navigationSvg, activeIcon)} />
+          <Link href="/notification" legacyBehavior prefetch>
+            <a className={navigationButton} data-label="알림" data-active={pathname === "/notification"}>
+              {pathname === "/notification" ? (
+                <NotificationIconFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
-                <MailIconOutlined className={navigationSvg} />
+                <NotificationIconOutlined className={navigationSvg} />
               )}
             </a>
           </Link>

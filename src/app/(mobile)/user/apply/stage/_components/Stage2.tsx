@@ -8,7 +8,7 @@ import InputWrapper from "@/components/common/input/InputWrapper";
 import MainTab from "@/components/Main/MainTab";
 
 function Stage2() {
-  const { register, setValue } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
 
   const handleSexKey = (value: string) => {
     setValue("sexKey", value);
@@ -39,6 +39,7 @@ function Stage2() {
           color="gray"
           size="medium"
           sameWidth
+          initialValue={watch("sexKey")}
           nowValue={handleSexKey}
           items={[
             { value: "MALE", name: "남성" },

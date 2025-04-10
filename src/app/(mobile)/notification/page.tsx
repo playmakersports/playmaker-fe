@@ -13,8 +13,13 @@ import TabList from "@/components/common/TabList";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PushRequest from "@/components/Methods/PushRequest";
 
+import SettingsIcon from "@/assets/icon/common/outlined/Settings.svg";
+
 function Notification() {
-  useHeader({ title: "알림" });
+  useHeader({
+    title: "알림",
+    subIcons: [{ svgIcon: <SettingsIcon />, onClick: () => {}, description: "알림 설정" }],
+  });
   const tabRef = useRef<HTMLDivElement>(null);
   const teamListRef = useRef<HTMLDivElement>(null);
   useStickyMoment(tabRef);

@@ -111,9 +111,9 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     border: 1px solid ${({ $color }) => ($color ? "var(--red200)" : "var(--gray200)")};
     background-color: transparent;
     svg {
+      display: none;
       width: 100%;
       height: 100%;
-      fill: transparent;
     }
   }
   &:focus:not(:checked) + i {
@@ -126,6 +126,7 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     border: 1px solid transparent;
     background-color: ${({ $color }) => ($color ? "var(--red500)" : "var(--primary500)")};
     svg {
+      display: block;
       fill: var(--white);
     }
   }
@@ -134,6 +135,7 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     border: 1px solid transparent;
     background-color: var(--gray200);
     svg {
+      display: block;
       fill: var(--gray100);
     }
   }

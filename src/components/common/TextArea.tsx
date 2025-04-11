@@ -1,8 +1,8 @@
 "use client";
-
 import React, { useImperativeHandle, useRef, useState } from "react";
 import { FONTS } from "@/styles/common";
 import styled from "styled-components";
+import NumberFlow from "@number-flow/react";
 
 import { InputStyledWrapper } from "./Wrapper";
 import InputWrapper from "./input/InputWrapper";
@@ -23,7 +23,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>((props, ref
       <TextAreaWrapper $isError={error}>
         {displayLength && (
           <Length>
-            {length}
+            <NumberFlow value={length} willChange format={{ useGrouping: false }} />
             {rest.maxLength && `/${rest.maxLength}`}
           </Length>
         )}
@@ -74,7 +74,7 @@ const Length = styled.div`
   margin: 4px 8px;
   right: 0;
   bottom: 0;
-  ${FONTS.body4("regular")};
+  ${FONTS.caption1("regular")};
   color: var(--gray400);
   backdrop-filter: blur(8px);
   background-color: rgba(256, 256, 256, 0.7);

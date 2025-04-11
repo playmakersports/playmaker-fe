@@ -1,90 +1,131 @@
-import React, { useState } from "react";
+"use client";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
+import { useFormContext } from "react-hook-form";
 
-import { fonts } from "@/styles/fonts.css";
-import { baseContainer } from "@/styles/container.css";
-import { NumberFlowInput } from "@/components/common/input/NumberFlowInput";
+import { stageFormWrapper, stageWrapper } from "./stage.css";
+import { BasicInput } from "@/components/common/input/BaseInput";
+import { TextArea } from "@/components/common/TextArea";
+
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function Stage4() {
-  const [number, setNumber] = useState(0);
+  const { register, watch } = useFormContext();
+  const [previewImage, setPreviewImage] = useState("");
+
+  const handlePreviewImg = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files?.[0];
+    const reader = new FileReader();
+    if (file) {
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        if (reader.result) {
+          setPreviewImage(reader.result.toString());
+        }
+      };
+    }
+  };
+
+  useEffect(() => {
+    if (watch("profileImg")) {
+      const file = watch("profileImg")[0];
+      const reader = new FileReader();
+      if (file) {
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          if (reader.result) {
+            setPreviewImage(reader.result.toString());
+          }
+        };
+      }
+    }
+  }, []);
+
   return (
-    <div className={baseContainer}>
-      <div
-        style={{
-          display: "flex",
-          gap: "2px",
-          alignItems: "center",
-          justifyContent: "center",
-          fontVariantNumeric: "tabular-nums",
-        }}
-      >
-        <div
-          className={fonts.head4.semibold}
-          style={{
-            letterSpacing: "-0.15rem",
-            color: "var(--gray700)",
-          }}
-        >
-          <NumberFlowInput
-            style={{ padding: "0 2px" }}
-            value={number}
-            onChange={(e) => {
-              setNumber(e.target.valueAsNumber);
-            }}
-          />
-        </div>
-        <p className={fonts.body2.regular} style={{ color: "var(--gray400)" }}>
-          kg
-        </p>
+    <div className={stageFormWrapper}>
+      <div>
+        <h3 className={stageWrapper.title}>프로필을 작성해주세요</h3>
+        <p className={stageWrapper.description}></p>
       </div>
-      <RangeSlider
-        type="range"
-        min={40}
-        max={120}
-        value={number}
-        onChange={(e) => {
-          setNumber(e.target.valueAsNumber);
-        }}
+      <ImageUpload htmlFor="profileImgUpload">
+        {previewImage ? <PreviewImg src={previewImage} /> : <PersonIcon />}
+        <div className="camera-icon-wrapper">
+          <PlusIcon />
+        </div>
+      </ImageUpload>
+      <BasicInput type="text" title="닉네임" required {...register("nickname")} />
+      <TextArea
+        title="자기소개"
+        placeholder={`다른 플레이어들에게 보일 자기소개를 작성해 주세요\n200자 이내 작성 가능합니다.`}
+        required
+        style={{ height: "130px", resize: "none" }}
+        displayLength
+        maxLength={200}
+        {...register("selfIntro")}
+      />
+      <input
+        style={{ display: "none" }}
+        type="file"
+        accept="image/*"
+        id="profileImgUpload"
+        {...register("profileImg", {
+          onChange: handlePreviewImg,
+        })}
       />
     </div>
   );
 }
 
-const RangeSlider = styled.input<{
-  min: number;
-  max: number;
-  value: number;
-}>`
-  appearance: none;
+const ImageUpload = styled.label`
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  border-radius: 14px;
+  background-color: var(--gray50);
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  svg {
+    width: 44px;
+    height: 44px;
+    fill: var(--gray300);
+  }
+  .camera-icon-wrapper {
+    position: absolute;
+    display: flex;
+    right: -6px;
+    top: -6px;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--primary500);
+    border: 2px solid var(--background-light);
+    svg {
+      width: 14px;
+      height: 14px;
+      fill: #fff;
+    }
+  }
+
+  &:active {
+    transform: scale(0.97);
+    transition: transform 0.25s;
+  }
+`;
+
+const PreviewImg = styled.img`
   width: 100%;
-  height: 2px;
-
-  background: ${({ min, max, value }) => {
-    const percentage = ((value - min) / (max - min)) * 100;
-    return `linear-gradient(to right, var(--primary500) 0%, var(--primary500) ${percentage}%, var(--gray200) ${percentage}%, var(--gray200) 100%)`;
-  }};
-  border-radius: 4px;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 16px;
-    height: 16px;
-    background-color: var(--white);
-    border: 1px solid var(--gray300);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: var(--shadow-xs);
-  }
-  &::-moz-range-thumb {
-    width: 16px;
-    height: 16px;
-    background-color: var(--white);
-    border: 1px solid var(--gray300);
-    border-radius: 50%;
-    cursor: pointer;
-    box-shadow: var(--shadow-xs);
-  }
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  overflow: hidden;
 `;
 
 export default Stage4;

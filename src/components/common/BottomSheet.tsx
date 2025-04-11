@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import Button, { ButtonFillType, ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
 
@@ -23,6 +23,7 @@ export type BottomSheetProps = {
 const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
   const { disabledDimOut = false, setShow, draggable = false, children, header, expanded, buttons } = props;
+  const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [touchStartY, setTouchStartY] = useState(0);
   const [translateY, setTranslateY] = useState(0);
@@ -78,6 +79,12 @@ function BottomSheet(props: BottomSheetProps) {
     onTouchEnd: handleTouchEnd,
   };
 
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, []);
+
   return (
     <>
       <Wrapper
@@ -95,6 +102,7 @@ function BottomSheet(props: BottomSheetProps) {
         $expanded={!!expanded}
         role="dialog"
         aria-modal="true"
+        tabIndex={-1}
         aria-labelledby="BottomModalHeader"
         {...(draggable === "all" ? draggableEvent : {})}
       >

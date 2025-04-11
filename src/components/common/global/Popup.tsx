@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { FONTS } from "@/styles/common";
 import Button from "../Button";
@@ -17,13 +17,20 @@ type Props = {
 
 function Popup(props: Props) {
   const { icon = false, type, title, message, buttonText, handlePopup } = props;
+  const modalRef = useRef<HTMLDivElement>(null);
   const handlePopupReturn = (action: boolean) => {
     handlePopup(action);
   };
 
+  useEffect(() => {
+    if (modalRef.current) {
+      modalRef.current.focus();
+    }
+  }, []);
+
   return (
     <Backdrop>
-      <Container role="dialog" aria-modal="true">
+      <Container role="dialog" aria-modal="true" aria-labelledby="popup-title" ref={modalRef} tabIndex={-1}>
         <Contents>
           {icon && (
             <div className="modal-icon">
@@ -31,7 +38,11 @@ function Popup(props: Props) {
             </div>
           )}
           <div className="modal-contents">
-            {title && <h3 className="modal-title">{title}</h3>}
+            {title && (
+              <h3 className="modal-title" id="popup-title">
+                {title}
+              </h3>
+            )}
             {message && <p className="modal-message">{message}</p>}
           </div>
 

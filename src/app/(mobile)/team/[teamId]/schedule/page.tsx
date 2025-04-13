@@ -15,7 +15,7 @@ import Loading from "@/components/common/Loading";
 import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { BaseContainer } from "@/components/common/Container";
-import ScheduleDetailModal from "../../../_components/ScheduleDetailModal";
+import ScheduleDetailModal from "../_components/ScheduleDetailModal";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 // import LocationIcon from "@/assets/icon/common/filled/Location.svg";

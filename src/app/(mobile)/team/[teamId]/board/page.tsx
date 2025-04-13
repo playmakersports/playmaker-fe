@@ -74,7 +74,7 @@ function Board() {
       }
     };
     if (isError) {
-      showErrorPopup();
+      // showErrorPopup();
     }
   }, [isError]);
 
@@ -82,15 +82,15 @@ function Board() {
     <>
       <TabWrapper ref={tabRef}>
         <MainTab
-          padding={16}
+          padding={20}
           type="line"
           color="primary"
+          sameWidth
           items={[
             { value: "ALL", name: "전체" },
             { value: "1", name: "공지사항" },
             { value: "2", name: "자유" },
-            { value: "3", name: "가입인사" },
-            { value: "4", name: "경기" },
+            { value: "3", name: "사진" },
           ]}
           nowValue={setTab}
         />

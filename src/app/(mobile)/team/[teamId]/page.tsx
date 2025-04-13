@@ -5,9 +5,9 @@ import { cookies } from "next/headers";
 import { baseBackendURL } from "@/apis";
 import { SelectTeamResponse } from "@/types/team";
 
-import TeamMainCoverTop from "../../_components/TeamMainCoverTop";
-import TeamMainTop from "../../_components/TeamMainTop";
-import TeamMainContents from "../../_components/TeamMainContents";
+import TeamMainCoverTop from "./_components/TeamMainCoverTop";
+import TeamMainTop from "./_components/TeamMainTop";
+import TeamMainContents from "./_components/TeamMainContents";
 
 async function getTeamData(teamId: string) {
   const cookieStore = await cookies();

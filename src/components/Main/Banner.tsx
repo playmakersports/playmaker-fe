@@ -1,16 +1,17 @@
 "use client";
-
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import Flicking, { ChangedEvent, WillChangeEvent } from "@egjs/react-flicking";
+import { FONTS } from "@/styles/common";
+import NumberFlow from "@number-flow/react";
 
 function Banner() {
   const flickRef = useRef<Flicking>(null);
   const [activePanel, setActivePanel] = useState(0);
-  const BANNER_MOCK = [
+  const data = [
     {
       background: "https://basketkorea.com/news/data/20230701/p1065582677150200_187_thum.jpg",
-      title: `2025 국민대배\n전국 대학생 농구대회`,
+      title: `2025 국민대배 전국 대학생 농구대회`,
       description: "2025.02.19 - 02.28",
       buttonName: "",
       linkTo: "",
@@ -24,7 +25,7 @@ function Banner() {
     },
     {
       background: "https://basketkorea.com/news/data/20230701/p1065582677150200_187_thum.jpg",
-      title: `2025 국민대배\n전국 대학생 농구대회`,
+      title: `2025 국민대배 전국 대학생 농구대회`,
       description: "2025.02.19 - 02.28",
       buttonName: "",
       linkTo: "",
@@ -44,10 +45,10 @@ function Banner() {
         onWillChange={onPanelChanged}
         onChanged={onPanelChanged}
       >
-        {BANNER_MOCK.map((banner, index) => (
+        {data.map((banner, index) => (
           <Panel key={index}>
             <div className="inner-container" style={{ backgroundImage: `url(${banner.background})` }}>
-              <p>
+              <p className="left">
                 <span className="title">{banner.title}</span>
                 <span className="description">{banner.description}</span>
               </p>
@@ -55,11 +56,11 @@ function Banner() {
           </Panel>
         ))}
       </Flicking>
-      <Bullet>
-        {BANNER_MOCK.map((_, index) => (
-          <span key={`bullet-${index}`} className={activePanel === index ? "active-bullet" : ""}></span>
-        ))}
-      </Bullet>
+      <Index aria-hidden="true">
+        <NumberFlow value={activePanel + 1} />
+        <span>/</span>
+        {data.length}
+      </Index>
     </Container>
   );
 }
@@ -90,7 +91,6 @@ const Container = styled.div`
 const Panel = styled.div`
   position: relative;
   flex-shrink: 0;
-  position: relative;
   width: 100%;
   height: calc(${BANNER_HEIGHT}px + var(--safe-area-top));
   display: flex;
@@ -101,64 +101,53 @@ const Panel = styled.div`
     display: flex;
     width: 100%;
     height: 100%;
-    padding: 0 18px calc((${BANNER_HEIGHT}px + var(--safe-area-top)) / 4.1 - 10px);
+    padding: 0 20px calc(20px + 16px);
     align-items: flex-end;
-    justify-content: flex-end;
+    justify-content: space-between;
     white-space: pre-wrap;
-    text-align: right;
     background-size: 100%;
     background-position: center;
 
-    span {
+    p.left {
       position: relative;
-      color: #fff;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      color: #fff;
     }
     span.title {
-      display: block;
-      font-size: 2.6rem;
-      font-weight: 700;
-      line-height: 3.4rem;
-      text-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+      ${FONTS.body2("semibold")};
     }
     span.description {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: 1.4rem;
+      ${FONTS.caption1("medium")};
     }
 
     &::before {
       content: "";
       position: absolute;
-      top: 0;
-      right: 0;
-      width: 70%;
-      height: 100%;
-      background: linear-gradient(to left, rgba(0, 0, 0, 0.8), transparent);
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 55%;
+      background: linear-gradient(to top, #000, transparent);
     }
   }
 `;
 
-const Bullet = styled.div`
+const Index = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  bottom: 32px;
-  margin: 0 auto 10px;
-  width: 100%;
-
-  span {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 100%;
-    background-color: var(--background-light);
-    &.active-bullet {
-      background-color: var(--main);
-    }
-  }
+  display: inline-flex;
+  gap: 2px;
+  bottom: calc(20px + 16px);
+  right: 20px;
+  z-index: 1;
+  padding: 3px 10px;
+  color: var(--white);
+  border-radius: 999px;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.08);
+  background-color: rgba(256, 256, 256, 0.4);
+  ${FONTS.caption1("medium")};
 `;
 
 export default Banner;

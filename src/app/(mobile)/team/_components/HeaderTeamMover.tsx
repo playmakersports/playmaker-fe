@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 
 import { fonts } from "@/styles/fonts.css";
 import Portal from "@/components/common/global/Portal";
@@ -9,17 +9,10 @@ import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
 function HeaderTeamMover({ title }: { title: string }) {
   const [showList, setShowList] = useState(false);
-  const teamListRef = useRef<HTMLDivElement>(null);
 
   const handleCloseList = () => {
     setShowList(false);
   };
-
-  useEffect(() => {
-    if (showList) {
-      (teamListRef.current?.childNodes[0] as HTMLButtonElement).focus();
-    }
-  }, [showList]);
 
   return (
     <div className={headerMoverContainer}>
@@ -27,9 +20,8 @@ function HeaderTeamMover({ title }: { title: string }) {
         <h3 className={fonts.body2.semibold}>{title}</h3>
         {title && <DownArrow width={24} height={24} fill="var(--gray700)" />}
       </button>
-      <Portal>
+      <Portal inactiveScroll={showList}>
         <div
-          ref={teamListRef}
           className={headerListContainer}
           tabIndex={-1}
           role="dialog"

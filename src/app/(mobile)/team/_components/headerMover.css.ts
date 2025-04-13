@@ -9,9 +9,19 @@ export const headerMoverContainer = style({
 });
 export const headerMoverButton = style({
   display: "flex",
+  margin: "-3px -8px",
+  padding: "3px 8px",
   gap: "4px",
   alignItems: "center",
   color: "var(--gray900)",
+  borderRadius: "6px",
+  transition: "all 0.2s",
+  selectors: {
+    "&:active": {
+      backgroundColor: "var(--gray100)",
+      transform: "scale(0.97)",
+    },
+  },
 });
 export const headerListContainer = style({
   position: "fixed",

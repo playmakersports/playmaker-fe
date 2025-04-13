@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import clsx from "clsx";
-import { addDays, format, isToday, startOfWeek } from "date-fns";
+import { addDays, format, isSameDay, isToday, startOfWeek } from "date-fns";
 
 import { FONTS } from "@/styles/common";
 import { fonts } from "@/styles/fonts.css";
@@ -15,6 +15,7 @@ import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 import FilterLineIcon from "@/assets/icon/common/FilterLine.svg";
 
 function MyWeekly() {
+  const [activeDate, setActiveDate] = useState(new Date());
   const [filterTeam, setFilterTeam] = useState("all");
   const SCHEDULE_MOCK = [
     {
@@ -64,6 +65,10 @@ function MyWeekly() {
     },
   ];
 
+  const handleActiveDate = (date: Date) => {
+    setActiveDate(date);
+  };
+
   return (
     <Wrapper aria-label="이번주 나의 일정">
       <Title>
@@ -92,12 +97,12 @@ function MyWeekly() {
       </Title>
       <Week>
         {getDatesOfCurrentWeek().map((value, i) => (
-          <div key={value} className="day-wrapper">
+          <button type="button" key={value} className="day-wrapper" onClick={() => handleActiveDate(new Date(value))}>
             <span className="date-name">{WEEK_NAME[i]}</span>
-            <span className={clsx("day-number", isToday(value) && "today", i === 5 && "has-plan")}>
+            <span className={clsx("day-number", isSameDay(value, activeDate) && "active-date", i === 5 && "has-plan")}>
               {+value.split("-")[2]}
             </span>
-          </div>
+          </button>
         ))}
       </Week>
       <Schedules>
@@ -173,7 +178,7 @@ const Week = styled.div`
   display: flex;
   justify-content: space-between;
 
-  div.day-wrapper {
+  button.day-wrapper {
     flex: 1;
     text-align: center;
 
@@ -198,7 +203,7 @@ const Week = styled.div`
         color: var(--primary500);
         background-color: var(--primary50);
       }
-      &.today {
+      &.active-date {
         ${FONTS.body3("semibold")};
         color: var(--white);
         background-color: var(--primary500);

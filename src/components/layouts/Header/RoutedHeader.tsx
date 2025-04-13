@@ -50,7 +50,7 @@ function RoutedHeader({ scrollY }: Props) {
         zIndex: 900,
       }}
     >
-      <Container data-never={!canTransparent} data-scrolled={isScrolled}>
+      <RoutedHeaderContainer data-never={!canTransparent} data-scrolled={isScrolled}>
         {customArea ? (
           <div style={{ flex: 1 }}>{customArea}</div>
         ) : (
@@ -75,7 +75,7 @@ function RoutedHeader({ scrollY }: Props) {
           ))}
         </Subs>
         {actions.length > 0 && <DropdownAction icon options={actions} />}
-      </Container>
+      </RoutedHeaderContainer>
     </header>
   );
 }
@@ -114,7 +114,7 @@ const Title = styled.span`
     }
   }
 `;
-const Container = styled.div`
+export const RoutedHeaderContainer = styled.div`
   display: flex;
   margin: 0 auto;
   width: 100%;

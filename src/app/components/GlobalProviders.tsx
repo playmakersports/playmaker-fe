@@ -34,6 +34,7 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
         <PopupProvider>
           <Suspense fallback={<Loading page />}>{children}</Suspense>
         </PopupProvider>
+        <div id="portal"></div>
       </QueryClientProvider>
     </Provider>
   );

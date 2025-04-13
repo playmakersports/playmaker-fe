@@ -4,18 +4,11 @@ import { useRouter } from "next/navigation";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { WhiteSectionDivider } from "@/components/common/Container";
-
+import { settingsGroupTitle, settingsGroupWrapper } from "./userSetting.css";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
-// import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
-import LockIcon from "@/assets/icon/common/filled/Lock.svg";
-import PersonIcon from "@/assets/icon/common/filled/Person.svg";
-// import HeadphoneIcon from "@/assets/icon/common/filled/Headphone.svg";
-// import InformationIcon from "@/assets/icon/common/filled/Information.svg";
-// import BuildingsIcon from "@/assets/icon/common/filled/Buildings.svg";
 
 type GroupListProps = {
   list: {
-    icon: React.ReactNode;
     title: string;
     onClick: () => void;
     subText?: string | React.ReactNode;
@@ -26,18 +19,15 @@ function GroupList({ list }: GroupListProps) {
     <Group>
       {list.map((item, idx) => (
         <li key={idx} onClick={item.onClick}>
-          <span className="title-wrapper">
-            {item.icon}
-            {item.title}
-          </span>
+          <span className="title-wrapper">{item.title}</span>
           {item.subText ? (
             <span className="status-wrapper">
               {item.subText}
-              <RightArrowIcon />
+              <RightArrowIcon width={24} height={24} fill="var(--gray700)" />
             </span>
           ) : (
             <span className="status-wrapper">
-              <RightArrowIcon />
+              <RightArrowIcon width={24} height={24} fill="var(--gray700)" />
             </span>
           )}
         </li>
@@ -50,92 +40,83 @@ function UserSetting() {
 
   return (
     <Container>
-      <GroupTitle>정보 관리</GroupTitle>
-      <GroupList
-        list={[
-          { icon: <PersonIcon />, title: "개인정보 수정", onClick: () => router.push(`/my/settings/info`) },
-          { icon: <PersonIcon />, title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
-          { icon: <LockIcon />, title: "공개 범위", onClick: () => {}, subText: "전체" },
-          {
-            // icon: <GraduationIcon />,
-            icon: <LockIcon />,
-            title: "학교 인증",
-            onClick: () => router.push(`/my/settings/school`),
-            subText: <span style={{ color: "var(--point-red)" }}>인증 필요</span>,
-          },
-        ]}
-      />
       <WhiteSectionDivider $child />
-      <GroupTitle>정보 및 지원</GroupTitle>
-      <GroupList
-        list={[
-          {
-            // icon: <HeadphoneIcon />,
-            icon: <LockIcon />,
-            title: "서비스 문의",
-            onClick: () => {},
-          },
-          {
-            // icon: <InformationIcon />,
-            icon: <LockIcon />,
-            title: "약관 및 개인정보처리방침",
-            onClick: () => {},
-          },
-          {
-            // icon: <BuildingsIcon />,
-            icon: <LockIcon />,
-            title: "서비스 제공자 정보",
-            onClick: () => {},
-          },
-        ]}
-      />
+      <div className={settingsGroupWrapper}>
+        <h4 className={settingsGroupTitle}>기본 정보</h4>
+        <GroupList
+          list={[
+            { title: "내 정보 관리", onClick: () => router.push(`/my/settings/info`) },
+            { title: "활동 지역", onClick: () => router.push(`/my/settings/location`) },
+            { title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
+            { title: "공개 범위", onClick: () => {}, subText: "전체" },
+            {
+              title: "학교 인증",
+              onClick: () => router.push(`/my/settings/school`),
+              subText: <span style={{ color: "var(--red500)" }}>인증 필요</span>,
+            },
+          ]}
+        />
+      </div>
+      <WhiteSectionDivider $child />
+      <div className={settingsGroupWrapper}>
+        <h4 className={settingsGroupTitle}>정보 및 지원</h4>
+        <GroupList
+          list={[
+            {
+              title: "알림 설정",
+              onClick: () => {},
+            },
+            {
+              title: "공지사항",
+              onClick: () => {},
+            },
+            {
+              title: "약관 정보",
+              onClick: () => {},
+            },
+
+            {
+              title: "앱 버전 확인",
+              onClick: () => {},
+            },
+            {
+              title: "로그아웃",
+              onClick: () => {},
+            },
+          ]}
+        />
+      </div>
     </Container>
   );
 }
 
 const Container = styled.div`
   user-select: none;
-  padding: 0 0 calc(20px + var(--env-sab));
+  padding: 0 0 var(--safe-bottom-navigation);
 `;
 
-const GroupTitle = styled.div`
-  margin-top: 10px;
-  padding: 16px 0;
-  ${FONTS.body3("semibold")};
-  font-size: 2rem;
-`;
 const Group = styled.ul`
-  margin: 0 -16px 16px;
+  display: flex;
+  flex-direction: column;
+  margin: -4px -10px 0;
+  gap: calc(20px - 4px - 4px);
   li {
-    padding: 16px 18px;
-    ${FONTS.body3("regular")};
-    font-weight: 400;
     display: flex;
+    padding: 4px 10px;
     align-items: center;
     justify-content: space-between;
     ${BUTTON_ACTIVE("var(--gray50)")}
   }
   span.title-wrapper {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--gray900);
-    }
+    ${FONTS.body3("medium")};
+    color: var(--gray700);
   }
   span.status-wrapper {
-    ${FONTS.body3("regular")}
+    ${FONTS.body4("regular")};
     display: inline-flex;
     align-items: center;
-    font-size: 1.4rem;
-    gap: 12px;
-    color: var(--gray600);
-    svg {
-      width: 14px;
-      fill: var(--gray600);
-    }
+    color: var(--gray500);
+    gap: 4px;
   }
 `;
 

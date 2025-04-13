@@ -2,12 +2,14 @@ import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
 export const settingsHeaderProfile = style({
+  userSelect: "none",
   display: "flex",
   padding: "20px 0",
   alignItems: "center",
   gap: "10px",
 });
 export const settingsMyInfoHeaderProfile = style({
+  userSelect: "none",
   display: "flex",
   flexDirection: "column",
   padding: "20px 0",

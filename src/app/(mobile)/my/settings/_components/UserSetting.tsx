@@ -48,7 +48,6 @@ function UserSetting() {
             { title: "내 정보 관리", onClick: () => router.push(`/my/settings/info`) },
             { title: "활동 지역", onClick: () => router.push(`/my/settings/location`) },
             { title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
-            { title: "공개 범위", onClick: () => {}, subText: "전체" },
             {
               title: "학교 인증",
               onClick: () => router.push(`/my/settings/school`),
@@ -101,6 +100,13 @@ const Group = styled.ul`
   margin: -4px -10px 0;
   gap: calc(20px - 4px - 4px);
   li {
+    -moz-user-select: -moz-none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: default;
+
     display: flex;
     padding: 4px 10px;
     align-items: center;

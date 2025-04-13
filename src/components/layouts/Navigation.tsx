@@ -54,8 +54,12 @@ function Navigation({ hide = false }: { hide?: boolean }) {
             </a>
           </Link>
           <Link href="/team" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="팀" data-active={pathname === "/team"}>
-              {pathname === "/team" ? (
+            <a
+              className={navigationButton}
+              data-label="팀"
+              data-active={pathname === "/team" || pathname === "/team/find" || pathname.startsWith("/team/")}
+            >
+              {pathname === "/team" || pathname === "/team/find" || pathname.startsWith("/team/") ? (
                 <PeopleIconFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
                 <PeopleIconOutlined className={navigationSvg} />

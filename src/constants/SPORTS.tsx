@@ -30,7 +30,7 @@ export const SUPPORT_SPORTS: Array<SportsInfoType> = [
   // },
   {
     value: "4",
-    name: "러닝",
+    name: "야구",
     icon: RunIcon,
   },
 ];

@@ -134,14 +134,18 @@ const Filter = styled.div`
 
 const TeamCreateButton = styled.button`
   position: fixed;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   right: 20px;
-  bottom: calc(var(--safe-bottom-navigation) + 24px);
+  bottom: var(--safe-bottom-navigation);
   border-radius: 50%;
   width: 48px;
   height: 48px;
   background-color: var(--primary500);
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s;
+  z-index: 1;
 
   svg {
     fill: var(--white);

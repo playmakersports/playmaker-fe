@@ -1,14 +1,13 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
-import FloatButton from "@/components/common/FloatButton";
 
 import Surprised from "@/assets/character/Surprised.svg";
-import { useRouter } from "next/navigation";
 
 type Props = { status?: number | string; message?: string; retry?: () => void; reset?: () => void };
 function ErrorFallback(props: Props) {
@@ -25,7 +24,9 @@ function ErrorFallback(props: Props) {
   return (
     <Container>
       <HideHeader />
-      <Surprised />
+      <div style={{ marginLeft: "-16px" }}>
+        <Surprised />
+      </div>
       <p className="title">이런! 오류가 발생했어요</p>
       <p className="description">
         일시적인 문제일 수 있지만
@@ -36,14 +37,14 @@ function ErrorFallback(props: Props) {
           {status} {message}
         </span>
       </p>
-      <FloatButton gap="10px">
-        <Button type="button" mode="primary" fillType="light" size="large" fullWidth onClick={retry ?? onGoBack}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "8px", width: "70%" }}>
+        <Button type="button" mode="gray" fillType="light" size="large" fullWidth onClick={retry ?? onGoBack}>
           다시 시도
         </Button>
         <Button type="button" mode="primary" size="large" fullWidth onClick={reset ?? onGoHome}>
           홈 화면 이동
         </Button>
-      </FloatButton>
+      </div>
     </Container>
   );
 }
@@ -73,26 +74,21 @@ const Container = styled(BaseContainer)`
   }
 
   p.title {
-    ${FONTS.body1("semibold")};
+    ${FONTS.head6("semibold")};
     margin-bottom: 4px;
-    font-size: 2.6rem;
-    color: var(--main);
+    color: var(--primary500);
   }
   p.description {
     ${FONTS.body3("regular")};
-    line-height: 2.6rem;
     color: var(--gray700);
     text-align: center;
   }
   span.error-message {
-    margin-top: 16px;
-    padding: 0 32px;
-    display: inline-block;
-    font-size: 1.4rem;
-    line-height: 2rem;
-    font-weight: 400;
+    ${FONTS.body4("regular")};
+    display: block;
+    margin: 16px 0;
     word-wrap: break-word;
-    color: var(--gray600);
+    color: var(--gray500);
   }
 `;
 

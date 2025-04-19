@@ -1,3 +1,4 @@
+import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
 export const headerContainer = style({
@@ -72,3 +73,20 @@ export const headerButtonIcon = style({
   width: "24px",
   height: "24px",
 });
+export const headerSingleSubActionButton = style([
+  fonts.body3.medium,
+  {
+    marginRight: "-3px",
+    width: "27px",
+    color: "var(--primary600)",
+    wordBreak: "keep-all",
+    borderRadius: "4px",
+    transition: "background-color 0.3s, box-shadow 0.3s",
+    selectors: {
+      "&:active": {
+        backgroundColor: "var(--primary50)",
+        boxShadow: "0 0 0 6px var(--primary50)",
+      },
+    },
+  },
+]);

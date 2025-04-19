@@ -7,34 +7,38 @@ import {
   atomHeaderCustomArea,
   atomHeaderIcons,
   atomHeaderOnClickBack,
+  atomHeaderOptions,
   atomHeaderTransparent,
   atomPageTitle,
+  HeaderOptionsType,
   HeaderSubIconType,
 } from "@/atom/common";
 import { ActionOptionsType } from "@/components/common/input/DropdownAction";
 
-type HeaderOptions = {
+type HeaderCommonProps = {
   onClickBack?: () => void | null;
   subIcons?: Array<HeaderSubIconType>;
-  subActions?: Array<ActionOptionsType>;
+  subActions?: Array<ActionOptionsType> | Omit<ActionOptionsType, "divided">;
   transparent?: { inactive: number } | boolean;
+  options?: HeaderOptionsType;
 };
 type HookProps =
   | ({
       title?: string;
-    } & HeaderOptions)
+    } & HeaderCommonProps)
   | ({
       customArea?: React.ReactNode;
-    } & HeaderOptions);
+    } & HeaderCommonProps);
 
 export const useHeader = (props: HookProps = {}) => {
-  const { onClickBack, subIcons, subActions, transparent } = props;
+  const { onClickBack, subIcons, subActions, transparent, options = {} } = props;
   const setTitle = useSetAtom(atomPageTitle);
   const setOnClickBack = useSetAtom(atomHeaderOnClickBack);
   const setCustom = useSetAtom(atomHeaderCustomArea);
   const setIcons = useSetAtom(atomHeaderIcons);
   const setActions = useSetAtom(atomHeaderActions);
   const setBgTransparent = useSetAtom(atomHeaderTransparent);
+  const setHeaderOptions = useSetAtom(atomHeaderOptions);
 
   useLayoutEffect(() => {
     if ("title" in props && props.title) {
@@ -47,6 +51,7 @@ export const useHeader = (props: HookProps = {}) => {
     onClickBack && setOnClickBack(() => onClickBack);
     subActions && setActions(subActions);
     transparent && setBgTransparent(transparent);
+    options && setHeaderOptions(options);
 
     return () => {
       setTitle("");
@@ -55,6 +60,7 @@ export const useHeader = (props: HookProps = {}) => {
       setOnClickBack(null);
       setActions([]);
       setBgTransparent(false);
+      setHeaderOptions({} as HeaderOptionsType);
     };
   }, []);
 };

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useAtomValue } from "jotai";
 import { useRouter } from "next/navigation";
 
-import { FONTS, getFontsJSON } from "@/styles/common";
+import { fonts } from "@/styles/fonts.css";
 import {
   atomHeaderActions,
   atomHeaderOnClickBack,
@@ -13,10 +13,12 @@ import {
   atomHeaderIcons,
   atomHeaderTransparent,
   atomPageTitle,
+  atomHeaderOptions,
 } from "@/atom/common";
 import DropdownAction from "@/components/common/input/DropdownAction";
 
 import LeftDirectionArrow from "@/assets/icon/arrow/LeftDirection.svg";
+import { headerSingleSubActionButton } from "./header.css";
 
 type Props = { scrollY: number };
 function RoutedHeader({ scrollY }: Props) {
@@ -28,6 +30,7 @@ function RoutedHeader({ scrollY }: Props) {
   const icons = useAtomValue(atomHeaderIcons);
   const actions = useAtomValue(atomHeaderActions);
   const bgTransparent = useAtomValue(atomHeaderTransparent);
+  const headerOptions = useAtomValue(atomHeaderOptions);
   const canTransparent = typeof bgTransparent === "boolean" ? bgTransparent : bgTransparent.inactive;
   const DEFAULT_SCROLLED_Y = 160;
   const isScrolled = scrollY > (typeof bgTransparent !== "boolean" ? bgTransparent.inactive : DEFAULT_SCROLLED_Y);
@@ -55,26 +58,44 @@ function RoutedHeader({ scrollY }: Props) {
           <div style={{ flex: 1 }}>{customArea}</div>
         ) : (
           <>
-            <button type="button" onClick={onClickBack} id="backButton" style={{ width: "24px", height: "24px" }}>
-              <LeftDirectionArrow width="100%" height="100%" />
-            </button>
+            {headerOptions?.hideBackButton ? (
+              <div style={{ width: "24px", height: "24px" }}></div>
+            ) : (
+              <button type="button" onClick={onClickBack} id="backButton" style={{ width: "24px", height: "24px" }}>
+                <LeftDirectionArrow width="100%" height="100%" />
+              </button>
+            )}
             <Title
+              className={fonts.body2.semibold}
               data-never={!canTransparent}
               data-fadein={canTransparent && isScrolled}
-              style={{ ...getFontsJSON(FONTS.body2("semibold")), flex: 1 }}
+              style={{
+                flex: 1,
+                textAlign: headerOptions?.titleAlign || "left",
+              }}
             >
               {title}
             </Title>
           </>
         )}
-        <Subs>
-          {icons.map((icon, index) => (
-            <SubIcons key={index} where={icon.onClick}>
-              {icon.svgIcon}
-            </SubIcons>
+        {!icons && !actions && <div style={{ width: "24px", height: "24px" }}></div>}
+        {icons.length > 0 && (
+          <Subs>
+            {icons.map((icon, index) => (
+              <SubIcons key={index} where={icon.onClick}>
+                {icon.svgIcon}
+              </SubIcons>
+            ))}
+          </Subs>
+        )}
+        {actions &&
+          (Array.isArray(actions) ? (
+            actions.length > 0 && <DropdownAction icon options={actions} />
+          ) : (
+            <button type="button" onClick={actions.action} className={headerSingleSubActionButton}>
+              {actions.name}
+            </button>
           ))}
-        </Subs>
-        {actions.length > 0 && <DropdownAction icon options={actions} />}
       </RoutedHeaderContainer>
     </header>
   );

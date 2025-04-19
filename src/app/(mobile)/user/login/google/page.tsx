@@ -39,7 +39,7 @@ function GoogleLogin() {
       await setToken(data.access_token);
 
       if (data.newUserYn === "Y") {
-        router.replace("/user/apply?from=google");
+        router.replace("/user/apply/stage?from=google");
       } else {
         router.replace("/");
       }

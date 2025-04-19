@@ -27,7 +27,7 @@ function KakaoLogin() {
 
     await setToken(data.access_token);
     if (data.newUserYn === "Y") {
-      router.replace("/user/apply?from=kakao");
+      router.replace("/user/apply/stage?from=kakao");
     } else {
       router.replace("/");
     }

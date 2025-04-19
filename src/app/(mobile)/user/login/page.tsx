@@ -60,9 +60,6 @@ function Login() {
         <Button type="button" mode="gray" fillType="light" size="large" onClick={handleMyPage}>
           My Page
         </Button>
-        <Button type="button" mode="primary" size="large" fillType="light" onClick={handleIntroPage}>
-          회원가입 (구버전)
-        </Button>
         <Button type="button" mode="primary" size="large" onClick={handleApplyStage}>
           회원가입
         </Button>

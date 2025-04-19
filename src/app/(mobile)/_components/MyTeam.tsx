@@ -51,7 +51,7 @@ function MyTeam() {
 
 const TeamList = styled.div`
   display: flex;
-  gap: 16px;
+  gap: 12px;
   margin: 0 -20px;
   padding: 20px 20px 18px 0;
   border-bottom: 1px solid var(--gray200);

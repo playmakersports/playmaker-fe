@@ -3,6 +3,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
+import { convertWebpImage } from "@/util/webp";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TextArea } from "@/components/common/TextArea";
@@ -11,19 +12,21 @@ import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function Stage4() {
-  const { register, watch } = useFormContext();
+  const { register, watch, setValue } = useFormContext();
   const [previewImage, setPreviewImage] = useState("");
 
-  const handlePreviewImg = (event: ChangeEvent<HTMLInputElement>) => {
+  const handlePreviewImg = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.currentTarget.files?.[0];
-    const reader = new FileReader();
-    if (file) {
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        if (reader.result) {
-          setPreviewImage(reader.result.toString());
-        }
-      };
+    if (!file) return;
+
+    try {
+      const webpBlob = await convertWebpImage(file, { maxWidth: 600, quality: 0.8 });
+      const webpFile = new File([webpBlob], "profile.webp", { type: "image/webp" });
+      const previewBase64 = URL.createObjectURL(webpBlob);
+      setPreviewImage(previewBase64);
+      setValue("profileImg", webpFile);
+    } catch (error) {
+      console.error("Error converting image to WebP:", error);
     }
   };
 

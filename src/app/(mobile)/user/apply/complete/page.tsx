@@ -7,8 +7,8 @@ import { useHeader } from "@/hook/useHeader";
 
 import Button from "@/components/common/Button";
 import { BaseContainer } from "@/components/common/Container";
-import CharacterWelcome from "../../../../../components/User/Join/CharacterWelcome";
 import GradientBg from "@/components/common/GradientBg";
+import CharacterWelcome from "../stage/_components/CharacterWelcome";
 
 function JoinComplete() {
   const router = useRouter();

@@ -19,7 +19,7 @@ function StageWrapper(props: Props) {
     <div className={stageWrapper.container}>
       <section className={stageWrapper.contents}>
         <div style={{ margin: "24px 0 16px" }}>
-          <Badge type="primary" fillType="light" size="large">
+          <Badge type="gray" fillType="light" size="large">
             {current} / {length}
           </Badge>
         </div>
@@ -27,17 +27,17 @@ function StageWrapper(props: Props) {
       </section>
       <div className={stageWrapper.buttons}>
         {!start && (
-          <Button type="button" size="large" flex={1} mode="gray" fillType="light" onClick={onClickPrev}>
+          <Button type="button" size="large" flex={1} mode="gray" fillType="outline" onClick={onClickPrev}>
             이전
           </Button>
         )}
         {!last && (
-          <Button type="button" size="large" flex={2} onClick={onClickNext}>
+          <Button type="button" size="large" flex={1} onClick={onClickNext}>
             다음
           </Button>
         )}
         {last && (
-          <Button type="submit" size="large" flex={2}>
+          <Button type="submit" size="large" flex={1}>
             완료
           </Button>
         )}

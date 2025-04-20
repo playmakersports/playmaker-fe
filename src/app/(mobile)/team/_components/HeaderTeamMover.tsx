@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 
 import { fonts } from "@/styles/fonts.css";
 import Portal from "@/components/common/global/Portal";
@@ -7,9 +7,12 @@ import { headerListContainer, headerListItem, headerMoverButton, headerMoverCont
 
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 
-function HeaderTeamMover({ title }: { title: string }) {
-  const [showList, setShowList] = useState(false);
-
+type Props = {
+  title?: string;
+  showList: boolean;
+  setShowList: React.Dispatch<React.SetStateAction<boolean>>;
+};
+function HeaderTeamMover({ title, showList, setShowList }: Props) {
   const handleCloseList = () => {
     setShowList(false);
   };

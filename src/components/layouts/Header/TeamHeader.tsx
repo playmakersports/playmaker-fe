@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useAtomValue } from "jotai";
 import { usePathname } from "next/navigation";
+import clsx from "clsx";
 import styled from "styled-components";
 
 import { atomHeaderTransparent, atomPageTitle } from "@/atom/common";
@@ -20,6 +21,8 @@ function TeamHeader({ scrollY }: Props) {
   const canTransparent = typeof bgTransparent === "boolean" ? bgTransparent : bgTransparent.inactive;
   const isScrolled = scrollY > (typeof bgTransparent !== "boolean" ? bgTransparent.inactive : DEFAULT_SCROLLED_Y);
 
+  const [showList, setShowList] = useState(false);
+
   return (
     <header
       style={{
@@ -30,39 +33,36 @@ function TeamHeader({ scrollY }: Props) {
         zIndex: 900,
       }}
     >
-      <RoutedHeaderContainer data-never={!canTransparent} data-scrolled={isScrolled}>
+      <RoutedHeaderContainer
+        data-never={!canTransparent}
+        data-scrolled={isScrolled}
+        style={showList ? { overflow: "hidden" } : {}}
+      >
         <div style={{ flex: 1 }}>
-          <HeaderTeamMover title={title} />
+          <HeaderTeamMover title={title} showList={showList} setShowList={setShowList} />
         </div>
         {pathname !== "/team/find" && (
-          <DropdownAction
-            icon
-            options={[
-              { name: "팀 관리", action: () => {} },
-              { name: "팀 탈퇴", action: () => {} },
-            ]}
-          />
+          <ActionMenu className={clsx({ hide: showList })}>
+            <DropdownAction
+              icon
+              options={[
+                { name: "팀 관리", action: () => {} },
+                { name: "팀 탈퇴", action: () => {} },
+              ]}
+            />
+          </ActionMenu>
         )}
       </RoutedHeaderContainer>
     </header>
   );
 }
 
-const Subs = styled.ul`
-  display: flex;
-  gap: 10px;
-  li > button,
-  li > a {
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
-  }
-  svg {
-    width: 100%;
-    height: 100%;
-    fill: var(--gray700);
+const ActionMenu = styled.div`
+  transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+  &.hide {
+    will-change: transform;
+    transform: translate3d(180%, 0, 0);
+    opacity: 0;
   }
 `;
 

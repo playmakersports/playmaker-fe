@@ -58,7 +58,16 @@ function UserSetting() {
       </div>
       <WhiteSectionDivider $child />
       <div className={settingsGroupWrapper}>
-        <h4 className={settingsGroupTitle}>정보 및 지원</h4>
+        <h4 className={settingsGroupTitle}>소속 팀</h4>
+        <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.push(`/my/settings/team`) }]} />
+      </div>
+      <WhiteSectionDivider $child />
+      <div className={settingsGroupWrapper}>
+        <h4 className={settingsGroupTitle}>내 운동 정보</h4>
+        <GroupList list={[{ title: "운동 종목별 정보 관리", onClick: () => router.push(`/my/settings/sports`) }]} />
+      </div>
+      <WhiteSectionDivider $child />
+      <div className={settingsGroupWrapper}>
         <GroupList
           list={[
             {

@@ -1,4 +1,6 @@
+"use client";
 import React from "react";
+import { useHeader } from "@/hook/useHeader";
 
 import { baseContainer } from "@/styles/container.css";
 import {
@@ -11,6 +13,16 @@ import { fonts } from "@/styles/fonts.css";
 import { BasicInput } from "@/components/common/input/BaseInput";
 
 function MySettingInfo() {
+  useHeader({
+    title: "내 정보 관리",
+    subActions: {
+      name: "저장",
+      action: () => {},
+    },
+    options: {
+      titleAlign: "center",
+    },
+  });
   return (
     <form className={baseContainer}>
       <div className={settingsMyInfoHeaderProfile}>

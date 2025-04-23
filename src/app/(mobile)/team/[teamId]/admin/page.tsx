@@ -8,7 +8,7 @@ import { differenceInCalendarDays } from "date-fns";
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
 import { BaseContainer } from "@/components/common/Container";
-import ProfileImage from "@/components/Team/ProfileImage";
+import ProfileImage from "@/app/(mobile)/team/[teamId]/_components/TeamMainLogo";
 import AdminList from "@/components/Team/AdminList";
 import Badge from "@/components/common/Badge";
 

@@ -3,7 +3,8 @@ import styled from "styled-components";
 import { useRouter, useParams } from "next/navigation";
 import { intervalToDuration } from "date-fns";
 
-import { TEXT_ACTIVE } from "@/styles/common";
+import { FONTS, TEXT_ACTIVE } from "@/styles/common";
+import AlertFilledIcon from "@/assets/icon/circle/AlertFilled.svg";
 
 type Props = {
   list: {
@@ -13,7 +14,7 @@ type Props = {
   }[];
 };
 
-function Notice({ list }: Props) {
+function TeamNotice({ list }: Props) {
   const router = useRouter();
   const params = useParams();
   const teamId = params["teamId"];
@@ -55,7 +56,9 @@ function Notice({ list }: Props) {
             >
               <Wrapper>
                 <p>
-                  <span className="category">공지</span>
+                  <span className="category">
+                    <AlertFilledIcon /> 공지
+                  </span>
                   <span className="title">{item.title}</span>
                 </p>
                 <span className="create-at">
@@ -76,25 +79,23 @@ function Notice({ list }: Props) {
   );
 }
 
-const PADDING = 24;
-
 const Container = styled.div`
-  padding: 10px 0;
-  background-color: rgba(247, 250, 252, 0.5);
+  padding: 10px 12px;
+  background-color: var(--primary50);
+  border-radius: 8px;
 `;
 const Display = styled.div`
   position: relative;
   display: flex;
-  padding: 0 ${PADDING}px;
-  height: 3.6rem;
+  height: 1.8rem;
   overflow: hidden;
   align-items: center;
 `;
 const Item = styled.div`
   position: absolute;
   display: flex;
-  height: 3.6rem;
-  width: calc(100% - ${PADDING * 2}px);
+  width: 100%;
+  height: 1.8rem;
   transform: translate3d(0, -100%, 0);
   align-items: center;
 
@@ -111,49 +112,43 @@ const Item = styled.div`
   }
 
   p {
+    display: flex;
+    gap: 10px;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
   }
   .category {
+    ${FONTS.caption1("semibold")};
     display: inline-flex;
-    margin-right: 6px;
     align-items: center;
-    font-weight: 600;
-    gap: 6px;
-    color: var(--main);
-    &::after {
-      content: "";
-      width: 4px;
-      height: 4px;
-      background-color: var(--gray400);
-      border-radius: 100%;
+    gap: 4px;
+    color: var(--primary500);
+    svg {
+      width: 18px;
+      height: 18px;
+      fill: var(--primary500);
     }
   }
   .title {
-    font-weight: 400;
+    ${FONTS.caption1("medium")};
+    color: var(--gray700);
   }
   .create-at {
-    flex-shrink: 0;
-    color: var(--gray500);
-    font-size: 1.4rem;
-    text-align: right;
+    ${FONTS.caption1("regular")};
+    color: var(--gray400);
   }
 `;
 
 const Wrapper = styled.div`
   display: inline-flex;
-  gap: 2px;
-  padding: 0 2px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  font-size: 1.6rem;
   line-height: 2rem;
   user-select: none;
-  border-radius: 2px;
 
-  ${TEXT_ACTIVE("var(--gray100)")};
+  ${TEXT_ACTIVE("transparent", { scalable: true })};
 `;
 
-export default Notice;
+export default TeamNotice;

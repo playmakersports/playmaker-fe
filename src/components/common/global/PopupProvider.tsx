@@ -4,13 +4,14 @@ import { useState, createContext, useContext } from "react";
 import Popup from "./Popup";
 
 export type PopupType = "confirm" | "alert" | "info";
+export type PopupColorType = "gray" | "primary" | "red";
 type PopupContextType = Pick<ReturnType<typeof usePopupLogic>, PopupType>;
 
 const PopupContext = createContext<PopupContextType | null>(null);
 
 function PopupProvider({ children }: { children: React.ReactNode }) {
   const confirmLogic = usePopupLogic();
-  const { isVisible, type, title, message, buttonText, showIcon, handlePopup } = confirmLogic;
+  const { isVisible, type, title, message, buttonText, showIcon, color, handlePopup } = confirmLogic;
 
   return (
     <PopupContext.Provider value={confirmLogic}>
@@ -22,6 +23,7 @@ function PopupProvider({ children }: { children: React.ReactNode }) {
           icon={showIcon}
           type={type}
           buttonText={buttonText}
+          color={color}
           handlePopup={handlePopup}
         />
       )}
@@ -35,6 +37,7 @@ const usePopupLogic = () => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [type, setType] = useState<PopupType>("alert");
+  const [color, setColor] = useState<PopupColorType>("primary");
   const [buttonText, setButtonText] = useState({ yes: "확인", no: "취소", sub: "" });
 
   const [resolveReject, setResolveReject] = useState<(value: boolean) => void>(() => {});
@@ -42,12 +45,14 @@ const usePopupLogic = () => {
   const alert = (
     message: string,
     options?: {
+      color?: "gray" | "primary" | "red";
       title?: string;
       showIcon?: boolean;
       buttonText?: string;
     }
   ) => {
     setType("alert");
+    setColor(options?.color ?? "primary");
     setShowIcon(options?.showIcon ?? false);
     setTitle(options?.title ?? "");
     setMessage(message);
@@ -65,6 +70,7 @@ const usePopupLogic = () => {
   const confirm = (
     message: string,
     options?: {
+      color?: "gray" | "primary" | "red";
       title?: string;
       showIcon?: boolean;
       buttonText?: {
@@ -75,6 +81,7 @@ const usePopupLogic = () => {
     }
   ) => {
     setType("confirm");
+    setColor(options?.color ?? "primary");
     setTitle(options?.title ?? "");
     setShowIcon(options?.showIcon ?? false);
     setMessage(message);
@@ -93,12 +100,14 @@ const usePopupLogic = () => {
   const info = (
     message: string,
     options: {
+      color?: "gray" | "primary" | "red";
       title: string;
       showIcon?: boolean;
       showCloseButton?: boolean;
     }
   ) => {
     setType("info");
+    setColor(options?.color ?? "primary");
     setTitle(options?.title ?? "");
     setShowIcon(options?.showIcon ?? false);
     setMessage(message);
@@ -124,7 +133,7 @@ const usePopupLogic = () => {
     resolveReject(result);
   };
 
-  return { isVisible, message, buttonText, handlePopup, title, type, showIcon, confirm, alert, info };
+  return { isVisible, message, buttonText, handlePopup, title, type, showIcon, confirm, alert, info, color };
 };
 
 export const usePopup = () => useContext(PopupContext);

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styled, { keyframes } from "styled-components";
 import { FONTS } from "@/styles/common";
 import Button from "../Button";
-import { PopupType } from "./PopupProvider";
+import { PopupColorType, PopupType } from "./PopupProvider";
 import AlertIcon from "@/assets/icon/circle/AlertOutlined.svg";
 import Close24Icon from "@/assets/icon/common/Close24.svg";
 
@@ -11,12 +11,13 @@ type Props = {
   type: PopupType;
   title?: string;
   message: string;
+  color?: PopupColorType;
   buttonText: { yes: string; no?: string; sub?: string };
   handlePopup: (props: boolean) => void;
 };
 
 function Popup(props: Props) {
-  const { icon = false, type, title, message, buttonText, handlePopup } = props;
+  const { icon = false, type, title, message, buttonText, color, handlePopup } = props;
   const modalRef = useRef<HTMLDivElement>(null);
   const handlePopupReturn = (action: boolean) => {
     handlePopup(action);
@@ -33,8 +34,8 @@ function Popup(props: Props) {
       <Container role="dialog" aria-modal="true" aria-labelledby="popup-title" ref={modalRef} tabIndex={-1}>
         <Contents>
           {icon && (
-            <div className="modal-icon">
-              <AlertIcon />
+            <div className="modal-icon" style={{ backgroundColor: `var(--${color}50)` }}>
+              <AlertIcon fill={`var(--${color}600)`} />
             </div>
           )}
           <div className="modal-contents">
@@ -60,7 +61,7 @@ function Popup(props: Props) {
               {buttonText.no}
             </Button>
             {type === "confirm" && (
-              <Button type="button" mode="primary" fullWidth onClick={() => handlePopupReturn(true)}>
+              <Button type="button" mode={color} fullWidth onClick={() => handlePopupReturn(true)}>
                 {buttonText.yes}
               </Button>
             )}
@@ -123,12 +124,10 @@ const Contents = styled.div`
     justify-content: center;
     width: 44px;
     height: 44px;
-    background-color: var(--primary50);
     border-radius: 8px;
     svg {
       width: 24px;
       height: 24px;
-      fill: var(--primary600);
     }
   }
   div.modal-contents {

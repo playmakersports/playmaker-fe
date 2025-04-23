@@ -5,111 +5,123 @@ import { useFormContext } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 import { useGet } from "@/apis/hook/query";
 
-import { ApiCodeArea } from "@/apis/types/code";
-import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { FONTS } from "@/styles/common";
+import { fonts } from "@/styles/fonts.css";
+import { stageFormWrapper, stageWrapper } from "./stage.css";
+import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
+import { ApiCodeArea } from "@/apis/types/code";
 
 interface LocationType {
-  key: number | null;
+  key: string | null;
   name: string;
 }
 function Stage3() {
-  const { setValue, watch } = useFormContext();
-  const formLocation = watch("location") ?? [];
-  const [sido, setSido] = useState<LocationType>({ key: null, name: "" });
-  const [locations, setLocations] = useState<LocationType[]>([]);
   const toast = useToast();
-  // const { data, isLoading } = useGet<ApiCodeArea>("/api/code/area");
-  const data = {
-    parent: [
-      { locationkey: 1, locationname: "서울" },
-      { locationkey: 2, locationname: "경기" },
-    ],
-    child: [
-      { locationkey: 1001, locationname: "강남구", parent: "서울" },
-      { locationkey: 1002, locationname: "서초구", parent: "서울" },
-      { locationkey: 2001, locationname: "수원시", parent: "경기" },
-      { locationkey: 2002, locationname: "고양시", parent: "경기" },
-    ],
-  };
+  const { setValue, watch } = useFormContext();
+  const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
 
-  const onClickLocation = (locationKey: number, name: string) => {
+  const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
+  const formLocation = watch("location") ?? [];
+  const formLocationDisplayValues = formLocation.map((key: string) => ({
+    key,
+    name: data?.find((item) => item.codeSequenceKey === key)?.codeValue,
+  }));
+  const [locations, setLocations] = useState<LocationType[]>(formLocationDisplayValues);
+
+  const onClickLocation = (locationKey: string, name: string) => {
     if (locations.length >= 2) {
       toast.trigger("위치는 최대 2개까지 선택 가능합니다.", { type: "error" });
       return;
     }
-    setLocations((prev) => [...prev, { key: locationKey, name: `${sido.name}, ${name}` }]);
+    if (formLocation.includes(locationKey)) {
+      toast.trigger("이미 선택한 지역입니다.", { type: "error" });
+      return;
+    }
+    setLocations((prev) => [...prev, { key: locationKey, name: `${sido.name} ${name}` }]);
     setValue("location", [...formLocation, locationKey]);
   };
-  const onRemoveLocation = (locationKey: number) => {
+
+  const onRemoveLocation = (locationKey: string) => {
     setLocations((prev) => prev.filter((location) => location.key !== locationKey));
     setValue(
       "location",
-      formLocation.filter((key: number) => key !== locationKey)
+      formLocation.filter((key: string) => key !== locationKey)
     );
   };
 
   return (
-    <div className={stageFormWrapper} style={{ height: "100%" }}>
+    <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -20px", padding: "0 20px" }}>
       <div style={{ marginBottom: "-4px" }}>
         <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
         <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
       </div>
-      <Location>
-        <div className="location-selected">
-          {locations.map((location) => (
-            <Chip
-              key={location.key}
-              type="primary"
-              fillType="light"
-              size="large"
-              closeAction={() => {
-                onRemoveLocation(location.key!);
-              }}
-            >
-              {location.name}
-            </Chip>
-          ))}
+      {isLoading ? (
+        <div style={{ marginTop: "32px" }}>
+          <Loading />
         </div>
-        <List>
-          <ul className="parent">
-            {data?.parent.map((item) => (
-              <li
-                key={item.locationkey}
-                onClick={() => setSido({ key: item.locationkey, name: item.locationname })}
-                className={clsx({ active: sido.key === item.locationkey })}
-                role="button"
+      ) : (
+        <Location>
+          <div className="location-selected">
+            {locations.map((location) => (
+              <Chip
+                key={location.key}
+                type="primary"
+                fillType="light"
+                size="large"
+                closeAction={() => {
+                  onRemoveLocation(location.key!);
+                }}
               >
-                {item.locationname}
-              </li>
+                {location.name}
+              </Chip>
             ))}
-          </ul>
-          <ul className="child">
-            {data?.child
-              .filter((location) => Math.floor(location.locationkey / 1000) === sido.key)
-              .map((item) => (
-                <li
-                  role="button"
-                  key={item.locationkey}
-                  onClick={() => onClickLocation(item.locationkey, item.locationname)}
-                >
-                  {item.locationname}
-                </li>
-              ))}
-          </ul>
-        </List>
-      </Location>
+          </div>
+          <List>
+            <ul className="parent">
+              {data
+                ?.filter((v) => !v.codeValueDes)
+                .map((item) => (
+                  <li
+                    key={item.codeSequenceKey}
+                    onClick={() => setSido({ key: item.codeSequenceKey, name: item.codeValue })}
+                    className={clsx({ active: sido.key === item.codeSequenceKey })}
+                    role="button"
+                  >
+                    {item.codeValue}
+                  </li>
+                ))}
+            </ul>
+            <ul className="child">
+              {data
+                ?.filter((v) => v.codeValueDes === sido.key)
+                .map((item) => (
+                  <li
+                    role="button"
+                    key={`${item.codeSequenceKey}+${item.codeValue}`}
+                    className={clsx(
+                      formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
+                    )}
+                    onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
+                  >
+                    {item.codeValue}
+                  </li>
+                ))}
+            </ul>
+          </List>
+        </Location>
+      )}
     </div>
   );
 }
 
 const Location = styled.div`
+  overflow: hidden;
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 100%;
-  margin: 0 -20px 20px;
+  margin: 0 -20px;
   border-bottom: 1px solid var(--gray200);
   div.location-selected {
     display: inline-flex;
@@ -118,6 +130,7 @@ const Location = styled.div`
   }
 `;
 const List = styled.div`
+  overflow: hidden;
   flex: 1;
   display: flex;
   justify-content: center;
@@ -147,11 +160,11 @@ const List = styled.div`
     }
 
     &.child {
+      overflow-y: auto;
       & li {
         color: var(--gray500);
         &.active {
           color: var(--primary500);
-          ${FONTS.body3("semibold")};
         }
         &:active {
           background-color: var(--primary50);
@@ -164,6 +177,22 @@ const List = styled.div`
     user-select: none;
     padding: 12px 0;
     text-align: center;
+  }
+`;
+
+const Information = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--gray600);
+
+  svg {
+    width: 28px;
+    height: 28px;
+    fill: var(--gray500);
   }
 `;
 

@@ -5,6 +5,7 @@ export const stageWrapper = {
   container: style({
     display: "flex",
     flexDirection: "column",
+    gap: "20px",
     justifyContent: "space-between",
     height: "calc(100vh - var(--safe-area-top) - 1px)",
   }),
@@ -27,6 +28,7 @@ export const stageWrapper = {
     padding: "0 20px",
     flexDirection: "column",
     height: "100%",
+    overflow: "hidden",
   }),
   buttons: style({
     display: "flex",

@@ -1,9 +1,8 @@
 type LocationType = {
-  locationkey: number;
-  locationname: string;
-  parent: string;
+  codeFormat: string;
+  codeName: string;
+  codeSequenceKey: string;
+  codeValue: string;
+  codeValueDes: null | string;
 };
-export type ApiCodeArea = {
-  child: LocationType[];
-  parent: LocationType[];
-};
+export type ApiCodeArea = Array<LocationType>;

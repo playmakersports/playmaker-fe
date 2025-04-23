@@ -1,43 +1,53 @@
 import React from "react";
 import styled from "styled-components";
+import { useRouter } from "next/navigation";
 
-import RightArrowSmallIcon from "@/assets/icon/arrow/RightArrow.svg";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { fonts } from "@/styles/fonts.css";
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 
 type Props = {
   children: React.ReactNode;
+  icon?: React.ReactNode;
   link?: string;
 };
 
-function GroupTitle({ children, link }: Props) {
+function GroupTitle({ children, icon, link }: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
+
   return (
     <Container>
-      <h4>{children}</h4>
-      {link && <RightArrowSmallIcon onClick={() => router.push(link)} />}
+      <h4 className={fonts.body2.semibold}>
+        {icon}
+        {children}
+      </h4>
+      {link && (
+        <ArrowButton type="button" onClick={() => router.push(link)}>
+          <RightArrow />
+        </ArrowButton>
+      )}
     </Container>
   );
 }
 const Container = styled.div`
   display: flex;
-  margin: 10px 0 -4px;
-  padding: 0 8px;
   align-items: center;
   justify-content: space-between;
-  &:first-of-type {
-    margin-top: 0;
-  }
   h4 {
+    display: inline-flex;
+    align-items: center;
     user-select: none;
-    color: var(--gray900);
-    font-weight: 600;
-    font-size: 1.8rem;
+    gap: 8px;
   }
   svg {
     width: 24px;
     height: 24px;
-    fill: var(--gray600);
+  }
+`;
+const ArrowButton = styled.button`
+  svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--gray700);
   }
 `;
 

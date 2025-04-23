@@ -2,14 +2,12 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-import WeeklyCalender from "@/components/common/WeeklyCalender";
-
 function MyTabHome() {
   const [weeklyDate, setWeeklyDate] = useState("");
 
   return (
     <Container>
-      <WeeklyCalender
+      {/* <WeeklyCalender
         clickable={false}
         grouping={true}
         activeDate={weeklyDate}
@@ -30,7 +28,7 @@ function MyTabHome() {
             ],
           },
         ]}
-      />
+      /> */}
     </Container>
   );
 }

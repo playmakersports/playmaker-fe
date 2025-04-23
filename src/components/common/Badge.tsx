@@ -59,7 +59,7 @@ const Container = styled.span<{ $fonts: string; $colors: ColorType }>`
     }
   }
   svg {
-    fill: ${({ $colors }) => $colors.color};
+    fill: ${({ $colors }) => $colors.color} !important;
   }
 `;
 

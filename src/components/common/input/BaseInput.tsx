@@ -2,8 +2,10 @@
 
 import React, { useImperativeHandle, useRef, useState } from "react";
 import styled from "styled-components";
-import { FONTS } from "@/styles/common";
+import clsx from "clsx";
 
+import { FONTS } from "@/styles/common";
+import { fonts } from "@/styles/fonts.css";
 import { InputWrapperStyledProps } from "./type";
 import { InputStyledWrapper } from "../Wrapper";
 import InputWrapper from "./InputWrapper";
@@ -24,6 +26,7 @@ export type InputProps = Partial<Omit<React.InputHTMLAttributes<HTMLInputElement
   onButtonWrapClick?: () => void;
   description?: string;
   suffix?: string;
+  large?: boolean;
 } & InputWrapperStyledProps;
 
 export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
@@ -38,6 +41,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
     information,
     description,
     suffix,
+    large = false,
     ...rest
   } = props;
   const [showPassword, setShowPassword] = useState(false);
@@ -70,7 +74,7 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
 
   return (
     <InputWrapper information={information} title={title} required={required}>
-      <ValueContainer $isError={error}>
+      <ValueContainer $isError={error} style={{ height: large ? "72px" : "40px" }}>
         {iconType && <IconArea>{ICON_TYPE[iconType]}</IconArea>}
         {onButtonWrapClick ? (
           <ButtonWrapInput type="button" onClick={onButtonWrapClick}>
@@ -81,12 +85,14 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
               placeholder={props.placeholder ?? " "}
               aria-disabled="true"
               tabIndex={-1}
+              className={clsx(large ? fonts.head6.medium : fonts.body4.regular)}
               {...rest}
             />
           </ButtonWrapInput>
         ) : (
           <StyledInput
             ref={inputRef}
+            className={clsx(large ? fonts.head6.medium : fonts.body4.regular)}
             type={type === "password" && showPassword ? "text" : type}
             placeholder={props.placeholder ?? " "}
             pattern={type === "number" || type === "tel" ? "[0-9]*" : undefined}
@@ -105,7 +111,11 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
               )}
             </>
           )}
-          {suffix && <span className="input-suffix">{suffix}</span>}
+          {suffix && (
+            <span className="input-suffix" data-large={large}>
+              {suffix}
+            </span>
+          )}
           {type === "password" && (
             <IconArea role="button" onClick={onClickShowPassword}>
               {showPassword ? <EyeOpenedIcon /> : <EyeClosedIcon />}
@@ -130,8 +140,12 @@ const ValueContainer = styled(InputStyledWrapper)`
     flex-shrink: 0;
   }
   span.input-suffix {
+    ${FONTS.body4("regular")};
     color: var(--gray400); /* placeholder일 때, */
-    ${FONTS.body4("regular")}
+
+    &[data-large="true"] {
+      ${FONTS.body2("regular")};
+    }
   }
 `;
 const IconArea = styled.div`
@@ -165,7 +179,6 @@ const StyledInput = styled.input`
   width: 100%;
   height: 100%;
   color: var(--gray700);
-  ${FONTS.body4("regular")};
 
   &::placeholder {
     color: var(--gray400);
@@ -193,7 +206,6 @@ const ButtonWrapInput = styled(StyledInput).attrs({ as: "button" })`
   justify-content: flex-start;
   align-items: center;
   input {
-    ${FONTS.body4("regular")};
     color: var(--gray700);
     &::placeholder {
       color: var(--gray400);

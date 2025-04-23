@@ -21,18 +21,18 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
   const { showModal: showSiDo, ModalComponents: ModalSido } = useModal();
   const { showModal: showSigungu, ModalComponents: ModalSigungu } = useModal();
 
-  const onSidoChanged = (e: ChangedEvent | WillChangeEvent) => {
-    if (data) {
-      setSido(data?.parent[e.index].locationkey);
-    }
-  };
-  const onSigunguChanged = (e: ChangedEvent | WillChangeEvent) => {
-    if (data) {
-      setSigungu(
-        data?.child.filter((location) => Math.floor(location.locationkey / 1000) === sido)[e.index].locationkey
-      );
-    }
-  };
+  // const onSidoChanged = (e: ChangedEvent | WillChangeEvent) => {
+  //   if (data) {
+  //     setSido(data?.parent[e.index].locationkey);
+  //   }
+  // };
+  // const onSigunguChanged = (e: ChangedEvent | WillChangeEvent) => {
+  //   if (data) {
+  //     setSigungu(
+  //       data?.child.filter((location) => Math.floor(location.locationkey / 1000) === sido)[e.index].locationkey
+  //     );
+  //   }
+  // };
 
   const setSidoSelected = (index: number, target: number) => {
     setSido(target);
@@ -54,7 +54,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
       <Container>
         <p className="input-title">{title ?? "주소"}</p>
         <Selects>
-          <Select onClick={showSiDo}>
+          {/* <Select onClick={showSiDo}>
             {sido ? (
               <div className="selected-value">
                 {data?.parent.find((item) => item.locationkey === sido)?.locationname}
@@ -77,7 +77,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
             <i className="arrow-icon">
               <ArrowBottomIcon />
             </i>
-          </Select>
+          </Select> */}
         </Selects>
       </Container>
       <ModalSido
@@ -94,7 +94,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
         ]}
       >
         <Wrapper>
-          <Flicking
+          {/* <Flicking
             ref={sidoRef}
             horizontal={false}
             onWillChange={onSidoChanged}
@@ -110,7 +110,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
                 {item.locationname}
               </Panel>
             ))}
-          </Flicking>
+          </Flicking> */}
         </Wrapper>
       </ModalSido>
       <ModalSigungu
@@ -128,7 +128,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
         ]}
       >
         <Wrapper>
-          <Flicking
+          {/* <Flicking
             ref={sigunguRef}
             horizontal={false}
             onWillChange={onSigunguChanged}
@@ -147,7 +147,7 @@ function LocationInput({ title, defaultValue, setLocationKey }: Props) {
                   {item.locationname}
                 </Panel>
               ))}
-          </Flicking>
+          </Flicking> */}
         </Wrapper>
       </ModalSigungu>
     </>

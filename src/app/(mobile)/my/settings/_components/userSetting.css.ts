@@ -40,3 +40,43 @@ export const settingsMyInfoFormWrapper = style({
   flexDirection: "column",
   gap: "20px",
 });
+
+export const settingsMyTeamListGroupTitle = style([
+  fonts.body3.semibold,
+  {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "8px",
+    color: "var(--gray900)",
+  },
+]);
+export const settingsMyTeamListContainer = style({
+  padding: "12px",
+  borderRadius: "10px",
+  backgroundColor: "var(--gray50)",
+});
+export const settingsMyTeamListSportsGroupTitle = style([
+  fonts.body4.regular,
+  {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "4px",
+    color: "var(--gray400)",
+  },
+]);
+export const settingsMyTeamListSportsGroupItem = style([
+  fonts.body4.medium,
+  {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    color: "var(--gray700)",
+  },
+]);
+export const settingsMyTeamListSportsGroupItemLogo = style({
+  display: "inline-block",
+  width: "32px",
+  height: "32px",
+  border: "1px solid var(--gray200)",
+  borderRadius: "50%",
+});

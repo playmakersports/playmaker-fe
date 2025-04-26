@@ -112,7 +112,11 @@ export const BasicInput = React.forwardRef<HTMLInputElement, InputProps>((props,
             </>
           )}
           {suffix && (
-            <span className="input-suffix" data-large={large}>
+            <span
+              className="input-suffix"
+              data-large={large}
+              style={{ color: props.disabled ? "var(--gray300)" : undefined }}
+            >
               {suffix}
             </span>
           )}

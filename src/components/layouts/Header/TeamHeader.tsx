@@ -46,7 +46,7 @@ function TeamHeader({ scrollY }: Props) {
         <div style={{ flex: 1 }}>
           <HeaderTeamMover title={title} showList={showList} setShowList={setShowList} />
         </div>
-        {pathname !== "/team/find" && (
+        {pathname !== "/team/find" && !!title && (
           <RightSection>
             <div className={clsx("action-menu", { hide: showList })}>
               <DropdownAction

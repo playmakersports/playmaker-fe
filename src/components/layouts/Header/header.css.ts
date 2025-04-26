@@ -76,11 +76,11 @@ export const headerButtonIcon = style({
 export const headerSingleSubActionButton = style([
   fonts.body3.medium,
   {
-    marginRight: "-3px",
-    width: "27px",
+    marginRight: "-8px",
+    width: "32px",
     color: "var(--primary600)",
     wordBreak: "keep-all",
-    borderRadius: "4px",
+    borderRadius: "2px",
     transition: "background-color 0.3s, box-shadow 0.3s",
     selectors: {
       "&:active": {

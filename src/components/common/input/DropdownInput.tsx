@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import { flip, hide, offset, useDismiss, useFloating, useInteractions } from "@floating-ui/react";
 
 import { InputWrapperStyledProps } from "./type";
 import { FONTS } from "@/styles/common";
@@ -38,7 +39,15 @@ function DropdownInput(props: Props) {
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
   const optionsRefs = useRef<HTMLButtonElement[]>([]);
-  const [position, setPosition] = useState("left");
+
+  const { refs, floatingStyles, middlewareData, context } = useFloating({
+    placement: "bottom-start",
+    open: showOptions,
+    onOpenChange: setShowOptions,
+    middleware: [hide(), flip(), offset(8)],
+  });
+  const dismiss = useDismiss(context);
+  const { getFloatingProps } = useInteractions([dismiss]);
 
   useEffect(() => {
     const outSideClick = (e: any) => {
@@ -48,29 +57,6 @@ function DropdownInput(props: Props) {
     };
     document.addEventListener("mouseup", outSideClick);
   }, [showOptions]);
-
-  useEffect(() => {
-    const checkPosition = () => {
-      if (!dropdownRef.current) return;
-      const rect = dropdownRef.current.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const elementCenter = rect.left + rect.width / 2;
-      const viewportCenter = windowWidth / 2;
-
-      if (elementCenter < viewportCenter) {
-        setPosition("left");
-      } else {
-        setPosition("right");
-      }
-    };
-
-    checkPosition();
-    window.addEventListener("resize", checkPosition);
-
-    return () => {
-      window.removeEventListener("resize", checkPosition);
-    };
-  }, []);
 
   const onKeyupOptionsOpen = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -111,7 +97,8 @@ function DropdownInput(props: Props) {
           options.find((v) => v.value === value)?.name ?? "없음"
         }`}
         role="menu"
-        ref={dropdownRef}
+        // ref={dropdownRef}
+        ref={refs.setReference}
         data-error={error}
         aria-disabled={disabled}
         data-state={value === "" ? "placeholder" : ""}
@@ -127,36 +114,45 @@ function DropdownInput(props: Props) {
       </ValueContainer>
       {description && <Description data-error={error}>{description}</Description>}
 
-      <DropdownAsset.Box $isShow={showOptions} style={{ [position]: 0 }}>
-        {optionsTitle && <OptionsTitle>{optionsTitle}</OptionsTitle>}
-        <DropdownAsset.List>
-          {options.map((option, index) => (
-            <button
-              key={option.value}
-              aria-label={option.name}
-              role="option"
-              aria-selected={option.value === value}
-              type="button"
-              onClick={() => {
-                onChange(option.value);
-                setShowOptions(false);
-              }}
-              data-active={option.value === value}
-              ref={(element) => {
-                if (element) {
-                  optionsRefs.current[index] = element as HTMLButtonElement;
-                }
-              }}
-              onKeyUp={(e) => onKeyupOptionSelect(e, index)}
-            >
-              <span className="option-name">{option.name}</span>
-              <span className="icon">
-                <CheckIcon />
-              </span>
-            </button>
-          ))}
-        </DropdownAsset.List>
-      </DropdownAsset.Box>
+      {showOptions && (
+        <DropdownAsset.Box
+          ref={refs.setFloating}
+          style={{
+            ...floatingStyles,
+            visibility: middlewareData.hide?.referenceHidden ? "hidden" : "visible",
+          }}
+          {...getFloatingProps()}
+        >
+          {optionsTitle && <OptionsTitle>{optionsTitle}</OptionsTitle>}
+          <DropdownAsset.List>
+            {options.map((option, index) => (
+              <button
+                key={option.value}
+                aria-label={option.name}
+                role="option"
+                aria-selected={option.value === value}
+                type="button"
+                onClick={() => {
+                  onChange(option.value);
+                  setShowOptions(false);
+                }}
+                data-active={option.value === value}
+                ref={(element) => {
+                  if (element) {
+                    optionsRefs.current[index] = element as HTMLButtonElement;
+                  }
+                }}
+                onKeyUp={(e) => onKeyupOptionSelect(e, index)}
+              >
+                <span className="option-name">{option.name}</span>
+                <span className="icon">
+                  <CheckIcon />
+                </span>
+              </button>
+            ))}
+          </DropdownAsset.List>
+        </DropdownAsset.Box>
+      )}
     </InputWrapper>
   );
 }

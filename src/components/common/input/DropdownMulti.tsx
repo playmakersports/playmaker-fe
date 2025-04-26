@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { flip, hide, offset, useDismiss, useFloating, useInteractions } from "@floating-ui/react";
 
 import { InputWrapperStyledProps } from "./type";
 import { FONTS, SCROLL_HIDE } from "@/styles/common";
@@ -38,41 +39,16 @@ function DropdownMulti(props: Props) {
     error = false,
   } = props;
   const [showOptions, setShowOptions] = useState(false);
-  const [position, setPosition] = useState("left");
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsRefs = useRef<HTMLButtonElement[]>([]);
 
-  useEffect(() => {
-    const outSideClick = (e: any) => {
-      if (showOptions && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowOptions(false);
-      }
-    };
-    document.addEventListener("mouseup", outSideClick);
-  }, [showOptions]);
-
-  useEffect(() => {
-    const checkPosition = () => {
-      if (!dropdownRef.current) return;
-      const rect = dropdownRef.current.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const elementCenter = rect.left + rect.width / 2;
-      const viewportCenter = windowWidth / 2;
-
-      if (elementCenter < viewportCenter) {
-        setPosition("left");
-      } else {
-        setPosition("right");
-      }
-    };
-
-    checkPosition();
-    window.addEventListener("resize", checkPosition);
-
-    return () => {
-      window.removeEventListener("resize", checkPosition);
-    };
-  }, []);
+  const { refs, floatingStyles, middlewareData, context } = useFloating({
+    placement: "bottom-start",
+    open: showOptions,
+    onOpenChange: setShowOptions,
+    middleware: [hide(), flip(), offset(8)],
+  });
+  const dismiss = useDismiss(context);
+  const { getFloatingProps } = useInteractions([dismiss]);
 
   const onKeyupOptionsOpen = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") {
@@ -116,7 +92,7 @@ function DropdownMulti(props: Props) {
 
   return (
     <InputWrapper title={title} required={required} information={information}>
-      <div ref={dropdownRef}>
+      <div ref={refs.setReference}>
         <ValueContainer
           type="button"
           role="menu"
@@ -163,33 +139,42 @@ function DropdownMulti(props: Props) {
         </ValueContainer>
         {description && <Description data-error={error}>{description}</Description>}
 
-        <DropdownAsset.Box $isShow={showOptions} style={{ [position]: 0 }}>
-          {optionsTitle && <OptionsTitle>{optionsTitle}</OptionsTitle>}
-          <DropdownAsset.MultiList>
-            {options.map((option, index) => (
-              <button
-                key={option.value}
-                aria-label={option.name}
-                role="option"
-                aria-selected={value.includes(option.value)}
-                type="button"
-                onClick={() => onClickOptionItem(option)}
-                data-active={value.includes(option.value)}
-                ref={(element) => {
-                  if (element) {
-                    optionsRefs.current[index] = element as HTMLButtonElement;
-                  }
-                }}
-                onKeyUp={(e) => onKeyupOptionSelect(e, index)}
-              >
-                <span className="icon">
-                  <CheckIcon fill="white" />
-                </span>
-                <span className="option-name">{option.name}</span>
-              </button>
-            ))}
-          </DropdownAsset.MultiList>
-        </DropdownAsset.Box>
+        {showOptions && (
+          <DropdownAsset.Box
+            ref={refs.setFloating}
+            style={{
+              ...floatingStyles,
+              visibility: middlewareData.hide?.referenceHidden ? "hidden" : "visible",
+            }}
+            {...getFloatingProps()}
+          >
+            {optionsTitle && <OptionsTitle>{optionsTitle}</OptionsTitle>}
+            <DropdownAsset.MultiList>
+              {options.map((option, index) => (
+                <button
+                  key={option.value}
+                  aria-label={option.name}
+                  role="option"
+                  aria-selected={value.includes(option.value)}
+                  type="button"
+                  onClick={() => onClickOptionItem(option)}
+                  data-active={value.includes(option.value)}
+                  ref={(element) => {
+                    if (element) {
+                      optionsRefs.current[index] = element as HTMLButtonElement;
+                    }
+                  }}
+                  onKeyUp={(e) => onKeyupOptionSelect(e, index)}
+                >
+                  <span className="icon">
+                    <CheckIcon fill="white" />
+                  </span>
+                  <span className="option-name">{option.name}</span>
+                </button>
+              ))}
+            </DropdownAsset.MultiList>
+          </DropdownAsset.Box>
+        )}
       </div>
     </InputWrapper>
   );

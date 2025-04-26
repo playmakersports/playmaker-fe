@@ -14,15 +14,15 @@ import {
 } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { useToast } from "@/hook/useToast";
+import { flip, hide, offset, useFloating } from "@floating-ui/react";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import { DateKeypadInput } from "./input/PlainInput";
-import Button from "./Button";
 import { BasicInput, InputProps } from "./input/BaseInput";
 
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
+import { NumberFlowInput } from "./input/NumberFlowInput";
 
 type Props = Omit<InputProps, "type" | "value" | "iconType" | "suffix"> & {
   value?: string;
@@ -44,9 +44,16 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   } = props;
 
   const { trigger } = useToast();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [calendarPosition, setCalendarPosition] = useState({ top: 0, left: 0, isAbove: false });
   const [showCalendar, setShowCalendar] = useState(false);
+  const { refs, floatingStyles } = useFloating({
+    placement: "bottom-start",
+    open: showCalendar,
+    onOpenChange: setShowCalendar,
+    middleware: [hide(), flip(), offset(8)],
+  });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const { dayList, weekCalendarList, currentDate, setCurrentDate } = useCalendar();
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
@@ -87,20 +94,11 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
   };
 
   const handleCalendarView = () => {
-    if (containerRef.current) {
-      const containerRect = containerRef.current!.getBoundingClientRect();
-      const isAbove = containerRect.bottom > window.innerHeight / 2;
-      setCalendarPosition({
-        top: isAbove ? containerRect.top : containerRect.bottom,
-        left: containerRect.left,
-        isAbove: isAbove,
-      });
-    }
     setShowCalendar(true);
   };
 
-  const onClickUpdateDateValue = () => {
-    const currentValueFormatted = format(currentDate, "yyyy-MM-dd");
+  const onClickUpdateDateValue = (targetDate: Date) => {
+    const currentValueFormatted = format(targetDate, "yyyy-MM-dd");
     if (inputRef.current) {
       inputRef.current.value = currentValueFormatted;
       if (rest.onChange) {
@@ -110,17 +108,17 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
       inputRef.current.focus();
     }
   };
-  const onClickResetDateValue = () => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      setYearValue(new Date().getFullYear());
-      setMonthValue(new Date().getMonth() + 1);
-      setCurrentDate(new Date());
-      if (rest.onChange) {
-        rest.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
-      }
-    }
-  };
+  // const onClickResetDateValue = () => {
+  //   if (inputRef.current) {
+  //     inputRef.current.value = "";
+  //     setYearValue(new Date().getFullYear());
+  //     setMonthValue(new Date().getMonth() + 1);
+  //     setCurrentDate(new Date());
+  //     if (rest.onChange) {
+  //       rest.onChange({ target: { value: "" } } as React.ChangeEvent<HTMLInputElement>);
+  //     }
+  //   }
+  // };
 
   const setCurrentDateValue = (date?: Date) => {
     const targetDate = date ?? new Date();
@@ -140,7 +138,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
 
   return (
     <Container ref={containerRef}>
-      <div style={{ position: "relative" }}>
+      <div ref={refs.setReference} style={{ position: "relative" }}>
         <BasicInput
           error={error}
           description={description}
@@ -161,16 +159,11 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
         </div>
       </div>
       {showCalendar && (
-        <CalendarModalWrapper
-          role="dialog"
-          left={containerRef.current ? containerRef.current!.offsetLeft : 0}
-          position={calendarPosition}
-        >
+        <CalendarModalWrapper role="dialog" ref={refs.setFloating} style={floatingStyles}>
           <NowDate>
             <CurrentDateInputs>
               <div className="year">
-                <DateKeypadInput
-                  type="number"
+                <NumberFlowInput
                   aria-label="연도 입력"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -199,8 +192,9 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
                 년
               </div>
               <div className="month">
-                <DateKeypadInput
-                  type="number"
+                <NumberFlowInput
+                  min={1}
+                  max={12}
                   aria-label="월 입력"
                   pattern="[0-9]*"
                   inputMode="numeric"
@@ -211,7 +205,12 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
                   }}
                   value={monthValue}
                   onFocus={(e) => e.target.select()}
-                  onChange={(e) => setMonthValue(+e.target.value)}
+                  onChange={(e) => {
+                    if (Number(e.target.value) >= 0 && Number(e.target.value) < 13) {
+                      setMonthValue(+e.target.value);
+                    }
+                    return;
+                  }}
                   onBlur={(e) => {
                     const newMonth = Number(e.target.value);
                     if (e.target.value !== "" && newMonth > 0 && newMonth < 13) {
@@ -274,6 +273,7 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
                       setCurrentDate(day.date);
                       setYearValue(year);
                       setMonthValue(month);
+                      onClickUpdateDateValue(day.date);
                     }}
                   >
                     {day.displayValue}
@@ -282,15 +282,6 @@ const DateCalendarInput = React.forwardRef<HTMLInputElement, Props>((props, ref)
               </Week>
             ))}
           </Calendar>
-
-          <Buttons>
-            <button type="button" className="reset-button" onClick={onClickResetDateValue}>
-              초기화
-            </button>
-            <Button type="button" mode="primary" fillType="default" onClick={onClickUpdateDateValue}>
-              확인
-            </Button>
-          </Buttons>
         </CalendarModalWrapper>
       )}
     </Container>
@@ -321,12 +312,9 @@ const Container = styled.div`
   }
 `;
 
-type ContainerPositionType = { top: number; left: number; isAbove: boolean };
-const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPositionType }>`
+const CalendarModalWrapper = styled.div`
   position: absolute;
   margin: 0 -4px;
-  /* top: ${({ position }) => (position.isAbove ? "auto" : `${position.top}px`)}; */
-  transform: ${({ position }) => (position.isAbove ? "translateY(calc(-100% - 46px - 16px))" : "translateY(16px)")};
   width: 320px;
   min-width: 320px;
   padding: 16px;
@@ -335,14 +323,6 @@ const CalendarModalWrapper = styled.div<{ left: number; position: ContainerPosit
   box-shadow: var(--shadow-lg);
   z-index: 50;
   color: var(--gray700);
-
-  @media (max-width: 420px) {
-    top: ${({ position }) => (position.isAbove ? 0 : position.top)}px;
-    left: 0;
-    margin: 0;
-    transform: ${({ position }) => (position.isAbove ? `translateY(calc(-46px - 16px))` : "translateY(16px)")};
-    width: 100vw;
-  }
 `;
 const NowDate = styled.div`
   display: flex;
@@ -352,17 +332,13 @@ const NowDate = styled.div`
 const CurrentDateInputs = styled.div`
   display: flex;
   gap: 8px;
-  padding: 0 4px 0 10px;
   color: var(--gray900);
   ${FONTS.body2("semibold")};
 
-  ${DateKeypadInput} {
-    padding: 0;
-    text-align: left;
-    max-width: 46px;
-    border-radius: 0;
-    color: var(--gray900);
-    ${FONTS.body2("semibold")};
+  & > div.year,
+  & > div.month {
+    display: flex;
+    align-items: center;
   }
 `;
 const MonthSwitch = styled.div`
@@ -439,17 +415,6 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
     transform: scale(1.03);
     color: var(--white);
     ${FONTS.body3("semibold")};
-  }
-`;
-
-const Buttons = styled.div`
-  display: flex;
-  margin-top: 40px;
-  justify-content: space-between;
-
-  button.reset-button {
-    ${FONTS.body3("medium")};
-    color: var(--primary600);
   }
 `;
 

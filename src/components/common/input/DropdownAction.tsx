@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
+import { flip, hide, offset, useDismiss, useFloating, useInteractions } from "@floating-ui/react";
 
 import { FONTS } from "@/styles/common";
 import { InputStyledWrapper } from "../Wrapper";
@@ -19,43 +20,15 @@ function DropdownAction(props: Props) {
   const { title, icon = false, options, children } = props;
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const [position, setPosition] = useState("left");
 
-  useEffect(() => {
-    const outSideClick = (e: any) => {
-      if (showOptions && dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setShowOptions(false);
-      }
-    };
-    document.addEventListener("mouseup", outSideClick);
-
-    return () => {
-      document.removeEventListener("mouseup", outSideClick);
-    };
-  }, [showOptions]);
-
-  useEffect(() => {
-    const checkPosition = () => {
-      if (!dropdownRef.current) return;
-      const rect = dropdownRef.current.getBoundingClientRect();
-      const windowWidth = window.innerWidth;
-      const elementCenter = rect.left + rect.width / 2;
-      const viewportCenter = windowWidth / 2;
-
-      if (elementCenter < viewportCenter) {
-        setPosition("left");
-      } else {
-        setPosition("right");
-      }
-    };
-
-    checkPosition();
-    window.addEventListener("resize", checkPosition);
-
-    return () => {
-      window.removeEventListener("resize", checkPosition);
-    };
-  }, []);
+  const { refs, floatingStyles, middlewareData, context } = useFloating({
+    placement: "bottom-end",
+    open: showOptions,
+    onOpenChange: setShowOptions,
+    middleware: [hide(), flip(), offset(8)],
+  });
+  const dismiss = useDismiss(context);
+  const { getFloatingProps } = useInteractions([dismiss]);
 
   const onClickShowOptions = () => {
     setShowOptions((prev) => !prev);
@@ -65,7 +38,7 @@ function DropdownAction(props: Props) {
     <Container data-icon={icon}>
       {icon ? (
         <div
-          ref={dropdownRef}
+          ref={refs.setReference}
           role="button"
           aria-label={title}
           onClick={onClickShowOptions}
@@ -91,15 +64,24 @@ function DropdownAction(props: Props) {
         </ValueContainer>
       )}
 
-      <DropdownAsset.Box $isShow={showOptions} style={{ [position]: 0 }}>
-        <DropdownAsset.List style={{ overflow: "inherit" }}>
-          {options.map((option, index) => (
-            <button type="button" key={index} onClick={option.action} data-divided={option.divided}>
-              <span className="option-name">{option.name}</span>
-            </button>
-          ))}
-        </DropdownAsset.List>
-      </DropdownAsset.Box>
+      {showOptions && (
+        <DropdownAsset.Box
+          ref={refs.setFloating}
+          style={{
+            ...floatingStyles,
+            visibility: middlewareData.hide?.referenceHidden ? "hidden" : "visible",
+          }}
+          {...getFloatingProps()}
+        >
+          <DropdownAsset.List style={{ overflow: "inherit" }}>
+            {options.map((option, index) => (
+              <button type="button" key={index} onClick={option.action} data-divided={option.divided}>
+                <span className="option-name">{option.name}</span>
+              </button>
+            ))}
+          </DropdownAsset.List>
+        </DropdownAsset.Box>
+      )}
     </Container>
   );
 }

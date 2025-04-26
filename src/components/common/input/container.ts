@@ -2,25 +2,18 @@ import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
 export const DropdownAsset = {
-  Box: styled.div<{ $isShow: boolean }>`
+  Box: styled.div`
     position: absolute;
     display: flex;
     padding: 4px;
     flex-direction: column;
     gap: 4px;
     width: 100%;
-    min-width: 160px;
-    /* top: 40px; */
-    top: 100%;
-    margin: 8px 0;
+    min-width: 140px;
     border-radius: 10px;
     background-color: var(--white);
     box-shadow: var(--shadow-lg);
-    z-index: ${({ $isShow }) => ($isShow ? 50 : -1)};
-    transform: translateY(${({ $isShow }) => ($isShow ? "0px" : "-12px")});
-    visibility: ${({ $isShow }) => ($isShow ? "visible" : "hidden")};
-    opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
-    transition: transform 0.25s, opacity 0.3s;
+    z-index: 50;
   `,
   List: styled.div`
     display: flex;
@@ -44,9 +37,10 @@ export const DropdownAsset = {
       ${FONTS.body4("regular")};
 
       & svg {
+        display: none;
         width: 24px;
         height: 24px;
-        fill: transparent;
+        fill: var(--primary500);
       }
 
       &:hover {
@@ -88,7 +82,7 @@ export const DropdownAsset = {
           height: 24px;
         }
         & svg {
-          fill: var(--primary500);
+          display: block;
         }
       }
     }
@@ -141,7 +135,7 @@ export const DropdownAsset = {
         & svg {
           width: 100%;
           height: 100%;
-          fill: transparent;
+          display: none;
         }
       }
 
@@ -155,6 +149,7 @@ export const DropdownAsset = {
           background-color: var(--primary500);
           border-color: transparent;
           & svg {
+            display: block;
             fill: var(--white);
           }
         }

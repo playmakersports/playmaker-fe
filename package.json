@@ -15,6 +15,7 @@
   "dependencies": {
     "@egjs/react-flicking": "^4.11.3",
     "@firebase/database-compat": "^2.0.1",
+    "@floating-ui/react": "^0.27.8",
     "@number-flow/react": "^0.5.5",
     "@tanstack/react-query": "^5.59.16",
     "@tiptap/extension-highlight": "^2.4.0",

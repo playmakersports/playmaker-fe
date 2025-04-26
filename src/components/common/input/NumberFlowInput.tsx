@@ -35,13 +35,16 @@ export const NumberFlowInput = React.forwardRef<HTMLInputElement, Props>((props,
   }, [value]);
 
   const calFlexibleWidth = () => {
-    if (rest.style?.padding) {
-      const padding = (rest.style.padding as string).split(" ")[1].split("px")[0];
+    if (rest.style?.padding && typeof rest.style.padding === "string") {
+      const padding = rest.style.padding?.split(" ")[1].split("px")[0];
       return flexibleWidth + 1 + Number(padding) * 2;
     }
-    if (rest.style?.paddingRight || rest.style?.paddingLeft) {
-      const paddingRight = (rest.style.paddingRight as string).split("px")[0];
-      const paddingLeft = (rest.style.paddingLeft as string).split("px")[0];
+    if (
+      (rest.style?.paddingRight && typeof rest.style.paddingRight === "string") ||
+      (rest.style?.paddingLeft && typeof rest.style.paddingLeft === "string")
+    ) {
+      const paddingRight = (rest.style.paddingRight as string)?.split("px")[0];
+      const paddingLeft = (rest.style.paddingLeft as string)?.split("px")[0];
       return flexibleWidth + 1 + Number(paddingRight) + Number(paddingLeft);
     }
     return flexibleWidth;

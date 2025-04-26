@@ -47,7 +47,7 @@ function TeamMainContents() {
         />
       </div>
       <div className={teamMainContentsGroup}>
-        <GroupTitle icon={<CalendarIcon />} link={`/team/${teamId}/schedule`}>
+        <GroupTitle icon={<CalendarIcon />} link={`/team/${teamId}/matches`}>
           최근 경기
         </GroupTitle>
         <div className={flexColumnGap12}>

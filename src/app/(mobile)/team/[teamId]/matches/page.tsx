@@ -1,12 +1,12 @@
 "use client";
-
 import React from "react";
 import { useHeader } from "@/hook/useHeader";
+import { baseContainer } from "@/styles/container.css";
 
 function MatchesList() {
-  useHeader({ title: "경기" });
+  useHeader({ title: "매치" });
 
-  return <div>MatchesList</div>;
+  return <section className={baseContainer}>MatchesList</section>;
 }
 
 export default MatchesList;

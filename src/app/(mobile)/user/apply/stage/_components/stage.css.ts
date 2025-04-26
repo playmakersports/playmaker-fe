@@ -43,3 +43,21 @@ export const stageFormWrapper = style({
   flexDirection: "column",
   gap: "10px",
 });
+
+export const stageFavSportsGrid = style({
+  display: "grid",
+  gridTemplateColumns: "repeat(3, 1fr)",
+  gap: "20px 10px",
+  justifyItems: "center",
+});
+export const stageWelcomeContainer = style({
+  position: "absolute",
+  display: "flex",
+  flexDirection: "column",
+  padding: "48px 16px calc(var(--safe-bottom) + 16px)",
+  width: "100%",
+  left: 0,
+  bottom: 0,
+  height: "100%",
+  background: "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--primary100) 100%)",
+});

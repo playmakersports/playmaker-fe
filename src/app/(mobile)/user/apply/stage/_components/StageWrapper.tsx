@@ -7,22 +7,25 @@ type Props = {
   children: React.ReactNode;
   onClickNext?: () => void;
   onClickPrev?: () => void;
+  onClickLast?: () => void;
   start: boolean;
   last: boolean;
   length: number;
   current: number;
 };
 function StageWrapper(props: Props) {
-  const { children, onClickNext, onClickPrev, start, last, length, current } = props;
+  const { children, onClickNext, onClickPrev, onClickLast, start, last, length, current } = props;
 
   return (
     <div className={stageWrapper.container}>
       <section className={stageWrapper.contents}>
-        <div style={{ margin: "24px 0 16px" }}>
-          <Badge type="gray" fillType="light" size="large">
-            {current} / {length}
-          </Badge>
-        </div>
+        {current !== 6 && (
+          <div style={{ margin: "24px 0 16px" }}>
+            <Badge type="gray" fillType="light" size="large">
+              {current} / {length}
+            </Badge>
+          </div>
+        )}
         {children}
       </section>
       <div className={stageWrapper.buttons}>
@@ -37,7 +40,7 @@ function StageWrapper(props: Props) {
           </Button>
         )}
         {last && (
-          <Button type="submit" size="large" flex={1}>
+          <Button type="submit" size="large" flex={1} onClick={onClickLast}>
             완료
           </Button>
         )}

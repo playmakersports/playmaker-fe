@@ -12,8 +12,9 @@ import Stage2 from "./_components/Stage2";
 import Stage3 from "./_components/Stage3";
 import Stage4 from "./_components/Stage4";
 import Stage5 from "./_components/Stage5";
+import Welcome from "./_components/Welcome";
 
-const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Stage6"];
+const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Welcome"];
 function JoinStage() {
   const popup = usePopup();
   const router = useRouter();
@@ -57,7 +58,6 @@ function JoinStage() {
       }
     }
     setStep(stages[currentStepIndex + 1]);
-    console.log(methods.watch());
   };
   const handlePrevStep = () => {
     if (!stages[currentStepIndex - 1]) return;
@@ -70,7 +70,8 @@ function JoinStage() {
       onClickPrev={handlePrevStep}
       start={currentStepIndex === 0}
       last={currentStepIndex === stages.length - 1}
-      length={stages.length}
+      length={stages.length - 1}
+      // 가입완료(Welcome) 페이지는 제외
       current={currentStepIndex + 1}
     >
       <FormProvider {...methods}>
@@ -89,6 +90,12 @@ function JoinStage() {
           </Step>
           <Step name={stages[4]}>
             <Stage5 />
+          </Step>
+          <Step name={stages[4]}>
+            <Stage5 />
+          </Step>
+          <Step name={stages[5]}>
+            <Welcome />
           </Step>
         </Funnel>
       </FormProvider>

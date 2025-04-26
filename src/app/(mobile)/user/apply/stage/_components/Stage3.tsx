@@ -180,20 +180,4 @@ const List = styled.div`
   }
 `;
 
-const Information = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 4px;
-  color: var(--gray600);
-
-  svg {
-    width: 28px;
-    height: 28px;
-    fill: var(--gray500);
-  }
-`;
-
 export default Stage3;

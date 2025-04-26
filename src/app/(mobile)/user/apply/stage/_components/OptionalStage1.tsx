@@ -18,7 +18,7 @@ function OptionalStage1() {
   return (
     <div className={stageFormWrapper}>
       <div>
-        <h3 className={stageWrapper.title}>'농구'에 대한 정보를 입력해 주세요</h3>
+        <h3 className={stageWrapper.title}>&apos;농구&apos;에 대한 정보를 입력해 주세요</h3>
         <p className={stageWrapper.description}>입력된 정보는 언제든지 수정 가능해요.</p>
       </div>
       <InputWrapper title="운동 기간">

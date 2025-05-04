@@ -24,7 +24,7 @@ export const TEAM_PLAYERS_MOCK: Array<{
 }> = [
   {
     playerId: "21",
-    name: "백종원",
+    name: "홍길동",
     level: 5,
     profileImg: "",
     tag: ["리더"],

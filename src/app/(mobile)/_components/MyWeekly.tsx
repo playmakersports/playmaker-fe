@@ -6,8 +6,9 @@ import { addDays, format, isSameDay, isToday, startOfWeek } from "date-fns";
 
 import { FONTS } from "@/styles/common";
 import { fonts } from "@/styles/fonts.css";
-import Chip from "@/components/common/Chip";
+import { filterButtonContainer } from "./container.css";
 import { BottomSheetSelect } from "@/components/common/input/BottomSheetSelect";
+import Chip from "@/components/common/Chip";
 import { formattedDate } from "@/util/date";
 
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
@@ -89,10 +90,10 @@ function MyWeekly() {
           ]}
           onChange={(value) => setFilterTeam(value)}
         >
-          <FilterButton>
-            <FilterLineIcon />
-            <span className={fonts.body4.medium}>필터</span>
-          </FilterButton>
+          <div className={filterButtonContainer}>
+            <FilterLineIcon width={16} height={16} fill="var(--gray600)" />
+            필터
+          </div>
         </BottomSheetSelect>
       </Title>
       <Week>
@@ -280,26 +281,6 @@ const Schedules = styled.ul`
         background-color: var(--magenta300);
       }
     }
-  }
-`;
-
-const FilterButton = styled.div`
-  cursor: pointer;
-  user-select: none;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 4px 8px;
-  border-radius: 6px;
-  border: 1px solid var(--gray200);
-  color: var(--gray600);
-  svg {
-    width: 16px;
-    height: 16px;
-    fill: var(--gray600);
-  }
-  &:active {
-    background-color: var(--gray50);
   }
 `;
 

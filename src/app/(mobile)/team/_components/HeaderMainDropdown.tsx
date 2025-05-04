@@ -11,17 +11,28 @@ type Props = {
   title?: string;
   showList: boolean;
   setShowList: React.Dispatch<React.SetStateAction<boolean>>;
+  list: { name: string; action: () => void }[];
+  onCloseList?: () => void;
 };
-function HeaderTeamMover({ title, showList, setShowList }: Props) {
+function HeaderMainDropdown({ title, showList, setShowList, list, onCloseList }: Props) {
   const handleCloseList = () => {
     setShowList(false);
+    onCloseList && onCloseList();
   };
 
   return (
     <div className={headerMoverContainer}>
       <button type="button" className={headerMoverButton} onClick={() => setShowList((prev) => !prev)}>
         <h3 className={fonts.body2.semibold}>{title}</h3>
-        {title && <DownArrow width={24} height={24} fill="var(--gray700)" />}
+        {title && (
+          <DownArrow
+            width={24}
+            height={24}
+            style={{
+              fill: "var(--gray700)",
+            }}
+          />
+        )}
       </button>
       <Portal inactiveScroll={showList}>
         <div
@@ -35,12 +46,11 @@ function HeaderTeamMover({ title, showList, setShowList }: Props) {
             transform: `translateX(-50%) translateY(${showList ? 0 : "-24px"})`,
           }}
         >
-          <button type="button" onFocus={() => console.log("focus")} className={headerListItem}>
-            팀이름1
-          </button>
-          <button type="button" className={headerListItem}>
-            팀이름2
-          </button>
+          {list.map((item, index) => (
+            <button type="button" key={`${item.name}+${index}`} onClick={item.action} className={headerListItem}>
+              {item.name}
+            </button>
+          ))}
         </div>
         <div
           onClick={handleCloseList}
@@ -63,4 +73,4 @@ function HeaderTeamMover({ title, showList, setShowList }: Props) {
   );
 }
 
-export default HeaderTeamMover;
+export default HeaderMainDropdown;

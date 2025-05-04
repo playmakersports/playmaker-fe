@@ -10,7 +10,8 @@ import { atomHeaderTransparent, atomPageTitle } from "@/atom/common";
 import { RoutedHeaderContainer } from "@/components/layouts/Header/RoutedHeader";
 import Badge from "@/components/common/Badge";
 import DropdownAction from "@/components/common/input/DropdownAction";
-import HeaderTeamMover from "@/app/(mobile)/team/_components/HeaderTeamMover";
+import HeaderMainDropdown from "@/app/(mobile)/team/_components/HeaderMainDropdown";
+
 import SearchIcon from "@/assets/icon/common/Search.svg";
 
 type Props = {
@@ -44,7 +45,16 @@ function TeamHeader({ scrollY }: Props) {
         style={showList ? { overflow: "hidden" } : {}}
       >
         <div style={{ flex: 1 }}>
-          <HeaderTeamMover title={title} showList={showList} setShowList={setShowList} />
+          <HeaderMainDropdown
+            title={title}
+            showList={showList}
+            setShowList={setShowList}
+            list={[
+              { name: "팀 이름1", action: () => {} },
+              { name: "팀 이름2", action: () => {} },
+              { name: "팀 이름3", action: () => {} },
+            ]}
+          />
         </div>
         {pathname !== "/team/find" && !!title && (
           <RightSection>

@@ -8,3 +8,13 @@ export type AuthResponse = {
   scope: string | null;
   token_type: string | null;
 };
+
+export type AuthJoinFormRequest = {
+  contact: string;
+  selfIntro: string;
+  nickname: string;
+  name: string;
+  birth: string;
+  sexKey: string;
+  preferredSport: string[];
+};

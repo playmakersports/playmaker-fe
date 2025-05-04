@@ -129,7 +129,7 @@ function Statistics() {
               </span>
             </li>
             <li className={TeamStatisticsGroupCardItem}>
-              <span className="item-title">어시스터</span>
+              <span className="item-title">어시스트</span>
               <span className={flexRowGap10}>
                 <span>홍길동</span>
                 <span>20점</span>

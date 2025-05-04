@@ -1,3 +1,4 @@
+import { baseCardContainer, flexRowGap10, flexRowGap12 } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { hexToRgb } from "@/util/common";
 import { globalStyle, style } from "@vanilla-extract/css";
@@ -63,11 +64,6 @@ export const teamMainTextWithIcon = style({
   gap: "4px",
   alignItems: "center",
   color: "var(--gray400)",
-});
-export const teamMainCardContainer = style({
-  padding: "16px",
-  borderRadius: "10px",
-  border: "1px solid var(--gray200)",
 });
 export const teamMainMatchTeamContainer = style({
   margin: "20px auto 0",
@@ -148,4 +144,37 @@ export const teamHeartButtonBox = style({
 export const teamHeartButtonIcon = style({
   width: "100%",
   height: "100%",
+});
+
+export const teamMainRecentVoteContainer = style({
+  margin: "0 -20px",
+  padding: "20px 0 0",
+  background: "linear-gradient(to bottom, #F8FAFC, rgba(241, 245, 249, 0))",
+});
+export const teamMainRecentVoteList = style({
+  display: "flex",
+  padding: "0 20px",
+  gap: "16px",
+  overflowX: "auto",
+  whiteSpace: "nowrap",
+  scrollbarWidth: "none",
+});
+export const teamMainRecentVoteCard = style({
+  minWidth: "280px",
+  borderRadius: "10px",
+  padding: "14px",
+  backgroundColor: "var(--white)",
+  border: "1px solid var(--gray100)",
+});
+
+export const teamMainBoardListImage = style({
+  width: "87px",
+  height: "87px",
+  borderRadius: "8px",
+  backgroundColor: "var(--gray100)",
+  objectFit: "cover",
+  backgroundSize: "cover",
+  backgroundPosition: "center",
+  backgroundRepeat: "no-repeat",
+  overflow: "hidden",
 });

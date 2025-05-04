@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import clsx from "clsx";
 
 import { fonts } from "@/styles/fonts.css";
+import { baseCardContainer } from "@/styles/container.css";
 import {
-  teamMainCardContainer,
   teamMainMatchResultBox,
   teamMainMatchResultBoxLose,
   teamMainMatchResultBoxWin,
@@ -18,7 +19,6 @@ import {
   teamMainTopHeader,
 } from "./team.main.css";
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
-import Link from "next/link";
 
 interface TeamInfo {
   name: string;
@@ -41,7 +41,7 @@ function TeamMainRecentMatch(props: Props) {
 
   return (
     <Link href={`/match/${matchId}`}>
-      <div className={teamMainCardContainer}>
+      <div className={baseCardContainer}>
         <div className={teamMainTopHeader}>
           <p className={fonts.body4.medium}>{competitionName}</p>
           <p className={clsx(teamMainTextWithIcon, fonts.caption1.regular)}>

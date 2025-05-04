@@ -15,7 +15,7 @@ function OptionalStage2() {
       <div style={{ display: "flex", gap: "12px" }}>
         <div style={{ flex: 1 }}>
           <BasicInput
-            type="text"
+            type="number"
             style={{ textAlign: "center" }}
             large={true}
             title="키"
@@ -25,7 +25,7 @@ function OptionalStage2() {
         </div>
         <div style={{ flex: 1 }}>
           <BasicInput
-            type="text"
+            type="number"
             style={{ textAlign: "center" }}
             large={true}
             title="체중"

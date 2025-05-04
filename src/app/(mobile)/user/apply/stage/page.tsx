@@ -6,13 +6,19 @@ import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import { useRouter } from "next/navigation";
 
-import StageWrapper from "./_components/StageWrapper";
+import { AuthJoinFormRequest } from "@/types/auth";
 import Stage1 from "./_components/Stage1";
 import Stage2 from "./_components/Stage2";
 import Stage3 from "./_components/Stage3";
 import Stage4 from "./_components/Stage4";
 import Stage5 from "./_components/Stage5";
 import Welcome from "./_components/Welcome";
+
+type JoinFormType = AuthJoinFormRequest & {
+  required1: boolean;
+  required2: boolean;
+  event1: boolean;
+};
 
 const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Welcome"];
 function JoinStage() {
@@ -37,69 +43,39 @@ function JoinStage() {
       handleConfirm();
     },
   });
-  const methods = useForm({
+  const methods = useForm<JoinFormType>({
     defaultValues: { required1: false, required2: false, event1: false, sexKey: "MALE" },
   });
-  const { Funnel, Step, currentStep, setStep } = useFunnel({
-    initialStep: stages[0],
+  const { Funnel, Step, setStep } = useFunnel({
+    initialStep: "Stage5",
   });
-  const currentStepIndex = stages.indexOf(currentStep);
-
-  const handleNextStep = () => {
-    if (!stages[currentStepIndex + 1]) return;
-    if (currentStepIndex === 0) {
-      const isEveryChecked = [methods.getValues("required1"), methods.getValues("required2")].every((v) => v);
-      if (!isEveryChecked) {
-        popup?.alert("필수 약관에 동의하셔야 가입할 수 있어요.", {
-          showIcon: true,
-          title: "약관 동의",
-        });
-        return;
-      }
-    }
-    setStep(stages[currentStepIndex + 1]);
-  };
-  const handlePrevStep = () => {
-    if (!stages[currentStepIndex - 1]) return;
-    setStep(stages[currentStepIndex - 1]);
-  };
 
   return (
-    <StageWrapper
-      onClickNext={handleNextStep}
-      onClickPrev={handlePrevStep}
-      start={currentStepIndex === 0}
-      last={currentStepIndex === stages.length - 1}
-      length={stages.length - 1}
-      // 가입완료(Welcome) 페이지는 제외
-      current={currentStepIndex + 1}
-    >
-      <FormProvider {...methods}>
-        <Funnel>
-          <Step name={stages[0]}>
-            <Stage1 />
-          </Step>
-          <Step name={stages[1]}>
-            <Stage2 />
-          </Step>
-          <Step name={stages[2]}>
-            <Stage3 />
-          </Step>
-          <Step name={stages[3]}>
-            <Stage4 />
-          </Step>
-          <Step name={stages[4]}>
-            <Stage5 />
-          </Step>
-          <Step name={stages[4]}>
-            <Stage5 />
-          </Step>
-          <Step name={stages[5]}>
-            <Welcome />
-          </Step>
-        </Funnel>
-      </FormProvider>
-    </StageWrapper>
+    <FormProvider {...methods}>
+      <Funnel>
+        <Step name={stages[0]}>
+          <Stage1 setStep={setStep} />
+        </Step>
+        <Step name={stages[1]}>
+          <Stage2 setStep={setStep} />
+        </Step>
+        <Step name={stages[2]}>
+          <Stage3 setStep={setStep} />
+        </Step>
+        <Step name={stages[3]}>
+          <Stage4 setStep={setStep} />
+        </Step>
+        <Step name={stages[4]}>
+          <Stage5 setStep={setStep} />
+        </Step>
+        <Step name={stages[4]}>
+          <Stage5 setStep={setStep} />
+        </Step>
+        <Step name={stages[5]}>
+          <Welcome />
+        </Step>
+      </Funnel>
+    </FormProvider>
   );
 }
 

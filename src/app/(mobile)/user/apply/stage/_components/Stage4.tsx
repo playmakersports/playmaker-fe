@@ -7,12 +7,18 @@ import { convertWebpImage } from "@/util/webp";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TextArea } from "@/components/common/TextArea";
+import StageWrapper, { SetStepType } from "./StageWrapper";
 
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 
-function Stage4() {
-  const { register, watch, setValue } = useFormContext();
+function Stage4({ setStep }: SetStepType) {
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { isValid },
+  } = useFormContext();
   const [previewImage, setPreviewImage] = useState("");
 
   const handlePreviewImg = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -45,38 +51,53 @@ function Stage4() {
     }
   }, []);
 
+  const handlePrevStep = () => {
+    setStep("Stage3");
+  };
+  const handleNextStep = () => {
+    setStep("Stage5");
+  };
+
   return (
-    <div className={stageFormWrapper}>
-      <div>
-        <h3 className={stageWrapper.title}>프로필을 작성해주세요</h3>
-        <p className={stageWrapper.description}></p>
-      </div>
-      <ImageUpload htmlFor="profileImgUpload">
-        {previewImage ? <PreviewImg src={previewImage} /> : <PersonIcon />}
-        <div className="camera-icon-wrapper">
-          <PlusIcon />
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      length={5}
+      current={4}
+      disableNext={!isValid}
+    >
+      <div className={stageFormWrapper}>
+        <div>
+          <h3 className={stageWrapper.title}>프로필을 작성해주세요</h3>
+          <p className={stageWrapper.description}></p>
         </div>
-      </ImageUpload>
-      <BasicInput type="text" title="닉네임" required {...register("nickname")} />
-      <TextArea
-        title="자기소개"
-        placeholder={`다른 플레이어들에게 보일 자기소개를 작성해 주세요\n200자 이내 작성 가능합니다.`}
-        required
-        style={{ height: "130px", resize: "none" }}
-        displayLength
-        maxLength={200}
-        {...register("selfIntro")}
-      />
-      <input
-        style={{ display: "none" }}
-        type="file"
-        accept="image/*"
-        id="profileImgUpload"
-        {...register("profileImg", {
-          onChange: handlePreviewImg,
-        })}
-      />
-    </div>
+        <ImageUpload htmlFor="profileImgUpload">
+          {previewImage ? <PreviewImg src={previewImage} /> : <PersonIcon />}
+          <div className="camera-icon-wrapper">
+            <PlusIcon />
+          </div>
+        </ImageUpload>
+        <BasicInput type="text" title="닉네임" required {...register("nickname", { required: true })} />
+        <TextArea
+          title="자기소개"
+          placeholder={`다른 플레이어들에게 보일 자기소개를 작성해 주세요\n200자 이내 작성 가능합니다.`}
+          required
+          style={{ height: "130px", resize: "none" }}
+          displayLength
+          maxLength={200}
+          {...register("selfIntro", { required: true })}
+        />
+        <input
+          style={{ display: "none" }}
+          type="file"
+          accept="image/*"
+          id="profileImgUpload"
+          {...register("profileImg", {
+            onChange: handlePreviewImg,
+          })}
+        />
+      </div>
+    </StageWrapper>
   );
 }
 

@@ -8,13 +8,25 @@ type Props = {
   onClickNext?: () => void;
   onClickPrev?: () => void;
   onClickLast?: () => void;
-  start: boolean;
-  last: boolean;
+  start?: boolean;
+  last?: boolean;
   length: number;
   current: number;
+  disableNext?: boolean;
 };
+export type SetStepType = { setStep: React.Dispatch<React.SetStateAction<string>> };
 function StageWrapper(props: Props) {
-  const { children, onClickNext, onClickPrev, onClickLast, start, last, length, current } = props;
+  const {
+    children,
+    onClickNext,
+    onClickPrev,
+    onClickLast,
+    start = false,
+    last = false,
+    length,
+    current,
+    disableNext = false,
+  } = props;
 
   return (
     <div className={stageWrapper.container}>
@@ -35,12 +47,12 @@ function StageWrapper(props: Props) {
           </Button>
         )}
         {!last && (
-          <Button type="button" size="large" flex={1} onClick={onClickNext}>
+          <Button type="button" size="large" disabled={disableNext} flex={1} onClick={onClickNext}>
             다음
           </Button>
         )}
         {last && (
-          <Button type="submit" size="large" flex={1} onClick={onClickLast}>
+          <Button type="submit" size="large" disabled={disableNext} flex={1} onClick={onClickLast}>
             완료
           </Button>
         )}

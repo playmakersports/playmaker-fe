@@ -1,43 +1,94 @@
-import React from "react";
+import React, { useEffect } from "react";
+import styled from "styled-components";
 import Image from "next/image";
-
+import { useToast } from "@/hook/useToast";
 import { useFormContext } from "react-hook-form";
+import { usePost } from "@/apis/hook/query";
+import { usePopup } from "@/components/common/global/PopupProvider";
+
+import { FONTS } from "@/styles/common";
 import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "./stage.css";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
-import styled from "styled-components";
-import clsx from "clsx";
-import { fonts } from "@/styles/fonts.css";
-import { FONTS } from "@/styles/common";
+import StageWrapper, { SetStepType } from "./StageWrapper";
+import Loading from "@/components/common/Loading";
 
-function Stage5() {
-  const { register } = useFormContext();
+function Stage5({ setStep }: SetStepType) {
+  const { register, watch } = useFormContext();
+  const { trigger } = useToast();
+  const popup = usePopup();
+
+  const { mutateAsync, isPending } = usePost("/api/login/signup", "form-data");
+  const selectedSports = watch("sports") ?? [];
+
+  const handleSubmitForm = async () => {
+    const formValues = watch();
+    try {
+      await mutateAsync({
+        data: {
+          contact: formValues.contact,
+        },
+      });
+      setStep("Welcome");
+    } catch (error) {
+      popup?.alert("가입에 실패했습니다. 다시 시도해주세요.", {
+        showIcon: true,
+        title: "가입 실패",
+        color: "red",
+      });
+      return;
+    }
+  };
+
+  const handlePrevStep = () => {
+    setStep("Stage4");
+  };
+  const handleNextStep = () => {
+    handleSubmitForm();
+  };
+
+  useEffect(() => {
+    if (selectedSports.length > 3) {
+      trigger("최대 3개까지 선택할 수 있어요.", { type: "error" });
+    }
+  }, [selectedSports]);
 
   return (
-    <div className={stageFormWrapper}>
-      <div>
-        <h3 className={stageWrapper.title}>관심 스포츠를 선택해 주세요</h3>
-        <p className={stageWrapper.description}>최대 3개까지 선택할 수 있어요</p>
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      length={5}
+      current={5}
+      disableNext={!(selectedSports.length > 0)}
+    >
+      {isPending && <Loading />}
+      <div className={stageFormWrapper}>
+        <div>
+          <h3 className={stageWrapper.title}>관심 스포츠를 선택해 주세요</h3>
+          <p className={stageWrapper.description}>최대 3개까지 선택할 수 있어요</p>
+        </div>
+        <div className={stageFavSportsGrid}>
+          {SUPPORT_SPORTS.map((item) => (
+            <SportsButton key={item.value}>
+              <input
+                type="checkbox"
+                id={`${item.value}+${item.name}`}
+                value={item.value}
+                style={{ display: "none" }}
+                {...register("sports", {
+                  maxLength: 3,
+                })}
+              />
+              <label htmlFor={`${item.value}+${item.name}`}>
+                <div className="icon-wrapper">
+                  <Image src={item.icon} alt={item.name} width={50} height={50} />
+                </div>
+                <span className="sports-name">{item.name}</span>
+              </label>
+            </SportsButton>
+          ))}
+        </div>
       </div>
-      <div className={stageFavSportsGrid}>
-        {SUPPORT_SPORTS.map((item) => (
-          <SportsButton key={item.value}>
-            <input
-              type="checkbox"
-              id={`${item.value}+${item.name}`}
-              value={item.value}
-              style={{ display: "none" }}
-              {...register("sports")}
-            />
-            <label htmlFor={`${item.value}+${item.name}`}>
-              <div className="icon-wrapper">
-                <Image src={item.icon} alt={item.name} width={50} height={50} />
-              </div>
-              <span className="sports-name">{item.name}</span>
-            </label>
-          </SportsButton>
-        ))}
-      </div>
-    </div>
+    </StageWrapper>
   );
 }
 

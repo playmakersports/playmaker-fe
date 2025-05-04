@@ -4,18 +4,21 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import useModal from "@/hook/useModal";
 import { useFormContext } from "react-hook-form";
-import { stageFormWrapper, stageWrapper } from "./stage.css";
+import { usePopup } from "@/components/common/global/PopupProvider";
 
+import { FONTS } from "@/styles/common";
+import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { SERVICE_TERMS } from "@/constants/TERMS";
 import { TERMS_LIST } from "@/constants/mock/JOIN_AGREEMENT";
-import { FONTS } from "@/styles/common";
 import { InputCheckbox } from "@/components/common/input/SelectInput";
 
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
+import StageWrapper, { SetStepType } from "./StageWrapper";
 
-function Stage1() {
+function Stage1({ setStep }: SetStepType) {
   const { ModalComponents, showModal } = useModal();
   const { register, watch, getValues, setValue } = useFormContext();
+  const popup = usePopup();
   const [selectedTerm, setSelectedTerm] = useState("");
   const [allChecked, setAllChecked] = useState(false);
 
@@ -32,8 +35,20 @@ function Stage1() {
     setAllChecked(isEveryChecked);
   }, [watch()]);
 
+  const handleNextStep = () => {
+    const isEveryChecked = [getValues("required1"), getValues("required2")].every((v) => v);
+    if (!isEveryChecked) {
+      popup?.alert("필수 약관에 동의하셔야 가입할 수 있어요.", {
+        showIcon: true,
+        title: "약관 동의",
+      });
+      return;
+    }
+    setStep("Stage2");
+  };
+
   return (
-    <>
+    <StageWrapper onClickNext={handleNextStep} start={true} length={5} current={1}>
       <div
         className={stageFormWrapper}
         style={{
@@ -102,7 +117,7 @@ function Stage1() {
           <div dangerouslySetInnerHTML={{ __html: SERVICE_TERMS }} />
         </TermContents>
       </ModalComponents>
-    </>
+    </StageWrapper>
   );
 }
 

@@ -5,18 +5,19 @@ import { useFormContext } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 import { useGet } from "@/apis/hook/query";
 
-import { FONTS } from "@/styles/common";
+import { ApiCodeArea } from "@/apis/types/code";
 import { fonts } from "@/styles/fonts.css";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
+
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
-import { ApiCodeArea } from "@/apis/types/code";
+import StageWrapper, { SetStepType } from "./StageWrapper";
 
 interface LocationType {
   key: string | null;
   name: string;
 }
-function Stage3() {
+function Stage3({ setStep }: SetStepType) {
   const toast = useToast();
   const { setValue, watch } = useFormContext();
   const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
@@ -25,7 +26,7 @@ function Stage3() {
   const formLocation = watch("location") ?? [];
   const formLocationDisplayValues = formLocation.map((key: string) => ({
     key,
-    name: data?.find((item) => item.codeSequenceKey === key)?.codeValue,
+    name: findAreaByCodeSequenceKey(data, key)?.text,
   }));
   const [locations, setLocations] = useState<LocationType[]>(formLocationDisplayValues);
 
@@ -50,68 +51,87 @@ function Stage3() {
     );
   };
 
+  const handlePrevStep = () => {
+    setStep("Stage2");
+  };
+  const handleNextStep = () => {
+    setStep("Stage4");
+  };
+
   return (
-    <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -20px", padding: "0 20px" }}>
-      <div style={{ marginBottom: "-4px" }}>
-        <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
-        <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
-      </div>
-      {isLoading ? (
-        <div style={{ marginTop: "32px" }}>
-          <Loading />
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      length={5}
+      current={3}
+      disableNext={!(formLocation.length > 1)}
+    >
+      <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -20px", padding: "0 20px" }}>
+        <div style={{ marginBottom: "-4px" }}>
+          <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
+          <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
         </div>
-      ) : (
-        <Location>
-          <div className="location-selected">
-            {locations.map((location) => (
-              <Chip
-                key={location.key}
-                type="primary"
-                fillType="light"
-                size="large"
-                closeAction={() => {
-                  onRemoveLocation(location.key!);
-                }}
-              >
-                {location.name}
-              </Chip>
-            ))}
+        {isLoading ? (
+          <div style={{ marginTop: "32px" }}>
+            <Loading />
           </div>
-          <List>
-            <ul className="parent">
-              {data
-                ?.filter((v) => !v.codeValueDes)
-                .map((item) => (
-                  <li
-                    key={item.codeSequenceKey}
-                    onClick={() => setSido({ key: item.codeSequenceKey, name: item.codeValue })}
-                    className={clsx({ active: sido.key === item.codeSequenceKey })}
-                    role="button"
-                  >
-                    {item.codeValue}
-                  </li>
-                ))}
-            </ul>
-            <ul className="child">
-              {data
-                ?.filter((v) => v.codeValueDes === sido.key)
-                .map((item) => (
-                  <li
-                    role="button"
-                    key={`${item.codeSequenceKey}+${item.codeValue}`}
-                    className={clsx(
-                      formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
-                    )}
-                    onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
-                  >
-                    {item.codeValue}
-                  </li>
-                ))}
-            </ul>
-          </List>
-        </Location>
-      )}
-    </div>
+        ) : (
+          <Location>
+            <div className="location-selected">
+              {locations.map((location) => (
+                <Chip
+                  key={location.key}
+                  type="primary"
+                  fillType="light"
+                  size="large"
+                  closeAction={() => {
+                    onRemoveLocation(location.key!);
+                  }}
+                >
+                  {location.name}
+                </Chip>
+              ))}
+            </div>
+            <List className={fonts.body3.regular}>
+              <ul className="parent">
+                {data?.map((item) => {
+                  const parent = item.parent;
+                  return (
+                    <li
+                      key={parent.codeSequenceKey}
+                      onClick={() => setSido({ key: parent.codeSequenceKey, name: parent.codeValue })}
+                      className={clsx({
+                        active: sido.key === parent.codeSequenceKey,
+                        [fonts.body3.semibold]: sido.key === parent.codeSequenceKey,
+                      })}
+                      role="button"
+                    >
+                      {parent.codeValue}
+                    </li>
+                  );
+                })}
+              </ul>
+              <ul className="child">
+                {data
+                  ?.find((item) => item.parent.codeSequenceKey === sido.key)
+                  ?.child?.map((item) => (
+                    <li
+                      role="button"
+                      key={`${item.codeSequenceKey}+${item.codeValue}`}
+                      className={clsx(
+                        formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
+                      )}
+                      onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
+                    >
+                      {item.codeValue}
+                    </li>
+                  ))}
+              </ul>
+            </List>
+          </Location>
+        )}
+      </div>
+    </StageWrapper>
   );
 }
 
@@ -135,7 +155,6 @@ const List = styled.div`
   display: flex;
   justify-content: center;
   border-top: 1px solid var(--gray200);
-  ${FONTS.body3("regular")};
 
   & > ul {
     flex: 1;
@@ -148,7 +167,6 @@ const List = styled.div`
         &.active {
           background-color: var(--white);
           color: var(--primary500);
-          ${FONTS.body3("semibold")};
           &:active {
             background-color: var(--white);
           }
@@ -179,5 +197,18 @@ const List = styled.div`
     text-align: center;
   }
 `;
+
+function findAreaByCodeSequenceKey(data?: ApiCodeArea, targetKey?: string | number) {
+  const item = data?.find((item) => item.child.some((child) => child.codeSequenceKey === targetKey));
+
+  if (!item) return null;
+
+  const child = item?.child?.find((child) => child.codeSequenceKey === targetKey);
+  return {
+    parent: item.parent.codeValue,
+    child: child?.codeValue,
+    text: `${item.parent.codeValue} ${child?.codeValue}`,
+  };
+}
 
 export default Stage3;

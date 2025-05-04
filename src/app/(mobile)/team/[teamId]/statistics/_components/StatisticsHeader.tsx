@@ -15,6 +15,8 @@ function StatisticsHeader() {
   useEffect(() => {
     if (showList) {
       setIsTransparent(false);
+    } else {
+      setIsTransparent(true);
     }
   }, [showList]);
 

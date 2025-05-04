@@ -4,7 +4,8 @@ import Image from "next/image";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
-import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
+import { BasicWhiteCard } from "../common/Card";
+import GroupTitle from "../common/GroupTitle";
 
 type Props = {
   posterImg: string;
@@ -39,7 +40,7 @@ function MainMatchCard(props: Props) {
 
   return (
     <LargeCardContainer>
-      <BasicWhiteCardTitle>{competitionName}</BasicWhiteCardTitle>
+      <GroupTitle>{competitionName}</GroupTitle>
       <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
         <div className="home-team team-wrapper">
           <div className="team-inner">

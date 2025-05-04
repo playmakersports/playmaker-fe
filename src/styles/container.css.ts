@@ -28,3 +28,28 @@ export const flexColumnGap12 = style({
   flexDirection: "column",
   gap: "12px",
 });
+export const flexColumnGap10 = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+});
+export const flexRowGap10 = style({
+  display: "flex",
+  gap: "10px",
+});
+export const flexRowGap12 = style({
+  display: "flex",
+  gap: "12px",
+});
+
+export const baseCardContainer = style({
+  borderRadius: "10px",
+  padding: "16px",
+  border: "1px solid var(--gray100)",
+  transition: "all 0.2s",
+  selectors: {
+    "&:active": {
+      transform: "scale(0.98)",
+    },
+  },
+});

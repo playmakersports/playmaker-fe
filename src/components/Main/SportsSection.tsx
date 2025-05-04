@@ -9,7 +9,7 @@ import CompetitionCard from "./CompetitionCard";
 import MoreButton from "../common/MoreButton";
 import GroupTitle from "../common/GroupTitle";
 import RecruitTeamItem from "./RecruitTeamItem";
-import { BasicWhiteCard, BasicWhiteCardTitle } from "../common/Card";
+import { BasicWhiteCard } from "../common/Card";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { TEAM_LIST_MOCK } from "@/constants/mock/HOME";
 import { COMPETITION_LIST_MOCK } from "@/constants/mock/COMPETITION";
@@ -37,7 +37,7 @@ function SportsSection() {
       </TabWrapper>
       <Cards>
         <Container>
-          <BasicWhiteCardTitle>팀 살펴보기</BasicWhiteCardTitle>
+          <GroupTitle>팀 살펴보기</GroupTitle>
           <ListWrapperColumn>
             {TEAM_LIST_MOCK.map((value, index) => (
               <RecruitTeamItem key={index} {...value} />

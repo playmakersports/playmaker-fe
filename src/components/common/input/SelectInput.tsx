@@ -42,18 +42,18 @@ export const InputCheckbox = React.forwardRef<HTMLInputElement, Props>(
 InputCheckbox.displayName = "InputCheckBox";
 
 export const InputRadio = React.forwardRef<HTMLInputElement, RadioProps>(
-  ({ id, size = "LARGE", color = "default", text, buttonType = false, ...rest }, ref) => {
+  ({ size = "LARGE", color = "default", text, buttonType = false, ...rest }, ref) => {
     const SIZE = size === "LARGE" ? "24px" : "20px";
 
     return (
       <TextContainer>
         <div style={{ position: "relative", display: "inline-block", width: SIZE, height: SIZE }}>
-          <Radio type="radio" data-error={color === "error"} id={id} ref={ref} {...rest} />
+          <Radio type="radio" data-error={color === "error"} ref={ref} {...rest} />
           <RadioIcon />
         </div>
         {text && (
           <div className="text-container" data-size={size}>
-            <label className="title" htmlFor={id}>
+            <label className="title" htmlFor={rest.id}>
               {text.title}
             </label>
             {text.description && <p className="description">{text.description}</p>}

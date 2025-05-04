@@ -1,4 +1,3 @@
-import { FONTS } from "@/styles/common";
 import styled from "styled-components";
 
 export const BasicWhiteCard = styled.div`
@@ -8,9 +7,4 @@ export const BasicWhiteCard = styled.div`
   background-color: var(--background-light);
   user-select: none;
   box-shadow: var(--shadow-alpha20);
-`;
-
-export const BasicWhiteCardTitle = styled.h3`
-  margin: 0 0 16px;
-  ${FONTS.body1("semibold")};
 `;

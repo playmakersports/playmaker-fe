@@ -13,10 +13,9 @@ import { BaseContainer } from "@/components/common/Container";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
-import TeamListCard from "@/components/Team/TeamListCard";
-import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
+import TeamListCard from "../_components/TeamListCard";
 
 function TeamList() {
   useHeader({
@@ -27,10 +26,9 @@ function TeamList() {
   useStickyMoment(sportsTabRef);
   const searchParams = useSearchParams();
   const targetSports = searchParams.get("sports") as string;
-  const [activeTab, setActiveTab] = useState(targetSports ?? "all");
+  const [activeTab, setActiveTab] = useState(targetSports ?? "");
   const [searchValue, setSearchValue] = useState("");
   const [sortQuery, setSortQuery] = useState("default");
-  const [filterRecruit, setFilterRecruit] = useState(false);
 
   const { data } = useGet("/api/team/selectteam");
 
@@ -45,7 +43,13 @@ function TeamList() {
           nowValue={(value) => {
             setActiveTab(value);
           }}
-          items={[{ value: "all", name: "전체" }, ...SUPPORT_SPORTS]}
+          items={[
+            { value: "all", name: "전체" },
+            ...SUPPORT_SPORTS.map((item) => ({
+              value: item.nameEng,
+              name: item.name,
+            })),
+          ]}
         />
       </TabWrapper>
       <Contents>
@@ -72,11 +76,6 @@ function TeamList() {
             { value: "date", name: "마감 임박순" },
           ]}
         />
-        <ToggleSwitch
-          checked={filterRecruit}
-          onChange={(e) => setFilterRecruit(e.target.checked)}
-          text={{ title: "모집중인 팀만" }}
-        />
       </Filter>
 
       <Cards>
@@ -91,6 +90,8 @@ function TeamList() {
             location={item.location}
             dueDate={item.dueDate}
             gender={item.gender}
+            likeCnt={8400}
+            memberCnt={20}
           />
         ))}
       </Cards>
@@ -133,8 +134,9 @@ const Filter = styled.div`
 `;
 
 const TeamCreateButton = styled.button`
-  position: fixed;
-  display: inline-flex;
+  position: absolute;
+  display: flex;
+  margin-bottom: 8px;
   align-items: center;
   justify-content: center;
   right: 20px;

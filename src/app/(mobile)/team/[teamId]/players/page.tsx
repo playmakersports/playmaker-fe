@@ -9,11 +9,11 @@ import { FONTS } from "@/styles/common";
 import SwipeSelector from "@/components/common/SwipeSelector";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
-import PlayerListItem from "@/components/Team/PlayerListItem";
+import PlayerListItem from "@/app/(mobile)/team/[teamId]/_components/PlayerListItem";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PlayerRoleModal from "../_components/PlayerRoleModal";
 
-import DoubleStarIcon from "@/assets/icon/common/outlined/Star.svg";
+import SettingsIcon from "@/assets/icon/common/outlined/Settings.svg";
 import CrownIcon from "@/assets/icon/common/filled/Key.svg";
 import StartIcon from "@/assets/icon/common/filled/Star.svg";
 import DeleteAllBorderIcon from "@/assets/icon/common/filled/Delete.svg";
@@ -32,7 +32,7 @@ function PlayerList() {
   const [playerInfo, setPlayerInfo] = useState<PlayerInfo>();
   useHeader({
     title: "팀원",
-    subIcons: [{ svgIcon: <DoubleStarIcon />, onClick: "", description: "다중 카테고리" }],
+    subIcons: [{ svgIcon: <SettingsIcon />, onClick: "", description: "다중 카테고리" }],
   });
 
   const PLAYERS_FILTER = [
@@ -64,7 +64,6 @@ function PlayerList() {
         <Players>
           {TEAM_PLAYERS_MOCK.map((player) => {
             const { level, sex, birthDate, tag, ...rest } = player;
-            const [birthYear, birthMonth] = birthDate.split("-");
             return (
               <SwipeSelector
                 key={player.playerId}
@@ -101,13 +100,7 @@ function PlayerList() {
                   onClick: () => {},
                 }}
               >
-                <PlayerListItem
-                  level={level}
-                  sex={sex}
-                  birthDate={birthDate}
-                  tag={`${birthYear}년 ${+birthMonth}월생`}
-                  {...rest}
-                />
+                <PlayerListItem level={level} sex={sex} position="가드" birthDate={birthDate} {...rest} />
               </SwipeSelector>
             );
           })}

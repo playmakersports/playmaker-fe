@@ -47,7 +47,7 @@ function JoinStage() {
     defaultValues: { required1: false, required2: false, event1: false, sexKey: "MALE" },
   });
   const { Funnel, Step, setStep } = useFunnel({
-    initialStep: "Stage5",
+    initialStep: stages[0],
   });
 
   return (

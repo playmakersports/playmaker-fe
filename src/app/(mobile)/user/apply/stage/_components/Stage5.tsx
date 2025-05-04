@@ -58,7 +58,7 @@ function Stage5({ setStep }: SetStepType) {
       onClickNext={handleNextStep}
       length={5}
       current={5}
-      disableNext={!(selectedSports.length > 0)}
+      disableNext={!(selectedSports.length > 0) || selectedSports.length > 3}
     >
       {isPending && <Loading />}
       <div className={stageFormWrapper}>

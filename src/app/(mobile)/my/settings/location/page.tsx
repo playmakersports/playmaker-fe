@@ -7,10 +7,10 @@ import { useToast } from "@/hook/useToast";
 import { useForm } from "react-hook-form";
 import { useHeader } from "@/hook/useHeader";
 
+import { ApiCodeArea } from "@/apis/types/code";
 import { fonts } from "@/styles/fonts.css";
 import { baseContainer } from "@/styles/container.css";
 import { stageFormWrapper, stageWrapper } from "@/app/(mobile)/user/apply/stage/_components/stage.css";
-import { ApiCodeArea } from "@/apis/types/code";
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
 
@@ -35,7 +35,7 @@ function MyLocation() {
   const formLocation = watch("location") ?? [];
   const formLocationDisplayValues = formLocation.map((key: string) => ({
     key,
-    name: data?.find((item) => item.codeSequenceKey === key)?.codeValue,
+    name: findAreaByCodeSequenceKey(data, key)?.text,
   }));
   const [locations, setLocations] = useState<LocationType[]>(formLocationDisplayValues);
 
@@ -61,73 +61,79 @@ function MyLocation() {
   };
 
   return (
-    <section
-      className={clsx(baseContainer, stageFormWrapper)}
-      style={{
-        overflow: "hidden",
-        paddingTop: "40px",
-      }}
-    >
-      <div style={{ marginBottom: "-4px" }}>
-        <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
-        <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
-      </div>
-      {isLoading ? (
-        <div style={{ marginTop: "32px" }}>
-          <Loading />
+    <div className={stageWrapper.container}>
+      <section
+        className={clsx(baseContainer, stageFormWrapper)}
+        style={{
+          overflow: "hidden",
+          paddingTop: "40px",
+        }}
+      >
+        <div style={{ marginBottom: "-4px" }}>
+          <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
+          <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
         </div>
-      ) : (
-        <Location>
-          <div className="location-selected">
-            {locations.map((location) => (
-              <Chip
-                key={location.key}
-                type="primary"
-                fillType="light"
-                size="large"
-                closeAction={() => {
-                  onRemoveLocation(location.key!);
-                }}
-              >
-                {location.name}
-              </Chip>
-            ))}
+        {isLoading ? (
+          <div style={{ marginTop: "32px" }}>
+            <Loading />
           </div>
-          <List className={fonts.body3.regular}>
-            <ul className="parent">
-              {data
-                ?.filter((v) => !v.codeValueDes)
-                .map((item) => (
-                  <li
-                    key={item.codeSequenceKey}
-                    onClick={() => setSido({ key: item.codeSequenceKey, name: item.codeValue })}
-                    className={clsx({ active: sido.key === item.codeSequenceKey })}
-                    role="button"
-                  >
-                    {item.codeValue}
-                  </li>
-                ))}
-            </ul>
-            <ul className="child">
-              {data
-                ?.filter((v) => v.codeValueDes === sido.key)
-                .map((item) => (
-                  <li
-                    role="button"
-                    key={`${item.codeSequenceKey}+${item.codeValue}`}
-                    className={clsx(
-                      formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
-                    )}
-                    onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
-                  >
-                    {item.codeValue}
-                  </li>
-                ))}
-            </ul>
-          </List>
-        </Location>
-      )}
-    </section>
+        ) : (
+          <Location>
+            <div className="location-selected">
+              {locations.map((location) => (
+                <Chip
+                  key={location.key}
+                  type="primary"
+                  fillType="light"
+                  size="large"
+                  closeAction={() => {
+                    onRemoveLocation(location.key!);
+                  }}
+                >
+                  {location.name}
+                </Chip>
+              ))}
+            </div>
+            <List className={fonts.body3.regular}>
+              <ul className="parent">
+                {data?.map((item) => {
+                  const parent = item.parent;
+                  return (
+                    <li
+                      key={parent.codeSequenceKey}
+                      onClick={() => setSido({ key: parent.codeSequenceKey, name: parent.codeValue })}
+                      className={clsx({
+                        active: sido.key === parent.codeSequenceKey,
+                        [fonts.body3.semibold]: sido.key === parent.codeSequenceKey,
+                      })}
+                      role="button"
+                    >
+                      {parent.codeValue}
+                    </li>
+                  );
+                })}
+              </ul>
+              <ul className="child">
+                {data
+                  ?.find((item) => item.parent.codeSequenceKey === sido.key)
+                  ?.child?.map((item) => (
+                    <li
+                      role="button"
+                      key={`${item.codeSequenceKey}+${item.codeValue}`}
+                      className={clsx(
+                        formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
+                      )}
+                      onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
+                    >
+                      {item.codeValue}
+                    </li>
+                  ))}
+              </ul>
+            </List>
+          </Location>
+        )}
+      </section>
+    </div>
   );
 }
 
@@ -193,5 +199,18 @@ const List = styled.div`
     text-align: center;
   }
 `;
+
+function findAreaByCodeSequenceKey(data?: ApiCodeArea, targetKey?: string | number) {
+  const item = data?.find((item) => item.child.some((child) => child.codeSequenceKey === targetKey));
+
+  if (!item) return null;
+
+  const child = item?.child?.find((child) => child.codeSequenceKey === targetKey);
+  return {
+    parent: item.parent.codeValue,
+    child: child?.codeValue,
+    text: `${item.parent.codeValue} ${child?.codeValue}`,
+  };
+}
 
 export default MyLocation;

@@ -3,6 +3,7 @@ import { style } from "@vanilla-extract/css";
 export const baseContainer = style({
   padding: "0 20px var(--safe-bottom-navigation)",
 });
+export const baseContainerPaddingTop = style([{ paddingTop: "20px" }, baseContainer]);
 export const flexColumnGap40 = style({
   display: "flex",
   flexDirection: "column",

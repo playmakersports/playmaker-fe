@@ -80,3 +80,13 @@ export const settingsMyTeamListSportsGroupItemLogo = style({
   border: "1px solid var(--gray200)",
   borderRadius: "50%",
 });
+
+export const settingsMyNotificationItem = style({
+  paddingBottom: "20px",
+  borderBottom: "1px solid var(--gray100)",
+  selectors: {
+    "&:last-of-type": {
+      borderBottom: "none",
+    },
+  },
+});

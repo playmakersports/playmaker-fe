@@ -45,7 +45,7 @@ function UserSetting() {
         <h4 className={settingsGroupTitle}>기본 정보</h4>
         <GroupList
           list={[
-            { title: "내 정보 관리", onClick: () => router.push(`/my/settings/info`) },
+            { title: "내 프로필 관리", onClick: () => router.push(`/my/settings/info`) },
             { title: "활동 지역", onClick: () => router.push(`/my/settings/location`) },
             // NOTE: 초기 버전에서는 학교 인증 및 계정 관리 제외
             // {
@@ -78,11 +78,11 @@ function UserSetting() {
           list={[
             {
               title: "알림 설정",
-              onClick: () => {},
+              onClick: () => router.push(`/my/settings/notification`),
             },
             {
               title: "공지사항",
-              onClick: () => {},
+              onClick: () => router.push(`/my/settings/notice`),
             },
             {
               title: "약관 정보",
@@ -95,6 +95,10 @@ function UserSetting() {
             },
             {
               title: "로그아웃",
+              onClick: () => {},
+            },
+            {
+              title: "탈퇴",
               onClick: () => {},
             },
           ]}

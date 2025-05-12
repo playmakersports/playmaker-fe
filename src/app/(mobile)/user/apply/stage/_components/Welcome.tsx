@@ -47,7 +47,7 @@ function Welcome() {
         </HeadText>
       </div>
       <div>
-        <Button type="button" size="large" fullWidth onClick={() => router.replace("/user/apply/optional")}>
+        <Button type="button" size="large" fullWidth onClick={() => router.replace("/")}>
           시작하기
         </Button>
       </div>

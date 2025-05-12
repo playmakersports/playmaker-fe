@@ -64,7 +64,8 @@ function Stage3({ setStep }: SetStepType) {
       onClickNext={handleNextStep}
       length={5}
       current={3}
-      disableNext={!(formLocation.length > 1)}
+      disableNext={false}
+      // disableNext={!(formLocation.length > 1)}
     >
       <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -20px", padding: "0 20px" }}>
         <div style={{ marginBottom: "-4px" }}>

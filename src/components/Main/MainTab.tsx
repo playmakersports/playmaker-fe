@@ -9,6 +9,7 @@ type CommonTabProps = {
   items: {
     value: string;
     name: string;
+    disabled?: boolean;
   }[];
   nowValue: (value: string) => void;
   initialValue?: string;
@@ -135,6 +136,7 @@ function MainTab(props: Props) {
             }}
             data-size={size}
             data-active={selected === item.value}
+            data-disabled={item.disabled}
             onClick={(event) => {
               handleClickItem(item.value, event);
             }}
@@ -193,6 +195,10 @@ const CommonItem = styled.li`
     &[data-active="true"] {
       ${FONTS.body3("medium")};
     }
+  }
+  &[data-disabled="true"] {
+    pointer-events: none;
+    opacity: 0.45;
   }
   transition: color 0.2s;
 `;

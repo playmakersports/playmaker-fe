@@ -1,80 +1,62 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useFormContext } from "react-hook-form";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { BasicInput } from "@/components/common/input/BaseInput";
-import DropdownInput from "@/components/common/input/DropdownInput";
+import StageWrapper, { SetStepType } from "./StageWrapper";
 import InputWrapper from "@/components/common/input/InputWrapper";
 import MainTab from "@/components/Main/MainTab";
 
-function OptionalStage1() {
-  const { register, watch, setValue } = useFormContext();
-  const [exp, setExp] = useState(!!watch("sports.basketball.experience") ? "write" : "0");
+function OptionalStage1({ setStep }: SetStepType) {
+  const { register, setValue, watch } = useFormContext();
 
-  const handlePosition = (value: string) => {
-    setValue("sports.basketball.position", value);
+  const handleHandedness = (value: string) => {
+    setValue("handedness", value);
+  };
+  const handlePrevStep = () => {
+    setStep("Step5");
+  };
+  const handleNextStep = () => {
+    setStep("Option2");
   };
 
   return (
-    <div className={stageFormWrapper}>
-      <div>
-        <h3 className={stageWrapper.title}>&apos;농구&apos;에 대한 정보를 입력해 주세요</h3>
-        <p className={stageWrapper.description}>입력된 정보는 언제든지 수정 가능해요.</p>
-      </div>
-      <InputWrapper title="운동 기간">
-        <div style={{ display: "flex", gap: "8px" }}>
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      current={-1}
+      length={6}
+      currentStageName="선택사항"
+    >
+      <div className={stageFormWrapper}>
+        <div>
+          <h3 className={stageWrapper.title}>플레이어님의 신체 정보를 입력해 주세요.</h3>
+          <p className={stageWrapper.description}>세부 정보를 입력하시면, 맞춤 팀을 추천드려요!</p>
+        </div>
+        <div style={{ display: "flex", gap: "12px" }}>
           <div style={{ flex: 1 }}>
-            <DropdownInput
-              placeholder=""
-              value={exp}
-              onChange={(target) => {
-                if (target === "0") {
-                  setValue("sports.basketball.experience", 0);
-                }
-                setExp(target);
-              }}
-              options={[
-                { name: "1년 미만", value: "0" },
-                { name: "직접 입력", value: "write" },
-              ]}
-            />
+            <BasicInput type="number" title="키" suffix="cm" {...register("height")} />
           </div>
-          <div style={{ flex: 2 }}>
-            <BasicInput
-              type="number"
-              suffix="년"
-              disabled={exp === "0"}
-              {...register("sports.basketball.experience", {
-                valueAsNumber: true,
-              })}
-            />
+          <div style={{ flex: 1 }}>
+            <BasicInput type="number" title="체중" suffix="kg" {...register("weight")} />
           </div>
         </div>
-      </InputWrapper>
-      <BasicInput
-        title="윙스팬"
-        type="number"
-        suffix="cm"
-        {...register("sports.basketball.wingspan", {
-          valueAsNumber: true,
-        })}
-      />
-      <InputWrapper title="포지션">
-        <MainTab
-          type="filled"
-          color="gray"
-          size="medium"
-          sameWidth
-          initialValue={watch("sports.basketball.position")}
-          nowValue={handlePosition}
-          items={[
-            { value: "guard", name: "가드" },
-            { value: "forward", name: "포워드" },
-            { value: "center", name: "센터" },
-          ]}
-        />
-      </InputWrapper>
-    </div>
+        <InputWrapper title="성별" required>
+          <MainTab
+            type="filled"
+            color="gray"
+            size="medium"
+            sameWidth
+            initialValue={watch("handedness")}
+            nowValue={handleHandedness}
+            items={[
+              { value: "left", name: "왼손잡이" },
+              { value: "right", name: "오른손잡이" },
+            ]}
+          />
+        </InputWrapper>
+      </div>
+    </StageWrapper>
   );
 }
 

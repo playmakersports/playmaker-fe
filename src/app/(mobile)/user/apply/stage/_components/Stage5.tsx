@@ -43,7 +43,8 @@ function Stage5({ setStep }: SetStepType) {
     setStep("Stage4");
   };
   const handleNextStep = () => {
-    handleSubmitForm();
+    // handleSubmitForm();
+    setStep("Option1");
   };
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function Stage5({ setStep }: SetStepType) {
       current={5}
       disableNext={!(selectedSports.length > 0) || selectedSports.length > 3}
     >
-      {isPending && <Loading />}
+      {/* {isPending && <Loading />} */}
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>관심 스포츠를 선택해 주세요</h3>
@@ -109,6 +110,7 @@ const SportsButton = styled.div`
       height: 110px;
       border-radius: 10px;
       border: 1px solid var(--gray200);
+      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     }
     span.sports-name {
       ${FONTS.body3("medium")};
@@ -123,6 +125,7 @@ const SportsButton = styled.div`
   }
 
   input:checked + label div.icon-wrapper {
+    background-color: var(--primary50);
     border-color: var(--primary500);
   }
   input:checked + label span.sports-name {

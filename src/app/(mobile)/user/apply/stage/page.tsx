@@ -13,6 +13,8 @@ import Stage3 from "./_components/Stage3";
 import Stage4 from "./_components/Stage4";
 import Stage5 from "./_components/Stage5";
 import Welcome from "./_components/Welcome";
+import OptionalStage1 from "./_components/OptionalStage1";
+import OptionalStage2 from "./_components/OptionalStage2";
 
 type JoinFormType = AuthJoinFormRequest & {
   required1: boolean;
@@ -20,7 +22,7 @@ type JoinFormType = AuthJoinFormRequest & {
   event1: boolean;
 };
 
-const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Welcome"];
+const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Option1", "Option2", "Welcome"];
 function JoinStage() {
   const popup = usePopup();
   const router = useRouter();
@@ -72,6 +74,12 @@ function JoinStage() {
           <Stage5 setStep={setStep} />
         </Step>
         <Step name={stages[5]}>
+          <OptionalStage1 setStep={setStep} />
+        </Step>
+        <Step name={stages[6]}>
+          <OptionalStage2 setStep={setStep} />
+        </Step>
+        <Step name={stages[7]}>
           <Welcome />
         </Step>
       </Funnel>

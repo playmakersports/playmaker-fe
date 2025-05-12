@@ -12,6 +12,7 @@ type Props = {
   last?: boolean;
   length: number;
   current: number;
+  currentStageName?: string;
   disableNext?: boolean;
 };
 export type SetStepType = { setStep: React.Dispatch<React.SetStateAction<string>> };
@@ -25,19 +26,25 @@ function StageWrapper(props: Props) {
     last = false,
     length,
     current,
+    currentStageName,
     disableNext = false,
   } = props;
 
   return (
     <div className={stageWrapper.container}>
       <section className={stageWrapper.contents}>
-        {current !== 6 && (
-          <div style={{ margin: "24px 0 16px" }}>
+        <div style={{ margin: "24px 0 16px" }}>
+          {currentStageName && current === -1 ? (
+            <Badge type="gray" fillType="light" size="large">
+              {currentStageName}
+            </Badge>
+          ) : (
             <Badge type="gray" fillType="light" size="large">
               {current} / {length}
             </Badge>
-          </div>
-        )}
+          )}
+        </div>
+
         {children}
       </section>
       <div className={stageWrapper.buttons}>

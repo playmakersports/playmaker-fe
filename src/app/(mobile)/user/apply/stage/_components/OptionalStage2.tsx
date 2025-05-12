@@ -1,40 +1,156 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
-import { stageFormWrapper, stageWrapper } from "./stage.css";
-import { BasicInput } from "@/components/common/input/BaseInput";
+import { usePopup } from "@/components/common/global/PopupProvider";
+import { usePost } from "@/apis/hook/query";
 
-function OptionalStage2() {
-  const { register } = useFormContext();
+import { fonts } from "@/styles/fonts.css";
+import { stageFormWrapper, stageWrapper } from "./stage.css";
+import { flexColumnGap10, flexColumnGap20 } from "@/styles/container.css";
+
+import MainTab from "@/components/Main/MainTab";
+import { BasicInput } from "@/components/common/input/BaseInput";
+import DropdownInput from "@/components/common/input/DropdownInput";
+import InputWrapper from "@/components/common/input/InputWrapper";
+import StageWrapper, { SetStepType } from "./StageWrapper";
+
+function OptionalStage2({ setStep }: SetStepType) {
+  const { register, watch, setValue } = useFormContext();
+  const popup = usePopup();
+
+  const [exp, setExp] = useState(!!watch("sports.basketball.experience") ? "write" : "0");
+  const { mutateAsync, isPending } = usePost("/api/login/signup", "form-data");
+
+  const handleSubmitForm = async () => {
+    const formValues = watch();
+    try {
+      await mutateAsync({
+        data: {
+          contact: formValues.contact,
+        },
+      });
+      setStep("Welcome");
+    } catch (error) {
+      popup?.alert("가입에 실패했습니다. 다시 시도해주세요.", {
+        showIcon: true,
+        title: "가입 실패",
+        color: "red",
+      });
+      return;
+    }
+  };
+
+  const handlePosition = (value: string) => {
+    setValue("sports.basketball.position", value);
+  };
+  const handlePrevStep = () => {
+    setStep("Option1");
+  };
+  const handleNextStep = () => {
+    handleSubmitForm();
+  };
+
   return (
-    <div className={stageFormWrapper}>
-      <div>
-        <h3 className={stageWrapper.title}>신체정보를 입력해주세요</h3>
-        <p className={stageWrapper.description}>키와 체중, 주로 사용하시는 손을 알려주세요! (선택)</p>
-      </div>
-      <div style={{ display: "flex", gap: "12px" }}>
-        <div style={{ flex: 1 }}>
-          <BasicInput
-            type="number"
-            style={{ textAlign: "center" }}
-            large={true}
-            title="키"
-            suffix="cm"
-            {...register("height")}
-          />
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      current={-1}
+      length={6}
+      currentStageName="선택사항"
+    >
+      <div className={stageFormWrapper}>
+        <div>
+          <h3 className={stageWrapper.title}>플레이어님의 스포츠 정보를 입력해 주세요.</h3>
+          <p className={stageWrapper.description}>세부 정보를 입력하시면, 맞춤 팀을 추천드려요!</p>
         </div>
-        <div style={{ flex: 1 }}>
-          <BasicInput
-            type="number"
-            style={{ textAlign: "center" }}
-            large={true}
-            title="체중"
-            suffix="kg"
-            {...register("weight")}
-          />
+        <div
+          className={flexColumnGap10}
+          style={{
+            justifyContent: "space-between",
+            height: "100%",
+          }}
+        >
+          <div className={flexColumnGap20}>
+            <MainTab
+              type="line"
+              size="large"
+              nowValue={() => {}}
+              initialValue="basketball"
+              sameWidth
+              items={[
+                { value: "volleyball", name: "배구", disabled: true },
+                { value: "baseball", name: "야구", disabled: true },
+                { value: "basketball", name: "농구" },
+              ]}
+            />
+            <InputWrapper title="운동 기간">
+              <div style={{ display: "flex", gap: "8px" }}>
+                <div style={{ flex: 1 }}>
+                  <DropdownInput
+                    placeholder=""
+                    value={exp}
+                    onChange={(target) => {
+                      if (target === "0") {
+                        setValue("sports.basketball.experience", 0);
+                      }
+                      setExp(target);
+                    }}
+                    options={[
+                      { name: "1년 미만", value: "0" },
+                      { name: "직접 입력", value: "write" },
+                    ]}
+                  />
+                </div>
+                <div style={{ flex: 2 }}>
+                  <BasicInput
+                    type="number"
+                    suffix="년"
+                    disabled={exp === "0"}
+                    {...register("sports.basketball.experience", {
+                      valueAsNumber: true,
+                    })}
+                  />
+                </div>
+              </div>
+            </InputWrapper>
+            <BasicInput
+              title="윙스팬"
+              type="number"
+              suffix="cm"
+              {...register("sports.basketball.wingspan", {
+                valueAsNumber: true,
+              })}
+            />
+            <InputWrapper title="포지션">
+              <MainTab
+                type="filled"
+                color="gray"
+                size="medium"
+                sameWidth
+                initialValue={watch("sports.basketball.position")}
+                nowValue={handlePosition}
+                items={[
+                  { value: "guard", name: "가드" },
+                  { value: "forward", name: "포워드" },
+                  { value: "center", name: "센터" },
+                ]}
+              />
+            </InputWrapper>
+          </div>
+          <p
+            className={fonts.body4.medium}
+            style={{
+              margin: "0 -20px",
+              padding: "16px 0",
+              textAlign: "center",
+              backgroundColor: "var(--gray50)",
+              color: "var(--gray400)",
+            }}
+          >
+            * 농구 외의 종목은 추후 업데이트 될 예정입니다.
+          </p>
         </div>
       </div>
-    </div>
+    </StageWrapper>
   );
 }
 

@@ -38,7 +38,7 @@ function Statistics() {
   const [value, setValue] = useState(0);
   useEffect(() => {
     if (title === "팀 교류전") setValue(87);
-    else if (title === "팀 대회전") setValue(51);
+    else if (title === "팀 대회") setValue(51);
   }, [title]);
 
   return (

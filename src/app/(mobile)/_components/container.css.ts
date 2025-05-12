@@ -17,7 +17,8 @@ export const filterButtonContainer = style([
   {
     cursor: "pointer",
     userSelect: "none",
-    display: "flex",
+    display: "inline-flex",
+    width: "fit-content",
     alignItems: "center",
     gap: "4px",
     padding: "4px 8px",

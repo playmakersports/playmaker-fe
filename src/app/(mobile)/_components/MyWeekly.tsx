@@ -197,7 +197,7 @@ const Week = styled.div`
       align-items: center;
       width: 40px;
       height: 40px;
-      border-radius: 12px;
+      border-radius: 10px;
       color: var(--gray700);
 
       &.has-plan {

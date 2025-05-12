@@ -398,7 +398,7 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   border: 1px solid transparent;
   /* color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray700)")}; */
   color: ${({ $isCurrentMonth }) => ($isCurrentMonth ? "var(--gray700)" : "var(--gray300)")};
-  border-radius: 12px;
+  border-radius: 10px;
   ${FONTS.body3("medium")};
 
   &[aria-invalid] {

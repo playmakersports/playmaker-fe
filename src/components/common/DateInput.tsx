@@ -351,7 +351,7 @@ const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
   color: ${({ $isCurrentMonth }) => ($isCurrentMonth ? "var(--gray700)" : "var(--gray300)")};
   /* color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray600)")}; */
   opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
-  border-radius: 12px;
+  border-radius: 10px;
 
   &[aria-invalid] {
     visibility: hidden;

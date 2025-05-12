@@ -102,6 +102,7 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     border-radius: 999px;
     border: none;
     background-color: var(--gray200);
+    transition: background-color 0.25s ease-in-out;
 
     div.switch-circle {
       background-color: var(--white);

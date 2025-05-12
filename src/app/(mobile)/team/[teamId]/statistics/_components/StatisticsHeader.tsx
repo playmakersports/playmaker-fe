@@ -48,7 +48,7 @@ function StatisticsHeader() {
           onCloseList={() => setIsTransparent(true)}
           list={[
             { name: "팀 교류전", action: () => handleHeaderTitle("팀 교류전") },
-            { name: "팀 대회전", action: () => handleHeaderTitle("팀 대회전") },
+            { name: "팀 대회", action: () => handleHeaderTitle("팀 대회") },
           ]}
         />
       </div>

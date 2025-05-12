@@ -162,9 +162,13 @@ export const teamMainRecentVoteList = style({
 export const teamMainRecentVoteCard = style({
   minWidth: "280px",
   borderRadius: "10px",
-  padding: "14px",
+  padding: "16px",
   backgroundColor: "var(--white)",
-  border: "1px solid var(--gray100)",
+  border: "1px solid var(--gray200)",
+});
+export const teamMainRecentVoteCardDateHeader = style({
+  paddingBottom: "10px",
+  borderBottom: "1px dashed var(--gray200)",
 });
 
 export const teamMainBoardListImage = style({

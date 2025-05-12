@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import clsx from "clsx";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 
 import { teamMainContentsGroup } from "./team.main.css";
 import { baseContainer, flexColumnGap12, flexColumnGap40 } from "@/styles/container.css";

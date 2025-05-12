@@ -36,7 +36,7 @@ function Login() {
     router.push("/user/apply/stage");
   };
   const handleMyPage = () => {
-    router.push("/my");
+    router.push("/my/settings");
   };
   const onClickTeamPage = () => {
     router.push("/team/33/board");
@@ -58,7 +58,7 @@ function Login() {
           팀 게시판
         </Button>
         <Button type="button" mode="gray" fillType="light" size="large" onClick={handleMyPage}>
-          My Page
+          My 설정
         </Button>
         <Button type="button" mode="primary" size="large" onClick={handleApplyStage}>
           회원가입

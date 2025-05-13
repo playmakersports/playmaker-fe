@@ -27,7 +27,6 @@ function MyTeamList() {
   useHeader({
     title: "소속 팀 관리",
     options: { titleAlign: "center" },
-    subActions: { name: "", action: () => {} },
   });
 
   const groupedTeams: Record<string, TeamListMock[]> = TEAM_LIST_MOCK.reduce((acc: any, team) => {

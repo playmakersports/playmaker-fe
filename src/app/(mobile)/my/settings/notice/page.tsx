@@ -19,13 +19,6 @@ function ServiceNotice() {
   useHeader({
     title: "공지사항",
     options: { titleAlign: "center" },
-    subIcons: [
-      {
-        svgIcon: <></>,
-        onClick: "",
-        description: "",
-      },
-    ],
   });
 
   const noticeList = [

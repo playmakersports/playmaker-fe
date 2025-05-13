@@ -70,3 +70,19 @@ export const numberFlowInternalInput = style({
 globalStyle(`${numberFlowContainer} > *`, {
   gridArea: "overlap",
 });
+
+export const dropdownAsset = {
+  Box: style({
+    position: "absolute",
+    display: "flex",
+    padding: "4px",
+    flexDirection: "column",
+    gap: "4px",
+    width: "100%",
+    minWidth: "140px",
+    borderRadius: "10px",
+    backgroundColor: "var(--white)",
+    boxShadow: "var(--shadow-lg)",
+    zIndex: 50,
+  }),
+};

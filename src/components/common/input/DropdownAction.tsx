@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { flip, hide, offset, useDismiss, useFloating, useInteractions } from "@floating-ui/react";
+import { flip, hide, offset, useDismiss, useFloating, useInteractions, useTransitionStyles } from "@floating-ui/react";
 
 import { FONTS } from "@/styles/common";
 import { InputStyledWrapper } from "../Wrapper";
@@ -8,6 +8,7 @@ import { DropdownAsset } from "./container";
 
 import DotMenuIcon from "@/assets/icon/common/MenuDots.svg";
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
+import { dropdownAsset } from "./container.css";
 
 export type ActionOptionsType = { name: string; action: () => void; divided?: boolean };
 type Props = {
@@ -21,7 +22,7 @@ function DropdownAction(props: Props) {
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const { refs, floatingStyles, middlewareData, context } = useFloating({
+  const { refs, context } = useFloating({
     placement: "bottom-end",
     open: showOptions,
     onOpenChange: setShowOptions,
@@ -29,6 +30,25 @@ function DropdownAction(props: Props) {
   });
   const dismiss = useDismiss(context);
   const { getFloatingProps } = useInteractions([dismiss]);
+  const { isMounted, styles } = useTransitionStyles(context, {
+    duration: 200,
+    common: {
+      right: 0,
+      transformOrigin: `top right`,
+    },
+    initial: {
+      opacity: 0,
+      transform: "scale(0.7) translate(-5px, -5px)",
+    },
+    open: {
+      opacity: 1,
+      transform: "scale(1) translate(0,0)",
+    },
+    close: {
+      opacity: 0,
+      transform: "scale(0.8) translate(-5px, -5px)",
+    },
+  });
 
   const onClickShowOptions = () => {
     setShowOptions((prev) => !prev);
@@ -64,12 +84,13 @@ function DropdownAction(props: Props) {
         </ValueContainer>
       )}
 
-      {showOptions && (
-        <DropdownAsset.Box
+      {isMounted && (
+        <div
           ref={refs.setFloating}
+          className={dropdownAsset.Box}
           style={{
-            ...floatingStyles,
-            visibility: middlewareData.hide?.referenceHidden ? "hidden" : "visible",
+            // ...floatingStyles,
+            ...styles,
           }}
           {...getFloatingProps()}
         >
@@ -80,7 +101,7 @@ function DropdownAction(props: Props) {
               </button>
             ))}
           </DropdownAsset.List>
-        </DropdownAsset.Box>
+        </div>
       )}
     </Container>
   );

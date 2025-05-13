@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from "react";
+import React, { ReactNode, useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { fonts } from "@/styles/fonts.css";
@@ -11,6 +11,7 @@ export type ModalProps = {
   description?: string;
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
+  onClose?: () => void;
 };
 
 const ANIMATION_RUNNING_TIME = 250;
@@ -22,7 +23,13 @@ function useModal() {
 
   const ModalComponents = useCallback(
     (props: ModalProps) => {
-      const { disabledDimOut = false, title, description, children, draggable = false, buttons } = props;
+      const { disabledDimOut = false, title, description, children, draggable = false, buttons, onClose } = props;
+
+      useEffect(() => {
+        if (!showBottom) {
+          onClose?.();
+        }
+      }, [showBottom]);
 
       if (showBottom) {
         return (

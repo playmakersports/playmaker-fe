@@ -78,7 +78,9 @@ function RoutedHeader({ scrollY }: Props) {
             </Title>
           </>
         )}
-        {!icons && !actions && <div style={{ width: "24px", height: "24px" }}></div>}
+        {icons.length === 0 && ((Array.isArray(actions) && actions.length === 0) || !actions) && (
+          <div style={{ width: "24px", height: "24px" }}></div>
+        )}
         {icons.length > 0 && (
           <Subs>
             {icons.map((icon, index) => (

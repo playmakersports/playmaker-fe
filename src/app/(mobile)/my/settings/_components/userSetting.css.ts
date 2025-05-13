@@ -90,3 +90,18 @@ export const settingsMyNotificationItem = style({
     },
   },
 });
+export const settingsAccountButton = style([
+  settingsMyTeamListSportsGroupItem,
+  {
+    padding: "10px 12px",
+    margin: "0 -12px",
+    borderRadius: "8px",
+    transition: "background-color 0.2s ease-in-out, transform 0.2s ease-in-out",
+    selectors: {
+      "&:active": {
+        transform: "scale(0.98)",
+        backgroundColor: "var(--gray50)",
+      },
+    },
+  },
+]);

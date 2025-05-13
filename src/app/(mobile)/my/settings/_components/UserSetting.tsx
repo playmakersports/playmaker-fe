@@ -39,7 +39,7 @@ function UserSetting() {
   const router = useRouter();
 
   return (
-    <Container>
+    <>
       <WhiteSectionDivider $child />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>기본 정보</h4>
@@ -97,21 +97,12 @@ function UserSetting() {
               title: "로그아웃",
               onClick: () => {},
             },
-            {
-              title: "탈퇴",
-              onClick: () => {},
-            },
           ]}
         />
       </div>
-    </Container>
+    </>
   );
 }
-
-const Container = styled.div`
-  user-select: none;
-  padding: 0 0 var(--safe-bottom-navigation);
-`;
 
 const Group = styled.ul`
   display: flex;

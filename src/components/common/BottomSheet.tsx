@@ -177,7 +177,7 @@ const Header = styled.header`
   opacity: 0.5;
   transform: translateY(20px);
   animation: ${fadeIn} 0.2s ease-in-out forwards;
-  animation-delay: 0.165s;
+  animation-delay: 0.1s;
 `;
 const Contents = styled.div`
   margin: 0 0 20px;
@@ -188,7 +188,7 @@ const Contents = styled.div`
     opacity: 0.5;
     transform: translateY(max(5%, 16px));
     animation: ${fadeIn} 0.2s ease-in-out forwards;
-    animation-delay: 0.15s;
+    animation-delay: 0.165s;
   }
 `;
 

@@ -25,12 +25,6 @@ function useModal() {
     (props: ModalProps) => {
       const { disabledDimOut = false, title, description, children, draggable = false, buttons, onClose } = props;
 
-      useEffect(() => {
-        if (!showBottom) {
-          onClose?.();
-        }
-      }, [showBottom]);
-
       if (showBottom) {
         return (
           <BottomSheet
@@ -48,6 +42,7 @@ function useModal() {
                 </HeaderContainer>
               )
             }
+            onClose={onClose}
             setShow={setShowBottom}
             buttons={buttons}
             expanded={false}

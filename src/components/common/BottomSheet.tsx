@@ -10,6 +10,7 @@ export type BottomSheetProps = {
   header?: ReactNode;
   expanded?: boolean;
   draggable?: "bar" | "all" | false;
+  onClose?: () => void;
   buttons?: {
     mode: ButtonStyleMode;
     fillType?: ButtonFillType;
@@ -22,7 +23,7 @@ export type BottomSheetProps = {
 
 const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
-  const { disabledDimOut = false, setShow, draggable = false, children, header, expanded, buttons } = props;
+  const { disabledDimOut = false, setShow, draggable = false, onClose, children, header, expanded, buttons } = props;
   const modalRef = useRef<HTMLDivElement>(null);
   const [showModal, setShowModal] = useState(false);
   const [touchStartY, setTouchStartY] = useState(0);
@@ -31,6 +32,7 @@ function BottomSheet(props: BottomSheetProps) {
 
   const closeBottomSheet = () => {
     setShowModal(false);
+    onClose && onClose();
     setTimeout(() => {
       setShow(false);
     }, ANIMATION_RUNNING_TIME);

@@ -22,13 +22,13 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
     <Provider>
       <SoonerToaster
         position="bottom-center"
-        duration={1970}
-        offset={{ bottom: "calc(var(--safe-bottom-navigation) + 10px)" }}
+        duration={1800}
+        offset={{ bottom: "calc(var(--navigation-height) + 10px)" }}
         mobileOffset={{
           top: 16,
-          right: 16,
-          left: 16,
-          bottom: "calc(var(--safe-bottom-navigation) + 10px)",
+          right: 12,
+          left: 12,
+          bottom: "calc(var(--navigation-height) + 10px)",
         }}
       />
       <QueryClientProvider client={queryClient}>

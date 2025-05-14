@@ -14,7 +14,7 @@ import SettingsIcon from "@/assets/icon/common/outlined/Settings.svg";
 function Notification() {
   useHeader({
     title: "알림",
-    subIcons: [{ svgIcon: <SettingsIcon />, onClick: "/my/settings/notification", description: "알림 설정" }],
+    subIcons: [{ svgIcon: <SettingsIcon />, onClick: "/my/notification", description: "알림 설정" }],
     options: {
       titleAlign: "center",
       hideBackButton: true,

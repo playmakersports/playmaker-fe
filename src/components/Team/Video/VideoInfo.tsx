@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-import ProfileTag from "../ProfileTag";
 import { FONTS, SCROLL_HIDE, SCROLL_MASKED_GRADIENT } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 
@@ -65,10 +64,6 @@ function VideoInfo(props: Props) {
               {player.playerName}
             </li>
           ))}
-          <ProfileTag
-            showInfo={selectedProfile}
-            handleClose={() => setSelectedProfile({ show: false, playerId: "" })}
-          />
         </ul>
       </div>
     </Container>

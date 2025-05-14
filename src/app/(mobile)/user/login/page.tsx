@@ -36,7 +36,7 @@ function Login() {
     router.push("/user/apply/stage");
   };
   const handleMyPage = () => {
-    router.push("/my/settings");
+    router.push("/my");
   };
   const onClickTeamPage = () => {
     router.push("/team/33/board");

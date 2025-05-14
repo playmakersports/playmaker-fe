@@ -6,7 +6,8 @@ import { useHeader } from "@/hook/useHeader";
 import { fonts } from "@/styles/fonts.css";
 import { baseContainer } from "@/styles/container.css";
 import { settingsHeaderProfile, settingsHeaderProfileImage } from "./_components/userSetting.css";
-import UserSetting from "@/app/(mobile)/my/settings/_components/UserSetting";
+import Button from "@/components/common/Button";
+import UserSetting from "@/app/(mobile)/my/_components/UserSetting";
 
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
@@ -14,7 +15,7 @@ function MySettings() {
   const router = useRouter();
   useHeader({
     title: "설정",
-    subActions: [{ name: "계정 관리", action: () => router.push("/my/settings/account") }],
+    subActions: [{ name: "계정 관리", action: () => router.push("/my/account") }],
   });
 
   return (
@@ -23,7 +24,7 @@ function MySettings() {
         <div className={settingsHeaderProfileImage}>
           <PersonIcon width={24} height={24} fill="var(--gray300)" />
         </div>
-        <div className="profile">
+        <div className="profile" style={{ flex: 1 }}>
           <div
             className={fonts.body3.medium}
             style={{
@@ -41,6 +42,9 @@ function MySettings() {
             @test
           </div>
         </div>
+        <Button type="button" mode="gray" fillType="light" size="small" onClick={() => router.push("/p/123")}>
+          프로필 보기
+        </Button>
       </div>
       <UserSetting />
     </section>

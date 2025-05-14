@@ -45,30 +45,30 @@ function UserSetting() {
         <h4 className={settingsGroupTitle}>기본 정보</h4>
         <GroupList
           list={[
-            { title: "내 프로필 관리", onClick: () => router.push(`/my/settings/info`) },
-            { title: "활동 지역", onClick: () => router.push(`/my/settings/location`) },
+            { title: "내 프로필 수정", onClick: () => router.push(`/my/info`) },
+            { title: "활동 지역", onClick: () => router.push(`/my/location`) },
             // NOTE: 초기 버전에서는 학교 인증 및 계정 관리 제외
             // {
             //   title: "학교 인증",
-            //   onClick: () => router.push(`/my/settings/school`),
+            //   onClick: () => router.push(`/my/school`),
             //   subText: <span style={{ color: "var(--red500)" }}>인증 필요</span>,
             // },
-            // { title: "계정 관리", onClick: () => router.push(`/my/settings/account`) },
+            // { title: "계정 관리", onClick: () => router.push(`/my/account`) },
           ]}
         />
       </div>
       <WhiteSectionDivider $child />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>소속 팀</h4>
-        <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.push(`/my/settings/team-list`) }]} />
+        <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.push(`/my/team-list`) }]} />
       </div>
       <WhiteSectionDivider $child />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>내 운동 정보</h4>
         <GroupList
           list={[
-            { title: "신체 정보 관리", onClick: () => router.push(`/my/settings/physical`) },
-            { title: "운동 종목별 정보 관리", onClick: () => router.push(`/my/settings/sports`) },
+            { title: "신체 정보 관리", onClick: () => router.push(`/my/physical`) },
+            { title: "운동 종목별 정보 관리", onClick: () => router.push(`/my/sports`) },
           ]}
         />
       </div>
@@ -78,11 +78,11 @@ function UserSetting() {
           list={[
             {
               title: "알림 설정",
-              onClick: () => router.push(`/my/settings/notification`),
+              onClick: () => router.push(`/my/notification`),
             },
             {
               title: "공지사항",
-              onClick: () => router.push(`/my/settings/notice`),
+              onClick: () => router.push(`/my/notice`),
             },
             {
               title: "약관 정보",

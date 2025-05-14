@@ -20,7 +20,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>((props, ref
 
   return (
     <InputWrapper title={title} required={required} information={information}>
-      <TextAreaWrapper $isError={error}>
+      <TextAreaWrapper $isError={error} style={{ height: rest.height ?? "auto" }}>
         {displayLength && (
           <Length>
             <NumberFlow value={length} willChange format={{ useGrouping: false }} />
@@ -28,6 +28,7 @@ export const TextArea = React.forwardRef<HTMLTextAreaElement, Props>((props, ref
           </Length>
         )}
         <StyledTextArea
+          style={{ height: "100%", resize: "none" }}
           ref={textareaRef}
           placeholder={props.placeholder ?? " "}
           onChange={(event) => {

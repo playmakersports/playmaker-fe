@@ -1,7 +1,7 @@
 "use client";
 
 import React, { Suspense } from "react";
-import { Toaster as SoonerToaster, toast } from "sonner";
+import { Toaster as SoonerToaster } from "sonner";
 import { Provider } from "jotai";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PopupProvider from "@/components/common/global/PopupProvider";

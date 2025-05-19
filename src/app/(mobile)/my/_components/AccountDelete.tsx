@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
+import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { fonts } from "@/styles/fonts.css";
@@ -9,13 +11,14 @@ import CheckIcon from "@/assets/icon/common/Check.svg";
 
 function AccountDelete({ ModalComponents }: { ModalComponents: (props: ModalProps) => React.JSX.Element | undefined }) {
   const [checked, setChecked] = useState<boolean[]>([]);
+  const router = useRouter();
   const popup = usePopup();
+  const { trigger } = useToast();
   const checkList = [
     "계정 정보은 모두 삭제 되고 다시 복구할 수 없어요.",
     "플메에서의 스포츠 기록을 복구할 수 없어요.",
     "단, 작성한 글과 댓글은 자동으로 삭제되지 않아요.",
     "팀에서 운영진을 맡고 있다면, 미리 변경해주세요.",
-    "주요 종목의 팀 운영과 경기 기록은 플메가 독보적이에요.",
     "위 내용에 모두 동의하였으며, 탈퇴를 진행하겠습니다.",
   ];
 
@@ -27,8 +30,8 @@ function AccountDelete({ ModalComponents }: { ModalComponents: (props: ModalProp
       buttons={[
         {
           name: "확인",
-          onClick: () => {
-            popup?.confirm(
+          onClick: async () => {
+            const confirm = await popup?.confirm(
               `탈퇴 시 계정 정보 및 이용 기록은 모두 삭제되며, 삭제된 데이터는 복구가 불가능합니다.\n
 정말 탈퇴하시겠어요?`,
               {
@@ -40,6 +43,11 @@ function AccountDelete({ ModalComponents }: { ModalComponents: (props: ModalProp
                 },
               }
             );
+
+            if (confirm) {
+              router.replace("/");
+              trigger("탈퇴가 완료되었습니다.", { type: "success" });
+            }
           },
           disabled: !checked.every((v) => v) || checked.length !== checkList.length,
           mode: "red",

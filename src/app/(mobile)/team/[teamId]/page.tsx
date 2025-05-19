@@ -1,6 +1,6 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 import { baseBackendURL } from "@/apis";
 import { SelectTeamResponse } from "@/types/team";
@@ -9,9 +9,20 @@ import TeamMainTop from "./_components/TeamMainTop";
 import TeamMainContents from "./_components/TeamMainContents";
 
 async function getTeamData(teamId: string) {
+  // 현재 위치 가져오기 (API 임시 연동)
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access-token")?.value;
-  const res = await fetch(`${baseBackendURL}/api/team/selectteam/page/${teamId}`, {
+  const link = `${protocol}://${host}/api/team`;
+  // const link =
+  //   process.env.NODE_ENV === "development"
+  //     ? `${protocol}://${host}/api/team`
+  //     : `${baseBackendURL}/api/team/selectteam/page/${teamId}`;
+  // const res = await fetch(`${baseBackendURL}/api/team/selectteam/page/${teamId}`, {
+  const res = await fetch(link, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },

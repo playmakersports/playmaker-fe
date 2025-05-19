@@ -61,6 +61,12 @@ export const flexRowGap4 = style({
 });
 
 export const flexAlignCenter = style({
+  display: "flex",
+  alignItems: "center",
+});
+export const flexSpaceBetween = style({
+  display: "flex",
+  justifyContent: "space-between",
   alignItems: "center",
 });
 
@@ -78,5 +84,17 @@ export const baseCardContainer = style([
         transform: "scale(0.98)",
       },
     },
+  },
+]);
+export const baseDividedLine = style({
+  display: "block",
+  width: "var(--mobile-max-width)",
+  height: "6px",
+  backgroundColor: "var(--gray50)",
+});
+export const baseDividedLineChild = style([
+  baseDividedLine,
+  {
+    margin: "0 -20px",
   },
 ]);

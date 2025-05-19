@@ -1,38 +1,57 @@
 "use client";
 
 import React, { useState } from "react";
-import styled from "styled-components";
+import { useParams, useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
+import clsx from "clsx";
 import useModal from "@/hook/useModal";
 
-import { FONTS } from "@/styles/common";
-import SwipeSelector from "@/components/common/SwipeSelector";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import PlayerListItem from "@/app/(mobile)/team/[teamId]/_components/PlayerListItem";
-import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
-import PlayerRoleModal from "../_components/PlayerRoleModal";
 
-import SettingsIcon from "@/assets/icon/common/outlined/Settings.svg";
-import CrownIcon from "@/assets/icon/common/filled/Key.svg";
-import StartIcon from "@/assets/icon/common/filled/Star.svg";
-import DeleteAllBorderIcon from "@/assets/icon/common/filled/Delete.svg";
-
-type PlayerInfo = {
-  defaultLevel: number;
-  playerId: string;
-  playerName: string;
-  playerImg: string;
-};
+import { fonts } from "@/styles/fonts.css";
+import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
+import {
+  baseContainerPaddingTop,
+  flexColumnGap10,
+  flexColumnGap20,
+  flexRowGap4,
+  flexSpaceBetween,
+} from "@/styles/container.css";
+import FilterButton from "@/components/common/FilterButton";
+import PlayersListSort from "../_components/PlayersListSort";
 
 function PlayerList() {
-  const { showModal: showRoleModal, ModalComponents: RoleModal } = useModal();
-  const { showModal: showCategoryModal, ModalComponents: CategoryModal } = useModal();
-  const [filter, setFilter] = useState("all");
-  const [playerInfo, setPlayerInfo] = useState<PlayerInfo>();
+  const router = useRouter();
+  const teamId = useParams().teamId;
+  const { showModal, ModalComponents } = useModal();
+  const [sortTab, setSortTab] = useState("name");
+  const [sortType, setSortType] = useState("");
+
   useHeader({
     title: "팀원",
-    subIcons: [{ svgIcon: <SettingsIcon />, onClick: "", description: "다중 카테고리" }],
+    subActions: [
+      {
+        name: "가입 신청 목록",
+        action: () => {
+          router.push(`/team/${teamId}/admin/recruit-applicant`);
+        },
+      },
+      {
+        name: "권한 설정",
+        action: () => {
+          router.push(`/team/${teamId}/admin/role`);
+        },
+      },
+      {
+        name: "팀원 퇴출",
+        action: () => {
+          router.push(`/team/${teamId}/admin/block`);
+        },
+      },
+    ],
+    // options: { titleAlign: "center" },
   });
 
   const PLAYERS_FILTER = [
@@ -42,100 +61,44 @@ function PlayerList() {
     { name: "휴학생", value: "rest" },
   ];
 
-  const onRoleClick = (playerInfo: PlayerInfo) => {
-    setPlayerInfo(playerInfo);
-    showRoleModal();
-  };
-  const onCategoryClick = (playerInfo: PlayerInfo) => {
-    setPlayerInfo(playerInfo);
-    showCategoryModal();
-  };
-
   return (
     <>
-      <Container>
-        <Top>
+      <section className={clsx(baseContainerPaddingTop, flexColumnGap20)}>
+        <div className={flexColumnGap10}>
           <BasicInput type="text" iconType="search" placeholder="이름으로 찾기" />
-          <Filter>
-            <DropDownBottomSheet getCurrentValue={setFilter} defaultValue={filter} options={PLAYERS_FILTER} />
-            <p>총 {TEAM_PLAYERS_MOCK.length}명</p>
-          </Filter>
-        </Top>
-        <Players>
+          <div className={clsx(flexSpaceBetween)}>
+            <p className={clsx(fonts.caption1.regular, flexRowGap4)} style={{ color: "var(--gray500)" }}>
+              <PeopleIcon width={18} height={18} fill="var(--gray600)" />
+              {TEAM_PLAYERS_MOCK.length}명
+            </p>
+            <FilterButton onClick={() => showModal()}>정렬</FilterButton>
+          </div>
+        </div>
+        <div className={flexColumnGap20}>
           {TEAM_PLAYERS_MOCK.map((player) => {
             const { level, sex, birthDate, tag, ...rest } = player;
             return (
-              <SwipeSelector
+              <PlayerListItem
                 key={player.playerId}
-                left={[
-                  {
-                    svg: <CrownIcon fill="var(--white)" />,
-                    bgColor: "var(--purple300)",
-                    text: "권한 설정",
-                    onClick: () =>
-                      onRoleClick({
-                        defaultLevel: player.level,
-                        playerId: player.playerId,
-                        playerName: player.name,
-                        playerImg: player.profileImg,
-                      }),
-                  },
-                  {
-                    svg: <StartIcon fill="var(--white)" />,
-                    bgColor: "var(--main)",
-                    text: "카테고리",
-                    onClick: () =>
-                      onCategoryClick({
-                        defaultLevel: player.level,
-                        playerId: player.playerId,
-                        playerName: player.name,
-                        playerImg: player.profileImg,
-                      }),
-                  },
-                ]}
-                right={{
-                  svg: <DeleteAllBorderIcon fill="var(--white)" />,
-                  bgColor: "#07235F",
-                  text: "퇴출",
-                  onClick: () => {},
-                }}
-              >
-                <PlayerListItem level={level} sex={sex} position="가드" birthDate={birthDate} {...rest} />
-              </SwipeSelector>
+                level={level}
+                sex={sex}
+                position="가드"
+                birthDate={birthDate}
+                {...rest}
+              />
             );
           })}
-        </Players>
-      </Container>
-      <PlayerRoleModal ModalContainer={RoleModal} playerInfo={playerInfo} />
-      <CategoryModal title="카테고리 지정">1</CategoryModal>
+        </div>
+      </section>
+      <PlayersListSort
+        ModalComponents={ModalComponents}
+        sortTab={sortTab}
+        setSortTab={setSortTab}
+        sortType={sortType}
+        setSortType={setSortType}
+      />
     </>
   );
 }
-
-const Container = styled.div`
-  padding: 8px 16px;
-  overflow-x: hidden;
-`;
-const Top = styled.div`
-  display: flex;
-  margin: 0 0 10px;
-  flex-direction: column;
-  gap: 16px;
-`;
-const Filter = styled.div`
-  display: flex;
-  padding: 0 4px;
-  justify-content: space-between;
-  align-items: center;
-  p {
-    ${FONTS.body4("regular")};
-    color: var(--gray500);
-    font-weight: 400;
-  }
-`;
-const Players = styled.div`
-  overflow-x: hidden;
-  margin: 0 -16px;
-`;
 
 export default PlayerList;

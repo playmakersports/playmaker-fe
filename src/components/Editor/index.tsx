@@ -3,25 +3,37 @@ import React from "react";
 import { EditorContent, Editor } from "@tiptap/react";
 
 import EditorMenu from "./Menu";
-import EditorMenuBottom from "./MenuBottom";
-import { ArticlePollType } from "./Poll";
+import EditorImages from "./Images";
 import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
 import { editorContainer, editorTextAreaContainer } from "./editor.css";
+import Loading from "../common/Loading";
+import clsx from "clsx";
+import { flexColumnGap12 } from "@/styles/container.css";
 
 type Props = {
   editor: Editor | null;
-  poll: EditorOptionalStateControl<ArticlePollType>;
   images: EditorOptionalStateControl<EditorImageType>;
 };
 
-function EditorUI({ editor, poll, images }: Props) {
+function EditorUI({ editor, images }: Props) {
+  if (!editor) return <Loading page />;
+
   return (
-    <div className={editorContainer}>
+    <div className={clsx(editorContainer, flexColumnGap12)}>
+      <EditorImages images={images} />
       {editor && <EditorMenu editor={editor} />}
-      <div id="tiptap_Editor" className={editorTextAreaContainer} data-focus={editor?.isFocused}>
-        {editor && <EditorContent editor={editor} />}
+      <div id="tiptap_Editor" className={editorTextAreaContainer}>
+        {editor && (
+          <EditorContent
+            editor={editor}
+            style={{
+              flex: 1,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          />
+        )}
       </div>
-      <EditorMenuBottom editor={editor} poll={poll} images={images} />
     </div>
   );
 }

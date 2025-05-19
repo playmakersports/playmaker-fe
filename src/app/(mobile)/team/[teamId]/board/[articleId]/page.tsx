@@ -1,5 +1,5 @@
 import "@/styles/editor.css";
-import { articleDetailHeader } from "../_components/articleDetail.css";
+import { articleDetailHeader } from "../_components/teamBoard.css";
 import ArticleReply from "../_components/ArticleReply";
 
 function ArticleId() {

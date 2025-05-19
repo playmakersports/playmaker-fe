@@ -1,33 +1,49 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { useRouter, useSearchParams, useParams } from "next/navigation";
+import clsx from "clsx";
+import Link from "next/link";
+import { useSearchParams, useParams } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
-import { usePopup } from "@/components/common/global/PopupProvider";
 
-import { FONTS } from "@/styles/common";
+import { fonts } from "@/styles/fonts.css";
+import { baseContainer, baseDividedLine, flexAlignCenter, flexRowGap16, flexRowGap4 } from "@/styles/container.css";
+import {
+  boardListFixedSection,
+  boardListFixedSectionTitle,
+  boardListFixedSectionTitleInner,
+  boardListPaginationButton,
+} from "./_components/teamBoard.css";
 import MainTab from "@/components/Main/MainTab";
-import { BaseContainer } from "@/components/common/Container";
-import { BasicInput } from "@/components/common/input/BaseInput";
 import { GetTeamBoardListResponse } from "@/types/team";
 import ListArticle from "./_components/ListArticle";
 
-import PlusIcon from "@/assets/icon/common/Plus.svg";
 import Loading from "@/components/common/Loading";
-import Button from "@/components/common/Button";
+import Badge from "@/components/common/Badge";
+import SearchIcon from "@/assets/icon/common/Search.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
+import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
+import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
+import SearchPopup from "./_components/SearchPopup";
 
 function Board() {
-  const router = useRouter();
+  const [showSearch, setShowSearch] = useState(false);
   const params = useParams();
   const teamId = params["teamId"];
-  const popup = usePopup();
   const searchParams = useSearchParams();
 
   useHeader({
     title: "게시판",
     subIcons: [
+      {
+        svgIcon: <SearchIcon />,
+        onClick: () => {
+          setShowSearch((prev) => !prev);
+        },
+        description: "검색",
+      },
       {
         svgIcon: <PlusIcon />,
         onClick: `/team/${teamId}/board/editor?type=new`,
@@ -58,28 +74,9 @@ function Board() {
     window.history.pushState(null, "", `?${params.toString()}`);
   };
 
-  useEffect(() => {
-    const showErrorPopup = async () => {
-      const isConfirm = await popup?.confirm("서버 문제 혹은 네트워크가 연결되지 않은 상태일 수 있습니다.", {
-        title: "게시글을 불러오지 못했습니다.",
-        showIcon: true,
-        buttonText: {
-          yes: "닫기",
-          no: "재시도",
-        },
-      });
-
-      if (!isConfirm) {
-        refetch();
-      }
-    };
-    if (isError) {
-      // showErrorPopup();
-    }
-  }, [isError]);
-
   return (
     <>
+      {showSearch && <SearchPopup setShow={setShowSearch} />}
       <TabWrapper ref={tabRef}>
         <MainTab
           padding={20}
@@ -87,31 +84,26 @@ function Board() {
           color="primary"
           sameWidth
           items={[
-            { value: "ALL", name: "전체" },
-            { value: "1", name: "공지사항" },
-            { value: "2", name: "자유" },
-            { value: "3", name: "사진" },
+            { value: "1", name: "게시판" },
+            { value: "2", name: "갤러리" },
           ]}
           nowValue={setTab}
         />
       </TabWrapper>
-      <FixedArticles>
+      <div className={boardListFixedSection}>
         {MOCK.slice(0, 3).map((article) => (
-          <FixedArticle key={article} onClick={() => router.push(`/team/${teamId}/board/${article}`)}>
-            <div className="article-inner">
-              <div style={{ flex: 1 }}>
-                <p className="article-head">글 공지입니다.</p>
-                <p className="article-sub">홍길동 | 2024.5.10</p>
-              </div>
-              <div className="article-info">
-                <p className="article-head">{article}</p>
-                <p className="article-sub">조회 60</p>
-              </div>
+          <Link key={article} className={boardListFixedSectionTitle} href={`/team/${teamId}/board/${article}`}>
+            <div className={boardListFixedSectionTitleInner}>
+              <Badge type="red" size="small">
+                공지
+              </Badge>
+              <span className={fonts.body4.medium}>글 공지입니다.</span>
             </div>
-          </FixedArticle>
+          </Link>
         ))}
-      </FixedArticles>
-      <Container>
+      </div>
+      <div className={baseDividedLine} />
+      <section className={baseContainer} style={{ backgroundColor: "var(--gray50)" }}>
         <Articles>
           {isLoading ? (
             <Loading />
@@ -120,32 +112,30 @@ function Board() {
           )}
         </Articles>
 
-        <Page>
-          {PAGE_MOCK.map((pageNum) => (
-            <button
-              type="button"
-              data-active={currentPage === String(pageNum)}
-              key={pageNum}
-              onClick={() => updatePaging(String(pageNum))}
-            >
-              {pageNum}
-            </button>
-          ))}
-        </Page>
-        <Search
-          onSubmit={(e) => {
-            e.preventDefault();
-            updateKeyword(e.currentTarget.keyword.value);
+        <div
+          className={clsx(flexRowGap16, flexAlignCenter)}
+          style={{
+            padding: "20px 0 0",
+            justifyContent: "center",
           }}
         >
-          <div style={{ flex: 1 }}>
-            <BasicInput type="text" iconType="search" id="keyword" />
+          <LeftArrowIcon width={24} height={24} fill="var(--gray700)" />
+          <div className={flexRowGap4}>
+            {PAGE_MOCK.map((pageNum) => (
+              <button
+                type="button"
+                className={boardListPaginationButton}
+                data-active={currentPage === String(pageNum)}
+                key={pageNum}
+                onClick={() => updatePaging(String(pageNum))}
+              >
+                {pageNum}
+              </button>
+            ))}
           </div>
-          <Button type="submit" size="small" mode="gray" fillType="light">
-            검색
-          </Button>
-        </Search>
-      </Container>
+          <RightArrowIcon width={24} height={24} fill="var(--gray700)" />
+        </div>
+      </section>
     </>
   );
 }
@@ -153,10 +143,6 @@ function Board() {
 const MOCK = [1, 10, 12, 14, 16, 8, 9, 28, 4, 2];
 const PAGE_MOCK = [1, 2, 3, 4, 5];
 
-const Container = styled(BaseContainer)`
-  padding-top: 0;
-  padding-bottom: calc(16px + var(--env-sab));
-`;
 const TabWrapper = styled.div`
   position: sticky;
   top: 0;
@@ -169,63 +155,13 @@ const TabWrapper = styled.div`
     background-color: var(--background-light);
   }
 `;
-const FixedArticles = styled.div``;
-const FixedArticle = styled.div`
-  border-bottom: 1px solid var(--gray200);
-  color: var(--gray700);
 
-  div.article-inner {
-    cursor: pointer;
-    display: flex;
-    padding: 10px 16px;
-    align-items: center;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  p.article-head {
-    margin-bottom: 4px;
-    ${FONTS.body4("semibold")};
-  }
-  p.article-sub {
-    color: var(--gray500);
-    ${FONTS.caption1("regular")};
-  }
-`;
 const Articles = styled.div`
   display: flex;
+  margin: 0 -20px;
   min-height: 120px;
-  margin: 0 0 16px;
   flex-direction: column;
-`;
-
-const Search = styled.form`
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-  padding: 0 15%;
-`;
-const Page = styled.div`
-  display: flex;
-  margin-top: 20px;
-  justify-content: center;
-  gap: 12px;
-
-  button {
-    ${FONTS.body3("regular")};
-    padding: 8px 16px;
-    background-color: var(--primary50);
-    border-radius: 6px;
-    user-select: none;
-
-    &:active {
-      background-color: var(--primary100);
-    }
-    &[data-active="true"] {
-      color: #fff;
-      background-color: var(--primary500);
-      ${FONTS.body4("semibold")};
-    }
-  }
+  background-color: var(--background-light);
 `;
 
 export default Board;

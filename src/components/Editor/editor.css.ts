@@ -1,6 +1,7 @@
 import { globalStyle, style } from "@vanilla-extract/css";
 
 export const editorContainer = style({
+  flex: 1,
   display: "flex",
   flexDirection: "column",
   width: "100%",
@@ -9,23 +10,19 @@ export const editorContainer = style({
 
 export const editorTextAreaContainer = style({
   flex: 1,
+  display: "flex",
+  flexDirection: "column",
   width: "100%",
-  padding: "10px 12px",
-  borderRadius: "8px",
-  border: "1px solid var(--gray200)",
-  selectors: {
-    '&[data-focus="true"]': {
-      borderColor: "var(--gray300)",
-    },
-  },
 });
 
 globalStyle(`${editorTextAreaContainer} div:focus-visible`, {
   outline: "none",
 });
 globalStyle(`${editorTextAreaContainer} > div > div[role="textbox"]`, {
-  minHeight: "340px",
+  flex: 1,
+  height: "100%",
   overflowY: "auto",
+  paddingBottom: "32px",
 });
 
 export const editorMenuContainer = style({
@@ -33,8 +30,8 @@ export const editorMenuContainer = style({
   gap: "4px",
   position: "sticky",
   top: "var(--safe-area-top)",
-  margin: "0 -16px",
-  padding: "6px 16px",
+  margin: "0 -20px",
+  padding: "6px 20px",
   overflowX: "auto",
   overflowY: "hidden",
   whiteSpace: "nowrap",
@@ -42,7 +39,7 @@ export const editorMenuContainer = style({
   scrollbarWidth: "none",
   selectors: {
     "&.stuck": {
-      padding: "12px 16px 8px",
+      padding: "10px 20px",
       backgroundColor: "var(--background-light)",
       borderBottom: "1px solid var(--gray200)",
       boxShadow: "var(--shadow-xs)",

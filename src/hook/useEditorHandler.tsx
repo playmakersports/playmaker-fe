@@ -5,8 +5,6 @@ import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
 
-import { ArticlePollType } from "@/components/Editor/Poll";
-
 type Props = {
   initialContent?: string;
 };
@@ -17,27 +15,11 @@ export type EditorOptionalStateControl<T> = {
 export type EditorImageType = { list: string[]; position: "TOP" | "BOTTOM" };
 
 export const useEditorHandler = ({ initialContent }: Props = {}) => {
-  const [pollValue, setPoll] = useState<ArticlePollType>({
-    pollDue: false,
-    endDate: "",
-    endTime: "00:00",
-    pollTitle: "",
-    pollOptions: [
-      { value: "", order: 0 },
-      { value: "", order: 1 },
-    ],
-    multiple: false,
-    anonymous: false,
-  });
   const [imagesValue, setImages] = useState<EditorImageType>({
     list: [],
     position: "TOP",
   });
 
-  const poll = {
-    getter: () => pollValue,
-    setter: (updateFn: (prev: ArticlePollType) => ArticlePollType) => setPoll(updateFn(pollValue)),
-  };
   const images = {
     getter: () => imagesValue,
     setter: (updateFn: (prev: EditorImageType) => EditorImageType) => setImages(updateFn(imagesValue)),
@@ -56,5 +38,5 @@ export const useEditorHandler = ({ initialContent }: Props = {}) => {
     ],
   });
 
-  return { editor, poll, images };
+  return { editor, images };
 };

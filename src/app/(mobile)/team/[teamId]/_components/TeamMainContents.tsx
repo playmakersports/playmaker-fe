@@ -6,7 +6,13 @@ import clsx from "clsx";
 import { useParams } from "next/navigation";
 
 import { teamMainContentsGroup } from "./team.main.css";
-import { baseContainer, flexColumnGap12, flexColumnGap40 } from "@/styles/container.css";
+import {
+  baseContainer,
+  baseDividedLineChild,
+  flexColumnGap12,
+  flexColumnGap16,
+  flexColumnGap20,
+} from "@/styles/container.css";
 import TeamMainRecentMatch from "./TeamMainRecentMatch";
 import WeeklyCalender from "@/app/(mobile)/team/[teamId]/_components/TeamWeeklyCalender";
 import TeamMainBoardList from "./TeamMainBoardList";
@@ -14,7 +20,7 @@ import GroupTitle from "@/components/common/GroupTitle";
 import RecentVote from "./RecentVote";
 import TeamMainPlayerList from "./TeamMainPlayerList";
 
-import CalendarIcon from "@/assets/icon/color/Calendar.svg";
+import Button from "@/components/common/Button";
 
 function TeamMainContents() {
   const [weeklyDate, setWeeklyDate] = useState("");
@@ -22,30 +28,37 @@ function TeamMainContents() {
   const teamId = params["teamId"];
 
   return (
-    <section className={clsx(baseContainer, flexColumnGap40)}>
+    <section className={clsx(baseContainer, flexColumnGap20)}>
       <RecentVote />
       <div className={teamMainContentsGroup}>
-        <GroupTitle icon={<CalendarIcon />} link={`/team/${teamId}/schedule`}>
-          다가오는 일정
-        </GroupTitle>
+        <GroupTitle link={`/team/${teamId}/schedule`}>다가오는 일정</GroupTitle>
         <WeeklyCalender
           activeDate={weeklyDate}
           setActiveDate={setWeeklyDate}
           schedulesList={[
-            { scheduleId: "", startDate: "2025-04-20", scheduleCategory: "훈련", scheduleTitle: "팀 훈련" },
+            {
+              scheduleId: "",
+              startDate: "2025-04-20",
+              time: "13:50",
+              scheduleCategory: "훈련",
+              scheduleTitle: "팀 훈련",
+            },
             {
               scheduleId: "",
               startDate: "2025-04-23",
+              time: "18:50",
               scheduleCategory: "훈련",
               scheduleTitle: "교류전 (VS 성균관대)",
             },
           ]}
         />
+        <Button type="button" mode="gray" fillType="outline" size="medium">
+          더보기
+        </Button>
       </div>
+      <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>
-        <GroupTitle icon={<CalendarIcon />} link={`/team/${teamId}/matches`}>
-          최근 경기
-        </GroupTitle>
+        <GroupTitle link={`/team/${teamId}/matches`}>최근 경기</GroupTitle>
         <div className={flexColumnGap12}>
           <TeamMainRecentMatch
             matchId={"123"}
@@ -99,20 +112,26 @@ function TeamMainContents() {
             }}
           />
         </div>
+        <Button type="button" mode="gray" fillType="outline" size="medium">
+          더보기
+        </Button>
       </div>
+      <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>
         <GroupTitle link={`/team/${teamId}/board`}>팀 게시판</GroupTitle>
-        <div className={flexColumnGap12}>
+        <div className={flexColumnGap16}>
           <TeamMainBoardList />
         </div>
       </div>
+      <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>
         <GroupTitle link={`/team/${teamId}/statistics`}>팀 데이터</GroupTitle>
         <div className={flexColumnGap12}></div>
       </div>
+      <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>
         <GroupTitle link={`/team/${teamId}/players`}>팀원 </GroupTitle>
-        <div className={flexColumnGap12} style={{ gap: 0, paddingBottom: "20px" }}>
+        <div className={flexColumnGap20}>
           <TeamMainPlayerList />
         </div>
       </div>

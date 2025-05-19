@@ -5,11 +5,13 @@ import { useRouter, useParams } from "next/navigation";
 import { addDays, differenceInDays, format, startOfWeek } from "date-fns";
 
 import { fonts } from "@/styles/fonts.css";
+import { flexColumnGap20, flexRowGap10 } from "@/styles/container.css";
+import { teamMainScheduleItem } from "./team.main.css";
 import Chip from "@/components/common/Chip";
 import Badge from "@/components/common/Badge";
-import { baseCardContainer } from "@/styles/container.css";
 
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
+import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
 
 type Props = {
   activeDate: string;
@@ -18,7 +20,7 @@ type Props = {
 };
 type Schedule = {
   startDate: string;
-  startTime?: string;
+  time: string;
   scheduleCategory: string;
   scheduleTitle: string;
   scheduleId: string;
@@ -52,11 +54,11 @@ function TeamWeeklyCalender(props: Props) {
           </DaySelector>
         ))}
       </Week>
-      <List>
+      <List className={clsx(flexColumnGap20)}>
         {schedulesList.map((schedule, index) => {
           const diffDays = differenceInDays(new Date(), new Date(schedule.startDate));
           return (
-            <li key={index} onClick={moveSchedule} className={clsx(baseCardContainer, { today: diffDays === 0 })}>
+            <li key={index} onClick={moveSchedule} className={teamMainScheduleItem}>
               <div className="head-line">
                 <Chip type="primary" fillType="light">
                   {schedule.scheduleCategory}
@@ -64,11 +66,17 @@ function TeamWeeklyCalender(props: Props) {
                 <span className={clsx("subtitle", fonts.body4.medium)}>{schedule.scheduleTitle}</span>
               </div>
               <div className="sub-line">
-                <span className={clsx("date-wrapper", fonts.caption1.regular)}>
-                  <CalendarIcon />
-                  {schedule.startDate}
-                </span>
-                <Badge type="primary" fillType={diffDays === 0 ? "filled" : "light"}>
+                <p className={clsx(flexRowGap10)}>
+                  <span className={clsx("date-wrapper", fonts.caption1.regular)}>
+                    <CalendarIcon />
+                    {schedule.startDate}
+                  </span>
+                  <span className={clsx("date-wrapper", fonts.caption1.regular)}>
+                    <ClockIcon />
+                    {schedule.time}
+                  </span>
+                </p>
+                <Badge type="primary" fillType={diffDays === 0 ? "filled" : "light"} size="medium">
                   D{diffDays === 0 ? "-DAY" : diffDays}
                 </Badge>
               </div>
@@ -124,9 +132,6 @@ const DaySelector = styled.button`
 `;
 
 const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   li.today {
     border-color: var(--primary500);
   }

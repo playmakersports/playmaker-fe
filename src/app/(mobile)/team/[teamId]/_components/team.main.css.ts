@@ -1,35 +1,26 @@
-import { baseCardContainer, flexRowGap10, flexRowGap12 } from "@/styles/container.css";
+import { innerChildContainer } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { hexToRgb } from "@/util/common";
 import { globalStyle, style } from "@vanilla-extract/css";
 
 export const teamMainTopBanner = style({
-  position: "relative",
-  marginBottom: "18px",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "flex-end",
   width: "100%",
-  height: "160px",
+  height: "180px",
   objectFit: "cover",
   backgroundColor: "var(--gray100)",
   backgroundSize: "cover",
   backgroundPosition: "top center",
 });
-export const teamMainTopInfoContainer = style({
-  position: "absolute",
-  bottom: 0,
-  display: "flex",
-  padding: "8px 10px",
-  justifyContent: "space-between",
-  alignItems: "center",
-  margin: "0 20px",
-  width: "calc(100% - 40px)",
-  backgroundColor: "rgba(256,256,256,0.7)",
-  borderRadius: "8px",
-  backdropFilter: "blur(15px)",
-  transform: "translateY(50%)",
-});
 export const teamMainTopInfoList = style({
+  padding: "12px 20px",
   display: "flex",
+  justifyContent: "space-between",
   gap: "12px",
+  backdropFilter: "blur(5px)",
+  backgroundColor: "rgba(0,0,0,0.1)",
 });
 export const teamMainTopInfoListItem = style([
   fonts.caption1.regular,
@@ -37,13 +28,14 @@ export const teamMainTopInfoListItem = style([
     display: "flex",
     gap: "4px",
     alignItems: "center",
-    color: "var(--gray700)",
+    color: "var(--white)",
+    opacity: "0.85",
   },
 ]);
 globalStyle(`${teamMainTopInfoListItem} > svg`, {
   width: "18px",
   height: "18px",
-  fill: "var(--gray700)",
+  fill: "var(--white)",
 });
 
 export const teamMainTopHeader = style({
@@ -55,10 +47,23 @@ export const teamMainTopHeader = style({
 
 export const teamMainContentsGroup = style({
   display: "flex",
+  paddingBottom: "10px",
   flexDirection: "column",
   gap: "16px",
 });
 
+export const teamMainScheduleItem = style({
+  paddingBottom: "20px",
+  borderBottom: "1px solid var(--gray100)",
+  selectors: {
+    "&:last-of-type": {
+      borderBottom: "none",
+    },
+    "&:active": {
+      backgroundColor: "var(--gray50)",
+    },
+  },
+});
 export const teamMainTextWithIcon = style({
   display: "inline-flex",
   gap: "4px",
@@ -146,14 +151,16 @@ export const teamHeartButtonIcon = style({
   height: "100%",
 });
 
-export const teamMainRecentVoteContainer = style({
-  margin: "0 -20px",
-  padding: "20px 0 0",
-  background: "linear-gradient(to bottom, #F8FAFC, rgba(241, 245, 249, 0))",
-});
+export const teamMainRecentVoteContainer = style([
+  innerChildContainer,
+  {
+    padding: "20px 0 0",
+    background: "linear-gradient(to bottom, #F8FAFC, rgba(241, 245, 249, 0))",
+  },
+]);
 export const teamMainRecentVoteList = style({
   display: "flex",
-  padding: "0 20px",
+  padding: "0 var(--global-lr-padding)",
   gap: "16px",
   overflowX: "auto",
   whiteSpace: "nowrap",
@@ -172,8 +179,8 @@ export const teamMainRecentVoteCardDateHeader = style({
 });
 
 export const teamMainBoardListImage = style({
-  width: "87px",
-  height: "87px",
+  width: "52px",
+  height: "52px",
   borderRadius: "8px",
   backgroundColor: "var(--gray100)",
   objectFit: "cover",

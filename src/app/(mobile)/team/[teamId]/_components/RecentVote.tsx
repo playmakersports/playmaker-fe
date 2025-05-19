@@ -111,7 +111,7 @@ function RecentVoteCard({ voteId, scheduleId, title, content, date }: Props) {
 function RecentVote() {
   return (
     <div className={clsx(teamMainRecentVoteContainer, flexColumnGap16)}>
-      <p className={fonts.body3.medium} style={{ color: "var(--gray900)", padding: "0 20px" }}>
+      <p className={fonts.body3.medium} style={{ color: "var(--gray900)", padding: "0 16px" }}>
         사용자 님의 <span style={{ color: "var(--primary500)" }}>참여 의사</span>를 기다리고 있어요!
       </p>
       <ul className={teamMainRecentVoteList}>

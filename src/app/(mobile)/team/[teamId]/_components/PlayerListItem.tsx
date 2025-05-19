@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 import clsx from "clsx";
-import { format } from "date-fns";
 
 import { fonts } from "@/styles/fonts.css";
-import { flexColumnGap10 } from "@/styles/container.css";
+import { flexRowGap8 } from "@/styles/container.css";
 
 import CrownIcon from "@/assets/icon/common/CrownCircle.svg";
 import FlagCircle from "@/assets/icon/common/FlagCircle.svg";
@@ -12,6 +11,7 @@ import GenderFemaleIcon from "@/assets/icon/color/Gender_Female.svg";
 import GenderMaleIcon from "@/assets/icon/color/Gender_Male.svg";
 
 type Props = {
+  size?: "small" | "medium";
   playerId: string;
   name: string;
   level: number;
@@ -22,7 +22,7 @@ type Props = {
   sex: "MALE" | "FEMALE";
 };
 function PlayerListItem(props: Props) {
-  const { playerId, name, level, profileImg, position, birthDate, sex, gisu } = props;
+  const { size = "medium", playerId, name, level, profileImg, position, birthDate, sex, gisu } = props;
   interface ILevel {
     name: string;
     color: string;
@@ -43,9 +43,9 @@ function PlayerListItem(props: Props) {
 
   return (
     <Container>
-      <Image>
+      <Image data-size={size}>
         {level > 1 && (
-          <Staff $bgColor={LEVEL_CODE[level].color}>
+          <Staff $bgColor={LEVEL_CODE[level].color} data-size={size}>
             {level > 3 ? <CrownIcon width={24} height={24} /> : <FlagCircle width={24} height={24} />}
           </Staff>
         )}
@@ -53,31 +53,39 @@ function PlayerListItem(props: Props) {
       <Name>
         {level > 1 && <p className={clsx(fonts.caption1.semibold, "position")}>{LEVEL_CODE[level].name}</p>}
         <p className={clsx(fonts.body3.semibold, "player-name")}>
-          {name} {GENDER_ICON[sex]}
-        </p>
-        <p className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
-          {format(birthDate, "yyyy년 M월생")}
+          {name}
+          <span className="gender-icon" data-size={size}>
+            {GENDER_ICON[sex]}
+          </span>
         </p>
       </Name>
-      <Info>
-        <li className={flexColumnGap10}>
-          <span className={fonts.caption1.medium} style={{ color: "var(--gray600)" }}>
+      <Info className={flexRowGap8}>
+        <li>
+          <span className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
             포지션
           </span>
-          <span className={fonts.body3.semibold} style={{ color: "var(--gray800)" }}>
+          <span className={fonts.body4.semibold} style={{ color: "var(--gray700)" }}>
             {position}
           </span>
         </li>
         {gisu && (
-          <li className={flexColumnGap10}>
-            <span className={fonts.caption1.medium} style={{ color: "var(--gray600)" }}>
+          <li>
+            <span className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
               기수
             </span>
-            <span className={fonts.body3.semibold} style={{ color: "var(--gray800)" }}>
+            <span className={fonts.body4.semibold} style={{ color: "var(--gray700)" }}>
               {gisu}기
             </span>
           </li>
         )}
+        <li>
+          <span className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
+            출석률
+          </span>
+          <span className={fonts.body4.semibold} style={{ color: "var(--gray700)" }}>
+            30%
+          </span>
+        </li>
       </Info>
     </Container>
   );
@@ -86,7 +94,6 @@ function PlayerListItem(props: Props) {
 const Container = styled.div`
   display: flex;
   gap: 14px;
-  padding: 10px 0;
   align-items: center;
   justify-content: space-between;
 `;
@@ -96,6 +103,10 @@ const Image = styled.div`
   height: 60px;
   border-radius: 50%;
   background-color: var(--gray100);
+  &[data-size="small"] {
+    width: 48px;
+    height: 48px;
+  }
 `;
 const Staff = styled.div<{ $bgColor: string }>`
   position: absolute;
@@ -111,6 +122,9 @@ const Staff = styled.div<{ $bgColor: string }>`
   border: 3px solid var(--background-light);
   box-sizing: content-box;
   background-color: ${({ $bgColor }) => $bgColor};
+  &[data-size="small"] {
+    display: none;
+  }
 `;
 const Name = styled.div`
   flex: 1;
@@ -118,20 +132,21 @@ const Name = styled.div`
     color: var(--primary500);
   }
   p.player-name {
-    margin-bottom: 8px;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
     color: var(--gray900);
+    span.gender-icon[data-size="small"] {
+      display: none;
+    }
   }
 `;
 const Info = styled.ul`
-  display: flex;
-  align-items: center;
-  gap: 10px;
   li {
-    text-align: center;
-    min-width: 52px;
+    display: flex;
+    padding: 8px 0;
+    align-items: center;
+    flex-direction: column;
+    min-width: 80px;
+    background-color: var(--gray50);
+    border-radius: 6px;
   }
 `;
 

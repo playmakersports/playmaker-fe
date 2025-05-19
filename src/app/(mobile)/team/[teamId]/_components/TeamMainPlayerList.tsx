@@ -5,6 +5,7 @@ function TeamMainPlayerList() {
   return (
     <>
       <PlayerListItem
+        size="small"
         playerId="123"
         name="홍길동"
         level={5}
@@ -15,6 +16,7 @@ function TeamMainPlayerList() {
         gisu={1}
       />
       <PlayerListItem
+        size="small"
         playerId="3123"
         name="홍길동"
         level={4}
@@ -25,6 +27,7 @@ function TeamMainPlayerList() {
         gisu={1}
       />
       <PlayerListItem
+        size="small"
         playerId="31523"
         name="홍길동"
         level={3}
@@ -35,6 +38,7 @@ function TeamMainPlayerList() {
         gisu={2}
       />
       <PlayerListItem
+        size="small"
         playerId="31273"
         name="홍길동"
         level={3}
@@ -45,6 +49,7 @@ function TeamMainPlayerList() {
         gisu={3}
       />
       <PlayerListItem
+        size="small"
         playerId="131273"
         name="홍길동"
         level={2}
@@ -55,6 +60,7 @@ function TeamMainPlayerList() {
         gisu={3}
       />
       <PlayerListItem
+        size="small"
         playerId="94"
         name="홍길동"
         level={0}

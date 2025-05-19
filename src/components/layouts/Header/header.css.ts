@@ -77,7 +77,7 @@ export const headerSingleSubActionButton = style([
   fonts.body3.medium,
   {
     marginRight: "-8px",
-    width: "32px",
+    minWidth: "32px",
     color: "var(--primary600)",
     wordBreak: "keep-all",
     borderRadius: "2px",

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
 import { fonts } from "@/styles/fonts.css";
-import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
+import RightArrow from "@/assets/icon/arrow/RightDirection.svg";
 
 type Props = {
   children: React.ReactNode;

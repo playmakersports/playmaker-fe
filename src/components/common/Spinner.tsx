@@ -1,9 +1,9 @@
 import React from "react";
 
-function Spinner({ color = "var(--main)" }: { color?: string }) {
+function Spinner({ size = 20, color = "var(--primary500)" }: { size?: number; color?: string }) {
   return (
     <>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width={size} height={size}>
         <radialGradient id="a11" cx=".66" fx=".66" cy=".3125" fy=".3125" gradientTransform="scale(1.5)">
           <stop offset="0" stopColor={color}></stop>
           <stop offset=".3" stopColor={color} stopOpacity=".9"></stop>

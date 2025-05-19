@@ -4,7 +4,7 @@ import styled from "styled-components";
 import useStickyMoment from "@/hook/useStickyMoment";
 import { useHeader } from "@/hook/useHeader";
 
-import { BaseContainer } from "@/components/common/Container";
+import { baseContainer, innerChildContainer } from "@/styles/container.css";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import PushRequest from "@/components/Methods/PushRequest";
 import NotificationItem from "./_components/NotificationItem";
@@ -25,7 +25,7 @@ function Notification() {
   const [filter, setFilter] = useState<string>("all");
 
   return (
-    <Container>
+    <section className={baseContainer}>
       <PushRequest />
       <Filter>
         <div>
@@ -45,7 +45,7 @@ function Notification() {
           />
         </div>
       </Filter>
-      <List>
+      <div className={innerChildContainer}>
         {MOCK_NOTI_LIST.map((noti) => (
           <NotificationItem
             key={noti.notiId}
@@ -59,23 +59,17 @@ function Notification() {
             isRead={noti.readYn === "Y"}
           />
         ))}
-      </List>
-    </Container>
+      </div>
+    </section>
   );
 }
 
-const Container = styled(BaseContainer)`
-  padding-bottom: var(--safe-bottom-navigation);
-`;
 const Filter = styled.div`
   display: flex;
   justify-content: flex-end;
   & > div {
     width: 90px;
   }
-`;
-const List = styled.div`
-  margin: 0 -20px;
 `;
 
 const MOCK_NOTI_LIST = [

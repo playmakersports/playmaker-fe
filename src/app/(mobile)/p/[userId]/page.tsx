@@ -1,9 +1,8 @@
 import React from "react";
 
-import { baseContainerPaddingTop, flexColumnGap24 } from "@/styles/container.css";
+import { baseContainerPaddingTop, baseDividedLineChild, flexColumnGap24 } from "@/styles/container.css";
 import ProfileTop from "./_components/ProfileTop";
 import ProfileInfo from "./_components/ProfileInfo";
-import { WhiteSectionDivider } from "@/components/common/Container";
 
 function ProfilePage() {
   return (
@@ -17,7 +16,7 @@ function ProfilePage() {
           birth="1999.01.01"
           phoneNum="010-1234-5678"
         />
-        <WhiteSectionDivider style={{ marginTop: "-4px" }} $child />
+        <div className={baseDividedLineChild} style={{ marginTop: "-4px" }} />
       </div>
     </section>
   );

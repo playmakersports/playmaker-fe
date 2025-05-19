@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const homeContentsContainer = style({
   position: "relative",
-  padding: "0 20px",
+  padding: "0 var(--global-lr-padding)",
   marginTop: "-20px",
   display: "flex",
   borderRadius: "20px 20px 0 0",

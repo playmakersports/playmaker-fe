@@ -21,7 +21,7 @@ function MySportsInfo() {
   return (
     <div>
       <MainTab
-        padding={20}
+        padding={16}
         size="large"
         type="line"
         nowValue={setSports}

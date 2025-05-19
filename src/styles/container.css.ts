@@ -1,7 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
 export const baseContainer = style({
-  padding: "0 20px var(--safe-bottom-navigation)",
+  padding: "0 var(--global-lr-padding) var(--safe-bottom-navigation)",
+});
+export const innerChildContainer = style({
+  margin: "0 calc(-1 *  var(--global-lr-padding))",
 });
 export const baseContainerPaddingTop = style([{ paddingTop: "20px" }, baseContainer]);
 export const flexColumnGap40 = style({
@@ -95,6 +98,6 @@ export const baseDividedLine = style({
 export const baseDividedLineChild = style([
   baseDividedLine,
   {
-    margin: "0 -20px",
+    margin: "0 calc(-1 *  var(--global-lr-padding))",
   },
 ]);

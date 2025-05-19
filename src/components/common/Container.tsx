@@ -2,7 +2,7 @@
 import styled from "styled-components";
 
 export const BaseContainer = styled.section`
-  padding: 0 20px 20px;
+  padding: 0 var(--global-lr-padding) 20px;
 `;
 
 export const WhiteSectionDivider = styled.div<{ $child?: boolean }>`
@@ -13,7 +13,7 @@ export const WhiteSectionDivider = styled.div<{ $child?: boolean }>`
   ${({ $child }) =>
     $child &&
     `
-  margin: 0 -20px;
+  margin: 0 calc(-1 * var(--global-lr-padding))px;
   `}
 `;
 export const WhiteSectionWrapper = styled.article`

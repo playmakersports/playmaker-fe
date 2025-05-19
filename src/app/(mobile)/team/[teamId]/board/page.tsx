@@ -79,7 +79,7 @@ function Board() {
       {showSearch && <SearchPopup setShow={setShowSearch} />}
       <TabWrapper ref={tabRef}>
         <MainTab
-          padding={20}
+          padding={16}
           type="line"
           color="primary"
           sameWidth

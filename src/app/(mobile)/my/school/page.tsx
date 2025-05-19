@@ -69,7 +69,7 @@ function MySchool() {
         <article className={flexColumnGap20} style={{ margin: "0 -20px", height: "100%" }}>
           <MainTab
             sameWidth
-            padding={20}
+            padding={16}
             type="line"
             size="large"
             nowValue={setTab}

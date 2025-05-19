@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import { WhiteSectionDivider } from "@/components/common/Container";
+import { baseDividedLineChild } from "@/styles/container.css";
 import { settingsGroupTitle, settingsGroupWrapper } from "./userSetting.css";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 
@@ -40,7 +40,7 @@ function UserSetting() {
 
   return (
     <>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>기본 정보</h4>
         <GroupList
@@ -57,12 +57,12 @@ function UserSetting() {
           ]}
         />
       </div>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>소속 팀</h4>
         <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.push(`/my/team-list`) }]} />
       </div>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>내 운동 정보</h4>
         <GroupList
@@ -72,7 +72,7 @@ function UserSetting() {
           ]}
         />
       </div>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <GroupList
           list={[

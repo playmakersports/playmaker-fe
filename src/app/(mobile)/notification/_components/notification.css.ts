@@ -3,7 +3,7 @@ import { globalStyle, style } from "@vanilla-extract/css";
 export const notificationItemContainer = style({
   display: "flex",
   gap: "10px",
-  padding: "10px 20px 16px",
+  padding: "10px var(--global-lr-padding) 16px",
   selectors: {
     "&.unread": {
       backgroundColor: "rgba(231, 253, 235, 0.7)",

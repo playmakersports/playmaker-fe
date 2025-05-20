@@ -61,7 +61,7 @@ function AccountDelete({ ModalComponents }: { ModalComponents: (props: ModalProp
           서비스 탈퇴 전, 알려드릴 사항이 있어요. 꼭 확인 하시고 신중하게 결정해주세요.
         </p>
       </div>
-      <div className={flexColumnGap10} style={{ margin: "20px -6px 0" }}>
+      <div className={flexColumnGap10} style={{ margin: "20px 0 0" }}>
         {checkList.map((item, index) => (
           <SelectVoteOption key={item}>
             <input

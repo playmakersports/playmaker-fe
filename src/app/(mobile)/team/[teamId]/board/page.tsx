@@ -66,12 +66,12 @@ function Board() {
   const updatePaging = (page: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("page", page);
-    window.history.pushState(null, "", `?${params.toString()}`);
+    window.history.replaceState(null, "", `?${params.toString()}`);
   };
   const updateKeyword = (keyword: string) => {
     const params = new URLSearchParams(searchParams.toString());
     params.set("keyword", keyword);
-    window.history.pushState(null, "", `?${params.toString()}`);
+    window.history.replaceState(null, "", `?${params.toString()}`);
   };
 
   return (
@@ -92,7 +92,12 @@ function Board() {
       </TabWrapper>
       <div className={boardListFixedSection}>
         {MOCK.slice(0, 3).map((article) => (
-          <Link key={article} className={boardListFixedSectionTitle} href={`/team/${teamId}/board/${article}`}>
+          <Link
+            onContextMenu={(e) => e.preventDefault()}
+            key={article}
+            className={boardListFixedSectionTitle}
+            href={`/team/${teamId}/board/${article}`}
+          >
             <div className={boardListFixedSectionTitleInner}>
               <Badge type="red" size="small">
                 공지
@@ -158,7 +163,7 @@ const TabWrapper = styled.div`
 
 const Articles = styled.div`
   display: flex;
-  margin: 0 -20px;
+  margin: 0 -16px;
   min-height: 120px;
   flex-direction: column;
   background-color: var(--background-light);

@@ -1,27 +1,32 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import clsx from "clsx";
 import { useRouter, useParams } from "next/navigation";
 import styled from "styled-components";
 import { isSameDay, subMonths } from "date-fns";
 import useCalendar from "@/hook/useCalendar";
 import { useHeader } from "@/hook/useHeader";
-import useModal from "@/hook/useModal";
 import useStickyMoment from "@/hook/useStickyMoment";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 
-import { TEAM_SCHEDULE_MOCK } from "@/constants/mock/TEAM";
-import Loading from "@/components/common/Loading";
 import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import { BaseContainer } from "@/components/common/Container";
-import ScheduleDetailModal from "../_components/ScheduleDetailModal";
+import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
-// import LocationIcon from "@/assets/icon/common/filled/Location.svg";
-// import CalendarIcon from "@/assets/icon/common/filled/Calendar.svg";
-import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
-import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
+import DownToggleArrow from "@/assets/icon/arrow/DownArrowToggle.svg";
+import { baseDividedLine, flexColumnGap16, flexRowGap8 } from "@/styles/container.css";
+import {
+  monthEventSummary,
+  monthEventSummaryItems,
+  weekDayButton,
+  weekDayButtonDisplayValue,
+  weekDayButtonScheduledBullet,
+  weekDayButtonScheduledBullets,
+  weekDayName,
+  weekLineWrapper,
+} from "./_components/calendar.css";
+import ScheduleList from "./_components/ScheduleList";
 
 function Schedule() {
   const router = useRouter();
@@ -31,7 +36,7 @@ function Schedule() {
   useStickyMoment(calendarRef);
 
   useHeader({
-    title: "일정",
+    title: "다가오는 일정",
     subIcons: [
       {
         svgIcon: <PlusIcon />,
@@ -42,7 +47,6 @@ function Schedule() {
   });
 
   const { dayList, weekCalendarList, currentDate, setCurrentDate } = useCalendar();
-  const { ModalComponents, showModal } = useModal();
 
   const handleMonthMove = (direction: "PREV" | "NEXT") => {
     const targetDate = subMonths(currentDate, direction === "PREV" ? +1 : -1);
@@ -85,191 +89,193 @@ function Schedule() {
   };
 
   return (
-    <Container>
+    <section>
       <CalendarContainer>
-        <Header>
-          <NowDate>
-            <MonthArrow onClick={() => handleMonthMove("PREV")}>
-              <LeftArrowIcon />
-            </MonthArrow>
-            <DateSwiperSelect
-              defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
-              getCurrentValue={({ y, m, d }) => {
-                setCurrentDate(new Date(y, m - 1, d));
-              }}
-            >
-              {(showModal) => (
-                <NumberFlowGroup>
-                  <button type="button" onClick={showModal} className="date-control-button">
-                    <NumberFlow
-                      className={
-                        currentDate.getFullYear() === new Date().getFullYear() ? "hide year-number" : "year-number"
-                      }
-                      value={currentDate.getFullYear() === new Date().getFullYear() ? 0 : currentDate.getFullYear()}
-                      suffix={currentDate.getFullYear() === new Date().getFullYear() ? undefined : "년"}
-                      format={{
-                        useGrouping: false,
-                        trailingZeroDisplay: "stripIfInteger",
-                      }}
-                      style={{
-                        marginRight: "6px",
-                      }}
-                    />
-                    <NumberFlow value={currentDate.getMonth() + 1} suffix="월" />
-                  </button>
-                </NumberFlowGroup>
-              )}
-            </DateSwiperSelect>
-            <MonthArrow onClick={() => handleMonthMove("NEXT")}>
-              <RightArrowIcon />
-            </MonthArrow>
-          </NowDate>
-          <MonthMover></MonthMover>
-        </Header>
+        <NowDate>
+          <DateSwiperSelect
+            defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
+            getCurrentValue={({ y, m, d }) => {
+              setCurrentDate(new Date(y, m - 1, d));
+            }}
+          >
+            {(showModal) => (
+              <NumberFlowGroup>
+                <button type="button" onClick={showModal} className="date-control-button">
+                  <NumberFlow
+                    value={currentDate.getFullYear()}
+                    suffix="년"
+                    format={{
+                      useGrouping: false,
+                      trailingZeroDisplay: "stripIfInteger",
+                    }}
+                    style={{
+                      marginRight: "5px",
+                    }}
+                  />
+                  <NumberFlow value={currentDate.getMonth() + 1} suffix="월" />
+                  <DownToggleArrow width={24} height={24} fill="var(--gray900)" />
+                </button>
+              </NumberFlowGroup>
+            )}
+          </DateSwiperSelect>
+        </NowDate>
         <Days onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
           <DirectionL className={swipeDirection}>이전달</DirectionL>
           <DirectionR className={swipeDirection}>다음달</DirectionR>
-          <WeekGroup className={swipeDirection}>
-            <Week>
-              {dayList.map((value) => (
-                <DayName key={value}>{value}</DayName>
-              ))}
-            </Week>
-            <Weeks ref={calendarRef}>
-              {weekCalendarList.map((week, weekNum) => {
-                const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
-                return (
-                  <Week key={weekNum} className={isActiveWeek ? "active-week" : ""}>
-                    {week.map((day) => (
-                      <Day
-                        key={day.date.toString()}
-                        data-active={true}
-                        $isCurrentMonth={!(day.nextMonth || day.previousMonth)}
-                        $isHoliday={day.holiday.isHoliday}
-                        className={isSameDay(day.date, currentDate) ? "current-date" : ""}
-                        onClick={() => {
-                          setCurrentDate(day.date);
-                        }}
+          <div style={{ display: "flex" }}>
+            {dayList.map((value) => (
+              <span className={weekDayName} key={value}>
+                {value}
+              </span>
+            ))}
+          </div>
+          <WeekGroup className={swipeDirection} ref={calendarRef}>
+            {weekCalendarList.map((week, weekNum) => {
+              const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
+              return (
+                <div key={weekNum} className={clsx({ "active-week": isActiveWeek }, weekLineWrapper)}>
+                  {week.map((day) => (
+                    <button
+                      type="button"
+                      key={day.date.toString()}
+                      className={weekDayButton}
+                      data-active-month={!(day.nextMonth || day.previousMonth)}
+                      data-holiday={day.holiday.isHoliday}
+                      onClick={() => {
+                        setCurrentDate(day.date);
+                      }}
+                    >
+                      <span
+                        className={weekDayButtonDisplayValue}
+                        data-active={isSameDay(day.date, currentDate)}
+                        data-scheduled={isSameDay(day.date, "2025-05-26")}
                       >
                         {day.displayValue}
-                      </Day>
-                    ))}
-                  </Week>
-                );
-              })}
-            </Weeks>
+                      </span>
+                      <div
+                        className={weekDayButtonScheduledBullets}
+                        data-active-month={!(day.nextMonth || day.previousMonth)}
+                      >
+                        <span className={weekDayButtonScheduledBullet} data-type="훈련" />
+                        <span className={weekDayButtonScheduledBullet} data-type="교류전" />
+                        <span className={weekDayButtonScheduledBullet} data-type="팀" />
+                        <span className={weekDayButtonScheduledBullet} data-type="대회" />
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              );
+            })}
           </WeekGroup>
         </Days>
       </CalendarContainer>
-      <ScheduleContainer>
-        {/* <Loading /> */}
-        <ScheduleList>
-          {TEAM_SCHEDULE_MOCK.map((item, index) => (
-            <li key={`${item.date}+${index}`} onClick={() => showModal()}>
-              <p className="schedule-emoji">{item.emoji}</p>
-              <p className="schedule-title">{item.title}</p>
-              <p className="schedule-description">{item.description}</p>
-              <div className="schedule-info">
-                <p>
-                  {/* <LocationIcon /> */}
-                  {item.place}
-                </p>
-                <p>
-                  {/* <CalendarIcon /> */}
-                  {item.startTime} - {item.endTime}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ScheduleList>
-      </ScheduleContainer>
-      <ScheduleDetailModal
-        ModalContainer={ModalComponents}
-        scheduleInfo={{
-          articleId: "1",
-          emoji: "🎉",
-          title: "일정 제목",
-          startDate: "2025-03-28T20:30",
-          endDate: "2025-03-31T20:50",
-          place: "성균관대학교 경기장",
-          description: "올해의 마지막 경기입니다. 많은 관심 부탁드립니다.",
-          writer: "홍길동",
-        }}
-      />
-    </Container>
+      <div className={baseDividedLine} />
+      <div className={flexColumnGap16}>
+        <ul className={clsx(monthEventSummary, flexRowGap8)}>
+          <li className={monthEventSummaryItems} data-type="훈련">
+            훈련 1
+          </li>
+          <li className={monthEventSummaryItems} data-type="교류전">
+            교류전 1
+          </li>
+          <li className={monthEventSummaryItems} data-type="팀">
+            팀 이벤트 1
+          </li>
+          <li className={monthEventSummaryItems} data-type="대회">
+            대회 1
+          </li>
+        </ul>
+        <ScheduleList
+          data={[
+            {
+              date: "2025-05-26",
+              schedule: [
+                {
+                  scheduleId: "1",
+                  category: "훈련",
+                  title: "훈련 1",
+                  place: "장소 1",
+                  date: "2025-05-26",
+                  time: "15:00",
+                  people: [
+                    { userId: "1", username: "홍길동", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "2", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                  ],
+                },
+                {
+                  scheduleId: "51",
+                  category: "교류전",
+                  title: "훈련 1",
+                  place: "장소 1",
+                  date: "2025-05-26",
+                  time: "15:00",
+                  people: [
+                    { userId: "1", username: "홍길동", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "2", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                  ],
+                },
+              ],
+            },
+            {
+              date: "2025-05-28",
+              schedule: [
+                {
+                  scheduleId: "321",
+                  category: "대회",
+                  title: "대박농구대회",
+                  place: "서울 실내체육관",
+                  date: "2025-05-26",
+                  time: "09:00",
+                  people: [
+                    { userId: "41", username: "홍길동", img: "https://picsum.photos/id/40/400" },
+                    { userId: "52", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "72", username: "김철수", img: "https://picsum.photos/id/237/400" },
+                    { userId: "892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "5892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "6892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "67892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "12567892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                    { userId: "267892", username: "김철수", img: "https://picsum.photos/seed/picsum/300" },
+                  ],
+                },
+              ],
+            },
+          ]}
+        />
+      </div>
+    </section>
   );
 }
 
 const CalendarContainer = styled.article`
-  margin: 0 0 14px;
-  padding: 0 0 20px;
-
-  &:has(.stuck) {
-    padding-bottom: 32px;
-  }
-`;
-const ScheduleContainer = styled.div`
-  flex: 1;
-  margin: 0 0 -24px;
-  height: max-content;
-  padding: 20px 16px calc(var(--env-sab) + 32px);
-  background-color: var(--background);
-  border-radius: 20px 20px 0 0;
-  border-top: 1px solid var(--gray100);
-`;
-const Container = styled(BaseContainer)`
   display: flex;
-  padding: 12px 0 20px;
-  padding-bottom: 32px;
-  height: calc(100vh - var(--safe-area-top) - 1px);
+  gap: 16px;
   flex-direction: column;
-
-  &:has(.stuck) {
-    ${ScheduleContainer} {
-      border-top: none;
-    }
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  padding: 0 16px;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
+  padding: 8px 16px 16px;
 `;
 const NowDate = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  line-height: 2.8rem;
   button.date-control-button {
-    position: relative;
     display: flex;
-    justify-content: center;
-    margin: 0 -2px;
-    padding: 4px 8px;
-    font-size: 2rem;
-    font-weight: 500;
-    ${BUTTON_ACTIVE("var(--gray50)")};
-
-    & > .year-number {
-      z-index: -1;
-      transition: opacity 0.7s;
-    }
-    & > .hide {
-      margin-left: calc(-6px - 12px);
-      opacity: 0;
-    }
+    padding-left: 2px;
+    margin-left: -2px;
+    align-items: center;
+    color: var(--gray900);
+    border-radius: 4px;
+    ${FONTS.body2("semibold")};
+    ${TEXT_ACTIVE("var(--gray100)", { scalable: true, activeRange: 4 })};
   }
 `;
 const Days = styled.div`
   position: relative;
-  width: var(--mobile-max-width);
+  margin: 0 calc(-1 * var(--global-lr-padding));
+  padding: 0 var(--global-lr-padding);
   overflow-x: hidden;
   overflow-y: hidden;
 `;
 const WeekGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   transition: transform 0.3s cubic-bezier(0.05, 0, 0, 1);
 
   &.L {
@@ -277,68 +283,6 @@ const WeekGroup = styled.div`
   }
   &.R {
     transform: translateX(-5%);
-  }
-`;
-
-const Week = styled.div`
-  display: flex;
-  padding: 0 20px;
-`;
-const Weeks = styled.div`
-  display: flex;
-  flex-direction: column;
-
-  &.stuck {
-    ${Week}.active-week {
-      position: fixed;
-      width: 100%;
-      max-width: var(--mobile-max-width);
-      height: max-content;
-      padding-top: 12px;
-      padding-bottom: 20px;
-      top: var(--safe-area-top);
-      opacity: 1;
-      z-index: 1;
-      background-color: var(--background-light);
-      &::after {
-        position: absolute;
-        content: "";
-        display: block;
-        width: 100%;
-        height: 36px;
-        left: 0;
-        bottom: -24px;
-        background: linear-gradient(to bottom, rgba(var(--background-rgb), 1) 0%, rgba(var(--background-rgb), 0) 100%);
-        border-radius: 20px 20px 0 0;
-        border-top: 1px solid var(--gray100);
-      }
-    }
-    ${Week} {
-      margin-top: -4px;
-      height: 12px;
-      opacity: 0;
-      transition: all 0.3s;
-    }
-  }
-`;
-const DayName = styled.div`
-  flex: 1;
-  text-align: center;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: var(--gray700);
-`;
-const MonthMover = styled.div`
-  display: flex;
-  gap: 4px;
-`;
-const MonthArrow = styled.button`
-  padding: 6px;
-  ${BUTTON_ACTIVE("var(--gray50)")};
-  svg {
-    width: 20px;
-    height: 20px;
-    fill: var(--gray500);
   }
 `;
 
@@ -372,81 +316,6 @@ const DirectionR = styled(MonthDirection)`
   &.R {
     opacity: 1;
     transform: translate3d(-25%, 0, 0) scale(1.2);
-  }
-`;
-
-const Day = styled.button<{ $isCurrentMonth: boolean; $isHoliday: boolean }>`
-  ${FONTS.body4("regular")};
-  position: relative;
-  flex: 1;
-  padding: 12px 0 24px;
-  text-align: center;
-  border: 1px solid transparent;
-  color: ${({ $isHoliday }) => ($isHoliday ? "var(--red400)" : "var(--gray700)")};
-  opacity: ${({ $isCurrentMonth }) => ($isCurrentMonth ? 1 : 0.5)};
-  ${BUTTON_ACTIVE("var(--primary100)")};
-
-  &[aria-invalid] {
-    visibility: hidden;
-  }
-  &[data-active]::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: block;
-    margin: 8px auto 0;
-    width: 4px;
-    height: 4px;
-    background-color: var(--purple200);
-    border-radius: 100%;
-  }
-  &.current-date {
-    ${FONTS.body4("semibold")};
-    background-color: var(--primary500);
-    color: var(--white);
-    transform: scale(1.05);
-  }
-`;
-
-const ScheduleList = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-
-  li {
-    cursor: pointer;
-    padding: 16px 20px;
-    background-color: var(--background-light);
-    width: 100%;
-    ${BUTTON_ACTIVE("var(--background-light)")};
-  }
-
-  p.schedule-emoji {
-    ${FONTS.body3("semibold")};
-  }
-  p.schedule-title {
-    margin-bottom: 6px;
-    ${FONTS.body3("semibold")};
-  }
-  p.schedule-description {
-    ${FONTS.body4("regular")};
-    color: var(--gray800);
-  }
-  div.schedule-info {
-    margin-top: 12px;
-    ${FONTS.body4("regular")};
-
-    p {
-      display: flex;
-      padding: 2px 0;
-      align-items: center;
-      gap: 10px;
-      color: var(--gray600);
-      svg {
-        fill: var(--gray600);
-      }
-    }
   }
 `;
 

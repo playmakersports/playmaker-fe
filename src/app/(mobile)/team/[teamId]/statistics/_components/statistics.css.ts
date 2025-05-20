@@ -38,8 +38,8 @@ globalStyle(`${TeamDataRecordItem} > span.title`, {
 });
 
 export const TeamStatisticsDetailContainer = style({
-  margin: "0 -20px",
-  padding: "32px 20px 20px",
+  margin: "0 -16px",
+  padding: "32px var(--global-lr-padding) 20px",
   backgroundColor: "var(--gray100)",
   borderRadius: "20px 20px 0 0",
 });

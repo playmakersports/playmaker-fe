@@ -14,6 +14,7 @@ function Portal({ children, inactiveScroll = false }: PortalProps) {
   useEffect(() => {
     const el = document.getElementById("portal");
     if (el) {
+      el.style.position = "relative";
       setPortalElement(el);
       setMounted(true);
     }

@@ -89,6 +89,7 @@ function BottomSheet(props: BottomSheetProps) {
 
   return (
     <>
+      <Backdrop $isShow={showModal} onClick={disabledDimOut ? () => {} : closeBottomSheet} />
       <Wrapper
         // 마우스 오른쪽 방지
         onContextMenu={(e) => e.preventDefault()}
@@ -134,7 +135,6 @@ function BottomSheet(props: BottomSheetProps) {
           </ButtonWrapper>
         )}
       </Wrapper>
-      <Backdrop $isShow={showModal} onClick={disabledDimOut ? () => {} : closeBottomSheet} />
     </>
   );
 }
@@ -152,7 +152,7 @@ const Backdrop = styled.div<{ $isShow: boolean }>`
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.2);
-  z-index: 999;
+  /* z-index: 999; */
   opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};
   transition: opacity 0.2s;
 `;
@@ -209,7 +209,7 @@ const Wrapper = styled.section<{
   bottom: 0;
   min-height: ${({ $expanded }) => ($expanded ? "90vh" : "auto")};
   max-height: 90vh;
-  z-index: 1000;
+  /* z-index: 1000; */
   background: var(--background-light);
   border-radius: 16px 16px 0 0;
   opacity: ${({ $isShow }) => ($isShow ? 1 : 0)};

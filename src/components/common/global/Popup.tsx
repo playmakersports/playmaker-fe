@@ -80,8 +80,8 @@ function Popup(props: Props) {
 }
 
 const ShowContainer = keyframes`
-  from{transform: scale(0.9); opacity: 0.5;};
-  to{transform: scale(1); opacity: 1;};
+  from{transform: scale(0.9) translateY(30%); opacity: 0.4;};
+  to{transform: scale(1) translateY(0);opacity: 1;};
 `;
 const Backdrop = styled.div`
   position: fixed;
@@ -93,7 +93,7 @@ const Backdrop = styled.div`
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 999;
+  z-index: 1010;
 `;
 
 const Container = styled.section`
@@ -110,7 +110,7 @@ const Container = styled.section`
   border-radius: 20px;
   overflow: hidden;
   box-shadow: var(--shadow-xl);
-  animation: ${ShowContainer} 0.3s var(--animate-pop);
+  animation: ${ShowContainer} 0.2s;
 `;
 
 const Contents = styled.div`

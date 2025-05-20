@@ -1,6 +1,5 @@
-import React, { ReactNode, useCallback, useEffect, useState } from "react";
+import React, { ReactNode, useCallback, useId, useRef, useState } from "react";
 import styled from "styled-components";
-
 import { fonts } from "@/styles/fonts.css";
 import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import Portal from "@/components/common/global/Portal";
@@ -13,49 +12,62 @@ export type ModalProps = {
   children: ReactNode | ((closeModal: () => void) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
   onClose?: () => void;
+  expanded?: boolean;
 };
 
-const ANIMATION_RUNNING_TIME = 250;
 function useModal() {
-  const [showBottom, setShowBottom] = useState(false);
+  const idPrefix = useId();
+  const idRef = useRef(0);
+  const [modals, setModals] = useState<{ key: string; visible: boolean }[]>([]);
+
   const showModal = () => {
-    setShowBottom(true);
+    const key = `${idPrefix}-${idRef.current++}`;
+    setModals((prev) => [...prev, { key, visible: true }]);
+    return key;
+  };
+
+  const hideModal = (key: string) => {
+    setModals((prev) => prev.map((m) => (m.key === key ? { ...m, visible: false } : m)));
+    // 실제 제거는 BottomSheet에서 애니메이션 이후 수행할 수 있음
+    setTimeout(() => {
+      setModals((prev) => prev.filter((m) => m.key !== key));
+    }, 250); // BottomSheet 애니메이션 시간
   };
 
   const ModalComponents = useCallback(
     (props: ModalProps) => {
-      const { disabledDimOut = false, title, description, children, draggable = false, buttons, onClose } = props;
-
-      if (showBottom) {
-        return (
-          <Portal>
-            <BottomSheet
-              draggable={draggable}
-              disabledDimOut={disabledDimOut}
-              header={
-                title && (
-                  <HeaderContainer>
-                    {title && <h4 className={fonts.body2.semibold}>{title}</h4>}
-                    {description && (
-                      <span className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>
-                        {description}
-                      </span>
-                    )}
-                  </HeaderContainer>
-                )
-              }
-              onClose={onClose}
-              setShow={setShowBottom}
-              buttons={buttons}
-              expanded={false}
-            >
-              {children}
-            </BottomSheet>
-          </Portal>
-        );
-      }
+      return (
+        <>
+          {modals.map(({ key, visible }) =>
+            visible ? (
+              <Portal key={key}>
+                <BottomSheet
+                  draggable={props.draggable}
+                  disabledDimOut={props.disabledDimOut}
+                  header={
+                    props.title && (
+                      <HeaderContainer>
+                        <h4 className={fonts.body2.semibold}>{props.title}</h4>
+                        {props.description && <span className={fonts.body4.regular}>{props.description}</span>}
+                      </HeaderContainer>
+                    )
+                  }
+                  onClose={props.onClose}
+                  setShow={(v) => {
+                    if (!v) hideModal(key);
+                  }}
+                  buttons={props.buttons}
+                  expanded={props.expanded}
+                >
+                  {typeof props.children === "function" ? props.children(() => hideModal(key)) : props.children}
+                </BottomSheet>
+              </Portal>
+            ) : null
+          )}
+        </>
+      );
     },
-    [showBottom]
+    [modals]
   );
 
   return { ModalComponents, showModal };

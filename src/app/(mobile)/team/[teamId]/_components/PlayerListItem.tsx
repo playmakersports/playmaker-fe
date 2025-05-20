@@ -141,10 +141,11 @@ const Name = styled.div`
 const Info = styled.ul`
   li {
     display: flex;
-    padding: 8px 0;
+    padding: 8px;
     align-items: center;
     flex-direction: column;
-    min-width: 80px;
+    min-width: 52px;
+    max-width: 80px;
     background-color: var(--gray50);
     border-radius: 6px;
   }

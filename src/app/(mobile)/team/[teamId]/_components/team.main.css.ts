@@ -154,27 +154,29 @@ export const teamHeartButtonIcon = style({
 export const teamMainRecentVoteContainer = style([
   innerChildContainer,
   {
-    padding: "20px 0 0",
-    background: "linear-gradient(to bottom, #F8FAFC, rgba(241, 245, 249, 0))",
+    padding: "20px 0",
+    background: "var(--gray50)",
   },
 ]);
 export const teamMainRecentVoteList = style({
-  display: "flex",
-  padding: "0 var(--global-lr-padding)",
-  gap: "16px",
-  overflowX: "auto",
-  whiteSpace: "nowrap",
   scrollbarWidth: "none",
 });
 export const teamMainRecentVoteCard = style({
-  minWidth: "280px",
+  width: "280px !important",
   borderRadius: "10px",
   padding: "16px",
   backgroundColor: "var(--white)",
   border: "1px solid var(--gray200)",
+  marginRight: "var(--global-lr-padding)",
+  selectors: {
+    "&:first-of-type": {
+      marginLeft: "var(--global-lr-padding)",
+    },
+  },
 });
 export const teamMainRecentVoteCardDateHeader = style({
   paddingBottom: "10px",
+  marginBottom: "10px",
   borderBottom: "1px dashed var(--gray200)",
 });
 

@@ -138,7 +138,7 @@ div.skeleton-loading-ui {
 }
 
 body {
-  color: var(--gray900);
+  color: var(--gray700);
   background: #fff;
 }
 button:focus-visible,

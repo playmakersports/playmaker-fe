@@ -18,9 +18,8 @@ function RecentVote() {
         {data.length > 0 && (
           <Swiper slidesPerView="auto" freeMode={true}>
             {data.map((item) => (
-              <SwiperSlide className={clsx(teamMainRecentVoteCard)}>
+              <SwiperSlide className={clsx(teamMainRecentVoteCard)} key={item.voteId}>
                 <RecentVoteCard
-                  key={item.voteId}
                   title={item.title}
                   scheduleId={item.scheduleId}
                   content={item.content}

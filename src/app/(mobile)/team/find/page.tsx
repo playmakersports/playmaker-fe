@@ -5,17 +5,16 @@ import styled from "styled-components";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
-import { useGet } from "@/apis/hook/query";
 
+import { baseContainer } from "@/styles/container.css";
+import { teamFindSearchContainer, teamFindSearchInput } from "./_components/teamFind.css";
 import MainTab from "@/components/Main/MainTab";
-import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
-import { BaseContainer } from "@/components/common/Container";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
-import { BasicInput } from "@/components/common/input/BaseInput";
-import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
+import TeamFindAll from "./_components/TeamFindAll";
+import TeamFindSports from "./_components/TeamFindSports";
 
+import SearchIcon from "@/assets/icon/common/Search.svg";
 import PlusIcon from "@/assets/icon/common/Plus.svg";
-import TeamListCard from "../_components/TeamListCard";
 
 function TeamList() {
   useHeader({
@@ -27,16 +26,17 @@ function TeamList() {
   const searchParams = useSearchParams();
   const targetSports = searchParams.get("sports") as string;
   const [activeTab, setActiveTab] = useState(targetSports ?? "");
-  const [searchValue, setSearchValue] = useState("");
-  const [sortQuery, setSortQuery] = useState("default");
-
-  const { data } = useGet("/api/team/selectteam");
 
   return (
-    <Container>
+    <section>
       <TabWrapper ref={sportsTabRef}>
+        <div className={teamFindSearchContainer} style={{ marginBottom: "8px" }}>
+          <SearchIcon fill="var(--primary500)" width={20} height={20} />
+          <input type="text" className={teamFindSearchInput} placeholder="스포츠 종목 또는 팀 이름 입력" />
+        </div>
         <MainTab
-          padding={20}
+          sameWidth
+          padding={16}
           color="primary"
           type="line"
           initialValue={activeTab}
@@ -44,7 +44,7 @@ function TeamList() {
             setActiveTab(value);
           }}
           items={[
-            { value: "all", name: "전체" },
+            { value: "", name: "전체" },
             ...SUPPORT_SPORTS.map((item) => ({
               value: item.nameEng,
               name: item.name,
@@ -52,87 +52,23 @@ function TeamList() {
           ]}
         />
       </TabWrapper>
-      <Contents>
-        <TeamCreateButton type="button" onClick={() => router.push("/team-create")}>
-          <PlusIcon width={24} height={24} />
-        </TeamCreateButton>
-        <BasicInput
-          type="text"
-          iconType="search"
-          placeholder="팀 이름으로 찾기.."
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          delButton={true}
-        />
-      </Contents>
-      <Filter>
-        <DropDownBottomSheet
-          defaultValue={sortQuery}
-          getCurrentValue={setSortQuery}
-          options={[
-            { value: "default", name: "추천순" },
-            { value: "like", name: "좋아요순" },
-            { value: "members", name: "팀 인원순" },
-            { value: "date", name: "마감 임박순" },
-          ]}
-        />
-      </Filter>
-
-      <Cards>
-        {NOW_RECRUIT_LIST.map((item) => (
-          <TeamListCard
-            key={item.teamId}
-            status={item.status}
-            university={item.university}
-            teamId={item.teamId}
-            teamLogo={item.teamLogo}
-            teamName={item.teamName}
-            location={item.location}
-            dueDate={item.dueDate}
-            gender={item.gender}
-            likeCnt={8400}
-            memberCnt={20}
-          />
-        ))}
-      </Cards>
-    </Container>
+      <TeamCreateButton type="button" onClick={() => router.push("/team-create")}>
+        <PlusIcon width={24} height={24} />
+      </TeamCreateButton>
+      <section>{activeTab === "" ? <TeamFindAll /> : <TeamFindSports sports={activeTab} />}</section>
+    </section>
   );
 }
 
-const Container = styled(BaseContainer)`
-  padding: 0 16px calc(88px + var(--env-sab) + 12px);
-`;
-
 const TabWrapper = styled.div`
   position: sticky;
-  margin: 0 -16px;
-  padding: 4px 0 0;
+  padding: 8px 0 0;
   top: 0;
   z-index: 1;
-  transition: padding 0.2s;
-
   &.stuck {
     background-color: var(--background-light);
   }
 `;
-const Contents = styled.section`
-  margin: 0 -16px;
-  padding: 12px 16px;
-  background-color: var(--background);
-`;
-const Cards = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 8px;
-`;
-
-const Filter = styled.div`
-  display: flex;
-  padding: 12px 6px 6px;
-  justify-content: space-between;
-`;
-
 const TeamCreateButton = styled.button`
   position: absolute;
   display: flex;

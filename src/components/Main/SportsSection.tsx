@@ -121,7 +121,7 @@ const Cards = styled.div`
 `;
 
 const LineBottom = styled.div`
-  margin: 0 -20px 2px;
+  margin: 0 -16px 2px;
   border-bottom: 1px solid var(--gray200);
 `;
 

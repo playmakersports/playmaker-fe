@@ -66,7 +66,7 @@ function MySchool() {
         </p>
       </Question>
       <form onSubmit={handleSubmit(onSubmit)} style={{ height: "100%" }}>
-        <article className={flexColumnGap20} style={{ margin: "0 -20px", height: "100%" }}>
+        <article className={flexColumnGap20} style={{ margin: "0 -16px", height: "100%" }}>
           <MainTab
             sameWidth
             padding={16}

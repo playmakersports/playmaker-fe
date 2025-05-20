@@ -67,7 +67,7 @@ function Stage3({ setStep }: SetStepType) {
       disableNext={false}
       // disableNext={!(formLocation.length > 1)}
     >
-      <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -20px", padding: "0 20px" }}>
+      <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -16px", padding: "0 16px" }}>
         <div style={{ marginBottom: "-4px" }}>
           <h3 className={stageWrapper.title}>플레이어님의 활동 위치를 선택해주세요</h3>
           <p className={stageWrapper.description}>주로 운동하시는 지역을 최대 2군데 선택해주세요</p>
@@ -142,11 +142,11 @@ const Location = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 -20px;
+  margin: 0 -16px;
   border-bottom: 1px solid var(--gray200);
   div.location-selected {
     display: inline-flex;
-    padding: 0 20px;
+    padding: 0 16px;
     gap: 12px;
   }
 `;

@@ -4,13 +4,18 @@ export const baseContainer = style({
   padding: "0 var(--global-lr-padding) var(--safe-bottom-navigation)",
 });
 export const innerChildContainer = style({
-  margin: "0 calc(-1 *  var(--global-lr-padding))",
+  margin: "0 calc(-1 * var(--global-lr-padding))",
 });
 export const baseContainerPaddingTop = style([{ paddingTop: "20px" }, baseContainer]);
 export const flexColumnGap40 = style({
   display: "flex",
   flexDirection: "column",
   gap: "40px",
+});
+export const flexColumnGap30 = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "30px",
 });
 export const flexColumnGap24 = style({
   display: "flex",

@@ -203,7 +203,7 @@ const Wrapper = styled.section<{
   flex-direction: column;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 20px 20px calc(28px + env(safe-area-inset-bottom) / 2);
+  padding: 20px var(--global-lr-padding) calc(28px + env(safe-area-inset-bottom) / 2);
   width: var(--mobile-max-width);
   left: 50%;
   bottom: 0;

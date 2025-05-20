@@ -44,7 +44,7 @@ function PlayersListSort(props: Props) {
   return (
     <ModalComponents draggable="all">
       {(close) => (
-        <div style={{ margin: "0 -20px" }} className={flexColumnGap20}>
+        <div style={{ margin: "0 -16px" }} className={flexColumnGap20}>
           <MainTab
             padding={16}
             type="line"

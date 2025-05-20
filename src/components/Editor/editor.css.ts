@@ -30,8 +30,8 @@ export const editorMenuContainer = style({
   gap: "4px",
   position: "sticky",
   top: "var(--safe-area-top)",
-  margin: "0 -20px",
-  padding: "6px 20px",
+  margin: "0 -16px",
+  padding: "6px 16px",
   overflowX: "auto",
   overflowY: "hidden",
   whiteSpace: "nowrap",
@@ -39,7 +39,7 @@ export const editorMenuContainer = style({
   scrollbarWidth: "none",
   selectors: {
     "&.stuck": {
-      padding: "10px 20px",
+      padding: "10px 16px",
       backgroundColor: "var(--background-light)",
       borderBottom: "1px solid var(--gray200)",
       boxShadow: "var(--shadow-xs)",

@@ -95,7 +95,7 @@ const Label = styled.div`
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  margin: 0 -20px 10px;
+  margin: 0 -16px 10px;
   padding: 12px 16px;
   width: var(--mobile-max-width);
   border-top: 1px solid var(--gray200);

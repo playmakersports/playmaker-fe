@@ -143,11 +143,11 @@ const Location = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 -20px;
+  margin: 0 -16px;
   border-bottom: 1px solid var(--gray200);
   div.location-selected {
     display: inline-flex;
-    padding: 0 20px;
+    padding: 0 16px;
     gap: 12px;
   }
 `;

@@ -61,10 +61,6 @@ function BottomSheet(props: BottomSheetProps) {
   }, [mounted]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    // if (!draggable) return;
-    // setTouchStartY(e.touches[0].clientY);
-    // setIsDragging(true);
-
     if (!draggable) return;
 
     const startY = e.touches[0].clientY;
@@ -89,13 +85,6 @@ function BottomSheet(props: BottomSheetProps) {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    // if (!draggable) return;
-    // if (!isDragging) return;
-    // const deltaY = e.touches[0].clientY - touchStartY;
-    // if (deltaY > 0) {
-    //   setTranslateY(deltaY);
-    // }
-
     if (!draggable || !isDragging) return;
 
     const deltaY = e.touches[0].clientY - touchStartY;
@@ -141,6 +130,17 @@ function BottomSheet(props: BottomSheetProps) {
       modalRef.current.focus();
     }
   }, []);
+  useEffect(() => {
+    const preventTouchMove = (e: TouchEvent) => {
+      if (isDragging) {
+        e.preventDefault();
+      }
+    };
+    document.body.addEventListener("touchmove", preventTouchMove, { passive: false });
+    return () => {
+      document.body.removeEventListener("touchmove", preventTouchMove);
+    };
+  }, [isDragging]);
 
   return (
     <>

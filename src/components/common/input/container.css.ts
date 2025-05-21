@@ -84,5 +84,7 @@ export const dropdownAsset = {
     backgroundColor: "var(--white)",
     boxShadow: "var(--shadow-lg)",
     zIndex: 50,
+    overflow: "auto",
+    boxSizing: "border-box",
   }),
 };

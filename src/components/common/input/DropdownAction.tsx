@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { cloneElement, isValidElement, useRef, useState } from "react";
+import clsx from "clsx";
 import styled from "styled-components";
 import { flip, hide, offset, useDismiss, useFloating, useInteractions, useTransitionStyles } from "@floating-ui/react";
 
@@ -16,9 +17,10 @@ type Props = {
   options: Array<ActionOptionsType>;
   children?: React.ReactNode;
   icon?: boolean;
+  maxHeight?: number | string;
 };
 function DropdownAction(props: Props) {
-  const { title, icon = false, options, children } = props;
+  const { title, icon = false, options, children, maxHeight } = props;
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -75,10 +77,18 @@ function DropdownAction(props: Props) {
         >
           <DotMenuIcon width={24} height={24} fill="var(--gray700)" />
         </div>
-      ) : children ? (
-        children
+      ) : children && isValidElement(children) ? (
+        cloneElement(children as React.ReactElement, {
+          ref: refs.setReference,
+          onClick: (e: React.MouseEvent) => {
+            onClickShowOptions();
+            if (children.props.onClick) {
+              children.props.onClick(e);
+            }
+          },
+        })
       ) : (
-        <ValueContainer ref={dropdownRef} onClick={onClickShowOptions}>
+        <ValueContainer ref={refs.setReference} onClick={onClickShowOptions}>
           <span className="current-value">{title}</span>
           <DownArrow />
         </ValueContainer>
@@ -91,10 +101,11 @@ function DropdownAction(props: Props) {
           style={{
             // ...floatingStyles,
             ...styles,
+            maxHeight,
           }}
           {...getFloatingProps()}
         >
-          <DropdownAsset.List style={{ overflow: "inherit" }}>
+          <DropdownAsset.List className="scrollable-container" style={{ overflow: "inherit" }}>
             {options.map((option, index) => (
               <button type="button" key={index} onClick={option.action} data-divided={option.divided}>
                 <span className="option-name">{option.name}</span>

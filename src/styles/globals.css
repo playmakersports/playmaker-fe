@@ -154,6 +154,12 @@ a:focus-visible {
   margin: -1px;
   overflow: hidden;
 }
+.scrollable-container {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  transform: translateZ(0);
+}
 
 @media (max-width: 540px) {
   :root {

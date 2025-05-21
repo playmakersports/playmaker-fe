@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import useModal from "@/hook/useModal";
 import Image from "next/image";
 import clsx from "clsx";
+import useDeviceAgent from "@/hook/useDeviceAgent";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -32,6 +33,7 @@ import { commentContainer, commentInput } from "@/components/common/input/contai
 import DropdownAction from "@/components/common/input/DropdownAction";
 
 function ScheduleListArticle(props: ScheduleItemType) {
+  const { isAndroid } = useDeviceAgent();
   const { scheduleId, category, title, place, date, time, people } = props;
   const { ModalComponents, showModal } = useModal();
 
@@ -93,7 +95,7 @@ function ScheduleListArticle(props: ScheduleItemType) {
         onClose={() => {
           setFoldComments(true);
         }}
-        draggable="all"
+        draggable={isAndroid || foldComments ? "all" : "bar"}
         buttons={foldComments ? [{ name: "경기 내용 보러가기", onClick: () => {}, mode: "primary" }] : undefined}
       >
         <div className={flexColumnGap20}>

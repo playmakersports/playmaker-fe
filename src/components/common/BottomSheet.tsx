@@ -61,17 +61,60 @@ function BottomSheet(props: BottomSheetProps) {
   }, [mounted]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    // if (!draggable) return;
+    // setTouchStartY(e.touches[0].clientY);
+    // setIsDragging(true);
+
     if (!draggable) return;
-    setTouchStartY(e.touches[0].clientY);
+
+    const startY = e.touches[0].clientY;
+    const target = e.target as HTMLElement;
+    const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
+
+    if (scrollable) {
+      const scrollTop = scrollable.scrollTop;
+      const scrollHeight = scrollable.scrollHeight;
+      const clientHeight = scrollable.clientHeight;
+
+      const isAtTop = scrollTop === 0;
+      const isAtBottom = scrollTop + clientHeight >= scrollHeight;
+
+      // 위로 스크롤 중인데 맨 아래면 → 바텀시트 열림 허용
+      // 아래로 스크롤 중인데 맨 위면 → 바텀시트 열림 허용
+      scrollable.dataset.scrollLock = JSON.stringify({ isAtTop, isAtBottom });
+    }
+
+    setTouchStartY(startY);
     setIsDragging(true);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    if (!draggable) return;
-    if (!isDragging) return;
+    // if (!draggable) return;
+    // if (!isDragging) return;
+    // const deltaY = e.touches[0].clientY - touchStartY;
+    // if (deltaY > 0) {
+    //   setTranslateY(deltaY);
+    // }
+
+    if (!draggable || !isDragging) return;
+
     const deltaY = e.touches[0].clientY - touchStartY;
+    const target = e.target as HTMLElement;
+    const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
+
+    if (scrollable && scrollable.dataset.scrollLock) {
+      const { isAtTop, isAtBottom } = JSON.parse(scrollable.dataset.scrollLock);
+
+      if (
+        (deltaY > 0 && !isAtTop) || // 아래로 내리는데 위에 있지 않음 → 내부 스크롤만
+        (deltaY < 0 && !isAtBottom) // 위로 올리는데 아래에 있지 않음 → 내부 스크롤만
+      ) {
+        return; // 바텀시트는 움직이지 않음
+      }
+    }
+
     if (deltaY > 0) {
-      setTranslateY(deltaY);
+      setTranslateY(deltaY); // 바텀시트 이동
     }
   };
 
@@ -195,7 +238,7 @@ const Header = styled.header`
 `;
 const Contents = styled.div`
   margin: 0 0 20px;
-  color: var(--gray400);
+  color: inherit;
   ${FONTS.caption1("regular")};
 
   & > div {

@@ -34,7 +34,6 @@ function BottomSheet(props: BottomSheetProps) {
 
   const closeBottomSheet = () => {
     setShowModal(false);
-    setMounted(false);
     onClose && onClose();
     setTimeout(() => {
       setShow(false);
@@ -42,10 +41,11 @@ function BottomSheet(props: BottomSheetProps) {
   };
 
   useEffect(() => {
+    setMounted(true);
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
-    setMounted(true);
     return () => {
+      setMounted(false);
       document.body.style.touchAction = "auto";
       document.body.style.overflow = "auto";
     };
@@ -74,9 +74,6 @@ function BottomSheet(props: BottomSheetProps) {
 
       const isAtTop = scrollTop === 0;
       const isAtBottom = scrollTop + clientHeight >= scrollHeight;
-
-      // 위로 스크롤 중인데 맨 아래면 → 바텀시트 열림 허용
-      // 아래로 스크롤 중인데 맨 위면 → 바텀시트 열림 허용
       scrollable.dataset.scrollLock = JSON.stringify({ isAtTop, isAtBottom });
     }
 
@@ -92,12 +89,8 @@ function BottomSheet(props: BottomSheetProps) {
     const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
 
     if (scrollable && scrollable.dataset.scrollLock) {
-      const { isAtTop, isAtBottom } = JSON.parse(scrollable.dataset.scrollLock);
-
-      if (
-        (deltaY > 0 && !isAtTop) || // 아래로 내리는데 위에 있지 않음 → 내부 스크롤만
-        (deltaY < 0 && !isAtBottom) // 위로 올리는데 아래에 있지 않음 → 내부 스크롤만
-      ) {
+      const { isAtTop } = JSON.parse(scrollable.dataset.scrollLock);
+      if (deltaY > 0 && !isAtTop) {
         return; // 바텀시트는 움직이지 않음
       }
     }
@@ -109,9 +102,26 @@ function BottomSheet(props: BottomSheetProps) {
 
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!draggable) return;
+
     setIsDragging(false);
     const touchEndY = e.changedTouches[0].clientY;
-    if (touchEndY > window.innerHeight * 0.8 && touchEndY - touchStartY > 100) {
+    const shouldClose = touchEndY > window.innerHeight * 0.8 && touchEndY - touchStartY > 100;
+
+    const target = e.target as HTMLElement;
+    const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
+
+    let isAtTop = true;
+    if (scrollable?.dataset.scrollLock) {
+      try {
+        const parsed = JSON.parse(scrollable.dataset.scrollLock);
+        isAtTop = Boolean(parsed?.isAtTop);
+      } catch {
+        // 파싱 실패 시 기본값 유지
+        isAtTop = true;
+      }
+    }
+
+    if (isAtTop && shouldClose) {
       closeBottomSheet();
       setTranslateY(-window.innerHeight / 2);
     } else {
@@ -130,17 +140,6 @@ function BottomSheet(props: BottomSheetProps) {
       modalRef.current.focus();
     }
   }, []);
-  useEffect(() => {
-    const preventTouchMove = (e: TouchEvent) => {
-      if (isDragging) {
-        e.preventDefault();
-      }
-    };
-    document.body.addEventListener("touchmove", preventTouchMove, { passive: false });
-    return () => {
-      document.body.removeEventListener("touchmove", preventTouchMove);
-    };
-  }, [isDragging]);
 
   return (
     <>

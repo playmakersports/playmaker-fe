@@ -170,8 +170,13 @@ function Schedule() {
         </Days>
       </CalendarContainer>
       <div className={baseDividedLine} />
-      <div className={flexColumnGap16}>
-        <ul className={clsx(monthEventSummary, flexRowGap8)}>
+      <div className={flexColumnGap16} style={{ paddingBottom: "24px" }}>
+        <ul
+          className={clsx(monthEventSummary, flexRowGap8)}
+          style={{
+            flexWrap: "wrap",
+          }}
+        >
           <li className={monthEventSummaryItems} data-type="훈련">
             훈련 1
           </li>

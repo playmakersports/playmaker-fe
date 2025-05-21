@@ -88,3 +88,32 @@ export const dropdownAsset = {
     boxSizing: "border-box",
   }),
 };
+
+export const commentContainer = style({
+  display: "flex",
+  height: "44px",
+  alignItems: "center",
+  padding: "0 10px 0 12px",
+  borderRadius: "8px",
+  border: "1px solid var(--gray200)",
+  transition: "border-color 0.2s ease-in-out",
+});
+export const commentInput = style([
+  fonts.body4.regular,
+  {
+    flex: 1,
+    padding: "12px 0",
+    color: "var(--gray700)",
+    selectors: {
+      "&::placeholder": {
+        color: "var(--gray400)",
+      },
+    },
+  },
+]);
+globalStyle(`${commentContainer}:has(input:not(:placeholder-shown))`, {
+  borderColor: "var(--primary500)",
+});
+globalStyle(`${commentContainer}:has(input:not(:placeholder-shown)) > svg`, {
+  fill: "var(--primary500)",
+});

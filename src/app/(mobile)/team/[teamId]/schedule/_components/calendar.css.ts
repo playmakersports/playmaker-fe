@@ -181,3 +181,14 @@ export const scheduleListItemProfile = style({
     },
   },
 });
+export const scheduleDetailCommentsWrapper = style({
+  paddingRight: "2px",
+  maxHeight: "120px",
+  overflowY: "auto",
+  selectors: {
+    "&[data-fold='false']": {
+      height: "80vh",
+      maxHeight: "500px",
+    },
+  },
+});

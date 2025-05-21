@@ -104,7 +104,7 @@ function RecentVoteCard({ voteId, scheduleId, title, content, date }: Props) {
   );
 }
 
-const SelectVoteOption = styled.label`
+export const SelectVoteOption = styled.label`
   cursor: pointer;
   flex: 1;
   display: flex;

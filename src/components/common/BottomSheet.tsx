@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 import Button, { ButtonFillType, ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
 
@@ -25,6 +25,8 @@ const ANIMATION_RUNNING_TIME = 250;
 function BottomSheet(props: BottomSheetProps) {
   const { disabledDimOut = false, setShow, draggable = false, onClose, children, header, expanded, buttons } = props;
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const [mounted, setMounted] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [touchStartY, setTouchStartY] = useState(0);
   const [translateY, setTranslateY] = useState(0);
@@ -32,6 +34,7 @@ function BottomSheet(props: BottomSheetProps) {
 
   const closeBottomSheet = () => {
     setShowModal(false);
+    setMounted(false);
     onClose && onClose();
     setTimeout(() => {
       setShow(false);
@@ -41,12 +44,21 @@ function BottomSheet(props: BottomSheetProps) {
   useEffect(() => {
     document.body.style.overflow = "hidden";
     document.body.style.touchAction = "none";
-    setShowModal(true);
+    setMounted(true);
     return () => {
       document.body.style.touchAction = "auto";
       document.body.style.overflow = "auto";
     };
   }, []);
+
+  useEffect(() => {
+    if (mounted) {
+      const id = requestAnimationFrame(() => {
+        setShowModal(true);
+      });
+      return () => cancelAnimationFrame(id);
+    }
+  }, [mounted]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!draggable) return;

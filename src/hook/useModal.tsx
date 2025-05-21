@@ -1,5 +1,4 @@
 import React, { ReactNode, useCallback, useId, useRef, useState } from "react";
-import styled from "styled-components";
 import { fonts } from "@/styles/fonts.css";
 import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import Portal from "@/components/common/global/Portal";
@@ -46,10 +45,16 @@ function useModal() {
                   disabledDimOut={props.disabledDimOut}
                   header={
                     props.title && (
-                      <HeaderContainer>
+                      <div
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          gap: "4px",
+                        }}
+                      >
                         <h4 className={fonts.body2.semibold}>{props.title}</h4>
                         {props.description && <span className={fonts.body4.regular}>{props.description}</span>}
-                      </HeaderContainer>
+                      </div>
                     )
                   }
                   onClose={props.onClose}
@@ -72,11 +77,5 @@ function useModal() {
 
   return { ModalComponents, showModal };
 }
-
-const HeaderContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
 
 export default useModal;

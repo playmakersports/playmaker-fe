@@ -90,6 +90,9 @@ function ScheduleListArticle(props: ScheduleItemType) {
       </li>
 
       <ModalComponents
+        onClose={() => {
+          setFoldComments(true);
+        }}
         draggable="all"
         buttons={foldComments ? [{ name: "경기 내용 보러가기", onClick: () => {}, mode: "primary" }] : undefined}
       >

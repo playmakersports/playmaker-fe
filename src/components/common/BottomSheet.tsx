@@ -105,7 +105,7 @@ function BottomSheet(props: BottomSheetProps) {
 
     setIsDragging(false);
     const touchEndY = e.changedTouches[0].clientY;
-    const shouldClose = touchEndY > window.innerHeight * 0.8 && touchEndY - touchStartY > 100;
+    const shouldClose = touchEndY > window.innerHeight * 0.65 && touchEndY - touchStartY > 100;
 
     const target = e.target as HTMLElement;
     const scrollable = target.closest(".scrollable-container") as HTMLElement | null;

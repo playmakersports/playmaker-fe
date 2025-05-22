@@ -262,7 +262,7 @@ const Wrapper = styled.section<{
   left: 50%;
   bottom: 0;
   min-height: ${({ $expanded }) => ($expanded ? "90vh" : "auto")};
-  max-height: 90vh;
+  max-height: 96vh;
   /* z-index: 1000; */
   background: var(--background-light);
   border-radius: 16px 16px 0 0;

@@ -6,7 +6,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 
-import { baseContainer } from "@/styles/container.css";
 import { teamFindSearchContainer, teamFindSearchInput } from "./_components/teamFind.css";
 import MainTab from "@/components/Main/MainTab";
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
@@ -14,7 +13,7 @@ import TeamFindAll from "./_components/TeamFindAll";
 import TeamFindSports from "./_components/TeamFindSports";
 
 import SearchIcon from "@/assets/icon/common/Search.svg";
-import PlusIcon from "@/assets/icon/common/Plus.svg";
+import PlusFloat from "@/components/common/PlusFloat";
 
 function TeamList() {
   useHeader({
@@ -52,9 +51,7 @@ function TeamList() {
           ]}
         />
       </TabWrapper>
-      <TeamCreateButton type="button" onClick={() => router.push("/team-create")}>
-        <PlusIcon width={24} height={24} />
-      </TeamCreateButton>
+      <PlusFloat linkTo="/team-create" blind="팀 만들기" />
       <section>{activeTab === "" ? <TeamFindAll /> : <TeamFindSports sports={activeTab} />}</section>
     </section>
   );
@@ -67,29 +64,6 @@ const TabWrapper = styled.div`
   z-index: 1;
   &.stuck {
     background-color: var(--background-light);
-  }
-`;
-const TeamCreateButton = styled.button`
-  position: absolute;
-  display: flex;
-  margin-bottom: 8px;
-  align-items: center;
-  justify-content: center;
-  right: 20px;
-  bottom: var(--safe-bottom-navigation);
-  border-radius: 50%;
-  width: 48px;
-  height: 48px;
-  background-color: var(--primary500);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s;
-  z-index: 1;
-
-  svg {
-    fill: var(--white);
-  }
-  &:active {
-    transform: scale(0.95);
   }
 `;
 

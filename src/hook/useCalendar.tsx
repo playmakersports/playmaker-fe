@@ -14,7 +14,18 @@ import { useState } from "react";
 const DAY_OF_WEEK = 7;
 const DAY_LIST = ["일", "월", "화", "수", "목", "금", "토"];
 
-function useCalendar(defaultDate?: Date) {
+export type UseCalendarType = {
+  dayList: string[];
+  weekCalendarList: WeekDateObject[][];
+  currentDate: Date;
+  currentDateHoliday: {
+    isHoliday: boolean;
+    holidayName: string | null;
+  };
+  setCurrentDate: React.Dispatch<React.SetStateAction<Date>>;
+};
+
+function useCalendar(defaultDate?: Date): UseCalendarType {
   const [currentDate, setCurrentDate] = useState(defaultDate ?? new Date());
   const totalMonthDays = getDaysInMonth(currentDate);
   const calendarLength = getWeeksInMonth(currentDate, { weekStartsOn: 0 }) * DAY_OF_WEEK;

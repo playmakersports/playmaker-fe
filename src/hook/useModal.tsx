@@ -2,6 +2,7 @@ import React, { ReactNode, useCallback, useId, useRef, useState } from "react";
 import { fonts } from "@/styles/fonts.css";
 import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import Portal from "@/components/common/global/Portal";
+import { flexColumnGap4 } from "@/styles/container.css";
 
 export type ModalProps = {
   disabledDimOut?: boolean;
@@ -45,13 +46,7 @@ function useModal() {
                   disabledDimOut={props.disabledDimOut}
                   header={
                     props.title && (
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "4px",
-                        }}
-                      >
+                      <div className={flexColumnGap4} style={{ marginBottom: "32px" }}>
                         <h4 className={fonts.body2.semibold}>{props.title}</h4>
                         {props.description && (
                           <span className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>

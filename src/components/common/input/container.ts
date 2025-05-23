@@ -40,7 +40,7 @@ export const DropdownAsset = {
       border-radius: 8px;
       font-variant-numeric: tabular-nums;
       color: var(--gray700);
-      ${FONTS.body4("regular")};
+      ${FONTS.body4("medium")};
 
       & svg {
         display: none;

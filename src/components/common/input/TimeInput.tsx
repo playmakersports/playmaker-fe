@@ -28,17 +28,7 @@ type Props = Omit<InputProps, "type" | "value" | "iconType" | "suffix"> &
 
 const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const { ModalComponents, showModal: showBottomSheet } = useModal();
-  const {
-    plainStyle = false,
-    mode = "modal",
-    error,
-    description,
-    defaultValue,
-    title,
-    delButton = false,
-    value,
-    ...rest
-  } = props;
+  const { plainStyle = false, mode = "modal", error, description, defaultValue, title } = props;
   const [showTimeModal, setShowTimeModal] = useState(false);
   const [modalPosition, setModalPosition] = useState<{
     x: "left" | "right";
@@ -100,11 +90,23 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
   const onClickUpdateInput = () => {
     if (inputRef.current) {
-      inputRef.current.value = `${String(
+      const newValue = `${String(
         +timeValue.hour +
           (!timeValue.am && +timeValue.hour < 12 ? 12 : 0) -
           (timeValue.am && +timeValue.hour === 12 ? 12 : 0)
       ).padStart(2, "0")}:${timeValue.minute.padStart(2, "0")}`;
+
+      inputRef.current.value = newValue;
+
+      if (inputRef.current) {
+        inputRef.current.value = newValue;
+        props.onChange?.({
+          target: {
+            name: props.name,
+            value: newValue,
+          },
+        } as React.ChangeEvent<HTMLInputElement>);
+      }
     }
     if (mode === "modal") {
       setShowTimeModal(false);
@@ -135,7 +137,7 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const bottomSheetRest = () => {
     if (props.mode === "bottom-sheet") {
       const { bottomSheetTitle, bottomSheetDescription, plainStyle, ...bottomSheetRest } = props;
-      return bottomSheetRest;
+      return { ...bottomSheetRest };
     } else {
       const { plainStyle, ...modalRest } = props;
       return modalRest;
@@ -147,6 +149,8 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       {plainStyle ? (
         <input
           type="text"
+          name={props.name}
+          id={props.id}
           ref={inputRef}
           onClick={!props.disabled ? handleModalView : () => {}}
           readOnly
@@ -155,10 +159,12 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       ) : (
         <div style={{ position: "relative" }} className="input-wrapper">
           <BasicInput
+            type="text"
             error={error}
+            name={props.name}
+            id={props.id}
             description={description}
             ref={inputRef}
-            type="text"
             title={title}
             onButtonWrapClick={!props.disabled ? handleModalView : () => {}}
             {...bottomSheetRest()}
@@ -186,16 +192,16 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
         <TimeSelector data-view-mode={mode}>
           <HourMinute>
             <div className="input-wrapper">
-              <label className="modal-input-label" htmlFor={`${rest.id}-hourInput`}>
+              <label className="modal-input-label" htmlFor={`${props.id}-hourInput`}>
                 시
               </label>
               <ModalInput>
                 <DateKeypadInput
                   type="text"
-                  id={`${rest.id}-hourInput`}
+                  id={`${props.id}-hourInput`}
                   pattern="[0-9]*"
                   inputMode="numeric"
-                  disabled={rest.disabled}
+                  disabled={props.disabled}
                   value={timeValue.hour}
                   onFocus={(e) => e.target.select()}
                   onChange={(event) => {
@@ -220,17 +226,17 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
               :
             </span>
             <div className="input-wrapper">
-              <label className="modal-input-label" htmlFor={`${rest.id}-minuteInput`}>
+              <label className="modal-input-label" htmlFor={`${props.id}-minuteInput`}>
                 분
               </label>
               <ModalInput>
                 <DateKeypadInput
                   type="text"
-                  id={`${rest.id}-minuteInput`}
+                  id={`${props.id}-minuteInput`}
                   pattern="[0-9]*"
                   inputMode="numeric"
                   value={timeValue.minute}
-                  disabled={rest.disabled}
+                  disabled={props.disabled}
                   onFocus={(e) => e.target.select()}
                   onChange={(event) => {
                     if (+event.target.value > 59) return null;
@@ -244,7 +250,7 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
           <ButtonAMPM
             type="button"
             data-view-mode={mode}
-            disabled={rest.disabled}
+            disabled={props.disabled}
             onClick={() => {
               if (timeValue.hour === "12") {
                 setTimeValue((prev) => ({ ...prev, am: !prev.am }));

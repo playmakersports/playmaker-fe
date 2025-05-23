@@ -27,10 +27,24 @@ type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType"> & {
   defaultValue?: string;
   pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
   plainStyle?: boolean;
+  bottomSheetHeader?: {
+    title: string;
+    description?: string;
+  };
 };
 
 const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { defaultValue, title, error, description, value, pickType = "EVERYDAY", plainStyle = false, ...rest } = props;
+  const {
+    defaultValue,
+    title,
+    error,
+    description,
+    value,
+    pickType = "EVERYDAY",
+    plainStyle = false,
+    bottomSheetHeader,
+    ...rest
+  } = props;
 
   const { ModalComponents, showModal } = useModal();
   const { trigger } = useToast();
@@ -61,13 +75,10 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
       setCurrentDate(new Date(`${year}/${month}/${day}`));
       setYearValue(+year);
       setMonthValue(+month);
-      const newValue = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-      if (inputRef.current) {
-        inputRef.current.value = newValue;
-        if (rest.onChange) {
-          rest.onChange({ target: { value: newValue } } as React.ChangeEvent<HTMLInputElement>);
-        }
-      }
+      // const newValue = `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+      // if (inputRef.current) {
+      //   inputRef.current.value = newValue;
+      // }
     } else {
       setCurrentDate(new Date());
       setYearValue(new Date().getFullYear());
@@ -96,11 +107,12 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   return (
     <>
       {plainStyle ? (
-        <input type="text" ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
+        <input type="text" name={rest.name} ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
       ) : (
         <BasicInput
           ref={inputRef}
           type="text"
+          name={rest.name}
           title={title}
           error={error}
           description={description}
@@ -109,6 +121,8 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
         />
       )}
       <ModalComponents
+        title={bottomSheetHeader?.title}
+        description={bottomSheetHeader?.description}
         draggable="all"
         buttons={[
           {
@@ -120,10 +134,15 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
                 : "날짜를 선택하세요",
             onClick: (close) => {
               if (inputRef.current) {
-                inputRef.current.value = format(currentDate, "yyyy-MM-dd");
+                const newValue = format(currentDate, "yyyy-MM-dd");
+                inputRef.current.value = newValue;
+
                 if (rest.onChange) {
                   rest.onChange({
-                    target: { value: format(currentDate, "yyyy-MM-dd") },
+                    target: {
+                      name: props.name,
+                      value: newValue,
+                    },
                   } as React.ChangeEvent<HTMLInputElement>);
                 }
               }
@@ -291,7 +310,6 @@ const NowDate = styled.div`
 const CurrentDateInputs = styled.div`
   display: flex;
   gap: 8px;
-  padding: 0 4px 0 10px;
   ${FONTS.body2("semibold")};
 
   ${DateKeypadInput} {

@@ -3,10 +3,11 @@ import Link from "next/link";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 
-function PlusFloat({ linkTo, blind }: { linkTo: string; blind?: string }) {
+function PlusFloat({ linkTo, blind, replace = false }: { linkTo: string; blind?: string; replace?: boolean }) {
   return (
     <Link
       prefetch={true}
+      replace={replace}
       href={linkTo}
       style={{
         backgroundColor: "var(--primary500)",

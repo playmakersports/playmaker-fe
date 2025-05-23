@@ -14,7 +14,9 @@ export const weekDayName = style([
 ]);
 export const weekDayButton = style({
   flex: 1,
-  textAlign: "center",
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
   border: "1px solid transparent",
   color: "var(--gray700)",
   selectors: {

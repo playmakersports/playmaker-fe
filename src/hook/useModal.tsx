@@ -53,7 +53,11 @@ function useModal() {
                         }}
                       >
                         <h4 className={fonts.body2.semibold}>{props.title}</h4>
-                        {props.description && <span className={fonts.body4.regular}>{props.description}</span>}
+                        {props.description && (
+                          <span className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>
+                            {props.description}
+                          </span>
+                        )}
                       </div>
                     )
                   }

@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useState } from "react";
 import clsx from "clsx";
 import styled from "styled-components";
@@ -133,10 +134,19 @@ function MonthlyCalendarView({ calendar }: Props) {
                       className={weekDayButtonScheduledBullets}
                       data-active-month={!(day.nextMonth || day.previousMonth)}
                     >
-                      <span className={weekDayButtonScheduledBullet} data-type="훈련" />
-                      <span className={weekDayButtonScheduledBullet} data-type="교류전" />
-                      <span className={weekDayButtonScheduledBullet} data-type="팀" />
-                      <span className={weekDayButtonScheduledBullet} data-type="대회" />
+                      {/* TODO: 달력에 예시로 보여주기 위한 조건 처리 */}
+                      {Number(day.displayValue) % 3 === 0 && (
+                        <span className={weekDayButtonScheduledBullet} data-type="훈련" />
+                      )}
+                      {Number(day.displayValue) % 5 === 0 && (
+                        <span className={weekDayButtonScheduledBullet} data-type="교류전" />
+                      )}
+                      {Number(day.displayValue) % 8 === 0 && (
+                        <span className={weekDayButtonScheduledBullet} data-type="팀" />
+                      )}
+                      {Number(day.displayValue) % 10 === 0 && (
+                        <span className={weekDayButtonScheduledBullet} data-type="대회" />
+                      )}
                     </div>
                   </button>
                 ))}

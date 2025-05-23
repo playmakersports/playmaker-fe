@@ -6,10 +6,10 @@ import { useGet } from "@/apis/hook/query";
 import { ApiSelectMember } from "@/apis/types/user";
 
 import { fonts } from "@/styles/fonts.css";
-import { settingsHeaderProfile, settingsHeaderProfileImage } from "@/app/(mobile)/my/_components/userSetting.css";
 import Button from "@/components/common/Button";
 
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
+import { settingsHeaderProfile, settingsHeaderProfileImage } from "@/app/(mobile)/my/_components/userSetting.css";
 
 function ProfileTop() {
   const router = useRouter();

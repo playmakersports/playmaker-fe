@@ -7,7 +7,7 @@ import { fonts } from "@/styles/fonts.css";
 import { baseContainer } from "@/styles/container.css";
 import { settingsHeaderProfile, settingsHeaderProfileImage } from "./_components/userSetting.css";
 import Button from "@/components/common/Button";
-import UserSetting from "@/app/(mobile)/my/_components/UserSetting";
+import UserSetting from "./_components/UserSetting";
 
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 

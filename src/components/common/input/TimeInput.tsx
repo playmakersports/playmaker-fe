@@ -13,15 +13,23 @@ import { InputStyledWrapper } from "../Wrapper";
 import TimeInputModal from "./TimeInputModalContainer";
 import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
 
-type Props = Omit<InputProps, "type" | "value" | "iconType" | "suffix"> & {
-  mode?: "modal" | "bottom-sheet";
-  value?: string;
-  defaultValue?: string;
-  children?: React.ReactNode;
-};
+type Props = Omit<InputProps, "type" | "value" | "iconType" | "suffix"> &
+  (
+    | {
+        mode: "bottom-sheet";
+        plainStyle?: boolean;
+        value?: string;
+        defaultValue?: string;
+        bottomSheetTitle?: string;
+        bottomSheetDescription?: string;
+      }
+    | { mode: "modal"; plainStyle?: boolean; value?: string; defaultValue?: string }
+  );
+
 const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const { ModalComponents, showModal: showBottomSheet } = useModal();
   const {
-    children,
+    plainStyle = false,
     mode = "modal",
     error,
     description,
@@ -38,7 +46,6 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   }>({ x: "left", y: "top" });
   const containerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { ModalComponents, showModal: showBottomSheet } = useModal();
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
 
   const getHourMinute = (target: string) => {
@@ -47,12 +54,13 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
     const calculateHour = am ? hour : `${+hour - 12}`;
     return { hour: calculateHour, minute, am };
   };
-  const [timeValue, setTimeValue] = useState(
-    defaultValue
+  const initialTime = defaultValue ? getHourMinute(defaultValue) : null;
+  const [timeValue, setTimeValue] = useState(() =>
+    initialTime
       ? {
-          am: getHourMinute(`${defaultValue}`).am,
-          hour: getHourMinute(`${defaultValue}`).hour,
-          minute: getHourMinute(`${defaultValue}`).minute,
+          am: initialTime.am,
+          hour: initialTime.hour,
+          minute: initialTime.minute,
         }
       : {
           am: getHours(new Date()) < 12,
@@ -106,143 +114,171 @@ const TimeInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   };
 
   useEffect(() => {
-    const outSideClick = (e: any) => {
-      if (showTimeModal && containerRef.current && !containerRef.current.contains(e.target)) {
+    const outSideClick = (e: MouseEvent) => {
+      if (showTimeModal && containerRef.current && !containerRef.current.contains(e.target as Node)) {
         setShowTimeModal(false);
       }
     };
     document.addEventListener("mouseup", outSideClick);
+    return () => {
+      document.removeEventListener("mouseup", outSideClick);
+    };
   }, [showTimeModal]);
+
+  const bottomSheetProps = () => {
+    if (props.mode === "bottom-sheet") {
+      return { bottomSheetTitle: props.bottomSheetTitle, bottomSheetDescription: props.bottomSheetDescription };
+    } else {
+      return {};
+    }
+  };
+  const bottomSheetRest = () => {
+    if (props.mode === "bottom-sheet") {
+      const { bottomSheetTitle, bottomSheetDescription, plainStyle, ...bottomSheetRest } = props;
+      return bottomSheetRest;
+    } else {
+      const { plainStyle, ...modalRest } = props;
+      return modalRest;
+    }
+  };
 
   return (
     <Container ref={containerRef}>
-      <div style={{ position: "relative" }} className="input-wrapper">
-        <BasicInput
-          error={error}
-          description={description}
-          ref={inputRef}
+      {plainStyle ? (
+        <input
           type="text"
-          title={title}
-          onButtonWrapClick={!props.disabled ? handleModalView : () => {}}
-          {...rest}
-        />
-        <div
-          className="dropdown-icon"
-          style={{ top: title ? "28px" : "0" }}
-          aria-disabled={props.disabled}
+          ref={inputRef}
           onClick={!props.disabled ? handleModalView : () => {}}
-        >
-          <DownArrowIcon />
+          readOnly
+          {...bottomSheetRest()}
+        />
+      ) : (
+        <div style={{ position: "relative" }} className="input-wrapper">
+          <BasicInput
+            error={error}
+            description={description}
+            ref={inputRef}
+            type="text"
+            title={title}
+            onButtonWrapClick={!props.disabled ? handleModalView : () => {}}
+            {...bottomSheetRest()}
+          />
+          <div
+            className="dropdown-icon"
+            style={{ top: title ? "28px" : "0" }}
+            aria-disabled={props.disabled}
+            onClick={!props.disabled ? handleModalView : () => {}}
+          >
+            <DownArrowIcon />
+          </div>
         </div>
-      </div>
-
-      {showTimeModal && (
-        <TimeInputModal
-          mode={mode}
-          title={title}
-          BottomSheetContainer={ModalComponents}
-          onClickConfirm={onClickUpdateInput}
-          position={modalPosition}
-        >
-          <TimeSelector data-view-mode={mode}>
-            <HourMinute>
-              <div className="input-wrapper">
-                <label className="modal-input-label" htmlFor={`${rest.id}-hourInput`}>
-                  시
-                </label>
-                <ModalInput>
-                  <DateKeypadInput
-                    type="text"
-                    id={`${rest.id}-hourInput`}
-                    pattern="[0-9]*"
-                    inputMode="numeric"
-                    disabled={rest.disabled}
-                    value={timeValue.hour}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(event) => {
-                      const value = event.target.value;
-                      if (+value > 23) return null;
-                      setTimeValue((prev) => ({ ...prev, hour: value }));
-                    }}
-                    onBlur={(event) => {
-                      const value = event.target.value;
-                      if (+value > 12) {
-                        setTimeValue((prev) => ({ ...prev, am: false, hour: String(+value - 12).padStart(2, "0") }));
-                      } else if (+value === 0) {
-                        setTimeValue((prev) => ({ ...prev, am: true, hour: "12" }));
-                      } else {
-                        setTimeValue((prev) => ({ ...prev, hour: value.padStart(2, "0") }));
-                      }
-                    }}
-                  />
-                </ModalInput>
-              </div>
-              <span className="cologne" data-view-mode={mode}>
-                :
-              </span>
-              <div className="input-wrapper">
-                <label className="modal-input-label" htmlFor={`${rest.id}-minuteInput`}>
-                  분
-                </label>
-                <ModalInput>
-                  <DateKeypadInput
-                    type="text"
-                    id={`${rest.id}-minuteInput`}
-                    pattern="[0-9]*"
-                    inputMode="numeric"
-                    value={timeValue.minute}
-                    disabled={rest.disabled}
-                    onFocus={(e) => e.target.select()}
-                    onChange={(event) => {
-                      if (+event.target.value > 59) return null;
-                      setTimeValue((prev) => ({ ...prev, minute: event.target.value }));
-                    }}
-                    onBlur={(event) =>
-                      setTimeValue((prev) => ({ ...prev, minute: event.target.value.padStart(2, "0") }))
-                    }
-                  />
-                </ModalInput>
-              </div>
-            </HourMinute>
-            <ButtonAMPM
-              type="button"
-              data-view-mode={mode}
-              disabled={rest.disabled}
-              onClick={() => {
-                if (timeValue.hour === "12") {
-                  setTimeValue((prev) => ({ ...prev, am: !prev.am }));
-                } else if (timeValue.hour === "00") {
-                  setTimeValue((prev) => ({ ...prev, am: false, hour: "12" }));
-                } else {
-                  setTimeValue((prev) => ({ ...prev, am: !prev.am }));
-                }
-              }}
-            >
-              <span data-active={timeValue.am}>오전</span>
-              <span data-active={!timeValue.am}>오후</span>
-              <span
-                className="active-background"
-                style={{
-                  transform:
-                    mode === "modal"
-                      ? `translateY(${timeValue.am ? "0" : "32px"})`
-                      : `translateX(${timeValue.am ? "0" : "calc(100% + 8px)"})`,
-                }}
-              ></span>
-            </ButtonAMPM>
-          </TimeSelector>
-          {mode === "modal" && (
-            <Buttons>
-              <button type="button" className="reset-button" onClick={onClickResetInput}>
-                초기화
-              </button>
-              <Button type="button" mode="primary" fillType="default" onClick={onClickUpdateInput}>
-                확인
-              </Button>
-            </Buttons>
-          )}
-        </TimeInputModal>
       )}
+
+      <TimeInputModal
+        mode={mode}
+        title={title}
+        BottomSheetContainer={ModalComponents}
+        onClickConfirm={onClickUpdateInput}
+        position={modalPosition}
+        showTimeModal={showTimeModal}
+        {...bottomSheetProps()}
+      >
+        <TimeSelector data-view-mode={mode}>
+          <HourMinute>
+            <div className="input-wrapper">
+              <label className="modal-input-label" htmlFor={`${rest.id}-hourInput`}>
+                시
+              </label>
+              <ModalInput>
+                <DateKeypadInput
+                  type="text"
+                  id={`${rest.id}-hourInput`}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  disabled={rest.disabled}
+                  value={timeValue.hour}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(event) => {
+                    const value = event.target.value;
+                    if (+value > 23) return null;
+                    setTimeValue((prev) => ({ ...prev, hour: value }));
+                  }}
+                  onBlur={(event) => {
+                    const value = event.target.value;
+                    if (+value > 12) {
+                      setTimeValue((prev) => ({ ...prev, am: false, hour: String(+value - 12).padStart(2, "0") }));
+                    } else if (+value === 0) {
+                      setTimeValue((prev) => ({ ...prev, am: true, hour: "12" }));
+                    } else {
+                      setTimeValue((prev) => ({ ...prev, hour: value.padStart(2, "0") }));
+                    }
+                  }}
+                />
+              </ModalInput>
+            </div>
+            <span className="cologne" data-view-mode={mode}>
+              :
+            </span>
+            <div className="input-wrapper">
+              <label className="modal-input-label" htmlFor={`${rest.id}-minuteInput`}>
+                분
+              </label>
+              <ModalInput>
+                <DateKeypadInput
+                  type="text"
+                  id={`${rest.id}-minuteInput`}
+                  pattern="[0-9]*"
+                  inputMode="numeric"
+                  value={timeValue.minute}
+                  disabled={rest.disabled}
+                  onFocus={(e) => e.target.select()}
+                  onChange={(event) => {
+                    if (+event.target.value > 59) return null;
+                    setTimeValue((prev) => ({ ...prev, minute: event.target.value }));
+                  }}
+                  onBlur={(event) => setTimeValue((prev) => ({ ...prev, minute: event.target.value.padStart(2, "0") }))}
+                />
+              </ModalInput>
+            </div>
+          </HourMinute>
+          <ButtonAMPM
+            type="button"
+            data-view-mode={mode}
+            disabled={rest.disabled}
+            onClick={() => {
+              if (timeValue.hour === "12") {
+                setTimeValue((prev) => ({ ...prev, am: !prev.am }));
+              } else if (timeValue.hour === "00") {
+                setTimeValue((prev) => ({ ...prev, am: false, hour: "12" }));
+              } else {
+                setTimeValue((prev) => ({ ...prev, am: !prev.am }));
+              }
+            }}
+          >
+            <span data-active={timeValue.am}>오전</span>
+            <span data-active={!timeValue.am}>오후</span>
+            <span
+              className="active-background"
+              style={{
+                transform:
+                  mode === "modal"
+                    ? `translateY(${timeValue.am ? "0" : "32px"})`
+                    : `translateX(${timeValue.am ? "0" : "calc(100% + 8px)"})`,
+              }}
+            ></span>
+          </ButtonAMPM>
+        </TimeSelector>
+        {mode === "modal" && (
+          <Buttons>
+            <button type="button" className="reset-button" onClick={onClickResetInput}>
+              초기화
+            </button>
+            <Button type="button" mode="primary" fillType="default" onClick={onClickUpdateInput}>
+              확인
+            </Button>
+          </Buttons>
+        )}
+      </TimeInputModal>
     </Container>
   );
 });

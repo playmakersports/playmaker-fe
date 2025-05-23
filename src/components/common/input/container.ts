@@ -16,6 +16,9 @@ export const DropdownAsset = {
     z-index: 50;
     overflow: auto;
     box-sizing: border-box;
+    &[data-size="small"] {
+      width: inherit;
+    }
   `,
   List: styled.div`
     display: flex;

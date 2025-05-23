@@ -26,10 +26,11 @@ type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType"> & {
   value?: string;
   defaultValue?: string;
   pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
+  plainStyle?: boolean;
 };
 
 const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { defaultValue, title, error, description, value, pickType = "EVERYDAY", ...rest } = props;
+  const { defaultValue, title, error, description, value, pickType = "EVERYDAY", plainStyle = false, ...rest } = props;
 
   const { ModalComponents, showModal } = useModal();
   const { trigger } = useToast();
@@ -94,15 +95,19 @@ const DateInput = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   return (
     <>
-      <BasicInput
-        ref={inputRef}
-        type="text"
-        title={title}
-        error={error}
-        description={description}
-        onButtonWrapClick={() => showModal()}
-        {...rest}
-      />
+      {plainStyle ? (
+        <input type="text" ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
+      ) : (
+        <BasicInput
+          ref={inputRef}
+          type="text"
+          title={title}
+          error={error}
+          description={description}
+          onButtonWrapClick={() => showModal()}
+          {...rest}
+        />
+      )}
       <ModalComponents
         draggable="all"
         buttons={[

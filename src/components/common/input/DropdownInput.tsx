@@ -21,6 +21,7 @@ type Props = {
   disabled?: boolean;
   description?: string;
   error?: boolean;
+  size?: "small" | "medium";
 } & InputWrapperStyledProps;
 function DropdownInput(props: Props) {
   const {
@@ -35,6 +36,7 @@ function DropdownInput(props: Props) {
     optionsTitle,
     disabled = false,
     error = false,
+    size = "medium",
   } = props;
   const [showOptions, setShowOptions] = useState(false);
   const dropdownRef = useRef<HTMLButtonElement>(null);
@@ -102,6 +104,7 @@ function DropdownInput(props: Props) {
         data-error={error}
         aria-disabled={disabled}
         data-state={value === "" ? "placeholder" : ""}
+        data-size={size}
         onClick={onClickOpenOptions}
         onKeyUp={onKeyupOptionsOpen}
       >
@@ -117,6 +120,7 @@ function DropdownInput(props: Props) {
       {showOptions && (
         <DropdownAsset.Box
           ref={refs.setFloating}
+          data-size={size}
           style={{
             ...floatingStyles,
             visibility: middlewareData.hide?.referenceHidden ? "hidden" : "visible",
@@ -185,6 +189,13 @@ const ValueContainer = styled(InputStyledWrapper).attrs({ as: "button" })`
   }
   &[data-error="true"] {
     border-color: var(--red500);
+  }
+  &[data-size="small"] {
+    ${FONTS.body4("medium")};
+    width: fit-content;
+    height: 32px;
+    padding: 0 8px 0 12px;
+    gap: 4px;
   }
 `;
 

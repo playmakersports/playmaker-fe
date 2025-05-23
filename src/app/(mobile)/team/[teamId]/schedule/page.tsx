@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import clsx from "clsx";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import useCalendar from "@/hook/useCalendar";
 import { useHeader } from "@/hook/useHeader";
 
@@ -10,11 +10,10 @@ import { baseDividedLine, flexColumnGap16, flexRowGap8 } from "@/styles/containe
 import { monthEventSummary, monthEventSummaryItems } from "./_components/calendar.css";
 import ScheduleList from "./_components/ScheduleList";
 import MonthlyCalendarView from "./_components/MonthlyCalendarView";
+import PlusFloat from "@/components/common/PlusFloat";
 
 function Schedule() {
-  const router = useRouter();
   const params = useParams();
-  // const  {} = useSearchParams()
   const teamId = params["teamId"];
   const calendar = useCalendar();
 
@@ -23,7 +22,7 @@ function Schedule() {
     subIcons: [
       {
         svgIcon: <SearchIcon />,
-        onClick: `/team/${teamId}/schedule/editor`,
+        onClick: `/team/${teamId}/schedule`,
         description: "일정 찾기",
       },
     ],
@@ -31,6 +30,7 @@ function Schedule() {
 
   return (
     <section>
+      <PlusFloat linkTo={`/team/${teamId}/schedule/new`} blind="새 일정 만들기" replace={true} />
       <MonthlyCalendarView calendar={calendar} />
       <div className={baseDividedLine} />
       <div className={flexColumnGap16} style={{ paddingBottom: "24px" }}>

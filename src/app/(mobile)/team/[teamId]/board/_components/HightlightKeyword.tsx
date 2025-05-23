@@ -16,7 +16,7 @@ export default function HighlightKeyword({ text, keyword }: Props) {
             key={index}
             style={{
               display: "inline-block",
-              backgroundColor: "var(--primary200)",
+              color: "var(--primary500)",
             }}
           >
             {part}

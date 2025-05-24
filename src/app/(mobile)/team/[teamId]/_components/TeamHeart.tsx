@@ -6,27 +6,26 @@ import HeartIcon from "@/assets/icon/common/outlined/Heart.svg";
 import HeartFilledIcon from "@/assets/icon/common/filled/Heart.svg";
 
 type Props = {
-  defaultHeart?: boolean;
   teamId: string | number;
 };
 function TeamHeart(props: Props) {
-  const { defaultHeart = false, teamId } = props;
-  const { trigger } = useToast();
-  const [heart, setHeart] = useState(defaultHeart);
+  const { teamId } = props;
+  const toast = useToast();
+  const [heart, setHeart] = useState(false);
 
-  const handleLike = () => {
+  const onClickHeart = () => {
     setHeart((prev) => !prev);
     if (heart) {
-      trigger("좋아요 목록에서 제거했습니다.");
+      toast.trigger("좋아요 목록에서 제거했습니다.");
     } else {
-      trigger("좋아요 목록에 추가했습니다.");
+      toast.trigger("좋아요 목록에 추가했습니다.");
     }
   };
 
   return (
-    <button type="button" className={teamHeartButtonBox} onClick={handleLike}>
+    <button type="button" className={teamHeartButtonBox} onClick={onClickHeart}>
       {heart ? (
-        <HeartFilledIcon className={teamHeartButtonIcon} fill="var(--red500)" />
+        <HeartFilledIcon className={teamHeartButtonIcon} data-filled="true" />
       ) : (
         <HeartIcon className={teamHeartButtonIcon} fill="var(--gray700)" />
       )}

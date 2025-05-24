@@ -9,12 +9,13 @@ import TeamNotice from "@/app/(mobile)/team/[teamId]/_components/TeamNotice";
 import { baseContainer } from "@/styles/container.css";
 import { teamMainTopBanner, teamMainTopHeader, teamMainTopInfoList, teamMainTopInfoListItem } from "./team.main.css";
 import { fonts } from "@/styles/fonts.css";
+import TeamMainLogo from "./TeamMainLogo";
 
 import LocationPinIcon from "@/assets/icon/common/outlined/LocationPin.svg";
 import IdentifyIcon from "@/assets/icon/common/outlined/IdCard.svg";
 import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
-import TeamMainLogo from "./TeamMainLogo";
+import HeartIcon from "@/assets/icon/common/outlined/Heart.svg";
 
 function TeamMainTop(props: SelectTeamResponse) {
   const {

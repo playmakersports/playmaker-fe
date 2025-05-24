@@ -128,8 +128,8 @@ export const teamMainMatchResultBoxLose = style({
 });
 
 export const teamHeartButtonBox = style({
-  width: "20px",
-  height: "20px",
+  width: "24px",
+  height: "24px",
   background: "none",
   border: "none",
   cursor: "pointer",
@@ -149,6 +149,11 @@ export const teamHeartButtonBox = style({
 export const teamHeartButtonIcon = style({
   width: "100%",
   height: "100%",
+  selectors: {
+    '&[data-filled="true"]': {
+      fill: "var(--red500) !important",
+    },
+  },
 });
 
 export const teamMainRecentVoteContainer = style([

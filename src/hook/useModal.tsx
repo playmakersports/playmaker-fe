@@ -47,7 +47,9 @@ function useModal() {
                   header={
                     props.title && (
                       <div className={flexColumnGap4} style={{ marginBottom: "32px" }}>
-                        <h4 className={fonts.body2.semibold}>{props.title}</h4>
+                        <h4 className={fonts.body2.semibold} style={{ color: "var(--gray900)" }}>
+                          {props.title}
+                        </h4>
                         {props.description && (
                           <span className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>
                             {props.description}

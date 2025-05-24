@@ -1,60 +1,65 @@
 "use client";
+import React from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { useFunnel } from "@/hook/useFunnel";
+import { useHeader } from "@/hook/useHeader";
+import { usePopup } from "@/components/common/global/PopupProvider";
+import { useRouter } from "next/navigation";
 
-import React, { ReactElement, useEffect } from "react";
-import { useResetAtom } from "jotai/utils";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import TeamCreateStage1 from "./_components/Stage1";
+import TeamCreateStage2 from "./_components/Stage2";
+import TeamCreateStage3 from "./_components/Stage3";
+import TeamCreateStage4 from "./_components/Stage4";
+import TeamCreateWelcome from "./_components/Welcome";
 
-import { resetAtomTeamCreate } from "@/atom/team";
-import Stepper from "@/components/common/Stepper";
-import TeamCreateStart from "@/components/Team/Create/TeamCreateStart";
-import TeamCreateStep1 from "@/components/Team/Create/TeamCreateStep1";
-import TeamCreateStep2 from "@/components/Team/Create/TeamCreateStep2";
-import TeamCreateStep3 from "@/components/Team/Create/TeamCreateStep3";
-import TeamCreateStep4 from "@/components/Team/Create/TeamCreateStep4";
-import TeamCreateStep5 from "@/components/Team/Create/TeamCreateStep5";
-import TeamCreateStep6 from "@/components/Team/Create/TeamCreateStep6";
-
+const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Welcome"];
 function TeamCreate() {
+  const popup = usePopup();
   const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const queryStepValue = searchParams.get("step");
-  const nowParams = new URLSearchParams(useSearchParams().toString());
+  useHeader({
+    onClickBack: () => {
+      const handleConfirm = async () => {
+        const confirmValue = await popup?.confirm(`입력된 정보는 저장되지 않고, 다시 복구할 수 없습니다.`, {
+          showIcon: true,
+          title: "팀 만들기를 취소하시겠습니까?",
+          buttonText: {
+            yes: "네, 취소할게요",
+            no: "아니오",
+          },
+        });
 
-  const resetServiceApply = useResetAtom(resetAtomTeamCreate);
+        if (confirmValue) {
+          router.replace("/");
+        }
+      };
+      handleConfirm();
+    },
+  });
+  const methods = useForm();
+  const { Funnel, Step, setStep } = useFunnel({
+    initialStep: stages[0],
+  });
 
-  const handleStepper = (target: number) => {
-    nowParams.set("step", target.toString());
-    router.push(`${pathname}?${nowParams.toString()}`);
-  };
-
-  useEffect(() => {
-    if (!queryStepValue) {
-      router.replace(`${pathname}?step=0`);
-    }
-    return () => {
-      resetServiceApply();
-    };
-  }, []);
-
-  const STEP_PAGE: Record<string, ReactElement> = {
-    0: <TeamCreateStart setStep={handleStepper} />,
-    1: <TeamCreateStep1 setStep={handleStepper} />,
-    2: <TeamCreateStep2 setStep={handleStepper} />,
-    3: <TeamCreateStep3 setStep={handleStepper} />,
-    4: <TeamCreateStep4 setStep={handleStepper} />,
-    5: <TeamCreateStep5 setStep={handleStepper} />,
-    6: <TeamCreateStep6 />,
-  };
-
-  if (!queryStepValue) return null;
-  if (queryStepValue === "0" || queryStepValue === "7") {
-    return STEP_PAGE[`${queryStepValue}`];
-  }
   return (
-    <Stepper type="simple" length={6} now={+queryStepValue}>
-      {STEP_PAGE[`${queryStepValue}`]}
-    </Stepper>
+    <FormProvider {...methods}>
+      <Funnel>
+        <Step name={stages[0]}>
+          <TeamCreateStage1 setStep={setStep} />
+        </Step>
+        <Step name={stages[1]}>
+          <TeamCreateStage2 setStep={setStep} />
+        </Step>
+        <Step name={stages[2]}>
+          <TeamCreateStage3 setStep={setStep} />
+        </Step>
+        <Step name={stages[3]}>
+          <TeamCreateStage4 setStep={setStep} />
+        </Step>
+        <Step name={stages[4]}>
+          <TeamCreateWelcome />
+        </Step>
+      </Funnel>
+    </FormProvider>
   );
 }
 

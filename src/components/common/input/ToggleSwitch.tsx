@@ -14,6 +14,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size" |
   text?: {
     title: string;
     description?: string;
+    first?: boolean;
   };
 };
 
@@ -24,7 +25,7 @@ export const ToggleSwitch = React.forwardRef<HTMLInputElement, Props>(
 
     return (
       <TextContainer>
-        <div style={{ position: "relative", display: "inline-block", ...SIZE }}>
+        <div style={{ position: "relative", display: "inline-block", order: text && text.first ? 2 : 1, ...SIZE }}>
           <Check type="checkbox" ref={ref} $color={color === "error"} size={size} {...rest} />
           <div className="switch-wrapper">
             <div
@@ -42,7 +43,7 @@ export const ToggleSwitch = React.forwardRef<HTMLInputElement, Props>(
           </div>
         </div>
         {text && (
-          <div className="text-container" data-size={size}>
+          <div className="text-container" data-size={size} style={{ order: text.first ? 1 : 2 }}>
             <label className="title" htmlFor={rest.id}>
               {text.title}
             </label>
@@ -57,6 +58,7 @@ ToggleSwitch.displayName = "ToggleSwitchCheckBox";
 
 const TextContainer = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
   gap: 10px;
 

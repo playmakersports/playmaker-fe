@@ -25,7 +25,7 @@ export const stageWrapper = {
   contents: style({
     flex: 1,
     display: "flex",
-    padding: "0 20px",
+    padding: "0 var(--global-lr-padding)",
     flexDirection: "column",
     height: "100%",
     overflow: "hidden",

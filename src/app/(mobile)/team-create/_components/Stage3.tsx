@@ -28,11 +28,11 @@ function TeamCreateStage3({ setStep }: SetStepType) {
   };
 
   const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
-  const formLocation = watch("location") ?? [];
-  const formLocationDisplayValues = formLocation.map((key: string) => ({
-    key,
-    name: findAreaByCodeSequenceKey(data, key)?.text,
-  }));
+  const formLocation = watch("location");
+  const formLocationDisplayValues = {
+    key: formLocation?.key ?? null,
+    name: findAreaByCodeSequenceKey(data, formLocation?.key)?.text ?? "",
+  };
   const [location, setLocation] = useState<LocationType | undefined>(formLocationDisplayValues);
 
   const onClickLocation = (locationKey: string, name: string) => {
@@ -59,16 +59,18 @@ function TeamCreateStage3({ setStep }: SetStepType) {
         ) : (
           <Location>
             <div className="location-selected">
-              <Chip
-                type="primary"
-                fillType="light"
-                size="large"
-                closeAction={() => {
-                  onRemoveLocation();
-                }}
-              >
-                {location?.name}
-              </Chip>
+              {formLocation && (
+                <Chip
+                  type="primary"
+                  fillType="light"
+                  size="large"
+                  closeAction={() => {
+                    onRemoveLocation();
+                  }}
+                >
+                  {location?.name}
+                </Chip>
+              )}
             </div>
             <List className={fonts.body3.regular}>
               <ul className="parent">
@@ -97,7 +99,7 @@ function TeamCreateStage3({ setStep }: SetStepType) {
                       role="button"
                       key={`${item.codeSequenceKey}+${item.codeValue}`}
                       className={clsx(
-                        formLocation.includes(item.codeSequenceKey) && { active: true, [fonts.body3.semibold]: true }
+                        formLocation === item.codeSequenceKey && { active: true, [fonts.body3.semibold]: true }
                       )}
                       onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
                     >

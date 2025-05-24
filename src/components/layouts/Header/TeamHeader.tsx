@@ -6,11 +6,13 @@ import Link from "next/link";
 import clsx from "clsx";
 import styled from "styled-components";
 
+import { flexRowGap10 } from "@/styles/container.css";
 import { atomHeaderTransparent, atomPageTitle } from "@/atom/common";
 import { RoutedHeaderContainer } from "@/components/layouts/Header/RoutedHeader";
 import Badge from "@/components/common/Badge";
 import DropdownAction from "@/components/common/input/DropdownAction";
 import HeaderMainDropdown from "@/app/(mobile)/team/_components/HeaderMainDropdown";
+import TeamHeart from "@/app/(mobile)/team/[teamId]/_components/TeamHeart";
 
 import SearchIcon from "@/assets/icon/common/Search.svg";
 
@@ -59,19 +61,23 @@ function TeamHeader({ scrollY }: Props) {
         {pathname !== "/team/find" && !!title && (
           <RightSection>
             <div className={clsx("action-menu", { hide: showList })}>
-              <DropdownAction
-                icon
-                options={[
-                  {
-                    name: "팀 관리",
-                    action: () => {
-                      router.push(`/team/${teamId}/admin`);
+              <div className={flexRowGap10}>
+                <TeamHeart teamId={`${teamId}`} />
+                <DropdownAction
+                  icon
+                  options={[
+                    {
+                      name: "팀 관리",
+                      action: () => {
+                        router.push(`/team/${teamId}/admin`);
+                      },
                     },
-                  },
-                  { name: "팀 탈퇴", action: () => {} },
-                ]}
-              />
+                    { name: "팀 탈퇴", action: () => {} },
+                  ]}
+                />
+              </div>
             </div>
+
             <div className={clsx("action-menu", { hide: !showList })}>
               <Link href="/team/find" onClick={() => setShowList(false)}>
                 <Badge type="gray" fillType="light" size="large" icon={<SearchIcon />}>

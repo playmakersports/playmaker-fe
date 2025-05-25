@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useModal from "@/hook/useModal";
 import Image from "next/image";
 import clsx from "clsx";
-import useDeviceAgent from "@/hook/useDeviceAgent";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -18,22 +17,21 @@ import {
   flexSpaceBetween,
 } from "@/styles/container.css";
 import { scheduleDetailCommentsWrapper, scheduleListItemProfile, scheduleListItemWrapper } from "./calendar.css";
+import { commentContainer, commentInput } from "@/components/common/input/container.css";
 
 import Badge from "@/components/common/Badge";
-import { SelectVoteOption } from "../../_components/RecentVoteCard";
-
 import { ScheduleItemType } from "./ScheduleList";
+import { SelectVoteOption } from "../../_components/RecentVoteCard";
+import DropdownAction from "@/components/common/input/DropdownAction";
+
 import CheckIcon from "@/assets/icon/common/Check.svg";
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
 import LocationPinIcon from "@/assets/icon/common/outlined/LocationPin.svg";
 import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 import SendIcon from "@/assets/icon/common/filled/Send.svg";
-import { commentContainer, commentInput } from "@/components/common/input/container.css";
-import DropdownAction from "@/components/common/input/DropdownAction";
 
 function ScheduleListArticle(props: ScheduleItemType) {
-  const { isAndroid } = useDeviceAgent();
   const { scheduleId, category, title, place, date, time, people } = props;
   const { ModalComponents, showModal } = useModal();
 
@@ -95,7 +93,7 @@ function ScheduleListArticle(props: ScheduleItemType) {
         onClose={() => {
           setFoldComments(true);
         }}
-        draggable={isAndroid || foldComments ? "all" : "bar"}
+        draggable="all"
         buttons={foldComments ? [{ name: "경기 내용 보러가기", onClick: () => {}, mode: "primary" }] : undefined}
       >
         <div className={flexColumnGap20}>

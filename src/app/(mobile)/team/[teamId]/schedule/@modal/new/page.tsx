@@ -91,7 +91,7 @@ function NewSchedule() {
                 { value: "훈련", name: "훈련" },
                 { value: "교류전", name: "교류전" },
                 { value: "팀 이벤트", name: "팀 이벤트" },
-                { value: "대회", name: "대회" },
+                // { value: "대회", name: "대회" },
               ]}
             />
             <div className={flexColumnGap4} style={{ gap: "8px", color: "var(--gray700)" }}>

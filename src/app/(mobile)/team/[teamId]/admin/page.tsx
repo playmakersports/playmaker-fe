@@ -1,160 +1,90 @@
 "use client";
-
-import React, { useEffect, useState } from "react";
-import styled, { keyframes } from "styled-components";
+import React from "react";
+import { useForm } from "react-hook-form";
 import { useHeader } from "@/hook/useHeader";
-import { differenceInCalendarDays } from "date-fns";
+import {
+  baseContainerPaddingTop,
+  baseDividedLineChild,
+  flexColumnGap16,
+  flexColumnGap24,
+} from "@/styles/container.css";
+import { BasicInput } from "@/components/common/input/BaseInput";
+import { TextArea } from "@/components/common/TextArea";
+import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
+import InputWrapper from "@/components/common/input/InputWrapper";
+import MainTab from "@/components/Main/MainTab";
+import Button from "@/components/common/Button";
 
-import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
-import { TEAM_INFO_MOCK } from "@/constants/mock/TEAM";
-import { BaseContainer } from "@/components/common/Container";
-import ProfileImage from "@/app/(mobile)/team/[teamId]/_components/TeamMainLogo";
-import AdminList from "@/components/Team/AdminList";
-import Badge from "@/components/common/Badge";
-
-import CheckIcon from "@/assets/icon/common/Check.svg";
-
-function AdminIndex() {
-  const [countFounded, setCountFounded] = useState(0);
-
+function TeamAdmin() {
+  const { register, watch, setValue } = useForm();
   useHeader({
     title: "팀 관리",
+    options: { titleAlign: "center" },
+    subActions: {
+      name: "저장",
+      action: () => {},
+    },
   });
-  const foundedDate = "2023-10-20";
-  useEffect(() => {
-    setCountFounded(differenceInCalendarDays(new Date(), foundedDate));
-  }, []);
+
+  const handleActiveJoin = (value: string) => {
+    setValue("activeJoin", value === "true");
+  };
 
   return (
-    <>
-      <Container>
-        <Header>
-          <ProfileImage imgSrc={TEAM_INFO_MOCK.logo} />
-          <TeamInfo>
-            <h2>{TEAM_INFO_MOCK.teamName}</h2>
-            <TeamInfoLabel>
-              <Badge type="warning">Premium</Badge>
-              <Badge type="primary" icon={<CheckIcon />}>
-                {TEAM_INFO_MOCK.univName}
-              </Badge>
-            </TeamInfoLabel>
-            <div className="team-description">
-              <p>
-                <span>Since {foundedDate.split("-").join(".")}</span>
-                <span>우리가 달려온 {countFounded}일</span>
-              </p>
-            </div>
-          </TeamInfo>
-        </Header>
-        <AdminList />
-      </Container>
-    </>
+    <section className={baseContainerPaddingTop}>
+      <div className={flexColumnGap24}>
+        <BasicInput type="text" title="팀 이름" required />
+        <TextArea title="팀 소개" required />
+        <ToggleSwitch
+          size="large"
+          text={{
+            title: "팀 공개 여부",
+            description: "팀을 다른 사람들에게 공개하시겠어요?",
+            first: true,
+            textOnlySize: "medium",
+          }}
+          showIcon
+        />
+        <div className={baseDividedLineChild} />
+        <InputWrapper title="팀 모집 설정">
+          <MainTab
+            type="filled"
+            color="gray"
+            size="medium"
+            sameWidth
+            initialValue={watch("activeJoin")}
+            nowValue={handleActiveJoin}
+            items={[
+              { value: "true", name: "모집 중" },
+              { value: "false", name: "모집 중지" },
+            ]}
+          />
+        </InputWrapper>
+        <div className={flexColumnGap16}>
+          <ToggleSwitch
+            size="large"
+            text={{
+              title: "나이 제한",
+              description: "팀에 가입할 수 있는 나이를 제한할 수 있어요.",
+              first: true,
+              textOnlySize: "medium",
+            }}
+            showIcon
+          />
+        </div>
+        <div
+          style={{
+            width: "100%",
+            height: "1px",
+            backgroundColor: "var(--gray100)",
+          }}
+        />
+        <Button type="button" mode="red" fillType="light">
+          팀 해체하기
+        </Button>
+      </div>
+    </section>
   );
 }
 
-const Container = styled(BaseContainer)`
-  padding-bottom: calc(20px + var(--env-sab));
-`;
-const Header = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
-`;
-const foundedAnimate = keyframes`
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-  20% {
-    transform: translate3d(0, 0, 0);
-  }
-  25% {
-    transform: translate3d(0, -1.8rem, 0);
-  }
-  70% {
-    transform: translate3d(0, -1.8rem, 0);
-  }
-  75% {
-    transform: translate3d(0, 0, 0);
-  }
-  100% {
-    transform: translate3d(0, 0, 0);
-  }
-`;
-
-const TeamInfo = styled.div`
-  display: flex;
-  margin-top: 4px;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  h2 {
-    ${FONTS.body1("semibold")};
-  }
-  div.team-description {
-    ${FONTS.body4("regular")};
-    color: var(--gray700);
-    height: 1.8rem;
-    overflow: hidden;
-    p {
-      animation: ${foundedAnimate} 9.5s infinite;
-      will-change: transform;
-    }
-    span {
-      display: block;
-      text-align: center;
-    }
-  }
-`;
-const TeamInfoLabel = styled.div`
-  display: flex;
-  gap: 4px;
-  font-weight: 400;
-  font-size: 1.4rem;
-  color: var(--gray700);
-
-  span {
-    display: inline-flex;
-    align-items: center;
-    font-weight: 600;
-    border-radius: 8px;
-  }
-`;
-const TeamInfoSettings = styled.div`
-  display: flex;
-  margin: 16px -4px 0;
-  padding: 0 2px;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--gray200);
-  border-radius: 10px;
-  & > button {
-    user-select: none;
-    position: relative;
-    ${FONTS.body4("regular")};
-    flex: 1;
-    padding: 12px 0;
-    font-weight: 400;
-    ${BUTTON_ACTIVE("var(--gray300)")}
-
-    &::after {
-      position: absolute;
-      content: "";
-      right: 0;
-      top: 0;
-      display: block;
-      margin: 12px 0;
-      width: 1px;
-      height: calc(100% - 24px);
-      background-color: var(--gray400);
-    }
-    &:last-of-type {
-      &::after {
-        width: 0;
-      }
-    }
-  }
-`;
-
-export default AdminIndex;
+export default TeamAdmin;

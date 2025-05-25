@@ -194,3 +194,26 @@ export const scheduleDetailCommentsWrapper = style({
     },
   },
 });
+
+export const calendarViewTypeSwitch = style({
+  display: "flex",
+  padding: "4px",
+  backgroundColor: "var(--gray50)",
+  borderRadius: "8px",
+  gap: "8px",
+});
+export const calendarViewTypeSwitchInner = style([
+  fonts.body4.medium,
+  {
+    padding: "5px 12px",
+    borderRadius: "6px",
+    color: "var(--gray500)",
+    selectors: {
+      '&[data-active="true"]': {
+        backgroundColor: "var(--white)",
+        boxShadow: "var(--shadow-xs)",
+        color: "var(--gray700)",
+      },
+    },
+  },
+]);

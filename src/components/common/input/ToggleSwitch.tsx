@@ -15,6 +15,7 @@ type Props = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size" |
     title: string;
     description?: string;
     first?: boolean;
+    textOnlySize?: "large" | "medium";
   };
 };
 
@@ -43,7 +44,7 @@ export const ToggleSwitch = React.forwardRef<HTMLInputElement, Props>(
           </div>
         </div>
         {text && (
-          <div className="text-container" data-size={size} style={{ order: text.first ? 1 : 2 }}>
+          <div className="text-container" data-size={text.textOnlySize ?? size} style={{ order: text.first ? 1 : 2 }}>
             <label className="title" htmlFor={rest.id}>
               {text.title}
             </label>

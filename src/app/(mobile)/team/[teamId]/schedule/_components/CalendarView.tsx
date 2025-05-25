@@ -9,6 +9,8 @@ import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
 
 import {
+  calendarViewTypeSwitch,
+  calendarViewTypeSwitchInner,
   weekDayButton,
   weekDayButtonDisplayValue,
   weekDayButtonScheduledBullet,
@@ -16,6 +18,7 @@ import {
   weekDayName,
   weekLineWrapper,
 } from "./calendar.css";
+import { flexAlignCenter, flexSpaceBetween } from "@/styles/container.css";
 
 import DownToggleArrow from "@/assets/icon/arrow/DownArrowToggle.svg";
 import { fonts } from "@/styles/fonts.css";
@@ -23,8 +26,10 @@ import { TEXT_ACTIVE } from "@/styles/common";
 
 type Props = {
   calendar: UseCalendarType;
+  viewWeekly: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
 };
-function MonthlyCalendarView({ calendar }: Props) {
+function CalendarView({ calendar, viewWeekly }: Props) {
+  const [showWeekly, setShowWeekly] = viewWeekly;
   const { dayList, weekCalendarList, currentDate, setCurrentDate } = calendar;
   const calendarRef = useRef<HTMLDivElement>(null);
 
@@ -69,7 +74,7 @@ function MonthlyCalendarView({ calendar }: Props) {
 
   return (
     <CalendarContainer>
-      <NowDate>
+      <NowDate className={clsx(flexAlignCenter, flexSpaceBetween)}>
         <DateSwiperSelect
           defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
           getCurrentValue={({ y, m, d }) => {
@@ -96,6 +101,14 @@ function MonthlyCalendarView({ calendar }: Props) {
             </NumberFlowGroup>
           )}
         </DateSwiperSelect>
+        <button type="button" className={calendarViewTypeSwitch} onClick={() => setShowWeekly((prev) => !prev)}>
+          <span className={calendarViewTypeSwitchInner} data-active={!showWeekly}>
+            월별
+          </span>
+          <span className={calendarViewTypeSwitchInner} data-active={showWeekly}>
+            주별
+          </span>
+        </button>
       </NowDate>
       <Days onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
         <DirectionL className={swipeDirection}>이전달</DirectionL>
@@ -111,7 +124,11 @@ function MonthlyCalendarView({ calendar }: Props) {
           {weekCalendarList.map((week, weekNum) => {
             const isActiveWeek = week.some((day) => isSameDay(day.date, currentDate));
             return (
-              <div key={weekNum} className={clsx({ "active-week": isActiveWeek }, weekLineWrapper)}>
+              <div
+                key={weekNum}
+                className={clsx({ "active-week": isActiveWeek }, weekLineWrapper)}
+                style={{ display: showWeekly && !isActiveWeek ? "none" : "flex" }}
+              >
                 {week.map((day) => (
                   <button
                     type="button"
@@ -230,4 +247,4 @@ const DirectionR = styled(MonthDirection)`
   }
 `;
 
-export default MonthlyCalendarView;
+export default CalendarView;

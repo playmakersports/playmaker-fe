@@ -1,21 +1,23 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { useParams } from "next/navigation";
 import useCalendar from "@/hook/useCalendar";
 import { useHeader } from "@/hook/useHeader";
 
-import SearchIcon from "@/assets/icon/common/Search.svg";
 import { baseDividedLine, flexColumnGap16, flexRowGap8 } from "@/styles/container.css";
 import { monthEventSummary, monthEventSummaryItems } from "./_components/calendar.css";
 import ScheduleList from "./_components/ScheduleList";
-import MonthlyCalendarView from "./_components/MonthlyCalendarView";
+import CalendarView from "./_components/CalendarView";
 import PlusFloat from "@/components/common/PlusFloat";
+import SearchIcon from "@/assets/icon/common/Search.svg";
 
 function Schedule() {
   const params = useParams();
   const teamId = params["teamId"];
   const calendar = useCalendar();
+  const viewWeekly = useState(true);
+  const isMonthly = !viewWeekly[0];
 
   useHeader({
     title: "다가오는 일정",
@@ -31,28 +33,36 @@ function Schedule() {
   return (
     <section>
       <PlusFloat linkTo={`/team/${teamId}/schedule/new`} blind="새 일정 만들기" replace={true} />
-      <MonthlyCalendarView calendar={calendar} />
-      <div className={baseDividedLine} />
-      <div className={flexColumnGap16} style={{ paddingBottom: "24px" }}>
-        <ul
-          className={clsx(monthEventSummary, flexRowGap8)}
-          style={{
-            flexWrap: "wrap",
-          }}
-        >
-          <li className={monthEventSummaryItems} data-type="훈련">
-            훈련 1
-          </li>
-          <li className={monthEventSummaryItems} data-type="교류전">
-            교류전 1
-          </li>
-          <li className={monthEventSummaryItems} data-type="팀">
-            팀 이벤트 1
-          </li>
-          <li className={monthEventSummaryItems} data-type="대회">
-            대회 1
-          </li>
-        </ul>
+      <CalendarView calendar={calendar} viewWeekly={viewWeekly} />
+      {isMonthly && <div className={baseDividedLine} />}
+      <div
+        className={flexColumnGap16}
+        style={{
+          paddingTop: isMonthly ? "0" : "8px",
+          paddingBottom: "24px",
+        }}
+      >
+        {isMonthly && (
+          <ul
+            className={clsx(monthEventSummary, flexRowGap8)}
+            style={{
+              flexWrap: "wrap",
+            }}
+          >
+            <li className={monthEventSummaryItems} data-type="훈련">
+              훈련 1
+            </li>
+            <li className={monthEventSummaryItems} data-type="교류전">
+              교류전 1
+            </li>
+            <li className={monthEventSummaryItems} data-type="팀">
+              팀 이벤트 1
+            </li>
+            <li className={monthEventSummaryItems} data-type="대회">
+              대회 1
+            </li>
+          </ul>
+        )}
         <ScheduleList
           data={[
             {

@@ -21,6 +21,7 @@ export type BottomSheetProps = {
   }[];
 };
 
+let bodyScrollLockCount = 0;
 const ANIMATION_RUNNING_TIME = 300;
 function BottomSheet(props: BottomSheetProps) {
   const { disabledDimOut = false, setShow, draggable = false, onClose, children, header, expanded, buttons } = props;
@@ -42,12 +43,22 @@ function BottomSheet(props: BottomSheetProps) {
 
   useEffect(() => {
     setMounted(true);
-    document.body.style.overflow = "hidden";
-    document.body.style.touchAction = "none";
+    bodyScrollLockCount++;
+
+    if (bodyScrollLockCount === 1) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    }
+
     return () => {
+      bodyScrollLockCount--;
       setMounted(false);
-      document.body.style.touchAction = "auto";
-      document.body.style.overflow = "auto";
+
+      // 모든 바텀시트가 닫혔을 때만 스크롤 복구
+      if (bodyScrollLockCount === 0) {
+        document.body.style.overflow = "auto";
+        document.body.style.touchAction = "auto";
+      }
     };
   }, []);
 
@@ -61,12 +72,14 @@ function BottomSheet(props: BottomSheetProps) {
   }, [mounted]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
+    e.stopPropagation();
     if (!draggable) return;
     setTouchStartY(e.touches[0].clientY);
     setIsDragging(true);
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
+    e.stopPropagation();
     if (!draggable || !isDragging) return;
 
     const deltaY = e.touches[0].clientY - touchStartY;
@@ -88,6 +101,7 @@ function BottomSheet(props: BottomSheetProps) {
     }
   };
   const handleTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation();
     if (!draggable) return;
 
     setIsDragging(false);

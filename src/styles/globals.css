@@ -155,6 +155,7 @@ a:focus-visible {
   overflow: hidden;
 }
 .scrollable-container {
+  overscroll-behavior: contain;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   touch-action: pan-y;

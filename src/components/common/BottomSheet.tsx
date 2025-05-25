@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import React, { ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import Button, { ButtonFillType, ButtonStyleMode } from "./Button";
 import { FONTS } from "@/styles/common";
 
@@ -21,7 +21,7 @@ export type BottomSheetProps = {
   }[];
 };
 
-const ANIMATION_RUNNING_TIME = 250;
+const ANIMATION_RUNNING_TIME = 300;
 function BottomSheet(props: BottomSheetProps) {
   const { disabledDimOut = false, setShow, draggable = false, onClose, children, header, expanded, buttons } = props;
   const modalRef = useRef<HTMLDivElement>(null);
@@ -62,22 +62,7 @@ function BottomSheet(props: BottomSheetProps) {
 
   const handleTouchStart = (e: React.TouchEvent) => {
     if (!draggable) return;
-
-    const startY = e.touches[0].clientY;
-    const target = e.target as HTMLElement;
-    const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
-
-    if (scrollable) {
-      const scrollTop = scrollable.scrollTop;
-      const scrollHeight = scrollable.scrollHeight;
-      const clientHeight = scrollable.clientHeight;
-
-      const isAtTop = scrollTop === 0;
-      const isAtBottom = scrollTop + clientHeight >= scrollHeight;
-      scrollable.dataset.scrollLock = JSON.stringify({ isAtTop, isAtBottom });
-    }
-
-    setTouchStartY(startY);
+    setTouchStartY(e.touches[0].clientY);
     setIsDragging(true);
   };
 
@@ -88,40 +73,37 @@ function BottomSheet(props: BottomSheetProps) {
     const target = e.target as HTMLElement;
     const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
 
-    if (scrollable && scrollable.dataset.scrollLock) {
-      const { isAtTop } = JSON.parse(scrollable.dataset.scrollLock);
-      if (deltaY > 0 && !isAtTop) {
-        return; // 바텀시트는 움직이지 않음
+    if (scrollable) {
+      // 현재 스크롤 위치
+      const isAtTop = scrollable.scrollTop === 0;
+
+      if (!isAtTop && deltaY > 0) {
+        // 스크롤이 위가 아니면 바텀시트는 움직이지 않음
+        return;
       }
     }
 
     if (deltaY > 0) {
-      setTranslateY(deltaY); // 바텀시트 이동
+      setTranslateY(deltaY);
     }
   };
-
   const handleTouchEnd = (e: React.TouchEvent) => {
     if (!draggable) return;
 
     setIsDragging(false);
-    const touchEndY = e.changedTouches[0].clientY;
-    const shouldClose = touchEndY > window.innerHeight * 0.65 && touchEndY - touchStartY > 100;
-
+    const deltaY = e.changedTouches[0].clientY - touchStartY;
     const target = e.target as HTMLElement;
     const scrollable = target.closest(".scrollable-container") as HTMLElement | null;
 
     let isAtTop = true;
-    if (scrollable?.dataset.scrollLock) {
-      try {
-        const parsed = JSON.parse(scrollable.dataset.scrollLock);
-        isAtTop = Boolean(parsed?.isAtTop);
-      } catch {
-        // 파싱 실패 시 기본값 유지
-        isAtTop = true;
-      }
+    if (scrollable) {
+      isAtTop = scrollable.scrollTop < -30;
     }
 
-    if (isAtTop && shouldClose) {
+    // 스크롤이 최상단이고, 충분히 아래로 당겨졌을 때만 닫음
+    const shouldClose = deltaY > 70 && isAtTop;
+
+    if (shouldClose) {
       closeBottomSheet();
       setTranslateY(-window.innerHeight / 2);
     } else {

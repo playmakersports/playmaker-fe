@@ -66,7 +66,7 @@ function NewSchedule() {
         onClose={() => {
           router.replace(`/team/${teamId}/schedule`);
         }}
-        draggable="bar"
+        draggable="all"
         buttons={[
           { name: "취소", onClick: (close) => close(), mode: "gray", fillType: "outline" },
           {

@@ -15,6 +15,13 @@ export const editorTextAreaContainer = style({
   width: "100%",
 });
 
+globalStyle(`${editorContainer} .tiptap p.is-editor-empty:first-child::before`, {
+  color: "var(--gray400)",
+  content: "attr(data-placeholder)",
+  float: "left",
+  height: 0,
+  pointerEvents: "none",
+});
 globalStyle(`${editorTextAreaContainer} div:focus-visible`, {
   outline: "none",
 });

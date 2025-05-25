@@ -21,7 +21,8 @@ function EditorUI({ editor, images }: Props) {
   return (
     <div className={clsx(editorContainer, flexColumnGap12)}>
       <EditorImages images={images} />
-      {editor && <EditorMenu editor={editor} />}
+      {/* NOTE: 에디터는 추후 기능 정의 후 추가 예정 */}
+      {/* {editor && <EditorMenu editor={editor} />} */}
       <div id="tiptap_Editor" className={editorTextAreaContainer}>
         {editor && (
           <EditorContent

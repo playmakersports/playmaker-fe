@@ -22,7 +22,9 @@ import {
 import { fonts } from "@/styles/fonts.css";
 
 function EditorView() {
-  const { editor, images } = useEditorHandler();
+  const { editor, images } = useEditorHandler({
+    placeholder: "내용을 입력해주세요...",
+  });
   const { mutate, data, isError, error, isPending } = usePost("/api/board/create", "form-data");
   const onSubmit = async () => {
     mutate({
@@ -63,7 +65,6 @@ function EditorView() {
   const searchParams = useSearchParams();
   const teamId = params["teamId"];
   const type = searchParams.get("type");
-  const via = searchParams.get("via");
 
   const [category, setCategory] = useState("");
   const [title, setTitle] = useState("");

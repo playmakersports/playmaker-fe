@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import Placeholder from "@tiptap/extension-placeholder";
 import TextAlign from "@tiptap/extension-text-align";
 import Highlight from "@tiptap/extension-highlight";
 import Underline from "@tiptap/extension-underline";
 
 type Props = {
   initialContent?: string;
+  placeholder?: string;
 };
 export type EditorOptionalStateControl<T> = {
   getter: () => T;
@@ -14,7 +16,7 @@ export type EditorOptionalStateControl<T> = {
 };
 export type EditorImageType = { list: string[]; position: "TOP" | "BOTTOM" };
 
-export const useEditorHandler = ({ initialContent }: Props = {}) => {
+export const useEditorHandler = ({ initialContent, placeholder }: Props = {}) => {
   const [imagesValue, setImages] = useState<EditorImageType>({
     list: [],
     position: "TOP",
@@ -30,6 +32,9 @@ export const useEditorHandler = ({ initialContent }: Props = {}) => {
     content: initialContent ?? "",
     extensions: [
       StarterKit,
+      Placeholder.configure({
+        placeholder,
+      }),
       Underline,
       TextAlign.configure({
         types: ["heading", "paragraph"],

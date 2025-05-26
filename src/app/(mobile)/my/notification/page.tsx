@@ -5,13 +5,13 @@ import { useHeader } from "@/hook/useHeader";
 import { useForm } from "react-hook-form";
 import {
   baseContainerPaddingTop,
+  baseDividedLineChild,
   flexColumnGap20,
   flexColumnGap24,
   flexColumnGap4,
   flexRowGap10,
 } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
-import { WhiteSectionDivider } from "@/components/common/Container";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 import { settingsMyNotificationItem } from "../_components/userSetting.css";
 
@@ -63,7 +63,7 @@ function NotificationSetting() {
           내 활동에 대한 알림을 보내드려요.
         </p>
       </div>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={flexColumnGap20}>
         {notificationList.map((noti) => (
           <div key={noti.registerName} className={clsx(settingsMyNotificationItem, flexRowGap10)}>

@@ -5,13 +5,13 @@ import { useHeader } from "@/hook/useHeader";
 import { differenceInCalendarDays } from "date-fns";
 import {
   baseContainerPaddingTop,
+  baseDividedLineChild,
   flexColumnGap20,
   flexColumnGap24,
   flexColumnGap4,
   flexRowGap10,
 } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
-import { WhiteSectionDivider } from "@/components/common/Container";
 import { settingsMyNotificationItem } from "../_components/userSetting.css";
 import Badge from "@/components/common/Badge";
 
@@ -53,7 +53,7 @@ function ServiceNotice() {
           플레이어메이커의 다양한 공지사항을 안내드려요.
         </p>
       </div>
-      <WhiteSectionDivider $child />
+      <div className={baseDividedLineChild} />
       <div className={flexColumnGap20}>
         {noticeList.map((noti) => (
           <div key={noti.articleId} className={clsx(settingsMyNotificationItem, flexRowGap10)}>

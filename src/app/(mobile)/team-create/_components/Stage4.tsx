@@ -9,7 +9,7 @@ import MainTab from "@/components/Main/MainTab";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 
 function TeamCreateStage4({ setStep }: SetStepType) {
-  const { setValue, watch } = useFormContext();
+  const { register, setValue, watch } = useFormContext();
 
   const handleGender = (value: string) => {
     setValue("gender", value);
@@ -42,20 +42,37 @@ function TeamCreateStage4({ setStep }: SetStepType) {
               size="large"
               text={{ title: "성별 제한", description: "팀에 가입할 수 있는 성별을 제한할 수 있어요.", first: true }}
               showIcon
+              {...register("genderRestrict")}
             />
-            <MainTab
-              type="filled"
-              color="gray"
-              size="medium"
-              sameWidth
-              initialValue={watch("gender")}
-              nowValue={handleGender}
-              items={[
-                { value: "FEMALE", name: "여성" },
-                { value: "MALE", name: "남성" },
-              ]}
-            />
+            <div
+              style={
+                watch("genderRestrict")
+                  ? undefined
+                  : {
+                      pointerEvents: "none",
+                      opacity: 0.55,
+                    }
+              }
+            >
+              <MainTab
+                type="filled"
+                color="gray"
+                size="medium"
+                sameWidth
+                initialValue={watch("gender")}
+                nowValue={handleGender}
+                items={[
+                  { value: "FEMALE", name: "여성" },
+                  { value: "MALE", name: "남성" },
+                ]}
+              />
+            </div>
           </div>
+          <ToggleSwitch
+            size="large"
+            text={{ title: "기수제 운영", description: "팀 소속 선수를 기수로 관리할 수 있어요.", first: true }}
+            showIcon
+          />
         </div>
       </div>
     </StageWrapper>

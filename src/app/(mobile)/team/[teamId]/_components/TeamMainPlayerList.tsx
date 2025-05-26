@@ -1,5 +1,5 @@
 import React from "react";
-import PlayerListItem from "./PlayerListItem";
+import PlayerListItem from "./TeamMainPlayerListItem";
 
 function TeamMainPlayerList() {
   return (

@@ -21,6 +21,12 @@ export const teamMainTopInfoList = style({
   gap: "12px",
   backdropFilter: "blur(5px)",
   backgroundColor: "rgba(0,0,0,0.1)",
+  "@media": {
+    "screen and (max-width: 360px)": {
+      padding: "12px 8px",
+      gap: "6px",
+    },
+  },
 });
 export const teamMainTopInfoListItem = style([
   fonts.caption1.regular,
@@ -30,6 +36,11 @@ export const teamMainTopInfoListItem = style([
     alignItems: "center",
     color: "var(--white)",
     opacity: "0.85",
+    "@media": {
+      "screen and (max-width: 360px)": {
+        fontSize: "1.15rem !important",
+      },
+    },
   },
 ]);
 globalStyle(`${teamMainTopInfoListItem} > svg`, {

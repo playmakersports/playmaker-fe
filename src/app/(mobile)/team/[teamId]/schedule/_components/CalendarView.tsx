@@ -72,6 +72,13 @@ function CalendarView({ calendar, viewWeekly }: Props) {
     }
   };
 
+  const handleSwitchViewType = () => {
+    if (window.navigator) {
+      window.navigator.vibrate?.([5, 25, 9]);
+    }
+    setShowWeekly((prev) => !prev);
+  };
+
   return (
     <CalendarContainer>
       <NowDate className={clsx(flexAlignCenter, flexSpaceBetween)}>
@@ -101,7 +108,7 @@ function CalendarView({ calendar, viewWeekly }: Props) {
             </NumberFlowGroup>
           )}
         </DateSwiperSelect>
-        <button type="button" className={calendarViewTypeSwitch} onClick={() => setShowWeekly((prev) => !prev)}>
+        <button type="button" className={calendarViewTypeSwitch} onClick={handleSwitchViewType}>
           <span className={calendarViewTypeSwitchInner} data-active={!showWeekly}>
             월별
           </span>

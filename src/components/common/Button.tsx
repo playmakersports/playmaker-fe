@@ -5,7 +5,7 @@ import { FONTS } from "@/styles/common";
 export type ButtonStyleMode = "primary" | "gray" | "success" | "info" | "warning" | "red";
 export type ButtonFillType = "default" | "light" | "outline";
 type ButtonStyledObject = { background: string; color: string; border: string };
-type ButtonSizeType = "small" | "medium" | "large";
+type ButtonSizeType = "xsmall" | "small" | "medium" | "large" | "xlarge";
 
 type Props = {
   fillType?: ButtonFillType;
@@ -49,6 +49,7 @@ function Button(props: Props) {
       style={{
         padding: isOnlyIcon ? BUTTON_SIZE_STYLED[size].onlyIconPadding : BUTTON_SIZE_STYLED[size].padding,
         height: BUTTON_SIZE_STYLED[size].height,
+        borderRadius: size === "xlarge" ? "10px" : "8px",
       }}
     >
       <span>
@@ -84,7 +85,6 @@ const Wrapper = styled.button<ButtonStyled>`
   ${({ flex }) => (flex ? `flex: ${flex}` : "")};
   width: ${({ $fullWidth }) => ($fullWidth ? "100%" : "auto")};
   border: ${({ mode }) => `1px solid ${mode.border}`};
-  border-radius: 10px;
   background-color: ${({ mode }) => mode.background};
   color: ${({ mode }) => mode.color};
   white-space: nowrap;
@@ -112,6 +112,11 @@ const Wrapper = styled.button<ButtonStyled>`
       border-color: var(--gray200);
     }
   }
+  &:active {
+    &[data-fill-type="outline"] {
+      background-color: ${({ mode }) => mode.border.replace(/(\d+)/, "50")};
+    }
+  }
   &:active > span {
     transform: scale(0.95);
     transition: all 0.25s;
@@ -130,23 +135,37 @@ const Wrapper = styled.button<ButtonStyled>`
 `;
 
 const BUTTON_SIZE_STYLED = {
+  xsmall: {
+    font: FONTS.caption1("medium"),
+    padding: "8px 12px",
+    height: "34px",
+    iconSize: "20px",
+    onlyIconPadding: "6px",
+  },
   small: {
+    font: FONTS.body4("medium"),
+    padding: "8px 12px",
+    height: "36px",
+    iconSize: "20px",
+    onlyIconPadding: "8px",
+  },
+  medium: {
     font: FONTS.body4("medium"),
     padding: "10px 16px",
     height: "40px",
     iconSize: "20px",
     onlyIconPadding: "10px",
   },
-  medium: {
+  large: {
     font: FONTS.body3("medium"),
-    padding: "10px 18px",
+    padding: "10px 16px",
     height: "44px",
     iconSize: "24px",
     onlyIconPadding: "10px",
   },
-  large: {
+  xlarge: {
     font: FONTS.body3("medium"),
-    padding: "10px 20px",
+    padding: "12px 18px",
     height: "48px",
     iconSize: "24px",
     onlyIconPadding: "12px",

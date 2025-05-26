@@ -23,7 +23,7 @@ import DropdownInput from "@/components/common/input/DropdownInput";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 import DateInput from "@/components/common/DateInput";
 import TimeInput from "@/components/common/input/TimeInput";
-import TeamFindList from "../../_components/TeamFindList";
+import TeamFindList from "../_components/TeamFindList";
 
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
 import LocationPinIcon from "@/assets/icon/common/outlined/LocationPin.svg";

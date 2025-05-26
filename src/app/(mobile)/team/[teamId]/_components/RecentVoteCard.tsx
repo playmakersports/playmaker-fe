@@ -38,7 +38,7 @@ function RecentVoteCard({ voteId, scheduleId, title, content, date }: Props) {
   return (
     <>
       <Link
-        href={`/team/${teamId}/schedule/${scheduleId}`}
+        href={`/team/${teamId}/schedule?feat=view|${scheduleId}`}
         className={clsx(flexRowGap10, teamMainRecentVoteCardDateHeader, flexAlignCenter)}
         style={{ justifyContent: "space-between" }}
       >

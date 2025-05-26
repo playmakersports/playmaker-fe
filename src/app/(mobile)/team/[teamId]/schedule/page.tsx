@@ -32,7 +32,7 @@ function Schedule() {
 
   return (
     <section>
-      <PlusFloat linkTo={`/team/${teamId}/schedule/new`} blind="새 일정 만들기" replace={true} />
+      <PlusFloat linkTo={`/team/${teamId}/schedule?feat=new`} blind="새 일정 만들기" replace={true} />
       <CalendarView calendar={calendar} viewWeekly={viewWeekly} />
       {isMonthly && <div className={baseDividedLine} />}
       <div

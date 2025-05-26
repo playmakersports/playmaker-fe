@@ -31,8 +31,8 @@ function TeamWeeklyCalender(props: Props) {
   const params = useParams();
   const teamId = params["teamId"];
 
-  const moveSchedule = () => {
-    router.push(`/team/${teamId}/schedule`);
+  const moveSchedule = (scheduleId: string) => {
+    router.push(`/team/${teamId}/schedule?feat=view|${scheduleId}`);
   };
 
   useEffect(() => {
@@ -58,7 +58,7 @@ function TeamWeeklyCalender(props: Props) {
         {schedulesList.map((schedule, index) => {
           const diffDays = differenceInDays(new Date(), new Date(schedule.startDate));
           return (
-            <li key={index} onClick={moveSchedule} className={teamMainScheduleItem}>
+            <li key={index} onClick={() => moveSchedule(schedule.scheduleId)} className={teamMainScheduleItem}>
               <div className="head-line">
                 <Chip type="primary" fillType="light">
                   {schedule.scheduleCategory}

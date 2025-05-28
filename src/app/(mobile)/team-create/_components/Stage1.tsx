@@ -16,7 +16,7 @@ function TeamCreateStage1({ setStep }: SetStepType) {
   };
 
   return (
-    <StageWrapper start={true} onClickNext={handleNextStep} length={4} current={1} disableNext={!watch("sports")}>
+    <StageWrapper start={true} onClickNext={handleNextStep} length={5} current={1} disableNext={!watch("sports")}>
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>종목을 선택해 주세요</h3>

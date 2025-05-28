@@ -10,9 +10,10 @@ import TeamCreateStage1 from "./_components/Stage1";
 import TeamCreateStage2 from "./_components/Stage2";
 import TeamCreateStage3 from "./_components/Stage3";
 import TeamCreateStage4 from "./_components/Stage4";
+import TeamCreateStage5 from "./_components/Stage5";
 import TeamCreateWelcome from "./_components/Welcome";
 
-const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Welcome"];
+const stages = ["Stage1", "Stage2", "Stage3", "Stage4", "Stage5", "Welcome"];
 function TeamCreate() {
   const popup = usePopup();
   const router = useRouter();
@@ -54,6 +55,9 @@ function TeamCreate() {
         </Step>
         <Step name={stages[3]}>
           <TeamCreateStage4 setStep={setStep} />
+        </Step>
+        <Step name={stages[4]}>
+          <TeamCreateStage5 setStep={setStep} />
         </Step>
         <Step name={stages[4]}>
           <TeamCreateWelcome />

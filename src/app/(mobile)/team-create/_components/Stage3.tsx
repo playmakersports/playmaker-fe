@@ -1,24 +1,54 @@
-import React, { useState } from "react";
-import clsx from "clsx";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
-import { useGet } from "@/apis/hook/query";
 
-import { ApiCodeArea } from "@/apis/types/code";
 import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
-import { fonts } from "@/styles/fonts.css";
 import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
-import Loading from "@/components/common/Loading";
-import Chip from "@/components/common/Chip";
+import { convertWebpImage } from "@/util/webp";
 
-interface LocationType {
-  key: string | null;
-  name: string;
-}
+import ImageIcon from "@/assets/icon/common/filled/Image.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
+import { flexColumnGap40 } from "@/styles/container.css";
+import InputWrapper from "@/components/common/input/InputWrapper";
 
 function TeamCreateStage3({ setStep }: SetStepType) {
-  const { setValue, watch } = useFormContext();
-  const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { isValid },
+  } = useFormContext();
+  const [previewImage, setPreviewImage] = useState("");
+
+  const handlePreviewImg = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.currentTarget.files?.[0];
+    if (!file) return;
+
+    try {
+      const webpBlob = await convertWebpImage(file, { maxWidth: 600, quality: 0.8 });
+      const webpFile = new File([webpBlob], "team_logo.webp", { type: "image/webp" });
+      const previewBase64 = URL.createObjectURL(webpBlob);
+      setPreviewImage(previewBase64);
+      setValue("teamLogo", webpFile);
+    } catch (error) {
+      console.error("Error converting image to WebP:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (watch("teamLogo")) {
+      const file = watch("teamLogo");
+      const reader = new FileReader();
+      if (file) {
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          if (reader.result) {
+            setPreviewImage(reader.result.toString());
+          }
+        };
+      }
+    }
+  }, []);
 
   const handlePrevStep = () => {
     setStep("Stage2");
@@ -27,168 +57,152 @@ function TeamCreateStage3({ setStep }: SetStepType) {
     setStep("Stage4");
   };
 
-  const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
-  const formLocation = watch("location");
-  const formLocationDisplayValues = {
-    key: formLocation?.key ?? null,
-    name: findAreaByCodeSequenceKey(data, formLocation?.key)?.text ?? "",
-  };
-  const [location, setLocation] = useState<LocationType | undefined>(formLocationDisplayValues);
-
-  const onClickLocation = (locationKey: string, name: string) => {
-    setLocation({ key: locationKey, name: `${sido.name} ${name}` });
-    setValue("location", locationKey);
-  };
-
-  const onRemoveLocation = () => {
-    setLocation(undefined);
-    setValue("location", "");
-  };
+  const COLOR_LIST = [
+    "FE110F",
+    "E35B62",
+    "FF480A",
+    "FFB813",
+    "FFD878",
+    "124DFF",
+    "07D9CC",
+    "66F51F",
+    "0FFF9B",
+    "0B8585",
+    "6512FF",
+    "BF61FD",
+    "D518F2",
+    "F866D9",
+    "cbd5e1",
+  ];
 
   return (
-    <StageWrapper onClickPrev={handlePrevStep} onClickNext={handleNextStep} length={4} current={3}>
-      <div className={stageFormWrapper} style={{ overflow: "hidden", margin: "0 -16px", padding: "0 16px" }}>
-        <div style={{ marginBottom: "-4px" }}>
-          <h3 className={stageWrapper.title}>팀의 활동 지역을 선택해 주세요</h3>
-          <p className={stageWrapper.description}>주로 운동하시는 지역을 1곳 선택해주세요</p>
+    <StageWrapper
+      onClickPrev={handlePrevStep}
+      onClickNext={handleNextStep}
+      length={5}
+      current={3}
+      disableNext={!!watch("watch")}
+    >
+      <div className={stageFormWrapper}>
+        <div>
+          <h3 className={stageWrapper.title}>팀 로고와 색상을 선택해 주세요</h3>
+          <p className={stageWrapper.description}>팀을 대표하는 이미지와 색을 선택해 주세요!</p>
         </div>
-        {isLoading ? (
-          <div style={{ marginTop: "32px" }}>
-            <Loading />
-          </div>
-        ) : (
-          <Location>
-            <div className="location-selected">
-              {formLocation && (
-                <Chip
-                  type="primary"
-                  fillType="light"
-                  size="large"
-                  closeAction={() => {
-                    onRemoveLocation();
+        <div className={flexColumnGap40}>
+          <ImageUpload htmlFor="profileImgUpload">
+            {previewImage ? <PreviewImg src={previewImage} /> : <ImageIcon />}
+            <div className="camera-icon-wrapper">
+              <PlusIcon />
+            </div>
+          </ImageUpload>
+          <InputWrapper title="팀 색상" required>
+            <ColorWrapper>
+              {COLOR_LIST.map((color) => (
+                <label
+                  key={color}
+                  style={{
+                    backgroundColor: `#${color}`,
                   }}
                 >
-                  {location?.name}
-                </Chip>
-              )}
-            </div>
-            <List className={fonts.body3.regular}>
-              <ul className="parent">
-                {data?.map((item) => {
-                  const parent = item.parent;
-                  return (
-                    <li
-                      key={parent.codeSequenceKey}
-                      onClick={() => setSido({ key: parent.codeSequenceKey, name: parent.codeValue })}
-                      className={clsx({
-                        active: sido.key === parent.codeSequenceKey,
-                        [fonts.body3.semibold]: sido.key === parent.codeSequenceKey,
-                      })}
-                      role="button"
-                    >
-                      {parent.codeValue}
-                    </li>
-                  );
-                })}
-              </ul>
-              <ul className="child">
-                {data
-                  ?.find((item) => item.parent.codeSequenceKey === sido.key)
-                  ?.child?.map((item) => (
-                    <li
-                      role="button"
-                      key={`${item.codeSequenceKey}+${item.codeValue}`}
-                      className={clsx(
-                        formLocation === item.codeSequenceKey && { active: true, [fonts.body3.semibold]: true }
-                      )}
-                      onClick={() => onClickLocation(item.codeSequenceKey, item.codeValue)}
-                    >
-                      {item.codeValue}
-                    </li>
-                  ))}
-              </ul>
-            </List>
-          </Location>
-        )}
+                  <input
+                    type="radio"
+                    style={{ display: "none" }}
+                    value={color}
+                    {...register("teamColor", { required: true })}
+                  />
+                </label>
+              ))}
+            </ColorWrapper>
+          </InputWrapper>
+        </div>
+        <input
+          style={{ display: "none" }}
+          type="file"
+          accept="image/*"
+          id="profileImgUpload"
+          {...register("teamLogo", {
+            onChange: handlePreviewImg,
+          })}
+        />
       </div>
     </StageWrapper>
   );
 }
 
-const Location = styled.div`
-  overflow: hidden;
-  flex: 1;
+const ImageUpload = styled.label`
+  cursor: pointer;
+  position: relative;
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 0 -16px;
-  border-bottom: 1px solid var(--gray200);
-  div.location-selected {
-    display: inline-flex;
-    padding: 0 16px;
-    gap: 12px;
-  }
-`;
-const List = styled.div`
-  overflow: hidden;
-  flex: 1;
-  display: flex;
+  margin: 0 auto;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background-color: var(--gray50);
+  border: 4px solid var(--background-light);
+  outline: 4px solid var(--gray300);
+  align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--gray200);
+  user-select: none;
 
-  & > ul {
-    flex: 1;
-
-    &.parent {
-      background-color: var(--gray50);
-      border-right: 1px solid var(--gray200);
-      & li {
-        color: var(--gray400);
-        &.active {
-          background-color: var(--white);
-          color: var(--primary500);
-          &:active {
-            background-color: var(--white);
-          }
-        }
-        &:active {
-          background-color: var(--gray100);
-        }
-      }
-    }
-
-    &.child {
-      overflow-y: auto;
-      & li {
-        color: var(--gray500);
-        &.active {
-          color: var(--primary500);
-        }
-        &:active {
-          background-color: var(--primary50);
-        }
-      }
+  svg {
+    width: 36px;
+    height: 36px;
+    fill: var(--gray300);
+  }
+  .camera-icon-wrapper {
+    position: absolute;
+    display: flex;
+    right: -10px;
+    top: -10px;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background-color: var(--primary500);
+    border: 2px solid var(--background-light);
+    svg {
+      width: 20px;
+      height: 20px;
+      fill: #fff;
     }
   }
-  & li {
-    cursor: pointer;
-    user-select: none;
-    padding: 12px 0;
-    text-align: center;
+
+  &:active {
+    transform: scale(0.97);
+    transition: transform 0.25s;
   }
 `;
 
-function findAreaByCodeSequenceKey(data?: ApiCodeArea, targetKey?: string | number) {
-  const item = data?.find((item) => item.child.some((child) => child.codeSequenceKey === targetKey));
+const PreviewImg = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  overflow: hidden;
+`;
 
-  if (!item) return null;
+const ColorWrapper = styled.div`
+  display: grid;
+  padding: 16px;
+  grid-template-columns: repeat(5, 1fr);
+  justify-content: space-between;
+  border-radius: 8px;
+  border: 1px solid var(--gray200);
+  gap: 24px;
 
-  const child = item?.child?.find((child) => child.codeSequenceKey === targetKey);
-  return {
-    parent: item.parent.codeValue,
-    child: child?.codeValue,
-    text: `${item.parent.codeValue} ${child?.codeValue}`,
-  };
-}
+  & > label {
+    cursor: pointer;
+    display: flex;
+    margin: 0 auto;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+
+    &:has(input:checked) {
+      outline: 3px solid var(--gray900);
+    }
+  }
+`;
 
 export default TeamCreateStage3;

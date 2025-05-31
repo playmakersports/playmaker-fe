@@ -4,30 +4,16 @@ import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
 
-import { VERCEL_BASE_URL } from "@/constants/baseUrl";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import { KAKAO_AUTH, GOOGLE_AUTH } from "@/apis/oauth";
 import Button from "@/components/common/Button";
 import LoginWrapper from "@/components/User/LoginWrapper";
 
 import KakaoLogo from "@/assets/logo/external/KakaoLogo.svg";
 import GoogleLogo from "@/assets/logo/external/GoogleLogo.svg";
+import { oAuthSignInStart } from "@/util/auth";
 
 function Login() {
   const router = useRouter();
-
-  const handleKakaoLogin = () => {
-    const REDIRECT_URI = `${VERCEL_BASE_URL}/user/login/kakao`;
-    const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY;
-    const KAKAO_URL = `${KAKAO_AUTH}?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-    window.open(KAKAO_URL, "_self");
-  };
-  const handleGoogleLogin = () => {
-    const REDIRECT_URI = `${VERCEL_BASE_URL}/user/login/google`;
-    const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
-    const GOOGLE_URL = `${GOOGLE_AUTH}?scope=email%20openid&response_type=code&redirect_uri=${REDIRECT_URI}&client_id=${GOOGLE_CLIENT_ID}`;
-    window.open(GOOGLE_URL, "_self");
-  };
 
   const handleIntroPage = () => {
     router.push("/user/apply");
@@ -48,12 +34,25 @@ function Login() {
   return (
     <LoginWrapper>
       <LoginOptions>
-        <KakaoBtn type="button" onClick={handleKakaoLogin}>
-          <KakaoLogo /> 카카오로 시작하기
-        </KakaoBtn>
-        <GoogleBtn type="button" onClick={handleGoogleLogin}>
-          <GoogleLogo /> Google로 시작하기
-        </GoogleBtn>
+        <div
+          style={{
+            display: "flex",
+            gap: "8px",
+          }}
+        >
+          <Button type="button" onClick={() => oAuthSignInStart("google")} mode="gray" fillType="light" flex={1}>
+            <GoogleLogo />
+            Google로 시작
+          </Button>
+          <Button type="button" onClick={() => oAuthSignInStart("kakao")} mode="gray" fillType="light" flex={1}>
+            <KakaoLogo />
+            카카오로 시작
+          </Button>
+          <Button type="button" onClick={() => oAuthSignInStart("apple")} mode="gray" fillType="light" flex={1}>
+            Apple로 시작
+          </Button>
+        </div>
+
         <Button type="button" mode="red" fillType="light" size="large" onClick={onClickTeamPage}>
           팀 게시판
         </Button>
@@ -77,28 +76,8 @@ const LoginOptions = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 0 12px calc(var(--env-sab) + 16px);
 `;
 
-const LoginBtn = styled.button`
-  ${FONTS.body3("regular")};
-  display: inline-flex;
-  min-height: 48px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  border: 1px solid var(--gray200);
-  gap: 10px;
-  transition: transform 0.2s;
-  &:active {
-    transform: scale(0.97);
-  }
-`;
-const KakaoBtn = styled(LoginBtn)`
-  background-color: #fee500;
-  border-color: transparent;
-`;
-const GoogleBtn = styled(LoginBtn)``;
 const StaffLogin = styled.p`
   margin-top: 32px;
   text-align: center;

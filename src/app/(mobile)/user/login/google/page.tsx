@@ -1,6 +1,7 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/session/useAuth";
+import { useSetUser } from "@/session/useSetUser";
 import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { baseBackendURL } from "@/apis";
@@ -8,6 +9,7 @@ import Loading from "@/components/common/Loading";
 
 function GoogleLogin() {
   const router = useRouter();
+  const { login } = useSetUser();
   const popup = usePopup();
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
@@ -29,6 +31,12 @@ function GoogleLogin() {
       if (data.newUserYn === "Y") {
         router.replace("/user/apply/stage?from=google");
       } else {
+        // TODO: 반영 예정
+        // login({
+        //   username: data.username,
+        //   nickname: data.nickname,
+        //   role: data.role,
+        // });
         router.replace("/");
       }
     } catch (error) {

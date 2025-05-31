@@ -4,25 +4,30 @@ import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import Portal from "@/components/common/global/Portal";
 import { flexColumnGap4 } from "@/styles/container.css";
 
+type ChildrenProps = { closeModal: () => void; setState: (value: unknown) => void };
 export type ModalProps = {
   disabledDimOut?: boolean;
   draggable?: "bar" | "all" | false;
   title?: string;
   description?: string;
-  children: ReactNode | ((closeModal: () => void) => ReactNode);
+  children: ReactNode | ((props: ChildrenProps) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
   onClose?: () => void;
   expanded?: boolean;
 };
 
-function useModal() {
+type HookProps = { key?: string };
+function useModal(props: HookProps = {}) {
   const idPrefix = useId();
   const idRef = useRef(0);
   const [modals, setModals] = useState<{ key: string; visible: boolean }[]>([]);
+  const [modalState, setModalState] = useState<Record<string, unknown>>();
+  const [key, setKey] = useState("");
 
   const showModal = () => {
-    const key = `${idPrefix}-${idRef.current++}`;
+    const key = props.key ?? `${idPrefix}-${idRef.current++}`;
     setModals((prev) => [...prev, { key, visible: true }]);
+    setKey(key);
     return key;
   };
 
@@ -65,7 +70,12 @@ function useModal() {
                   buttons={props.buttons}
                   expanded={props.expanded}
                 >
-                  {typeof props.children === "function" ? props.children(() => hideModal(key)) : props.children}
+                  {typeof props.children === "function"
+                    ? props.children({
+                        closeModal: () => hideModal(key),
+                        setState: (value) => setModalState((prev) => ({ ...prev, [key]: value })),
+                      })
+                    : props.children}
                 </BottomSheet>
               </Portal>
             ) : null
@@ -76,7 +86,7 @@ function useModal() {
     [modals]
   );
 
-  return { ModalComponents, showModal };
+  return { ModalComponents, showModal, modalState, key };
 }
 
 export default useModal;

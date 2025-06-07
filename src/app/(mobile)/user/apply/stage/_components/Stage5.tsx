@@ -31,7 +31,7 @@ function Stage5({ setStep }: SetStepType) {
             birth: formValues.birth.replaceAll("-", ""),
             sexKey: formValues.sexKey,
             activeAreas: formValues.activeAreas,
-            preferredSport: selectedSports,
+            preferredSports: selectedSports,
             selfIntro: formValues.selfIntro,
           },
           image: formValues.image,

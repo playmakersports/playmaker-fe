@@ -6,6 +6,7 @@ import { isPast } from "date-fns";
 import useModal from "@/hook/useModal";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
+import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -30,8 +31,9 @@ import LocationPinIcon from "@/assets/icon/common/outlined/LocationPin.svg";
 import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
 import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 
-function NewSchedule() {
+function EditSchedule({ scheduleId }: { scheduleId?: string | null }) {
   const router = useRouter();
+  const popup = usePopup();
   const teamId = useParams()["teamId"];
   const { ModalComponents, showModal } = useModal();
   const { ModalComponents: TeamListModalComponents, showModal: showTeamListModal } = useModal();
@@ -70,8 +72,20 @@ function NewSchedule() {
         buttons={[
           { name: "취소", onClick: (close) => close(), mode: "gray", fillType: "outline" },
           {
-            name: "저장",
-            onClick: (close) => {
+            name: "수정",
+            onClick: async (close) => {
+              const isEdit = await popup?.confirm(
+                `해당 내용으로 일정을 수정하시겠어요?\n수정 일정 적용 시, 팀원에게 알림이 전송됩니다.`,
+                {
+                  title: "일정 수정",
+                  buttonText: {
+                    yes: "네, 수정할게요",
+                    no: "취소",
+                  },
+                }
+              );
+
+              if (!isEdit) return;
               close();
               toast.trigger("일정이 저장되었습니다.", { type: "success" });
             },
@@ -209,4 +223,4 @@ function NewSchedule() {
   );
 }
 
-export default NewSchedule;
+export default EditSchedule;

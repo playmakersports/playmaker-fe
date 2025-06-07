@@ -29,6 +29,9 @@ import LocationPinIcon from "@/assets/icon/common/outlined/LocationPin.svg";
 import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 import SendIcon from "@/assets/icon/common/filled/Send.svg";
+import DeleteIcon from "@/assets/icon/common/outlined/Delete.svg";
+import PencilIcon from "@/assets/icon/common/outlined/Pencil.svg";
+import { scheduleDetailDelEditButton } from "../_components/schedule.css";
 
 function ViewSchedule({ scheduleId }: { scheduleId?: string | null }) {
   const router = useRouter();
@@ -146,10 +149,24 @@ function ViewSchedule({ scheduleId }: { scheduleId?: string | null }) {
           }}
         >
           <div className={flexColumnGap12}>
-            <div>
+            <div className={clsx(flexSpaceBetween, flexAlignCenter)}>
               <Badge size="medium" type={categoryColor[data?.category]} fillType="light">
                 {data?.category}
               </Badge>
+              <div className={clsx(flexRowGap12, flexAlignCenter)}>
+                <button
+                  type="button"
+                  className={scheduleDetailDelEditButton}
+                  onClick={() => {
+                    router.push(`/team/${teamId}/schedule?feat=edit|${scheduleId}`);
+                  }}
+                >
+                  <PencilIcon width={24} height={24} fill="var(--gray700)" />
+                </button>
+                <button type="button" className={scheduleDetailDelEditButton}>
+                  <DeleteIcon width={24} height={24} fill="var(--gray700)" />
+                </button>
+              </div>
             </div>
             <div className={flexColumnGap4} style={{ gap: "8px", color: "var(--gray700)" }}>
               <div className={fonts.body2.semibold}>{data?.title}</div>

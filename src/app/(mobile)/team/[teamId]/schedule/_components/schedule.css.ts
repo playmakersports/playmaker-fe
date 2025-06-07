@@ -27,3 +27,17 @@ export const teamFindListSelectButton = style([
     },
   },
 ]);
+export const scheduleDetailDelEditButton = style({
+  width: "24px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "4px",
+  transition: "background-color 0.2s, box-shadow 0.2s",
+  selectors: {
+    "&:active": {
+      backgroundColor: "var(--gray100)",
+      boxShadow: "0 0 0 6px var(--gray100)",
+    },
+  },
+});

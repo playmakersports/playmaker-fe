@@ -30,7 +30,7 @@ export const BottomSheetSelect = (props: Props) => {
         {children}
       </div>
       <ModalComponents draggable="all" title={title} description={description}>
-        {(closeModal) => (
+        {({ closeModal }) => (
           <ModalInner>
             <div className="dropdown-options">
               {options.map((option) => (

@@ -29,7 +29,7 @@ export const useGet = <T,>(url: string, params?: Record<string, string>, config?
 };
 
 interface MutationFnAsyncType {
-  data: unknown;
+  data: any;
   queryParams?: Record<string, string>;
 }
 export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
@@ -45,12 +45,32 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
         finalUrl += `?${queryString}`;
       }
 
-      const response = await typedPost<T>(finalUrl, data, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": CONTENT_TYPE[contentType],
-        },
+      let requestData: any = data;
+      const headers: Record<string, string> = {
+        Authorization: `Bearer ${accessToken}`,
+      };
+
+      // ✅ multipart/form-data 처리
+      if (contentType === "form-data") {
+        const formData = new FormData();
+
+        // userInfo를 문자열로 직렬화
+        formData.append("userInfo", JSON.stringify(data.userInfo));
+
+        // image가 파일 객체일 경우만 append
+        if (data.image instanceof File) {
+          formData.append("image", data.image);
+        }
+
+        requestData = formData;
+      } else {
+        headers["Content-Type"] = CONTENT_TYPE[contentType];
+      }
+
+      const response = await typedPost<T>(finalUrl, requestData, {
+        headers,
       });
+
       return response.data;
     },
     mutationKey: [url],

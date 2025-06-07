@@ -32,7 +32,7 @@ interface MutationFnAsyncType {
   data: any;
   queryParams?: Record<string, string>;
 }
-export const usePost = (url: string, contentType: ContentType = "json") => {
+export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
   const { accessToken } = useAuth();
 
   return useMutation({
@@ -54,7 +54,7 @@ export const usePost = (url: string, contentType: ContentType = "json") => {
         headers["Content-Type"] = CONTENT_TYPE[contentType];
       }
 
-      const response = await typedPost<any>(finalUrl, data, { headers });
+      const response = await typedPost<T>(finalUrl, data, { headers });
       return response.data;
     },
     mutationKey: [url],

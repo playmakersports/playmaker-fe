@@ -2,6 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/session/useAuth";
 import { useSetUser } from "@/session/useSetUser";
+import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { baseBackendURL } from "@/apis";
@@ -11,6 +12,7 @@ function GoogleLogin() {
   const router = useRouter();
   const { login } = useSetUser();
   const popup = usePopup();
+  const toast = useToast();
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
   const code = searchParams.get("code") as string;
@@ -30,6 +32,7 @@ function GoogleLogin() {
 
       if (data.newUserYn === "Y") {
         router.replace("/user/apply/stage?from=google");
+        toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
       } else {
         // TODO: 반영 예정
         // login({

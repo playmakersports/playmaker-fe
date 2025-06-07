@@ -23,7 +23,7 @@ function Stage3({ setStep }: SetStepType) {
   const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
 
   const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
-  const formLocation = watch("location") ?? [];
+  const formLocation = watch("activeAreas") ?? [];
   const formLocationDisplayValues = formLocation.map((key: string) => ({
     key,
     name: findAreaByCodeSequenceKey(data, key)?.text,
@@ -40,13 +40,13 @@ function Stage3({ setStep }: SetStepType) {
       return;
     }
     setLocations((prev) => [...prev, { key: locationKey, name: `${sido.name} ${name}` }]);
-    setValue("location", [...formLocation, locationKey]);
+    setValue("activeAreas", [...formLocation, locationKey]);
   };
 
   const onRemoveLocation = (locationKey: string) => {
     setLocations((prev) => prev.filter((location) => location.key !== locationKey));
     setValue(
-      "location",
+      "activeAreas",
       formLocation.filter((key: string) => key !== locationKey)
     );
   };

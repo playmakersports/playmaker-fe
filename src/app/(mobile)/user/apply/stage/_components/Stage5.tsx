@@ -18,16 +18,24 @@ function Stage5({ setStep }: SetStepType) {
   const popup = usePopup();
 
   const { mutateAsync, isPending } = usePost("/api/login/signup", "form-data");
-  const selectedSports = watch("sports") ?? [];
+  const selectedSports = watch("preferredSport") ?? [];
 
   const handleSubmitForm = async () => {
     const formValues = watch();
     try {
       await mutateAsync({
         data: {
+          username: formValues.username,
           contact: formValues.contact,
+          birth: formValues.birth,
+          sexKey: formValues.sexKey,
+          activeAreas: formValues.activeAreas,
+          preferredSport: selectedSports,
+          selfIntro: formValues.selfIntro,
+          image: formValues.image,
         },
       });
+      trigger("가입이 완료되었습니다.", { type: "success" });
       setStep("Welcome");
     } catch (error) {
       popup?.alert("가입에 실패했습니다. 다시 시도해주세요.", {
@@ -43,7 +51,7 @@ function Stage5({ setStep }: SetStepType) {
     setStep("Stage4");
   };
   const handleNextStep = () => {
-    // handleSubmitForm();
+    handleSubmitForm();
     setStep("Option1");
   };
 
@@ -75,7 +83,7 @@ function Stage5({ setStep }: SetStepType) {
                 id={`${item.value}+${item.name}`}
                 value={item.value}
                 style={{ display: "none" }}
-                {...register("sports", {
+                {...register("preferredSport", {
                   maxLength: 3,
                 })}
               />

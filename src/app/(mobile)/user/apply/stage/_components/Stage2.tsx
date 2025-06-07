@@ -40,7 +40,7 @@ function Stage2({ setStep }: SetStepType) {
           <h3 className={stageWrapper.title}>플레이어님의 정보를 확인할게요</h3>
           <p className={stageWrapper.description}>필수 정보를 입력해 주세요</p>
         </div>
-        <BasicInput type="text" title="이름" required {...register("name", { required: true })} />
+        <BasicInput type="text" title="이름" required {...register("username", { required: true })} />
         <DateInput title="생년월일" required {...register("birth", { required: true })} />
         <BasicInput
           type="tel"

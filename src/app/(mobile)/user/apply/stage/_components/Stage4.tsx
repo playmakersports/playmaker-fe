@@ -30,15 +30,15 @@ function Stage4({ setStep }: SetStepType) {
       const webpFile = new File([webpBlob], "profile.webp", { type: "image/webp" });
       const previewBase64 = URL.createObjectURL(webpBlob);
       setPreviewImage(previewBase64);
-      setValue("profileImg", webpFile);
+      setValue("image", webpFile);
     } catch (error) {
       console.error("Error converting image to WebP:", error);
     }
   };
 
   useEffect(() => {
-    if (watch("profileImg")) {
-      const file = watch("profileImg")[0];
+    if (watch("image")) {
+      const file = watch("image")[0];
       const reader = new FileReader();
       if (file) {
         reader.readAsDataURL(file);
@@ -77,7 +77,7 @@ function Stage4({ setStep }: SetStepType) {
             <PlusIcon />
           </div>
         </ImageUpload>
-        <BasicInput type="text" title="닉네임" required {...register("nickname", { required: true })} />
+        {/* <BasicInput type="text" title="닉네임" required {...register("nickname", { required: true })} /> */}
         <TextArea
           title="자기소개"
           placeholder={`다른 플레이어들에게 보일 자기소개를 작성해 주세요\n200자 이내 작성 가능합니다.`}
@@ -92,7 +92,7 @@ function Stage4({ setStep }: SetStepType) {
           type="file"
           accept="image/*"
           id="profileImgUpload"
-          {...register("profileImg", {
+          {...register("image", {
             onChange: handlePreviewImg,
           })}
         />

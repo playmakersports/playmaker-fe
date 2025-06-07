@@ -22,21 +22,28 @@ function Stage5({ setStep }: SetStepType) {
 
   const handleSubmitForm = async () => {
     const formValues = watch();
+
+    const formData = new FormData();
+    formData.append(
+      "userInfo",
+      JSON.stringify({
+        username: formValues.username,
+        contact: formValues.contact,
+        birth: formValues.birth.replaceAll("-", ""),
+        university: null,
+        sexKey: formValues.sexKey,
+        activeAreas: formValues.activeAreas,
+        preferredSports: selectedSports,
+        selfIntro: formValues.selfIntro,
+      })
+    );
+    if (formValues.image instanceof File) {
+      formData.append("image", formValues.image);
+    }
+
     try {
       await mutateAsync({
-        data: {
-          userInfo: {
-            username: formValues.username,
-            contact: formValues.contact,
-            birth: formValues.birth.replaceAll("-", ""),
-            university: null,
-            sexKey: formValues.sexKey,
-            activeAreas: formValues.activeAreas,
-            preferredSports: selectedSports,
-            selfIntro: formValues.selfIntro,
-          },
-          image: formValues.image,
-        },
+        data: formData,
       });
       trigger("가입이 완료되었습니다.", { type: "success" });
       setStep("Welcome");
@@ -46,7 +53,6 @@ function Stage5({ setStep }: SetStepType) {
         title: "가입 실패",
         color: "red",
       });
-      return;
     }
   };
 

@@ -32,7 +32,7 @@ interface MutationFnAsyncType {
   data: any;
   queryParams?: Record<string, string>;
 }
-export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
+export const usePost = (url: string, contentType: ContentType = "json") => {
   const { accessToken } = useAuth();
 
   return useMutation({
@@ -45,37 +45,22 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
         finalUrl += `?${queryString}`;
       }
 
-      let requestData: any = data;
       const headers: Record<string, string> = {
         Authorization: `Bearer ${accessToken}`,
       };
 
-      // ✅ multipart/form-data 처리
-      if (contentType === "form-data") {
-        const formData = new FormData();
-
-        // userInfo를 문자열로 직렬화
-        formData.append("userInfo", JSON.stringify(data.userInfo));
-
-        // image가 파일 객체일 경우만 append
-        if (data.image instanceof File) {
-          formData.append("image", data.image);
-        }
-
-        requestData = formData;
-      } else {
+      // contentType이 json이면 Content-Type 지정, form-data는 생략
+      if (contentType !== "form-data") {
         headers["Content-Type"] = CONTENT_TYPE[contentType];
       }
 
-      const response = await typedPost<T>(finalUrl, requestData, {
-        headers,
-      });
-
+      const response = await typedPost<any>(finalUrl, data, { headers });
       return response.data;
     },
     mutationKey: [url],
   });
 };
+
 export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
   const { accessToken } = useAuth();
   return useMutation({

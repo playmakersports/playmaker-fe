@@ -31,8 +31,8 @@ function GoogleLogin() {
       await setToken(data.access_token);
 
       if (data.newUserYn === "Y") {
+        // 신규 회원일 경우, 회원가입 화면으로 연결
         router.replace("/user/apply/stage?from=google");
-        toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
       } else {
         // TODO: 반영 예정
         // login({
@@ -40,6 +40,7 @@ function GoogleLogin() {
         //   nickname: data.nickname,
         //   role: data.role,
         // });
+        toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
         router.replace("/");
       }
     } catch (error) {

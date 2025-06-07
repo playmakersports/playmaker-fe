@@ -25,13 +25,15 @@ function Stage5({ setStep }: SetStepType) {
     try {
       await mutateAsync({
         data: {
-          username: formValues.username,
-          contact: formValues.contact,
-          birth: formValues.birth,
-          sexKey: formValues.sexKey,
-          activeAreas: formValues.activeAreas,
-          preferredSport: selectedSports,
-          selfIntro: formValues.selfIntro,
+          userInfo: {
+            username: formValues.username,
+            contact: formValues.contact,
+            birth: formValues.birth.replaceAll("-", ""),
+            sexKey: formValues.sexKey,
+            activeAreas: formValues.activeAreas,
+            preferredSport: selectedSports,
+            selfIntro: formValues.selfIntro,
+          },
           image: formValues.image,
         },
       });
@@ -69,7 +71,7 @@ function Stage5({ setStep }: SetStepType) {
       current={5}
       disableNext={!(selectedSports.length > 0) || selectedSports.length > 3}
     >
-      {/* {isPending && <Loading />} */}
+      {isPending && <Loading />}
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>관심 스포츠를 선택해 주세요</h3>

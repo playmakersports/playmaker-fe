@@ -77,11 +77,16 @@ export const flexSpaceBetween = style({
   justifyContent: "space-between",
   alignItems: "center",
 });
+export const flexSpaceEvenly = style({
+  display: "flex",
+  justifyContent: "space-evenly",
+  alignItems: "center",
+});
 
 export const baseCardContainerNoTrans = style({
   borderRadius: "10px",
   padding: "16px",
-  border: "1px solid var(--gray100)",
+  border: "1px solid var(--gray200)",
   transition: "all 0.2s",
 });
 export const baseCardContainer = style([

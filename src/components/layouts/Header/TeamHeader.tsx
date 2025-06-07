@@ -6,7 +6,9 @@ import Link from "next/link";
 import clsx from "clsx";
 import styled from "styled-components";
 
-import { flexRowGap10 } from "@/styles/container.css";
+import { flexAlignCenter, flexRowGap10, flexRowGap12 } from "@/styles/container.css";
+import { headerTeamTag, headerTitleTransitionShow } from "./header.css";
+
 import { atomHeaderTransparent, atomPageTitle } from "@/atom/common";
 import { RoutedHeaderContainer } from "@/components/layouts/Header/RoutedHeader";
 import Badge from "@/components/common/Badge";
@@ -46,17 +48,24 @@ function TeamHeader({ scrollY }: Props) {
         data-scrolled={isScrolled}
         style={showList ? { overflow: "hidden" } : {}}
       >
-        <div style={{ flex: 1 }}>
-          <HeaderMainDropdown
-            title={title}
-            showList={showList}
-            setShowList={setShowList}
-            list={[
-              { name: "팀 이름1", action: () => {} },
-              { name: "팀 이름2", action: () => {} },
-              { name: "팀 이름3", action: () => {} },
-            ]}
-          />
+        <div className={clsx(flexRowGap12, flexAlignCenter)} style={{ flex: 1 }}>
+          {title !== "팀 살펴보기" && (
+            <span className={headerTeamTag} data-show={!showList} data-divider={!!title}>
+              팀
+            </span>
+          )}
+          <div className={headerTitleTransitionShow} data-show={!!title}>
+            <HeaderMainDropdown
+              title={title}
+              showList={showList}
+              setShowList={setShowList}
+              list={[
+                { name: "팀 이름1", action: () => {} },
+                { name: "팀 이름2", action: () => {} },
+                { name: "팀 이름3", action: () => {} },
+              ]}
+            />
+          </div>
         </div>
         {pathname !== "/team/find" && !!title && (
           <RightSection>

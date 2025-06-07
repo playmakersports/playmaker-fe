@@ -90,3 +90,51 @@ export const headerSingleSubActionButton = style([
     },
   },
 ]);
+
+export const headerTeamTag = style([
+  fonts.body2.semibold,
+  {
+    userSelect: "none",
+    display: "flex",
+    color: "var(--gray900)",
+    gap: "12px",
+    transition: "width 0.45s, margin 0.45s, opacity 0.3s ease-in-out",
+    selectors: {
+      "&::after": {
+        display: "block",
+        margin: "5px 0",
+        content: "",
+        width: "2px",
+        backgroundColor: "var(--gray200)",
+        transition: "all 0.3s ease-in-out",
+      },
+      "&[data-divider='false']::after": {
+        opacity: 0,
+        transform: "translateX(-8px)",
+      },
+      "&[data-divider='true']::after": {
+        opacity: 1,
+        transform: "translateX(0)",
+      },
+      "&[data-show='false']": {
+        width: 0,
+        marginLeft: "-24px",
+        marginRight: "12px",
+        opacity: 0,
+      },
+    },
+  },
+]);
+export const headerTitleTransitionShow = style({
+  transition: "opacity 0.3s ease-in-out, transform 0.3s ease-in-out",
+  selectors: {
+    "&[data-show='false']": {
+      opacity: 0,
+      transform: "translateX(-8px)",
+    },
+    "&[data-show='true']": {
+      opacity: 1,
+      transform: "translateX(0)",
+    },
+  },
+});

@@ -138,7 +138,7 @@ const BUTTON_SIZE_STYLED = {
   xsmall: {
     font: FONTS.caption1("medium"),
     padding: "8px 12px",
-    height: "34px",
+    height: "32px",
     iconSize: "20px",
     onlyIconPadding: "6px",
   },

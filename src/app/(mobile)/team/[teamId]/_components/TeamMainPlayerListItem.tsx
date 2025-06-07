@@ -5,13 +5,7 @@ import clsx from "clsx";
 import { fonts } from "@/styles/fonts.css";
 import { flexRowGap8 } from "@/styles/container.css";
 
-import CrownIcon from "@/assets/icon/common/CrownCircle.svg";
-import FlagCircle from "@/assets/icon/common/FlagCircle.svg";
-import GenderFemaleIcon from "@/assets/icon/color/Gender_Female.svg";
-import GenderMaleIcon from "@/assets/icon/color/Gender_Male.svg";
-
 type Props = {
-  size?: "small" | "medium";
   playerId: string;
   name: string;
   level: number;
@@ -19,10 +13,9 @@ type Props = {
   position: string;
   birthDate: string;
   gisu?: number;
-  sex: "MALE" | "FEMALE";
 };
 function PlayerListItem(props: Props) {
-  const { size = "medium", playerId, name, level, profileImg, position, birthDate, sex, gisu } = props;
+  const { playerId, name, level, profileImg, position, birthDate, gisu } = props;
   interface ILevel {
     name: string;
     color: string;
@@ -36,28 +29,12 @@ function PlayerListItem(props: Props) {
     1: { name: "팀원", color: "", value: "member" },
   };
 
-  const GENDER_ICON = {
-    MALE: <GenderMaleIcon width={20} height={20} />,
-    FEMALE: <GenderFemaleIcon width={20} height={20} />,
-  };
-
   return (
     <Container>
-      <Image data-size={size}>
-        {level > 1 && (
-          <Staff $bgColor={LEVEL_CODE[level].color} data-size={size}>
-            {level > 3 ? <CrownIcon width={24} height={24} /> : <FlagCircle width={24} height={24} />}
-          </Staff>
-        )}
-      </Image>
+      <ProfileImage style={{ backgroundImage: `url(${profileImg})` }} />
       <Name>
-        {level > 1 && <p className={clsx(fonts.caption1.semibold, "position")}>{LEVEL_CODE[level].name}</p>}
-        <p className={clsx(fonts.body3.semibold, "player-name")}>
-          {name}
-          <span className="gender-icon" data-size={size}>
-            {GENDER_ICON[sex]}
-          </span>
-        </p>
+        {level > 1 && <p className={clsx(fonts.caption1.regular, "position")}>{LEVEL_CODE[level].name}</p>}
+        <p className={clsx(fonts.body3.semibold, "player-name")}>{name}</p>
       </Name>
       <Info className={flexRowGap8}>
         <li>
@@ -97,35 +74,17 @@ const Container = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
-const Image = styled.div`
+const ProfileImage = styled.div`
   position: relative;
-  width: 60px;
-  height: 60px;
   border-radius: 50%;
   background-color: var(--gray100);
-  &[data-size="small"] {
-    width: 48px;
-    height: 48px;
-  }
+  width: 48px;
+  height: 48px;
+  background-size: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
-const Staff = styled.div<{ $bgColor: string }>`
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  right: -8px;
-  bottom: 0;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 3px solid var(--background-light);
-  box-sizing: content-box;
-  background-color: ${({ $bgColor }) => $bgColor};
-  &[data-size="small"] {
-    display: none;
-  }
-`;
+
 const Name = styled.div`
   flex: 1;
   p.position {
@@ -133,9 +92,7 @@ const Name = styled.div`
   }
   p.player-name {
     color: var(--gray900);
-    span.gender-icon[data-size="small"] {
-      display: none;
-    }
+    word-break: keep-all;
   }
 `;
 const Info = styled.ul`
@@ -144,7 +101,7 @@ const Info = styled.ul`
     padding: 8px;
     align-items: center;
     flex-direction: column;
-    min-width: 52px;
+    min-width: 65px;
     max-width: 80px;
     background-color: var(--gray50);
     border-radius: 6px;

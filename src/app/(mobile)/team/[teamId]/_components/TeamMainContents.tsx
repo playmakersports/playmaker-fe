@@ -21,6 +21,7 @@ import RecentVote from "./RecentVote";
 import TeamMainPlayerList from "./TeamMainPlayerList";
 
 import Button from "@/components/common/Button";
+import TeamMainData from "./TeamMainData";
 
 function TeamMainContents() {
   const [weeklyDate, setWeeklyDate] = useState("");
@@ -126,7 +127,9 @@ function TeamMainContents() {
       <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>
         <GroupTitle link={`/team/${teamId}/statistics`}>팀 데이터</GroupTitle>
-        <div className={flexColumnGap12}></div>
+        <div className={flexColumnGap12}>
+          <TeamMainData />
+        </div>
       </div>
       <div className={baseDividedLineChild} />
       <div className={teamMainContentsGroup}>

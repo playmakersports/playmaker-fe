@@ -29,19 +29,24 @@ export const TeamDataRecordContainer = style([
   },
 ]);
 export const TeamDataRecordItem = style({
-  display: "inline-flex",
+  display: "flex",
+  minWidth: "80px",
+  alignItems: "center",
+  flexDirection: "column",
   gap: "5px",
   color: "var(--gray800)",
 });
-globalStyle(`${TeamDataRecordItem} > span.title`, {
-  color: "var(--gray600)",
+globalStyle(`${TeamDataRecordItem} span.title`, {
+  display: "inline-block",
+  marginRight: "5px",
+  color: "var(--gray400)",
 });
 
 export const TeamStatisticsDetailContainer = style({
   margin: "0 -16px",
-  padding: "32px var(--global-lr-padding) 20px",
-  backgroundColor: "var(--gray100)",
-  borderRadius: "20px 20px 0 0",
+  padding: "30px var(--global-lr-padding) 20px",
+  backgroundColor: "var(--white)",
+  borderRadius: "30px 30px 0 0",
 });
 export const TeamStatisticsGroupTitle = style([
   fonts.body2.semibold,
@@ -52,27 +57,23 @@ export const TeamStatisticsGroupTitle = style([
     color: "var(--gray900)",
   },
 ]);
-export const TeamStatisticsGroupCard = style({
-  padding: "12px 16px",
-  borderRadius: "10px",
-  backgroundColor: "var(--white)",
-});
 export const TeamStatisticsGroupCardItem = style([
   fonts.body4.medium,
   {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    padding: "14px 4px",
-    borderBottom: "1px solid var(--gray200)",
     color: "var(--gray800)",
-    selectors: {
-      "&:last-of-type": {
-        borderBottom: "none",
-      },
-    },
   },
 ]);
-globalStyle(`${TeamStatisticsGroupCardItem} > span.item-title`, {
+globalStyle(`${TeamStatisticsGroupCardItem} span.item-title`, {
   color: "var(--gray600)",
+});
+export const TeamStatisticsGroupHeadIconWrapper = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "32px",
+  height: "32px",
+  borderRadius: "6px",
 });

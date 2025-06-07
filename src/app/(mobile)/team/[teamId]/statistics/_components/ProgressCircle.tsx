@@ -1,19 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 
-const STROKE = 24;
-
 const ArcTrack = styled.path`
   fill: none;
-  stroke: var(--gray100);
   stroke-linecap: round;
-  stroke-width: ${STROKE / 2};
 `;
 
 const ArcProgress = styled.path`
   fill: none;
-  stroke: var(--primary500);
-  stroke-width: ${STROKE};
   stroke-linecap: round;
   transition: stroke-dashoffset 0.8s ease;
 `;
@@ -24,6 +18,8 @@ interface Props {
   direction: "left-to-right" | "right-to-left";
   rate?: number;
   children?: React.ReactNode;
+  stroke?: number | { track: number; progress: number };
+  color?: { track?: string; progress?: string };
 }
 
 function polarToCartesian(cx: number, cy: number, r: number, angleDeg: number) {
@@ -42,17 +38,23 @@ function describeArc(cx: number, cy: number, r: number, startAngle: number, endA
   return ["M", start.x, start.y, "A", r, r, 0, largeArcFlag, 1, end.x, end.y].join(" ");
 }
 
-const HalfDonutChart: React.FC<Props> = ({
+const ProgressCircle: React.FC<Props> = ({
   size = 200,
   percentage,
   rate = 0.5,
   children,
   direction = "right-to-left",
+  stroke = 24,
+  color,
 }) => {
-  const RADIUS = (size - STROKE) / 2;
+  const radiusStroke = typeof stroke === "number" ? stroke : stroke.track;
+  const strokeTrack = typeof stroke === "number" ? stroke / 2 : stroke.track;
+  const strokeProgress = typeof stroke === "number" ? stroke : stroke.progress;
+
+  const RADIUS = (size - radiusStroke) / 2;
   const CENTER = size / 2;
 
-  const arcDegrees = 360 * rate;
+  const arcDegrees = 360 * (rate === 1 ? 0.999 : rate);
   const arcLength = (Math.PI * RADIUS * arcDegrees) / 180;
   const startAngle = 90 + arcDegrees / 2;
   const endAngle = 90 - arcDegrees / 2;
@@ -71,8 +73,14 @@ const HalfDonutChart: React.FC<Props> = ({
           transform: `rotate(${(isLeftToRight ? -1 : 1) * 90}deg) scaleX(${isLeftToRight ? 1 : -1})`,
         }}
       >
-        <ArcTrack d={path} />
-        <ArcProgress d={path} strokeDasharray={arcLength} strokeDashoffset={dashOffset} />
+        <ArcTrack d={path} stroke={color?.track ?? "var(--gray100)"} strokeWidth={strokeTrack} />
+        <ArcProgress
+          d={path}
+          stroke={color?.progress ?? "var(--primary500)"}
+          strokeWidth={strokeProgress}
+          strokeDasharray={arcLength}
+          strokeDashoffset={dashOffset}
+        />
       </svg>
       <div
         style={{
@@ -92,4 +100,4 @@ const HalfDonutChart: React.FC<Props> = ({
   );
 };
 
-export default HalfDonutChart;
+export default ProgressCircle;

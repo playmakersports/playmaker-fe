@@ -6,25 +6,41 @@ import NumberFlow from "@number-flow/react";
 import { useParams } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 import { useAtomValue } from "jotai";
+import Link from "next/link";
 
 import { fonts } from "@/styles/fonts.css";
 import { atomPageTitle } from "@/atom/common";
-import { baseContainer, flexColumnGap16, flexColumnGap20, flexColumnGap40, flexRowGap10 } from "@/styles/container.css";
+import {
+  baseContainer,
+  flexAlignCenter,
+  flexColumnGap12,
+  flexColumnGap16,
+  flexColumnGap20,
+  flexColumnGap24,
+  flexColumnGap40,
+  flexRowGap10,
+} from "@/styles/container.css";
 import StatisticsHeader from "./_components/StatisticsHeader";
 import {
   ProgressCircleTrophyWrapper,
   TeamDataRecordContainer,
   TeamDataRecordItem,
   TeamStatisticsDetailContainer,
-  TeamStatisticsGroupCard,
   TeamStatisticsGroupCardItem,
+  TeamStatisticsGroupHeadIconWrapper,
   TeamStatisticsGroupTitle,
 } from "./_components/statistics.css";
 import ProgressCircle from "./_components/ProgressCircle";
 
 import TrophyIcon from "@/assets/icon/sports/filled/Trophy.svg";
+import PlusIcon from "@/assets/icon/common/Plus.svg";
+import MinusIcon from "@/assets/icon/common/Minus.svg";
+import WarningIcon from "@/assets/icon/circle/WarningOutlined.svg";
+import ClockIcon from "@/assets/icon/common/outlined/Clock.svg";
+import ThumbUpIcon from "@/assets/icon/common/filled/ThumbUp.svg";
+import ThumbDownIcon from "@/assets/icon/common/filled/ThumbDown.svg";
+import CheerIcon from "@/assets/icon/common/filled/Cheer.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
-import Link from "next/link";
 
 function Statistics() {
   const teamId = useParams()["teamId"];
@@ -36,6 +52,14 @@ function Statistics() {
   });
 
   const [value, setValue] = useState(0);
+  const data = {
+    avg: {
+      score: 60,
+      concede: 17,
+      foul: 7,
+      timeout: 3,
+    },
+  };
   useEffect(() => {
     if (title === "팀 교류전") setValue(87);
     else if (title === "팀 대회") setValue(51);
@@ -43,7 +67,7 @@ function Statistics() {
 
   return (
     <Container className={clsx(baseContainer, flexColumnGap20)}>
-      <div className={flexColumnGap16}>
+      <div className={flexColumnGap24}>
         <div className="progress-chart">
           <div className="circle-wrapper">
             <ProgressCircle size={186} percentage={value} rate={0.75} direction="right-to-left">
@@ -59,21 +83,30 @@ function Statistics() {
         </div>
         <div className={TeamDataRecordContainer}>
           <p className={TeamDataRecordItem}>
-            <span className="title">승리</span>
+            <ThumbUpIcon width={20} height={20} fill="var(--primary500)" />
             <span>
-              <NumberFlow value={value} suffix="회" />
+              <span className="title">승리</span>
+              <span>
+                <NumberFlow value={value} suffix="회" />
+              </span>
             </span>
           </p>
           <p className={TeamDataRecordItem}>
-            <span className="title">패배</span>
+            <ThumbDownIcon width={20} height={20} fill="var(--red500)" />
             <span>
-              <NumberFlow value={value} suffix="회" />
+              <span className="title">패배</span>
+              <span>
+                <NumberFlow value={value} suffix="회" />
+              </span>
             </span>
           </p>
           <p className={TeamDataRecordItem}>
-            <span className="title">무승부</span>
+            <CheerIcon width={20} height={20} fill="var(--gray400)" />
             <span>
-              <NumberFlow value={value} suffix="회" />
+              <span className="title">무승부</span>
+              <span>
+                <NumberFlow value={value} suffix="회" />
+              </span>
             </span>
           </p>
         </div>
@@ -86,29 +119,49 @@ function Statistics() {
               <RightArrowIcon width={24} height={24} fill="var(--gray700)" />
             </Link>
           </h3>
-          <ul className={TeamStatisticsGroupCard}>
+          <ul className={flexColumnGap12}>
             <li className={TeamStatisticsGroupCardItem}>
-              <span className="item-title">평균 득점</span>
+              <div className={clsx(flexRowGap10, flexAlignCenter)}>
+                <span className={TeamStatisticsGroupHeadIconWrapper} style={{ backgroundColor: "var(--success50)" }}>
+                  <PlusIcon width={24} height={24} fill="var(--success500)" />
+                </span>
+                <span className="item-title">평균 득점</span>
+              </div>
               <span>
-                <NumberFlow value={27} suffix="점" />
+                <NumberFlow value={data.avg.score} suffix="점" />
               </span>
             </li>
             <li className={TeamStatisticsGroupCardItem}>
-              <span className="item-title">평균 실점</span>
+              <div className={clsx(flexRowGap10, flexAlignCenter)}>
+                <span className={TeamStatisticsGroupHeadIconWrapper} style={{ backgroundColor: "var(--red50)" }}>
+                  <MinusIcon width={24} height={24} fill="var(--red500)" />
+                </span>
+                <span className="item-title">평균 실점</span>
+              </div>
               <span>
-                <NumberFlow value={27} suffix="점" />
+                <NumberFlow value={data.avg.concede} suffix="점" />
               </span>
             </li>
             <li className={TeamStatisticsGroupCardItem}>
-              <span className="item-title">평균 파울</span>
+              <div className={clsx(flexRowGap10, flexAlignCenter)}>
+                <span className={TeamStatisticsGroupHeadIconWrapper} style={{ backgroundColor: "var(--warning50)" }}>
+                  <WarningIcon width={24} height={24} fill="var(--warning500)" />
+                </span>
+                <span className="item-title">평균 파울</span>
+              </div>
               <span>
-                <NumberFlow value={27} suffix="회" />
+                <NumberFlow value={data.avg.foul} suffix="회" />
               </span>
             </li>
             <li className={TeamStatisticsGroupCardItem}>
-              <span className="item-title">평균 타임아웃</span>
+              <div className={clsx(flexRowGap10, flexAlignCenter)}>
+                <span className={TeamStatisticsGroupHeadIconWrapper} style={{ backgroundColor: "var(--purple50)" }}>
+                  <ClockIcon width={24} height={24} fill="var(--purple500)" />
+                </span>
+                <span className="item-title">평균 타임아웃</span>
+              </div>
               <span>
-                <NumberFlow value={3} suffix="회" />
+                <NumberFlow value={data.avg.timeout} suffix="회" />
               </span>
             </li>
           </ul>
@@ -120,7 +173,7 @@ function Statistics() {
               <RightArrowIcon width={24} height={24} fill="var(--gray700)" />
             </Link>
           </h3>
-          <ul className={TeamStatisticsGroupCard}>
+          <ul className={flexColumnGap12}>
             <li className={TeamStatisticsGroupCardItem}>
               <span className="item-title">득점</span>
               <span className={flexRowGap10}>
@@ -164,6 +217,9 @@ function Statistics() {
 }
 
 const Container = styled.div`
+  background-color: var(--gray100);
+  background: linear-gradient(to bottom, var(--background-light) 0%, var(--gray100) 8%);
+
   div.progress-chart {
     position: relative;
     margin: 20px auto 0;

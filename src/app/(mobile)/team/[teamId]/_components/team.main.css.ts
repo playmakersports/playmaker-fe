@@ -1,4 +1,4 @@
-import { innerChildContainer } from "@/styles/container.css";
+import { flexAlignCenter, flexRowGap10, innerChildContainer } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { hexToRgb } from "@/util/common";
 import { globalStyle, style } from "@vanilla-extract/css";
@@ -206,4 +206,23 @@ export const teamMainBoardListImage = style({
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
   overflow: "hidden",
+});
+
+export const teamMainDataCardTitle = style([
+  flexRowGap10,
+  flexAlignCenter,
+  {
+    borderBottom: "1px dashed var(--gray200)",
+    paddingBottom: "12px",
+  },
+]);
+export const teamMainDataSummary = style({
+  flex: 1,
+  maxWidth: "55px",
+  textAlign: "center",
+});
+globalStyle(`${teamMainDataSummary} svg`, {
+  width: "20px",
+  height: "20px",
+  marginBottom: "12px",
 });

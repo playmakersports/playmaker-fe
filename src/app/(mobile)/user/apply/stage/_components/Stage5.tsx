@@ -29,6 +29,7 @@ function Stage5({ setStep }: SetStepType) {
             username: formValues.username,
             contact: formValues.contact,
             birth: formValues.birth.replaceAll("-", ""),
+            university: null,
             sexKey: formValues.sexKey,
             activeAreas: formValues.activeAreas,
             preferredSports: selectedSports,

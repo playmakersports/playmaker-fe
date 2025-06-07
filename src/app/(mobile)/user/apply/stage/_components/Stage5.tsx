@@ -22,21 +22,19 @@ function Stage5({ setStep }: SetStepType) {
 
   const handleSubmitForm = async () => {
     const formValues = watch();
-
     const formData = new FormData();
-    formData.append(
-      "userInfo",
-      JSON.stringify({
-        username: formValues.username,
-        contact: formValues.contact,
-        birth: formValues.birth.replaceAll("-", ""),
-        university: null,
-        sexKey: formValues.sexKey,
-        activeAreas: formValues.activeAreas,
-        preferredSports: selectedSports,
-        selfIntro: formValues.selfIntro,
-      })
-    );
+    const userInfo = {
+      username: formValues.username,
+      contact: formValues.contact,
+      birth: formValues.birth.replaceAll("-", ""),
+      university: null,
+      sexKey: formValues.sexKey,
+      activeAreas: formValues.activeAreas,
+      preferredSports: selectedSports,
+      selfIntro: formValues.selfIntro,
+    };
+
+    formData.append("userInfo", new Blob([JSON.stringify(userInfo)], { type: "application/json" }));
     if (formValues.image instanceof File) {
       formData.append("image", formValues.image);
     }

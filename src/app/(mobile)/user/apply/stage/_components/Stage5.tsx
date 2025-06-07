@@ -43,7 +43,6 @@ function Stage5({ setStep }: SetStepType) {
       await mutateAsync({
         data: formData,
       });
-      trigger("가입이 완료되었습니다.", { type: "success" });
       setStep("Welcome");
     } catch (error) {
       popup?.alert("가입에 실패했습니다. 다시 시도해주세요.", {
@@ -59,7 +58,6 @@ function Stage5({ setStep }: SetStepType) {
   };
   const handleNextStep = () => {
     handleSubmitForm();
-    setStep("Option1");
   };
 
   useEffect(() => {
@@ -70,6 +68,7 @@ function Stage5({ setStep }: SetStepType) {
 
   return (
     <StageWrapper
+      last={true}
       onClickPrev={handlePrevStep}
       onClickNext={handleNextStep}
       length={5}

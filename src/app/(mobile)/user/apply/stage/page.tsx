@@ -80,7 +80,7 @@ function JoinStage() {
           <OptionalStage2 setStep={setStep} />
         </Step>
         <Step name={stages[7]}>
-          <Welcome />
+          <Welcome setStep={setStep} />
         </Step>
       </Funnel>
     </FormProvider>

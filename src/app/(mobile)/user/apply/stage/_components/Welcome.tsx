@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
+import clsx from "clsx";
 import styled, { keyframes } from "styled-components";
 
+import { SetStepType } from "./StageWrapper";
 import { fonts } from "@/styles/fonts.css";
 import { stageWelcomeContainer } from "./stage.css";
 import Button from "@/components/common/Button";
@@ -11,12 +13,19 @@ import Button from "@/components/common/Button";
 import MaleCharacter from "@/assets/character/character_boy_happy.png";
 import FemaleCharacter from "@/assets/character/character_girl_happy.png";
 
-function Welcome() {
+function Welcome({ setStep }: SetStepType) {
   const { watch } = useFormContext();
+  const [textPhase, setTextPhase] = useState(1);
   const router = useRouter();
   const gender = watch("sexKey");
-  const username = watch("name");
+  const username = watch("username");
   const WELCOME_TEXT = ["이제 뛰어볼까", "너의 스포츠 정신을 보여줘", "지금부터 시작이야", "할 수 있어"];
+
+  useEffect(() => {
+    setTimeout(() => {
+      setTextPhase(2);
+    }, 1500);
+  }, []);
 
   return (
     <div className={stageWelcomeContainer}>
@@ -40,15 +49,20 @@ function Welcome() {
           {gender === "MALE" && <Image src={MaleCharacter} alt="" width={170} aria-disabled />}
           {gender === "FEMALE" && <Image src={FemaleCharacter} alt="" width={170} aria-disabled />}
         </Character>
-        <HeadText className={fonts.head6.semibold}>
-          {username} 님,
-          <br />
-          만나서 반가워요!
+        <HeadText className={fonts.head5.semibold}>
+          <div className={clsx("phase", { show: textPhase === 1 })}>
+            <p>{username} 님</p>
+            <p>만나서 반가워요!</p>
+          </div>
+          <div className={clsx("phase", { show: textPhase === 2 })}>
+            <p>운동 경력과 스포츠 정보로</p>
+            <p>팀을 추천해드릴게요</p>
+          </div>
         </HeadText>
       </div>
       <div>
-        <Button type="button" size="large" fullWidth onClick={() => router.replace("/")}>
-          시작하기
+        <Button type="button" size="large" fullWidth onClick={() => setStep("Option1")}>
+          다음
         </Button>
       </div>
     </div>
@@ -58,7 +72,7 @@ function Welcome() {
 const HeadTextShowAnimate = keyframes`
     from {
         opacity: 0;
-        transform: translateY(-35%);
+        transform: translateY(35%);
     }
     to {
         opacity: 1;
@@ -112,11 +126,28 @@ const Character = styled.div`
   margin: 0 auto;
   text-align: center;
 `;
-const HeadText = styled.p`
+const HeadText = styled.div`
   margin-top: 8px;
-  opacity: 0;
   text-align: center;
-  animation: ${HeadTextShowAnimate} 0.7s forwards;
+  line-height: 4.7rem;
+  transform: scale(0.9);
+
+  div.phase > p {
+    opacity: 0;
+    animation: ${HeadTextShowAnimate} 0.7s forwards;
+    &:nth-child(1) {
+      animation-delay: 0;
+    }
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+  }
+  div.phase.show {
+    display: block;
+  }
+  div.phase {
+    display: none;
+  }
 `;
 
 export default Welcome;

@@ -13,21 +13,12 @@ function OptionalStage1({ setStep }: SetStepType) {
   const handleHandedness = (value: string) => {
     setValue("handedness", value);
   };
-  const handlePrevStep = () => {
-    setStep("Step5");
-  };
   const handleNextStep = () => {
     setStep("Option2");
   };
 
   return (
-    <StageWrapper
-      onClickPrev={handlePrevStep}
-      onClickNext={handleNextStep}
-      current={-1}
-      length={6}
-      currentStageName="선택사항"
-    >
+    <StageWrapper start={true} onClickNext={handleNextStep} current={-1} length={6} currentStageName="선택사항">
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>플레이어님의 신체 정보를 입력해 주세요.</h3>

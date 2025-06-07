@@ -1,5 +1,5 @@
 import { fonts } from "@/styles/fonts.css";
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const settingsHeaderProfile = style({
   userSelect: "none",
@@ -24,6 +24,13 @@ export const settingsHeaderProfileImage = style({
   height: "48px",
   borderRadius: "10px",
   backgroundColor: "var(--gray50)",
+  overflow: "hidden",
+});
+globalStyle(`${settingsHeaderProfileImage} img.profile-image`, {
+  width: "100%",
+  height: "100%",
+  objectFit: "cover",
+  objectPosition: "center",
 });
 export const settingsGroupWrapper = style({
   margin: "20px 0",

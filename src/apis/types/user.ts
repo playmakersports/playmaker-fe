@@ -5,19 +5,26 @@ export type ApiCodeUniversity = {
 }[];
 
 export type ApiSelectMember = {
-  birth: string;
-  contact: string;
-  imageUrl: string;
-  memberType: "대학생" | "일반" | (string & NonNullable<unknown>);
-  nickname: string;
-  preferredSport: string;
-  selfIntro: string;
-  sexKey: "남성" | "여성" | (string & NonNullable<unknown>);
-  team: Array<{
-    logoUrl: string;
-    teamId: number;
-    teamName: string;
-  }>;
-  university: string;
   userName: string;
+  contact: string;
+  birth: string;
+  sexKey: "MALE" | "FEMALE";
+  university: string;
+  memberType: string | null;
+  preferredSports: string[];
+  activeAreas: string[] | null;
+  selfIntro: string | null;
+  imageUrl: string;
+  fitLib: {
+    exDuration: number;
+    posKey: number;
+    height: number;
+    weight: number;
+    wingSpan: number;
+  } | null;
+  team: Array<{
+    teamId: number | string | null;
+    teamName: string;
+    logoUrl: string;
+  }> | null;
 };

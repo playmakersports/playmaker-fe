@@ -3,6 +3,9 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 
+import { useGet } from "@/apis/hook/query";
+import { ApiSelectMember } from "@/apis/types/user";
+
 import { fonts } from "@/styles/fonts.css";
 import { baseContainer } from "@/styles/container.css";
 import { settingsHeaderProfile, settingsHeaderProfileImage } from "./_components/userSetting.css";
@@ -13,6 +16,7 @@ import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 function MySettings() {
   const router = useRouter();
+  const { data } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
   useHeader({
     title: "설정",
     subActions: [
@@ -25,7 +29,11 @@ function MySettings() {
     <section className={baseContainer}>
       <div className={settingsHeaderProfile}>
         <div className={settingsHeaderProfileImage}>
-          <PersonIcon width={24} height={24} fill="var(--gray300)" />
+          {data?.imageUrl ? (
+            <img src={data?.imageUrl} alt={data?.userName} className="profile-image" />
+          ) : (
+            <PersonIcon width={24} height={24} fill="var(--gray300)" />
+          )}
         </div>
         <div className="profile" style={{ flex: 1 }}>
           <div
@@ -34,7 +42,7 @@ function MySettings() {
               color: "var(--gray700)",
             }}
           >
-            이름
+            {data?.userName}
           </div>
           <div
             className={fonts.caption1.regular}

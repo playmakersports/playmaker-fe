@@ -110,6 +110,7 @@ export const headerTeamTag = style([
       },
       "&[data-divider='false']::after": {
         opacity: 0,
+        width: 0,
         transform: "translateX(-8px)",
       },
       "&[data-divider='true']::after": {

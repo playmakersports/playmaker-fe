@@ -110,7 +110,7 @@ const RightSection = styled.div`
   div.action-menu {
     user-select: none;
     grid-area: overlap;
-    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+    /* transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out; */
     &.hide {
       will-change: transform;
       transform: translate3d(180%, 0, 0);

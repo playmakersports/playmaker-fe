@@ -10,8 +10,9 @@ import {
   settingsMyInfoFormWrapper,
   settingsMyInfoHeaderProfile,
 } from "../_components/userSetting.css";
-import Loading from "@/components/common/Loading";
 import { fonts } from "@/styles/fonts.css";
+import { formattedDateNoHyphen } from "@/util/date";
+import Loading from "@/components/common/Loading";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 import InputWrapper from "@/components/common/input/InputWrapper";
@@ -35,7 +36,7 @@ function MySettingInfo() {
 
   return (
     <form className={baseContainer}>
-      {isLoading && <Loading />}
+      {isLoading && <Loading page />}
       <div className={settingsMyInfoHeaderProfile}>
         <div className={settingsHeaderProfileImage}>
           {data?.imageUrl ? (
@@ -46,7 +47,7 @@ function MySettingInfo() {
         </div>
         <div className="profile">
           <p className={fonts.body3.medium} style={{ color: "var(--gray700)" }}>
-            사용자
+            {data?.userName}
           </p>
           <p className={fonts.body4.regular} style={{ color: "var(--gray400)" }}>
             @test
@@ -56,7 +57,7 @@ function MySettingInfo() {
       <div className={settingsMyInfoFormWrapper}>
         <div className={flexRowGap16}>
           <div style={{ flex: 1 }}>
-            <BasicInput type="text" title="이름" value={data?.userName} disabled />
+            <BasicInput type="text" title="이름" defaultValue={data?.userName} disabled />
           </div>
           <InputWrapper title="공개">
             <div
@@ -72,7 +73,7 @@ function MySettingInfo() {
         </div>
         <div className={flexRowGap16}>
           <div style={{ flex: 1 }}>
-            <BasicInput type="text" title="생년월일" value={data?.birth} disabled />
+            <BasicInput type="text" title="생년월일" defaultValue={formattedDateNoHyphen(data?.birth ?? "")} disabled />
           </div>
           <InputWrapper title="공개">
             <div
@@ -104,7 +105,7 @@ function MySettingInfo() {
         </div>
         <div className={flexRowGap16}>
           <div style={{ flex: 1 }}>
-            <BasicInput type="text" title="성별" value={data?.sexKey === "MALE" ? "남성" : "여성"} disabled />
+            <BasicInput type="text" title="성별" defaultValue={data?.sexKey} disabled />
           </div>
           <InputWrapper title="공개">
             <div

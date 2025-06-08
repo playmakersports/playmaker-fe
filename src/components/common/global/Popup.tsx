@@ -79,6 +79,10 @@ function Popup(props: Props) {
   );
 }
 
+const ShowBackdrop = keyframes`
+  from{background:rgba(15, 23, 42, 0)};
+  to{background:rgba(15, 23, 42, 0.35)};
+`;
 const ShowContainer = keyframes`
   from{transform: scale(0.9) translateY(30%); opacity: 0.4;};
   to{transform: scale(1) translateY(0);opacity: 1;};
@@ -92,8 +96,9 @@ const Backdrop = styled.div`
   top: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(15, 23, 42, 0.35);
   z-index: 1010;
+  animation: ${ShowBackdrop} 0.35s;
 `;
 
 const Container = styled.section`

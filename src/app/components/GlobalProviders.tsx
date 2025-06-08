@@ -11,9 +11,13 @@ function GlobalProviders({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        // throwOnError: true,
         refetchOnWindowFocus: false,
-        retry: false,
+        retry: (failureCount, error) => {
+          if (failureCount === 2) {
+            window.alert(`서버 통신 중 오류가 발생했습니다.\n${error.message}`);
+          }
+          return failureCount < 3;
+        },
       },
     },
   });

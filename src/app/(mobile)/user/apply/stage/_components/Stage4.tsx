@@ -38,7 +38,7 @@ function Stage4({ setStep }: SetStepType) {
 
   useEffect(() => {
     if (watch("image")) {
-      const file = watch("image")[0];
+      const file = watch("image");
       const reader = new FileReader();
       if (file) {
         reader.readAsDataURL(file);

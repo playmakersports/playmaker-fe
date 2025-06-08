@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { usePopup } from "@/components/common/global/PopupProvider";
+import { useRouter } from "next/router";
 import { usePost } from "@/apis/hook/query";
+import { useToast } from "@/hook/useToast";
 
 import { fonts } from "@/styles/fonts.css";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
 import { flexColumnGap10, flexColumnGap20 } from "@/styles/container.css";
 
+import Loading from "@/components/common/Loading";
 import MainTab from "@/components/Main/MainTab";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import DropdownInput from "@/components/common/input/DropdownInput";
@@ -15,22 +18,31 @@ import StageWrapper, { SetStepType } from "./StageWrapper";
 
 function OptionalStage2({ setStep }: SetStepType) {
   const { register, watch, setValue } = useFormContext();
+  const router = useRouter();
   const popup = usePopup();
+  const toast = useToast();
 
-  const [exp, setExp] = useState(!!watch("sports.basketball.experience") ? "write" : "0");
-  const { mutateAsync, isPending } = usePost("/api/login/signup", "form-data");
+  const [exp, setExp] = useState(!!watch("basketball.exDuration") ? "write" : "0");
+  const { mutateAsync, isPending } = usePost("/api/login/updatefitlib");
 
   const handleSubmitForm = async () => {
     const formValues = watch();
     try {
       await mutateAsync({
         data: {
-          contact: formValues.contact,
+          fitlib: {
+            exDuration: formValues.basketball.exDuration,
+            wingSpan: formValues.basketball.wingSpan,
+            posKey: formValues.basketball.posKey,
+            height: formValues.height,
+            weight: formValues.weight,
+          },
         },
       });
-      setStep("Welcome");
+      router.push("/");
+      toast.trigger("스포츠 정보가 저장되었습니다.", { type: "success" });
     } catch (error) {
-      popup?.alert("가입에 실패했습니다. 다시 시도해주세요.", {
+      popup?.alert("스포츠 정보 저장에 실패했습니다. 다시 시도해주세요.", {
         showIcon: true,
         title: "가입 실패",
         color: "red",
@@ -40,7 +52,7 @@ function OptionalStage2({ setStep }: SetStepType) {
   };
 
   const handlePosition = (value: string) => {
-    setValue("sports.basketball.position", value);
+    setValue("basketball.posKey", value);
   };
   const handlePrevStep = () => {
     setStep("Option1");
@@ -52,12 +64,14 @@ function OptionalStage2({ setStep }: SetStepType) {
   return (
     <StageWrapper
       onClickPrev={handlePrevStep}
-      onClickNext={handleNextStep}
+      onClickLast={handleNextStep}
       current={-1}
       length={6}
+      last={true}
       currentStageName="선택사항"
     >
       <div className={stageFormWrapper}>
+        {isPending && <Loading page />}
         <div>
           <h3 className={stageWrapper.title}>플레이어님의 스포츠 정보를 입력해 주세요.</h3>
           <p className={stageWrapper.description}>세부 정보를 입력하시면, 맞춤 팀을 추천드려요!</p>
@@ -90,7 +104,7 @@ function OptionalStage2({ setStep }: SetStepType) {
                     value={exp}
                     onChange={(target) => {
                       if (target === "0") {
-                        setValue("sports.basketball.experience", 0);
+                        setValue("basketball.exDuration", 0);
                       }
                       setExp(target);
                     }}
@@ -105,7 +119,7 @@ function OptionalStage2({ setStep }: SetStepType) {
                     type="number"
                     suffix="년"
                     disabled={exp === "0"}
-                    {...register("sports.basketball.experience", {
+                    {...register("basketball.exDuration", {
                       valueAsNumber: true,
                     })}
                   />
@@ -116,7 +130,7 @@ function OptionalStage2({ setStep }: SetStepType) {
               title="윙스팬"
               type="number"
               suffix="cm"
-              {...register("sports.basketball.wingspan", {
+              {...register("basketball.wingSpan", {
                 valueAsNumber: true,
               })}
             />
@@ -126,7 +140,7 @@ function OptionalStage2({ setStep }: SetStepType) {
                 color="gray"
                 size="medium"
                 sameWidth
-                initialValue={watch("sports.basketball.position")}
+                initialValue={watch("basketball.posKey")}
                 nowValue={handlePosition}
                 items={[
                   { value: "guard", name: "가드" },

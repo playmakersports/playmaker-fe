@@ -1,115 +1,161 @@
 "use client";
-
-import React from "react";
+import React, { useRef, useState } from "react";
+import clsx from "clsx";
 import styled from "styled-components";
-
 import { useHeader } from "@/hook/useHeader";
+import { usePopup } from "@/components/common/global/PopupProvider";
 import useModal from "@/hook/useModal";
+import { useRouter } from "next/navigation";
 
-import { formattedDate } from "@/util/date";
-import { BaseContainer } from "@/components/common/Container";
-import Button from "@/components/common/Button";
-import Badge from "@/components/common/Badge";
+import { fonts } from "@/styles/fonts.css";
+import {
+  baseContainer,
+  flexAlignCenter,
+  flexRowGap10,
+  flexRowGap12,
+  flexRowGap4,
+  flexSpaceBetween,
+  innerChildContainer,
+} from "@/styles/container.css";
 import { FONTS } from "@/styles/common";
-import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_APPLY_LIST } from "@/constants/mock/TEAM_APPLY";
 
-import CheckIcon from "@/assets/icon/common/Check.svg";
-import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
 import { TextArea } from "@/components/common/TextArea";
+import { InputCheckbox } from "@/components/common/input/SelectInput";
+import Button from "@/components/common/Button";
+import {
+  playersListTableColumnDivider,
+  playersListTableFlex1,
+  playersListTableHead,
+  playersListTableRow,
+  playersListTableW70,
+} from "../../players/_components/players.css";
+
+import CheckIcon from "@/assets/icon/common/Check.svg";
+import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 
 function RecruitApplicant() {
+  const listRef = useRef<HTMLUListElement>(null);
+  const router = useRouter();
+  const [selected, setSelected] = useState<string[]>([]);
   useHeader({
     title: "가입 신청 목록",
   });
-  const { showModal: showAcceptModal, ModalComponents: AcceptModal } = useModal();
+  const popup = usePopup();
   const { showModal: showDenyModal, ModalComponents: DenyModal } = useModal();
 
+  const players = TEAM_APPLY_LIST;
+  const allChecked = players.length > 0 && players.every((player) => selected.includes(player.playerId));
+
+  const handleSingleCheck = (id: string, checked: boolean) => {
+    setSelected((prev) => (checked ? [...prev, id] : prev.filter((pid) => pid !== id)));
+  };
+  const handleAllCheck = (checked: boolean) => {
+    if (checked) {
+      const allIds = players.map((p) => p.playerId);
+      setSelected(allIds);
+    } else {
+      setSelected([]);
+    }
+  };
+
+  const handleApplyAccept = () => {
+    popup?.confirm("가입 승인 시점부터 활동이 가능합니다.", {
+      title: "가입을 승인하시겠어요?",
+      showIcon: true,
+      color: "primary",
+      buttonText: { yes: "네, 승인합니다" },
+    });
+  };
   return (
     <>
-      <Container>
-        <div className="search-wrapper">
-          <BasicInput type="text" iconType="search" placeholder="이름으로 검색할 수 있어요" />
+      <section className={baseContainer}>
+        <div
+          className={clsx(flexRowGap10, flexAlignCenter, flexSpaceBetween)}
+          style={{ height: "52px", padding: "10px 0" }}
+        >
+          {selected.length > 0 ? (
+            <div className={clsx(flexRowGap4, flexAlignCenter, fonts.body4.regular)}>
+              <CheckIcon width={20} height={20} fill="var(--gray700)" />
+              <p>
+                <span className={fonts.body4.medium} style={{ color: "var(--primary500)" }}>
+                  {selected.length}건
+                </span>{" "}
+                선택
+              </p>
+            </div>
+          ) : (
+            <div className={clsx(flexRowGap4, flexAlignCenter, fonts.body4.regular)}>
+              <PeopleIcon width={20} height={20} fill="var(--gray700)" />
+              <p>
+                <span className={fonts.body4.medium} style={{ color: "var(--primary500)" }}>
+                  {players.length}건
+                </span>
+                의 가입 신청이 있어요!
+              </p>
+            </div>
+          )}
+          <div className={flexRowGap10}>
+            <Button type="button" mode="red" fillType="light" size="xsmall" onClick={showDenyModal}>
+              거절
+            </Button>
+            <Button type="button" fillType="default" size="xsmall" onClick={handleApplyAccept}>
+              승인
+            </Button>
+          </div>
         </div>
-        <List>
-          {TEAM_APPLY_LIST.map((player) => (
-            <li key={player.playerId}>
-              <input type="checkbox" aria-disabled id={`player-${player.playerId}`} />
-              <PlayerInner htmlFor={`player-${player.playerId}`} role="button">
-                <ProfileImage></ProfileImage>
-                <Name>
-                  <p className="player-name">{player.name}</p>
-                  <p className="player-tags">
-                    <Badge type="gray">{player.birth.split("-")[0]}년생</Badge>
-                    <Badge type="primary">
-                      {player.univ}
-                      {player.certificated && <CheckIcon />}
-                    </Badge>
-                  </p>
-                </Name>
-                <i>
-                  <DownArrowIcon />
-                </i>
-              </PlayerInner>
-              <PlayerDetail>
-                <p className="introduce">{player.introduce}</p>
-                <div className="sub-details">
-                  <div className="sub-detail">
-                    <strong>신청일</strong>
-                    <p>
-                      {formattedDate(player.applyDate, {
-                        displayDateType: ".",
-                        displayDayName: "hide",
-                        displayYear: "always",
-                        displayTime: "hide",
-                      })}
-                    </p>
+
+        <div className={innerChildContainer}>
+          <div
+            className={clsx(playersListTableRow, playersListTableHead)}
+            // ref={headRef}
+          >
+            <div className={clsx(flexRowGap12, flexAlignCenter, playersListTableFlex1)}>
+              <InputCheckbox
+                id="allCheckedBox"
+                size="MEDIUM"
+                checked={allChecked}
+                onChange={(e) => handleAllCheck(e.target.checked)}
+              />
+              프로필
+            </div>
+            <div className={playersListTableColumnDivider} data-header="true" />
+            <div className={clsx(flexRowGap4, flexAlignCenter, playersListTableW70)}>경력</div>
+          </div>
+        </div>
+
+        <ul ref={listRef}>
+          {players.map((player) => (
+            <PlayerItem key={player.playerId}>
+              <div className="item-top">
+                <InputCheckbox
+                  size="MEDIUM"
+                  className="player-select"
+                  checked={selected.includes(player.playerId)}
+                  onChange={(e) => handleSingleCheck(player.playerId, e.target.checked)}
+                />
+                <div className={flexAlignCenter} style={{ flex: 1 }}>
+                  <div className={flexRowGap12} style={{ flex: 1 }}>
+                    <ProfileImage></ProfileImage>
+                    <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                      <Name onClick={() => router.push(`/p/${player.playerId}`)}>
+                        <p className="player-name">{player.name}</p>
+                        <RightArrow width={20} height={20} fill="var(--gray700)" />
+                      </Name>
+                      <p className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
+                        {player.applyDate} 가입신청
+                      </p>
+                    </div>
                   </div>
-                  <div className="sub-detail">
-                    <strong>최근 수상</strong>
-                    <p>
-                      {player.recentRank.title} {player.recentRank.rank}
-                    </p>
-                  </div>
-                  <div className="sub-detail">
-                    <strong>활동 팀</strong>
-                    <p className="active-team-list">
-                      {player.activeTeam.map((team, idx) => (
-                        <span key={idx}>
-                          {team.teamName} <span className="team-sports">{team.sports}</span>
-                        </span>
-                      ))}
-                    </p>
-                  </div>
+                  <div className={clsx(fonts.body4.medium, playersListTableW70)}>10년</div>
                 </div>
-                <div className="buttons">
-                  <Button type="button" flex={1} mode="red" onClick={() => showDenyModal()}>
-                    거절
-                  </Button>
-                  <Button type="button" flex={3} mode="primary" onClick={() => showAcceptModal()}>
-                    수락
-                  </Button>
-                </div>
-              </PlayerDetail>
-            </li>
+              </div>
+              <div className="item-intro">{player.introduce}</div>
+            </PlayerItem>
           ))}
-        </List>
-      </Container>
-      <AcceptModal
-        title="가입 수락"
-        buttons={[
-          {
-            mode: "primary",
-            name: "확인",
-            onClick: (close) => {
-              close();
-            },
-          },
-        ]}
-      >
-        <TextArea title="환영 메시지" maxLength={50} displayLength />
-        <BasicInput type="number" title="기수" information="기수제로 운영되는 팀은 필수로 입력해야 해요." required />
-      </AcceptModal>
+        </ul>
+      </section>
       <DenyModal
         title="가입 거절"
         buttons={[
@@ -128,149 +174,35 @@ function RecruitApplicant() {
   );
 }
 
-const Container = styled(BaseContainer)`
-  padding-bottom: calc(24px + var(--env-sab));
-  div.search-wrapper {
-    margin: 0 0 20px;
-  }
-`;
-
-const PlayerInner = styled.label`
-  cursor: pointer;
+const PlayerItem = styled.li`
   user-select: none;
-  display: flex;
-  max-height: 60px;
-  align-items: center;
-  gap: 16px;
-
-  i > svg {
-    width: 24px;
-    height: 24px;
-    fill: var(--gray600);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--gray200);
+  div.item-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
   }
-
-  &:focus {
+  div.item-intro {
+    ${FONTS.body4("regular")};
+    margin-top: 16px;
+    margin-left: 32px;
     background-color: var(--gray50);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--gray600);
   }
 `;
 const ProfileImage = styled.div`
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
   background-color: var(--gray100);
 `;
 const Name = styled.div`
-  flex: 1;
-  p.deny {
-    font-size: 1.3rem;
-    line-height: 1.6rem;
-    font-weight: 500;
-    color: var(--warning500);
-  }
-  p.player-name {
-    ${FONTS.body3("semibold")};
-    margin-bottom: 4px;
-  }
-  p.player-tags {
-    font-size: 1.4rem;
-    font-weight: 400;
-    color: var(--gray600);
-    span {
-      margin-right: 4px;
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-  }
-`;
-const PlayerDetail = styled.div`
+  ${FONTS.body3("medium")};
   display: flex;
-  overflow: hidden;
-  height: 0px;
-  padding: 4px;
-  flex-direction: column;
-  justify-content: space-between;
-  opacity: 0;
-  transition: opacity 0.25s, height 0.2s;
-
-  p.introduce {
-    ${FONTS.body4("regular")};
-    margin: 12px 0 8px;
-    font-size: 1.3rem;
-    font-weight: 400;
-    padding: 8px 12px;
-    background-color: rgba(var(--sub2-rgb), 0.5);
-    border-radius: 5px;
-  }
-  div.sub-details {
-    display: flex;
-    margin: 0 2px;
-    flex-direction: column;
-    gap: 6px;
-  }
-  div.sub-detail {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin: 0 4px;
-    strong {
-      ${FONTS.body4("regular")};
-      font-weight: 600;
-      color: var(--gray600);
-    }
-    p {
-      ${FONTS.body4("regular")};
-      font-weight: 400;
-      color: var(--gray900);
-    }
-    p.active-team-list {
-      display: inline-flex;
-      gap: 6px;
-      & > span {
-        display: inline-flex;
-        align-items: center;
-        gap: 2px;
-      }
-
-      span.team-sports {
-        font-size: 1.2rem;
-        font-weight: 600;
-        color: var(--main);
-      }
-    }
-  }
-  div.buttons {
-    margin-top: 12px;
-    display: flex;
-    gap: 10px;
-  }
-`;
-
-const List = styled.ul`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-
-  input {
-    display: none;
-  }
-  li {
-    transition: all 0.3s;
-  }
-  li:has(input:checked) {
-    margin: 10px 8px;
-    padding: 16px 12px;
-    border-radius: 12px;
-    box-shadow: 0 0 12px 4px var(--gray100);
-    transform: scale(1.05);
-  }
-  input:checked + ${PlayerInner} > i > svg {
-    transform: rotate(180deg);
-  }
-  input:checked + ${PlayerInner} + ${PlayerDetail} {
-    height: 200px;
-    opacity: 1;
-  }
+  align-items: center;
 `;
 
 export default RecruitApplicant;

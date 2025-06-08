@@ -109,7 +109,7 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
     justify-content: center;
     border-radius: ${({ size }) => (size === "LARGE" ? "8px" : "6px")};
     border: 1px solid ${({ $color }) => ($color ? "var(--red200)" : "var(--gray200)")};
-    background-color: transparent;
+    background-color: #fff;
     svg {
       display: none;
       width: 100%;

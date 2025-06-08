@@ -59,8 +59,8 @@ function TeamCreate() {
         <Step name={stages[4]}>
           <TeamCreateStage5 setStep={setStep} />
         </Step>
-        <Step name={stages[4]}>
-          <TeamCreateWelcome />
+        <Step name={stages[5]}>
+          <TeamCreateWelcome setStep={setStep} />
         </Step>
       </Funnel>
     </FormProvider>

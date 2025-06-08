@@ -26,7 +26,7 @@ function TeamCreateStage2({ setStep }: SetStepType) {
       onClickNext={handleNextStep}
       length={5}
       current={2}
-      disableNext={!!watch("watch")}
+      disableNext={!watch("teamName")}
     >
       <div className={stageFormWrapper}>
         <div>
@@ -34,7 +34,7 @@ function TeamCreateStage2({ setStep }: SetStepType) {
           <p className={stageWrapper.description}>새로 만들 팀 정보를 입력해 주세요.</p>
         </div>
         <div className={flexColumnGap20}>
-          <BasicInput type="text" title="팀 이름" required {...register("name", { required: true })} />
+          <BasicInput type="text" title="팀 이름" required {...register("teamName", { required: true })} />
           <DateInput title="창단일" required />
           <TextArea
             title="팀 소개"
@@ -43,7 +43,7 @@ function TeamCreateStage2({ setStep }: SetStepType) {
             style={{ height: "130px", resize: "none" }}
             displayLength
             maxLength={150}
-            {...register("introduce", { required: true })}
+            {...register("teamIntro", { required: true })}
           />
         </div>
       </div>

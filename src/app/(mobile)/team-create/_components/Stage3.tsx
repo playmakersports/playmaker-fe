@@ -29,15 +29,15 @@ function TeamCreateStage3({ setStep }: SetStepType) {
       const webpFile = new File([webpBlob], "team_logo.webp", { type: "image/webp" });
       const previewBase64 = URL.createObjectURL(webpBlob);
       setPreviewImage(previewBase64);
-      setValue("teamLogo", webpFile);
+      setValue("image", webpFile);
     } catch (error) {
       console.error("Error converting image to WebP:", error);
     }
   };
 
   useEffect(() => {
-    if (watch("teamLogo")) {
-      const file = watch("teamLogo");
+    if (watch("image")) {
+      const file = watch("image");
       const reader = new FileReader();
       if (file) {
         reader.readAsDataURL(file);

@@ -28,7 +28,7 @@ function TeamCreateStage4({ setStep }: SetStepType) {
   };
 
   const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
-  const formLocation = watch("location");
+  const formLocation = watch("activeArea");
   const formLocationDisplayValues = {
     key: formLocation?.key ?? null,
     name: findAreaByCodeSequenceKey(data, formLocation?.key)?.text ?? "",
@@ -37,12 +37,12 @@ function TeamCreateStage4({ setStep }: SetStepType) {
 
   const onClickLocation = (locationKey: string, name: string) => {
     setLocation({ key: locationKey, name: `${sido.name} ${name}` });
-    setValue("location", locationKey);
+    setValue("activeArea", locationKey);
   };
 
   const onRemoveLocation = () => {
     setLocation(undefined);
-    setValue("location", "");
+    setValue("activeArea", "");
   };
 
   return (

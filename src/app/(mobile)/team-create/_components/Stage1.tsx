@@ -16,7 +16,7 @@ function TeamCreateStage1({ setStep }: SetStepType) {
   };
 
   return (
-    <StageWrapper start={true} onClickNext={handleNextStep} length={5} current={1} disableNext={!watch("sports")}>
+    <StageWrapper start={true} onClickNext={handleNextStep} length={5} current={1} disableNext={!watch("teamItem")}>
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>종목을 선택해 주세요</h3>
@@ -28,9 +28,9 @@ function TeamCreateStage1({ setStep }: SetStepType) {
               <input
                 type="radio"
                 id={`${item.value}+${item.name}`}
-                value={item.value}
+                value={item.nameEng.toUpperCase()}
                 style={{ display: "none" }}
-                {...register("sports", {
+                {...register("teamItem", {
                   maxLength: 3,
                 })}
               />

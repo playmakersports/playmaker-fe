@@ -25,7 +25,7 @@ type Props = {
   teamLogo: string;
   teamName: string;
   location: string;
-  teamIntro: string;
+  teamIntro: string | null;
   gender: string;
   memberCnt: number;
   likeCnt: number;

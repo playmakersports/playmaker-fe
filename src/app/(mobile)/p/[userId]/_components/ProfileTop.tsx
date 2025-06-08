@@ -2,18 +2,16 @@
 import React from "react";
 import { useHeader } from "@/hook/useHeader";
 import { useRouter } from "next/navigation";
-import { useGet } from "@/apis/hook/query";
-import { ApiSelectMember } from "@/apis/types/user";
 
 import { fonts } from "@/styles/fonts.css";
 import Button from "@/components/common/Button";
-
-import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 import { settingsHeaderProfile, settingsHeaderProfileImage } from "@/app/(mobile)/my/_components/userSetting.css";
+import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
-function ProfileTop() {
+type Props = { imageUrl: string; username: string; subName?: string; isLoading?: boolean; isMyProfile?: boolean };
+function ProfileTop(props: Props) {
+  const { imageUrl, username, subName, isLoading, isMyProfile } = props;
   const router = useRouter();
-  const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
   useHeader({ title: "프로필", options: { titleAlign: "center" } });
 
   if (isLoading)
@@ -32,7 +30,11 @@ function ProfileTop() {
     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <div className={settingsHeaderProfile} style={{ padding: 0 }}>
         <div className={settingsHeaderProfileImage}>
-          <PersonIcon width={24} height={24} fill="var(--gray300)" />
+          {imageUrl ? (
+            <img src={imageUrl} alt={username} className="profile-image" />
+          ) : (
+            <PersonIcon width={24} height={24} fill="var(--gray300)" />
+          )}
         </div>
         <div className="profile">
           <div
@@ -41,7 +43,7 @@ function ProfileTop() {
               color: "var(--gray700)",
             }}
           >
-            이름
+            {username}
           </div>
           <div
             className={fonts.caption1.regular}
@@ -49,13 +51,15 @@ function ProfileTop() {
               color: "var(--gray400)",
             }}
           >
-            @test
+            @{subName}
           </div>
         </div>
       </div>
-      <Button type="button" mode="gray" fillType="light" size="small" onClick={() => router.push("/my/info")}>
-        프로필 수정
-      </Button>
+      {isMyProfile && (
+        <Button type="button" mode="gray" fillType="light" size="small" onClick={() => router.push("/my/info")}>
+          프로필 수정
+        </Button>
+      )}
     </div>
   );
 }

@@ -1,9 +1,12 @@
 "use client";
 import React, { ReactNode } from "react";
+import Link from "next/link";
 import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import { useToast } from "@/hook/useToast";
+import { useProfileGet } from "@/apis/hook/user";
 
+import { fonts } from "@/styles/fonts.css";
 import { baseContainer, flexColumnGap16, flexColumnGap20, flexColumnGap24 } from "@/styles/container.css";
 import {
   settingsMyTeamListContainer,
@@ -22,6 +25,9 @@ import FootballIcon from "@/assets/icon/sports/outlined/Football.svg";
 import VolleyballIcon from "@/assets/icon/sports/outlined/Volleyball.svg";
 
 function MyTeamList() {
+  const { data } = useProfileGet();
+  const myTeamList = data?.team;
+
   const popup = usePopup();
   const { trigger } = useToast();
   useHeader({
@@ -29,13 +35,13 @@ function MyTeamList() {
     options: { titleAlign: "center" },
   });
 
-  const groupedTeams: Record<string, TeamListMock[]> = TEAM_LIST_MOCK.reduce((acc: any, team) => {
-    if (!acc[team.sports]) {
-      acc[team.sports] = [];
-    }
-    acc[team.sports].push(team);
-    return acc;
-  }, {});
+  // const groupedTeams: Record<string, TeamListMock[]> = myTeamList?.reduce((acc: any, team) => {
+  //   if (!acc[team.teamItem]) {
+  //     acc[team.teamItem] = [];
+  //   }
+  //   acc[team.teamItem].push(team);
+  //   return acc;
+  // }, {});
 
   const SPORTS_ICON: Record<string, ReactNode> = {
     야구: <BaseballIcon width={20} height={20} fill="var(--gray400)" />,
@@ -61,14 +67,20 @@ function MyTeamList() {
           <FolderIcon width={24} height={24} fill="var(--gray700)" />
           소속 팀 리스트
         </h4>
-        <ul className={settingsMyTeamListContainer}></ul>
+        <ul className={settingsMyTeamListContainer}>
+          {myTeamList?.map((team) => (
+            <li key={team.teamId} className={fonts.caption1.medium}>
+              <Link href={`/team/${team.teamId}`}>{team.teamName}</Link>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className={flexColumnGap20}>
         <h4 className={settingsMyTeamListGroupTitle}>
           <PeopleIcon width={24} height={24} fill="var(--gray700)" />
           소속 팀 관리
         </h4>
-        <div className={flexColumnGap24}>
+        {/* <div className={flexColumnGap24}>
           {Object.entries(groupedTeams).map(([sports, teams]) => (
             <div key={sports} className={flexColumnGap16}>
               <h5 className={settingsMyTeamListSportsGroupTitle}>
@@ -91,7 +103,7 @@ function MyTeamList() {
               </ul>
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -3,16 +3,15 @@ import React from "react";
 import styled from "styled-components";
 import Link from "next/link";
 import clsx from "clsx";
-import { useGet } from "@/apis/hook/query";
+import { useProfileGet } from "@/apis/hook/user";
 
 import { fonts } from "@/styles/fonts.css";
-import { ApiSelectMember } from "@/apis/types/user";
 import { FONTS, SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function MyTeam() {
-  const { data } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile"); // 임시
+  const { data } = useProfileGet();
   const myTeamList = data?.team;
 
   return (

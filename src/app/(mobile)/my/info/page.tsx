@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import { useHeader } from "@/hook/useHeader";
-import { useGet } from "@/apis/hook/query";
 
-import { ApiSelectMember } from "@/apis/types/user";
+import { useProfileGet } from "@/apis/hook/user";
 import { baseContainer, flexAlignCenter, flexRowGap16 } from "@/styles/container.css";
 import {
   settingsHeaderProfileImage,
@@ -11,8 +10,9 @@ import {
   settingsMyInfoHeaderProfile,
 } from "../_components/userSetting.css";
 import { fonts } from "@/styles/fonts.css";
-import { formattedDateNoHyphen } from "@/util/date";
+
 import Loading from "@/components/common/Loading";
+import { formattedDateNoHyphen } from "@/util/date";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 import InputWrapper from "@/components/common/input/InputWrapper";
@@ -21,7 +21,7 @@ import { TextArea } from "@/components/common/TextArea";
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 function MySettingInfo() {
-  const { data, isLoading } = useGet<ApiSelectMember>("/api/test/login/selectmyprofile");
+  const { data, isLoading } = useProfileGet();
 
   useHeader({
     title: "내 프로필 수정",

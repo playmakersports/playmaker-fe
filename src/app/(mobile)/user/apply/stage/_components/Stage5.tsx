@@ -70,7 +70,7 @@ function Stage5({ setStep }: SetStepType) {
     <StageWrapper
       last={true}
       onClickPrev={handlePrevStep}
-      onClickNext={handleNextStep}
+      onClickLast={handleNextStep}
       length={5}
       current={5}
       disableNext={!(selectedSports.length > 0) || selectedSports.length > 3}

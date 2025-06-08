@@ -2,13 +2,13 @@ import { FONTS } from "@/styles/common";
 import React from "react";
 import styled, { keyframes } from "styled-components";
 
-type Props = { isPlaying?: boolean; imgSrc: string };
-function TeamMainLogo({ isPlaying = false, imgSrc }: Props) {
+type Props = { text?: string; imgSrc: string };
+function TeamMainLogo({ text = "", imgSrc }: Props) {
   return (
     <Container>
-      {isPlaying && <Playing />}
-      <RoundWrapper $playing={isPlaying}>
-        <ProfileImg src={imgSrc} $playing={isPlaying} alt="팀 프로필 이미지" />
+      {text && <Playing data-text={text} />}
+      <RoundWrapper $playing={text !== ""}>
+        <ProfileImg src={imgSrc} $playing={text !== ""} alt="팀 프로필 이미지" />
       </RoundWrapper>
     </Container>
   );
@@ -73,7 +73,7 @@ const Playing = styled.p`
   z-index: 2;
   word-break: keep-all;
   &::before {
-    content: "경기중";
+    content: attr(data-text);
   }
 `;
 

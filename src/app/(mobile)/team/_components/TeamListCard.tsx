@@ -20,19 +20,19 @@ import NumberFlow from "@number-flow/react";
 // import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
 
 type Props = {
-  status: string;
   university: string | null;
-  teamId: string;
+  teamId: number;
   teamLogo: string;
   teamName: string;
   location: string;
-  dueDate: string;
+  teamIntro: string;
   gender: string;
   memberCnt: number;
   likeCnt: number;
+  isHeart?: boolean;
 };
 function TeamListCard(props: Props) {
-  const { status, university, teamId, teamLogo, teamName, location, gender, memberCnt, likeCnt } = props;
+  const { university, teamId, teamLogo, teamName, location, teamIntro, gender, memberCnt, likeCnt } = props;
   const [heart, setHeart] = useState(false);
 
   return (
@@ -42,7 +42,7 @@ function TeamListCard(props: Props) {
         <div className={flexColumnGap10} style={{ flex: 1 }}>
           <div>
             <h3 className={fonts.body3.semibold}>{teamName}</h3>
-            <p className={fonts.caption1.regular}>팀 소개글입니다!</p>
+            <p className={fonts.caption1.regular}>{teamIntro}</p>
           </div>
 
           <div className={clsx(fonts.caption1.medium, flexRowGap10)} style={{ color: "var(--gray500)" }}>

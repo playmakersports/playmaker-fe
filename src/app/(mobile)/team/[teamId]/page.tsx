@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { cookies, headers } from "next/headers";
 
 import { baseBackendURL } from "@/apis";
-import { SelectTeamResponse } from "@/types/team";
+import { ApiTeamDetail } from "@/apis/types/team";
 
 import TeamMainTop from "./_components/TeamMainTop";
 import TeamMainContents from "./_components/TeamMainContents";
@@ -16,20 +16,20 @@ async function getTeamData(teamId: string) {
 
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access-token")?.value;
-  const link = `${protocol}://${host}/api/team`;
-  // const link =
-  //   process.env.NODE_ENV === "development"
-  //     ? `${protocol}://${host}/api/team`
-  //     : `${baseBackendURL}/api/team/selectteam/page/${teamId}`;
-  // const res = await fetch(`${baseBackendURL}/api/team/selectteam/page/${teamId}`, {
-  const res = await fetch(link, {
+  // const link = `${protocol}://${host}/api/team`;
+  const link =
+    process.env.NODE_ENV === "development"
+      ? `${protocol}://${host}/api/team`
+      : `${baseBackendURL}/api/team/selectteam/page/${teamId}`;
+  const res = await fetch(`${baseBackendURL}/api/teams/${teamId}`, {
+    // const res = await fetch(link, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },
   });
   if (!res.ok) notFound(); // 404
-  const team: SelectTeamResponse = await res.json();
-  if (!team.teamId) notFound();
+  const team: ApiTeamDetail = await res.json();
+  if (!team.id) notFound();
   return team;
 }
 

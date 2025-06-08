@@ -2,8 +2,9 @@
 import React from "react";
 import styled from "styled-components";
 import { useHeader } from "@/hook/useHeader";
+import { format } from "date-fns";
 
-import { SelectTeamResponse } from "@/types/team";
+import { ApiTeamDetail } from "@/apis/types/team";
 import TeamNotice from "@/app/(mobile)/team/[teamId]/_components/TeamNotice";
 
 import { baseContainer } from "@/styles/container.css";
@@ -17,25 +18,12 @@ import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 import CalendarIcon from "@/assets/icon/common/outlined/Calendar.svg";
 import HeartIcon from "@/assets/icon/common/outlined/Heart.svg";
 
-function TeamMainTop(props: SelectTeamResponse) {
-  const {
-    bgUrl,
-    teamIntro,
-    teamId,
-    teamName,
-    logoUrl,
-    activeArea,
-    createDt,
-    item,
-    countMember,
-    masterNm,
-    myTeamYn,
-    university,
-  } = props;
+function TeamMainTop(props: ApiTeamDetail) {
   const PLAYING = true;
+  const bgUrl = `https://images.unsplash.com/photo-1519766304817-4f37bda74a26?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D`;
 
   useHeader({
-    title: teamName,
+    title: props.teamName,
   });
 
   return (
@@ -44,27 +32,25 @@ function TeamMainTop(props: SelectTeamResponse) {
         <ul className={teamMainTopInfoList}>
           <li className={teamMainTopInfoListItem}>
             <LocationPinIcon />
-            {activeArea}
+            {props.activeArea}
           </li>
           <li className={teamMainTopInfoListItem}>
-            <IdentifyIcon /> {masterNm}
+            <IdentifyIcon /> {props.teamLeaderName}
           </li>
+          <li className={teamMainTopInfoListItem}>{/* <PeopleIcon /> {countMember}명 */}</li>
           <li className={teamMainTopInfoListItem}>
-            <PeopleIcon /> {countMember}명
-          </li>
-          <li className={teamMainTopInfoListItem}>
-            <CalendarIcon /> {createDt.slice(2)} 창단
+            <CalendarIcon /> {format(props.createDate, "yy-MM-dd")} 창단
           </li>
         </ul>
       </section>
       <section className={baseContainer} style={{ paddingBottom: "20px" }}>
         <Top>
-          <TeamMainLogo isPlaying={PLAYING} imgSrc={logoUrl} />
+          <TeamMainLogo text={props.recruitingYn === "Y" ? "모집중" : ""} imgSrc={props.logoUrl ?? "a.png"} />
           <div className={teamMainTopHeader}>
             <h2 className={fonts.body3.semibold} style={{ color: "var(--gray900)" }}>
-              {teamName}
+              {props.teamName}
             </h2>
-            <p className={fonts.body4.regular}>{teamIntro}</p>
+            <p className={fonts.body4.regular}>{props.teamIntro}</p>
           </div>
         </Top>
         <TeamNotice

@@ -15,13 +15,16 @@ import {
 import { InputCheckbox } from "@/components/common/input/SelectInput";
 import { fonts } from "@/styles/fonts.css";
 import LocationFilterModal from "./LocationFilterModal";
+import { useGet } from "@/apis/hook/query";
+import { ApiTeamDetail } from "@/apis/types/team";
 
 function TeamFindSports({ sports }: { sports: string }) {
   const [keyword, setKeyword] = useState("");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState<string[]>([]);
+  const { data } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter/item/${sports.toUpperCase()}`);
   const { ModalComponents, showModal, modalState } = useModal({ key: "team-find-location" });
-
+  console.log(data);
   return (
     <>
       <div className={clsx(baseContainer, flexColumnGap20)} style={{ paddingTop: "20px" }}>
@@ -34,17 +37,16 @@ function TeamFindSports({ sports }: { sports: string }) {
         </div>
 
         <div className={clsx(flexColumnGap12)}>
-          {NOW_RECRUIT_LIST.map((item) => (
+          {data?.map((item) => (
             <TeamListCard
-              key={item.teamId}
-              status={item.status}
-              university={item.university}
-              teamId={item.teamId}
-              teamLogo={item.teamLogo}
+              key={item.id}
+              teamId={item.id}
+              teamLogo={item.logoUrl ?? ""}
               teamName={item.teamName}
-              location={item.location}
-              dueDate={item.dueDate}
-              gender={item.gender}
+              location={item.activeArea}
+              teamIntro={item.teamIntro}
+              university={""}
+              gender={""}
               likeCnt={8400}
               memberCnt={20}
             />

@@ -9,10 +9,24 @@ type FormattedDateType = {
 };
 const padStartNumber = (target: string | number) => String(target).padStart(2, "0");
 export const DAY_NAME_KOREAN = ["일", "월", "화", "수", "목", "금", "토"];
-export const formattedDate = (target: string, type: FormattedDateType) => {
+export const formattedDateNoHyphen = (target: string) => {
   if (!target) return "";
-  const [date, time] = target.split("T");
-  const targetDate = new Date(date);
+  const year = target.slice(0, 4);
+  const month = target.slice(4, 6);
+  const day = target.slice(6, 8);
+  return `${year}-${month}-${day}`;
+};
+export const formattedDate = (target: string | Date, type: FormattedDateType) => {
+  if (!target) return "";
+  let targetDate: Date;
+  let time = "";
+  if (typeof target === "string") {
+    const [date, t] = target.split("T");
+    targetDate = new Date(date);
+    time = t;
+  } else {
+    targetDate = target;
+  }
   const currentYear = new Date().getFullYear();
   const year = getYear(targetDate);
   const month = getMonth(targetDate) + 1;

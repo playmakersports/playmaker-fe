@@ -2,6 +2,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useHeader } from "@/hook/useHeader";
+import { useParams, useRouter } from "next/navigation";
+import { useAuth } from "@/session/useAuth";
+import { usePopup } from "@/components/common/global/PopupProvider";
+import axios from "axios";
 import {
   baseContainerPaddingTop,
   baseDividedLineChild,
@@ -14,9 +18,14 @@ import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
 import InputWrapper from "@/components/common/input/InputWrapper";
 import MainTab from "@/components/Main/MainTab";
 import Button from "@/components/common/Button";
+import { baseBackendURL } from "@/apis";
 
 function TeamAdmin() {
   const { register, watch, setValue } = useForm();
+  const teamId = useParams()["teamId"] as string;
+  const router = useRouter();
+  const { accessToken } = useAuth();
+  const popup = usePopup();
   useHeader({
     title: "팀 관리",
     options: { titleAlign: "center" },
@@ -28,6 +37,37 @@ function TeamAdmin() {
 
   const handleActiveJoin = (value: string) => {
     setValue("activeJoin", value === "true");
+  };
+
+  const handleTeamDissolution = async () => {
+    const confirm = await popup?.confirm(
+      `해체된 팀은 복구할 수 없습니다.\n신중하게 결정해주세요. 팀을 해체하시겠습니까?\n[teamId: ${teamId}]`,
+      {
+        title: "팀 해체",
+        buttonText: { yes: "네, 해체합니다" },
+        showIcon: true,
+        color: "red",
+      }
+    );
+
+    if (confirm) {
+      axios
+        .delete(`${baseBackendURL}/api/teams/${teamId}`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then(() => {
+          popup?.alert("", { title: `팀이 해체되었습니다.\n홈 화면으로 이동합니다.` });
+          router.push("/");
+        })
+        .catch((error) => {
+          const status = error.response?.status;
+          if (status === 403) {
+            popup?.alert("", { title: "팀 해체 권한이 없습니다.[403]" });
+          }
+        });
+    }
   };
 
   return (
@@ -79,7 +119,7 @@ function TeamAdmin() {
             backgroundColor: "var(--gray100)",
           }}
         />
-        <Button type="button" mode="red" fillType="light">
+        <Button type="button" mode="red" fillType="light" onClick={handleTeamDissolution}>
           팀 해체하기
         </Button>
       </div>

@@ -141,6 +141,7 @@ const Contents = styled.div`
     gap: 8px;
   }
   h3.modal-title {
+    white-space: pre-wrap;
     ${FONTS.body2("semibold")};
   }
   p.modal-message {

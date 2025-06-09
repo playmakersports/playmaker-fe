@@ -1,4 +1,3 @@
-"use client";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
@@ -37,7 +36,7 @@ function Stage4({ setStep }: SetStepType) {
   };
 
   useEffect(() => {
-    if (watch("image")) {
+    if (watch("image") instanceof Blob) {
       const file = watch("image");
       const reader = new FileReader();
       if (file) {

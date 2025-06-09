@@ -36,7 +36,7 @@ function TeamCreateStage3({ setStep }: SetStepType) {
   };
 
   useEffect(() => {
-    if (watch("image")) {
+    if (watch("image") instanceof Blob) {
       const file = watch("image");
       const reader = new FileReader();
       if (file) {

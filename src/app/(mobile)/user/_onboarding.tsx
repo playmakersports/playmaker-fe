@@ -15,8 +15,8 @@ import AppleLogo from "@/assets/logo/external/AppleLogo.svg";
 function AppOnboardingHome() {
   const setOnboarding = useSetAtom(isOnboardingAtom);
   const onClickLogin = (provider: "kakao" | "google" | "apple") => {
+    setOnboarding(true);
     oAuthSignInStart(provider);
-    setOnboarding((prev) => !prev);
   };
 
   return (

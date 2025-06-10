@@ -41,7 +41,7 @@ function TeamAdmin() {
 
   const handleTeamDissolution = async () => {
     const confirm = await popup?.confirm(
-      `해체된 팀은 복구할 수 없습니다.\n신중하게 결정해주세요. 팀을 해체하시겠습니까?\n[teamId: ${teamId}]`,
+      `해체된 팀은 복구할 수 없습니다.\n신중하게 결정해주세요. 팀을 해체하시겠습니까?`,
       {
         title: "팀 해체",
         buttonText: { yes: "네, 해체합니다" },

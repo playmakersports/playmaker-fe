@@ -10,12 +10,12 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
       queries: {
         refetchOnWindowFocus: false,
         retry: (failureCount, error) => {
-          if (failureCount === 3) {
+          if (failureCount === 1) {
             popup?.alert(`${error.message}\nOccurred Time ${formatDate(new Date(), "yyyy-MM-dd hh:mm:ss")}`, {
               title: `서버와의 통신 중 문제가 발생했습니다`,
             });
           }
-          return failureCount < 3;
+          return failureCount < 1;
         },
       },
     },

@@ -1,6 +1,6 @@
 export const TEAM_APPLY_LIST = [
   {
-    playerId: "2000",
+    playerId: 2000,
     applyDate: "2024-11-14",
     profileImg: "",
     name: "백종원",
@@ -12,7 +12,7 @@ export const TEAM_APPLY_LIST = [
     activeTeam: [{ teamName: "SPBABA", sports: "농구" }],
   },
   {
-    playerId: "7840",
+    playerId: 7840,
     applyDate: "2024-11-13",
     profileImg: "",
     name: "안성재",
@@ -27,7 +27,7 @@ export const TEAM_APPLY_LIST = [
     ],
   },
   {
-    playerId: "2849",
+    playerId: 2849,
     applyDate: "2024-11-12",
     profileImg: "",
     name: "김플메",

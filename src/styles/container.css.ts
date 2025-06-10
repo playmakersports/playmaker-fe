@@ -59,6 +59,10 @@ export const flexRowGap16 = style({
   display: "flex",
   gap: "16px",
 });
+export const flexRowGap24 = style({
+  display: "flex",
+  gap: "24px",
+});
 export const flexRowGap8 = style({
   display: "flex",
   gap: "8px",

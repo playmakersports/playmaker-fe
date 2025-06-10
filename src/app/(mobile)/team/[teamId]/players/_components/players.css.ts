@@ -35,6 +35,13 @@ export const playersListTableFlex1 = style({
   display: "flex",
   alignItems: "center",
 });
+export const playersListTableW54 = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "54px",
+  textAlign: "center",
+});
 export const playersListTableW70 = style({
   display: "flex",
   justifyContent: "center",

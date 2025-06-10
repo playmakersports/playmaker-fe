@@ -44,7 +44,11 @@ function GoogleLogin() {
         router.replace("/");
       }
     } catch (error) {
-      await popup?.alert(`서버 통신에 실패했어요.`, { title: "로그인 실패", showIcon: true, color: "red" });
+      await popup?.alert(`서버 통신에 실패했어요.\n${error}`, {
+        title: "로그인 실패",
+        showIcon: true,
+        color: "red",
+      });
       throw new Error("Failed to fetch data");
     }
   };

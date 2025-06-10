@@ -1,46 +1,46 @@
 "use client";
 
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
-import { setCookie } from "cookies-next";
+import { useAuth } from "@/session/useAuth";
 
-import Button from "@/components/common/Button";
+import { isOnboardingAtom } from "@/session/userAtom";
 import Loading from "@/components/common/Loading";
 
 function TestLogin() {
   const router = useRouter();
-  const { data, isSuccess, error } = useGet<{ access_token: string }>("/api/test/login/random", {});
+  const { setToken, clearToken } = useAuth();
+  const setOnboarding = useSetAtom(isOnboardingAtom);
+  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>("/api/test/login/random", {});
+  const once = useRef(false);
 
   useEffect(() => {
-    if (data) {
-      setCookie("access-token", data.access_token, { secure: true });
+    if (once.current === false) {
+      if (isSuccess) {
+        setToken(data.access_token);
+      } else {
+        const confirm = window.confirm(
+          `서버 통신 문제로 테스트 토큰이 발급되지 않았습니다.\n로그인 화면으로 돌아가시겠습니까?`
+        );
+        if (confirm) {
+          clearToken();
+          setOnboarding(false);
+        } else {
+          setToken("TestToken");
+        }
+        router.replace("/");
+      }
+      once.current = true;
     }
-  }, [data]);
+  }, [isSuccess]);
 
+  if (isLoading) return <Loading page />;
   return (
-    <Suspense fallback={<Loading page />}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60vh" }}>
-        <p style={{ fontSize: "1.6rem", textAlign: "center" }}>{error?.message}</p>
-        {isSuccess && (
-          <p
-            style={{
-              width: "100%",
-              padding: "0 12px",
-              wordBreak: "break-all",
-              fontSize: "1.6rem",
-              lineHeight: "2.2rem",
-              textAlign: "center",
-            }}
-          >
-            <code>{JSON.stringify(data)}</code>
-            <Button type="button" mode="primary" fullWidth fillType="outline" onClick={() => router.replace(`/my`)}>
-              로그인 성공 마이페이지 이동
-            </Button>
-          </p>
-        )}
-      </div>
-    </Suspense>
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", height: "60vh" }}>
+      <p style={{ fontSize: "1.6rem", textAlign: "center" }}>{error?.message}</p>
+    </div>
   );
 }
 

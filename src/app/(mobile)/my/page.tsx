@@ -21,7 +21,6 @@ function MySettings() {
     title: "설정",
     subActions: [
       { name: "계정 관리", action: () => router.push("/my/account") },
-      { name: "로그인 (DEV)", action: () => router.push("/user/login") },
       {
         name: "TEST TOKEN",
         action: () => {

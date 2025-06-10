@@ -2,14 +2,18 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/session/useAuth";
 
 import Header from "@/components/layouts/Header/Header";
 import AppCode from "@/components/layouts/AppCode";
 import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Loading from "@/components/common/Loading";
 import NavigationLayout from "./_components/NavigationLayout";
+import OnboardingRoutes from "./_components/OnboardingRoutes";
 
 function MobileLayout({ children }: { children: React.ReactNode }) {
+  const { isLogin } = useAuth();
+
   const container = useRef<HTMLDivElement>(null);
   const [routeLoading, setRouteLoading] = useState(false);
   const router = useRouter();
@@ -51,10 +55,16 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
     <>
       {routeLoading && <Loading page />}
       <div id="root" style={{ position: "relative", zIndex: 0, width: "100%", height: "100%" }}>
-        <Container id="mobile_Wrapper">
-          <Header scrollY={scrollY} />
-          <NavigationLayout>{children}</NavigationLayout>
-        </Container>
+        {typeof window !== "undefined" && isLogin ? (
+          <Container id="mobile_Wrapper">
+            <Header scrollY={scrollY} />
+            <NavigationLayout>{children}</NavigationLayout>
+          </Container>
+        ) : (
+          <Container id="mobile_Wrapper">
+            <OnboardingRoutes>{children}</OnboardingRoutes>
+          </Container>
+        )}
         <AppCode />
       </div>
     </>

@@ -53,17 +53,7 @@ function Button(props: Props) {
       }}
     >
       <span>
-        {icon && (
-          <i
-            style={{
-              padding: "2px",
-              width: BUTTON_SIZE_STYLED[size].iconSize,
-              height: BUTTON_SIZE_STYLED[size].iconSize,
-            }}
-          >
-            {icon}
-          </i>
-        )}
+        {icon && <IconWrapper $iconSize={BUTTON_SIZE_STYLED[size].iconSize}>{icon}</IconWrapper>}
         {children}
       </span>
     </Wrapper>
@@ -131,6 +121,19 @@ const Wrapper = styled.button<ButtonStyled>`
       height: auto;
       fill: ${({ mode }) => mode.color};
     }
+  }
+`;
+
+const IconWrapper = styled.i<{ $iconSize: string }>`
+  width: ${({ $iconSize }) => $iconSize};
+  height: ${({ $iconSize }) => $iconSize};
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 100%;
+    height: auto;
+    fill: currentColor;
   }
 `;
 
@@ -202,7 +205,7 @@ const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledO
       border: "transparent",
     },
     outline: {
-      background: "transparent",
+      background: "var(--white)",
       color: "var(--gray600)",
       border: "var(--gray200)",
     },
@@ -219,7 +222,7 @@ const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledO
       border: "transparent",
     },
     outline: {
-      background: "transparent",
+      background: "var(--white)",
       color: "var(--success600)",
       border: "var(--success200)",
     },
@@ -236,7 +239,7 @@ const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledO
       border: "transparent",
     },
     outline: {
-      background: "transparent",
+      background: "var(--white)",
       color: "var(--info600)",
       border: "var(--info200)",
     },
@@ -253,7 +256,7 @@ const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledO
       border: "transparent",
     },
     outline: {
-      background: "transparent",
+      background: "var(--white)",
       color: "var(--warning600)",
       border: "var(--warning200)",
     },
@@ -270,7 +273,7 @@ const BUTTON_STYLE: Record<ButtonStyleMode, Record<ButtonFillType, ButtonStyledO
       border: "transparent",
     },
     outline: {
-      background: "transparent",
+      background: "var(--white)",
       color: "var(--red600)",
       border: "var(--red200)",
     },

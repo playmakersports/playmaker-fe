@@ -38,7 +38,7 @@ import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 function RecruitApplicant() {
   const listRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
-  const [selected, setSelected] = useState<string[]>([]);
+  const [selected, setSelected] = useState<(number | null)[]>([]);
   useHeader({
     title: "가입 신청 목록",
   });
@@ -48,7 +48,7 @@ function RecruitApplicant() {
   const players = TEAM_APPLY_LIST;
   const allChecked = players.length > 0 && players.every((player) => selected.includes(player.playerId));
 
-  const handleSingleCheck = (id: string, checked: boolean) => {
+  const handleSingleCheck = (id: number | null, checked: boolean) => {
     setSelected((prev) => (checked ? [...prev, id] : prev.filter((pid) => pid !== id)));
   };
   const handleAllCheck = (checked: boolean) => {

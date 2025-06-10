@@ -13,7 +13,7 @@ function LoginWrapper({ children, logoFill }: Props) {
         position: "relative",
         display: "flex",
         height: "calc(100vh - var(--safe-area-top) - 2px)",
-        padding: "60px 20px 0",
+        padding: "calc(var(--env-sat) + 40px) 20px 0",
         flexDirection: "column",
         justifyContent: "space-between",
         overflow: "hidden",
@@ -62,9 +62,7 @@ function LoginWrapper({ children, logoFill }: Props) {
         </div>
         {/* <LogoTextType className="logo-text" width={150} height={16} fill={logoFill ?? "var(--main)"} /> */}
       </div>
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div style={{ marginBottom: "16px" }}>{children}</div>
-      </div>
+      <div style={{ position: "relative", paddingBottom: "4px", zIndex: 1 }}>{children}</div>
     </section>
   );
 }

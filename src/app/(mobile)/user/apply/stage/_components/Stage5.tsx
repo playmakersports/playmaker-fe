@@ -11,13 +11,14 @@ import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "./stage.css"
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import StageWrapper, { SetStepType } from "./StageWrapper";
 import Loading from "@/components/common/Loading";
+import { authAPI } from "@/apis/url";
 
 function Stage5({ setStep }: SetStepType) {
   const { register, watch } = useFormContext();
   const { trigger } = useToast();
   const popup = usePopup();
 
-  const { mutateAsync, isPending } = usePost("/api/login/signup", "form-data");
+  const { mutateAsync, isPending } = usePost(authAPI.JOIN, "form-data");
   const selectedSports = watch("preferredSport") ?? [];
 
   const handleSubmitForm = async () => {

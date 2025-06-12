@@ -20,19 +20,22 @@ import {
   flexRowGap4,
 } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
+import { boardAPI } from "@/apis/url";
 
 function EditorView() {
   const { editor, images } = useEditorHandler({
     placeholder: "내용을 입력해주세요...",
   });
-  const { mutate, data, isError, error, isPending } = usePost("/api/board/create", "form-data");
+  const { mutate, data, isError, error, isPending } = usePost(boardAPI.BOARDS);
   const onSubmit = async () => {
     mutate({
       data: {
-        categoryNum: category,
-        content: editor?.getHTML(),
-        teamId,
-        title,
+        boardInfo: {
+          teamId,
+          title,
+          category: category,
+          content: editor?.getHTML(),
+        },
       },
     });
     if (isError) {

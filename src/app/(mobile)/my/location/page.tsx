@@ -13,6 +13,7 @@ import { baseContainer } from "@/styles/container.css";
 import { stageFormWrapper, stageWrapper } from "@/app/(mobile)/user/apply/stage/_components/stage.css";
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
+import { commonAPI } from "@/apis/url";
 
 interface LocationType {
   key: string | null;
@@ -29,7 +30,7 @@ function MyLocation() {
     },
   });
   const { setValue, watch } = useForm();
-  const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
+  const { data, isLoading } = useGet<ApiCodeArea>(`${commonAPI.CODES}/activeArea`);
 
   const [sido, setSido] = useState<LocationType>({ key: "11", name: "서울특별시" });
   const formLocation = watch("location") ?? [];

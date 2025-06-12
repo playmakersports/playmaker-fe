@@ -15,6 +15,7 @@ import { BasicInput } from "@/components/common/input/BaseInput";
 import DropdownInput from "@/components/common/input/DropdownInput";
 import InputWrapper from "@/components/common/input/InputWrapper";
 import StageWrapper, { SetStepType } from "./StageWrapper";
+import { authAPI } from "@/apis/url";
 
 function OptionalStage2({ setStep }: SetStepType) {
   const { register, watch, setValue } = useFormContext();
@@ -23,7 +24,7 @@ function OptionalStage2({ setStep }: SetStepType) {
   const toast = useToast();
 
   const [exp, setExp] = useState(!!watch("basketball.exDuration") ? "write" : "0");
-  const { mutateAsync, isPending } = usePost("/api/login/updatefitlib");
+  const { mutateAsync, isPending } = usePost(authAPI.FITNESS);
 
   const handleSubmitForm = async () => {
     const formValues = watch();

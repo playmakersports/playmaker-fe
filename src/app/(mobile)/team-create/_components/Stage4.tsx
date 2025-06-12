@@ -10,6 +10,7 @@ import { fonts } from "@/styles/fonts.css";
 import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
+import { commonAPI } from "@/apis/url";
 
 interface LocationType {
   key: string | null;
@@ -18,7 +19,7 @@ interface LocationType {
 
 function TeamCreateStage4({ setStep }: SetStepType) {
   const { setValue, watch } = useFormContext();
-  const { data, isLoading } = useGet<ApiCodeArea>("/api/code/activeArea");
+  const { data, isLoading } = useGet<ApiCodeArea>(`${commonAPI.CODES}/activeArea`);
 
   const handlePrevStep = () => {
     setStep("Stage3");

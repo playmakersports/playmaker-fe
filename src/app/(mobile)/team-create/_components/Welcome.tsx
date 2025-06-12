@@ -7,6 +7,7 @@ import { usePopup } from "@/components/common/global/PopupProvider";
 
 import Loading from "@/components/common/Loading";
 import { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
+import { teamAPI } from "@/apis/url";
 
 function TeamCreateWelcome({ setStep }: SetStepType) {
   const { watch } = useFormContext();
@@ -14,7 +15,7 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
   const popup = usePopup();
   const { mutate, isPending } = usePost<{
     id: number;
-  }>("/api/teams");
+  }>(teamAPI.TEAMS, "form-data");
   const hasPostedRef = useRef(false);
 
   useEffect(() => {
@@ -30,6 +31,9 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
             logoUrl: formValues.logoUrl,
             teamIntro: formValues.teamIntro,
             message: formValues.message,
+            hasGenerationSystem: formValues.hasGenerationSystem ? "Y" : "N",
+            foundingDate: formValues.foundingDate.replaceAll("-", ""),
+            genderRestriction: formValues.genderRestriction ? "Y" : "N",
           },
         },
         {

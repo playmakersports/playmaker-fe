@@ -35,7 +35,7 @@ function TeamCreateStage2({ setStep }: SetStepType) {
         </div>
         <div className={flexColumnGap20}>
           <BasicInput type="text" title="팀 이름" required {...register("teamName", { required: true })} />
-          <DateInput title="창단일" required />
+          <DateInput title="창단일" required {...register("foundingDate")} />
           <TextArea
             title="팀 소개"
             placeholder={`다른 플레이어들에게 보일 팀 소개글을 작성해 주세요\n150자 이내 작성 가능합니다. (선택)`}

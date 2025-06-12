@@ -27,6 +27,7 @@ import PlusIcon from "@/assets/icon/common/Plus.svg";
 import LeftArrowIcon from "@/assets/icon/arrow/LeftArrow.svg";
 import RightArrowIcon from "@/assets/icon/arrow/RightArrow.svg";
 import SearchPopup from "./_components/SearchPopup";
+import { boardAPI } from "@/apis/url";
 
 function Board() {
   const [showSearch, setShowSearch] = useState(false);
@@ -58,9 +59,10 @@ function Board() {
   const currentPage = searchParams.get("page") || "1";
   const currentKeyword = searchParams.get("keyword") || "";
 
-  const { data, isLoading, isError, refetch } = useGet<GetTeamBoardListResponse>(`/api/board/team/${teamId}`, {
-    page: currentPage,
-    keyword: currentKeyword,
+  const { data, isLoading, isError, refetch } = useGet<GetTeamBoardListResponse>(`${boardAPI.BOARDS}`, {
+    // page: currentPage,
+    // keyword: currentKeyword,
+    teamId: teamId as string,
   });
 
   const updatePaging = (page: string) => {

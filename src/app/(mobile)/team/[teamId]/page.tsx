@@ -7,6 +7,7 @@ import { ApiTeamDetail } from "@/apis/types/team";
 
 import TeamMainTop from "./_components/TeamMainTop";
 import TeamMainContents from "./_components/TeamMainContents";
+import { teamAPI } from "@/apis/url";
 
 async function getTeamData(teamId: string) {
   // 현재 위치 가져오기 (API 임시 연동)
@@ -16,13 +17,8 @@ async function getTeamData(teamId: string) {
 
   const cookieStore = await cookies();
   const accessToken = cookieStore.get("access-token")?.value;
-  // const link = `${protocol}://${host}/api/team`;
-  const link =
-    process.env.NODE_ENV === "development"
-      ? `${protocol}://${host}/api/team`
-      : `${baseBackendURL}/api/team/selectteam/page/${teamId}`;
-  const res = await fetch(`${baseBackendURL}/api/teams/${teamId}`, {
-    // const res = await fetch(link, {
+
+  const res = await fetch(`${baseBackendURL}${teamAPI.TEAMS}/${teamId}`, {
     headers: {
       authorization: `Bearer ${accessToken}`,
     },

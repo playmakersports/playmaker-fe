@@ -7,6 +7,7 @@ import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { baseBackendURL } from "@/apis";
 import Loading from "@/components/common/Loading";
+import { authAPI } from "@/apis/url";
 
 function GoogleLogin() {
   const router = useRouter();
@@ -16,7 +17,7 @@ function GoogleLogin() {
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
   const code = searchParams.get("code") as string;
-  const googleUrl = `${baseBackendURL}/api/login/goauth2?code=${encodeURIComponent(code)}`;
+  const googleUrl = `${baseBackendURL}${authAPI.GOOGLE}?code=${encodeURIComponent(code)}`;
 
   const handleLogin = async () => {
     try {

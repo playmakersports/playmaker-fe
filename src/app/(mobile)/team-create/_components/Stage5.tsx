@@ -42,11 +42,11 @@ function TeamCreateStage5({ setStep }: SetStepType) {
               size="large"
               text={{ title: "성별 제한", description: "팀에 가입할 수 있는 성별을 제한할 수 있어요.", first: true }}
               showIcon
-              {...register("genderRestrict")}
+              {...register("genderRestriction")}
             />
             <div
               style={
-                watch("genderRestrict")
+                watch("genderRestriction")
                   ? undefined
                   : {
                       pointerEvents: "none",
@@ -72,6 +72,7 @@ function TeamCreateStage5({ setStep }: SetStepType) {
             size="large"
             text={{ title: "기수제 운영", description: "팀 소속 선수를 기수로 관리할 수 있어요.", first: true }}
             showIcon
+            {...register("hasGenerationSystem")}
           />
         </div>
       </div>

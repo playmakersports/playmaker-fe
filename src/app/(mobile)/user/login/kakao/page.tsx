@@ -7,6 +7,7 @@ import { usePopup } from "@/components/common/global/PopupProvider";
 
 import { baseBackendURL } from "@/apis";
 import Loading from "@/components/common/Loading";
+import { authAPI } from "@/apis/url";
 
 function KakaoLogin() {
   const router = useRouter();
@@ -16,7 +17,7 @@ function KakaoLogin() {
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
   const code = searchParams.get("code") as string;
-  const kakaoUrl = `${baseBackendURL}/api/login/koauth2?code=${encodeURIComponent(code)}`;
+  const kakaoUrl = `${baseBackendURL}${authAPI.KAKAO}?code=${encodeURIComponent(code)}`;
 
   const handleLogin = async () => {
     try {

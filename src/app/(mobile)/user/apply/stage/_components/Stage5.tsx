@@ -76,7 +76,7 @@ function Stage5({ setStep }: SetStepType) {
       current={5}
       disableNext={!(selectedSports.length > 0) || selectedSports.length > 3}
     >
-      {isPending && <Loading />}
+      {isPending && <Loading page />}
       <div className={stageFormWrapper}>
         <div>
           <h3 className={stageWrapper.title}>관심 스포츠를 선택해 주세요</h3>

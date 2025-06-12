@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { usePopup } from "@/components/common/global/PopupProvider";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { usePost } from "@/apis/hook/query";
 import { useToast } from "@/hook/useToast";
 

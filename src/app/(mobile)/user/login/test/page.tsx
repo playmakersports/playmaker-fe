@@ -1,19 +1,19 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { useSetAtom } from "jotai";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
 import { useAuth } from "@/session/useAuth";
+import { useSetUser } from "@/session/useSetUser";
 
-import { isOnboardingAtom } from "@/session/userAtom";
 import Loading from "@/components/common/Loading";
 
 function TestLogin() {
   const router = useRouter();
+  const { logout } = useSetUser();
+
   const { setToken, clearToken } = useAuth();
-  const setOnboarding = useSetAtom(isOnboardingAtom);
-  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>("/api/test/login/random", {});
+  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>("/api/dev/test/random-token", {});
   const once = useRef(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function TestLogin() {
         );
         if (confirm) {
           clearToken();
-          setOnboarding(false);
+          logout();
         } else {
           setToken("TestToken");
         }

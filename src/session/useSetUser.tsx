@@ -1,10 +1,9 @@
 import { useSetAtom } from "jotai";
-import { isOnboardingAtom, userAtom, UserSessionData } from "./userAtom";
+import { userAtom, UserSessionData } from "./userAtom";
 import { useAuth } from "./useAuth";
 
 export const useSetUser = () => {
   const setUser = useSetAtom(userAtom);
-  const setOnboarding = useSetAtom(isOnboardingAtom);
   const { clearToken } = useAuth();
 
   const login = (userData: UserSessionData) => {
@@ -13,7 +12,6 @@ export const useSetUser = () => {
 
   const logout = () => {
     setUser(null);
-    setOnboarding(false);
     clearToken();
   };
 

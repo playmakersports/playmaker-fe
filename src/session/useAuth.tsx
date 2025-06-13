@@ -1,9 +1,8 @@
 import { setCookie, deleteCookie, getCookie } from "cookies-next";
-import { useAtom, useSetAtom } from "jotai";
-import { isOnboardingAtom, userAtom } from "./userAtom";
+import { useAtom } from "jotai";
+import { userAtom } from "./userAtom";
 
 export const useAuth = () => {
-  const setOnboarding = useSetAtom(isOnboardingAtom);
   const [userAtomValue, setUserAtom] = useAtom(userAtom);
   const accessToken = getCookie("access-token") ?? null;
   const isLogin = userAtomValue?.isLogin || accessToken === "TestToken";
@@ -17,7 +16,6 @@ export const useAuth = () => {
       nickname: null,
       isLogin: true,
     }));
-    setOnboarding(true);
 
     return setCookie("access-token", newToken, {
       path: "/",
@@ -35,7 +33,6 @@ export const useAuth = () => {
       nickname: null,
       isLogin: false,
     }));
-    setOnboarding(false);
 
     return deleteCookie("access-token", {
       path: "/",

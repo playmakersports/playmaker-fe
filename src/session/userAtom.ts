@@ -7,4 +7,3 @@ export type UserSessionData = {
   isLogin: boolean;
 };
 export const userAtom = atom<UserSessionData | null>(null);
-export const isOnboardingAtom = atom<boolean>(false);

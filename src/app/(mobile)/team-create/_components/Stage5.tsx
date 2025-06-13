@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
@@ -7,18 +7,34 @@ import { flexColumnGap16, flexColumnGap40 } from "@/styles/container.css";
 
 import MainTab from "@/components/Main/MainTab";
 import { ToggleSwitch } from "@/components/common/input/ToggleSwitch";
+import BirthRangeInput from "@/components/common/BirthRangeInput";
 
 function TeamCreateStage5({ setStep }: SetStepType) {
   const { register, setValue, watch } = useFormContext();
+  const [genderRestriction, setGenderRestriction] = useState(false);
+  const [ageRestriction, setAgeRestriction] = useState(false);
+  const [ageRange, setAgeRange] = useState<number[]>();
 
   const handleGender = (value: string) => {
-    setValue("gender", value);
+    setValue("genderRestriction", value);
   };
 
   const handlePrevStep = () => {
     setStep("Stage4");
   };
   const handleComplete = () => {
+    if (!genderRestriction) {
+      setValue("genderRestriction", null);
+    }
+    if (ageRestriction) {
+      // ageMin >= ageMax
+      // ageMin의 나이 <= ageMax의 나이
+      setValue("ageMin", ageRange?.[1] || 0);
+      setValue("ageMax", ageRange?.[0] || 0);
+    } else {
+      setValue("ageMin", 0);
+      setValue("ageMax", 0);
+    }
     setStep("Welcome");
   };
 
@@ -34,19 +50,45 @@ function TeamCreateStage5({ setStep }: SetStepType) {
             <ToggleSwitch
               size="large"
               text={{ title: "나이 제한", description: "팀에 가입할 수 있는 나이를 제한할 수 있어요.", first: true }}
-              showIcon
+              showIcon={true}
+              checked={ageRestriction}
+              onChange={(e) => {
+                setAgeRestriction(e.target.checked);
+                if (!e.target.checked) {
+                  setValue("ageMin", 0);
+                  setValue("ageMax", 0);
+                }
+              }}
             />
+            <div
+              style={
+                ageRestriction
+                  ? undefined
+                  : {
+                      pointerEvents: "none",
+                      opacity: 0.55,
+                    }
+              }
+            >
+              <BirthRangeInput getYearRange={setAgeRange} />
+            </div>
           </div>
           <div className={flexColumnGap16}>
             <ToggleSwitch
               size="large"
               text={{ title: "성별 제한", description: "팀에 가입할 수 있는 성별을 제한할 수 있어요.", first: true }}
-              showIcon
-              {...register("genderRestriction")}
+              showIcon={true}
+              checked={genderRestriction}
+              onChange={(e) => {
+                setGenderRestriction(e.target.checked);
+                if (!e.target.checked) {
+                  setValue("genderRestriction", null);
+                }
+              }}
             />
             <div
               style={
-                watch("genderRestriction")
+                genderRestriction
                   ? undefined
                   : {
                       pointerEvents: "none",
@@ -59,7 +101,7 @@ function TeamCreateStage5({ setStep }: SetStepType) {
                 color="gray"
                 size="medium"
                 sameWidth
-                initialValue={watch("gender")}
+                initialValue={watch("genderRestriction")}
                 nowValue={handleGender}
                 items={[
                   { value: "FEMALE", name: "여성" },

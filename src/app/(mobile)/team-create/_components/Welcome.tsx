@@ -20,21 +20,31 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
 
   useEffect(() => {
     const formValues = watch();
+    const formData = new FormData();
+    const requestDto = {
+      hasGenerationSystem: formValues.hasGenerationSystem ? "Y" : "N",
+      teamColor: formValues.teamColor,
+      message: formValues.message,
+      teamName: formValues.teamName,
+      genderRestriction: formValues.genderRestriction ?? null,
+      foundingDate: formValues.foundingDate.replaceAll("-", ""),
+      university: null,
+      teamIntro: formValues.teamIntro,
+      teamItem: formValues.teamItem,
+      activeArea: formValues.activeArea,
+      ageMax: 0,
+      ageMin: 0,
+    };
+
+    formData.append("requestDto", new Blob([JSON.stringify(requestDto)], { type: "application/json" }));
+    if (formValues.image instanceof File) {
+      formData.append("logoFile", formValues.image);
+    }
+
     if (!hasPostedRef.current) {
       mutate(
         {
-          data: {
-            teamName: formValues.teamName,
-            teamColor: formValues.teamColor,
-            teamItem: formValues.teamItem,
-            activeArea: formValues.activeArea,
-            logoUrl: formValues.logoUrl,
-            teamIntro: formValues.teamIntro,
-            message: formValues.message,
-            hasGenerationSystem: formValues.hasGenerationSystem ? "Y" : "N",
-            foundingDate: formValues.foundingDate.replaceAll("-", ""),
-            genderRestriction: formValues.genderRestriction ? "Y" : "N",
-          },
+          data: formData,
         },
         {
           onSuccess: (data) => {
@@ -44,7 +54,6 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
               color: "primary",
             });
             router.push(`/team/${data.id}`);
-            console.log(data);
           },
 
           onError: (error) => {

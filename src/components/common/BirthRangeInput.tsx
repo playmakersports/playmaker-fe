@@ -1,27 +1,35 @@
-import React, { useCallback, useRef, useState } from "react";
-import { getYear } from "date-fns";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { differenceInYears, getYear } from "date-fns";
 import styled from "styled-components";
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore from "swiper";
 import { useToast } from "@/hook/useToast";
 import useModal from "@/hook/useModal";
-import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
+import "swiper/css";
 
 import { InputStyledWrapper } from "./Wrapper";
-import { CARD_ACTIVE, FONTS } from "@/styles/common";
-import ArrowBottomIcon from "@/assets/icon/arrow/DownArrow.svg";
+import { FONTS } from "@/styles/common";
+import DownArrowIcon from "@/assets/icon/arrow/DownArrow.svg";
 
 type Props = {
   getYearRange: (target: [number, number]) => void;
   defaultValue?: [number, number];
   title?: string;
 };
+
 function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
   const { trigger } = useToast();
-  const { showModal: showMinModal, ModalComponents: MinComponents } = useModal();
-  const { showModal: showMaxModal, ModalComponents: MaxComponents } = useModal();
-  const [birthYearMin, setBirthYearMin] = useState<number>(defaultValue ? defaultValue[0] : 0);
-  const [birthYearMax, setBirthYearMax] = useState<number>(defaultValue ? defaultValue[1] : 0);
-  const yearMinRef = useRef<Flicking>(null);
-  const yearMaxRef = useRef<Flicking>(null);
+  const { showModal, ModalComponents } = useModal();
+
+  const startAgeYear = getYear(new Date()) - 14;
+  const [birthYearMin, setBirthYearMin] = useState<number>(defaultValue?.[0] || 0);
+  const [birthYearMax, setBirthYearMax] = useState<number>(defaultValue?.[1] || 0);
+
+  const [minList, setMinList] = useState<number[]>([]);
+  const [maxList, setMaxList] = useState<number[]>([]);
+
+  const minSwiperRef = useRef<SwiperCore | null>(null);
+  const maxSwiperRef = useRef<SwiperCore | null>(null);
 
   const getNumberFromTo = useCallback((start: number, end: number) => {
     if (start > end) {
@@ -30,127 +38,143 @@ function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   }, []);
 
-  const MIN_BIRTH_YEARS = getNumberFromTo(getYear(new Date()), 1940);
-  const MAX_BIRTH_YEARS = getNumberFromTo(getYear(new Date()), !!birthYearMin ? birthYearMin : 1940);
+  // 초기 minList 설정
+  useEffect(() => {
+    setMinList(getNumberFromTo(startAgeYear, 1940));
+  }, [getNumberFromTo]);
 
-  const onYearMinChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setBirthYearMin(+`${MIN_BIRTH_YEARS[e.index]}`);
-  };
-  const onYearMaxChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setBirthYearMax(+`${MAX_BIRTH_YEARS[e.index]}`);
+  // birthYearMin 변경 시 maxList 재설정
+  useEffect(() => {
+    setMaxList(getNumberFromTo(startAgeYear, birthYearMin || 1940));
+  }, [birthYearMin, getNumberFromTo]);
+
+  // 저장 버튼 클릭
+  const handleSave = (close: () => void) => {
+    if (birthYearMin && birthYearMax) {
+      if (birthYearMin > birthYearMax) {
+        trigger("연장자는 연소자보다 나이가 많아야 합니다.", { type: "warning" });
+        return;
+      }
+      getYearRange([birthYearMin, birthYearMax]);
+      close();
+    } else {
+      trigger("출생연도를 모두 선택해주세요.", { type: "warning" });
+    }
   };
 
-  const moveToYearMin = (index: number) => {
-    setBirthYearMin(+`${MIN_BIRTH_YEARS[index]}`);
-    yearMinRef.current!.moveTo(index).catch((err) => {
-      if (err instanceof FlickingError) return;
-      throw err;
-    });
-  };
-  const moveToYearMax = (index: number) => {
-    setBirthYearMax(+`${MAX_BIRTH_YEARS[index]}`);
-    yearMaxRef.current!.moveTo(index).catch((err) => {
-      if (err instanceof FlickingError) return;
-      throw err;
-    });
-  };
+  const [showAgeInfo, setShowAgeInfo] = useState(false);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setShowAgeInfo((prev) => !prev);
+    }, 3000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <>
       <Container>
-        <p className="input-title">{title ?? "출생연도 범위"}</p>
+        {title && <div className="input-title">{title}</div>}
         <Selects>
-          <Select onClick={showMinModal}>
+          <Select onClick={showModal}>
             {birthYearMin ? (
               <div className="selected-value">{birthYearMin}년생</div>
             ) : (
               <div className="placeholder">연장자 출생연도</div>
             )}
             <i className="arrow-icon">
-              <ArrowBottomIcon />
+              <DownArrowIcon />
             </i>
           </Select>
           <div className="separator" />
-          <Select onClick={showMaxModal}>
+          <Select onClick={showModal}>
             {birthYearMax ? (
               <div className="selected-value">{birthYearMax}년생</div>
             ) : (
               <div className="placeholder">연소자 출생연도</div>
             )}
             <i className="arrow-icon">
-              <ArrowBottomIcon />
+              <DownArrowIcon />
             </i>
           </Select>
         </Selects>
       </Container>
-      <MinComponents
+
+      <ModalComponents
+        title="나이 제한"
+        description="출생연도로 나이를 제한할 수 있어요."
         buttons={[
           {
             mode: "primary",
-            name: "다음",
-            onClick: (close) => {
-              close();
-              showMaxModal();
-            },
+            name: "저장",
+            onClick: handleSave,
           },
         ]}
       >
         <Wrapper>
-          <Flicking
-            ref={yearMinRef}
-            horizontal={false}
-            onWillChange={onYearMinChanged}
-            onChanged={onYearMinChanged}
-            defaultIndex={MIN_BIRTH_YEARS.findIndex((v) => v === birthYearMin)}
+          <div className="background-selected">~</div>
+          <Swiper
+            direction="vertical"
+            freeMode
+            slidesPerView={5}
+            centeredSlides
+            onSwiper={(swiper) => (minSwiperRef.current = swiper)}
+            onSlideChange={(swiper) => setBirthYearMin(minList[swiper.activeIndex])}
+            initialSlide={minList.findIndex((v) => v === birthYearMin) || 0}
+            style={{ flex: 1 }}
           >
-            {MIN_BIRTH_YEARS.map((year, index) => (
-              <YearPanel
-                key={year + "year"}
-                className={year === +birthYearMin ? "active-pick" : ""}
-                onClick={() => moveToYearMin(index)}
-              >
-                {year}년생 (만 {getYear(new Date()) - year}세)
-              </YearPanel>
+            {minList.map((year) => (
+              <SwiperSlide key={`min-${year}`}>
+                {birthYearMin === year ? (
+                  <YearPanel>
+                    <span className="age-year" data-switch={showAgeInfo}>
+                      {year}년생
+                    </span>
+                    <span className="age-info" data-switch={!showAgeInfo}>
+                      {differenceInYears(new Date(), new Date(`${year}-01-01`)) + 1}세
+                    </span>
+                  </YearPanel>
+                ) : (
+                  <YearPanel>
+                    <span className="age-year">{year}년생</span>
+                  </YearPanel>
+                )}
+              </SwiperSlide>
             ))}
-          </Flicking>
-        </Wrapper>
-      </MinComponents>
-      <MaxComponents
-        buttons={[
-          {
-            mode: "primary",
-            name: "선택",
-            onClick: (close) => {
-              if (birthYearMin <= birthYearMax) {
-                getYearRange([birthYearMin, birthYearMax]);
-                close();
-              } else {
-                trigger("잘못된 범위 선택입니다", { type: "error" });
-              }
-            },
-          },
-        ]}
-      >
-        <Wrapper>
-          <Flicking
-            ref={yearMaxRef}
-            horizontal={false}
-            onWillChange={onYearMaxChanged}
-            onChanged={onYearMaxChanged}
-            defaultIndex={MAX_BIRTH_YEARS.findIndex((v) => v === birthYearMax)}
+          </Swiper>
+          <Swiper
+            direction="vertical"
+            freeMode
+            slidesPerView={5}
+            centeredSlides
+            onSwiper={(swiper) => (maxSwiperRef.current = swiper)}
+            onSlideChange={(swiper) => setBirthYearMax(maxList[swiper.activeIndex])}
+            initialSlide={maxList.findIndex((v) => v === birthYearMax) || 0}
+            style={{ flex: 1 }}
           >
-            {MAX_BIRTH_YEARS.map((year, index) => (
-              <YearPanel
-                key={year + "year"}
-                className={year === +birthYearMax ? "active-pick" : ""}
-                onClick={() => moveToYearMax(index)}
-              >
-                {year}년생 (만 {getYear(new Date()) - year}세)
-              </YearPanel>
+            {maxList.map((year) => (
+              <SwiperSlide key={`max-${year}`}>
+                {birthYearMax === year ? (
+                  <YearPanel>
+                    <span className="age-year" data-switch={showAgeInfo}>
+                      {year}년생
+                    </span>
+                    <span className="age-info" data-switch={!showAgeInfo}>
+                      {differenceInYears(new Date(), new Date(`${year}-01-01`)) + 1}세
+                    </span>
+                  </YearPanel>
+                ) : (
+                  <YearPanel>
+                    <span className="age-year">{year}년생</span>
+                  </YearPanel>
+                )}
+              </SwiperSlide>
             ))}
-          </Flicking>
+          </Swiper>
         </Wrapper>
-      </MaxComponents>
+      </ModalComponents>
     </>
   );
 }
@@ -164,56 +188,38 @@ const Container = styled.div`
     color: var(--gray700);
     line-height: 2.4rem;
   }
-
-  .input-information {
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    margin-top: 10px;
-    padding: 0 8px;
-    font-size: 1.2rem;
-    color: var(--gray700);
-    gap: 4px;
-    svg {
-      width: 16px;
-      height: 16px;
-    }
-  }
 `;
+
 const Selects = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   div.separator {
-    display: block;
     width: 24px;
     height: 1px;
     background-color: var(--gray400);
   }
 `;
+
 const Select = styled(InputStyledWrapper)`
-  ${CARD_ACTIVE}
   user-select: none;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.15);
 
   div.selected-value {
-    ${FONTS.body3("regular")};
+    ${FONTS.body4("regular")};
   }
   div.placeholder {
-    ${FONTS.body3("regular")};
-    color: var(--gray500);
+    ${FONTS.body4("regular")};
+    color: var(--gray400);
   }
   i.arrow-icon {
     display: flex;
     align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
     svg {
-      transform: rotate(180deg);
-      fill: var(--gray400);
+      width: 20px;
+      height: 20px;
+      fill: var(--gray700);
     }
   }
 `;
@@ -221,60 +227,89 @@ const Select = styled(InputStyledWrapper)`
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  padding: 0 12px;
   justify-content: center;
-  align-items: center;
-  height: 240px;
+  gap: 8px;
+  padding: 0 12px;
+  height: 300px;
   overflow: hidden;
 
-  .flicking-viewport {
-    position: relative;
-    width: 100%;
-    transform-style: preserve-3d;
-    overflow: visible;
-  }
-  .flicking-camera {
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 24px;
-    background: linear-gradient(to bottom, var(--background-light) 0%, rgba(var(--background-light-rgb), 0) 100%);
-    z-index: 1;
-  }
+  &::before,
   &::after {
     content: "";
     position: absolute;
-    display: block;
+    width: 100%;
+    height: 32px;
+    left: 0;
+    z-index: 2;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--background-light), rgba(var(--background-light-rgb), 0));
+  }
+
+  &::after {
     bottom: 0;
+    background: linear-gradient(to top, var(--background-light), rgba(var(--background-light-rgb), 0));
+  }
+
+  div.background-selected {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
     left: 0;
     width: 100%;
-    height: 24px;
-    background: linear-gradient(to top, var(--background-light) 0%, rgba(var(--background-light-rgb), 0) 100%);
+    height: 60px;
+    background-color: var(--primary50);
+    z-index: 1;
+    border-radius: 8px;
+    transform: translateY(-50%);
+    opacity: 0.65;
+    ${FONTS.head5("medium")};
+    color: var(--primary600);
   }
 `;
+
 const YearPanel = styled.div`
-  padding: 8px 12px;
-  display: block;
+  user-select: none;
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-areas: "overlap";
+
+  padding: 8px 0;
+  width: 100%;
+  height: 100%;
   text-align: center;
   ${FONTS.body3("regular")};
-  color: var(--gray600);
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.5px;
-  transition: all 0.25s;
-  transition-delay: 0.2s;
+  color: var(--gray500);
+  letter-spacing: -0.1px;
+  transition: color 0.3s ease, font-size 0.3s ease;
 
-  &.active-pick {
-    color: var(--main);
-    font-weight: 700;
-    font-size: 2rem;
+  span.age-year {
+    grid-area: overlap;
+  }
+  span.age-info {
+    grid-area: overlap;
+    display: flex;
+    justify-content: center;
+  }
+  .swiper-slide-active & {
+    ${FONTS.body1("semibold")};
+    color: var(--primary600);
+
+    span {
+      transition: opacity 0.3s ease;
+    }
+    span[data-switch="true"] {
+      opacity: 1;
+    }
+    span[data-switch="false"] {
+      opacity: 0;
+    }
   }
 `;
 

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/session/useAuth";
 import { useSetUser } from "@/session/useSetUser";
@@ -12,13 +12,16 @@ import { authAPI } from "@/apis/url";
 
 function KakaoLogin() {
   const router = useRouter();
-  const { login } = useSetUser();
+  const { login, logout } = useSetUser();
   const popup = usePopup();
   const toast = useToast();
   const { setToken } = useAuth();
   const searchParams = useSearchParams();
   const code = searchParams.get("code") as string;
   const kakaoUrl = `${baseBackendURL}${authAPI.KAKAO}?code=${encodeURIComponent(code)}`;
+
+  // 요청 성공시에, param 업데이트로 다시 호출되는 현상 제어
+  const alreadyCalled = useRef(false);
 
   useEffect(() => {
     const handleLogin = async () => {
@@ -53,11 +56,13 @@ function KakaoLogin() {
           color: "red",
         });
         router.replace("/");
+        logout();
         throw new Error("Failed to fetch data");
       }
     };
 
-    if (code) {
+    if (code && !alreadyCalled.current) {
+      alreadyCalled.current = true;
       handleLogin();
     }
   }, [code]);

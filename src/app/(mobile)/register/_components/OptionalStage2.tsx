@@ -144,9 +144,9 @@ function OptionalStage2({ setStep }: SetStepType) {
                 initialValue={watch("basketball.posKey")}
                 nowValue={handlePosition}
                 items={[
-                  { value: "guard", name: "가드" },
-                  { value: "forward", name: "포워드" },
-                  { value: "center", name: "센터" },
+                  { value: "10", name: "가드" },
+                  { value: "20", name: "포워드" },
+                  { value: "30", name: "센터" },
                 ]}
               />
             </InputWrapper>

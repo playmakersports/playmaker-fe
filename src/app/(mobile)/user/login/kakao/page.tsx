@@ -36,11 +36,12 @@ function KakaoLogin() {
 
         const data = await response.json();
         await setToken(data.access_token);
+        document.cookie = `refresh_token=${data.refresh_token}; path=/; max-age=604800; secure; sameSite=Lax`;
         sessionStorage.setItem("kakao_logged_in", "true");
 
         if (data.newUserYn === "Y") {
           // 신규 회원일 경우, 회원가입 화면으로 연결
-          router.replace("/user/apply/stage?from=kakao");
+          router.replace("/register?from=kakao");
         } else {
           // TODO: 반영 예정
           // login({

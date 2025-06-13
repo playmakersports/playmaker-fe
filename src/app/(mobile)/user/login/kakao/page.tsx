@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/session/useAuth";
 import { useSetUser } from "@/session/useSetUser";
@@ -21,9 +21,10 @@ function KakaoLogin() {
   const kakaoUrl = `${baseBackendURL}${authAPI.KAKAO}?code=${encodeURIComponent(code)}`;
 
   // 요청 성공시에, param 업데이트로 다시 호출되는 현상 제어
-  const alreadyCalled = useRef(false);
+  const [hasRun, setHasRun] = useState(false);
 
   useEffect(() => {
+    const hasLoggedIn = sessionStorage.getItem("kakao_logged_in");
     const handleLogin = async () => {
       try {
         const response = await fetch(kakaoUrl, {
@@ -35,6 +36,7 @@ function KakaoLogin() {
 
         const data = await response.json();
         await setToken(data.access_token);
+        sessionStorage.setItem("kakao_logged_in", "true");
 
         if (data.newUserYn === "Y") {
           // 신규 회원일 경우, 회원가입 화면으로 연결
@@ -49,6 +51,7 @@ function KakaoLogin() {
           toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
           router.replace("/");
         }
+        setHasRun(true);
       } catch (error) {
         await popup?.alert(`서버 통신에 실패했어요.\n${error}`, {
           title: "로그인 실패",
@@ -57,12 +60,10 @@ function KakaoLogin() {
         });
         router.replace("/");
         logout();
-        throw new Error("Failed to fetch data");
       }
     };
 
-    if (code && !alreadyCalled.current) {
-      alreadyCalled.current = true;
+    if (code && !hasRun && !hasLoggedIn) {
       handleLogin();
     }
   }, [code]);

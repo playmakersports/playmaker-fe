@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
 import { flexColumnGap20 } from "@/styles/container.css";
-import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
-import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
+import { stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
+import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
 
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TextArea } from "@/components/common/TextArea";

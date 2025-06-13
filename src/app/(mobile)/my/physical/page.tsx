@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { baseContainer } from "@/styles/container.css";
 import { BasicInput } from "@/components/common/input/BaseInput";
-import { stageFormWrapper, stageWrapper } from "@/app/(mobile)/user/apply/stage/_components/stage.css";
+import { stageFormWrapper, stageWrapper } from "@/app/(mobile)/register/_components/stage.css";
 
 function MyPhysical() {
   const { register } = useForm();

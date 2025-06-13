@@ -5,9 +5,9 @@ import { useFormContext } from "react-hook-form";
 import { useGet } from "@/apis/hook/query";
 
 import { ApiCodeArea } from "@/apis/types/code";
-import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
+import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
 import { fonts } from "@/styles/fonts.css";
-import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
+import { stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
 import { commonAPI } from "@/apis/url";

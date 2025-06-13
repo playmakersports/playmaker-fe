@@ -6,8 +6,8 @@ import { useFormContext } from "react-hook-form";
 
 import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { fonts } from "@/styles/fonts.css";
-import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
-import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
+import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
+import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
 
 function TeamCreateStage1({ setStep }: SetStepType) {
   const { register, watch } = useFormContext();

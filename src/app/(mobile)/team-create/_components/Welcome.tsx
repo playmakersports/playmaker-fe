@@ -6,7 +6,7 @@ import { useFormContext } from "react-hook-form";
 import { usePopup } from "@/components/common/global/PopupProvider";
 
 import Loading from "@/components/common/Loading";
-import { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
+import { SetStepType } from "../../register/_components/StageWrapper";
 import { teamAPI } from "@/apis/url";
 
 function TeamCreateWelcome({ setStep }: SetStepType) {

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
-import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
-import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
+import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
+import { stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
 import { flexColumnGap16, flexColumnGap40 } from "@/styles/container.css";
 
 import MainTab from "@/components/Main/MainTab";

@@ -2,8 +2,8 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
-import StageWrapper, { SetStepType } from "../../user/apply/stage/_components/StageWrapper";
-import { stageFormWrapper, stageWrapper } from "../../user/apply/stage/_components/stage.css";
+import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
+import { stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
 import { convertWebpImage } from "@/util/webp";
 
 import ImageIcon from "@/assets/icon/common/filled/Image.svg";

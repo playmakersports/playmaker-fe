@@ -1,15 +1,16 @@
+"use client";
 import React from "react";
-import { usePathname } from "next/navigation";
-import AppOnboardingHome from "../user/_onboarding";
-import { useAtomValue } from "jotai";
-import { isOnboardingAtom } from "@/session/userAtom";
+import { redirect, usePathname } from "next/navigation";
+import { useAuth } from "@/session/useAuth";
 
 function OnboardingRoutes({ children }: { children: React.ReactNode }) {
-  const onboarding = useAtomValue(isOnboardingAtom);
+  const { isLogin } = useAuth();
   const pathname = usePathname();
-  const isOAuthStart = pathname.startsWith("/user/login");
+  const isOAuthStart = pathname.startsWith("/user");
 
-  if (!onboarding && !isOAuthStart) return <AppOnboardingHome />;
+  if (!isLogin && !isOAuthStart) {
+    redirect("/user");
+  }
   return children;
 }
 

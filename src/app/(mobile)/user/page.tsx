@@ -1,10 +1,9 @@
+"use client";
 import React from "react";
 import clsx from "clsx";
 import Link from "next/link";
-import { useSetAtom } from "jotai";
 
 import { oAuthSignInStart } from "@/util/auth";
-import { isOnboardingAtom } from "@/session/userAtom";
 import LoginWrapper from "@/components/User/LoginWrapper";
 import { flexColumnGap12 } from "@/styles/container.css";
 import { onboardingLoginButton } from "./_components/onboarding.css";
@@ -15,9 +14,7 @@ import GoogleLogo from "@/assets/logo/external/GoogleLogo.svg";
 import AppleLogo from "@/assets/logo/external/AppleLogo.svg";
 
 function AppOnboardingHome() {
-  const setOnboarding = useSetAtom(isOnboardingAtom);
   const onClickLogin = (provider: "kakao" | "google" | "apple") => {
-    setOnboarding(true);
     oAuthSignInStart(provider);
   };
 
@@ -25,7 +22,6 @@ function AppOnboardingHome() {
     <LoginWrapper>
       <div className={flexColumnGap12}>
         <Link
-          onClick={() => setOnboarding(true)}
           href="/user/login/test"
           className={clsx(fonts.body3.medium, onboardingLoginButton)}
           data-provider="google"

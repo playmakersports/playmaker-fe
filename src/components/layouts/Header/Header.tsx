@@ -8,7 +8,7 @@ type Props = { scrollY: number };
 function Header({ scrollY }: Props) {
   const pathname = usePathname();
 
-  if (pathname === "/") {
+  if (pathname === "/home") {
     return <MainHeader scrollY={scrollY} />;
   }
   if ((pathname === "/team" || pathname.startsWith("/team/")) && pathname.split("/").length < 4) {

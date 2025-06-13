@@ -44,9 +44,9 @@ function Navigation({ hide = false }: { hide?: boolean }) {
     >
       <div className={navigationContainer}>
         <div className={navigationInner}>
-          <Link href="/" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="홈" data-active={pathname === "/"}>
-              {pathname === "/" ? (
+          <Link href="/home" legacyBehavior prefetch>
+            <a className={navigationButton} data-label="홈" data-active={pathname === "/home"}>
+              {pathname === "/home" ? (
                 <HomeIconFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
                 <HomeIconOutlined className={navigationSvg} />

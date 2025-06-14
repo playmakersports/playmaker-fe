@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const baseContainer = style({
-  padding: "0 var(--global-lr-padding) var(--safe-bottom-navigation)",
+  padding: "0 var(--global-lr-padding) calc(var(--safe-bottom-navigation) + 52px)",
 });
 export const innerChildContainer = style({
   margin: "0 calc(-1 * var(--global-lr-padding))",
@@ -42,6 +42,11 @@ export const flexColumnGap10 = style({
   flexDirection: "column",
   gap: "10px",
 });
+export const flexColumnGap8 = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "8px",
+});
 export const flexColumnGap4 = style({
   display: "flex",
   flexDirection: "column",
@@ -76,6 +81,11 @@ export const flexAlignCenter = style({
   display: "flex",
   alignItems: "center",
 });
+export const flexCenterJA = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
 export const flexSpaceBetween = style({
   display: "flex",
   justifyContent: "space-between",
@@ -92,6 +102,7 @@ export const baseCardContainerNoTrans = style({
   padding: "16px",
   border: "1px solid var(--gray200)",
   transition: "all 0.2s",
+  backgroundColor: "var(--white)",
 });
 export const baseCardContainer = style([
   baseCardContainerNoTrans,

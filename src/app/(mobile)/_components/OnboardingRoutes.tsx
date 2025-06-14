@@ -7,8 +7,9 @@ function OnboardingRoutes({ children }: { children: React.ReactNode }) {
   const { isLogin } = useAuth();
   const pathname = usePathname();
   const isOAuthStart = pathname.startsWith("/user");
+  const isDev = process.env.NODE_ENV === "development";
 
-  if (!isLogin && !isOAuthStart) {
+  if (!isLogin && !isOAuthStart && !isDev) {
     redirect("/user");
   }
   return children;

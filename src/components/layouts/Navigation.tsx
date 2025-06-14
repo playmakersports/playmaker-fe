@@ -67,8 +67,12 @@ function Navigation({ hide = false }: { hide?: boolean }) {
             </a>
           </Link>
           <Link href="/match" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="경기" data-active={pathname === "/match"}>
-              {pathname === "/match" ? (
+            <a
+              className={navigationButton}
+              data-label="경기"
+              data-active={pathname === "/match" || pathname.startsWith("/match/")}
+            >
+              {pathname === "/match" || pathname.startsWith("/match/") ? (
                 <TrophyFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
                 <TrophyOutlined className={navigationSvg} />

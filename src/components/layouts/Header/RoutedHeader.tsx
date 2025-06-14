@@ -166,10 +166,11 @@ export const RoutedHeaderContainer = styled.div`
     &[data-scrolled="false"] {
       background-color: transparent;
       svg {
-        fill: var(--white);
+        fill: var(--gray500);
+        transition: fill 0.2s ease-in-out;
       }
       ${Title} {
-        color: var(--white);
+        color: var(--gray400);
       }
     }
 

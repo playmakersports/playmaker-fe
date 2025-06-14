@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 function NavigationLayout({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const SHOW_NAV_PAGE = ["/home", "/team", "/team/find", "/my", "/match", "/notification"];
-  const SHOW_SUB_NAV = !path.startsWith("/team/") && !path.startsWith("/my/") && !path.startsWith("/p/");
+  const SHOW_SUB_NAV =
+    !path.startsWith("/team/") && !path.startsWith("/my/") && !path.startsWith("/p/") && !path.startsWith("/match/");
 
   return (
     <>

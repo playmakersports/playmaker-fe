@@ -2,7 +2,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
-import { useSetUser } from "@/session/useSetUser";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { baseDividedLineChild } from "@/styles/container.css";
@@ -39,7 +38,6 @@ function GroupList({ list }: GroupListProps) {
 }
 function UserSetting() {
   const router = useRouter();
-  const { logout } = useSetUser();
 
   return (
     <>
@@ -99,8 +97,7 @@ function UserSetting() {
             {
               title: "로그아웃",
               onClick: () => {
-                logout();
-                router.replace("/user");
+                router.replace("/user/logout");
               },
             },
           ]}

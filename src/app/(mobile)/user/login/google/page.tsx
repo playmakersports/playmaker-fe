@@ -50,7 +50,7 @@ function GoogleLogin() {
           //   role: data.role,
           // });
           toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
-          router.replace("/");
+          router.replace("/home");
         }
         setHasRun(true);
       } catch (error) {

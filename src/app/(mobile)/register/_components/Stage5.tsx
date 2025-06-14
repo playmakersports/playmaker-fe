@@ -5,6 +5,8 @@ import { useToast } from "@/hook/useToast";
 import { useFormContext } from "react-hook-form";
 import { usePost } from "@/apis/hook/query";
 import { usePopup } from "@/components/common/global/PopupProvider";
+import { userAtom } from "@/session/userAtom";
+import { useSetAtom } from "jotai";
 
 import { FONTS } from "@/styles/common";
 import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "./stage.css";
@@ -15,6 +17,7 @@ import { authAPI } from "@/apis/url";
 
 function Stage5({ setStep }: SetStepType) {
   const { register, watch } = useFormContext();
+  const setUserAtom = useSetAtom(userAtom);
   const { trigger } = useToast();
   const popup = usePopup();
 
@@ -43,6 +46,12 @@ function Stage5({ setStep }: SetStepType) {
     try {
       await mutateAsync({
         data: formData,
+      });
+      setUserAtom({
+        username: formValues.username,
+        role: "",
+        nickname: "",
+        isLogin: true,
       });
       setStep("Welcome");
     } catch (error) {

@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import styled from "styled-components";
 import { useRouter } from "next/navigation";
@@ -99,7 +100,7 @@ function UserSetting() {
               title: "로그아웃",
               onClick: () => {
                 logout();
-                router.replace("/");
+                router.replace("/user");
               },
             },
           ]}

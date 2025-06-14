@@ -1,43 +1,65 @@
 "use client";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
-import TeamSwitchTab from "./TeamSwitchTab";
+import clsx from "clsx";
 import styled from "styled-components";
+import { useParams } from "next/navigation";
+
+import { semantic } from "@/styles/color.css";
+import { fonts } from "@/styles/fonts.css";
+import {
+  flexAlignCenter,
+  flexColumnGap20,
+  flexColumnGap4,
+  flexRowGap12,
+  flexRowGap4,
+  flexSpaceBetween,
+} from "@/styles/container.css";
+import Badge from "@/components/common/Badge";
+import MainTab from "@/components/Main/MainTab";
+import { SCROLL_HIDE } from "@/styles/common";
+
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 
 function PlayersList() {
   const params = useParams();
   const matchId = params["matchId"];
-  const [currentTeam, setCurrentTeam] = useState<"HOME" | "AWAY">("HOME");
+  const [currentTeam, setCurrentTeam] = useState<"HOME" | "AWAY" | string>("HOME");
   const MOCK_PROFILE_IMG = "https://cdn.interfootball.co.kr/news/photo/202012/514959_420656_1454.jpg";
 
   return (
-    <Wrapper>
-      <TeamSwitchTab
-        homeTeamName="SPABA"
-        awayTeamName="바스켓"
-        currentTeam={currentTeam}
-        onSwitchTeam={setCurrentTeam}
-      />
-      <List>
+    <Wrapper className="scrollable-container">
+      <div className="tab-container">
+        <MainTab
+          type="line"
+          color="primary"
+          items={[
+            { name: "홈팀", value: "HOME" },
+            { name: "원정팀", value: "AWAY" },
+          ]}
+          initialValue={currentTeam}
+          nowValue={setCurrentTeam}
+          sameWidth
+        />
+      </div>
+      <List className={flexColumnGap20}>
         {TEAM_PLAYERS_MOCK.map((player) => (
-          <li key={player.id}>
-            <span className="left">
+          <li key={player.id} className={clsx(flexSpaceBetween, flexAlignCenter)}>
+            <div className={clsx(flexRowGap12, flexAlignCenter)}>
               <img src={MOCK_PROFILE_IMG} alt={player.name} />
-              <span className="name">
-                {player.startingYn === "Y" ? <span className="starting">선발</span> : ""}
-                {player.name}
-              </span>
-            </span>
-            <ul className="right-info">
-              <li>
-                <p className="title">번호</p>
-                <p className="contents">{player.backNumber}</p>
-              </li>
-              <li>
-                <p className="title">포지션</p>
-                <p className="contents">{player.position}</p>
-              </li>
-            </ul>
+              <div className={flexColumnGap4} style={{ gap: 0 }}>
+                <span className={clsx(fonts.body4.medium, flexAlignCenter, flexRowGap4)}>
+                  <span className="back-number">NO.{player.backNumber.toString().padStart(2, "0")}</span>
+                  {player.name}
+                  {player.startingYn === "Y" && (
+                    <Badge type="magenta" fillType="light" size="small">
+                      선발
+                    </Badge>
+                  )}
+                </span>
+                <p className={semantic.description}>{player.position}</p>
+              </div>
+            </div>
+            <RightArrow fill="var(--gray700)" width={18} height={18} />
           </li>
         ))}
       </List>
@@ -47,76 +69,49 @@ function PlayersList() {
 
 const Wrapper = styled.section`
   position: relative;
-  margin-top: 20px;
+  margin-top: -20px;
+  max-height: 60vh;
   padding: 0 4px;
+  overflow-y: auto;
+  ${SCROLL_HIDE};
+
+  div.tab-container {
+    position: sticky;
+    padding-bottom: 20px;
+    top: 0;
+    z-index: 5;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 24%);
+  }
 `;
 
 const List = styled.ul`
   li {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 4px;
-    font-size: 1.6rem;
-    font-weight: 500;
-
-    span.left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-
-      span.starting {
-        display: block;
-        margin-bottom: 6px;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: var(--gray500);
-      }
-      span.name {
-        font-weight: 500;
-        font-size: 1.6rem;
-        font-weight: 700;
-      }
-    }
-
-    ul.right-info {
-      display: flex;
-      gap: 10px;
-
-      li {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        p.title {
-          font-size: 1.2rem;
-          font-weight: 500;
-          color: var(--gray600);
-        }
-        p.contents {
-          font-size: 1.4rem;
-          font-weight: 700;
-          color: var(--gray900);
-        }
-      }
-    }
     img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
       object-fit: cover;
     }
+  }
+  span.back-number {
+    opacity: 0.8;
+    letter-spacing: -0.03rem;
+    font-size: 90%;
+    font-weight: 700;
   }
 `;
 
 const TEAM_PLAYERS_MOCK = [
-  { id: "1", img: "", name: "김길동", backNumber: 20, position: "G", startingYn: "Y" },
-  { id: "2", img: "", name: "고길동", backNumber: 7, position: "G", startingYn: "Y" },
-  { id: "3", img: "", name: "서길동", backNumber: 88, position: "G", startingYn: "Y" },
-  { id: "4", img: "", name: "홍길동", backNumber: 8, position: "G", startingYn: "Y" },
-  { id: "5", img: "", name: "박길동", backNumber: 10, position: "G", startingYn: "Y" },
-  { id: "15", img: "", name: "왕길동", backNumber: 15, position: "G", startingYn: "N" },
-  { id: "51", img: "", name: "대길동", backNumber: 19, position: "G", startingYn: "N" },
-  { id: "45", img: "", name: "송길동", backNumber: 28, position: "G", startingYn: "N" },
+  { id: "1", img: "", name: "김길동", backNumber: 20, position: "가드", startingYn: "Y" },
+  { id: "2", img: "", name: "고길동", backNumber: 7, position: "가드", startingYn: "Y" },
+  { id: "3", img: "", name: "서길동", backNumber: 88, position: "포워드", startingYn: "Y" },
+  { id: "4", img: "", name: "홍길동", backNumber: 8, position: "포워드", startingYn: "Y" },
+  { id: "5", img: "", name: "박길동", backNumber: 10, position: "포워드", startingYn: "N" },
+  { id: "15", img: "", name: "왕길동", backNumber: 15, position: "포워드", startingYn: "N" },
+  { id: "51", img: "", name: "대길동", backNumber: 19, position: "가드", startingYn: "Y" },
+  { id: "45", img: "", name: "송길동", backNumber: 28, position: "센터", startingYn: "Y" },
+  { id: "7", img: "", name: "송길동", backNumber: 28, position: "포워드", startingYn: "N" },
+  { id: "88", img: "", name: "송길동", backNumber: 28, position: "센터", startingYn: "Y" },
 ];
 
 export default PlayersList;

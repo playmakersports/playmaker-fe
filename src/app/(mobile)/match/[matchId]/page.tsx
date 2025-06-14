@@ -1,75 +1,94 @@
 "use client";
 import React from "react";
+import clsx from "clsx";
 import { useHeader } from "@/hook/useHeader";
 import { useParams } from "next/navigation";
+import useModal from "@/hook/useModal";
 
-import GradientBg from "@/components/common/GradientBg";
-import MatchScores from "../_components/MatchScores";
-import MatchTitle from "../_components/MatchTitle";
-import MatchMvp from "../_components/MatchMvp";
+import { fonts } from "@/styles/fonts.css";
+import { baseCardContainer, baseContainerPaddingTop, flexColumnGap20 } from "@/styles/container.css";
+import MatchHeader from "../_components/detail/MatchHeader";
+import MatchFlow from "../_components/detail/MatchFlow";
+import MatchPlayers from "../_components/detail/MatchPlayers";
 import PlayersList from "../_components/PlayersList";
-
-import MenuDotsIcon from "@/assets/icon/common/MenuDots.svg";
 
 function MatchPage() {
   const params = useParams();
   const matchId = params["matchId"];
-  const winnerColor = TEAM_SCORES.homeScore > TEAM_SCORES.awayScore ? TEAM_SCORES.homeColor : TEAM_SCORES.awayColor;
+  const { showModal, ModalComponents } = useModal();
   useHeader({
-    title: "",
+    title: "플메슛 83 : 99 SPABA",
     transparent: true,
-    subIcons: [{ svgIcon: <MenuDotsIcon />, onClick: `/match/${matchId}/score`, description: "점수 입력" }],
+    subActions: [
+      { name: "경기 수정", action: () => {} },
+      { name: "경기 삭제", action: () => {} },
+    ],
+    options: { titleAlign: "center" },
   });
 
   return (
-    <>
-      <GradientBg position="absolute" opacity={0.15} colorRgb={winnerColor} />
-      <MatchTitle competitionName={TEAM_SCORES.competitionName} />
-      <MatchScores
-        homeInfo={{
+    <section
+      className={clsx(flexColumnGap20, baseContainerPaddingTop)}
+      style={{
+        marginTop: "calc((env(safe-area-inset-top) + var(--header-height)) * -1)",
+        paddingTop: "calc(env(safe-area-inset-top) + var(--header-height))",
+        backgroundColor: "var(--gray100)",
+      }}
+    >
+      <MatchHeader
+        title={TEAM_SCORES.competitionName}
+        subtitle="서울경인지역예선 16강"
+        date="2025-06-02"
+        time="14:00"
+        home={{
           name: TEAM_SCORES.homeName,
-          univ: TEAM_SCORES.homeUniv,
           logo: TEAM_SCORES.homeLogo,
           score: TEAM_SCORES.homeScore,
-          color: TEAM_SCORES.homeColor,
+          fouls: 10,
+          timeouts: 2,
         }}
-        awayInfo={{
+        away={{
           name: TEAM_SCORES.awayName,
-          univ: TEAM_SCORES.awayUniv,
           logo: TEAM_SCORES.awayLogo,
           score: TEAM_SCORES.awayScore,
-          color: TEAM_SCORES.awayColor,
+          fouls: 8,
+          timeouts: 3,
         }}
-        stage={TEAM_SCORES.matchStage}
-        scores={TEAM_SCORES.scores}
       />
-      <MatchMvp
-        name="김선형"
-        profileImg="https://imgnews.pstatic.net/image/413/2020/12/18/0000110505_001_20201218032641259.jpg?type=w647"
-        teamName={TEAM_SCORES.homeName}
-        photo="https://thumb.zumst.com/530x0/https://static.news.zumst.com/images/2/2023/03/30/0d96b666658043f7994f61ce280fb06e.jpg"
-        stats={[
-          { title: "득점", value: "20" },
-          { title: "어시스트", value: "5" },
-          { title: "리바운드", value: "10" },
-          { title: "스틸", value: "3" },
+      <MatchFlow />
+      <MatchPlayers />
+      <button type="button" onClick={showModal} className={clsx(fonts.body3.medium, baseCardContainer)}>
+        선수 전체 명단
+      </button>
+      <ModalComponents
+        title="선수 명단"
+        draggable="all"
+        buttons={[
+          {
+            name: "닫기",
+            onClick: (close) => {
+              close();
+            },
+            mode: "primary",
+          },
         ]}
-      />
-      <PlayersList />
-    </>
+      >
+        <PlayersList />
+      </ModalComponents>
+    </section>
   );
 }
 
 const TEAM_SCORES = {
-  competitionName: "2024 한국스포츠연맹배 전국아마추어농구대회 대학부 서울경인지역예선",
+  competitionName: "한국스포츠연맹배 전국아마추어농구대회 대학부",
   category: "basketball",
   matchStage: "16강",
   homeName: "SPABA",
   homeUniv: "서울과학기술대",
   homeLogo: "",
-  homeScore: 59,
+  homeScore: 99,
   homeColor: "7, 217, 204",
-  awayName: "바스켓",
+  awayName: "플메슛",
   awayUniv: "홍익대",
   awayLogo: "",
   awayScore: 83,

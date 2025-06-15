@@ -1,11 +1,22 @@
 // 메모리 저장용
 let inMemoryAccessToken: string | null = null;
 
-export function setTokens(data: { access_token: string; refresh_token: string; expires_in: number }) {
+type AuthData = {
+  access_token: string;
+  token_type: string | null;
+  refresh_token: string;
+  id_token: string | null;
+  expires_in: number;
+  refresh_token_expires_in: number;
+  scope: string | null;
+  newUserYn: "Y" | "N";
+};
+export function setTokens(data: AuthData) {
   inMemoryAccessToken = data.access_token;
   sessionStorage.setItem("access_token", data.access_token);
   sessionStorage.setItem("refresh_token", data.refresh_token);
-  const expiryMs = Date.now() + data.expires_in * 1000;
+  const access_token_exp = data.expires_in || 3600; // 임시로 1시간 설정 처리
+  const expiryMs = Date.now() + access_token_exp * 1000;
   sessionStorage.setItem("access_token_expiry", expiryMs.toString());
 }
 

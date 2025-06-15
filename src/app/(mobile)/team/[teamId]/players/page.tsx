@@ -1,16 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
+import clsx from "clsx";
 import { useParams, useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
-import clsx from "clsx";
 
+import PlayersList from "./_components/PlayersList";
 import { BasicInput } from "@/components/common/input/BaseInput";
 import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
-import PlayerListItem from "@/app/(mobile)/team/[teamId]/_components/TeamMainPlayerListItem";
 
 import { fonts } from "@/styles/fonts.css";
-import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 import {
   baseContainerPaddingTop,
   flexColumnGap10,
@@ -19,7 +18,8 @@ import {
   flexSpaceBetween,
 } from "@/styles/container.css";
 import Button from "@/components/common/Button";
-import PlayersList from "./_components/PlayersList";
+
+import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 
 function PlayerList() {
   const router = useRouter();
@@ -69,7 +69,7 @@ function PlayerList() {
               mode={applyCount > 0 ? "primary" : "gray"}
               fillType={applyCount > 0 ? "default" : "outline"}
               size="xsmall"
-              onClick={() => router.push(`/team/${teamId}/admin/recruit-applicant`)}
+              onClick={() => router.push(`/team/${teamId}/admin/join-request`)}
             >
               가입 신청 {applyCount}건
             </Button>

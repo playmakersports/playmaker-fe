@@ -18,3 +18,14 @@ export type ApiTeamDetail = {
   teamLeaderId: number;
   teamLeaderName: string;
 };
+
+export type ApiTeamJoinRequest = {
+  requestId: number;
+  teamId: number;
+  teamName: string;
+  memberId: number;
+  memberName: string;
+  status: string;
+  message: string;
+  requestDate: string;
+};

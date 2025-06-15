@@ -5,7 +5,8 @@ import styled from "styled-components";
 import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import useModal from "@/hook/useModal";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import { useTeamJoinRequestGet } from "@/apis/hook/team";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -18,7 +19,6 @@ import {
   innerChildContainer,
 } from "@/styles/container.css";
 import { FONTS } from "@/styles/common";
-import { TEAM_APPLY_LIST } from "@/constants/mock/TEAM_APPLY";
 
 import { TextArea } from "@/components/common/TextArea";
 import { InputCheckbox } from "@/components/common/input/SelectInput";
@@ -35,25 +35,27 @@ import CheckIcon from "@/assets/icon/common/Check.svg";
 import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
 
-function RecruitApplicant() {
+function TeamJoinRequest() {
   const listRef = useRef<HTMLUListElement>(null);
   const router = useRouter();
   const [selected, setSelected] = useState<(number | null)[]>([]);
+  const { teamId } = useParams();
   useHeader({
     title: "가입 신청 목록",
   });
   const popup = usePopup();
   const { showModal: showDenyModal, ModalComponents: DenyModal } = useModal();
+  const { data } = useTeamJoinRequestGet(Number(teamId));
 
-  const players = TEAM_APPLY_LIST;
-  const allChecked = players.length > 0 && players.every((player) => selected.includes(player.playerId));
+  const players = data ?? [];
+  const allChecked = players.length > 0 && players.every((player) => selected.includes(player.memberId));
 
   const handleSingleCheck = (id: number | null, checked: boolean) => {
     setSelected((prev) => (checked ? [...prev, id] : prev.filter((pid) => pid !== id)));
   };
   const handleAllCheck = (checked: boolean) => {
     if (checked) {
-      const allIds = players.map((p) => p.playerId);
+      const allIds = players.map((p) => p.memberId);
       setSelected(allIds);
     } else {
       setSelected([]);
@@ -127,31 +129,31 @@ function RecruitApplicant() {
 
         <ul ref={listRef}>
           {players.map((player) => (
-            <PlayerItem key={player.playerId}>
+            <PlayerItem key={player.memberId}>
               <div className="item-top">
                 <InputCheckbox
                   size="MEDIUM"
                   className="player-select"
-                  checked={selected.includes(player.playerId)}
-                  onChange={(e) => handleSingleCheck(player.playerId, e.target.checked)}
+                  checked={selected.includes(player.memberId)}
+                  onChange={(e) => handleSingleCheck(player.memberId, e.target.checked)}
                 />
                 <div className={flexAlignCenter} style={{ flex: 1 }}>
                   <div className={flexRowGap12} style={{ flex: 1 }}>
                     <ProfileImage></ProfileImage>
                     <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
-                      <Name onClick={() => router.push(`/p/${player.playerId}`)}>
-                        <p className="player-name">{player.name}</p>
+                      <Name onClick={() => router.push(`/p/${player.memberId}`)}>
+                        <p className="player-name">{player.memberName}</p>
                         <RightArrow width={20} height={20} fill="var(--gray700)" />
                       </Name>
                       <p className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
-                        {player.applyDate} 가입신청
+                        {player.requestDate} 가입신청
                       </p>
                     </div>
                   </div>
                   <div className={clsx(fonts.body4.medium, playersListTableW70)}>10년</div>
                 </div>
               </div>
-              <div className="item-intro">{player.introduce}</div>
+              <div className="item-intro">{player.message}</div>
             </PlayerItem>
           ))}
         </ul>
@@ -205,4 +207,4 @@ const Name = styled.div`
   align-items: center;
 `;
 
-export default RecruitApplicant;
+export default TeamJoinRequest;

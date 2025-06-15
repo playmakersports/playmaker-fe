@@ -17,6 +17,13 @@ export type ApiTeamDetail = {
   deleteScheduledDate: string | null;
   teamLeaderId: number;
   teamLeaderName: string;
+  memberCount: number;
+  foundingDate: string | null;
+  university: string | null;
+  ageMin: number | null;
+  ageMax: number | null;
+  genderRestriction: "MALE" | "FEMALE" | null; // 가능한 값이 있다면 명시
+  hasGenerationSystem: "Y" | "N" | null;
 };
 
 export type ApiTeamJoinRequest = {

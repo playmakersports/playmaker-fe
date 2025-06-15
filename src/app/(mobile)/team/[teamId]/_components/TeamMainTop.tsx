@@ -2,7 +2,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useHeader } from "@/hook/useHeader";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 
 import { ApiTeamDetail } from "@/apis/types/team";
 import TeamNotice from "@/app/(mobile)/team/[teamId]/_components/TeamNotice";
@@ -37,9 +37,11 @@ function TeamMainTop(props: ApiTeamDetail) {
           <li className={teamMainTopInfoListItem}>
             <IdentifyIcon /> {props.teamLeaderName}
           </li>
-          <li className={teamMainTopInfoListItem}>{/* <PeopleIcon /> {countMember}명 */}</li>
           <li className={teamMainTopInfoListItem}>
-            <CalendarIcon /> {format(props.createDate, "yy-MM-dd")} 창단
+            <PeopleIcon /> {props.memberCount}명
+          </li>
+          <li className={teamMainTopInfoListItem}>
+            <CalendarIcon /> {formatDate(props.foundingDate ?? props.createDate, "yy-MM-dd")} 창단
           </li>
         </ul>
       </section>

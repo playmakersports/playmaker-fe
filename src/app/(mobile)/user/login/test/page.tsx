@@ -34,7 +34,16 @@ function TestLogin() {
           clearTokens();
           logout();
         } else {
-          setTokens({ access_token: "test-token", refresh_token: "test-refresh", expires_in: 3000 });
+          setTokens({
+            access_token: "test-access-token-123player-maker",
+            refresh_token: "test-refresh-token-123player-maker",
+            expires_in: 3600,
+            token_type: null,
+            scope: null,
+            refresh_token_expires_in: 10,
+            id_token: null,
+            newUserYn: "N",
+          });
           console.log("test-token", getAccessToken());
           router.replace("/register");
         }

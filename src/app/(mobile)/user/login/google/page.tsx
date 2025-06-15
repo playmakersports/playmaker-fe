@@ -14,6 +14,15 @@ export default function GoogleLoginPage() {
   const toast = useToast();
   const popup = usePopup();
 
+  const handleError = (error: any) => {
+    popup?.alert(`서버와의 통신 중 문제가 발생했어요.\n${error.message}`, {
+      title: "로그인 실패",
+      showIcon: true,
+      color: "red",
+    });
+    router.replace("/user");
+  };
+
   useEffect(() => {
     const code = params.get("code") as string | null;
     if (!code) {
@@ -35,11 +44,12 @@ export default function GoogleLoginPage() {
         });
         if (!res.ok) {
           const err = await res.json();
+          handleError(err);
           throw new Error(err.message ?? "로그인 실패");
         }
         const data = await res.json();
         setTokens(data);
-        router.replace("/");
+        // router.replace("/");
 
         if (data.newUserYn === "Y") {
           router.replace("/register?from=google");
@@ -49,12 +59,7 @@ export default function GoogleLoginPage() {
         }
       } catch (e: any) {
         console.error(e);
-        popup?.alert(`서버와의 통신 중 문제가 발생했어요.\n${e.message}`, {
-          title: "로그인 실패",
-          showIcon: true,
-          color: "red",
-        });
-        router.replace("/user");
+        handleError(e);
       }
     })();
   }, [params, router]);

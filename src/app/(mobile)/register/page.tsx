@@ -39,7 +39,7 @@ function JoinStage() {
         });
 
         if (confirmValue) {
-          router.replace("/");
+          router.replace("/user/logout");
         }
       };
       handleConfirm();

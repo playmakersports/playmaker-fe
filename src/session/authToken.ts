@@ -1,8 +1,9 @@
-// 메모리 저장 + sessionStorage 조합
+// 메모리 저장용
 let inMemoryAccessToken: string | null = null;
 
 export function setTokens(data: { access_token: string; refresh_token: string; expires_in: number }) {
   inMemoryAccessToken = data.access_token;
+  sessionStorage.setItem("access_token", data.access_token);
   sessionStorage.setItem("refresh_token", data.refresh_token);
   const expiryMs = Date.now() + data.expires_in * 1000;
   sessionStorage.setItem("access_token_expiry", expiryMs.toString());
@@ -10,7 +11,10 @@ export function setTokens(data: { access_token: string; refresh_token: string; e
 
 export function getAccessToken(): string | null {
   const expiry = parseInt(sessionStorage.getItem("access_token_expiry") ?? "0", 10);
-  if (Date.now() < expiry && inMemoryAccessToken) {
+  if (Date.now() < expiry) {
+    if (!inMemoryAccessToken) {
+      inMemoryAccessToken = sessionStorage.getItem("access_token");
+    }
     return inMemoryAccessToken;
   }
   return null;
@@ -22,6 +26,7 @@ export function getRefreshToken(): string | null {
 
 export function clearTokens() {
   inMemoryAccessToken = null;
+  sessionStorage.removeItem("access_token");
   sessionStorage.removeItem("refresh_token");
   sessionStorage.removeItem("access_token_expiry");
 }

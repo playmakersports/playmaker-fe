@@ -19,3 +19,9 @@ export function getAccessToken(): string | null {
 export function getRefreshToken(): string | null {
   return sessionStorage.getItem("refresh_token");
 }
+
+export function clearTokens() {
+  inMemoryAccessToken = null;
+  sessionStorage.removeItem("refresh_token");
+  sessionStorage.removeItem("access_token_expiry");
+}

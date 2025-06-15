@@ -32,6 +32,7 @@ export const authAPI = {
   KAKAO: "/api/auth/kakao/callback",
   GOOGLE: "/api/auth/google/callback",
   APPLE: "/api/auth/apple/callback",
+  REFRESH: "/api/auth/refresh",
 };
 
 export const teamAPI = {

@@ -14,7 +14,7 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
             popup?.alert(
               `${(error as any)?.errorMessage ?? error.message}\nOccurred Time ${formatDate(
                 new Date(),
-                "yyyy-MM-dd hh:mm:ss"
+                "yyyy-MM-dd HH:mm:ss"
               )}`,
               {
                 title: `서버와의 통신 중 문제가 발생했습니다`,

@@ -73,7 +73,7 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
             popup?.alert(
               `${errorResponse?.message}${
                 errorResponse.code ? `[${errorResponse.code}]` : ""
-              }\nOccurred Time ${formatDate(new Date(), "yyyy-MM-dd hh:mm:ss")}`,
+              }\nOccurred Time ${formatDate(new Date(), "yyyy-MM-dd HH:mm:ss")}`,
               {
                 title: "서버와의 통신 중 문제가 발생했습니다",
                 showIcon: true,

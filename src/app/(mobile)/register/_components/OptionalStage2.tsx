@@ -31,13 +31,11 @@ function OptionalStage2({ setStep }: SetStepType) {
     try {
       await mutateAsync({
         data: {
-          fitlib: {
-            exDuration: formValues.basketball.exDuration,
-            wingSpan: formValues.basketball.wingSpan,
-            posKey: formValues.basketball.posKey,
-            height: formValues.height,
-            weight: formValues.weight,
-          },
+          exDuration: formValues.basketball.exDuration,
+          wingSpan: formValues.basketball.wingSpan,
+          posKey: formValues.basketball.posKey,
+          height: formValues.height,
+          weight: formValues.weight,
         },
       });
       router.replace("/home");

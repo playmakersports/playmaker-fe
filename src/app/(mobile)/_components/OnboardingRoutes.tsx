@@ -1,17 +1,20 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { redirect, usePathname } from "next/navigation";
-import { useAuth } from "@/session/useAuth";
+import { getAccessToken } from "@/session/authToken";
 
 function OnboardingRoutes({ children }: { children: React.ReactNode }) {
-  const { isLogin } = useAuth();
   const pathname = usePathname();
   const isOAuthStart = pathname.startsWith("/user");
   const isDev = process.env.NODE_ENV === "development";
 
-  if (!isLogin && !isOAuthStart && !isDev) {
-    redirect("/user");
-  }
+  useEffect(() => {
+    const token = getAccessToken();
+    if (!token && !isOAuthStart && !isDev) {
+      redirect("/user");
+    }
+  }, []);
+
   return children;
 }
 

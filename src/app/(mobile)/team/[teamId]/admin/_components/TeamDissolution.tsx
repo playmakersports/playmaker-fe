@@ -2,8 +2,9 @@ import React from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { usePopup } from "@/components/common/global/PopupProvider";
-import { useAuth } from "@/session/useAuth";
+// import { useAuth } from "@/session/useAuth";
 
+import { getAccessToken } from "@/session/authToken";
 import { baseBackendURL } from "@/apis";
 import Button from "@/components/common/Button";
 
@@ -11,7 +12,7 @@ function TeamDissolution() {
   const popup = usePopup();
   const router = useRouter();
   const teamId = useParams()["teamId"] as string;
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
 
   const handleTeamDissolution = async () => {
     const confirm = await popup?.confirm(

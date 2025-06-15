@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useRef } from "react";
+import { formatDate } from "date-fns";
 import { usePost } from "@/apis/hook/query";
 import { useRouter } from "next/navigation";
 import { useFormContext } from "react-hook-form";
+import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
 
 import Loading from "@/components/common/Loading";
@@ -12,6 +14,7 @@ import { teamAPI } from "@/apis/url";
 function TeamCreateWelcome({ setStep }: SetStepType) {
   const { watch } = useFormContext();
   const router = useRouter();
+  const toast = useToast();
   const popup = usePopup();
   const { mutate, isPending } = usePost<{
     id: number;
@@ -48,20 +51,35 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
         },
         {
           onSuccess: (data) => {
-            popup?.alert("팀이 성공적으로 생성되었습니다.", {
-              title: "팀 생성 완료",
-              showIcon: true,
-              color: "primary",
+            toast?.trigger("새로운 팀을 만들었습니다.", {
+              type: "success",
             });
-            router.push(`/team/${data.id}`);
+            router.replace(`/team/${data.id}`);
           },
 
           onError: (error) => {
-            popup?.alert(`문제가 발생하였습니다. 다시 시도해주세요.(${error.name}, ${error.message})`, {
-              title: "서버 오류",
-              showIcon: true,
-              color: "red",
-            });
+            let errorResponse: { code: string | null; message: string } | undefined = undefined;
+            if (error?.response) {
+              errorResponse = {
+                code: error.response.data.errorCode,
+                message: error.response.data.errorMessage,
+              };
+            } else {
+              errorResponse = {
+                code: null,
+                message: error.message,
+              };
+            }
+            popup?.alert(
+              `${errorResponse?.message}${
+                errorResponse.code ? `[${errorResponse.code}]` : ""
+              }\nOccurred Time ${formatDate(new Date(), "yyyy-MM-dd hh:mm:ss")}`,
+              {
+                title: "서버와의 통신 중 문제가 발생했습니다",
+                showIcon: true,
+                color: "red",
+              }
+            );
             setStep("Stage5");
           },
         }

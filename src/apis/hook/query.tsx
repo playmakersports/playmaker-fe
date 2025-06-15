@@ -1,8 +1,9 @@
-import { AxiosRequestConfig } from "axios";
+import { AxiosError, AxiosRequestConfig } from "axios";
 import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
 import { typedGet, typedPost, typedPut } from "..";
 
 type ContentType = "json" | "form-data";
+type QueryError = AxiosError<{ errorCode: string; errorMessage: string }>;
 type QueryConfig<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 const CONTENT_TYPE: Record<ContentType, string> = {
   json: "application/json",
@@ -23,7 +24,7 @@ interface MutationFnAsyncType {
 }
 
 export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
-  return useMutation<T, Error, MutationFnAsyncType>({
+  return useMutation<T, QueryError, MutationFnAsyncType>({
     mutationKey: [url],
     mutationFn: async ({ data, queryParams }) => {
       const finalUrl = queryParams ? `${url}?${new URLSearchParams(queryParams).toString()}` : url;
@@ -40,7 +41,7 @@ export const usePost = <T,>(url: string, contentType: ContentType = "json") => {
 };
 
 export const usePut = <T,>(url: string, contentType: ContentType = "json") => {
-  return useMutation<T, Error, MutationFnAsyncType>({
+  return useMutation<T, QueryError, MutationFnAsyncType>({
     mutationKey: [url],
     mutationFn: async ({ data, queryParams }) => {
       const finalUrl = queryParams ? `${url}?${new URLSearchParams(queryParams).toString()}` : url;

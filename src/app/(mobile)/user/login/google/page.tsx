@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { setTokens } from "@/session/authToken";
+import { setTokens, getAccessToken } from "@/session/authToken";
 import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import { baseBackendURL } from "@/apis";
@@ -52,7 +52,8 @@ export default function GoogleLoginPage() {
         // router.replace("/");
 
         if (data.newUserYn === "Y") {
-          router.replace("/register?from=google");
+          router.replace("/register");
+          console.log("신규회원 ------", getAccessToken());
         } else {
           toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
           router.replace("/home");

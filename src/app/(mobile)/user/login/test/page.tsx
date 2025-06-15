@@ -3,34 +3,42 @@
 import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useGet } from "@/apis/hook/query";
-import { useAuth } from "@/session/useAuth";
+// import { useAuth } from "@/session/useAuth";
 import { useSetUser } from "@/session/useSetUser";
 
 import Loading from "@/components/common/Loading";
+import { setTokens, clearTokens, getAccessToken } from "@/session/authToken";
 
 function TestLogin() {
   const router = useRouter();
   const { logout } = useSetUser();
 
-  const { setToken, clearToken } = useAuth();
-  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string }>("/api/dev/test/random-token", {});
+  // const { setToken, clearToken } = useAuth();
+
+  const { data, isSuccess, isLoading, error } = useGet<{ access_token: string } & any>(
+    "/api/dev/test/random-token",
+    {}
+  );
   const once = useRef(false);
 
   useEffect(() => {
     if (once.current === false) {
       if (isSuccess) {
-        setToken(data.access_token);
+        // setToken(data.access_token);
+        setTokens(data);
       } else {
         const confirm = window.confirm(
           `서버 통신 문제로 테스트 토큰이 발급되지 않았습니다.\n로그인 화면으로 돌아가시겠습니까?`
         );
         if (confirm) {
-          clearToken();
+          clearTokens();
           logout();
         } else {
-          setToken("TestToken");
+          setTokens({ access_token: "test-token", refresh_token: "test-refresh", expires_in: 3000 });
+          console.log("test-token", getAccessToken());
+          router.replace("/register");
         }
-        router.replace("/");
+        // router.replace("/user");
       }
       once.current = true;
     }

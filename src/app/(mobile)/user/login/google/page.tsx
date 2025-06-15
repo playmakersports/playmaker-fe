@@ -48,9 +48,9 @@ export default function GoogleLoginPage() {
           throw new Error(err.message ?? "로그인 실패");
         }
         const data = await res.json();
-        setTokens(data);
-        // router.replace("/");
 
+        console.log("Google Callback ------", data);
+        setTokens(data);
         if (data.newUserYn === "Y") {
           router.replace("/register");
           console.log("신규회원 ------", getAccessToken());

@@ -54,14 +54,14 @@ const TeamHeart: React.FC<Props> = ({ teamId, isHeart, onHeart }) => {
 
 const HeartButton = styled.button`
   svg {
-    width: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
   }
   svg.fill-heart {
-    fill: var(--main);
+    fill: var(--primary500);
   }
   svg.stroke-heart {
-    fill: var(--gray600);
+    fill: var(--gray400);
   }
 `;
 

@@ -1,47 +1,71 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
+import { useSetAtom } from "jotai";
 import { usePost } from "@/apis/hook/query";
-
 import { useEditorHandler } from "@/hook/useEditorHandler";
-import EditorUI from "@/components/Editor";
-import Spinner from "@/components/common/Spinner";
-import { baseContainerPaddingTop, flexAlignCenter, flexColumnGap16, flexRowGap4 } from "@/styles/container.css";
-import { fonts } from "@/styles/fonts.css";
+
 import { boardAPI } from "@/apis/url";
+import Spinner from "@/components/common/Spinner";
+import EditorUI from "@/components/Editor";
+import { atomHeaderActions } from "@/atom/common";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
+import { fonts } from "@/styles/fonts.css";
+import { baseContainerPaddingTop, flexAlignCenter, flexColumnGap16, flexRowGap4 } from "@/styles/container.css";
 
 function EditorView() {
+  useHeader({
+    title: "글쓰기",
+  });
   const { editor, images } = useEditorHandler({
     placeholder: `자유롭게 이야기를 남겨보세요!\n최대 1,000자까지 작성 가능합니다.`,
   });
+  const router = useRouter();
   const { mutate, data, isError, error, isPending } = usePost(boardAPI.BOARDS);
-  const onSubmit = async () => {
-    mutate({
-      data: {
-        boardInfo: {
-          teamId,
-          title,
-          category: category,
-          content: editor?.getHTML(),
+  const setActions = useSetAtom(atomHeaderActions);
+  const onSubmit = () => {
+    mutate(
+      {
+        data: {
+          boardInfo: {
+            teamId,
+            title,
+            boardType,
+            content: editor?.getHTML(),
+          },
         },
       },
-    });
-    if (isError) {
-      await popup?.alert(`문제가 발생했습니다. 잠시 후 다시 시도해주세요\n${error.message}`, {
-        title: "게시글 등록 실패",
-        showIcon: true,
-        color: "red",
-      });
-    }
+      {
+        onSuccess: (data: { teamId: string | number; id: string | number; boardId?: string | number } | any) => {
+          router.push(`/team/${data.teamId}/board/${data.boardId ?? data.id}`);
+        },
+        onError: (err) => {
+          popup?.alert(`문제가 발생했습니다. 잠시 후 다시 시도해주세요\n${err.message}`, {
+            title: "게시글 등록 실패",
+            showIcon: true,
+            color: "red",
+          });
+        },
+      }
+    );
   };
-  useHeader({
-    title: "글쓰기",
-    subActions: {
+
+  const popup = usePopup();
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const teamId = params["teamId"];
+  const type = searchParams.get("type");
+
+  const [boardType, setBoardType] = useState("");
+  const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    if (!editor) return;
+    setActions({
       name: (
         <span className={clsx(flexRowGap4, flexAlignCenter)} style={{ justifyContent: "center" }}>
           {isPending && <Spinner size={24} />}
@@ -52,28 +76,8 @@ function EditorView() {
         if (isPending) return;
         onSubmit();
       },
-    },
-  });
-
-  const popup = usePopup();
-  const router = useRouter();
-  const params = useParams();
-  const searchParams = useSearchParams();
-  const teamId = params["teamId"];
-  const type = searchParams.get("type");
-
-  const [category, setCategory] = useState("");
-  const [title, setTitle] = useState("");
-
-  const onClear = async () => {
-    if (!editor?.isEmpty) {
-      const isConfirm = await popup?.confirm("입력된 내용은 복구할 수 없습니다.\n초기화하시겠습니까?");
-      if (isConfirm) {
-        editor?.commands.clearContent();
-        editor?.commands.focus();
-      }
-    }
-  };
+    });
+  }, [editor]);
 
   return (
     <section
@@ -84,15 +88,12 @@ function EditorView() {
         minHeight: "calc(100vh - var(--safe-area-top))",
       }}
     >
-      {/* <DropdownInput
-  
-      /> */}
       <div className={flexColumnGap16} style={{ flex: 1 }}>
         <div style={{ margin: "0 -4px" }}>
           <DropDownBottomSheet
             mode="card"
-            defaultValue={category}
-            getCurrentValue={setCategory}
+            defaultValue={boardType}
+            getCurrentValue={setBoardType}
             placeholder="카테고리 선택"
             options={[
               { name: "공지사항", value: "1" },

@@ -5,40 +5,23 @@ import styled from "styled-components";
 import { FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
 import CommentsIcon from "@/assets/icon/common/filled/Chat.svg";
+import { TeamBoardItemType } from "@/types/team";
 
-type Props = {
-  articleId: number;
-  title: string;
-  member: {
-    memberId: number;
-    username: string;
-    image: string;
-  };
-  category: {
-    teamId: number;
-    categoryNum: number;
-    categoryName: string;
-    isDelete: "Y" | "N";
-  };
-  createAt: string;
-};
-function ListArticle(props: Props) {
+function ListArticle(props: TeamBoardItemType) {
   const CATEGORY_NAME: Record<number, string> = {
     1: "공지사항",
-    2: "자유",
-    3: "가입인사",
-    4: "경기",
-    5: "운영진",
+    2: "자유게시판",
+    3: "갤러리",
   };
 
   return (
     <Wrapper>
-      <Link href={`/team/${props.category.teamId}/board/${props.articleId}`}>
+      <Link href={`/team/${props.teamId}/board/${props.id}`}>
         <p className="title">{props.title}</p>
         <div className="card-bottom">
           <p className="article-sub">
-            <strong>{CATEGORY_NAME[props.category.categoryNum]}</strong> {props.member.username} ·{" "}
-            {formattedDate(props.createAt, {
+            <strong>{CATEGORY_NAME[props.boardType]}</strong> {props.createBy.memberName} ·{" "}
+            {formattedDate(new Date(props.createBy.createdAt), {
               displayDateType: "kr",
               displayDayName: "hide",
               displayYear: "not-this-year",
@@ -48,9 +31,10 @@ function ListArticle(props: Props) {
           </p>
           <CountInfo>
             <p className="comment">
-              <CommentsIcon />1
+              <CommentsIcon />
+              {props.commentCount}
             </p>
-            <p className="view">조회 60</p>
+            <p className="view">조회 {props.viewCount}</p>
           </CountInfo>
         </div>
       </Link>

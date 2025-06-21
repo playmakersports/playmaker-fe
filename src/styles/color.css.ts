@@ -8,6 +8,9 @@ export const colors = {
   gray500: style({
     color: "var(--gray500)",
   }),
+  gray600: style({
+    color: "var(--gray600)",
+  }),
   gray900: style({
     color: "var(--gray900)",
   }),
@@ -27,3 +30,9 @@ export const semantic = {
     },
   ]),
 };
+
+export const omittedText = style({
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  whiteSpace: "nowrap",
+});

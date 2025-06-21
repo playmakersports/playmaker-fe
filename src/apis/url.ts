@@ -9,9 +9,9 @@ export const boardAPI = {
 
 export const teamJoinAPI = {
   REQUEST: "/api/teams/join/request",
-  APPROVE: (teamId: number, memberId: number) => `/api/teams/join/${teamId}/approve/${memberId}`,
-  REJECT: (teamId: number, memberId: number) => `/api/teams/join/${teamId}/reject/${memberId}`,
-  TEAM_REQ_LIST: (teamId: number) => `/api/teams/join/team/${teamId}/requests`,
+  APPROVE: (teamId: number | string, memberId: number | string) => `/api/teams/join/${teamId}/approve/${memberId}`,
+  REJECT: (teamId: number | string, memberId: number | string) => `/api/teams/join/${teamId}/reject/${memberId}`,
+  TEAM_REQ_LIST: (teamId: number | string) => `/api/teams/join/team/${teamId}/requests`,
   MY_REQUEST: `/api/teams/join/my-requests`,
 };
 
@@ -39,10 +39,10 @@ export const teamAPI = {
   TEAMS: "/api/teams",
   TEAM_LIKE: "/api/like",
   SETTING: {
-    VISIBILITY: (teamId: number) => `/api/teams/${teamId}/settings/visibility`,
-    RECRUIT: (teamId: number) => `/api/teams/${teamId}/settings/recruit`,
-    PUBLIC: (teamId: number) => `/api/teams/${teamId}/settings/public`,
-    BASIC: (teamId: number) => `/api/teams/${teamId}/settings/basic`,
+    VISIBILITY: (teamId: number | string) => `/api/teams/${teamId}/settings/visibility`,
+    RECRUIT: (teamId: number | string) => `/api/teams/${teamId}/settings/recruit`,
+    PUBLIC: (teamId: number | string) => `/api/teams/${teamId}/settings/public`,
+    BASIC: (teamId: number | string) => `/api/teams/${teamId}/settings/basic`,
   },
 };
 

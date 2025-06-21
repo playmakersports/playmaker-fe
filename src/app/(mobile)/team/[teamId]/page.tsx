@@ -8,6 +8,7 @@ import { ApiTeamDetail } from "@/apis/types/team";
 import TeamMainTop from "./_components/TeamMainTop";
 import TeamMainContents from "./_components/TeamMainContents";
 import { teamAPI } from "@/apis/url";
+import TeamJoinButton from "./_components/TeamJoinButton";
 
 async function getTeamData(teamId: string) {
   // 현재 위치 가져오기 (API 임시 연동)
@@ -46,6 +47,7 @@ async function TeamHome({ params }: { params: Promise<{ teamId: string }> }) {
     <>
       <TeamMainTop {...teamData} />
       <TeamMainContents />
+      {teamData.joinYn === "Y" && <TeamJoinButton teamId={teamId} />}
     </>
   );
 }

@@ -19,6 +19,7 @@ export type TeamBoardItemType = {
   };
   title: string;
   category: string;
+  boardType: string | number;
   content: string;
   viewCount: number;
   startDate: string;

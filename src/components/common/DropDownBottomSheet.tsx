@@ -49,11 +49,11 @@ export const DropDownBottomSheet = (props: Props) => {
         ) : (
           <SelectCard onClick={showModal}>
             {!!selectedOption ? (
-              <p className="dropdown-current-value">
+              <div className="dropdown-current-value">
                 {options?.find((option) => option.value === selectedOption)?.name}
-              </p>
+              </div>
             ) : (
-              <p className="dropdown-placeholder">{placeholder ?? "선택"}</p>
+              <div className="dropdown-placeholder">{placeholder ?? "선택"}</div>
             )}
 
             <i className="arrow-icon">
@@ -140,30 +140,35 @@ const Select = styled.div`
     }
   }
 `;
-const SelectCard = styled(InputStyledWrapper)`
-  ${CARD_ACTIVE}
+const SelectCard = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--gray200);
   user-select: none;
   display: flex;
   justify-content: space-between;
-  box-shadow: 0 2px 4px 0 rgba(141, 141, 141, 0.15);
 
   div.dropdown-current-value {
-    ${FONTS.body3("regular")}
+    user-select: none;
+    ${FONTS.body4("regular")}
   }
   div.dropdown-placeholder {
-    ${FONTS.body3("regular")};
+    user-select: none;
+    ${FONTS.body4("regular")};
     font-weight: 400;
-    color: var(--gray500);
+    color: var(--gray400);
   }
   i.arrow-icon {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 24px;
-    height: 24px;
+    color: var(--gray700);
     svg {
-      transform: rotate(180deg);
-      fill: var(--gray400);
+      width: 20px;
+      height: 20px;
     }
   }
 `;

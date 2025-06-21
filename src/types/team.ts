@@ -9,28 +9,27 @@ export type PostTeamBoardRequest = {
   image: File | null;
 };
 
-type GetTeamBoardListItems = {
-  articleId: number;
+export type TeamBoardItemType = {
+  id: number | string;
+  teamId: number | string;
+  createBy: {
+    memberId: number | string;
+    memberName: string;
+    imageUrl: string;
+  };
   title: string;
-  member: {
-    memberId: number;
-    username: string;
-    image: string;
-  };
-  category: {
-    teamId: number;
-    categoryNum: number;
-    categoryName: string;
-    isDelete: "Y" | "N";
-  };
+  category: string;
+  content: string;
+  viewCount: number;
+  startDate: string;
+  endDate: string;
+  hasLiked: true;
   createAt: string;
-  // viewCnt: number;
-  // commentCnt: number;
-  // likeCnt: number;
 };
 export type GetTeamBoardListResponse = {
-  board: Array<GetTeamBoardListItems>;
+  board: Array<TeamBoardItemType>;
   totalPages: number;
   currentPage: number;
   pageSize: number;
+  count: number;
 };

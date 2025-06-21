@@ -3,7 +3,14 @@ import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/reac
 import { typedGet, typedPost, typedPut } from "..";
 
 type ContentType = "json" | "form-data";
-type QueryError = AxiosError<{ errorCode: string; errorMessage: string }>;
+type QueryError = AxiosError<{
+  errorCode: string;
+  errorMessage: string;
+  error: string;
+  message: string;
+  status: number;
+  timestamp: number;
+}>;
 type QueryConfig<T> = Omit<UseQueryOptions<T, Error, T, QueryKey>, "queryKey" | "queryFn">;
 const CONTENT_TYPE: Record<ContentType, string> = {
   json: "application/json",

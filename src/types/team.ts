@@ -28,10 +28,12 @@ export type TeamBoardItemType = {
   createAt: string;
   commentCount: number;
 };
-export type GetTeamBoardListResponse = {
-  board: Array<TeamBoardItemType>;
-  totalPages: number;
-  currentPage: number;
-  pageSize: number;
-  count: number;
-};
+// TODO: 임시 처리된 부분 API 변경시 반영해야 함.
+export type GetTeamBoardListResponse = Array<TeamBoardItemType>;
+// export type GetTeamBoardListResponse = {
+//   board: Array<TeamBoardItemType>;
+//   totalPages: number;
+//   currentPage: number;
+//   pageSize: number;
+//   count: number;
+// };

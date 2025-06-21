@@ -26,6 +26,7 @@ function TestLogin() {
       if (isSuccess) {
         // setToken(data.access_token);
         setTokens(data);
+        router.replace("/home");
       } else {
         const confirm = window.confirm(
           `서버 통신 문제로 테스트 토큰이 발급되지 않았습니다.\n로그인 화면으로 돌아가시겠습니까?`

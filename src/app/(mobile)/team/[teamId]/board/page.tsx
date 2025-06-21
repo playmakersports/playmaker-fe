@@ -45,10 +45,14 @@ function Board() {
   const [boardType, setTab] = useState("0");
   const currentKeyword = searchParams.get("keyword") || "";
 
-  const { data, isLoading, isError, refetch } = useGet<GetTeamBoardListResponse>(`${boardAPI.BOARDS}`, {
-    teamId: teamId as string,
-    boardType,
-  });
+  const boardParams: { [key: string]: string } =
+    boardType !== "0"
+      ? {
+          boardType,
+          teamId: teamId as string,
+        }
+      : { teamId: teamId as string };
+  const { data, isLoading, isError, refetch } = useGet<GetTeamBoardListResponse>(`${boardAPI.BOARDS}`, boardParams);
 
   const updateKeyword = (keyword: string) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -104,7 +108,7 @@ function Board() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "calc(100vh - var(--header-height) - 46px)",
+            height: "calc(100vh - var(--header-height) - 40px)",
             backgroundColor: "var(--gray50)",
             color: "var(--gray400)",
             textAlign: "center",

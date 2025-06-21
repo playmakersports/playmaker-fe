@@ -36,16 +36,16 @@ function TeamListCard(props: Props) {
   const [heart, setHeart] = useState(false);
 
   return (
-    <CardHeader className={baseCardContainerNoTrans}>
+    <CardHeader className={baseCardContainerNoTrans} style={{ padding: "12px" }}>
       <Link href={`/team/${teamId}`} className={flexRowGap8} style={{ flex: 1 }}>
         <img src={teamLogo} alt={teamName} />
         <div className={flexColumnGap10} style={{ flex: 1 }}>
           <div>
-            <h3 className={fonts.body3.semibold}>{teamName}</h3>
-            <p className={fonts.caption1.regular}>{teamIntro}</p>
+            <h3 className={fonts.body3.medium}>{teamName}</h3>
+            <p className={fonts.body4.regular}>{teamIntro}</p>
           </div>
 
-          <div className={clsx(fonts.caption1.medium, flexRowGap10)} style={{ color: "var(--gray500)" }}>
+          <div className={clsx(fonts.caption1.regular, flexRowGap10)} style={{ color: "var(--gray400)" }}>
             {university ? (
               <div className={clsx(flexRowGap4, flexAlignCenter)}>
                 {/* <GraduationIcon /> */}
@@ -53,12 +53,12 @@ function TeamListCard(props: Props) {
               </div>
             ) : (
               <div className={clsx(flexRowGap4, flexAlignCenter)}>
-                <LocationIcon width={18} height={18} fill="var(--gray500)" />
+                <LocationIcon width={18} height={18} />
                 {location}
               </div>
             )}
             <div className={clsx(flexRowGap4, flexAlignCenter)}>
-              <PeopleIcon width={18} height={18} fill="var(--gray500)" />
+              <PeopleIcon width={18} height={18} />
               {memberCnt}명
             </div>
           </div>
@@ -72,6 +72,7 @@ function TeamListCard(props: Props) {
           wordBreak: "keep-all",
           letterSpacing: "-0.35px",
           gap: 0,
+          color: "var(--gray400)",
         }}
       >
         <Heart teamId={teamId} isHeart={heart} onHeart={setHeart} />

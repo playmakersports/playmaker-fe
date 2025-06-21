@@ -2,7 +2,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
-import { useAuth } from "@/session/useAuth";
+import { setTokens } from "@/session/authToken";
 import { useProfileGet } from "@/apis/hook/user";
 
 import { fonts } from "@/styles/fonts.css";
@@ -15,7 +15,7 @@ import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 function MySettings() {
   const router = useRouter();
-  const { setToken } = useAuth();
+
   const { data } = useProfileGet();
   useHeader({
     title: "설정",
@@ -26,7 +26,16 @@ function MySettings() {
         action: () => {
           const promptToken = prompt("토큰을 입력해주세요");
           if (promptToken) {
-            setToken(promptToken);
+            setTokens({
+              access_token: promptToken,
+              refresh_token: promptToken,
+              expires_in: 4000,
+              refresh_token_expires_in: 4000,
+              newUserYn: "N",
+              token_type: null,
+              id_token: null,
+              scope: null,
+            });
             router.refresh();
           }
         },

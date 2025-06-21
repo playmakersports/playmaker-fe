@@ -45,7 +45,7 @@ function TestLogin() {
             newUserYn: "N",
           });
           console.log("test-token", getAccessToken());
-          router.replace("/register");
+          router.replace("/home");
         }
         // router.replace("/user");
       }

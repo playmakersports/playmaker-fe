@@ -108,7 +108,7 @@ function EditorImages({ images }: Props) {
         )}
         <ImageAddLabel htmlFor="profileImgUpload" aria-label="이미지 추가 삽입">
           <div className="icon-wrapper">
-            <CameraIcon width={24} height={24} fill="var(--gray300)" />
+            <CameraIcon width={24} height={24} fill="var(--gray200)" />
             <span className="plus-icon">
               <Plus width={12} height={12} fill="var(--white)" />
             </span>
@@ -149,6 +149,7 @@ const ImageAddLabel = styled.label`
   border-radius: 10px;
   border: 1px solid var(--gray200);
   color: var(--gray400);
+  background-color: var(--gray50);
 
   & > div.icon-wrapper {
     position: relative;
@@ -158,24 +159,27 @@ const ImageAddLabel = styled.label`
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    border: 1px solid var(--gray300);
+    border: 1px solid var(--gray200);
     & > span.plus-icon {
       position: absolute;
-      margin: -2px;
+      margin: -4px;
       bottom: 0;
       right: 0;
-      width: 14px;
-      height: 14px;
+      width: 16px;
+      height: 16px;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-color: var(--gray700);
+      background-color: var(--gray400);
       border-radius: 50%;
+      border: 2px solid var(--white);
+      box-sizing: content-box;
     }
   }
 `;
 const ImageItem = styled.div`
-  position: relative;
+  position: absolute;
+  bottom: 0;
   width: 80px;
   height: 80px;
   border-radius: 10px;

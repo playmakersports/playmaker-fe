@@ -9,22 +9,15 @@ import { usePost } from "@/apis/hook/query";
 
 import { useEditorHandler } from "@/hook/useEditorHandler";
 import EditorUI from "@/components/Editor";
-import Button from "@/components/common/Button";
-import DropdownInput from "@/components/common/input/DropdownInput";
 import Spinner from "@/components/common/Spinner";
-import {
-  baseContainerPaddingTop,
-  flexAlignCenter,
-  flexColumnGap10,
-  flexColumnGap20,
-  flexRowGap4,
-} from "@/styles/container.css";
+import { baseContainerPaddingTop, flexAlignCenter, flexColumnGap16, flexRowGap4 } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { boardAPI } from "@/apis/url";
+import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 
 function EditorView() {
   const { editor, images } = useEditorHandler({
-    placeholder: "내용을 입력해주세요...",
+    placeholder: `자유롭게 이야기를 남겨보세요!\n최대 1,000자까지 작성 가능합니다.`,
   });
   const { mutate, data, isError, error, isPending } = usePost(boardAPI.BOARDS);
   const onSubmit = async () => {
@@ -92,21 +85,26 @@ function EditorView() {
       }}
     >
       {/* <DropdownInput
-        value={category}
-        onChange={setCategory}
-        placeholder="카테고리 선택"
-        options={[
-          { name: "공지사항", value: "notice" },
-          { name: "사진", value: "photo" },
-          { name: "자유", value: "free" },
-          { name: "가입인사", value: "intro" },
-        ]}
+  
       /> */}
-      <div className={flexColumnGap20} style={{ flex: 1 }}>
-        <div className={flexColumnGap10}>
+      <div className={flexColumnGap16} style={{ flex: 1 }}>
+        <div style={{ margin: "0 -4px" }}>
+          <DropDownBottomSheet
+            mode="card"
+            defaultValue={category}
+            getCurrentValue={setCategory}
+            placeholder="카테고리 선택"
+            options={[
+              { name: "공지사항", value: "1" },
+              { name: "자유게시판", value: "2" },
+              { name: "갤러리", value: "3" },
+            ]}
+          />
+        </div>
+        <div className={flexColumnGap16}>
           <input
             type="text"
-            className={fonts.body1.medium}
+            className={fonts.body2.semibold}
             placeholder="제목을 입력해주세요"
             value={title}
             onChange={(e) => setTitle(e.target.value)}

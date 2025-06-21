@@ -8,7 +8,7 @@ import CommentsIcon from "@/assets/icon/common/filled/Chat.svg";
 import { TeamBoardItemType } from "@/types/team";
 
 function ListArticle(props: TeamBoardItemType) {
-  const CATEGORY_NAME: Record<number, string> = {
+  const CATEGORY_NAME: Record<string | number, string> = {
     1: "공지사항",
     2: "자유게시판",
     3: "갤러리",
@@ -21,7 +21,7 @@ function ListArticle(props: TeamBoardItemType) {
         <div className="card-bottom">
           <p className="article-sub">
             <strong>{CATEGORY_NAME[props.boardType]}</strong> {props.createBy.memberName} ·{" "}
-            {formattedDate(new Date(props.createBy.createdAt), {
+            {formattedDate(new Date(props.createAt), {
               displayDateType: "kr",
               displayDayName: "hide",
               displayYear: "not-this-year",

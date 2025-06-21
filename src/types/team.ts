@@ -26,6 +26,7 @@ export type TeamBoardItemType = {
   endDate: string;
   hasLiked: true;
   createAt: string;
+  commentCount: number;
 };
 export type GetTeamBoardListResponse = {
   board: Array<TeamBoardItemType>;

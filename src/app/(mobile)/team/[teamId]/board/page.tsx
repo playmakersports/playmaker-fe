@@ -79,7 +79,7 @@ function Board() {
           nowValue={setTab}
         />
       </TabWrapper>
-      {data?.board && data?.board.length > 0 ? (
+      {data && data.length > 0 ? (
         <div>
           <div className={boardListFixedSection}>
             {MOCK.slice(0, 3).map((article) => (
@@ -97,8 +97,8 @@ function Board() {
             ))}
           </div>
           <div className={baseDividedLine} />
-          <section className={baseContainer} style={{ backgroundColor: "var(--gray50)" }}>
-            {isLoading ? <Loading /> : data?.board?.map((article) => <ListArticle key={article.id} {...article} />)}
+          <section style={{ backgroundColor: "var(--gray50)" }}>
+            {isLoading ? <Loading /> : data?.map((article) => <ListArticle key={article.id} {...article} />)}
           </section>
         </div>
       ) : (

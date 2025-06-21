@@ -1,13 +1,32 @@
 "use client";
-import { useHeader } from "@/hook/useHeader";
+import { colors } from "@/styles/color.css";
 import { FONTS } from "@/styles/common";
+import { flexRowGap12, flexRowGap4 } from "@/styles/container.css";
+import { fonts } from "@/styles/fonts.css";
+import clsx from "clsx";
 import React from "react";
 import styled from "styled-components";
 
-function ArticleReply() {
-  useHeader({ title: "공지사항" });
+type Props = {
+  teamId: string | number;
+  articleId: string | number;
+  viewCount: number;
+};
+function ArticleReply(props: Props) {
+  const { teamId, articleId, viewCount = 0 } = props;
 
-  return <div>ArticleReply</div>;
+  return (
+    <div>
+      <div className={clsx(flexRowGap12, fonts.body4.medium)}>
+        <span className={clsx(flexRowGap4, colors.gray500)}>
+          댓글<span className={colors.gray600}>0</span>
+        </span>
+        <span className={clsx(flexRowGap4, colors.gray500)}>
+          조회<span className={colors.gray600}>{viewCount}</span>
+        </span>
+      </div>
+    </div>
+  );
 }
 
 const CommentInput = styled.div`

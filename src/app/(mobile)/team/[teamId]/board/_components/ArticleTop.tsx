@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { articleDetailHeader } from "./teamBoard.css";
 import { formatDate } from "date-fns";
@@ -15,7 +16,6 @@ type Props = {
     memberName: string;
     imageUrl: string;
   };
-  viewCount: number;
   boardType: string | number;
   createAt: string | Date;
 };
@@ -25,9 +25,9 @@ function ArticleTop(props: Props) {
     2: "자유게시판",
     3: "갤러리",
   };
-  const { title, boardType, createBy, viewCount, createAt } = props;
+  const { title, boardType, createBy, createAt } = props;
   useHeader({
-    title: BOARD_TYPE_TITLE[boardType],
+    title: BOARD_TYPE_TITLE[boardType] ?? "게시판",
     options: { titleAlign: "center" },
   });
 
@@ -40,9 +40,8 @@ function ArticleTop(props: Props) {
         <div>
           <div className={fonts.caption1.medium}>{createBy.memberName}</div>
           <div className={clsx(semantic.description, flexRowGap4)}>
-            <span className="create-at">{formatDate(createAt, "yyyy-mm-dd")}</span>
-            <span className="create-at-time">{formatDate(createAt, "HH:mm")}</span>
-            <span className="view">조회 {viewCount}</span>
+            {createAt && <span className="create-at">{formatDate(createAt, "yyyy-mm-dd")}</span>}
+            {createAt && <span className="create-at-time">{formatDate(createAt, "HH:mm")}</span>}
           </div>
         </div>
       </div>

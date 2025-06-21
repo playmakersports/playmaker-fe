@@ -1,4 +1,5 @@
 "use client";
+import clsx from "clsx";
 import { useGet } from "@/apis/hook/query";
 import { useParams } from "next/navigation";
 
@@ -8,7 +9,7 @@ import { boardAPI } from "@/apis/url";
 import { TeamBoardItemType } from "@/types/team";
 import Loading from "@/components/common/Loading";
 import "@/styles/editor.css";
-import { baseContainer, flexColumnGap16 } from "@/styles/container.css";
+import { baseContainer, baseDividedLineChild, flexColumnGap16 } from "@/styles/container.css";
 
 function ArticleId() {
   const articleId = useParams()["articleId"] as string;
@@ -22,24 +23,17 @@ function ArticleId() {
     );
 
   return (
-    <div className={baseContainer}>
-      <div className={flexColumnGap16}>
-        <ArticleTop
-          title={data.title}
-          boardType={data.boardType}
-          createBy={data.createBy}
-          createAt={data.createAt}
-          viewCount={data.viewCount}
-        />
-        <article
-          id="tiptap_Editor"
-          dangerouslySetInnerHTML={{
-            __html: data?.content.replace(/<(iframe|script)[\s\S]*?<\/\1>/gi, ""),
-          }}
-        />
-      </div>
-      <ArticleReply />
-    </div>
+    <section className={clsx(baseContainer, flexColumnGap16)}>
+      <ArticleTop title={data.title} boardType={data.boardType} createBy={data.createBy} createAt={data.createAt} />
+      <article
+        id="tiptap_Editor"
+        dangerouslySetInnerHTML={{
+          __html: data?.content.replace(/<(iframe|script)[\s\S]*?<\/\1>/gi, ""),
+        }}
+      />
+      <div className={baseDividedLineChild} />
+      <ArticleReply teamId={data.teamId} articleId={articleId} viewCount={data.viewCount} />
+    </section>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 import React, { useRef, useState } from "react";
 import clsx from "clsx";
+import { formatDate } from "date-fns";
 import styled from "styled-components";
 import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
@@ -45,7 +46,7 @@ function TeamJoinRequest() {
   });
   const popup = usePopup();
   const { showModal: showDenyModal, ModalComponents: DenyModal } = useModal();
-  const { data } = useTeamJoinRequestGet(Number(teamId));
+  const { data } = useTeamJoinRequestGet(`${teamId}`);
 
   const players = data ?? [];
   const allChecked = players.length > 0 && players.every((player) => selected.includes(player.memberId));
@@ -146,7 +147,7 @@ function TeamJoinRequest() {
                         <RightArrow width={20} height={20} fill="var(--gray700)" />
                       </Name>
                       <p className={fonts.caption1.medium} style={{ color: "var(--gray400)" }}>
-                        {player.requestDate} 가입신청
+                        {formatDate(player.requestDate, "yyyy.MM.dd HH:mm")} 신청
                       </p>
                     </div>
                   </div>

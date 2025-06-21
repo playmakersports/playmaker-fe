@@ -8,6 +8,7 @@ import { SUPPORT_SPORTS } from "@/constants/SPORTS";
 import { fonts } from "@/styles/fonts.css";
 import { stageFavSportsGrid, stageFormWrapper, stageWrapper } from "../../register/_components/stage.css";
 import StageWrapper, { SetStepType } from "../../register/_components/StageWrapper";
+import { FONTS } from "@/styles/common";
 
 function TeamCreateStage1({ setStep }: SetStepType) {
   const { register, watch } = useFormContext();
@@ -36,9 +37,9 @@ function TeamCreateStage1({ setStep }: SetStepType) {
               />
               <label htmlFor={`${item.value}+${item.name}`}>
                 <div className="icon-wrapper">
-                  <Image src={item.icon} alt={item.name} width={50} height={50} />
+                  <Image src={item.icon} alt={item.name} width={80} height={80} />
                 </div>
-                <span className={clsx(fonts.body3.medium, "sports-name")}>{item.name}</span>
+                <span className="sports-name">{item.name}</span>
               </label>
             </SportsButton>
           ))}
@@ -68,8 +69,9 @@ const SportsButton = styled.div`
       transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
     }
     span.sports-name {
+      ${FONTS.body3("medium")};
       padding: 10px 0;
-      color: var(--gray700);
+      color: var(--gray600);
     }
 
     &:active div.icon-wrapper > img {
@@ -79,11 +81,10 @@ const SportsButton = styled.div`
   }
 
   input:checked + label div.icon-wrapper {
-    background-color: var(--primary50);
-    border-color: var(--primary500);
+    border: 2px solid var(--primary500);
   }
   input:checked + label span.sports-name {
-    font-weight: 600;
+    ${FONTS.body3("semibold")};
     color: var(--primary500);
   }
 `;

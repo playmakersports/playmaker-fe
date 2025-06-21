@@ -4,7 +4,7 @@ import BasketballIcon from "@/assets/icon/sports/basketball.png";
 import VolleyballIcon from "@/assets/icon/sports/volley.png";
 import FootballIcon from "@/assets/icon/sports/football.png";
 import BadmintonIcon from "@/assets/icon/sports/badminton.png";
-import RunIcon from "@/assets/icon/sports/run.png";
+import BaseballIcon from "@/assets/icon/sports/baseball.png";
 
 type SportsInfoType = { value: string; name: string; nameEng: string; icon: StaticImageData };
 export const SUPPORT_SPORTS: Array<SportsInfoType> = [
@@ -35,6 +35,6 @@ export const SUPPORT_SPORTS: Array<SportsInfoType> = [
     value: "4",
     name: "야구",
     nameEng: "baseball",
-    icon: RunIcon,
+    icon: BaseballIcon,
   },
 ];

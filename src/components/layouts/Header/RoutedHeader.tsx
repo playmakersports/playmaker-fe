@@ -94,7 +94,12 @@ function RoutedHeader({ scrollY }: Props) {
           (Array.isArray(actions) ? (
             actions.length > 0 && <DropdownAction icon options={actions} />
           ) : (
-            <button type="button" onClick={actions.action} className={headerSingleSubActionButton}>
+            <button
+              type="button"
+              onClick={actions.disabled ? undefined : actions.action}
+              disabled={actions.disabled}
+              className={headerSingleSubActionButton}
+            >
               {actions.name}
             </button>
           ))}

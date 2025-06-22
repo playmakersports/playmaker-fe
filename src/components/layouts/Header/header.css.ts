@@ -87,6 +87,15 @@ export const headerSingleSubActionButton = style([
         backgroundColor: "var(--primary50)",
         boxShadow: "0 0 0 6px var(--primary50)",
       },
+      "&:disabled": {
+        backgroundColor: "transparent",
+        cursor: "not-allowed",
+        color: "var(--gray300)",
+      },
+      "&:active:disabled": {
+        backgroundColor: "transparent",
+        boxShadow: "none",
+      },
     },
   },
 ]);

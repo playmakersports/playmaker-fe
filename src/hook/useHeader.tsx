@@ -1,6 +1,6 @@
 "use client";
 import { useSetAtom } from "jotai";
-import { useLayoutEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 
 import {
   atomHeaderActions,
@@ -63,4 +63,11 @@ export const useHeader = (props: HookProps = {}) => {
       setHeaderOptions({} as HeaderOptionsType);
     };
   }, []);
+
+  useEffect(() => {
+    subActions && setActions(subActions);
+    return () => {
+      setActions([]);
+    };
+  }, [subActions]);
 };

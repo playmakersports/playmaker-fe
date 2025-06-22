@@ -8,19 +8,21 @@ import useModal from "@/hook/useModal";
 import { BasicInput, InputProps } from "./input/BaseInput";
 import { FONTS } from "@/styles/common";
 
-type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType"> & {
+type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType" | "defaultValue" | "children"> & {
+  children?: (showModal: () => void) => React.ReactNode;
   value?: string;
   defaultValue?: string | Date;
-  pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
   plainStyle?: boolean;
   bottomSheetHeader?: {
     title: string;
     description?: string;
   };
+  pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
 };
 
 const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
   const {
+    children,
     defaultValue,
     title,
     error,
@@ -39,18 +41,14 @@ const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) 
 
   const inputRef = useRef<HTMLInputElement>(null);
   useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
-  const [currentDate, setCurrentDate] = useState(() => {
-    if (defaultValue) {
-      return new Date(defaultValue);
-    } else if (inputRef.current && inputRef.current.value) {
-      return new Date(inputRef.current.value);
-    }
-    return new Date();
-  });
+  const [currentDate, setCurrentDate] = useState(new Date());
 
   useEffect(() => {
     if (inputRef.current && inputRef.current.value) {
       setCurrentDate(new Date(inputRef.current.value));
+    }
+    if (defaultValue) {
+      setCurrentDate(new Date(defaultValue));
     }
   }, []);
 
@@ -110,27 +108,56 @@ const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) 
   }, [currentDate]);
 
   // 저장 버튼 클릭
-  const handleSave = (close: () => void) => {};
+  const handleSave = (close: () => void) => {
+    if (inputRef.current) {
+      const newValue = formatDate(currentDate, "yyyy-MM-dd");
+      inputRef.current.value = newValue;
+
+      if (rest.onChange) {
+        rest.onChange({
+          target: {
+            name: props.name,
+            value: newValue,
+          },
+        } as React.ChangeEvent<HTMLInputElement>);
+      }
+    }
+    inputRef.current?.focus();
+    close();
+  };
 
   return (
     <>
-      {plainStyle ? (
-        <input type="text" name={rest.name} ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
-      ) : (
-        <BasicInput
-          ref={inputRef}
-          type="text"
-          name={rest.name}
-          title={title}
-          error={error}
-          description={description}
-          onButtonWrapClick={() => showModal()}
-          {...rest}
-        />
+      {!children &&
+        (plainStyle ? (
+          <input type="text" name={rest.name} ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
+        ) : (
+          <BasicInput
+            ref={inputRef}
+            type="text"
+            name={rest.name}
+            title={title}
+            error={error}
+            description={description}
+            onButtonWrapClick={() => showModal()}
+            {...rest}
+          />
+        ))}
+      {children && (
+        <>
+          {children(showModal)}
+          <input
+            type="text"
+            name={rest.name}
+            ref={inputRef}
+            readOnly
+            style={{ display: "none", width: "1px", height: "1px", position: "fixed", top: "-100%", left: "-100%" }}
+            {...rest}
+          />
+        </>
       )}
       <ModalComponents
         title={bottomSheetHeader?.title}
-        disabledDimOut
         description={bottomSheetHeader?.description}
         draggable="bar"
         buttons={[
@@ -138,23 +165,7 @@ const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) 
             mode: "primary",
             disabled: !(currentDate || defaultValue || (inputRef.current && inputRef.current.value)),
             name: `${formatDate(currentDate, "yyyy년 M월 d일")}로 설정`,
-            onClick: (close) => {
-              if (inputRef.current) {
-                const newValue = formatDate(currentDate, "yyyy-MM-dd");
-                inputRef.current.value = newValue;
-
-                if (rest.onChange) {
-                  rest.onChange({
-                    target: {
-                      name: props.name,
-                      value: newValue,
-                    },
-                  } as React.ChangeEvent<HTMLInputElement>);
-                }
-              }
-              inputRef.current?.focus();
-              close();
-            },
+            onClick: handleSave,
           },
         ]}
       >

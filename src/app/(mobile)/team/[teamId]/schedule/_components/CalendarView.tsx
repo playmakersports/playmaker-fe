@@ -3,10 +3,10 @@ import React, { useRef, useState } from "react";
 import clsx from "clsx";
 import styled from "styled-components";
 import { isSameDay, subMonths } from "date-fns";
-
-import { UseCalendarType } from "@/hook/useCalendar";
-import { DateSwiperSelect } from "@/components/common/DateSwiperSelect";
 import NumberFlow, { NumberFlowGroup } from "@number-flow/react";
+import { UseCalendarType } from "@/hook/useCalendar";
+
+import DateSwiperSelect from "@/components/common/DateSwiperSelect";
 
 import {
   calendarViewTypeSwitch,
@@ -19,10 +19,10 @@ import {
   weekLineWrapper,
 } from "./calendar.css";
 import { flexAlignCenter, flexSpaceBetween } from "@/styles/container.css";
-
-import DownToggleArrow from "@/assets/icon/arrow/DownArrowToggle.svg";
 import { fonts } from "@/styles/fonts.css";
 import { TEXT_ACTIVE } from "@/styles/common";
+
+import DownToggleArrow from "@/assets/icon/arrow/DownArrowToggle.svg";
 
 type Props = {
   calendar: UseCalendarType;
@@ -83,8 +83,11 @@ function CalendarView({ calendar, viewWeekly }: Props) {
     <CalendarContainer>
       <NowDate className={clsx(flexAlignCenter, flexSpaceBetween)}>
         <DateSwiperSelect
-          defaultValue={`${currentDate.getFullYear()}-${currentDate.getMonth() + 1}-${currentDate.getDate()}`}
-          getCurrentValue={({ y, m, d }) => {
+          pickType="EVERYDAY"
+          defaultValue={new Date(currentDate)}
+          onChange={(event) => {
+            const [y, m, d] = event.target.value.split("-").map(Number);
+            console.log(event.target.value);
             setCurrentDate(new Date(y, m - 1, d));
           }}
         >

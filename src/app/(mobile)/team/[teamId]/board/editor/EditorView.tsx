@@ -24,7 +24,12 @@ function EditorView() {
   const { editor, images } = useEditorHandler({
     placeholder: `자유롭게 이야기를 남겨보세요!\n최대 1,000자까지 작성 가능합니다.`,
   });
+  const [title, setTitle] = useState("");
+  const [boardType, setBoardType] = useState("");
+
   const router = useRouter();
+  const params = useParams();
+  const teamId = params["teamId"];
   const { mutate, data, isError, error, isPending } = usePost(boardAPI.BOARDS);
   const setActions = useSetAtom(atomHeaderActions);
   const onSubmit = () => {
@@ -32,9 +37,9 @@ function EditorView() {
       {
         data: {
           boardInfo: {
-            teamId,
-            title,
-            boardType,
+            teamId: Number(teamId),
+            title: title,
+            boardType: Number(boardType),
             content: editor?.getHTML(),
           },
         },
@@ -55,13 +60,8 @@ function EditorView() {
   };
 
   const popup = usePopup();
-  const params = useParams();
   const searchParams = useSearchParams();
-  const teamId = params["teamId"];
   const type = searchParams.get("type");
-
-  const [boardType, setBoardType] = useState("");
-  const [title, setTitle] = useState("");
 
   useEffect(() => {
     if (!editor) return;

@@ -79,6 +79,7 @@ const TextContainer = styled.div`
     }
     p.description {
       ${FONTS.body4("regular")};
+      white-space: pre-wrap;
     }
   }
   div.text-container[data-size="medium"] {
@@ -87,6 +88,7 @@ const TextContainer = styled.div`
     }
     p.description {
       ${FONTS.caption1("regular")};
+      white-space: pre-wrap;
     }
   }
 `;

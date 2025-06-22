@@ -104,7 +104,7 @@ function BirthRangeInput({ getYearRange, defaultValue, title }: Props) {
 
       <ModalComponents
         title="나이 제한"
-        description="출생연도로 나이를 제한할 수 있어요."
+        description="출생연도로 팀 가입을 제한할 수 있어요."
         buttons={[
           {
             mode: "primary",

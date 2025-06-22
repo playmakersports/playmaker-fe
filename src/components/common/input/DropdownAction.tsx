@@ -11,7 +11,12 @@ import DotMenuIcon from "@/assets/icon/common/MenuDots.svg";
 import DownArrow from "@/assets/icon/arrow/DownArrow.svg";
 import { dropdownAsset } from "./container.css";
 
-export type ActionOptionsType = { name: string | React.ReactNode; action: () => void; divided?: boolean };
+export type ActionOptionsType = {
+  name: string | React.ReactNode;
+  action: () => void;
+  disabled?: boolean;
+  divided?: boolean;
+};
 type Props = {
   title?: string;
   options: Array<ActionOptionsType>;

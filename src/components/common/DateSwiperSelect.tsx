@@ -1,37 +1,58 @@
-import React, { useCallback, useImperativeHandle, useRef, useState, useEffect } from "react";
+import React, { useImperativeHandle, useRef, useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import { getDate, getDaysInMonth, getMonth, getYear } from "date-fns";
-import Flicking, { ChangedEvent, FlickingError, WillChangeEvent } from "@egjs/react-flicking";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { formatDate, getDaysInMonth, isSameMonth, isSameYear, setDate, setMonth, setYear } from "date-fns";
 import useModal from "@/hook/useModal";
 
+import { BasicInput, InputProps } from "./input/BaseInput";
 import { FONTS } from "@/styles/common";
 
-type Props = {
-  children: (showModal: () => void) => React.ReactNode;
-  defaultValue?: string;
-  getCurrentValue: (values: { y: number; m: number; d: number }) => void;
-  pickType?: "EVERYDAY" | "ONLY_PAST";
+type Props = Omit<InputProps, "type" | "value" | "suffix" | "iconType"> & {
+  value?: string;
+  defaultValue?: string | Date;
+  pickType?: "EVERYDAY" | "ONLY_PAST" | "ONLY_FUTURE";
+  plainStyle?: boolean;
+  bottomSheetHeader?: {
+    title: string;
+    description?: string;
+  };
 };
-export const DateSwiperSelect = (props: Props) => {
-  const { children, defaultValue, getCurrentValue, pickType = "EVERYDAY" } = props;
+
+const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) => {
+  const {
+    defaultValue,
+    title,
+    error,
+    description,
+    value,
+    pickType = "EVERYDAY",
+    plainStyle = false,
+    bottomSheetHeader,
+    ...rest
+  } = props;
 
   const { ModalComponents, showModal } = useModal();
+  const [yearList, setYearList] = useState<number[]>([]);
+  const [monthList, setMonthList] = useState<number[]>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+  const [dateList, setDateList] = useState<number[]>([]);
 
-  const [yearValue, setYearValue] = useState(defaultValue ? +defaultValue.split("-")[0] : +getYear(new Date()));
-  const [monthValue, setMonthValue] = useState(defaultValue ? +defaultValue.split("-")[1] : +getMonth(new Date()) + 1);
-  const [dayValue, setDayValue] = useState(defaultValue ? +defaultValue.split("-")[2] : +getDate(new Date()));
-  const yearFlickRef = useRef<Flicking>(null);
-  const monthFlickRef = useRef<Flicking>(null);
-  const dayFlickRef = useRef<Flicking>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
+  const [currentDate, setCurrentDate] = useState(() => {
+    if (defaultValue) {
+      return new Date(defaultValue);
+    } else if (inputRef.current && inputRef.current.value) {
+      return new Date(inputRef.current.value);
+    }
+    return new Date();
+  });
 
   useEffect(() => {
-    if (defaultValue) {
-      const [year, month, day] = defaultValue.split("-").map(Number);
-      setYearValue(year);
-      setMonthValue(month);
-      setDayValue(day);
+    if (inputRef.current && inputRef.current.value) {
+      setCurrentDate(new Date(inputRef.current.value));
     }
-  }, [defaultValue]);
+  }, []);
 
   const getNumberFromTo = useCallback((start: number, end: number) => {
     if (start > end) {
@@ -39,188 +60,260 @@ export const DateSwiperSelect = (props: Props) => {
     }
     return Array.from({ length: end - start + 1 }, (_, index) => start + index);
   }, []);
-  const YEARS = getNumberFromTo(pickType === "EVERYDAY" ? 2299 : getYear(new Date()), 1940);
-  const MONTHS = getNumberFromTo(
-    1,
-    (pickType === "ONLY_PAST" && +yearValue < getYear(new Date())) || pickType === "EVERYDAY"
-      ? 12
-      : getMonth(new Date()) + 1
-  );
-  const DAYS = getNumberFromTo(
-    1,
-    pickType === "ONLY_PAST" && +yearValue === getYear(new Date()) && +monthValue === getMonth(new Date()) + 1
-      ? getDate(new Date())
-      : getDaysInMonth(new Date(yearValue, monthValue - 1))
-  );
 
-  const onYearChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setYearValue(+`${YEARS[e.index]}`);
-  };
-  const onMonthChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setMonthValue(+`${MONTHS[e.index]}`);
-  };
-  const onDayChanged = (e: ChangedEvent | WillChangeEvent) => {
-    setDayValue(+`${DAYS[e.index]}`);
+  const handleMonthDate = () => {
+    if (pickType === "ONLY_PAST") {
+      if (isSameYear(currentDate, new Date())) {
+        setMonthList(getNumberFromTo(1, new Date().getMonth() + 1));
+        if (isSameMonth(currentDate, new Date())) {
+          setDateList(getNumberFromTo(1, new Date().getDate()));
+        }
+      } else {
+        setMonthList(getNumberFromTo(1, 12));
+        setDateList(getNumberFromTo(1, getDaysInMonth(currentDate)));
+      }
+    }
   };
 
-  const moveToYear = (index: number) => {
-    setYearValue(+`${YEARS[index]}`);
-    yearFlickRef.current!.moveTo(index).catch((err) => {
-      if (err instanceof FlickingError) return;
-      throw err;
-    });
+  useEffect(() => {
+    if (pickType === "ONLY_PAST") {
+      setYearList(getNumberFromTo(new Date().getFullYear(), 1940));
+      return;
+    }
+    if (pickType === "ONLY_FUTURE") {
+      setYearList(getNumberFromTo(new Date().getFullYear(), new Date().getFullYear() + 50));
+      return;
+    }
+    if (pickType === "EVERYDAY") {
+      setYearList(getNumberFromTo(1940, new Date().getFullYear() + 50));
+    }
+  }, [getNumberFromTo]);
+
+  const handleYearChange = (activeIndex: number) => {
+    setCurrentDate(setYear(currentDate, yearList[activeIndex]));
+    if (!window.navigator) return;
+    window.navigator.vibrate(8);
   };
-  const moveToMonth = (index: number) => {
-    setMonthValue(+`${MONTHS[index]}`);
-    monthFlickRef.current!.moveTo(index).catch((err) => {
-      if (err instanceof FlickingError) return;
-      throw err;
-    });
+  const handleMonthChange = (activeIndex: number) => {
+    setCurrentDate(setMonth(currentDate, monthList[activeIndex] - 1));
+    if (!window.navigator) return;
+    window.navigator.vibrate(8);
   };
-  const moveToDay = (index: number) => {
-    setDayValue(+`${DAYS[index]}`);
-    dayFlickRef.current!.moveTo(index).catch((err) => {
-      if (err instanceof FlickingError) return;
-      throw err;
-    });
+  const handleDateChange = (activeIndex: number) => {
+    setCurrentDate(setDate(currentDate, dateList[activeIndex]));
+    if (!window.navigator) return;
+    window.navigator.vibrate(8);
   };
+  useEffect(() => {
+    setDateList(getNumberFromTo(1, getDaysInMonth(currentDate)));
+    handleMonthDate();
+  }, [currentDate]);
+
+  // 저장 버튼 클릭
+  const handleSave = (close: () => void) => {};
 
   return (
     <>
-      {children(showModal)}
-
+      {plainStyle ? (
+        <input type="text" name={rest.name} ref={inputRef} onClick={() => showModal()} readOnly {...rest} />
+      ) : (
+        <BasicInput
+          ref={inputRef}
+          type="text"
+          name={rest.name}
+          title={title}
+          error={error}
+          description={description}
+          onButtonWrapClick={() => showModal()}
+          {...rest}
+        />
+      )}
       <ModalComponents
+        title={bottomSheetHeader?.title}
+        disabledDimOut
+        description={bottomSheetHeader?.description}
+        draggable="bar"
         buttons={[
           {
             mode: "primary",
-            name: "선택",
+            disabled: !(currentDate || defaultValue || (inputRef.current && inputRef.current.value)),
+            name: `${formatDate(currentDate, "yyyy년 M월 d일")}로 설정`,
             onClick: (close) => {
-              getCurrentValue({ y: yearValue, m: monthValue, d: dayValue });
+              if (inputRef.current) {
+                const newValue = formatDate(currentDate, "yyyy-MM-dd");
+                inputRef.current.value = newValue;
+
+                if (rest.onChange) {
+                  rest.onChange({
+                    target: {
+                      name: props.name,
+                      value: newValue,
+                    },
+                  } as React.ChangeEvent<HTMLInputElement>);
+                }
+              }
+              inputRef.current?.focus();
               close();
             },
           },
         ]}
       >
         <Wrapper>
-          <PickList>
-            <Flicking
-              ref={yearFlickRef}
-              horizontal={false}
-              onWillChange={onYearChanged}
-              onChanged={onYearChanged}
-              defaultIndex={YEARS.findIndex((v) => v === yearValue)}
-            >
-              {YEARS.map((year, index) => (
-                <li
-                  key={year + "year"}
-                  className={year === +yearValue ? "active-pick" : ""}
-                  onClick={() => moveToYear(index)}
-                >
-                  {year}
-                </li>
-              ))}
-            </Flicking>
-          </PickList>
-          <PickList>
-            <Flicking
-              ref={monthFlickRef}
-              horizontal={false}
-              onWillChange={onMonthChanged}
-              onChanged={onMonthChanged}
-              defaultIndex={MONTHS.findIndex((v) => v === monthValue)}
-            >
-              {MONTHS.map((month, index) => (
-                <li
-                  key={month + "month"}
-                  className={month === +monthValue ? "active-pick" : ""}
-                  onClick={() => moveToMonth(index)}
-                >
-                  {month}
-                </li>
-              ))}
-            </Flicking>
-          </PickList>
-          <PickList>
-            <Flicking
-              ref={dayFlickRef}
-              horizontal={false}
-              onWillChange={onDayChanged}
-              onChanged={onDayChanged}
-              defaultIndex={DAYS.findIndex((v) => v === dayValue)}
-            >
-              {DAYS.map((day, index) => (
-                <li key={day} className={day === +dayValue ? "active-pick" : ""} onClick={() => moveToDay(index)}>
-                  {day}
-                </li>
-              ))}
-            </Flicking>
-          </PickList>
+          <div className="background-selected">
+            <span>년</span>
+            <span>월</span>
+            <span>일</span>
+          </div>
+          <Swiper
+            direction="vertical"
+            freeMode
+            slidesPerView={5}
+            centeredSlides
+            onSlideChange={(swiper) => handleYearChange(swiper.activeIndex)}
+            initialSlide={yearList.findIndex((v) => v === Number(currentDate.getFullYear())) || 0}
+            style={{ flex: 1 }}
+          >
+            {yearList.map((year) => (
+              <SwiperSlide key={`min-${year}`}>
+                <YearPanel>
+                  <span className="age-year">{year}</span>
+                </YearPanel>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Swiper
+            direction="vertical"
+            freeMode
+            slidesPerView={5}
+            centeredSlides
+            onSlideChange={(swiper) => handleMonthChange(swiper.activeIndex)}
+            initialSlide={monthList.findIndex((v) => v === Number(currentDate.getMonth() + 1)) || 0}
+            style={{ flex: 1 }}
+          >
+            {monthList.map((month) => (
+              <SwiperSlide key={`min-${month}`}>
+                <YearPanel>
+                  <span className="age-year">{month}</span>
+                </YearPanel>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+          <Swiper
+            direction="vertical"
+            freeMode
+            slidesPerView={5}
+            centeredSlides
+            onSlideChange={(swiper) => handleDateChange(swiper.activeIndex)}
+            initialSlide={dateList.findIndex((v) => v === Number(currentDate.getDate())) || 0}
+            style={{ flex: 1 }}
+          >
+            {dateList.map((day) => (
+              <SwiperSlide key={`min-${day}`}>
+                <YearPanel>
+                  <span className="age-year">{day}</span>
+                </YearPanel>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </Wrapper>
       </ModalComponents>
     </>
   );
-};
-
+});
+DateSwiperSelect.displayName = "DateSwiperSelect";
 const Wrapper = styled.div`
   position: relative;
   display: flex;
-  padding: 0 12px;
   justify-content: center;
-  align-items: center;
-  height: 160px;
+  gap: 8px;
+  padding: 0 12px;
+  height: 300px;
   overflow: hidden;
-  .flicking-viewport {
-    position: relative;
-    width: 100%;
-    transform-style: preserve-3d;
-    overflow: visible;
-  }
-  .flicking-camera {
-    transform-style: preserve-3d;
-    will-change: transform;
-  }
-  &::before {
-    content: "";
-    position: absolute;
-    display: block;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 24px;
-    background: linear-gradient(to bottom, var(--background-light) 0%, rgba(var(--background-light-rgb), 0) 100%);
-    z-index: 1;
-  }
+
+  &::before,
   &::after {
     content: "";
     position: absolute;
-    display: block;
+    width: 100%;
+    height: 32px;
+    left: 0;
+    z-index: 2;
+  }
+
+  &::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--background-light), rgba(var(--background-light-rgb), 0));
+  }
+
+  &::after {
     bottom: 0;
+    background: linear-gradient(to top, var(--background-light), rgba(var(--background-light-rgb), 0));
+  }
+
+  div.background-selected {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 50%;
     left: 0;
     width: 100%;
-    height: 24px;
-    background: linear-gradient(to top, var(--background-light) 0%, rgba(var(--background-light-rgb), 0) 100%);
-  }
-`;
-const PickList = styled.ul`
-  flex: 1;
-  border-left: 1px solid var(--gray200);
-  &:first-of-type {
-    border-left: none;
-  }
-  li {
-    padding: 8px 12px;
-    display: block;
-    text-align: center;
-    ${FONTS.body3("regular")};
-    color: var(--gray600);
-    font-variant-numeric: tabular-nums;
-    letter-spacing: -0.5px;
-    transition: all 0.25s;
-    transition-delay: 0.2s;
-    &.active-pick {
-      color: var(--main);
-      font-weight: 700;
-      font-size: 2rem;
+    height: 60px;
+    background-color: rgba(var(--main-rgb), 0.1);
+    z-index: 1;
+    border-radius: 8px;
+    transform: translateY(-50%);
+    ${FONTS.body2("medium")};
+    color: var(--primary600);
+    & > span {
+      flex: 1;
+      padding-left: 24px;
+      text-align: center;
+      &:first-child {
+        padding-left: 60px;
+      }
     }
   }
 `;
+
+const YearPanel = styled.div`
+  user-select: none;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  grid-template-areas: "overlap";
+
+  padding: 8px 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  ${FONTS.body3("regular")};
+  color: var(--gray500);
+  letter-spacing: -0.1px;
+  transition: color 0.3s ease, font-size 0.3s ease;
+
+  span.age-year {
+    grid-area: overlap;
+  }
+  span.age-info {
+    grid-area: overlap;
+    display: flex;
+    justify-content: center;
+  }
+  .swiper-slide-active & {
+    ${FONTS.body1("semibold")};
+    color: var(--primary600);
+
+    span {
+      transition: opacity 0.3s ease;
+    }
+    span[data-switch="true"] {
+      opacity: 1;
+    }
+    span[data-switch="false"] {
+      opacity: 0;
+    }
+  }
+`;
+
+export default DateSwiperSelect;

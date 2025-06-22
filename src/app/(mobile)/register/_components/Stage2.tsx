@@ -7,6 +7,7 @@ import DateInput from "@/components/common/DateInput";
 import InputWrapper from "@/components/common/input/InputWrapper";
 import MainTab from "@/components/Main/MainTab";
 import StageWrapper, { SetStepType } from "./StageWrapper";
+import DateSwiperSelect from "@/components/common/DateSwiperSelect";
 
 function Stage2({ setStep }: SetStepType) {
   const {
@@ -41,7 +42,13 @@ function Stage2({ setStep }: SetStepType) {
           <p className={stageWrapper.description}>필수 정보를 입력해 주세요</p>
         </div>
         <BasicInput type="text" title="이름" required {...register("username", { required: true })} />
-        <DateInput title="생년월일" required {...register("birth", { required: true })} />
+        <DateSwiperSelect
+          title="생년월일"
+          bottomSheetHeader={{ title: "생년월일 선택", description: "플레이어님의 생년월일을 선택해주세요." }}
+          pickType="ONLY_PAST"
+          required
+          {...register("birth", { required: true })}
+        />
         <BasicInput
           type="tel"
           required

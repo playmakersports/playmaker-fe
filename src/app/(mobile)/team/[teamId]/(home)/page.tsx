@@ -5,10 +5,10 @@ import { cookies, headers } from "next/headers";
 import { baseBackendURL } from "@/apis";
 import { ApiTeamDetail } from "@/apis/types/team";
 
-import TeamMainTop from "./_components/TeamMainTop";
-import TeamMainContents from "./_components/TeamMainContents";
+import TeamMainTop from "../_components/TeamMainTop";
+import TeamMainContents from "../_components/TeamMainContents";
 import { teamAPI } from "@/apis/url";
-import TeamJoinButton from "./_components/TeamJoinButton";
+import TeamJoinButton from "../_components/TeamJoinButton";
 
 async function getTeamData(teamId: string) {
   // 현재 위치 가져오기 (API 임시 연동)

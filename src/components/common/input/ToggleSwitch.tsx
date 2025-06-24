@@ -122,7 +122,7 @@ const Check = styled.input<{ size: Props["size"]; $color: boolean }>`
 
     svg.switch-icon.minus {
       display: block;
-      fill: var(--gray200);
+      fill: var(--gray400);
     }
     svg.switch-icon.check {
       display: none;

@@ -1,8 +1,8 @@
+"use client";
 import React from "react";
 import axios from "axios";
 import { useParams, useRouter } from "next/navigation";
 import { usePopup } from "@/components/common/global/PopupProvider";
-// import { useAuth } from "@/session/useAuth";
 
 import { getAccessToken } from "@/session/authToken";
 import { baseBackendURL } from "@/apis";

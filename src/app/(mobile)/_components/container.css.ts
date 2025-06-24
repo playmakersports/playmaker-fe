@@ -1,6 +1,21 @@
 import { fonts } from "@/styles/fonts.css";
 import { style } from "@vanilla-extract/css";
 
+export const layoutContainer = style({
+  position: "relative",
+  margin: "0 auto",
+  width: "auto",
+  minHeight: "100vh",
+  maxWidth: "var(--mobile-max-width)",
+  boxShadow: "rgba(0, 0, 0, 0.125) 0px 8px 36px",
+  "@media": {
+    "(max-width: 540px)": {
+      boxShadow: "none",
+      maxWidth: "100%",
+    },
+  },
+});
+
 export const homeContentsContainer = style({
   position: "relative",
   padding: "0 var(--global-lr-padding)",

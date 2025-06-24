@@ -22,3 +22,6 @@ export const atomHeaderActions = atom<Array<Omit<ActionOptionsType, "disabled">>
 );
 export const atomHeaderTransparent = atom<HeaderTransparentType>(false);
 export const atomHeaderOptions = atom<HeaderOptionsType>();
+
+// 헤더 표시 여부
+export const atomHeaderDisplay = atom<boolean>(true);

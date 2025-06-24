@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import styled from "styled-components";
 import { useParams, usePathname, useRouter } from "next/navigation";
+import { useAtomValue } from "jotai";
 
 import Header from "@/components/layouts/Header/Header";
 import AppCode from "@/components/layouts/AppCode";
@@ -9,10 +9,13 @@ import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-
 import Loading from "@/components/common/Loading";
 import NavigationLayout from "./_components/NavigationLayout";
 import OnboardingRoutes from "./_components/OnboardingRoutes";
+import { atomHeaderDisplay } from "@/atom/common";
+import { layoutContainer } from "./_components/container.css";
 
 function MobileLayout({ children }: { children: React.ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
   const [routeLoading, setRouteLoading] = useState(false);
+  const isDisplayHeader = useAtomValue(atomHeaderDisplay);
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
@@ -54,12 +57,14 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
       <div id="root" style={{ position: "relative", zIndex: 0, width: "100%", height: "100%" }}>
         <OnboardingRoutes>
           {pathname === "/user" ? (
-            <Container id="mobile_Wrapper">{children}</Container>
+            <section className={layoutContainer} id="mobile_Wrapper">
+              {children}
+            </section>
           ) : (
-            <Container id="mobile_Wrapper">
-              <Header scrollY={scrollY} />
+            <section className={layoutContainer} id="mobile_Wrapper">
+              {isDisplayHeader && <Header scrollY={scrollY} />}
               <NavigationLayout>{children}</NavigationLayout>
-            </Container>
+            </section>
           )}
         </OnboardingRoutes>
         <AppCode />
@@ -67,19 +72,5 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
     </>
   );
 }
-
-const Container = styled.div`
-  position: relative;
-  margin: 0 auto;
-  width: auto;
-  min-height: 100vh;
-  max-width: var(--mobile-max-width);
-  box-shadow: rgba(0, 0, 0, 0.125) 0px 8px 36px;
-
-  @media (max-width: 540px) {
-    box-shadow: none;
-    max-width: 100%;
-  }
-`;
 
 export default MobileLayout;

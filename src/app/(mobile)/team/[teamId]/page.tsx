@@ -17,7 +17,7 @@ async function getTeamData(teamId: string) {
   const protocol = headersList.get("x-forwarded-proto") || "http";
 
   const cookieStore = await cookies();
-  const accessToken = cookieStore.get("access-token")?.value;
+  const accessToken = cookieStore.get("access_token")?.value;
 
   const res = await fetch(`${baseBackendURL}${teamAPI.TEAMS}/${teamId}`, {
     headers: {

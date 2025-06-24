@@ -1,75 +1,67 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useAuth } from "@/session/useAuth";
-import { useSetUser } from "@/session/useSetUser";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { setTokens } from "@/session/authToken";
 import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
-
 import { baseBackendURL } from "@/apis";
-import Loading from "@/components/common/Loading";
 import { authAPI } from "@/apis/url";
+import Loading from "@/components/common/Loading";
 
-function KakaoLogin() {
+export default function GoogleLoginPage() {
+  const params = useSearchParams();
   const router = useRouter();
-  const { login, logout } = useSetUser();
-  const popup = usePopup();
   const toast = useToast();
-  const { setToken } = useAuth();
-  const searchParams = useSearchParams();
-  const code = searchParams.get("code") as string;
-  const kakaoUrl = `${baseBackendURL}${authAPI.KAKAO}?code=${encodeURIComponent(code)}`;
+  const popup = usePopup();
 
-  // 요청 성공시에, param 업데이트로 다시 호출되는 현상 제어
-  const [hasRun, setHasRun] = useState(false);
+  const handleError = (error: any) => {
+    popup?.alert(`서버와의 통신 중 문제가 발생했어요.\n${error.message}`, {
+      title: "로그인 실패",
+      showIcon: true,
+      color: "red",
+    });
+    router.replace("/user");
+  };
 
   useEffect(() => {
-    const hasLoggedIn = sessionStorage.getItem("kakao_logged_in");
-    const handleLogin = async () => {
+    const code = params.get("code") as string | null;
+    if (!code) {
+      popup?.alert(`로그인이 불가능한 접근입니다.\n다시 확인 해주세요.`, {
+        title: "잘못된 접근",
+        showIcon: true,
+        color: "red",
+      });
+      router.replace("/user");
+      return;
+    }
+    const kakaoUrl = `${baseBackendURL}${authAPI.KAKAO}?code=${encodeURIComponent(code)}`;
+
+    (async () => {
       try {
-        const response = await fetch(kakaoUrl, {
+        const res = await fetch(kakaoUrl, {
           method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
         });
+        if (!res.ok) {
+          const err = await res.json();
+          handleError(err);
+          throw new Error(err.message ?? "로그인 실패");
+        }
+        const data = await res.json();
 
-        const data = await response.json();
-        await setToken(data.access_token);
-        document.cookie = `refresh_token=${data.refresh_token}; path=/; max-age=604800; secure; sameSite=Lax`;
-        sessionStorage.setItem("kakao_logged_in", "true");
-
+        setTokens(data);
         if (data.newUserYn === "Y") {
-          // 신규 회원일 경우, 회원가입 화면으로 연결
-          router.replace("/register?from=kakao");
+          router.replace("/register");
         } else {
-          // TODO: 반영 예정
-          // login({
-          //   username: data.username,
-          //   nickname: data.nickname,
-          //   role: data.role,
-          // });
           toast.trigger("환영합니다. 로그인되었습니다.", { type: "success" });
           router.replace("/home");
         }
-        setHasRun(true);
-      } catch (error) {
-        await popup?.alert(`서버 통신에 실패했어요.\n${error}`, {
-          title: "로그인 실패",
-          showIcon: true,
-          color: "red",
-        });
-        router.replace("/");
-        logout();
+      } catch (e: any) {
+        console.error(e);
+        handleError(e);
       }
-    };
-
-    if (code && !hasRun && !hasLoggedIn) {
-      handleLogin();
-    }
-  }, [code]);
+    })();
+  }, [params, router]);
 
   return <Loading page />;
 }
-
-export default KakaoLogin;

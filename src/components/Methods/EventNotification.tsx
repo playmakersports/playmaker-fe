@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAuth } from "@/session/useAuth";
 
 import { baseBackendURL } from "@/apis";
+import { getAccessToken } from "@/session/authToken";
 import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
 
 function EventNotification() {
-  const { accessToken } = useAuth();
+  const accessToken = getAccessToken();
   const HEARTBEAT_TIMEOUT = 360000;
 
   useEffect(() => {

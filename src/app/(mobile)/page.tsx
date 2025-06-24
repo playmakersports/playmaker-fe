@@ -1,10 +1,9 @@
 "use client";
-import { useAuth } from "@/session/useAuth";
+import { getAccessToken } from "@/session/authToken";
 import { redirect } from "next/navigation";
 
 function RootPage() {
-  const { isLogin } = useAuth();
-  if (isLogin) {
+  if (!!getAccessToken()) {
     redirect("/home");
   } else {
     redirect("/user");

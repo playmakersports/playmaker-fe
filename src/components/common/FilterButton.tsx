@@ -1,6 +1,6 @@
 import React from "react";
 import FilterLineIcon from "@/assets/icon/common/FilterLine.svg";
-import { filterButtonContainer } from "@/app/(mobile)/_components/container.css";
+import { filterButtonContainer } from "@/app/_components/container.css";
 
 type Props = {
   onClick: () => void;

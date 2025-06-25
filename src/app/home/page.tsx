@@ -1,5 +1,5 @@
 import Banner from "@/components/Main/Banner";
-import MyWeekly from "@/app/(mobile)/_components/MyWeekly";
+import MyWeekly from "@/app/_components/MyWeekly";
 import SportsSection from "@/components/Main/SportsSection";
 import MyTeam from "../_components/MyTeam";
 import { homeContentsContainer } from "../_components/container.css";

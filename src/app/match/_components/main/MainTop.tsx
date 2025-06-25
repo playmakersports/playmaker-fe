@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 
 import { fonts } from "@/styles/fonts.css";
-import { teamFindSearchContainer, teamFindSearchInput } from "@/app/(mobile)/team/find/_components/teamFind.css";
+import { teamFindSearchContainer, teamFindSearchInput } from "@/app/team/find/_components/teamFind.css";
 import { flexColumnGap16, flexColumnGap4, flexRowGap4 } from "@/styles/container.css";
 import { matchMainTeamListItem, matchMainTeamListLogo } from "./matchMain.css";
 import SearchIcon from "@/assets/icon/common/Search.svg";

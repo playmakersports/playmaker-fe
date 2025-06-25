@@ -10,7 +10,7 @@ import { useHeader } from "@/hook/useHeader";
 import { ApiCodeArea } from "@/apis/types/code";
 import { fonts } from "@/styles/fonts.css";
 import { baseContainer } from "@/styles/container.css";
-import { stageFormWrapper, stageWrapper } from "@/app/(mobile)/register/_components/stage.css";
+import { stageFormWrapper, stageWrapper } from "@/app/register/_components/stage.css";
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
 import { commonAPI } from "@/apis/url";

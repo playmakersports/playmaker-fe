@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { fonts } from "@/styles/fonts.css";
 import Button from "@/components/common/Button";
-import { settingsHeaderProfile, settingsHeaderProfileImage } from "@/app/(mobile)/my/_components/userSetting.css";
+import { settingsHeaderProfile, settingsHeaderProfileImage } from "@/app/my/_components/userSetting.css";
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 
 type Props = { imageUrl: string; username: string; subName?: string; isLoading?: boolean; isMyProfile?: boolean };

@@ -5,7 +5,7 @@ import { useHeader } from "@/hook/useHeader";
 import { formatDate } from "date-fns";
 
 import { ApiTeamDetail } from "@/apis/types/team";
-import TeamNotice from "@/app/(mobile)/team/[teamId]/_components/TeamNotice";
+import TeamNotice from "@/app/team/[teamId]/_components/TeamNotice";
 
 import { baseContainer } from "@/styles/container.css";
 import { teamMainTopBanner, teamMainTopHeader, teamMainTopInfoList, teamMainTopInfoListItem } from "./team.main.css";

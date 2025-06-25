@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import GlobalProviders from "./components/GlobalProviders";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import StyledComponentsRegistry from "../../lib/styledRegistry";
+import MobileLayout from "./mobileLayout";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -50,7 +51,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={pretendard.className}>
         <SpeedInsights />
         <StyledComponentsRegistry>
-          <GlobalProviders>{children}</GlobalProviders>
+          <GlobalProviders>
+            <MobileLayout>{children}</MobileLayout>
+          </GlobalProviders>
         </StyledComponentsRegistry>
       </body>
     </html>

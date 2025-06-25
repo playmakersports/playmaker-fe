@@ -14,7 +14,7 @@ import {
   flexColumnGap20,
 } from "@/styles/container.css";
 import TeamMainRecentMatch from "./TeamMainRecentMatch";
-import WeeklyCalender from "@/app/(mobile)/team/[teamId]/_components/TeamWeeklyCalender";
+import WeeklyCalender from "@/app/team/[teamId]/_components/TeamWeeklyCalender";
 import TeamMainBoardList from "./TeamMainBoardList";
 import GroupTitle from "@/components/common/GroupTitle";
 import RecentVote from "./RecentVote";

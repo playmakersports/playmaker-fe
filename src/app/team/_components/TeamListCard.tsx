@@ -4,7 +4,7 @@ import Link from "next/link";
 import styled from "styled-components";
 
 import { fonts } from "@/styles/fonts.css";
-import Heart from "../../../../components/common/TeamHeart";
+import Heart from "../../../components/common/TeamHeart";
 import {
   flexColumnGap10,
   flexAlignCenter,

@@ -13,8 +13,8 @@ import { atomHeaderTransparent, atomPageTitle } from "@/atom/common";
 import { RoutedHeaderContainer } from "@/components/layouts/Header/RoutedHeader";
 import Badge from "@/components/common/Badge";
 import DropdownAction from "@/components/common/input/DropdownAction";
-import HeaderMainDropdown from "@/app/(mobile)/team/_components/HeaderMainDropdown";
-import TeamHeart from "@/app/(mobile)/team/[teamId]/_components/TeamHeart";
+import HeaderMainDropdown from "@/app/team/_components/HeaderMainDropdown";
+import TeamHeart from "@/app/team/[teamId]/_components/TeamHeart";
 
 import SearchIcon from "@/assets/icon/common/Search.svg";
 

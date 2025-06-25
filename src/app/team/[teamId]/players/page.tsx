@@ -43,6 +43,12 @@ function PlayerList() {
           router.push(`/team/${teamId}/admin/block`);
         },
       },
+      {
+        name: "기수 설정",
+        action: () => {
+          router.push(`/team/${teamId}/admin/player-batch`);
+        },
+      },
     ],
     // options: { titleAlign: "center" },
   });

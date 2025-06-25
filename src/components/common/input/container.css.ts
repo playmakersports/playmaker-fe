@@ -55,7 +55,7 @@ export const numberFlowInternalInput = style({
   fontFamily: "inherit",
   fontWeight: "inherit",
   textAlign: "center",
-  color: "transparent",
+  color: "transparent !important",
   caretColor: "var(--gray700)",
 
   "::-webkit-inner-spin-button": {

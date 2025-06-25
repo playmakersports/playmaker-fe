@@ -26,7 +26,7 @@ div.skeleton-loading-ui {
   --safe-bottom: calc(var(--env-sab) / 1.3);
   --header-height: 48px;
   --navigation-height: calc(64px + var(--safe-bottom));
-  --safe-bottom-navigation: calc(var(--env-sab) + var(--navigation-height));
+  --safe-bottom-navigation: calc(var(--env-sab) + 64px);
 
   --animate-pop: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   --animation-cubic: cubic-bezier(0.05, 0, 0, 1);

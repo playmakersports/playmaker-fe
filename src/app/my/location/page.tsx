@@ -64,10 +64,10 @@ function MyLocation() {
   return (
     <div className={stageWrapper.container}>
       <section
-        className={clsx(baseContainer, stageFormWrapper)}
+        className={stageFormWrapper}
         style={{
           overflow: "hidden",
-          paddingTop: "40px",
+          padding: "40px var(--global-lr-padding) var(--safe-bottom-navigation)",
         }}
       >
         <div style={{ marginBottom: "-4px" }}>

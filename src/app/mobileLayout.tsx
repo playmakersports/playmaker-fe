@@ -51,6 +51,15 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  if (pathname.startsWith("/pc")) {
+    return (
+      <>
+        {routeLoading && <Loading page />}
+        <OnboardingRoutes>{children}</OnboardingRoutes>
+      </>
+    );
+  }
+
   return (
     <>
       {routeLoading && <Loading page />}

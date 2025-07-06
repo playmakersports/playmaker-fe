@@ -8,18 +8,18 @@ import { useHeader } from "@/hook/useHeader";
 import useStickyMoment from "@/hook/useStickyMoment";
 
 import { fonts } from "@/styles/fonts.css";
-import { baseContainer, baseDividedLine } from "@/styles/container.css";
+import { baseDividedLine } from "@/styles/container.css";
 import { boardListFixedSection, boardListFixedSectionTitle } from "./_components/teamBoard.css";
 import MainTab from "@/components/Main/MainTab";
 import { GetTeamBoardListResponse } from "@/types/team";
 import ListArticle from "./_components/ListArticle";
-
 import Loading from "@/components/common/Loading";
 import Badge from "@/components/common/Badge";
-import SearchIcon from "@/assets/icon/common/Search.svg";
 import SearchPopup from "./_components/SearchPopup";
 import { boardAPI } from "@/apis/url";
 import PlusFloat from "@/components/common/PlusFloat";
+
+import SearchIcon from "@/assets/icon/common/Search.svg";
 
 function Board() {
   const [showSearch, setShowSearch] = useState(false);
@@ -80,7 +80,7 @@ function Board() {
         />
       </TabWrapper>
       {data && data.length > 0 ? (
-        <div>
+        <div style={{ paddingBottom: "var(--safe-bottom-navigation)" }}>
           <div className={boardListFixedSection}>
             {MOCK.slice(0, 3).map((article) => (
               <Link
@@ -98,9 +98,13 @@ function Board() {
           </div>
           <div className={baseDividedLine} />
           <section style={{ backgroundColor: "var(--gray50)" }}>
-            {isLoading ? <Loading /> : data?.map((article) => <ListArticle key={article.id} {...article} />)}
+            {data?.map((article) => (
+              <ListArticle key={article.id} {...article} />
+            ))}
           </section>
         </div>
+      ) : isLoading ? (
+        <Loading page />
       ) : (
         <div
           className={fonts.caption1.regular}
@@ -124,7 +128,6 @@ function Board() {
 }
 
 const MOCK = [1, 10, 12, 14, 16, 8, 9, 28, 4, 2];
-const PAGE_MOCK = [1, 2, 3, 4, 5];
 
 const TabWrapper = styled.div`
   position: sticky;

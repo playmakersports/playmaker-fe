@@ -17,7 +17,7 @@ type Props = {
     imageUrl: string;
   };
   boardType: string | number;
-  createAt: string | Date;
+  createAt: string;
 };
 function ArticleTop(props: Props) {
   const BOARD_TYPE_TITLE: Record<string, string> = {
@@ -31,6 +31,8 @@ function ArticleTop(props: Props) {
     options: { titleAlign: "center" },
   });
 
+  const [createDate, createTime] = createAt.split("-");
+
   return (
     <div className={articleDetailHeader.container}>
       <div className={articleDetailHeader.info}>
@@ -40,8 +42,8 @@ function ArticleTop(props: Props) {
         <div>
           <div className={fonts.caption1.medium}>{createBy.memberName}</div>
           <div className={clsx(semantic.description, flexRowGap4)}>
-            {createAt && <span className="create-at">{formatDate(createAt, "yyyy-mm-dd")}</span>}
-            {createAt && <span className="create-at-time">{formatDate(createAt, "HH:mm")}</span>}
+            {createAt && <span className="create-at">{createDate.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3")}</span>}
+            {createAt && <span className="create-at-time">{createTime}</span>}
           </div>
         </div>
       </div>

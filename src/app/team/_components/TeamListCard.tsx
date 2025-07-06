@@ -6,17 +6,16 @@ import styled from "styled-components";
 import { fonts } from "@/styles/fonts.css";
 import Heart from "../../../components/common/TeamHeart";
 import {
+  baseCardContainer,
   flexColumnGap10,
   flexAlignCenter,
   flexRowGap4,
-  baseCardContainerNoTrans,
   flexRowGap8,
   flexRowGap10,
 } from "@/styles/container.css";
 
 import LocationIcon from "@/assets/icon/common/outlined/LocationPin.svg";
 import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
-import NumberFlow from "@number-flow/react";
 // import GraduationIcon from "@/assets/icon/common/filled/Graduation.svg";
 
 type Props = {
@@ -36,7 +35,7 @@ function TeamListCard(props: Props) {
   const [heart, setHeart] = useState(false);
 
   return (
-    <CardHeader className={baseCardContainerNoTrans} style={{ padding: "12px" }}>
+    <CardHeader className={baseCardContainer} style={{ padding: "12px" }}>
       <Link href={`/team/${teamId}`} className={flexRowGap8} style={{ flex: 1 }}>
         <img src={teamLogo} alt={teamName} />
         <div className={flexColumnGap10} style={{ flex: 1 }}>

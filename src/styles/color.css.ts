@@ -11,6 +11,9 @@ export const colors = {
   gray600: style({
     color: "var(--gray600)",
   }),
+  gray800: style({
+    color: "var(--gray800)",
+  }),
   gray900: style({
     color: "var(--gray900)",
   }),

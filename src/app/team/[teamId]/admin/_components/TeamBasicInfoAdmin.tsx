@@ -16,12 +16,13 @@ import BirthRangeInput from "@/components/common/BirthRangeInput";
 import { useTeamBasicInfoPut } from "@/apis/hook/team";
 import { ApiTeamDetail } from "@/apis/types/team";
 import { baseDividedLineChild, flexColumnGap16, flexColumnGap24 } from "@/styles/container.css";
+import Loading from "@/components/common/Loading";
 
 function TeamBasicInfoAdmin(props: ApiTeamDetail) {
   const router = useRouter();
   const toast = useToast();
   const teamId = useParams()?.teamId as string;
-  const { mutate } = useTeamBasicInfoPut(teamId);
+  const { mutate, isPending } = useTeamBasicInfoPut(teamId);
   const [ageRange, setAgeRange] = useState<number[]>([]);
 
   const {
@@ -80,6 +81,7 @@ function TeamBasicInfoAdmin(props: ApiTeamDetail) {
 
   return (
     <div className={flexColumnGap24}>
+      {isPending && <Loading page />}
       <BasicInput type="text" title="팀 이름" {...register("teamName")} required />
       <TextArea title="팀 소개" {...register("teamIntro")} required />
       <ToggleSwitch

@@ -22,9 +22,9 @@ function TeamFindSports({ sports }: { sports: string }) {
   const [keyword, setKeyword] = useState("");
   const [query, setQuery] = useState("");
   const [location, setLocation] = useState<string[]>([]);
-  const { data } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter/item/${sports.toUpperCase()}`);
+  const { data, isLoading } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter/item/${sports.toUpperCase()}`);
   const { ModalComponents, showModal, modalState } = useModal({ key: "team-find-location" });
-  console.log(data);
+
   return (
     <>
       <div className={clsx(baseContainer, flexColumnGap20)} style={{ paddingTop: "20px" }}>
@@ -36,22 +36,30 @@ function TeamFindSports({ sports }: { sports: string }) {
           </label>
         </div>
 
-        <div className={clsx(flexColumnGap12)}>
-          {data?.map((item) => (
-            <TeamListCard
-              key={item.id}
-              teamId={item.id}
-              teamLogo={item.logoUrl ?? ""}
-              teamName={item.teamName}
-              location={item.activeArea}
-              teamIntro={item.teamIntro}
-              university={""}
-              gender={""}
-              likeCnt={8400}
-              memberCnt={20}
-            />
-          ))}
-        </div>
+        {isLoading ? (
+          <div className={clsx(flexColumnGap12)}>
+            <div className="skeleton-loading-ui" style={{ width: "100%", height: "98px", borderRadius: "10px" }}></div>
+            <div className="skeleton-loading-ui" style={{ width: "100%", height: "98px", borderRadius: "10px" }}></div>
+            <div className="skeleton-loading-ui" style={{ width: "100%", height: "98px", borderRadius: "10px" }}></div>
+          </div>
+        ) : (
+          <div className={clsx(flexColumnGap12)}>
+            {data?.map((item) => (
+              <TeamListCard
+                key={item.id}
+                teamId={item.id}
+                teamLogo={item.logoUrl ?? ""}
+                teamName={item.teamName}
+                location={item.activeArea}
+                teamIntro={item.teamIntro}
+                university={""}
+                gender={""}
+                likeCnt={8400}
+                memberCnt={20}
+              />
+            ))}
+          </div>
+        )}
       </div>
       <LocationFilterModal ModalComponents={ModalComponents} />
     </>

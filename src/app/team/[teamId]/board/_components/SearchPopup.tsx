@@ -23,9 +23,9 @@ function SearchPopup({ setShow }: { setShow: React.Dispatch<React.SetStateAction
   return (
     <div
       style={{
+        top: 0,
         position: "fixed",
-        marginTop: "calc(var(--header-height) * -1)",
-        padding: "0 var(--global-lr-padding)",
+        padding: "var(--env-sat) var(--global-lr-padding) 0",
         width: "100%",
         maxWidth: "var(--mobile-max-width)",
         height: "100%",

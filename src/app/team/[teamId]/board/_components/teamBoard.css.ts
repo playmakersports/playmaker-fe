@@ -76,7 +76,7 @@ export const commentItemWrapper = style({
 export const commentInputBottomWrapper = style({
   position: "sticky",
   margin: "0 -16px",
-  padding: "12px 16px calc(var(--safe-bottom) + 16px)",
+  padding: "12px 16px max(16px, var(--env-sab))",
   width: "calc(100% + 32px)",
   bottom: 0,
   left: 0,

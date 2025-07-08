@@ -15,7 +15,12 @@
       font-variant-numeric: tabular-nums;
     }
   }
-
+  p {
+    font-size: 1.4rem;
+    line-height: 2rem;
+    min-height: 2rem;
+    font-weight: 400;
+  }
   h1 {
     font-size: 2rem;
     line-height: 3rem;

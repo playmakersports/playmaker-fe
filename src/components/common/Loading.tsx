@@ -1,5 +1,6 @@
 "use client";
 import LoadingAnimatedSvg from "@/assets/icon/common/Loading.svg";
+import { fonts } from "@/styles/fonts.css";
 
 type Props =
   | {
@@ -25,27 +26,40 @@ function Loading(props: Props) {
           margin: "0 auto",
           width: "100%",
           height: "100%",
-          background: "transparent",
+          background: "rgba(256, 256, 256, 0.1)",
           zIndex: 100,
         }}
       >
-        <LoadingAnimatedSvg width={60} height={70} style={{ margin: 0 }} />
-        <p
+        <div
           style={{
-            fontSize: "1.5rem",
-            fontWeight: 500,
-            color: "var(--main)",
-            marginTop: "10px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "180px",
+            minHeight: "180px",
+            gap: "0",
+            borderRadius: "20px",
+            backdropFilter: "blur(5px)",
+            border: "1px solid rgba(256, 256, 256, 0.9)",
           }}
         >
-          {props.text}
-        </p>
+          <LoadingAnimatedSvg width={110} height={90} style={{ margin: 0 }} />
+          <p
+            className={fonts.body3.semibold}
+            style={{
+              color: "var(--primary600)",
+            }}
+          >
+            {props.text}
+          </p>
+        </div>
       </div>
     );
   }
   return (
     <div style={{ display: "block", margin: "0 auto", height: "120px" }}>
-      <LoadingAnimatedSvg width={60} height={120} />
+      <LoadingAnimatedSvg width={80} height={120} />
     </div>
   );
 }

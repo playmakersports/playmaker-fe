@@ -1,8 +1,7 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
-import { useRouter, useParams, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import { useSetAtom } from "jotai";
@@ -16,8 +15,9 @@ import { atomHeaderActions } from "@/atom/common";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
 import { fonts } from "@/styles/fonts.css";
 import { baseContainerPaddingTop, flexAlignCenter, flexColumnGap16, flexRowGap4 } from "@/styles/container.css";
+import { convertWebpImage } from "@/util/webp";
 
-function EditorView() {
+function EditorView({ teamId }: { teamId: string }) {
   useHeader({
     title: "글쓰기",
   });
@@ -28,35 +28,61 @@ function EditorView() {
   const [boardType, setBoardType] = useState("");
 
   const router = useRouter();
-  const params = useParams();
-  const teamId = params["teamId"];
-  const { mutate, data, isError, error, isPending } = usePost(boardAPI.BOARDS);
+  const { mutateAsync, isPending } = usePost(boardAPI.BOARDS, "form-data");
   const setActions = useSetAtom(atomHeaderActions);
-  const onSubmit = () => {
-    mutate(
-      {
-        data: {
-          boardInfo: {
-            teamId: Number(teamId),
-            title: title,
-            boardType: Number(boardType),
-            content: editor?.getHTML(),
-          },
-        },
-      },
-      {
-        onSuccess: (data: { teamId: string | number; id: string | number; boardId?: string | number } | any) => {
-          router.push(`/team/${data.teamId}/board/${data.boardId ?? data.id}`);
-        },
-        onError: (err) => {
-          popup?.alert(`문제가 발생했습니다. 잠시 후 다시 시도해주세요\n${err.message}`, {
-            title: "게시글 등록 실패",
-            showIcon: true,
-            color: "red",
-          });
-        },
+
+  const onSubmit = async () => {
+    const formData = new FormData();
+    const boardInfo = {
+      teamId: Number(teamId),
+      title: title,
+      category: null,
+      content: editor?.getHTML(),
+      startDate: null,
+      endDate: null,
+    };
+
+    formData.append("boardInfo", new Blob([JSON.stringify(boardInfo)], { type: "application/json" }));
+    formData.append("boardType", boardType);
+    if (images.getter().list.length > 0) {
+      for (let [index, imageBase64] of images.getter().list.entries()) {
+        // base64에서 MIME 타입 추출 (예: "image/png")
+        const mimeMatch = imageBase64.match(/^data:(.*?);base64,/);
+        const mime = mimeMatch ? mimeMatch[1] : "image/png"; // 기본값: image/png
+
+        // base64 → Blob
+        const byteString = atob(imageBase64.split(",")[1]);
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+        const blob = new Blob([ab], { type: mime });
+
+        // Blob → File
+        const file = new File([blob], `image-${index}.${mime.split("/")[1]}`, { type: mime });
+
+        // webp 변환
+        const webpBlob = await convertWebpImage(file, { maxWidth: 600, quality: 0.8 });
+        const webpFile = new File([webpBlob], `board-image-${index}.webp`, { type: "image/webp" });
+
+        formData.append("image", webpFile);
       }
-    );
+    }
+
+    try {
+      const resBoardId = await mutateAsync({
+        data: formData,
+      });
+      router.push(`/team/${teamId}/board/${resBoardId}`);
+    } catch (e: any) {
+      console.log(e.response.data.message);
+      popup?.alert(`${e.response.data.message}\n${e.message}`, {
+        title: "게시글 등록 실패",
+        showIcon: true,
+        color: "red",
+      });
+    }
   };
 
   const popup = usePopup();
@@ -77,7 +103,7 @@ function EditorView() {
         onSubmit();
       },
     });
-  }, [editor]);
+  }, [editor, title, images]);
 
   return (
     <section

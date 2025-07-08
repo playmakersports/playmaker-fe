@@ -29,6 +29,11 @@ function EditorImages({ images }: Props) {
     const files = imgInputRef.current?.files;
     const imgList: string[] = [];
 
+    if (getter().list.length > 2) {
+      toast.trigger("최대 3개까지 첨부 가능합니다", { type: "error" });
+      return;
+    }
+
     if (files) {
       const promises = Array.from(files).map((file) => {
         return new Promise<string>((resolve, reject) => {
@@ -178,7 +183,7 @@ const ImageAddLabel = styled.label`
   }
 `;
 const ImageItem = styled.div`
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 80px;
   height: 80px;

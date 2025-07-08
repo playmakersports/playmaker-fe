@@ -6,7 +6,7 @@ type Props = {
   params: Promise<{ [key: string]: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
-export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
   const type = (await searchParams).type;
   const EDITOR_TYPE = {
     new: "글쓰기",
@@ -19,8 +19,9 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 async function TeamEditor({ params }: Props) {
   // (await params).teamId;
   // TODO : 팀 별 카테고리 받아와야 함
+  const { teamId } = await params;
 
-  return <EditorView />;
+  return <EditorView teamId={teamId} />;
 }
 
 export default TeamEditor;

@@ -12,30 +12,25 @@ function Spinner({ size = 20, color = "var(--primary500)" }: { size?: number; co
           <stop offset="1" stopColor={color} stopOpacity="0"></stop>
         </radialGradient>
         <circle
-          transform-origin="center"
           fill="none"
           stroke="url(#a11)"
           strokeWidth="24"
           strokeLinecap="round"
           strokeDasharray="200 1000"
-          strokeDashoffset="0"
           cx="100"
           cy="100"
           r="70"
         >
           <animateTransform
-            type="rotate"
             attributeName="transform"
-            calcMode="spline"
-            dur="2"
-            values="360;0"
-            keyTimes="0;1"
-            keySplines="0 0 1 1"
+            type="rotate"
+            from="0 100 100"
+            to="-360 100 100"
+            dur="2s"
             repeatCount="indefinite"
-          ></animateTransform>
+          />
         </circle>
         <circle
-          transform-origin="center"
           fill="none"
           opacity=".2"
           stroke={color}

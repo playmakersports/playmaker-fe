@@ -9,7 +9,7 @@ import { usePost } from "@/apis/hook/query";
 import { useEditorHandler } from "@/hook/useEditorHandler";
 
 import { boardAPI } from "@/apis/url";
-import Spinner from "@/components/common/Spinner";
+import Loading from "@/components/common/Loading";
 import EditorUI from "@/components/Editor";
 import { atomHeaderActions } from "@/atom/common";
 import { DropDownBottomSheet } from "@/components/common/DropDownBottomSheet";
@@ -28,7 +28,7 @@ function EditorView({ teamId }: { teamId: string }) {
   const [boardType, setBoardType] = useState("");
 
   const router = useRouter();
-  const { mutateAsync, isPending } = usePost(boardAPI.BOARDS, "form-data");
+  const { mutateAsync, isPending } = usePost<{ id: number }>(boardAPI.BOARDS, "form-data");
   const setActions = useSetAtom(atomHeaderActions);
 
   const onSubmit = async () => {
@@ -71,10 +71,14 @@ function EditorView({ teamId }: { teamId: string }) {
     }
 
     try {
-      const resBoardId = await mutateAsync({
+      const response = await mutateAsync({
         data: formData,
       });
-      router.push(`/team/${teamId}/board/${resBoardId}`);
+      if (!response.id) {
+        router.push(`/team/${teamId}/board`);
+        return;
+      }
+      router.push(`/team/${teamId}/board/${response.id}`);
     } catch (e: any) {
       popup?.alert(`${e.response.data.message}\n${e.message}`, {
         title: "게시글 등록 실패",
@@ -93,7 +97,6 @@ function EditorView({ teamId }: { teamId: string }) {
     setActions({
       name: (
         <span className={clsx(flexRowGap4, flexAlignCenter)} style={{ justifyContent: "center" }}>
-          {isPending && <Spinner size={24} />}
           등록
         </span>
       ),
@@ -113,6 +116,7 @@ function EditorView({ teamId }: { teamId: string }) {
         minHeight: "calc(100vh - var(--safe-area-top))",
       }}
     >
+      {isPending && <Loading page text="글 등록 중" />}
       <div className={flexColumnGap16} style={{ flex: 1 }}>
         <div style={{ margin: "0 -4px" }}>
           <DropDownBottomSheet

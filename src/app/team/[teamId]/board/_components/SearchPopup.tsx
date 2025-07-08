@@ -28,9 +28,10 @@ function SearchPopup({ setShow }: { setShow: React.Dispatch<React.SetStateAction
         padding: "var(--env-sat) var(--global-lr-padding) 0",
         width: "100%",
         maxWidth: "var(--mobile-max-width)",
-        height: "100%",
+        height: "calc(100vh - 1px)",
         zIndex: 901,
         backgroundColor: "var(--background-light)",
+        overflow: "hidden",
       }}
     >
       <div className={clsx(flexRowGap10, flexAlignCenter)} style={{ height: "var(--header-height)" }}>

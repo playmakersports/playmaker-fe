@@ -76,7 +76,6 @@ function EditorView({ teamId }: { teamId: string }) {
       });
       router.push(`/team/${teamId}/board/${resBoardId}`);
     } catch (e: any) {
-      console.log(e.response.data.message);
       popup?.alert(`${e.response.data.message}\n${e.message}`, {
         title: "게시글 등록 실패",
         showIcon: true,

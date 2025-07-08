@@ -112,7 +112,7 @@ function Board() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            height: "calc(100vh - var(--header-height) - 40px - var(--env-sab))",
+            height: "calc(100vh - var(--header-height) - 40px - var(--navigation-height))",
             backgroundColor: "var(--gray50)",
             color: "var(--gray400)",
             textAlign: "center",

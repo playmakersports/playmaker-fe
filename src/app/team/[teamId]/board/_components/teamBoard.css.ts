@@ -171,12 +171,32 @@ export const boardImageViewerContainer = style({
   backgroundColor: "rgba(15, 23, 42, 0.6)",
   zIndex: 901,
 });
-export const boardImageViewerItemList = style({
-  position: "relative",
-  width: "100%",
-  height: "auto",
-  backgroundColor: "var(--gray100)",
-});
+export const boardImageViewerItemList = style([
+  fonts.body4.regular,
+  {
+    position: "relative",
+    width: "100%",
+    height: "auto",
+    minHeight: "55vh",
+    backgroundColor: "rgba(0,0,0,0.7)",
+    backdropFilter: "blur(4px)",
+    selectors: {
+      "&:before": {
+        position: "absolute",
+        padding: "8px 20px",
+        top: "-52px",
+        left: "50%",
+        content: "두 번 터치하면 확대됩니다",
+        color: "var(--white)",
+        width: "max-content",
+        textAlign: "center",
+        borderRadius: "999px",
+        backgroundColor: "black",
+        transform: "translateX(-50%)",
+      },
+    },
+  },
+]);
 export const boardImageViewerBullet = style({
   position: "absolute",
   bottom: "-16px",

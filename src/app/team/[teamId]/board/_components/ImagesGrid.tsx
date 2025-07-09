@@ -1,8 +1,9 @@
 import "swiper/css";
-import React, { useRef, useState } from "react";
+import "swiper/css/zoom";
+import React, { useState } from "react";
 import Image from "next/image";
-import SwiperCore from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Zoom } from "swiper/modules";
 import {
   boardImagesGridContainer,
   boardImagesGridItem,
@@ -42,14 +43,24 @@ function ImagesGrid({ images }: { images: string[] }) {
         <section className={boardImageViewerContainer} onClick={handleCloseViewer}>
           <div className={boardImageViewerItemList} onClick={(e) => e.stopPropagation()}>
             <Swiper
+              zoom={true}
+              autoHeight={true}
               slidesPerView={1}
               initialSlide={currentSlide}
               onSlideChange={(swipe) => setCurrentSlide(swipe.activeIndex)}
+              modules={[Zoom]}
             >
               {images.map((image, index) => (
                 <SwiperSlide key={index} style={{ textAlign: "center" }}>
-                  <div style={{ height: "max-content" }}>
-                    <img src={image} alt="이미지" />
+                  <div
+                    className="swiper-zoom-container"
+                    style={{
+                      minHeight: "55vh",
+                      height: "max-content",
+                      marginBottom: "-2px",
+                    }}
+                  >
+                    <img src={image} alt="이미지" style={{ width: "100%", height: "100%" }} />
                   </div>
                 </SwiperSlide>
               ))}

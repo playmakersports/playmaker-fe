@@ -63,7 +63,7 @@ function EditorView({ teamId }: { teamId: string }) {
         const file = new File([blob], `image-${index}.${mime.split("/")[1]}`, { type: mime });
 
         // webp 변환
-        const webpBlob = await convertWebpImage(file, { maxWidth: 600, quality: 0.8 });
+        const webpBlob = await convertWebpImage(file, { maxWidth: 880, quality: 0.85 });
         const webpFile = new File([webpBlob], `board-image-${index}.webp`, { type: "image/webp" });
 
         formData.append("image", webpFile);

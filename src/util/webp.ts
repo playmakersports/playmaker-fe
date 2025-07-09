@@ -30,6 +30,9 @@ export const convertWebpImage = (file: File, options: WebPOptions = {}): Promise
         const ctx = canvas.getContext("2d");
         if (!ctx) return reject(new Error("Canvas context is null"));
 
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = "high";
+
         ctx.drawImage(img, 0, 0, width, height);
 
         canvas.toBlob(

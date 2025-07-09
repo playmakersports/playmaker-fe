@@ -23,6 +23,8 @@ type Props = {
 };
 function ArticleComment(props: Props) {
   const { teamId, articleId, viewCount = 0 } = props;
+  const hasSafeArea =
+    Number(getComputedStyle(document.documentElement).getPropertyValue("--env-sab").replace("px", "")) ?? 0;
 
   return (
     <>
@@ -72,7 +74,7 @@ function ArticleComment(props: Props) {
           <li className="item"></li>
           <li className="item"></li>
         </ul>
-        <div className={commentInputBottomWrapper}>
+        <div className={commentInputBottomWrapper} data-safe-area={hasSafeArea > 0}>
           <div className={commentInputContainer}>
             <input type="text" className={commentInputStyle} placeholder="댓글을 입력해 주세요" />
             <button type="button">

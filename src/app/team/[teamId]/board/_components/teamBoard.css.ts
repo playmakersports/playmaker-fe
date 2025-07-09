@@ -83,6 +83,10 @@ export const commentInputBottomWrapper = style({
   backgroundColor: "var(--background-light)",
   borderTop: "1px solid var(--gray200)",
 });
+globalStyle(`${commentInputBottomWrapper}[data-safe-area='true']:has(input[type='text']:focus)`, {
+  paddingBottom: "4px",
+});
+
 export const commentItemUserAvatar = style({
   width: "24px",
   height: "24px",
@@ -128,4 +132,56 @@ export const commentInputStyle = style([
 ]);
 globalStyle(`${commentInputContainer}:has(${commentInputStyle}:placeholder-shown)`, {
   color: "var(--gray400)",
+});
+
+export const boardImagesGridContainer = style({
+  display: "flex",
+  margin: "0 -16px",
+  flexWrap: "nowrap",
+  marginTop: "24px",
+  gap: "8px",
+  overflowX: "auto",
+});
+export const boardImagesGridItem = style({
+  flexShrink: 0,
+  display: "flex",
+  width: "80px",
+  height: "80px",
+  borderRadius: "10px",
+  border: "1px solid var(--gray100)",
+  overflow: "hidden",
+  selectors: {
+    "&:first-of-type": {
+      marginLeft: "16px",
+    },
+    "&:last-of-type": {
+      marginRight: "16px",
+    },
+  },
+});
+export const boardImageViewerContainer = style({
+  position: "fixed",
+  top: 0,
+  display: "flex",
+  alignItems: "center",
+  left: "50%",
+  width: "var(--mobile-max-width)",
+  transform: "translateX(-50%)",
+  height: "100vh",
+  backgroundColor: "rgba(15, 23, 42, 0.6)",
+  zIndex: 901,
+});
+export const boardImageViewerItemList = style({
+  position: "relative",
+  width: "100%",
+  height: "auto",
+  backgroundColor: "var(--gray100)",
+});
+export const boardImageViewerBullet = style({
+  position: "absolute",
+  bottom: "-16px",
+  display: "flex",
+  justifyContent: "center",
+  gap: "8px",
+  width: "100%",
 });

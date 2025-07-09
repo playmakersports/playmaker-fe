@@ -22,11 +22,13 @@ export type TeamBoardItemType = {
   boardType: string | number;
   content: string;
   viewCount: number;
+  imgUrl: string[];
   startDate: string;
   endDate: string;
   hasLiked: true;
   createAt: string;
   commentCount: number;
+  priority: string | null;
 };
 // TODO: 임시 처리된 부분 API 변경시 반영해야 함.
 export type GetTeamBoardListResponse = Array<TeamBoardItemType>;

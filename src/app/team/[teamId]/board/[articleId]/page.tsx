@@ -10,6 +10,7 @@ import ArticleReply from "../_components/ArticleComment";
 import { boardAPI } from "@/apis/url";
 import { TeamBoardItemType } from "@/types/team";
 import { baseContainer, baseDividedLineChild, flexColumnGap4 } from "@/styles/container.css";
+import ImagesGrid from "../_components/ImagesGrid";
 
 function ArticleId() {
   const articleId = useParams()["articleId"] as string;
@@ -38,6 +39,7 @@ function ArticleId() {
           __html: data?.content.replace(/<(iframe|script)[\s\S]*?<\/\1>/gi, ""),
         }}
       />
+      {data.imgUrl.length > 0 && <ImagesGrid images={data.imgUrl} />}
       <div className={baseDividedLineChild} style={{ margin: "16px -16px" }} />
       <ArticleReply teamId={data.teamId} articleId={articleId} viewCount={data.viewCount} />
     </section>

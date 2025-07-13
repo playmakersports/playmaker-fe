@@ -8,7 +8,7 @@ function NavigationLayout({ children }: { children: React.ReactNode }) {
   const SHOW_NAV_PAGE = ["/home", "/team", "/team/find", "/my", "/match", "/notification"];
   const SHOW_SUB_NAV =
     !path.startsWith("/team/") && !path.startsWith("/my/") && !path.startsWith("/p/") && !path.startsWith("/match/");
-  const HIDE_SUB_NAV = /^\/team\/\d+\/board\/\d+$/.test(path);
+  const HIDE_SUB_NAV = /^\/team\/\d+\/board\/\d+$/.test(path) || /^\/team\/\d+\/video\/\d+$/.test(path);
 
   return (
     <>

@@ -26,7 +26,7 @@ function Loading(props: Props) {
           margin: "0 auto",
           width: "100%",
           height: "100%",
-          background: "rgba(256, 256, 256, 0.1)",
+          background: "rgba(256, 256, 256, 0.05)",
           zIndex: 100,
         }}
       >
@@ -37,11 +37,12 @@ function Loading(props: Props) {
             alignItems: "center",
             justifyContent: "center",
             width: "180px",
-            minHeight: "180px",
+            minHeight: "100px",
             gap: "0",
-            borderRadius: "20px",
+            borderRadius: "999px",
             backdropFilter: "blur(5px)",
-            border: "1px solid rgba(256, 256, 256, 0.9)",
+            background: "rgba(256, 256, 256, 0.3)",
+            border: "1px solid rgba(0, 0, 0, 0.045)",
           }}
         >
           <LoadingAnimatedSvg width={110} height={90} style={{ margin: 0 }} />

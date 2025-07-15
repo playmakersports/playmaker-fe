@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import useModal from "@/hook/useModal";
 import clsx from "clsx";
 
-import { NOW_RECRUIT_LIST } from "@/constants/mock/RECRUIT";
 import TeamListCard from "../../_components/TeamListCard";
 import FilterButton from "@/components/common/FilterButton";
 import {
@@ -21,9 +20,15 @@ import { ApiTeamDetail } from "@/apis/types/team";
 function TeamFindSports({ sports }: { sports: string }) {
   const [keyword, setKeyword] = useState("");
   const [query, setQuery] = useState("");
+  const [isOnlyRecruiting, setIsOnlyRecruiting] = useState(false);
   const [location, setLocation] = useState<string[]>([]);
-  const { data, isLoading } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter/item/${sports.toUpperCase()}`);
-  const { ModalComponents, showModal, modalState } = useModal({ key: "team-find-location" });
+  const { ModalComponents, showModal, modalState } = useModal<{ location: string }>({ key: "team-location" });
+
+  const { data, isLoading, isFetched } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter`, {
+    teamItem: sports.toUpperCase(),
+    recruiting: `${isOnlyRecruiting}`,
+    activeArea: modalState["team-location"]?.location,
+  });
 
   return (
     <>
@@ -31,8 +36,12 @@ function TeamFindSports({ sports }: { sports: string }) {
         <div className={clsx(flexSpaceBetween)}>
           <FilterButton onClick={() => showModal()}>지역 선택</FilterButton>
           <label className={flexRowGap10}>
-            <InputCheckbox size="MEDIUM" />
-            <span className={fonts.body4.medium}>모집 중만 보기</span>
+            <InputCheckbox
+              size="MEDIUM"
+              checked={isOnlyRecruiting}
+              onChange={(e) => setIsOnlyRecruiting(e.target.checked)}
+            />
+            <span className={fonts.body4.medium}>모집 중만 보기 </span>
           </label>
         </div>
 
@@ -60,6 +69,8 @@ function TeamFindSports({ sports }: { sports: string }) {
             ))}
           </div>
         )}
+
+        {isFetched && data?.length === 0 && <div className={fonts.body3.medium}>검색 결과가 없습니다</div>}
       </div>
       <LocationFilterModal ModalComponents={ModalComponents} />
     </>

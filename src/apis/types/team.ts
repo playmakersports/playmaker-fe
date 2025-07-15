@@ -36,3 +36,25 @@ export type ApiTeamJoinRequest = {
   message: string;
   requestDate: string;
 };
+
+export type ApiBoardCommentItem = {
+  id: string | number;
+  teamId: string | number;
+  createBy: {
+    memberId: string | number;
+    memberName: string;
+    imageUrl: string;
+  };
+  content: string;
+  createAt: string;
+  author: boolean;
+};
+
+export type ApiBoardCommentRequest = {
+  teamId: string | number;
+  authorId: string | number;
+  teamBoardId: string | number;
+  authorName: string | number;
+  content: string;
+  deleteYn?: "Y" | "N";
+};

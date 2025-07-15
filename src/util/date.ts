@@ -109,3 +109,9 @@ export const countDayDiff = (target: string) => {
   const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
   return daysDiff;
 };
+
+export const parsedServerDateTime = (target: string) => {
+  const [date, time] = target.split("-");
+  const parsedDate = date.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
+  return `${parsedDate}T${time}`;
+};

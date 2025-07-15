@@ -55,3 +55,4 @@ export const typedPut = <T>(path: string, data?: unknown, config?: AxiosRequestC
   axiosClient.put<T>(path, data, config);
 export const typedPatch = <T>(path: string, data?: unknown, config?: AxiosRequestConfig) =>
   axiosClient.patch<T>(path, data, config);
+export const typedDelete = <T>(path: string, config?: AxiosRequestConfig) => axiosClient.delete<T>(path, config);

@@ -1,3 +1,5 @@
+import { semantic } from "@/styles/color.css";
+import { flexCenterJA } from "@/styles/container.css";
 import { fonts } from "@/styles/fonts.css";
 import { globalStyle, style } from "@vanilla-extract/css";
 
@@ -84,7 +86,8 @@ export const commentInputBottomWrapper = style({
   borderTop: "1px solid var(--gray200)",
 });
 globalStyle(`${commentInputBottomWrapper}[data-safe-area='true']:has(input[type='text']:focus)`, {
-  paddingBottom: "4px",
+  paddingBottom: "0",
+  marginBottom: "-4px",
 });
 
 export const commentItemUserAvatar = style({
@@ -93,6 +96,9 @@ export const commentItemUserAvatar = style({
   borderRadius: "50%",
   backgroundColor: "var(--gray200)",
   flexShrink: 0,
+  backgroundSize: "24px 24px",
+  backgroundPosition: "center",
+  objectFit: "cover",
 });
 export const commentItemHasReply = style({
   flexShrink: 0,
@@ -111,8 +117,10 @@ export const commentItemHasReply = style({
 });
 export const commentInputContainer = style({
   display: "flex",
+  alignItems: "center",
   padding: "10px 12px",
   width: "100%",
+  height: "48px",
   backgroundColor: "var(--gray100)",
   borderRadius: "8px",
   gap: "8px",
@@ -126,6 +134,9 @@ export const commentInputStyle = style([
     selectors: {
       "&::placeholder": {
         color: "var(--gray400)",
+      },
+      "&:disabled": {
+        color: "var(--gray500)",
       },
     },
   },
@@ -180,21 +191,6 @@ export const boardImageViewerItemList = style([
     minHeight: "55vh",
     backgroundColor: "rgba(0,0,0,0.7)",
     backdropFilter: "blur(4px)",
-    selectors: {
-      "&:before": {
-        position: "absolute",
-        padding: "8px 20px",
-        top: "-52px",
-        left: "50%",
-        content: "두 번 터치하면 확대됩니다",
-        color: "var(--white)",
-        width: "max-content",
-        textAlign: "center",
-        borderRadius: "999px",
-        backgroundColor: "black",
-        transform: "translateX(-50%)",
-      },
-    },
   },
 ]);
 export const boardImageViewerBullet = style({
@@ -205,3 +201,14 @@ export const boardImageViewerBullet = style({
   gap: "8px",
   width: "100%",
 });
+export const boardEmptyCommentArea = style([
+  semantic.description,
+  flexCenterJA,
+  {
+    flex: 1,
+    paddingBottom: "28px",
+    minHeight: "15vh",
+    whiteSpace: "pre-wrap",
+    textAlign: "center",
+  },
+]);

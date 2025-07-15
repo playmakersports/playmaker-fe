@@ -9,11 +9,9 @@ import { fonts } from "@/styles/fonts.css";
 import { FONTS, SCROLL_MASKED_GRADIENT, TEXT_ACTIVE } from "@/styles/common";
 import { scrollMaskedHandler, scrollMaskedHandlerRef } from "@/util/display";
 import PlusIcon from "@/assets/icon/common/Plus.svg";
+import { ApiHomeResponse } from "@/apis/types/code";
 
-function MyTeam() {
-  const { data } = useProfileGet();
-  const myTeamList = data?.team;
-
+function MyTeam({ data }: { data: ApiHomeResponse["teams"] }) {
   return (
     <TeamList as="article" aria-label="나의 팀 목록">
       <div className="list-wrapper">
@@ -22,12 +20,12 @@ function MyTeam() {
           ref={(ref) => scrollMaskedHandlerRef(ref, "horizontal")}
           onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
         >
-          {myTeamList?.map((item) => (
+          {data?.map((item) => (
             <Link key={item.teamId} href={`/team/${item.teamId}`} legacyBehavior>
               <TeamItem aria-label={item.teamName} role="button">
                 <TeamImage
                   style={{
-                    backgroundImage: `url(${item.logoUrl})`,
+                    backgroundImage: `url(${item.teamLogo})`,
                   }}
                 />
                 <span className={clsx(fonts.caption1.medium, "team-name")}>{item.teamName}</span>
@@ -52,7 +50,7 @@ const TeamList = styled.div`
   display: flex;
   gap: 12px;
   margin: 0 -16px;
-  padding: 20px 16px 18px 0;
+  padding: 0 16px 0 0;
   border-bottom: 1px solid var(--gray200);
   border-top-left-radius: 20px;
   align-items: center;
@@ -63,7 +61,7 @@ const TeamList = styled.div`
     ${SCROLL_MASKED_GRADIENT("var(--background-light-rgb)")}
   }
   .team-list {
-    padding: 0 4px 0 20px;
+    padding: 20px 4px 18px 20px;
     display: flex;
     gap: 20px;
     overflow-x: auto;
@@ -74,12 +72,13 @@ const TeamItem = styled.a`
   user-select: none;
   position: relative;
   display: flex;
+  width: 52px;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   color: var(--gray900);
   border-radius: 2px;
-  ${TEXT_ACTIVE("var(--gray50)", { scalable: true })}
+  ${TEXT_ACTIVE("var(--gray100)", { scalable: true })}
 
   span.team-name {
     width: 44px;
@@ -104,6 +103,7 @@ const TeamImage = styled.div`
 
 const FindTeamButton = styled.a`
   display: flex;
+  margin: 20px 0 18px;
   flex-direction: column;
   gap: 4px;
 

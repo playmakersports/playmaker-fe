@@ -3,8 +3,31 @@ import MyWeekly from "@/app/_components/MyWeekly";
 import SportsSection from "@/components/Main/SportsSection";
 import MyTeam from "../_components/MyTeam";
 import { homeContentsContainer } from "../_components/container.css";
+import { cookies, headers } from "next/headers";
+import { commonAPI } from "@/apis/url";
+import { baseBackendURL } from "@/apis";
+import { ApiHomeResponse } from "@/apis/types/code";
 
-export default function Home() {
+async function getHomeData() {
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  const res = await fetch(`${baseBackendURL}${commonAPI.HOME}`, {
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
+  });
+  const data: ApiHomeResponse = await res.json();
+  return data;
+}
+
+async function Home() {
+  const homeData = await getHomeData();
+
   return (
     <div
       style={{
@@ -13,10 +36,12 @@ export default function Home() {
     >
       <Banner />
       <section className={homeContentsContainer}>
-        <MyTeam />
+        <MyTeam data={homeData.teams} />
         <MyWeekly />
         <SportsSection />
       </section>
     </div>
   );
 }
+
+export default Home;

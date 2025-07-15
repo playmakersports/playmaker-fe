@@ -48,4 +48,5 @@ export const teamAPI = {
 
 export const commonAPI = {
   CODES: "/api/codes",
+  HOME: "/api/home",
 };

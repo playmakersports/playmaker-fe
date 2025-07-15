@@ -71,6 +71,19 @@
     font-style: italic;
   }
 
+  a.editor-link {
+    display: inline-flex;
+    padding: 1px 6px;
+    border: 1px solid var(--gray300);
+    border-radius: 8px;
+    gap: 4px;
+    align-items: center;
+    color: var(--info500);
+  }
+  a.editor-link::before {
+    content: "🔗";
+  }
+
   .wrong-iframe {
     margin: 0 0 2px;
     font-size: 1.3rem;

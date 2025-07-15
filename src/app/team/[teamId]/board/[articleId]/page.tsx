@@ -36,7 +36,12 @@ function ArticleId() {
       <article
         id="tiptap_Editor"
         dangerouslySetInnerHTML={{
-          __html: data?.content.replace(/<(iframe|script)[\s\S]*?<\/\1>/gi, ""),
+          __html: data?.content
+            .replace(/<(iframe|script)[\s\S]*?<\/\1>/gi, "")
+            .replace(
+              /(https?:\/\/[^\s<]+)/g,
+              '<a href="$1" class="editor-link" target="_blank" rel="noopener noreferrer">$1</a>'
+            ),
         }}
       />
       {data.imgUrl.length > 0 && <ImagesGrid images={data.imgUrl} />}

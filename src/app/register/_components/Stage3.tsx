@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 import { useGet } from "@/apis/hook/query";
@@ -8,11 +7,11 @@ import { useGet } from "@/apis/hook/query";
 import { ApiCodeArea } from "@/apis/types/code";
 import { fonts } from "@/styles/fonts.css";
 import { stageFormWrapper, stageWrapper } from "./stage.css";
-
 import Loading from "@/components/common/Loading";
 import Chip from "@/components/common/Chip";
 import StageWrapper, { SetStepType } from "./StageWrapper";
 import { commonAPI } from "@/apis/url";
+import { LocationContainer, LocationChildList } from "./location-styled";
 
 interface LocationType {
   key: string | null;
@@ -78,7 +77,7 @@ function Stage3({ setStep }: SetStepType) {
             <Loading />
           </div>
         ) : (
-          <Location>
+          <LocationContainer>
             <div className="location-selected">
               {locations.map((location) => (
                 <Chip
@@ -94,7 +93,7 @@ function Stage3({ setStep }: SetStepType) {
                 </Chip>
               ))}
             </div>
-            <List className={fonts.body3.regular}>
+            <LocationChildList className={fonts.body3.regular}>
               <ul className="parent">
                 {data?.map((item) => {
                   const parent = item.parent;
@@ -129,76 +128,13 @@ function Stage3({ setStep }: SetStepType) {
                     </li>
                   ))}
               </ul>
-            </List>
-          </Location>
+            </LocationChildList>
+          </LocationContainer>
         )}
       </div>
     </StageWrapper>
   );
 }
-
-const Location = styled.div`
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  margin: 0 -16px;
-  border-bottom: 1px solid var(--gray200);
-  div.location-selected {
-    display: inline-flex;
-    padding: 0 16px;
-    gap: 12px;
-  }
-`;
-const List = styled.div`
-  overflow: hidden;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  border-top: 1px solid var(--gray200);
-
-  & > ul {
-    flex: 1;
-
-    &.parent {
-      background-color: var(--gray50);
-      border-right: 1px solid var(--gray200);
-      & li {
-        color: var(--gray400);
-        &.active {
-          background-color: var(--white);
-          color: var(--primary500);
-          &:active {
-            background-color: var(--white);
-          }
-        }
-        &:active {
-          background-color: var(--gray100);
-        }
-      }
-    }
-
-    &.child {
-      overflow-y: auto;
-      & li {
-        color: var(--gray500);
-        &.active {
-          color: var(--primary500);
-        }
-        &:active {
-          background-color: var(--primary50);
-        }
-      }
-    }
-  }
-  & li {
-    cursor: pointer;
-    user-select: none;
-    padding: 12px 0;
-    text-align: center;
-  }
-`;
 
 function findAreaByCodeSequenceKey(data?: ApiCodeArea, targetKey?: string | number) {
   const item = data?.find((item) => item.child.some((child) => child.codeSequenceKey === targetKey));

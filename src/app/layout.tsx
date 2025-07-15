@@ -5,6 +5,7 @@ import GlobalProviders from "./components/GlobalProviders";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import StyledComponentsRegistry from "../../lib/styledRegistry";
 import MobileLayout from "./mobileLayout";
+import Clarity from "@microsoft/clarity";
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -44,6 +45,8 @@ export const metadata: Metadata = {
     ],
   },
 };
+
+Clarity.init("sfaizx4ss8");
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

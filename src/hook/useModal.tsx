@@ -4,24 +4,24 @@ import BottomSheet, { BottomSheetProps } from "@/components/common/BottomSheet";
 import Portal from "@/components/common/global/Portal";
 import { flexColumnGap4 } from "@/styles/container.css";
 
-type ChildrenProps = { closeModal: () => void; setState: (value: unknown) => void };
-export type ModalProps = {
+type ChildrenProps<T> = { closeModal: () => void; setState: (value: T) => void };
+export type ModalProps<T = unknown> = {
   disabledDimOut?: boolean;
   draggable?: "bar" | "all" | false;
   title?: string;
   description?: string;
-  children: ReactNode | ((props: ChildrenProps) => ReactNode);
+  children: ReactNode | ((props: ChildrenProps<T>) => ReactNode);
   buttons?: BottomSheetProps["buttons"];
   onClose?: () => void;
   expanded?: boolean;
 };
 
 type HookProps = { key?: string };
-function useModal(props: HookProps = {}) {
+function useModal<T = unknown>(props: HookProps = {}) {
   const idPrefix = useId();
   const idRef = useRef(0);
   const [modals, setModals] = useState<{ key: string; visible: boolean }[]>([]);
-  const [modalState, setModalState] = useState<Record<string, unknown>>();
+  const [modalState, setModalState] = useState<Record<string, T>>({});
   const [key, setKey] = useState("");
 
   const showModal = () => {
@@ -40,7 +40,7 @@ function useModal(props: HookProps = {}) {
   };
 
   const ModalComponents = useCallback(
-    (props: ModalProps) => {
+    (props: ModalProps<T>) => {
       return (
         <>
           {modals.map(({ key, visible }) =>

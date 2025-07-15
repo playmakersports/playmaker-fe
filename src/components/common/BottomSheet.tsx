@@ -233,6 +233,7 @@ const Header = styled.header`
 `;
 const Contents = styled.div`
   margin: 0 0 20px;
+  max-height: 75dvh;
   color: inherit;
   ${FONTS.caption1("regular")};
 

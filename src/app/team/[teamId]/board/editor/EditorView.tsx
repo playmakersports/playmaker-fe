@@ -78,7 +78,7 @@ function EditorView({ teamId }: { teamId: string }) {
         router.push(`/team/${teamId}/board`);
         return;
       }
-      router.push(`/team/${teamId}/board/${response.id}`);
+      router.replace(`/team/${teamId}/board/${response.id}`);
     } catch (e: any) {
       popup?.alert(`${e.response.data.message}\n${e.message}`, {
         title: "게시글 등록 실패",

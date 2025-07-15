@@ -69,6 +69,7 @@ export const commentListWrapper = style({
   display: "flex",
   flexDirection: "column",
   gap: "16px",
+  minHeight: "12vh",
 });
 export const commentItemWrapper = style({
   display: "flex",

@@ -59,7 +59,7 @@ function ArticleComment(props: Props) {
     <>
       <div className={clsx(flexRowGap12, fonts.body4.medium)}>
         <span className={clsx(flexRowGap4, colors.gray500)}>
-          댓글<span className={colors.gray600}>0</span>
+          댓글<span className={colors.gray600}>{data?.length ?? 0}</span>
         </span>
         <span className={clsx(flexRowGap4, colors.gray500)}>
           조회<span className={colors.gray600}>{viewCount}</span>

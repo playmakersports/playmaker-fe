@@ -23,24 +23,9 @@ function TestLogin() {
       toast.trigger("테스트 로그인에 성공했습니다", { type: "success" });
       router.replace("/home");
     } else {
-      const confirm = window.confirm(
-        `서버 통신 문제로 테스트 토큰이 발급되지 않았습니다.\n로그인 화면으로 돌아가시겠습니까?`
-      );
-      if (confirm) {
-        clearTokens();
-      } else {
-        setTokens({
-          access_token: "test-access-token-123player-maker",
-          refresh_token: "test-refresh-token-123player-maker",
-          expires_in: 3600,
-          token_type: null,
-          scope: null,
-          refresh_token_expires_in: 10,
-          id_token: null,
-          newUserYn: "N",
-        });
-        router.replace("/home");
-      }
+      window.alert("테스트 토큰 발급 실패");
+      clearTokens();
+      router.replace("/home");
     }
   }, [isLoading]);
 

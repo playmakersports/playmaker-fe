@@ -35,6 +35,9 @@ const nextConfig = withPWA({
     });
     return config;
   },
+  async redirects() {
+    return [{ source: "/team", destination: "/team/find", permanent: true }];
+  },
 });
 
 module.exports = withVanillaExtract(nextConfig);

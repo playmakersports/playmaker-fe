@@ -46,6 +46,10 @@ export const teamAPI = {
   },
 };
 
+export const matchAPI = {
+  matches: "/api/matches",
+};
+
 export const commonAPI = {
   CODES: "/api/codes",
   HOME: "/api/home",

@@ -139,6 +139,7 @@ function EditorView({ teamId }: { teamId: string }) {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             autoFocus
+            autoComplete="off"
           />
           <div style={{ backgroundColor: "var(--gray200)", width: "100%", height: "1px" }} />
         </div>

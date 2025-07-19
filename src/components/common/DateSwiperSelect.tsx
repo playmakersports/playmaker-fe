@@ -89,18 +89,12 @@ const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) 
 
   const handleYearChange = (activeIndex: number) => {
     setCurrentDate(setYear(currentDate, yearList[activeIndex]));
-    if (!window.navigator) return;
-    window.navigator.vibrate(8);
   };
   const handleMonthChange = (activeIndex: number) => {
     setCurrentDate(setMonth(currentDate, monthList[activeIndex] - 1));
-    if (!window.navigator) return;
-    window.navigator.vibrate(8);
   };
   const handleDateChange = (activeIndex: number) => {
     setCurrentDate(setDate(currentDate, dateList[activeIndex]));
-    if (!window.navigator) return;
-    window.navigator.vibrate(8);
   };
   useEffect(() => {
     setDateList(getNumberFromTo(1, getDaysInMonth(currentDate)));
@@ -234,6 +228,7 @@ const DateSwiperSelect = React.forwardRef<HTMLInputElement, Props>((props, ref) 
 DateSwiperSelect.displayName = "DateSwiperSelect";
 const Wrapper = styled.div`
   position: relative;
+  user-select: none;
   display: flex;
   justify-content: center;
   gap: 8px;

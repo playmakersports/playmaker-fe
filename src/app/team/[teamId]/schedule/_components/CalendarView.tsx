@@ -73,9 +73,6 @@ function CalendarView({ calendar, viewWeekly }: Props) {
   };
 
   const handleSwitchViewType = () => {
-    if (window.navigator) {
-      window.navigator.vibrate?.([5, 25, 9]);
-    }
     setShowWeekly((prev) => !prev);
   };
 

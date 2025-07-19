@@ -30,10 +30,12 @@ export const articleDetailHeader = {
 export const boardListFixedSection = style({
   display: "flex",
   flexDirection: "column",
+  backgroundColor: "var(--white)",
 });
 export const boardListFixedSectionTitle = style({
   display: "flex",
-  padding: "10px 16px",
+  alignItems: "center",
+  padding: "12px 16px",
   gap: "10px",
   color: "var(--gray700)",
   borderBottom: "1px solid var(--gray200)",
@@ -210,6 +212,24 @@ export const boardEmptyCommentArea = style([
     paddingBottom: "28px",
     minHeight: "15vh",
     whiteSpace: "pre-wrap",
+    textAlign: "center",
+  },
+]);
+
+export const boardArticleListContainer = style({
+  minHeight: "calc(100vh - var(--header-height) - 40px - var(--navigation-height))",
+  paddingBottom: "var(--safe-bottom-navigation)",
+  backgroundColor: "var(--gray50)",
+});
+export const boardEmptyArticleArea = style([
+  fonts.caption1.regular,
+  {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "calc(100vh - var(--header-height) - 40px - var(--navigation-height))",
+    backgroundColor: "var(--gray50)",
+    color: "var(--gray400)",
     textAlign: "center",
   },
 ]);

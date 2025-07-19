@@ -1,8 +1,20 @@
 import { AxiosError, AxiosRequestConfig } from "axios";
-import { useMutation, useQuery, UseQueryOptions, QueryKey } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  UseQueryOptions,
+  QueryKey,
+  useInfiniteQuery,
+  UndefinedInitialDataInfiniteOptions,
+} from "@tanstack/react-query";
 import { typedGet, typedPost, typedPut } from "..";
 
 type ContentType = "json" | "form-data";
+type ResultPagination<T> = {
+  maxPage: number;
+  currentPage: number;
+  items: T;
+};
 type QueryError = AxiosError<{
   errorCode: string;
   errorMessage: string;
@@ -17,11 +29,31 @@ const CONTENT_TYPE: Record<ContentType, string> = {
   "form-data": "multipart/form-data",
 };
 
-export const useGet = <T,>(url: string, params?: Record<string, string>, config?: QueryConfig<T>) => {
+type ParamsType = Record<string, string | number | undefined>;
+export const useGet = <T,>(url: string, params?: ParamsType, config?: QueryConfig<T>) => {
   return useQuery<T>({
     queryKey: [url, JSON.stringify(params || {})] as QueryKey,
     queryFn: () => typedGet<T>(url, { params }).then((res) => res.data),
     ...config,
+  });
+};
+
+export const useInfiniteGet = <T,>(
+  url: string,
+  params?: ParamsType,
+  options?: UndefinedInitialDataInfiniteOptions<ResultPagination<T>>
+) => {
+  return useInfiniteQuery<ResultPagination<T>>({
+    initialPageParam: 1,
+    queryKey: [JSON.stringify(params || {})],
+    queryFn: async ({ pageParam }) => {
+      const res = await typedGet<ResultPagination<T>>(url, { params: { ...params, page: pageParam } });
+      return res.data;
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage?.maxPage === lastPage.currentPage ? undefined : lastPage.currentPage + 1;
+    },
+    ...options,
   });
 };
 

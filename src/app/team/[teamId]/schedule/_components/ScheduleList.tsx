@@ -1,6 +1,7 @@
 import React from "react";
 import clsx from "clsx";
 import { formatDate } from "date-fns";
+import { ko } from "date-fns/locale";
 
 import { scheduleListDayTitle } from "./calendar.css";
 import { baseContainer, flexColumnGap20, flexColumnGap30 } from "@/styles/container.css";
@@ -27,16 +28,13 @@ type Props = {
 };
 function ScheduleList(props: Props) {
   const { data } = props;
-  const days = ["일", "월", "화", "수", "목", "금", "토"];
 
   return (
     <>
       <section className={clsx(baseContainer, flexColumnGap30)}>
         {data.map((item, index) => (
           <div key={index} className={flexColumnGap20}>
-            <p className={scheduleListDayTitle}>
-              {formatDate(item.date, "d일")} {days[new Date(item.date).getDay()]}요일{" "}
-            </p>
+            <p className={scheduleListDayTitle}>{formatDate(item.date, "d일 EEEE", { locale: ko })}</p>
             <ul className={flexColumnGap20} style={{ gap: "28px" }}>
               {item.schedule.map((schedule) => (
                 <ScheduleListArticle

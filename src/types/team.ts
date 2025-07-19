@@ -1,3 +1,5 @@
+import { BoardTypeEnums } from "@/apis/enums/enums";
+
 export type PostTeamBoardRequest = {
   boardInfo: {
     category: number;
@@ -19,7 +21,7 @@ export type TeamBoardItemType = {
   };
   title: string;
   category: string;
-  boardType: string | number;
+  boardType: BoardTypeEnums;
   content: string;
   viewCount: number;
   imgUrl: string[];

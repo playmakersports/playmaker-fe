@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { formatDate } from "date-fns";
-import NumberFlow from "@number-flow/react";
 import clsx from "clsx";
+import NumberFlow from "@number-flow/react";
+import { useHeader } from "@/hook/useHeader";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -38,6 +39,16 @@ type Props = {
 };
 function MatchHeader(props: Props) {
   const { title, subtitle, date, time, home, away } = props;
+  useHeader({
+    title: "플메슛 83 : 99 SPABA",
+    transparent: true,
+    subActions: [
+      { name: "경기 수정", action: () => {} },
+      { name: "경기 삭제", action: () => {} },
+    ],
+    options: { titleAlign: "center" },
+  });
+
   const [scores, setScores] = useState([0, 0]);
   useEffect(() => {
     setScores([away.score, home.score]);

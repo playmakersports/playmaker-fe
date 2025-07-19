@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { semantic } from "@/styles/color.css";
 import { fonts } from "@/styles/fonts.css";
 import {
+  baseCardContainer,
   flexAlignCenter,
   flexColumnGap20,
   flexColumnGap4,
@@ -19,51 +20,72 @@ import MainTab from "@/components/Main/MainTab";
 import { SCROLL_HIDE } from "@/styles/common";
 
 import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
+import useModal from "@/hook/useModal";
 
 function PlayersList() {
+  const { showModal, ModalComponents } = useModal();
   const params = useParams();
   const matchId = params["matchId"];
   const [currentTeam, setCurrentTeam] = useState<"HOME" | "AWAY" | string>("HOME");
   const MOCK_PROFILE_IMG = "https://cdn.interfootball.co.kr/news/photo/202012/514959_420656_1454.jpg";
 
   return (
-    <Wrapper className="scrollable-container">
-      <div className="tab-container">
-        <MainTab
-          type="line"
-          color="primary"
-          items={[
-            { name: "홈팀", value: "HOME" },
-            { name: "원정팀", value: "AWAY" },
-          ]}
-          initialValue={currentTeam}
-          nowValue={setCurrentTeam}
-          sameWidth
-        />
-      </div>
-      <List className={flexColumnGap20}>
-        {TEAM_PLAYERS_MOCK.map((player) => (
-          <li key={player.id} className={clsx(flexSpaceBetween, flexAlignCenter)}>
-            <div className={clsx(flexRowGap12, flexAlignCenter)}>
-              <img src={MOCK_PROFILE_IMG} alt={player.name} />
-              <div className={flexColumnGap4} style={{ gap: 0 }}>
-                <span className={clsx(fonts.body4.medium, flexAlignCenter, flexRowGap4)}>
-                  <span className="back-number">NO.{player.backNumber.toString().padStart(2, "0")}</span>
-                  {player.name}
-                  {player.startingYn === "Y" && (
-                    <Badge type="magenta" fillType="light" size="small">
-                      선발
-                    </Badge>
-                  )}
-                </span>
-                <p className={semantic.description}>{player.position}</p>
-              </div>
-            </div>
-            <RightArrow fill="var(--gray700)" width={18} height={18} />
-          </li>
-        ))}
-      </List>
-    </Wrapper>
+    <>
+      <button type="button" onClick={showModal} className={clsx(fonts.body3.medium, baseCardContainer)}>
+        선수 전체 명단
+      </button>
+      <ModalComponents
+        title="선수 명단"
+        draggable="all"
+        buttons={[
+          {
+            name: "닫기",
+            onClick: (close) => {
+              close();
+            },
+            mode: "primary",
+          },
+        ]}
+      >
+        <Wrapper className="scrollable-container">
+          <div className="tab-container">
+            <MainTab
+              type="line"
+              color="primary"
+              items={[
+                { name: "홈팀", value: "HOME" },
+                { name: "원정팀", value: "AWAY" },
+              ]}
+              initialValue={currentTeam}
+              nowValue={setCurrentTeam}
+              sameWidth
+            />
+          </div>
+          <List className={flexColumnGap20}>
+            {TEAM_PLAYERS_MOCK.map((player) => (
+              <li key={player.id} className={clsx(flexSpaceBetween, flexAlignCenter)}>
+                <div className={clsx(flexRowGap12, flexAlignCenter)}>
+                  <img src={MOCK_PROFILE_IMG} alt={player.name} />
+                  <div className={flexColumnGap4} style={{ gap: 0 }}>
+                    <span className={clsx(fonts.body4.medium, flexAlignCenter, flexRowGap4)}>
+                      <span className="back-number">NO.{player.backNumber.toString().padStart(2, "0")}</span>
+                      {player.name}
+                      {player.startingYn === "Y" && (
+                        <Badge type="magenta" fillType="light" size="small">
+                          선발
+                        </Badge>
+                      )}
+                    </span>
+                    <p className={semantic.description}>{player.position}</p>
+                  </div>
+                </div>
+                <RightArrow fill="var(--gray700)" width={18} height={18} />
+              </li>
+            ))}
+          </List>
+        </Wrapper>
+      </ModalComponents>
+    </>
   );
 }
 

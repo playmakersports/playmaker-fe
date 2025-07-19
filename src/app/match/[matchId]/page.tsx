@@ -1,30 +1,48 @@
-"use client";
 import React from "react";
 import clsx from "clsx";
-import { useHeader } from "@/hook/useHeader";
-import { useParams } from "next/navigation";
-import useModal from "@/hook/useModal";
 
-import { fonts } from "@/styles/fonts.css";
-import { baseCardContainer, baseContainerPaddingTop, flexColumnGap20 } from "@/styles/container.css";
+import { baseContainerPaddingTop, flexColumnGap20 } from "@/styles/container.css";
 import MatchHeader from "../_components/detail/MatchHeader";
 import MatchFlow from "../_components/detail/MatchFlow";
 import MatchPlayers from "../_components/detail/MatchPlayers";
-import PlayersList from "../_components/PlayersList";
+import PlayersList from "../_components/detail/PlayersList";
+import { cookies, headers } from "next/headers";
+import { baseBackendURL } from "@/apis";
+import { notFound } from "next/navigation";
+import { matchAPI } from "@/apis/url";
+import { ApiMatchDetail } from "@/apis/types/match";
 
-function MatchPage() {
-  const params = useParams();
-  const matchId = params["matchId"];
-  const { showModal, ModalComponents } = useModal();
-  useHeader({
-    title: "플메슛 83 : 99 SPABA",
-    transparent: true,
-    subActions: [
-      { name: "경기 수정", action: () => {} },
-      { name: "경기 삭제", action: () => {} },
-    ],
-    options: { titleAlign: "center" },
+async function getMatchDetailData(matchId: string) {
+  const headersList = await headers();
+  const host = headersList.get("host");
+  const protocol = headersList.get("x-forwarded-proto") || "http";
+
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("access_token")?.value;
+
+  const res = await fetch(`${baseBackendURL}${matchAPI.matches}/${matchId}`, {
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
   });
+  if (!res.ok) notFound(); // 404
+  const team: ApiMatchDetail = await res.json();
+  if (!team.id) notFound();
+  return team;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ matchId: string }> }) {
+  const { matchId } = await params;
+  const match = await getMatchDetailData(matchId);
+
+  return {
+    title: `${match.homeTeamName} ${match.homeScore} : ${match.awayScore} ${match.awayTeamName}`,
+  };
+}
+
+async function MatchPage({ params }: { params: Promise<{ matchId: string }> }) {
+  const { matchId } = await params;
+  const match = await getMatchDetailData(matchId);
 
   return (
     <section
@@ -36,45 +54,28 @@ function MatchPage() {
       }}
     >
       <MatchHeader
-        title={TEAM_SCORES.competitionName}
+        title={match.title}
         subtitle="서울경인지역예선 16강"
-        date="2025-06-02"
+        date={match.matchDateTime}
         time="14:00"
         home={{
-          name: TEAM_SCORES.homeName,
+          name: match.homeTeamName,
           logo: TEAM_SCORES.homeLogo,
-          score: TEAM_SCORES.homeScore,
+          score: match.homeScore,
           fouls: 10,
           timeouts: 2,
         }}
         away={{
-          name: TEAM_SCORES.awayName,
+          name: match.awayTeamName,
           logo: TEAM_SCORES.awayLogo,
-          score: TEAM_SCORES.awayScore,
+          score: match.awayScore,
           fouls: 8,
           timeouts: 3,
         }}
       />
       <MatchFlow />
       <MatchPlayers />
-      <button type="button" onClick={showModal} className={clsx(fonts.body3.medium, baseCardContainer)}>
-        선수 전체 명단
-      </button>
-      <ModalComponents
-        title="선수 명단"
-        draggable="all"
-        buttons={[
-          {
-            name: "닫기",
-            onClick: (close) => {
-              close();
-            },
-            mode: "primary",
-          },
-        ]}
-      >
-        <PlayersList />
-      </ModalComponents>
+      <PlayersList />
     </section>
   );
 }

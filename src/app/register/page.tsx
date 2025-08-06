@@ -27,6 +27,7 @@ function JoinStage() {
   const popup = usePopup();
   const router = useRouter();
   useHeader({
+    transparent: true,
     onClickBack: () => {
       const handleConfirm = async () => {
         const confirmValue = await popup?.confirm(`입력된 정보는 저장되지 않고, 다시 복구할 수 없습니다.`, {

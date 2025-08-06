@@ -61,3 +61,20 @@ export const stageWelcomeContainer = style({
   height: "100%",
   background: "linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, var(--primary100) 100%)",
 });
+
+export const welcomeTextContainer = style({
+  userSelect: "none",
+  display: "grid",
+  alignItems: "center",
+});
+export const welcomeTextItem = style({
+  gridArea: "2/1",
+  opacity: 0,
+  textShadow: "0 0 8px rgba(243, 254, 245, 1)",
+  transform: "translateY(20px)",
+  transition: "all 0.5s ease-in-out",
+});
+export const welcomeTextFadeIn = style({
+  transform: "translateY(0)",
+  opacity: 1,
+});

@@ -26,7 +26,7 @@ function TeamFindSports({ sports }: { sports: string }) {
 
   const { data, isLoading, isFetched } = useGet<ApiTeamDetail[]>(`/api/teams/browse/filter`, {
     teamItem: sports.toUpperCase(),
-    recruiting: `${isOnlyRecruiting}`,
+    recruiting: isOnlyRecruiting ? "true" : undefined,
     activeArea: modalState["team-location"]?.location,
   });
 

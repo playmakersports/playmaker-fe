@@ -133,6 +133,7 @@ function EditorView({ teamId }: { teamId: string }) {
         </div>
         <div className={flexColumnGap16}>
           <input
+            id="editor-title-input"
             type="text"
             className={fonts.body2.semibold}
             placeholder="제목을 입력해주세요"
@@ -140,6 +141,7 @@ function EditorView({ teamId }: { teamId: string }) {
             onChange={(e) => setTitle(e.target.value)}
             autoFocus
             autoComplete="off"
+            inputMode="search"
           />
           <div style={{ backgroundColor: "var(--gray200)", width: "100%", height: "1px" }} />
         </div>

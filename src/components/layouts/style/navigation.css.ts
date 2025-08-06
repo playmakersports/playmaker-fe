@@ -23,6 +23,7 @@ export const navigationLayoutWrapper = style({
       width: "160px",
       left: "50%",
       top: "80px",
+      opacity: "1 !important",
       transform: "translateX(calc(-50% - var(--mobile-max-width) / 2 - 80px)) !important",
       transition: "none",
     },

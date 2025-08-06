@@ -8,6 +8,7 @@ import {
   navigationButton,
   navigationContainer,
   navigationInner,
+  navigationLayoutWrapper,
   navigationSvg,
 } from "./style/navigation.css";
 
@@ -29,15 +30,8 @@ function Navigation({ hide = false }: { hide?: boolean }) {
 
   return (
     <nav
+      className={navigationLayoutWrapper}
       style={{
-        position: "fixed",
-        bottom: "-1px",
-        left: 0,
-        right: 0,
-        width: "100%",
-        minHeight: " var(--navigation-height)",
-        zIndex: 900,
-        transition: "transform 0.35s ease, opacity 0.3s ease",
         opacity: hide ? "0" : "1",
         transform: hide ? "translateY(100%)" : "translateY(0)",
       }}

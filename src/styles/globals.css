@@ -19,7 +19,7 @@ div.skeleton-loading-ui {
 }
 
 :root {
-  --mobile-max-width: 480px;
+  --mobile-max-width: 560px;
   --safe-area-top: calc(var(--header-height) + env(safe-area-inset-top));
   --env-sat: env(safe-area-inset-top);
   --env-sab: env(safe-area-inset-bottom);

@@ -1,3 +1,5 @@
+import { TeamPlayerAuthStatus } from "../enums/enums";
+
 export type ApiTeamDetail = {
   id: number;
   teamName: string;
@@ -57,4 +59,18 @@ export type ApiBoardCommentRequest = {
   authorName: string | number;
   content: string;
   deleteYn?: "Y" | "N";
+};
+
+export type ApiTeamPlayerItem = {
+  memberId: number;
+  username: string;
+  email: string;
+  image: string;
+  university: string;
+  auth: TeamPlayerAuthStatus;
+  authDisplay: string;
+  generation: number;
+  generationDisplay: string;
+  joinDate: string;
+  mainTeam: boolean;
 };

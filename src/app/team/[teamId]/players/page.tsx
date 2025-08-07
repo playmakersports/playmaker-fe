@@ -4,11 +4,10 @@ import React, { useState } from "react";
 import clsx from "clsx";
 import { useParams, useRouter } from "next/navigation";
 import { useHeader } from "@/hook/useHeader";
+import { useTeamJoinRequestGet, useTeamPlyerGet } from "@/apis/hook/team";
 
 import PlayersList from "./_components/PlayersList";
 import { BasicInput } from "@/components/common/input/BaseInput";
-import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
-
 import { fonts } from "@/styles/fonts.css";
 import {
   baseContainerPaddingTop,
@@ -24,9 +23,12 @@ import PeopleIcon from "@/assets/icon/common/outlined/People.svg";
 function PlayerList() {
   const router = useRouter();
   const teamId = useParams().teamId;
+  const { data: playersList } = useTeamPlyerGet(teamId as string);
+  const { data: requestPlayers } = useTeamJoinRequestGet(teamId as string);
+  const joinRequestCount = requestPlayers?.length || 0;
+
   const [sortTab, setSortTab] = useState("name");
   const [sortType, setSortType] = useState("");
-  const applyCount = Math.floor(Math.random() * 5);
 
   useHeader({
     title: "팀원",
@@ -50,15 +52,7 @@ function PlayerList() {
         },
       },
     ],
-    // options: { titleAlign: "center" },
   });
-
-  const PLAYERS_FILTER = [
-    { name: "전체", value: "all" },
-    { name: "운영진", value: "manage" },
-    { name: "기수", value: "student" },
-    { name: "휴학생", value: "rest" },
-  ];
 
   return (
     <>
@@ -68,20 +62,20 @@ function PlayerList() {
           <div className={clsx(flexSpaceBetween)}>
             <p className={clsx(fonts.body4.regular, flexRowGap4)} style={{ color: "var(--gray500)" }}>
               <PeopleIcon width={20} height={20} fill="var(--gray600)" />
-              {TEAM_PLAYERS_MOCK.length}명
+              {playersList?.length}명
             </p>
             <Button
               type="button"
-              mode={applyCount > 0 ? "primary" : "gray"}
-              fillType={applyCount > 0 ? "default" : "outline"}
+              mode={joinRequestCount > 0 ? "primary" : "gray"}
+              fillType={joinRequestCount > 0 ? "default" : "outline"}
               size="xsmall"
               onClick={() => router.push(`/team/${teamId}/admin/join-request`)}
             >
-              가입 신청 {applyCount}건
+              가입 신청 {joinRequestCount > 0 ? `${joinRequestCount}건` : "없음"}
             </Button>
           </div>
         </div>
-        <PlayersList />
+        <PlayersList playersList={playersList} />
       </section>
     </>
   );

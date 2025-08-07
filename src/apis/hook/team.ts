@@ -1,4 +1,10 @@
-import { ApiBoardCommentItem, ApiBoardCommentRequest, ApiTeamDetail, ApiTeamJoinRequest } from "../types/team";
+import {
+  ApiBoardCommentItem,
+  ApiBoardCommentRequest,
+  ApiTeamDetail,
+  ApiTeamJoinRequest,
+  ApiTeamPlayerItem,
+} from "../types/team";
 import { boardAPI, teamAPI, teamJoinAPI } from "../url";
 import { useGet, usePost, usePut } from "./query";
 import { typedDelete } from "..";
@@ -9,9 +15,18 @@ export const useTeamGet = (id: number | string) => {
 export const useTeamListGet = () => {
   return useGet<ApiTeamDetail[]>(teamAPI.TEAMS);
 };
+export const useTeamPlyerGet = (id: number | string) => {
+  return useGet<ApiTeamPlayerItem[]>(`${teamAPI.TEAMS}/${id}/members`);
+};
 
 export const useTeamJoinRequestGet = (id: number | string) => {
   return useGet<ApiTeamJoinRequest[]>(teamJoinAPI.TEAM_REQ_LIST(id));
+};
+export const useTeamJoinApprovePost = (teamId: string | number, ids: (number | string)[]) => {
+  return usePost<undefined>(teamJoinAPI.APPROVE(teamId, ids.join("|")));
+};
+export const useTeamJoinRejectPost = (teamId: string | number, ids: (number | string)[]) => {
+  return usePost<undefined>(teamJoinAPI.REJECT(teamId, ids.join("|")));
 };
 
 export const useTeamBasicInfoPut = (teamId: number | string) => {

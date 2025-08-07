@@ -1,5 +1,5 @@
 import { fonts } from "@/styles/fonts.css";
-import { style } from "@vanilla-extract/css";
+import { globalStyle, style } from "@vanilla-extract/css";
 
 export const playersListTableRow = style({
   cursor: "default",
@@ -15,6 +15,13 @@ export const playersListTableRow = style({
       backgroundColor: "var(--white)",
     },
   },
+});
+globalStyle(`${playersListTableRow} span.bullet`, {
+  display: "inline-block",
+  width: "4px",
+  height: "4px",
+  borderRadius: "50%",
+  backgroundColor: "var(--primary500)",
 });
 export const playersListTableHead = style([
   fonts.body4.medium,

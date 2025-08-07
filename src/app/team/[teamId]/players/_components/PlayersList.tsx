@@ -4,16 +4,8 @@ import styled from "styled-components";
 import clsx from "clsx";
 import useStickyMoment from "@/hook/useStickyMoment";
 
-import { TEAM_PLAYERS_MOCK } from "@/constants/mock/TEAM";
 import { fonts } from "@/styles/fonts.css";
 import { flexAlignCenter, flexRowGap4, innerChildContainer } from "@/styles/container.css";
-
-import UpDownArrow from "@/assets/icon/arrow/UpDownArrow.svg";
-import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
-import CrownIcon from "@/assets/icon/common/CrownCircle.svg";
-import FlagCircle from "@/assets/icon/common/FlagCircle.svg";
-import GenderFemaleIcon from "@/assets/icon/color/Gender_Female.svg";
-import GenderMaleIcon from "@/assets/icon/color/Gender_Male.svg";
 import {
   playersListTableColumnDivider,
   playersListTableFlex1,
@@ -21,27 +13,18 @@ import {
   playersListTableRow,
   playersListTableW70,
 } from "./players.css";
+import { TeamPlayerAuthStatus, TeamPlayerAuthStatusName } from "@/apis/enums/enums";
 
-function PlayersList() {
+import UpDownArrow from "@/assets/icon/arrow/UpDownArrow.svg";
+import RightArrow from "@/assets/icon/arrow/RightArrow.svg";
+import CrownIcon from "@/assets/icon/common/CrownCircle.svg";
+import FlagCircle from "@/assets/icon/common/FlagCircle.svg";
+import { ApiTeamPlayerItem } from "@/apis/types/team";
+
+function PlayersList({ playersList }: { playersList?: ApiTeamPlayerItem[] }) {
   const headRef = useRef<HTMLDivElement>(null);
-  useStickyMoment(headRef);
-  interface ILevel {
-    name: string;
-    color: string;
-    value: string;
-  }
-  const LEVEL_CODE: Record<string, ILevel> = {
-    5: { name: "회장", color: "#ff8c00", value: "president" },
-    4: { name: "부회장", color: "#0fd1c1", value: "vice" },
-    3: { name: "운영진", color: "#8984E5", value: "staff" },
-    2: { name: "매니저", color: "#A0BCF8", value: "manager" },
-    1: { name: "팀원", color: "", value: "member" },
-  };
 
-  const GENDER_ICON = {
-    MALE: <GenderMaleIcon width={20} height={20} />,
-    FEMALE: <GenderFemaleIcon width={20} height={20} />,
-  };
+  useStickyMoment(headRef);
 
   const UpDownSortArrow = ({ type }: { type: string }) => {
     return (
@@ -68,33 +51,48 @@ function PlayersList() {
           출석률 <UpDownSortArrow type="attendance" />
         </div>
       </div>
-      {TEAM_PLAYERS_MOCK.map((player) => (
-        <div className={playersListTableRow} key={player.playerId}>
+      {playersList?.map((player) => (
+        <div className={playersListTableRow} key={player.memberId}>
           <Image>
-            {player.level > 1 && (
-              <Staff $bgColor={LEVEL_CODE[player.level].color}>
-                {player.level > 3 ? <CrownIcon width={24} height={24} /> : <FlagCircle width={24} height={24} />}
+            {["MASTER", "ASSISTANT", "STAFF"].includes(player.auth) && (
+              <Staff
+                style={{
+                  backgroundColor: PLAYER_LEVEL_COLORS[player.auth],
+                }}
+              >
+                {player.auth === "MASTER" ? (
+                  <CrownIcon width={24} height={24} />
+                ) : (
+                  <FlagCircle width={24} height={24} />
+                )}
               </Staff>
             )}
           </Image>
           <div className={playersListTableFlex1}>
             <div>
-              {player.level > 1 && (
-                <p className={clsx(fonts.caption1.semibold, "position")} style={{ color: "var(--primary500)" }}>
-                  {LEVEL_CODE[player.level].name}
-                </p>
-              )}
+              <p
+                className={clsx(fonts.caption1.semibold, flexAlignCenter, flexRowGap4)}
+                style={{ color: "var(--primary500)" }}
+              >
+                {player.generation !== null ? (
+                  <>
+                    {player.generation}기<span className="bullet" />
+                  </>
+                ) : null}
+                {TeamPlayerAuthStatusName[player.auth]}
+              </p>
+
               <p className={clsx(fonts.body3.medium, flexAlignCenter)}>
-                {player.name} <RightArrow width={20} height={20} fill="var(--gray700)" />
+                {player.username} <RightArrow width={20} height={20} fill="var(--gray700)" />
                 {/* <span className="gender-icon">{GENDER_ICON[player.sex]}</span> */}
               </p>
             </div>
           </div>
 
           <div className={playersListTableColumnDivider} />
-          <div className={clsx(fonts.body4.medium, playersListTableW70)}>포워드</div>
+          {/* <div className={clsx(fonts.body4.medium, playersListTableW70)}>포워드</div> */}
           <div className={playersListTableColumnDivider} />
-          <div className={clsx(fonts.body4.medium, playersListTableW70)}>{player.attendRate * 100}%</div>
+          {/* <div className={clsx(fonts.body4.medium, playersListTableW70)}>{player.attendRate * 100}%</div> */}
         </div>
       ))}
     </div>
@@ -109,7 +107,7 @@ const Image = styled.div`
   border-radius: 10px;
   background-color: var(--gray100);
 `;
-const Staff = styled.div<{ $bgColor: string }>`
+const Staff = styled.div`
   position: absolute;
   display: flex;
   justify-content: center;
@@ -122,10 +120,18 @@ const Staff = styled.div<{ $bgColor: string }>`
   overflow: hidden;
   border: 3px solid var(--background-light);
   box-sizing: content-box;
-  background-color: ${({ $bgColor }) => $bgColor};
   &[data-size="small"] {
     display: none;
   }
 `;
+
+const PLAYER_LEVEL_COLORS: Record<TeamPlayerAuthStatus, string> = {
+  MASTER: "#ff8c00",
+  ASSISTANT: "#0fd1c1",
+  STAFF: "#8984E5",
+  MEMBER: "",
+  APPLICABLE: "",
+  APPLY: "",
+};
 
 export default PlayersList;

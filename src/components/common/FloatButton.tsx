@@ -22,9 +22,22 @@ const Container = styled.div<{ gap: string }>`
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;
-  backdrop-filter: blur(2px);
-  background: linear-gradient(to top, rgba(256, 256, 256, 0.8) 0%, rgba(256, 256, 256, 0.05) 100%);
+  background-color: var(--white);
   gap: ${(props) => props.gap};
+
+  @media screen and (min-width: 880px) {
+    padding-bottom: 28px;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: -20px;
+    background: linear-gradient(to top, rgba(256, 256, 256, 1) 0%, rgba(256, 256, 256, 0) 100%);
+    width: 100%;
+    height: 20px;
+  }
 `;
 
 export default FloatButton;

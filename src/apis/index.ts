@@ -6,8 +6,8 @@ export const baseBackendURL = "https://port-0-playermaker17-m6usflhbd2e8f971.sel
 const axiosClient = axios.create({ baseURL: baseBackendURL });
 
 // 1) 요청 전 토큰 자동 주입
-axiosClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = getAccessToken();
+axiosClient.interceptors.request.use(async (config: InternalAxiosRequestConfig) => {
+  const token = await getAccessToken();
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -31,7 +31,7 @@ axiosClient.interceptors.response.use(
       try {
         const res = await axios.post(authAPI.REFRESH, { refresh_token: refreshToken }, { baseURL: baseBackendURL });
         const data = res.data;
-        setTokens(data);
+        await setTokens(data);
 
         originalReq.headers = {
           ...originalReq.headers,

@@ -58,7 +58,6 @@ function TeamBasicInfoAdmin(props: ApiTeamDetail) {
         onSuccess: () => {
           toast.trigger("팀 정보가 저장되었습니다.", { type: "success" });
           router.push(`/team/${teamId}`);
-          //   queryClient.invalidateQueries({ queryKey: [`${teamAPI.TEAMS}/${teamId}`] });
         },
         onError: (error) => {
           toast.trigger(`에러: ${error.response?.data.errorMessage}`, { type: "error" });

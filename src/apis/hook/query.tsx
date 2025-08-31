@@ -32,7 +32,7 @@ const CONTENT_TYPE: Record<ContentType, string> = {
 type ParamsType = Record<string, string | number | undefined>;
 export const useGet = <T,>(url: string, params?: ParamsType, config?: QueryConfig<T>) => {
   return useQuery<T>({
-    queryKey: [url, JSON.stringify(params || {})] as QueryKey,
+    queryKey: [url, ...Object.values(params ?? [])] as QueryKey,
     queryFn: () => typedGet<T>(url, { params }).then((res) => res.data),
     ...config,
   });
@@ -45,7 +45,7 @@ export const useInfiniteGet = <T,>(
 ) => {
   return useInfiniteQuery<ResultPagination<T>>({
     initialPageParam: 1,
-    queryKey: [JSON.stringify(params || {})],
+    queryKey: [url, ...Object.values(params ?? [])],
     queryFn: async ({ pageParam }) => {
       const res = await typedGet<ResultPagination<T>>(url, { params: { ...params, page: pageParam } });
       return res.data;

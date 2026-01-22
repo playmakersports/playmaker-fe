@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { FONTS } from "@/styles/common";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 type Props = {
   teamId: string;
@@ -15,13 +15,12 @@ type Props = {
 function RecruitTeamItem(props: Props) {
   const { teamId, teamName, univName, location, logoImg } = props;
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   return (
     <Container
       type="button"
       onClick={() => {
-        router.push(`/team/${teamId}`);
+        router.navigate({ to: `/team/${teamId}` });
       }}
     >
       <ItemWrapper>

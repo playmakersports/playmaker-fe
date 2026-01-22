@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { fonts } from "@/styles/fonts.css";
 import RightArrow from "@/assets/icon/arrow/RightDirection.svg";
@@ -21,7 +21,7 @@ function GroupTitle({ children, icon, link }: Props) {
         {children}
       </h4>
       {link && (
-        <ArrowButton type="button" onClick={() => router.push(link)}>
+        <ArrowButton type="button" onClick={() => router.navigate({ to: link })}>
           <RightArrow />
         </ArrowButton>
       )}

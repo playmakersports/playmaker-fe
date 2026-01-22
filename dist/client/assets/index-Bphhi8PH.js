@@ -1,0 +1,1 @@
+import{j as e}from"./main-DdFHfJsj.js";import{u as t}from"./useHeader-ycHOJC5z.js";function n(){return t({title:"팀원 퇴출",options:{titleAlign:"center"}}),e.jsx("div",{children:"TeamAdminBlock"})}export{n as component};

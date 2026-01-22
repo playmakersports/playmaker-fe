@@ -1,8 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { useAtomValue } from "jotai";
-import { usePathname, useParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useLocation, useParams, useRouter, Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import styled from "styled-components";
 
@@ -14,7 +13,7 @@ import { RoutedHeaderContainer } from "@/components/layouts/Header/RoutedHeader"
 import Badge from "@/components/common/Badge";
 import DropdownAction from "@/components/common/input/DropdownAction";
 import HeaderMainDropdown from "@/app/team/_components/HeaderMainDropdown";
-import TeamHeart from "@/app/team/[teamId]/_components/TeamHeart";
+import TeamHeart from "@/app/team/$teamId/_components/TeamHeart";
 
 import SearchIcon from "@/assets/icon/common/Search.svg";
 
@@ -22,8 +21,8 @@ type Props = {
   scrollY: number;
 };
 function TeamHeader({ scrollY }: Props) {
-  const pathname = usePathname();
-  const teamId = useParams()["teamId"];
+  const pathname = useLocation().pathname;
+  const { teamId } = useParams({ strict: false });
   const router = useRouter();
   const title = useAtomValue(atomPageTitle);
   const bgTransparent = useAtomValue(atomHeaderTransparent);
@@ -78,7 +77,7 @@ function TeamHeader({ scrollY }: Props) {
                     {
                       name: "팀 관리",
                       action: () => {
-                        router.push(`/team/${teamId}/admin`);
+                        router.navigate({ to: `/team/${teamId}/admin` });
                       },
                     },
                     { name: "팀 탈퇴", action: () => {} },
@@ -88,7 +87,7 @@ function TeamHeader({ scrollY }: Props) {
             </div>
 
             <div className={clsx("action-menu", { hide: !showList })}>
-              <Link href="/team/find" onClick={() => setShowList(false)}>
+              <Link to="/team/find" onClick={() => setShowList(false)}>
                 <Badge type="gray" fillType="light" size="large" icon={<SearchIcon />}>
                   팀 살펴보기
                 </Badge>

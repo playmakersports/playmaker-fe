@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import Image from "next/image";
 import { useToast } from "@/hook/useToast";
 import { useFormContext } from "react-hook-form";
 import { usePost } from "@/apis/hook/query";
@@ -105,7 +104,7 @@ function Stage5({ setStep }: SetStepType) {
               />
               <label htmlFor={`${item.value}+${item.name}`}>
                 <div className="icon-wrapper">
-                  <Image src={item.icon} alt={item.name} width={80} height={80} />
+                  <img src={item.icon} alt={item.name} width={80} height={80} />
                 </div>
                 <span className="sports-name">{item.name}</span>
               </label>

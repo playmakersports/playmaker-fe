@@ -1,0 +1,1 @@
+const a="/assets/basketball-BYE603pR.png",l="/assets/volley-CzOkjW_d.png",n="/assets/football-QjzTp8NA.png",e="/assets/baseball-Cy-bshVq.png",s=[{value:"1",name:"농구",nameEng:"basketball",icon:a},{value:"2",name:"축구",nameEng:"football",icon:n},{value:"3",name:"배구",nameEng:"volleyball",icon:l},{value:"4",name:"야구",nameEng:"baseball",icon:e}];export{s as S};

@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { usePopup } from "@/components/common/global/PopupProvider";
 import { formatDate } from "date-fns";
 import { AxiosError } from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 function QueryProvider({ children }: { children: React.ReactNode }) {
   const popup = usePopup();
@@ -18,7 +18,7 @@ function QueryProvider({ children }: { children: React.ReactNode }) {
           const axiosError = error as AxiosError;
           if (axiosError.status === 401) {
             popup?.alert("", { title: "만료된 로그인 정보입니다.\n다시 로그인해주세요." });
-            router.replace("/user/logout");
+            router.navigate({ to: "/user/logout", replace: true });
             return false;
           }
 

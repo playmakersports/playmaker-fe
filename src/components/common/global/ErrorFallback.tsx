@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -15,10 +15,10 @@ function ErrorFallback(props: Props) {
   const { status, message, retry, reset } = props;
 
   const onGoBack = () => {
-    router.back();
+    router.history.back();
   };
   const onGoHome = () => {
-    router.replace("/");
+    router.navigate({ to: "/", replace: true });
   };
 
   return (

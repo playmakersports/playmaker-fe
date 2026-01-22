@@ -1,0 +1,4 @@
+const LeftArrowIcon = "data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='currentColor'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_129_2826'%20style='mask-type:alpha'%20maskUnits='userSpaceOnUse'%20x='-1'%20y='0'%20width='25'%20height='24'%3e%3crect%20x='-0.243652'%20width='24'%20height='24'%20fill='%23D9D9D9'/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_129_2826)'%3e%3cpath%20d='M14.2832%2017.1269C13.9922%2017.4179%2013.5204%2017.4179%2013.2294%2017.1269L8.10254%2012L13.2294%206.87313C13.5204%206.58214%2013.9922%206.58214%2014.2832%206.87313C14.5741%207.16411%2014.5741%207.63589%2014.2832%207.92688L10.21%2012L14.2832%2016.0731C14.5741%2016.3641%2014.5741%2016.8359%2014.2832%2017.1269Z'%20/%3e%3c/g%3e%3c/svg%3e";
+export {
+  LeftArrowIcon as L
+};

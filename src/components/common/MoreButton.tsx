@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import RightArrowThinIcon from "@/assets/icon/arrow/RightArrow.svg";
@@ -13,10 +13,9 @@ type Props = {
 function MoreButton(props: Props) {
   const { text, href } = props;
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   return (
-    <Container type="button" onClick={() => router.push(href)}>
+    <Container type="button" onClick={() => router.navigate({ to: href })}>
       {text} <RightArrowThinIcon width={12} height={12} />
     </Container>
   );

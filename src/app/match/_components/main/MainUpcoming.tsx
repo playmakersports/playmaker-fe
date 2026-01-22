@@ -2,7 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -42,7 +42,7 @@ function MainUpcomingMatch() {
               {data.map((item) => (
                 <SwiperSlide className={clsx(matchMainUpcomingCard)} key={item.matchId}>
                   <div className={flexColumnGap12}>
-                    <Link className={flexRowGap8} href={`/match/${item.matchId}`}>
+                    <Link className={flexRowGap8} to={`/match/${item.matchId}`}>
                       <div className={matchMainUpcomingCardTeamLogo}></div>
                       <div style={{ flex: 1 }}>
                         <p className={flexSpaceBetween}>

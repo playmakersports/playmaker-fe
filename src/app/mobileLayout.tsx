@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
-import { useParams, usePathname, useRouter } from "next/navigation";
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useRouter, useParams } from "@tanstack/react-router";
 import { useAtomValue } from "jotai";
 
 import Header from "@/components/layouts/Header/Header";
 import AppCode from "@/components/layouts/AppCode";
-import { NavigateOptions } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import Loading from "@/components/common/Loading";
 import NavigationLayout from "./_components/NavigationLayout";
 import OnboardingRoutes from "./_components/OnboardingRoutes";
@@ -17,23 +16,11 @@ function MobileLayout({ children }: { children: React.ReactNode }) {
   const [routeLoading, setRouteLoading] = useState(false);
   const isDisplayHeader = useAtomValue(atomHeaderDisplay);
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams();
+  const location = useLocation();
+  const params = useParams({ strict: false });
+  const pathname = location.pathname;
 
   const [scrollY, setScrollY] = useState(0);
-
-  useLayoutEffect(() => {
-    const cacheScrollPosition: Array<number> = [];
-
-    // 페이지 이동시 최상단
-    const routerPush = router.push;
-    const newPush = (ref: string, options?: NavigateOptions): void => {
-      cacheScrollPosition.push(container.current?.scrollTop || 0);
-      setRouteLoading(true);
-      routerPush(ref, options);
-    };
-    router.push = newPush;
-  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);

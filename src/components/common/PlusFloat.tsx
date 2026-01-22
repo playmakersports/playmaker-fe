@@ -1,14 +1,14 @@
 import React from "react";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 
 import PlusIcon from "@/assets/icon/common/Plus.svg";
 
 function PlusFloat({ linkTo, blind, replace = false }: { linkTo: string; blind?: string; replace?: boolean }) {
   return (
     <Link
-      prefetch={true}
+      preload="intent"
       replace={replace}
-      href={linkTo}
+      to={linkTo}
       style={{
         backgroundColor: "var(--primary500)",
         borderRadius: "50%",

@@ -1,0 +1,56 @@
+const COMPETITION_LIST_MOCK = [
+  {
+    posterImg: "/images/mock/seoul-tech-univ-poster.png",
+    competitionId: "25",
+    competitionName: "제7회 전국대학농구동아리대회",
+    startDate: "2024-11-15",
+    endDate: "2024-11-30",
+    matchLocation: "00대학교 실내체육관",
+    openedBy: "서울과학기술대학교",
+    openedByLogo: "/images/mock/seoul-tech-univ-logo.gif",
+    schedule: [
+      { date: "2024-11-20", rounds: ["예선1", "예선2"] },
+      { date: "2024-11-22", rounds: ["예선1", "예선2"] },
+      { date: "2024-11-23", rounds: ["예선2", "예선3"] },
+      { date: "2024-11-25", rounds: ["16강"] },
+      { date: "2024-11-28", rounds: ["8강", "4강"] },
+      { date: "2024-11-30", rounds: ["결승"] }
+    ]
+  },
+  {
+    posterImg: "/images/mock/2024hongik-jump-competition.jpeg",
+    competitionId: "26",
+    competitionName: "제7회 전국대학농구동아리대회",
+    startDate: "2024-11-22",
+    endDate: "2024-11-30",
+    matchLocation: "00대학교 실내체육관",
+    openedBy: "서울과학기술대학교",
+    openedByLogo: "/images/mock/seoul-tech-univ-logo.gif"
+  },
+  {
+    posterImg: "/images/mock/2024hongik-jump-competition.jpeg",
+    competitionId: "19",
+    competitionName: "홍익대학교 JUMP배 농구대회 32강",
+    startDate: "2024-11-22",
+    endDate: "2024-11-30",
+    matchLocation: "홍익대학교 실내체육관",
+    openedBy: "홍익대학교",
+    openedByLogo: "/images/mock/hongik-univ-logo.png",
+    homeName: "JUMP",
+    homeLogo: "/images/mock/hongik-jump.png",
+    awayName: "15ers",
+    awayLogo: "/images/mock/15ers.png"
+  }
+];
+const COMPETITION_DETAIL_MOCK = {
+  posterImg: "/images/mock/seoul-tech-univ-poster.png",
+  competitionId: "25",
+  competitionName: "제7회 전국대학농구동아리대회",
+  startDate: "2024-11-15",
+  endDate: "2024-11-30",
+  matchLocation: "00대학교 실내체육관"
+};
+export {
+  COMPETITION_LIST_MOCK as C,
+  COMPETITION_DETAIL_MOCK as a
+};

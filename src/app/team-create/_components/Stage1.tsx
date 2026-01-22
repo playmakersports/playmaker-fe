@@ -1,6 +1,5 @@
 import React from "react";
 import clsx from "clsx";
-import Image from "next/image";
 import styled from "styled-components";
 import { useFormContext } from "react-hook-form";
 
@@ -37,7 +36,7 @@ function TeamCreateStage1({ setStep }: SetStepType) {
               />
               <label htmlFor={`${item.value}+${item.name}`}>
                 <div className="icon-wrapper">
-                  <Image src={item.icon} alt={item.name} width={80} height={80} />
+                  <img src={item.icon} alt={item.name} width={80} height={80} />
                 </div>
                 <span className="sports-name">{item.name}</span>
               </label>

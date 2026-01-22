@@ -2,7 +2,7 @@
 
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { FONTS } from "@/styles/common";
 import Button from "@/components/common/Button";
@@ -26,7 +26,7 @@ function Page404() {
         (ERROR 404)
       </p>
       <FloatButton>
-        <Button type="button" mode="primary" fullWidth onClick={() => router.push("/")}>
+        <Button type="button" mode="primary" fullWidth onClick={() => router.navigate({ to: "/" })}>
           홈 화면 이동
         </Button>
       </FloatButton>

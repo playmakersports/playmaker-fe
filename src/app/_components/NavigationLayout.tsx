@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import Navigation from "@/components/layouts/Navigation";
-import { usePathname } from "next/navigation";
+import { useLocation } from "@tanstack/react-router";
 
 function NavigationLayout({ children }: { children: React.ReactNode }) {
-  const path = usePathname();
+  const path = useLocation().pathname;
   const SHOW_NAV_PAGE = ["/home", "/team", "/team/find", "/my", "/match", "/notification"];
   const SHOW_SUB_NAV =
     !path.startsWith("/team/") && !path.startsWith("/my/") && !path.startsWith("/p/") && !path.startsWith("/match/");

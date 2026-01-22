@@ -1,7 +1,6 @@
 "use client";
 import React from "react";
-import { usePathname } from "next/navigation";
-import Link from "next/link";
+import { useLocation, Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import {
   activeIcon,
@@ -26,7 +25,7 @@ import NotificationIconOutlined from "@/assets/icon/common/outlined/Notification
 import PersonIconOutlined from "@/assets/icon/common/outlined/Person.svg";
 
 function Navigation({ hide = false }: { hide?: boolean }) {
-  const pathname = usePathname();
+  const pathname = useLocation().pathname;
 
   return (
     <nav
@@ -38,17 +37,14 @@ function Navigation({ hide = false }: { hide?: boolean }) {
     >
       <div className={navigationContainer}>
         <div className={navigationInner}>
-          <Link href="/home" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="홈" data-active={pathname === "/home"}>
+          <Link to="/home" preload="intent" className={navigationButton} data-label="홈" data-active={pathname === "/home"}>
               {pathname === "/home" ? (
                 <HomeIconFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
                 <HomeIconOutlined className={navigationSvg} />
               )}
-            </a>
           </Link>
-          <Link href="/team" legacyBehavior prefetch>
-            <a
+          <Link to="/team" preload="intent"
               className={navigationButton}
               data-label="팀"
               data-active={pathname === "/team" || pathname === "/team/find" || pathname.startsWith("/team/")}
@@ -58,10 +54,8 @@ function Navigation({ hide = false }: { hide?: boolean }) {
               ) : (
                 <PeopleIconOutlined className={navigationSvg} />
               )}
-            </a>
           </Link>
-          <Link href="/match" legacyBehavior prefetch>
-            <a
+          <Link to="/match" preload="intent"
               className={navigationButton}
               data-label="경기"
               data-active={pathname === "/match" || pathname.startsWith("/match/")}
@@ -71,19 +65,15 @@ function Navigation({ hide = false }: { hide?: boolean }) {
               ) : (
                 <TrophyOutlined className={navigationSvg} />
               )}
-            </a>
           </Link>
-          <Link href="/notification" legacyBehavior prefetch>
-            <a className={navigationButton} data-label="알림" data-active={pathname === "/notification"}>
+          <Link to="/notification" preload="intent" className={navigationButton} data-label="알림" data-active={pathname === "/notification"}>
               {pathname === "/notification" ? (
                 <NotificationIconFilled className={clsx(navigationSvg, activeIcon)} />
               ) : (
                 <NotificationIconOutlined className={navigationSvg} />
               )}
-            </a>
           </Link>
-          <Link href="/my" legacyBehavior prefetch>
-            <a
+          <Link to="/my" preload="intent"
               className={navigationButton}
               data-label="마이"
               data-active={pathname === "/my" || pathname.startsWith("/my/")}
@@ -93,7 +83,6 @@ function Navigation({ hide = false }: { hide?: boolean }) {
               ) : (
                 <PersonIconOutlined className={navigationSvg} />
               )}
-            </a>
           </Link>
         </div>
       </div>

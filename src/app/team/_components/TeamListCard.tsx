@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import clsx from "clsx";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import styled from "styled-components";
 
 import { fonts } from "@/styles/fonts.css";
@@ -36,7 +36,7 @@ function TeamListCard(props: Props) {
 
   return (
     <CardHeader className={baseCardContainer} style={{ padding: "12px" }}>
-      <Link href={`/team/${teamId}`} className={flexRowGap8} style={{ flex: 1 }}>
+      <Link to={`/team/${teamId}`} className={flexRowGap8} style={{ flex: 1 }}>
         <img src={teamLogo} alt={teamName} />
         <div className={flexColumnGap10} style={{ flex: 1 }}>
           <div>

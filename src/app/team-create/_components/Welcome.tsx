@@ -2,7 +2,7 @@
 import React, { useEffect, useRef } from "react";
 import { formatDate } from "date-fns";
 import { usePost } from "@/apis/hook/query";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 import { useFormContext } from "react-hook-form";
 import { useToast } from "@/hook/useToast";
 import { usePopup } from "@/components/common/global/PopupProvider";
@@ -54,7 +54,7 @@ function TeamCreateWelcome({ setStep }: SetStepType) {
             toast?.trigger("새로운 팀을 만들었습니다.", {
               type: "success",
             });
-            router.replace(`/team/${data.id}`);
+            router.navigate({ to: `/team/${data.id}`, replace: true });
           },
 
           onError: (error) => {

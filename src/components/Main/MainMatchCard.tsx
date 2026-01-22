@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import Image from "next/image";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { formattedDate } from "@/util/date";
@@ -44,21 +43,21 @@ function MainMatchCard(props: Props) {
       <MatchBox style={{ backgroundImage: `url(${posterImg})` }}>
         <div className="home-team team-wrapper">
           <div className="team-inner">
-            <Image src={homeLogo} alt={homeName} width={48} height={48} aria-disabled />
+            <img src={homeLogo} alt={homeName} width={48} height={48} aria-disabled />
             <span className="team-name">{homeName}</span>
           </div>
         </div>
         <p className="versers">vs</p>
         <div className="away-team team-wrapper">
           <div className="team-inner">
-            <Image src={awayLogo} alt={awayName} width={48} height={48} aria-disabled />
+            <img src={awayLogo} alt={awayName} width={48} height={48} aria-disabled />
             <span className="team-name">{awayName}</span>
           </div>
         </div>
       </MatchBox>
       {openedBy && openedByLogo && (
         <Opened>
-          <Image src={openedByLogo} width={28} height={28} alt="" className="opened-by-logo" /> {openedBy}
+          <img src={openedByLogo} width={28} height={28} alt="" className="opened-by-logo" /> {openedBy}
         </Opened>
       )}
       <DetailList>

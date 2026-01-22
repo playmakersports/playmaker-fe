@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearch } from "@tanstack/react-router";
 
 import { BasicWhiteCard } from "../common/Card";
 import { CARD_ACTIVE } from "@/styles/common";
@@ -40,8 +40,8 @@ function MatchCard(props: Props) {
     mvpId,
   } = props;
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const competitionId = searchParams.get("competitionId");
+  const searchParams = useSearch({ strict: false });
+  const competitionId = (searchParams as { competitionId?: string })?.competitionId;
 
   const STATUS_NAME: Record<string, string> = {
     PENDING: "경기 중",
@@ -50,7 +50,7 @@ function MatchCard(props: Props) {
   };
 
   return (
-    <Container role="button" onClick={() => router.push(`/match/${matchId}`)}>
+    <Container role="button" onClick={() => router.navigate({ to: `/match/${matchId}` })}>
       <MatchWrapper>
         <Team>
           <img src={teamLogo} alt={teamName} />

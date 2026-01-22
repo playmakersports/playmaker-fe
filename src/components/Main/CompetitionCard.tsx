@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { useRouter } from "@tanstack/react-router";
 
 import { CARD_ACTIVE, FONTS } from "@/styles/common";
 import { countDayDiff, formattedDate } from "@/util/date";
@@ -18,7 +17,6 @@ type Props = {
 };
 function CompetitionCard(props: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { posterImg, competitionId, competitionName, startDate, endDate, matchLocation, attendMembers } = props;
   const dayCount = () => {
     if (countDayDiff(startDate) === 0) return "D-DAY";
@@ -26,7 +24,7 @@ function CompetitionCard(props: Props) {
   };
 
   return (
-    <MediumCardContainer onClick={() => router.push(`/competition/${competitionId}`)}>
+    <MediumCardContainer onClick={() => router.navigate({ to: `/competition/${competitionId}` })}>
       <div className="match-poster" style={{ backgroundImage: `url(${posterImg})` }} data-d-day={dayCount()} />
       <MediumContents>
         <h5>{competitionName}</h5>

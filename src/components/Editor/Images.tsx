@@ -1,7 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Editor } from "@tiptap/react";
-import Image from "next/image";
 import { EditorImageType, EditorOptionalStateControl } from "@/hook/useEditorHandler";
 
 import Loading from "../common/Loading";
@@ -123,7 +122,7 @@ function EditorImages({ images }: Props) {
 
         {getter()?.list.map((image, index) => (
           <ImageItem key={`image-${index}`}>
-            <Image src={image} alt={`첨부된 이미지 ${index}번`} width={80} height={80} />
+            <img src={image} alt={`첨부된 이미지 ${index}번`} width={80} height={80} />
             <button type="button" onClick={() => removeImageItem(index)} aria-label={`${index + 1}번 이미지 삭제`}>
               <CloseIcon width={14} height={14} />
             </button>

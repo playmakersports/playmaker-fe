@@ -1,0 +1,1 @@
+import{j as t}from"./main-DdFHfJsj.js";import{u as s}from"./useHeader-ycHOJC5z.js";import{h as e}from"./container.css-CS477Ypa.js";import"./vanilla-extract-css.browser.esm-WxGd34AK.js";function m(){return s({title:"매치"}),t.jsx("section",{className:e,children:"MatchesList"})}export{m as component};

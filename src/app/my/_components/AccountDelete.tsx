@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 import styled from "styled-components";
 import { ModalProps } from "@/hook/useModal";
 import { useToast } from "@/hook/useToast";
@@ -45,7 +45,7 @@ function AccountDelete({ ModalComponents }: { ModalComponents: (props: ModalProp
             );
 
             if (confirm) {
-              router.replace("/");
+              router.navigate({ to: "/", replace: true });
               trigger("탈퇴가 완료되었습니다.", { type: "success" });
             }
           },

@@ -1,9 +1,8 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import Link from "next/link";
+import { Link, useRouter } from "@tanstack/react-router";
 import { useAtomValue } from "jotai";
-import { useRouter } from "next/navigation";
 
 import { fonts } from "@/styles/fonts.css";
 import {
@@ -111,8 +110,8 @@ function SubIcons({ children, where }: { children: React.ReactNode; where: (() =
   if (typeof where === "string") {
     return (
       <li>
-        <Link href={where} legacyBehavior>
-          <a>{children}</a>
+        <Link to={where}>
+          {children}
         </Link>
       </li>
     );

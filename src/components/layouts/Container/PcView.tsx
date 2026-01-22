@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Logotype from "@/assets/logo/Logotype.svg";
 import PersonIcon from "@/assets/icon/common/filled/Person.svg";
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 
 function PcView({ children }: { children: React.ReactNode }) {
   return (
@@ -13,16 +13,16 @@ function PcView({ children }: { children: React.ReactNode }) {
         <Header>
           <Menu>
             <div className="logo-area">
-              <Link href="/" aria-label="홈으로 이동. 협회 및 관계자 전용 화면에서 벗어납니다.">
+              <Link to="/" aria-label="홈으로 이동. 협회 및 관계자 전용 화면에서 벗어납니다.">
                 <Logotype width={168} height="auto" fill="var(--gray900)" />
               </Link>
               <p>협회 및 관계사 전용</p>
             </div>
             <li className="menu-item">
-              <Link href="/staff/competition">대회 관리</Link>
+              <Link to="/staff/competition">대회 관리</Link>
             </li>
             <li className="menu-item">
-              <Link href="/staff/payment">결제 정보</Link>
+              <Link to="/staff/payment">결제 정보</Link>
             </li>
           </Menu>
           <Icons>

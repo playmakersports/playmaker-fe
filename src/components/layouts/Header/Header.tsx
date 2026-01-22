@@ -1,12 +1,12 @@
 "use client";
-import { usePathname } from "next/navigation";
+import { useLocation } from "@tanstack/react-router";
 import MainHeader from "./MainHeader";
 import RoutedHeader from "./RoutedHeader";
 import TeamHeader from "./TeamHeader";
 
 type Props = { scrollY: number };
 function Header({ scrollY }: Props) {
-  const pathname = usePathname();
+  const pathname = useLocation().pathname;
 
   if (pathname === "/home") {
     return <MainHeader scrollY={scrollY} />;

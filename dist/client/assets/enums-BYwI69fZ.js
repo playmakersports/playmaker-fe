@@ -1,0 +1,1 @@
+var E=(A=>(A[A.NOTICE=1]="NOTICE",A[A.FREE=2]="FREE",A[A.GALLERY=3]="GALLERY",A))(E||{});const L={APPLICABLE:"가입가능",APPLY:"가입 신청",MEMBER:"팀원",STAFF:"운영진",ASSISTANT:"부회장",MASTER:"회장"};export{E as B,L as T};

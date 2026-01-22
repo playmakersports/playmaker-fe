@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useFormContext } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { SetStepType } from "./StageWrapper";
 import { fonts } from "@/styles/fonts.css";
@@ -64,7 +64,7 @@ function Welcome({ setStep }: SetStepType) {
             추가 정보 입력하기
           </Button>
         </div>
-        <Button type="button" size="xlarge" fullWidth onClick={() => router.replace("/home")}>
+        <Button type="button" size="xlarge" fullWidth onClick={() => router.navigate({ to: "/home", replace: true })}>
           시작하기
         </Button>
       </div>

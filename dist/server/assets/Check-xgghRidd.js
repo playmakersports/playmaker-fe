@@ -1,0 +1,4 @@
+const CheckIcon = "data:image/svg+xml,%3csvg%20width='24'%20height='24'%20viewBox='0%200%2024%2024'%20fill='currentColor'%20xmlns='http://www.w3.org/2000/svg'%3e%3cmask%20id='mask0_129_2815'%20style='mask-type:alpha'%20maskUnits='userSpaceOnUse'%20x='0'%20y='0'%20width='24'%20height='24'%3e%3crect%20width='24'%20height='24'%20/%3e%3c/mask%3e%3cg%20mask='url(%23mask0_129_2815)'%3e%3cpath%20d='M9.54983%2017.6537L4.74983%2012.8537C4.45463%2012.5585%204.4546%2012.0799%204.74977%2011.7847C5.04499%2011.4894%205.5237%2011.4894%205.81896%2011.7846L9.54983%2015.5155L18.1807%206.88462C18.476%206.58937%2018.9547%206.5894%2019.2499%206.88469C19.5451%207.17993%2019.545%207.65854%2019.2498%207.95375L9.54983%2017.6537Z'%20/%3e%3c/g%3e%3c/svg%3e";
+export {
+  CheckIcon as C
+};

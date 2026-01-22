@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 import clsx from "clsx";
 
 import {
@@ -34,7 +34,7 @@ function MainHeader({ scrollY }: Props) {
           <button
             type="button"
             className={clsx(headerButtonIconWrapper, !isScrolled && headerButtonDarkBgIconWrapper)}
-            onClick={() => router.push("/notification")}
+            onClick={() => router.navigate({ to: "/notification" })}
             aria-label="내 알림 전체보기"
           >
             <SearchIcon className={headerButtonIcon} fill={isScrolled ? "var(--gray700)" : "var(--gray100)"} />

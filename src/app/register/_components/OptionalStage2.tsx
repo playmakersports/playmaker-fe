@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { usePopup } from "@/components/common/global/PopupProvider";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 import { usePost } from "@/apis/hook/query";
 import { useToast } from "@/hook/useToast";
 
@@ -38,7 +38,7 @@ function OptionalStage2({ setStep }: SetStepType) {
           weight: formValues.weight,
         },
       });
-      router.replace("/home");
+      router.navigate({ to: "/home", replace: true });
       toast.trigger("스포츠 정보가 저장되었습니다.", { type: "success" });
     } catch (error) {
       popup?.alert("스포츠 정보 저장에 실패했습니다. 다시 시도해주세요.", {

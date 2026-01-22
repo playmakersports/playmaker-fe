@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@tanstack/react-router";
 
 import { BUTTON_ACTIVE, FONTS } from "@/styles/common";
 import { baseDividedLineChild } from "@/styles/container.css";
@@ -46,8 +46,8 @@ function UserSetting() {
         <h4 className={settingsGroupTitle}>기본 정보</h4>
         <GroupList
           list={[
-            { title: "내 프로필 수정", onClick: () => router.push(`/my/info`) },
-            { title: "활동 지역", onClick: () => router.push(`/my/location`) },
+            { title: "내 프로필 수정", onClick: () => router.navigate({ to: `/my/info` }) },
+            { title: "활동 지역", onClick: () => router.navigate({ to: `/my/location` }) },
             // NOTE: 초기 버전에서는 학교 인증 및 계정 관리 제외
             // {
             //   title: "학교 인증",
@@ -61,15 +61,15 @@ function UserSetting() {
       <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>소속 팀</h4>
-        <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.push(`/my/team-list`) }]} />
+        <GroupList list={[{ title: "소속 팀 관리", onClick: () => router.navigate({ to: `/my/team-list` }) }]} />
       </div>
       <div className={baseDividedLineChild} />
       <div className={settingsGroupWrapper}>
         <h4 className={settingsGroupTitle}>내 운동 정보</h4>
         <GroupList
           list={[
-            { title: "신체 정보 관리", onClick: () => router.push(`/my/physical`) },
-            { title: "운동 종목별 정보 관리", onClick: () => router.push(`/my/sports`) },
+            { title: "신체 정보 관리", onClick: () => router.navigate({ to: `/my/physical` }) },
+            { title: "운동 종목별 정보 관리", onClick: () => router.navigate({ to: `/my/sports` }) },
           ]}
         />
       </div>
@@ -79,11 +79,11 @@ function UserSetting() {
           list={[
             {
               title: "알림 설정",
-              onClick: () => router.push(`/my/notification`),
+              onClick: () => router.navigate({ to: `/my/notification` }),
             },
             {
               title: "공지사항",
-              onClick: () => router.push(`/my/notice`),
+              onClick: () => router.navigate({ to: `/my/notice` }),
             },
             {
               title: "약관 정보",
@@ -97,7 +97,7 @@ function UserSetting() {
             {
               title: "로그아웃",
               onClick: () => {
-                router.replace("/user/logout");
+                router.navigate({ to: "/user/logout", replace: true });
               },
             },
           ]}

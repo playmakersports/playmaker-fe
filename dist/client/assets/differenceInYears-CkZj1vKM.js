@@ -1,0 +1,1 @@
+import{t as r}from"./toDate-qOSwr3PX.js";function o(s,a){const e=r(s),t=r(a),n=e.getTime()-t.getTime();return n<0?-1:n>0?1:n}function l(s,a){const e=r(s),t=r(a);return e.getFullYear()-t.getFullYear()}function d(s,a){const e=r(s),t=r(a),n=o(e,t),f=Math.abs(l(e,t));e.setFullYear(1584),t.setFullYear(1584);const i=o(e,t)===-n,c=n*(f-+i);return c===0?0:c}export{o as c,d};

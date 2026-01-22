@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import clsx from "clsx";
 import styled from "styled-components";
-import { useParams } from "next/navigation";
+import { useParams } from "@tanstack/react-router";
 
 import { semantic } from "@/styles/color.css";
 import { fonts } from "@/styles/fonts.css";
@@ -24,7 +24,7 @@ import useModal from "@/hook/useModal";
 
 function PlayersList() {
   const { showModal, ModalComponents } = useModal();
-  const params = useParams();
+  const params = useParams({ strict: false });
   const matchId = params["matchId"];
   const [currentTeam, setCurrentTeam] = useState<"HOME" | "AWAY" | string>("HOME");
   const MOCK_PROFILE_IMG = "https://cdn.interfootball.co.kr/news/photo/202012/514959_420656_1454.jpg";

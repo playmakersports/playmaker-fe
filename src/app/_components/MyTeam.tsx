@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import styled from "styled-components";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import { useProfileGet } from "@/apis/hook/user";
 
@@ -21,7 +21,7 @@ function MyTeam({ data }: { data: ApiHomeResponse["teams"] }) {
           onScroll={(e) => scrollMaskedHandler(e, "horizontal")}
         >
           {data?.map((item) => (
-            <Link key={item.teamId} href={`/team/${item.teamId}`} legacyBehavior>
+            <Link key={item.teamId} to={`/team/${item.teamId}`}>
               <TeamItem aria-label={item.teamName} role="button">
                 <TeamImage
                   style={{
@@ -34,7 +34,7 @@ function MyTeam({ data }: { data: ApiHomeResponse["teams"] }) {
           ))}
         </div>
       </div>
-      <Link href="/team" legacyBehavior>
+      <Link to="/team">
         <FindTeamButton aria-label="새로운 팀 찾기">
           <span className="circle">
             <PlusIcon />

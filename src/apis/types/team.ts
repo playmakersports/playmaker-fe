@@ -29,6 +29,12 @@ export type ApiTeamDetail = {
   ageMax: number | null;
   genderRestriction: "MALE" | "FEMALE" | null; // 가능한 값이 있다면 명시
   hasGenerationSystem: "Y" | "N" | null;
+  recent: {
+    id: number;
+    title: string;
+    createdAt: string;
+    boardType: number;
+  }[];
 };
 
 export type ApiTeamJoinRequest = {

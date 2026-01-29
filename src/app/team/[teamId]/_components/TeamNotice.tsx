@@ -5,13 +5,10 @@ import { intervalToDuration } from "date-fns";
 
 import { FONTS, TEXT_ACTIVE } from "@/styles/common";
 import AlertFilledIcon from "@/assets/icon/circle/AlertFilled.svg";
+import { ApiTeamDetail } from "@/apis/types/team";
 
 type Props = {
-  list: {
-    articleId: string;
-    createAt: string;
-    title: string;
-  }[];
+  list: ApiTeamDetail["recent"];
 };
 
 function TeamNotice({ list }: Props) {
@@ -32,24 +29,28 @@ function TeamNotice({ list }: Props) {
     return () => clearInterval(intervalId);
   }, []);
 
+  if (list.length == 0) return null;
+
   return (
     <Container>
       <Display>
         {list.map((item, index) => {
           const dateInterval = intervalToDuration({
-            start: new Date(item.createAt),
+            start: new Date(item.createdAt),
             end: new Date(),
           });
-          const isWithin24H = !dateInterval.years && !dateInterval.months && !dateInterval.days;
+          const isWithin24H =
+            !dateInterval.years && !dateInterval.months && !dateInterval.days;
 
           return (
             <Item
-              key={item.articleId}
-              onClick={() => router.push(`/team/${teamId}/board/${item.articleId}`)}
+              key={item.id}
+              onClick={() => router.push(`/team/${teamId}/board/${item.id}`)}
               className={
                 order === index
                   ? "current"
-                  : (order === 0 && list.length - 1 === index) || order - 1 === index
+                  : (order === 0 && list.length - 1 === index) ||
+                    order - 1 === index
                   ? "prev"
                   : "next"
               }
@@ -65,10 +66,11 @@ function TeamNotice({ list }: Props) {
                   {isWithin24H
                     ? dateInterval.hours ?? 0 > 0
                       ? `${dateInterval.hours}시간 전`
-                      : (dateInterval.hours ?? 0 === 0) && (dateInterval.minutes ?? 0 > 0)
+                      : (dateInterval.hours ?? 0 === 0) &&
+                        (dateInterval.minutes ?? 0 > 0)
                       ? `${dateInterval.minutes}분 전`
                       : "방금"
-                    : item.createAt.split("T")[0]}
+                    : item.createdAt.split("T")[0]}
                 </span>
               </Wrapper>
             </Item>

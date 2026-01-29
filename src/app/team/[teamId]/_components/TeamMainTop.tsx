@@ -8,7 +8,12 @@ import { ApiTeamDetail } from "@/apis/types/team";
 import TeamNotice from "@/app/team/[teamId]/_components/TeamNotice";
 
 import { baseContainer } from "@/styles/container.css";
-import { teamMainTopBanner, teamMainTopHeader, teamMainTopInfoList, teamMainTopInfoListItem } from "./team.main.css";
+import {
+  teamMainTopBanner,
+  teamMainTopHeader,
+  teamMainTopInfoList,
+  teamMainTopInfoListItem,
+} from "./team.main.css";
 import { fonts } from "@/styles/fonts.css";
 import TeamMainLogo from "./TeamMainLogo";
 
@@ -28,7 +33,10 @@ function TeamMainTop(props: ApiTeamDetail) {
 
   return (
     <>
-      <section className={teamMainTopBanner} style={{ backgroundImage: `url(${bgUrl})` }}>
+      <section
+        className={teamMainTopBanner}
+        style={{ backgroundImage: `url(${bgUrl})` }}
+      >
         <ul className={teamMainTopInfoList}>
           <li className={teamMainTopInfoListItem}>
             <LocationPinIcon />
@@ -41,26 +49,30 @@ function TeamMainTop(props: ApiTeamDetail) {
             <PeopleIcon /> {props.memberCount}명
           </li>
           <li className={teamMainTopInfoListItem}>
-            <CalendarIcon /> {formatDate(props.foundingDate ?? props.createDate, "yy-MM-dd")} 창단
+            <CalendarIcon />{" "}
+            {formatDate(props.foundingDate ?? props.createDate, "yy-MM-dd")}{" "}
+            창단
           </li>
         </ul>
       </section>
       <section className={baseContainer} style={{ paddingBottom: "20px" }}>
         <Top>
-          <TeamMainLogo text={props.recruitingYn === "Y" ? "모집중" : ""} imgSrc={props.logoUrl ?? "a.png"} />
+          <TeamMainLogo
+            text={props.recruitingYn === "Y" ? "모집중" : ""}
+            imgSrc={props.logoUrl ?? "a.png"}
+          />
           <div className={teamMainTopHeader}>
-            <h2 className={fonts.body3.semibold} style={{ color: "var(--gray900)" }}>
+            <h2
+              className={fonts.body3.semibold}
+              style={{ color: "var(--gray900)" }}
+            >
               {props.teamName}
             </h2>
             <p className={fonts.body4.regular}>{props.teamIntro}</p>
           </div>
         </Top>
         <TeamNotice
-          list={[
-            { title: "8월 1주차 교류전 참가 여부 투표", articleId: "5", createAt: "2025-04-19T13:00" },
-            { title: "2024년 하계 단결 MT - 투표 진행중", articleId: "1", createAt: "2025-04-19T23:58" },
-            { title: "2024년 6월 회비 결산", articleId: "32", createAt: "2025-04-19T22:57" },
-          ]}
+          list={props.recent.filter((item) => item.boardType === 1)}
         />
       </section>
     </>

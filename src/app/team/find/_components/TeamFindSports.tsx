@@ -59,7 +59,7 @@ function TeamFindSports({ sports }: { sports: string }) {
                 teamId={item.id}
                 teamLogo={item.logoUrl ?? ""}
                 teamName={item.teamName}
-                location={item.activeArea}
+                location={item.activeArea.name}
                 teamIntro={item.teamIntro}
                 university={""}
                 gender={""}

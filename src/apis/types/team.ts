@@ -6,7 +6,10 @@ export type ApiTeamDetail = {
   teamColor: string | null;
   teamItem: string;
   createDate: string;
-  activeArea: string;
+  activeArea: {
+    key: string;
+    name: string;
+  };
   logoUrl: string | null;
   teamIntro: string | null;
   message: string | null;

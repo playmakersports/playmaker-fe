@@ -32,7 +32,7 @@ function TeamMainTop(props: ApiTeamDetail) {
         <ul className={teamMainTopInfoList}>
           <li className={teamMainTopInfoListItem}>
             <LocationPinIcon />
-            {props.activeArea}
+            {props.activeArea.name}
           </li>
           <li className={teamMainTopInfoListItem}>
             <IdentifyIcon /> {props.teamLeaderName}

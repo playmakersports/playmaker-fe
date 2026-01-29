@@ -55,14 +55,8 @@ function LoginWrapper({ children, logoFill }: Props) {
           </linearGradient>
         </defs>
       </svg>
-      <div style={logoAreaStyle}>
-        <LogoSymbolType className="logo-icon" width={132} height={72} />
-        <div className={fonts.head5.semibold} style={{ color: "var(--primary500)" }}>
-          플메
-        </div>
-        {/* <LogoTextType className="logo-text" width={150} height={16} fill={logoFill ?? "var(--main)"} /> */}
-      </div>
-      <div style={{ position: "relative", paddingBottom: "4px", zIndex: 1 }}>{children}</div>
+      <div style={{ position: "relative",display:"flex", flexDirection:"column", justifyContent:"space-between"
+      ,height:"100svh"}}>{children}</div>
     </section>
   );
 }
@@ -76,12 +70,6 @@ const backgroundStyle = {
   height: "800px",
   zIndex: 0,
 } as const;
-const logoAreaStyle = {
-  display: "flex",
-  margin: "60px 0",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: "18px",
-} as const;
+
 
 export default LoginWrapper;

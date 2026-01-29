@@ -1,4 +1,4 @@
-import { VERCEL_BASE_URL } from "@/constants/baseUrl";
+import { REDIRECT_BASE_URL } from "@/constants/baseUrl";
 
 const k_auth_uri = "https://kauth.kakao.com/oauth/authorize";
 const g_auth_uri = "https://accounts.google.com/o/oauth2/v2/auth";
@@ -31,7 +31,7 @@ const createOpenUri = (provider: Provider, redirectUri: string) => {
   return `${baseUri}?${params.toString()}`;
 };
 export const oAuthSignInStart = (provider: Provider) => {
-  const target_redirect_uri = `${VERCEL_BASE_URL}/user/login/${provider}`;
+  const target_redirect_uri = `${REDIRECT_BASE_URL}/user/login/${provider}`;
   const openUri = createOpenUri(provider, target_redirect_uri);
   window.open(openUri, "_self");
 };
